@@ -40,6 +40,17 @@ powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\make_
 - 对比用的地球格网必须与世界同分辨率（512x256 / 1024x512 / 2048x1024），新机器上需先建好地球格网（见上一节）。
 - 8 张区域图的选取规则见 `packages/figures/select_regions.py` 开头的说明。
 
+盲评用法（阶段 0.7）：`--blind "世界 A" --out figures/stage0/calib_world_A` 隐去名称、来源、种子与 method_class；`--mirror-shift-deg 100` 先把世界东西镜像再平移（保距变换，指标不变）。
+
+## 尺子校准（阶段 0.7）
+
+| 脚本 | 用途 |
+|---|---|
+| `make_rounded_world.py` | 生成"圆润世界"对照样本（故意做坏：光滑解析几何 + 噪声斑块山，能通过 A 层），写 `data/worlds/rounded_control/`（nc 不进 Git，`params.json` 进 Git），约 2 分钟 |
+| `calibration_metrics.py` | 地球与圆润世界的指标对比、B1 比较方式试算，写 `reviews/stage0_calibration_data.json`，约 1 分钟 |
+
+校准结论见 `reviews/stage0_calibration.md`。
+
 ## 奇景覆盖度核对（阶段 0.5b）
 
 | 脚本 | 用途 |

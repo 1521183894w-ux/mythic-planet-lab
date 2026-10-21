@@ -1,0 +1,104 @@
+{
+ "description": "阶段 0.7 圆润世界对照样本的生成参数（重建：scripts/make_rounded_world.py）",
+ "seed": 20261021,
+ "method_class_elevation": "visual_only",
+ "lobes": [
+  [
+   "L1",
+   38.0,
+   15.0,
+   32.0
+  ],
+  [
+   "L2",
+   44.0,
+   112.0,
+   28.0
+  ],
+  [
+   "L3",
+   -27.0,
+   24.0,
+   25.0
+  ],
+  [
+   "L4",
+   -8.0,
+   150.0,
+   22.0
+  ]
+ ],
+ "bridges": [
+  [
+   "L1",
+   "L2"
+  ],
+  [
+   "L1",
+   "L3"
+  ],
+  [
+   "L2",
+   "L4"
+  ]
+ ],
+ "bridge_half_width_km": 125.0,
+ "inland_sea": [
+  37.0,
+  -6.0,
+  8.5
+ ],
+ "strait": [
+  [
+   37.0,
+   -14.0
+  ],
+  [
+   37.0,
+   -40.0
+  ],
+  50.0
+ ],
+ "secondary_center": [
+  5.0,
+  -80.0
+ ],
+ "secondary_radius_deg_tuned": 27.244,
+ "polar_radius_deg": 16.0,
+ "islands": [
+  [
+   -35.0,
+   -150.0,
+   2.5
+  ],
+  [
+   20.0,
+   -150.0,
+   1.5
+  ],
+  [
+   -40.0,
+   70.0,
+   2.0
+  ],
+  [
+   55.0,
+   -30.0,
+   1.8
+  ]
+ ],
+ "smooth_union_km": 80.0,
+ "target_ocean_fraction": 0.71,
+ "lobe_gaps_deg": {
+  "L1-L2": 8.99,
+  "L1-L3": 8.55,
+  "L2-L4": 12.31
+ },
+ "files": {
+  "2048x1024": "data/worlds/rounded_control/rounded_control_2048x1024.nc",
+  "1024x512": "data/worlds/rounded_control/rounded_control_1024x512.nc",
+  "512x256": "data/worlds/rounded_control/rounded_control_512x256.nc"
+ },
+ "code_version": "355af25-dirty",
+ "generated": "2026-10-21 21:22:04"
+}

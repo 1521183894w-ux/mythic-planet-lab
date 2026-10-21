@@ -181,7 +181,7 @@ def write_gallery(out_dir: Path, world, stage: int, metrics: dict, earth_metrics
 <header>
 <h1>标准图组 · 阶段 {stage} · {_e(world.display_name)}（{_e(world.world_id)}）</h1>
 <div class="meta">格网 {_e(world.resolution)}（赤道像元约 {world.grid.pixel_km_equator:.1f} km） · 种子 {_e(world.seed)} ·
-代码 {_e(world.code_version)} · 高程 method_class：{_e(world.method_class)} · 生成 {time.strftime('%Y-%m-%d %H:%M')}</div>
+代码 {_e(world.code_version)} · 高程 method_class：{_e(world.method_label)} · 生成 {time.strftime('%Y-%m-%d %H:%M')}</div>
 <div class="meta">数据：{_e(world.source)}</div>
 <div class="note">本页汇总标准图组与指标，供评审与用户看图。指标达标不等于阶段完成：完成须同时满足指标、world-reviewer 评审无未处理的严重问题、
 用户在 PROGRESS.md 写下“通过”（CLAUDE.md 第 2 节）。看图时请重点看区域放大图与旁边的地球对照。</div>

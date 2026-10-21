@@ -10,7 +10,7 @@
 from __future__ import annotations
 
 import subprocess
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
@@ -107,6 +107,12 @@ class World:
     region_groups: dict | None = None
     mountain_exclude: np.ndarray | None = None
     is_earth: bool = False
+    method_label_override: str | None = None   # 只用于盲评时在图中隐去 method_class；真实值仍在 method_class
+
+    @property
+    def method_label(self) -> str:
+        """图中显示的 method_class（盲评时为"隐去"说明）。"""
+        return self.method_label_override or self.method_class
 
     def __post_init__(self):
         if self.method_class not in METHOD_CLASSES:
@@ -157,6 +163,31 @@ def load_world_nc(path: str | Path) -> World:
     return World(world_id=str(attrs.get("world_id", path.stem)), display_name=str(attrs.get("display_name", path.stem)),
                  elevation=elev, land=land, method_class=mc, source=str(attrs.get("source", path.name)),
                  seed=str(attrs.get("seed", "—")), code_version=str(attrs.get("code_version", code_version())))
+
+
+BLIND_NOTE = "（盲评隐去，评审后在 reviews/stage0_calibration.md 公开）"
+
+
+def mirrored(world: World, shift_deg: float) -> World:
+    """东西镜像（经度 λ → −λ）后向东平移 shift_deg（取整到格点）。这是球面上的保距变换，
+    纬度不变，所以所有指标（面积、距离、形态学、纬度判据）都不变；只用于盲评时降低"一眼认出地图"的可能。"""
+    nx = world.grid.nx
+    k = int(round(shift_deg / 360.0 * nx))
+
+    def f(a):
+        return None if a is None else np.roll(a[:, ::-1], k, axis=1)
+
+    return replace(world, elevation=f(world.elevation), land=f(world.land), regions=f(world.regions),
+                   mountain_exclude=f(world.mountain_exclude),
+                   source=f"{world.source}；东西镜像后向东平移 {k * 360.0 / nx:.2f}°")
+
+
+def blinded(world: World, name: str, world_id: str) -> World:
+    """盲评版：隐去名称、来源、种子与 method_class，按陆块单元（而不是地球大洲）分区统计。
+    山系统计的冰盖剔除（地球）保留，因为它是输入处理，不是可见信息。"""
+    return replace(world, world_id=world_id, display_name=name, seed=BLIND_NOTE, source=BLIND_NOTE,
+                   method_label_override=BLIND_NOTE, is_earth=False, regions=None, region_names=None,
+                   region_groups=None)
 
 
 def load(spec: str) -> World:

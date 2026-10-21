@@ -73,7 +73,7 @@ def global_elevation(world, path, vert_exag: float = 3.0):
     cb = fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=cax)
     cb.set_label("高程 / 水深（m）；海平面处色带断开")
     ax.set_title(f"{world.display_name} · 高程（分层设色 + 山体阴影，垂直夸张 {vert_exag:g}×）· 等距圆柱投影", fontsize=13)
-    stamp(fig, world, f"{world.method_class}（高程）", ["黑线：海岸线（陆地掩膜 0.5 等值线）。"])
+    stamp(fig, world, f"{world.method_label}（高程）", ["黑线：海岸线（陆地掩膜 0.5 等值线）。"])
     _save(fig, path)
 
 
@@ -117,7 +117,7 @@ def polar_elevation(world, path, north: bool = True, edge_lat: float = 40.0):
     notes = ["极地图避免等距圆柱投影的高纬拉伸掩盖问题；按格网像元最近邻取样，经纬网 10°。"]
     if world.is_earth and not north:
         notes.append("注：南极冰架是漂浮冰，Natural Earth 不算陆地（海岸线把它圈在海中），但 ETOPO 给的是冰面高程，所以显示为正高程。")
-    stamp(fig, world, f"{world.method_class}（高程）", notes)
+    stamp(fig, world, f"{world.method_label}（高程）", notes)
     _save(fig, path)
 
 
@@ -179,7 +179,7 @@ def landmass_units(world, metrics, fields, cfg, path):
     ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(1.01, 1.0), fontsize=8, frameon=False)
     fig.text(0.755, 0.12, a_layer_text(metrics), fontsize=8.5, va="bottom", family=MONO_FAMILY)
     ax.set_title(f"{world.display_name} · 陆块单元、亚大陆与主内海（A 层的空间结构）", fontsize=13)
-    stamp(fig, world, f"由高程/海陆掩膜派生（输入 {world.method_class}）",
+    stamp(fig, world, f"由高程/海陆掩膜派生（输入 {world.method_label}）",
           [f"亚大陆：主大陆在宽度 < {2 * cfg['A_hard_constraints']['subcontinents']['neck_radius_km']:g} km 的颈部切开，"
            f"面积 ≥ {min_lobe / 1e6:g} 百万 km² 的才算；海峡：宽度 < {cfg['A_hard_constraints']['main_inland_sea']['strait_max_width_km']:g} km 的水道。"])
     _save(fig, path)
@@ -238,7 +238,7 @@ def coast_morphology(world, metrics, fields, path, r_km: int = 100):
            f"大陆架/海洋  {B1['shelf_fraction_of_ocean']:.3f}"]
     fig.text(0.755, 0.12, "\n".join(txt), fontsize=8.5, va="bottom", family=MONO_FAMILY)
     ax.set_title(f"{world.display_name} · 半岛与海湾（半径 {r_km} km 的球面形态学）", fontsize=13)
-    stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_class}）",
+    stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_label}）",
           ["半岛指数 = 削掉的陆地面积 ÷ 陆地面积；海湾指数 = 填充的海域面积 ÷ 陆地面积。定义见 docs/metrics_definitions.md。"])
     _save(fig, path)
 
@@ -262,7 +262,7 @@ def distance_to_sea(world, metrics, fields, path):
     cb.set_label("到最近海洋格点的大圆距离（km）")
     ax.set_title(f"{world.display_name} · 距海距离（B2）  中位数 {B2['median_km']:.0f} km · 90% 分位 {B2['p90_km']:.0f} km · "
                  f"离海 > 1000 km 的陆地 {B2['land_fraction_beyond_1000km']:.1%}", fontsize=12)
-    stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_class}）", ["距离为格点中心之间的大圆距离；面积加权统计。"])
+    stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_label}）", ["距离为格点中心之间的大圆距离；面积加权统计。"])
     _save(fig, path)
 
 
@@ -280,7 +280,7 @@ def slope(world, fields, metrics, path):
     q = metrics["C"]["slope"]["quantiles_land_deg"]
     ax.set_title(f"{world.display_name} · 坡度（格网尺度 {g.pixel_km_equator:.0f} km）  陆地坡度中位数 {q['0.5']:.2f}° · "
                  f"90% 分位 {q['0.9']:.2f}°", fontsize=12)
-    stamp(fig, world, f"由高程派生（输入 {world.method_class}）",
+    stamp(fig, world, f"由高程派生（输入 {world.method_label}）",
           ["坡度随格网分辨率变化很大，只能与同分辨率的地球比较（见分布对比图）。"])
     _save(fig, path)
 
@@ -319,7 +319,7 @@ def mountain_systems(world, metrics, fields, path, n_label: int = 12):
     txt += [f"{i + 1:>3}  {s['length_km']:>8.0f}  {s['mean_width_km']:>8.0f}" for i, s in enumerate(systems[:n_label])]
     fig.text(0.755, 0.12, "\n".join(txt), fontsize=8.5, va="bottom", family=MONO_FAMILY)
     ax.set_title(f"{world.display_name} · 山系（按面积编号；底图为陆地高程灰度）", fontsize=13)
-    stamp(fig, world, f"由高程派生（输入 {world.method_class}）",
+    stamp(fig, world, f"由高程派生（输入 {world.method_label}）",
           ["山地 = 高程 ≥ 1000 m 且 ±100 km 内起伏 ≥ 1000 m；间隔 < 100 km 的连成山系；长度为骨架最长路径。"
            + ("地球已剔除南极与格陵兰冰盖。" if world.is_earth else "")])
     _save(fig, path)

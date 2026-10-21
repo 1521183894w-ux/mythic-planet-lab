@@ -120,6 +120,25 @@ def test_missing_rules_reported():
     assert picks["r8_random_coast"].missing is None
 
 
+def test_mirrored_world_keeps_metrics():
+    """东西镜像 + 经度平移是保距变换：A 层与距海距离等指标不变（盲评用，见 mythic.figures.world.mirrored）。"""
+    from mythic.figures.world import World, blinded, mirrored
+
+    g = LatLonGrid(512, 256)
+    land = (_ang(g, 30, -40) < 30) | (_ang(g, -20, 60) < 18) | (np.broadcast_to(g.lat[:, None], g.shape) < -72)
+    w = World(world_id="t", display_name="t", elevation=np.where(land, 500.0, -4000.0), land=land,
+              method_class="visual_only", source="test")
+    w2 = blinded(mirrored(w, 100.0), "世界 X", "calib_x")
+    assert w2.method_label != "visual_only" and w2.method_class == "visual_only" and w2.display_name == "世界 X"
+    cfg = load_config()
+    m1 = compute_all(w.elevation, w.land, cfg=cfg)
+    m2 = compute_all(w2.elevation, w2.land, cfg=cfg)
+    assert m1["A"]["ocean_fraction"]["value"] == pytest.approx(m2["A"]["ocean_fraction"]["value"], rel=1e-12)
+    assert m1["A"]["main_continent"]["share_of_land"] == pytest.approx(m2["A"]["main_continent"]["share_of_land"])
+    assert m1["B2"]["median_km"] == pytest.approx(m2["B2"]["median_km"], rel=1e-9)
+    assert m1["B1"]["peninsula_index"]["100"] == pytest.approx(m2["B1"]["peninsula_index"]["100"], rel=1e-9)
+
+
 def test_load_world_nc(tmp_path):
     g = LatLonGrid(64, 32)
     elev = np.where(_ang(g, 0, 0) < 30, 800.0, -3000.0)

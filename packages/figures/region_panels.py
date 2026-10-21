@@ -60,6 +60,6 @@ def region_pair(pick: RegionPick, world, earth_world, ref: dict, path, index: in
                  fontsize=12)
     extra = [f"选取规则：{pick.rule}。", f"选取结果：{pick.missing or pick.reason}",
              f"地球对照：{ref['note']}"]
-    stamp(fig, world, f"{world.method_class}（世界高程）；地球为 interpolated（ETOPO 2022 重采样）", extra)
+    stamp(fig, world, f"{world.method_label}（世界高程）；地球为 interpolated（ETOPO 2022 重采样）", extra)
     fig.savefig(path, dpi=110)
     plt.close(fig)

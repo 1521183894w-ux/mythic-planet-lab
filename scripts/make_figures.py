@@ -26,7 +26,7 @@ from mythic.figures.gallery import write_gallery
 from mythic.figures.region_panels import earth_reference, region_pair
 from mythic.figures.select_regions import CoastAnalysis, select_regions
 from mythic.figures.style import setup_fonts
-from mythic.figures.world import EARTH_REF, ROOT, load, load_earth, to_jsonable
+from mythic.figures.world import EARTH_REF, ROOT, blinded, load, load_earth, mirrored, to_jsonable
 from mythic.metrics.compute import compute_all, load_config
 
 EARTH_RESOLUTIONS = ["512x256", "1024x512", "2048x1024"]
@@ -41,17 +41,28 @@ def main() -> int:
     ap.add_argument("--world", default="earth", help='"earth"、"earth:<分辨率>" 或世界 netCDF 文件路径')
     ap.add_argument("--stage", type=int, default=0)
     ap.add_argument("--out", default=None, help="输出目录（默认 figures/stage<N>/<world_id>）")
+    ap.add_argument("--blind", default=None, metavar="名称",
+                    help="盲评版（阶段 0.7 尺子校准）：图中世界只叫这个名称，隐去来源、种子与 method_class；须同时给 --out")
+    ap.add_argument("--mirror-shift-deg", type=float, default=None,
+                    help="（仅盲评用）先东西镜像再向东平移若干度：保距变换，不改变任何指标，只降低一眼认出地图的可能")
     args = ap.parse_args()
     t_all = time.perf_counter()
     setup_fonts()
     cfg = load_config()
 
     world = load(args.world)
+    if args.mirror_shift_deg is not None:
+        world = mirrored(world, args.mirror_shift_deg)
+    if args.blind:
+        if not args.out:
+            raise SystemExit("--blind 必须同时给 --out")
+        log(f"盲评版：{world.world_id}（method_class {world.method_class}）-> 显示为 {args.blind}")
+        world = blinded(world, args.blind, Path(args.out).name)
     out = Path(args.out) if args.out else ROOT / "figures" / f"stage{args.stage}" / world.world_id
     (out / "regions").mkdir(parents=True, exist_ok=True)
     for old in list(out.glob("*.png")) + list((out / "regions").glob("*.png")):
         old.unlink()  # 只删本管线生成的图，避免旧图混进新图组
-    log(f"世界 {world.world_id}（{world.resolution}，method_class {world.method_class}，代码 {world.code_version}）-> {out}")
+    log(f"世界 {world.world_id}（{world.resolution}，method_class {world.method_label}，代码 {world.code_version}）-> {out}")
 
     t0 = time.perf_counter()
     metrics, fields = compute_all(world.elevation, world.land, cfg=cfg, return_fields=True, **world.compute_kwargs())
@@ -79,17 +90,17 @@ def main() -> int:
 
     def add(group, file, title, why="", method=""):
         figures.append({"group": group, "file": file, "title": title, "why": why,
-                        "method_class": method or f"由高程/海陆掩膜派生（输入 {world.method_class}）"})
+                        "method_class": method or f"由高程/海陆掩膜派生（输入 {world.method_label}）"})
 
     t0 = time.perf_counter()
     maps.global_elevation(world, out / "01_elevation_global.png")
     add("global", "01_elevation_global.png", "高程（等距圆柱投影）", "分层设色 + 山体阴影；海平面处色带断开。",
-        world.method_class)
+        world.method_label)
     maps.polar_elevation(world, out / "02_elevation_north_polar.png", north=True)
     add("global", "02_elevation_north_polar.png", "北极区高程（等面积方位投影）", "避免等距圆柱投影的高纬拉伸掩盖问题。",
-        world.method_class)
+        world.method_label)
     maps.polar_elevation(world, out / "03_elevation_south_polar.png", north=False)
-    add("global", "03_elevation_south_polar.png", "南极区高程（等面积方位投影）", "", world.method_class)
+    add("global", "03_elevation_south_polar.png", "南极区高程（等面积方位投影）", "", world.method_label)
     maps.landmass_units(world, metrics, fields, cfg, out / "04_landmass_units.png")
     add("maps", "04_landmass_units.png", "陆块单元、亚大陆与主内海（A 层）", "A 层硬约束的空间结构与达标情况。")
     maps.coast_morphology(world, metrics, fields, out / "05_coast_morphology.png")
@@ -118,12 +129,12 @@ def main() -> int:
         f = f"regions/{p.key}.png"
         region_pair(p, world, earth, ref, out / f, n)
         add("regions", f, f"区域 {n} · {p.title}", (p.missing and f"未找到：{p.missing}") or p.reason,
-            f"{world.method_class}（世界高程）")
+            f"{world.method_label}（世界高程）")
         region_records.append({**p.as_dict(), "earth_comparison": {**ref, "center": list(ref["center"])}})
     log(f"区域放大图 {time.perf_counter() - t0:.1f} s")
 
     meta = {"world_id": world.world_id, "display_name": world.display_name, "resolution": world.resolution,
-            "seed": world.seed, "code_version": world.code_version, "method_class_elevation": world.method_class,
+            "seed": world.seed, "code_version": world.code_version, "method_class_elevation": world.method_label,
             "source": world.source, "stage": args.stage, "generated": time.strftime("%Y-%m-%d %H:%M:%S"),
             "config_version": cfg.get("version")}
     (out / "metrics.json").write_text(json.dumps(to_jsonable({**meta, "metrics": metrics}), ensure_ascii=False, indent=1),

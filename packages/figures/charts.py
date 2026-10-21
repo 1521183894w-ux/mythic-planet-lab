@@ -61,7 +61,7 @@ def hypsometry(world, metrics, earth_metrics, path):
         ax.legend(fontsize=9)
         ax.set_ylim(-11000, 9000)
     fig.suptitle(f"{world.display_name} · 高程分布与地球对比（C 层）", fontsize=13)
-    stamp(fig, world, f"由高程统计（输入 {world.method_class}）", ["面积加权；地球数据为 ETOPO 2022 重采样到同一分辨率。"])
+    stamp(fig, world, f"由高程统计（输入 {world.method_label}）", ["面积加权；地球数据为 ETOPO 2022 重采样到同一分辨率。"])
     _save(fig, path)
 
 
@@ -95,7 +95,7 @@ def slope_distance_mountains(world, metrics, fields, earth_metrics, earth_fields
         ax.grid(alpha=0.3)
         ax.legend(fontsize=9)
     fig.suptitle(f"{world.display_name} · 坡度、距海距离与山系长度：与同分辨率地球对比", fontsize=13)
-    stamp(fig, world, f"由高程派生（输入 {world.method_class}）", ["面积加权累积分布；地球山系统计剔除了南极与格陵兰冰盖。"])
+    stamp(fig, world, f"由高程派生（输入 {world.method_label}）", ["面积加权累积分布；地球山系统计剔除了南极与格陵兰冰盖。"])
     _save(fig, path)
 
 
@@ -167,7 +167,7 @@ def coast_vs_earth(world, metrics, earth_metrics, earth_world, cfg, path):
              f"红色菱形 = {regions[0][0]}" + (f"，橙色菱形 = 其余大陆级陆块（{'、'.join(n for n, _ in regions[1:])}）" if len(regions) > 1 else "")
              + "。B1 的比较方式（落在范围内 / 与上半区间比）待用户确认（PROGRESS U11）。", fontsize=8.5)
     fig.suptitle(f"{world.display_name} · 海岸复杂度与距海距离：与同分辨率地球对比（B1、B2）", fontsize=13)
-    stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_class}）")
+    stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_label}）")
     _save(fig, path)
 
 
