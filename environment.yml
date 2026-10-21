@@ -1,0 +1,59 @@
+# Mythic Planet Laboratory · Python 环境规格（人工维护）
+#
+# - 这里只约束 Python 主版本和包名；精确版本锁定在 environment.win-64.lock.txt。
+# - 新机器重建：powershell -ExecutionPolicy Bypass -File scripts\setup_env.ps1
+#   （默认按锁文件安装，不重新求解，两台电脑得到完全相同的包。）
+# - 增删包后：改本文件，再运行 setup_env.ps1 -FromSpec -Force，会重新求解并更新锁文件。
+# - 选型理由（为什么用 micromamba + conda-forge 而不是 pip/uv）见 docs/environment.md。
+name: mythic-planet-lab
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  # Python 3.12：所有必测包在 conda-forge win-64 上的共同区间是 3.12–3.13，取交集最宽、最成熟的版本
+  - python=3.12
+
+  # 数值计算与数据存储
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - zarr
+  - netcdf4
+
+  # 地理空间（共用同一套 GDAL/PROJ）
+  - gdal
+  - rasterio
+  - pyproj
+  - shapely
+  - geopandas
+  - cartopy
+  - matplotlib-base    # 只要后台出图，不装 Qt6 交互界面
+
+  # 形态学运算与指标计算
+  - scikit-image
+
+  # 板块构造：运动学重建与记录
+  - pygplates
+  - gplately
+
+  # 球面三角网格
+  - stripy
+
+  # 地貌演化、侵蚀与水文
+  - landlab
+  - fastscape
+  - fastscapelib-f2py   # fastscape 的 Fortran 计算核心（PyPI 上没有）
+  - richdem             # 洼地填充、流向（PyPI 上没有 Windows 版）
+  - pysheds
+
+  # 通用工具
+  - pyyaml
+  - jinja2              # 标准图组的 index.html 画廊
+  - pillow
+  - pooch
+  - requests
+  - tqdm
+
+  # 测试
+  - pytest
