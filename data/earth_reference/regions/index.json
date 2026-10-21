@@ -1,0 +1,940 @@
+{
+ "description": "地球区域参照图集（docs/review_protocol.md §2.2；docs/archetype_library.md §9）",
+ "generated": "2026-10-21 17:11:20",
+ "config": "config/earth_regions.yaml",
+ "regions": [
+  {
+   "id": "mediterranean",
+   "name": "地中海全貌",
+   "file": "mediterranean.png",
+   "center": [
+    38.0,
+    17.0
+   ],
+   "size_km": 4000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "主内海全貌"
+   ],
+   "archetypes": [
+    "内陆巨湖（对照）",
+    "海峡急流与漩涡（墨西拿）"
+   ],
+   "land_fraction_in_window_grid": 0.746
+  },
+  {
+   "id": "aegean",
+   "name": "爱琴海与希腊",
+   "file": "aegean.png",
+   "center": [
+    38.5,
+    24.5
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "主内海中海岸最复杂的一段",
+    "最大的群岛区"
+   ],
+   "archetypes": [
+    "弧后伸展多岛海、断块半岛"
+   ],
+   "land_fraction_in_window_grid": 0.507
+  },
+  {
+   "id": "norway",
+   "name": "挪威海岸",
+   "file": "norway.png",
+   "center": [
+    65.0,
+    13.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "主大陆北端高纬海岸"
+   ],
+   "archetypes": [
+    "峡湾海岸"
+   ],
+   "land_fraction_in_window_grid": 0.393
+  },
+  {
+   "id": "se_asia",
+   "name": "东南亚群岛",
+   "file": "se_asia.png",
+   "center": [
+    2.0,
+    118.0
+   ],
+   "size_km": 4000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "最大的群岛区"
+   ],
+   "archetypes": [
+    "火山岛弧与边缘海（印尼）",
+    "微大陆与大岛"
+   ],
+   "land_fraction_in_window_grid": 0.214
+  },
+  {
+   "id": "east_african_rift",
+   "name": "东非裂谷",
+   "file": "east_african_rift.png",
+   "center": [
+    -3.0,
+    34.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "一处亚大陆之间的陆桥或地峡（对照内陆地形）"
+   ],
+   "archetypes": [
+    "大陆裂谷与裂谷湖",
+    "大陆巨型孤峰火山（乞力马扎罗）"
+   ],
+   "land_fraction_in_window_grid": 0.893
+  },
+  {
+   "id": "caribbean",
+   "name": "加勒比",
+   "file": "caribbean.png",
+   "center": [
+    17.0,
+    -72.0
+   ],
+   "size_km": 3000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "最大的群岛区",
+    "一处亚大陆之间的陆桥或地峡"
+   ],
+   "archetypes": [
+    "火山岛弧与边缘海",
+    "蓝洞（区域）"
+   ],
+   "land_fraction_in_window_grid": 0.244
+  },
+  {
+   "id": "baltic",
+   "name": "波罗的海",
+   "file": "baltic.png",
+   "center": [
+    60.0,
+    21.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "主内海全貌（小型对照）"
+   ],
+   "archetypes": [
+    "U 形谷与冰碛湖群（芬兰千湖）"
+   ],
+   "land_fraction_in_window_grid": 0.726
+  },
+  {
+   "id": "antarctic_peninsula",
+   "name": "南极半岛",
+   "file": "antarctic_peninsula.png",
+   "center": [
+    -68.0,
+    -63.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "极地大陆的一段海岸"
+   ],
+   "archetypes": [
+    "冰盖与冰架"
+   ],
+   "land_fraction_in_window_grid": 0.134
+  },
+  {
+   "id": "panama_isthmus",
+   "name": "中美地峡",
+   "file": "panama_isthmus.png",
+   "center": [
+    10.0,
+    -80.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "一处亚大陆之间的陆桥或地峡"
+   ],
+   "archetypes": [],
+   "land_fraction_in_window_grid": 0.312
+  },
+  {
+   "id": "west_africa_coast",
+   "name": "西非海岸（几内亚湾）",
+   "file": "west_africa_coast.png",
+   "center": [
+    5.0,
+    0.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [
+    "海岸复杂度最低的一段（地球上的平直海岸对照）"
+   ],
+   "archetypes": [],
+   "land_fraction_in_window_grid": 0.483
+  },
+  {
+   "id": "himalaya_tibet",
+   "name": "喜马拉雅与青藏高原",
+   "file": "himalaya_tibet.png",
+   "center": [
+    31.0,
+    86.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "超长碰撞造山带",
+    "大陆高原",
+    "深切大峡谷（雅鲁藏布）"
+   ],
+   "land_fraction_in_window_grid": 0.998
+  },
+  {
+   "id": "alps",
+   "name": "阿尔卑斯",
+   "file": "alps.png",
+   "center": [
+    46.0,
+    10.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "超长碰撞造山带",
+    "U 形谷与冰碛湖群"
+   ],
+   "land_fraction_in_window_grid": 0.651
+  },
+  {
+   "id": "central_andes",
+   "name": "安第斯中段与阿尔蒂普拉诺",
+   "file": "central_andes.png",
+   "center": [
+    -19.0,
+    -68.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "大陆高原",
+    "海沟陡岸",
+    "盐湖盆地、盐壳（乌尤尼）",
+    "镜面盐沼"
+   ],
+   "land_fraction_in_window_grid": 0.748
+  },
+  {
+   "id": "red_sea",
+   "name": "红海与亚丁湾",
+   "file": "red_sea.png",
+   "center": [
+    20.0,
+    40.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "裂谷海、狭长海湾",
+    "走滑断裂盆地与死海式洼地（死海）"
+   ],
+   "land_fraction_in_window_grid": 0.837
+  },
+  {
+   "id": "gulf_of_california",
+   "name": "加利福尼亚湾与圣安德烈斯断层",
+   "file": "gulf_of_california.png",
+   "center": [
+    31.0,
+    -115.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "裂谷海、狭长海湾",
+    "走滑断裂盆地",
+    "海底峡谷与陡峭陆坡（蒙特雷）"
+   ],
+   "land_fraction_in_window_grid": 0.504
+  },
+  {
+   "id": "japan",
+   "name": "日本岛弧与日本海",
+   "file": "japan.png",
+   "center": [
+    37.0,
+    137.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "火山岛弧与边缘海",
+    "大陆巨型孤峰火山（富士山）"
+   ],
+   "land_fraction_in_window_grid": 0.233
+  },
+  {
+   "id": "aleutians",
+   "name": "阿留申群岛（跨日界线）",
+   "file": "aleutians.png",
+   "center": [
+    53.0,
+    -178.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "火山岛弧与边缘海"
+   ],
+   "land_fraction_in_window_grid": 0.031
+  },
+  {
+   "id": "hawaii",
+   "name": "夏威夷群岛",
+   "file": "hawaii.png",
+   "center": [
+    21.0,
+    -157.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "热点岛链与海山",
+    "熔岩原",
+    "海底平顶山（太平洋海山群）"
+   ],
+   "land_fraction_in_window_grid": 0.004
+  },
+  {
+   "id": "deccan",
+   "name": "德干高原与西高止山",
+   "file": "deccan.png",
+   "center": [
+    18.0,
+    76.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "溢流玄武岩台地",
+    "大断崖"
+   ],
+   "land_fraction_in_window_grid": 0.559
+  },
+  {
+   "id": "columbia_plateau",
+   "name": "哥伦比亚高原与黄石",
+   "file": "columbia_plateau.png",
+   "center": [
+    45.5,
+    -116.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "溢流玄武岩台地",
+    "冰川洪水疤地",
+    "破火山口湖、超级火山（黄石）",
+    "地热间歇泉区"
+   ],
+   "land_fraction_in_window_grid": 0.844
+  },
+  {
+   "id": "madagascar",
+   "name": "马达加斯加",
+   "file": "madagascar.png",
+   "center": [
+    -19.0,
+    46.5
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "微大陆与大岛"
+   ],
+   "land_fraction_in_window_grid": 0.221
+  },
+  {
+   "id": "new_zealand",
+   "name": "新西兰",
+   "file": "new_zealand.png",
+   "center": [
+    -41.0,
+    173.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "微大陆与大岛",
+    "峡湾海岸",
+    "地热间歇泉区"
+   ],
+   "land_fraction_in_window_grid": 0.067
+  },
+  {
+   "id": "iceland",
+   "name": "冰岛",
+   "file": "iceland.png",
+   "center": [
+    65.0,
+    -18.5
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "洋中脊出露岛",
+    "熔岩原",
+    "地热间歇泉区"
+   ],
+   "land_fraction_in_window_grid": 0.181
+  },
+  {
+   "id": "zagros",
+   "name": "扎格罗斯山与波斯湾",
+   "file": "zagros.png",
+   "center": [
+    29.0,
+    53.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "盐丘与盐冰川",
+    "超长碰撞造山带"
+   ],
+   "land_fraction_in_window_grid": 0.854
+  },
+  {
+   "id": "south_china_karst",
+   "name": "华南喀斯特与下龙湾",
+   "file": "south_china_karst.png",
+   "center": [
+    24.0,
+    109.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "喀斯特峰林、天坑",
+    "溺谷喀斯特海岸（下龙湾）",
+    "砂岩峰林（张家界）",
+    "丹霞"
+   ],
+   "land_fraction_in_window_grid": 0.76
+  },
+  {
+   "id": "se_china_coast",
+   "name": "中国东南沿海与钱塘江",
+   "file": "se_china_coast.png",
+   "center": [
+    27.0,
+    120.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "溺谷海岸",
+    "共振海湾与涌潮河口（钱塘江）",
+    "花岗岩峰丛与穹丘（黄山）"
+   ],
+   "land_fraction_in_window_grid": 0.404
+  },
+  {
+   "id": "guiana_tepuis",
+   "name": "圭亚那高原（罗赖马）",
+   "file": "guiana_tepuis.png",
+   "center": [
+    5.5,
+    -62.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "平顶山（tepui）",
+    "巨型瀑布（安赫尔）"
+   ],
+   "land_fraction_in_window_grid": 0.695
+  },
+  {
+   "id": "colorado_plateau",
+   "name": "科罗拉多高原",
+   "file": "colorado_plateau.png",
+   "center": [
+    37.0,
+    -111.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "深切大峡谷",
+    "恶地",
+    "天然拱门与石柱（区域）"
+   ],
+   "land_fraction_in_window_grid": 0.888
+  },
+  {
+   "id": "drakensberg",
+   "name": "德拉肯斯堡与南非高原",
+   "file": "drakensberg.png",
+   "center": [
+    -28.0,
+    28.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "大断崖",
+    "复杂撞击坑（弗里德堡，多环构造）"
+   ],
+   "land_fraction_in_window_grid": 0.618
+  },
+  {
+   "id": "bengal_delta",
+   "name": "孟加拉三角洲与科西河冲积扇",
+   "file": "bengal_delta.png",
+   "center": [
+    24.0,
+    89.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "巨型三角洲与冲积平原",
+    "季风三角洲",
+    "红树林海岸（孙德尔本斯）",
+    "巨型冲积扇（科西河）"
+   ],
+   "land_fraction_in_window_grid": 0.785
+  },
+  {
+   "id": "mississippi",
+   "name": "密西西比三角洲与墨西哥湾北岸",
+   "file": "mississippi.png",
+   "center": [
+    30.0,
+    -90.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "巨型三角洲与冲积平原",
+    "曲流与牛轭湖",
+    "障壁岛与潟湖"
+   ],
+   "land_fraction_in_window_grid": 0.596
+  },
+  {
+   "id": "sahara",
+   "name": "撒哈拉中部",
+   "file": "sahara.png",
+   "center": [
+    23.0,
+    10.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "沙丘海与风蚀地貌",
+    "绿洲"
+   ],
+   "land_fraction_in_window_grid": 0.989
+  },
+  {
+   "id": "arabia_rub_al_khali",
+   "name": "鲁卜哈利沙漠",
+   "file": "arabia_rub_al_khali.png",
+   "center": [
+    20.0,
+    50.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "沙丘海与风蚀地貌"
+   ],
+   "land_fraction_in_window_grid": 0.664
+  },
+  {
+   "id": "tarim_lop_nur",
+   "name": "塔里木盆地与罗布泊",
+   "file": "tarim_lop_nur.png",
+   "center": [
+    40.0,
+    87.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "雅丹",
+    "盐湖盆地"
+   ],
+   "land_fraction_in_window_grid": 1.0
+  },
+  {
+   "id": "loess_plateau",
+   "name": "黄土高原",
+   "file": "loess_plateau.png",
+   "center": [
+    37.0,
+    108.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "黄土高原"
+   ],
+   "land_fraction_in_window_grid": 0.994
+  },
+  {
+   "id": "southern_chile",
+   "name": "智利南部峡湾",
+   "file": "southern_chile.png",
+   "center": [
+    -48.0,
+    -73.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "峡湾海岸",
+    "冰盖与冰架（巴塔哥尼亚冰原）"
+   ],
+   "land_fraction_in_window_grid": 0.27
+  },
+  {
+   "id": "greenland",
+   "name": "格陵兰",
+   "file": "greenland.png",
+   "center": [
+    72.0,
+    -40.0
+   ],
+   "size_km": 3000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "冰盖与冰架"
+   ],
+   "land_fraction_in_window_grid": 0.366
+  },
+  {
+   "id": "great_lakes",
+   "name": "北美五大湖与加拿大地盾",
+   "file": "great_lakes.png",
+   "center": [
+    47.0,
+    -84.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "冰蚀大湖区",
+    "复杂撞击坑（萨德伯里）"
+   ],
+   "land_fraction_in_window_grid": 0.949
+  },
+  {
+   "id": "amazon",
+   "name": "亚马孙",
+   "file": "amazon.png",
+   "center": [
+    -3.0,
+    -60.0
+   ],
+   "size_km": 3000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "热带雨林巨流域",
+    "曲流与牛轭湖"
+   ],
+   "land_fraction_in_window_grid": 0.873
+  },
+  {
+   "id": "okavango_pantanal",
+   "name": "奥卡万戈三角洲",
+   "file": "okavango_pantanal.png",
+   "center": [
+    -19.5,
+    23.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "内陆三角洲"
+   ],
+   "land_fraction_in_window_grid": 0.965
+  },
+  {
+   "id": "pantanal",
+   "name": "潘塔纳尔",
+   "file": "pantanal.png",
+   "center": [
+    -17.5,
+    -57.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "巨型湿地"
+   ],
+   "land_fraction_in_window_grid": 0.995
+  },
+  {
+   "id": "great_barrier_reef",
+   "name": "大堡礁",
+   "file": "great_barrier_reef.png",
+   "center": [
+    -18.0,
+    147.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "珊瑚环礁群与堡礁"
+   ],
+   "land_fraction_in_window_grid": 0.408
+  },
+  {
+   "id": "maldives",
+   "name": "马尔代夫",
+   "file": "maldives.png",
+   "center": [
+    3.0,
+    73.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "珊瑚环礁群与堡礁"
+   ],
+   "land_fraction_in_window_grid": 0.051
+  },
+  {
+   "id": "bay_of_fundy",
+   "name": "芬迪湾",
+   "file": "bay_of_fundy.png",
+   "center": [
+    45.0,
+    -66.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "共振海湾与涌潮河口"
+   ],
+   "land_fraction_in_window_grid": 0.45
+  },
+  {
+   "id": "caspian",
+   "name": "里海",
+   "file": "caspian.png",
+   "center": [
+    42.0,
+    51.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "内陆巨湖"
+   ],
+   "land_fraction_in_window_grid": 0.884
+  },
+  {
+   "id": "wadden_north_sea",
+   "name": "北海与瓦登海",
+   "file": "wadden_north_sea.png",
+   "center": [
+    54.0,
+    5.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "大型潮滩",
+    "海蚀崖与海蚀柱（多佛白崖）"
+   ],
+   "land_fraction_in_window_grid": 0.54
+  },
+  {
+   "id": "manicouagan",
+   "name": "曼尼古根撞击构造",
+   "file": "manicouagan.png",
+   "center": [
+    51.4,
+    -68.7
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "复杂撞击坑（中央峰）",
+    "环形撞击湖"
+   ],
+   "land_fraction_in_window_grid": 0.633
+  },
+  {
+   "id": "chicxulub",
+   "name": "尤卡坦半岛（希克苏鲁伯）",
+   "file": "chicxulub.png",
+   "center": [
+    21.0,
+    -89.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "多环巨型撞击构造",
+    "蓝洞（伯利兹，区域）"
+   ],
+   "land_fraction_in_window_grid": 0.287
+  },
+  {
+   "id": "transantarctic",
+   "name": "南极横贯山脉",
+   "file": "transantarctic.png",
+   "center": [
+    -84.0,
+    175.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "冰原岛峰",
+    "冰盖与冰架"
+   ],
+   "land_fraction_in_window_grid": 0.746
+  },
+  {
+   "id": "toba_sumatra",
+   "name": "苏门答腊与多巴湖",
+   "file": "toba_sumatra.png",
+   "center": [
+    2.5,
+    99.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "破火山口湖、超级火山（多巴）"
+   ],
+   "land_fraction_in_window_grid": 0.195
+  },
+  {
+   "id": "siberia_permafrost",
+   "name": "西伯利亚东北",
+   "file": "siberia_permafrost.png",
+   "center": [
+    66.0,
+    135.0
+   ],
+   "size_km": 2000.0,
+   "grid_pixel_km": 19.55,
+   "fine_pixel_km": 2.0,
+   "review_role": [],
+   "archetypes": [
+    "冻土与冰丘"
+   ],
+   "land_fraction_in_window_grid": 0.834
+  }
+ ]
+}

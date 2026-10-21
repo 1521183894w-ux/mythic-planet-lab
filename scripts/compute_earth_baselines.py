@@ -117,7 +117,7 @@ def main() -> None:
             **result,
         }
         out = REF / f"baselines_{res}.json"
-        out.write_text(json.dumps(to_jsonable(payload), ensure_ascii=False, indent=1), encoding="utf-8")
+        out.write_text(json.dumps(to_jsonable(payload), ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
         print(f"[{res}] {time.perf_counter() - t0:.1f}s -> {out.name} ({out.stat().st_size / 1e3:.0f} KB); timings {result['timings_s']}",
               flush=True)
 

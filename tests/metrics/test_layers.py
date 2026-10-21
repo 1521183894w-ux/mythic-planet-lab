@@ -162,3 +162,8 @@ def test_compute_all_on_synthetic_world():
     assert res["A"]["ocean_fraction"]["value"] == pytest.approx(1 - cap_area_km2(g, 50) / (4 * np.pi * g.radius_km**2), abs=0.005)
     assert res["by_region"]["main_continent"]["fractal_dimension"] == pytest.approx(1.0, abs=0.1)
     assert res["B1"]["peninsula_index"]["100"] < 0.01
+    # 主大陆纬度范围：球冠中心 20°N、半径 50° -> 北端约 70°N、南端约 30°S
+    lat = res["A"]["main_continent_latitude"]
+    assert lat["north_deg"] == pytest.approx(70.0, abs=0.5)
+    assert lat["south_deg"] == pytest.approx(-30.0, abs=0.5)
+    assert res["resolution_warnings"]  # 1024x512 上 25 km 的细线判定应给出警告

@@ -59,3 +59,6 @@ desktop.ini
 # ---- 本地设置（含个人信息或机器特定配置）----
 .claude/settings.local.json
 .env
+
+# 区域参照图集的图片可由 scripts/build_region_atlas.py 重新生成
+data/earth_reference/regions/*.png

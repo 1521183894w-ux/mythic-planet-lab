@@ -1,0 +1,234 @@
+# 地球区域参照图集的区域清单（docs/review_protocol.md §2.2、docs/archetype_library.md §9）
+#
+# 每个区域：以 center 为中心、size_km 见方的局部等面积方位投影（LAEA）裁剪。
+# 出两种分辨率：与世界格网相同（2048x1024，约 19.5 km）用于并排对照；ETOPO 60 角秒（约 1.9 km）展示真实细节。
+# review_role：评审时作为哪类世界区域图的对照（review_protocol §2.2 的 8 类）。
+# archetypes：该区域可作为哪些原型的地球例子（原型库第 1–6 节中 A、B 级；C 级小于格网，不配图）。
+
+default_size_km: 2000
+
+regions:
+  # ---- 评审标准对照（任务书 0.5 点名）----------------------------------------------
+  - id: mediterranean
+    name: 地中海全貌
+    center: [38.0, 17.0]
+    size_km: 4000
+    review_role: [主内海全貌]
+    archetypes: [内陆巨湖（对照）, 海峡急流与漩涡（墨西拿）]
+  - id: aegean
+    name: 爱琴海与希腊
+    center: [38.5, 24.5]
+    review_role: [主内海中海岸最复杂的一段, 最大的群岛区]
+    archetypes: [弧后伸展多岛海、断块半岛]
+  - id: norway
+    name: 挪威海岸
+    center: [65.0, 13.0]
+    review_role: [主大陆北端高纬海岸]
+    archetypes: [峡湾海岸]
+  - id: se_asia
+    name: 东南亚群岛
+    center: [2.0, 118.0]
+    size_km: 4000
+    review_role: [最大的群岛区]
+    archetypes: [火山岛弧与边缘海（印尼）, 微大陆与大岛]
+  - id: east_african_rift
+    name: 东非裂谷
+    center: [-3.0, 34.0]
+    review_role: [一处亚大陆之间的陆桥或地峡（对照内陆地形）]
+    archetypes: [大陆裂谷与裂谷湖, 大陆巨型孤峰火山（乞力马扎罗）]
+  - id: caribbean
+    name: 加勒比
+    center: [17.0, -72.0]
+    size_km: 3000
+    review_role: [最大的群岛区, 一处亚大陆之间的陆桥或地峡]
+    archetypes: [火山岛弧与边缘海, 蓝洞（区域）]
+  - id: baltic
+    name: 波罗的海
+    center: [60.0, 21.0]
+    review_role: [主内海全貌（小型对照）]
+    archetypes: [U 形谷与冰碛湖群（芬兰千湖）]
+  - id: antarctic_peninsula
+    name: 南极半岛
+    center: [-68.0, -63.0]
+    review_role: [极地大陆的一段海岸]
+    archetypes: [冰盖与冰架]
+  - id: panama_isthmus
+    name: 中美地峡
+    center: [10.0, -80.0]
+    review_role: [一处亚大陆之间的陆桥或地峡]
+    archetypes: []
+  - id: west_africa_coast
+    name: 西非海岸（几内亚湾）
+    center: [5.0, 0.0]
+    review_role: [海岸复杂度最低的一段（地球上的平直海岸对照）]
+    archetypes: []
+
+  # ---- 构造类原型 -----------------------------------------------------------------
+  - id: himalaya_tibet
+    name: 喜马拉雅与青藏高原
+    center: [31.0, 86.0]
+    archetypes: [超长碰撞造山带, 大陆高原, 深切大峡谷（雅鲁藏布）]
+  - id: alps
+    name: 阿尔卑斯
+    center: [46.0, 10.0]
+    archetypes: [超长碰撞造山带, U 形谷与冰碛湖群]
+  - id: central_andes
+    name: 安第斯中段与阿尔蒂普拉诺
+    center: [-19.0, -68.0]
+    archetypes: [大陆高原, 海沟陡岸, 盐湖盆地、盐壳（乌尤尼）, 镜面盐沼]
+  - id: red_sea
+    name: 红海与亚丁湾
+    center: [20.0, 40.0]
+    archetypes: [裂谷海、狭长海湾, 走滑断裂盆地与死海式洼地（死海）]
+  - id: gulf_of_california
+    name: 加利福尼亚湾与圣安德烈斯断层
+    center: [31.0, -115.0]
+    archetypes: [裂谷海、狭长海湾, 走滑断裂盆地, 海底峡谷与陡峭陆坡（蒙特雷）]
+  - id: japan
+    name: 日本岛弧与日本海
+    center: [37.0, 137.0]
+    archetypes: [火山岛弧与边缘海, 大陆巨型孤峰火山（富士山）]
+  - id: aleutians
+    name: 阿留申群岛（跨日界线）
+    center: [53.0, -178.0]
+    archetypes: [火山岛弧与边缘海]
+  - id: hawaii
+    name: 夏威夷群岛
+    center: [21.0, -157.0]
+    archetypes: [热点岛链与海山, 熔岩原, 海底平顶山（太平洋海山群）]
+  - id: deccan
+    name: 德干高原与西高止山
+    center: [18.0, 76.0]
+    archetypes: [溢流玄武岩台地, 大断崖]
+  - id: columbia_plateau
+    name: 哥伦比亚高原与黄石
+    center: [45.5, -116.0]
+    archetypes: [溢流玄武岩台地, 冰川洪水疤地, 破火山口湖、超级火山（黄石）, 地热间歇泉区]
+  - id: madagascar
+    name: 马达加斯加
+    center: [-19.0, 46.5]
+    archetypes: [微大陆与大岛]
+  - id: new_zealand
+    name: 新西兰
+    center: [-41.0, 173.0]
+    archetypes: [微大陆与大岛, 峡湾海岸, 地热间歇泉区]
+  - id: iceland
+    name: 冰岛
+    center: [65.0, -18.5]
+    archetypes: [洋中脊出露岛, 熔岩原, 地热间歇泉区]
+  - id: zagros
+    name: 扎格罗斯山与波斯湾
+    center: [29.0, 53.0]
+    archetypes: [盐丘与盐冰川, 超长碰撞造山带]
+
+  # ---- 地貌、岩性、水文、干旱、冰川、海洋类原型 --------------------------------------
+  - id: south_china_karst
+    name: 华南喀斯特与下龙湾
+    center: [24.0, 109.0]
+    archetypes: [喀斯特峰林、天坑, 溺谷喀斯特海岸（下龙湾）, 砂岩峰林（张家界）, 丹霞]
+  - id: se_china_coast
+    name: 中国东南沿海与钱塘江
+    center: [27.0, 120.0]
+    archetypes: [溺谷海岸, 共振海湾与涌潮河口（钱塘江）, 花岗岩峰丛与穹丘（黄山）]
+  - id: guiana_tepuis
+    name: 圭亚那高原（罗赖马）
+    center: [5.5, -62.0]
+    archetypes: [平顶山（tepui）, 巨型瀑布（安赫尔）]
+  - id: colorado_plateau
+    name: 科罗拉多高原
+    center: [37.0, -111.0]
+    archetypes: [深切大峡谷, 恶地, 天然拱门与石柱（区域）]
+  - id: drakensberg
+    name: 德拉肯斯堡与南非高原
+    center: [-28.0, 28.0]
+    archetypes: [大断崖, 复杂撞击坑（弗里德堡，多环构造）]
+  - id: bengal_delta
+    name: 孟加拉三角洲与科西河冲积扇
+    center: [24.0, 89.0]
+    archetypes: [巨型三角洲与冲积平原, 季风三角洲, 红树林海岸（孙德尔本斯）, 巨型冲积扇（科西河）]
+  - id: mississippi
+    name: 密西西比三角洲与墨西哥湾北岸
+    center: [30.0, -90.0]
+    archetypes: [巨型三角洲与冲积平原, 曲流与牛轭湖, 障壁岛与潟湖]
+  - id: sahara
+    name: 撒哈拉中部
+    center: [23.0, 10.0]
+    archetypes: [沙丘海与风蚀地貌, 绿洲]
+  - id: arabia_rub_al_khali
+    name: 鲁卜哈利沙漠
+    center: [20.0, 50.0]
+    archetypes: [沙丘海与风蚀地貌]
+  - id: tarim_lop_nur
+    name: 塔里木盆地与罗布泊
+    center: [40.0, 87.0]
+    archetypes: [雅丹, 盐湖盆地]
+  - id: loess_plateau
+    name: 黄土高原
+    center: [37.0, 108.0]
+    archetypes: [黄土高原]
+  - id: southern_chile
+    name: 智利南部峡湾
+    center: [-48.0, -73.0]
+    archetypes: [峡湾海岸, 冰盖与冰架（巴塔哥尼亚冰原）]
+  - id: greenland
+    name: 格陵兰
+    center: [72.0, -40.0]
+    size_km: 3000
+    archetypes: [冰盖与冰架]
+  - id: great_lakes
+    name: 北美五大湖与加拿大地盾
+    center: [47.0, -84.0]
+    archetypes: [冰蚀大湖区, 复杂撞击坑（萨德伯里）]
+  - id: amazon
+    name: 亚马孙
+    center: [-3.0, -60.0]
+    size_km: 3000
+    archetypes: [热带雨林巨流域, 曲流与牛轭湖]
+  - id: okavango_pantanal
+    name: 奥卡万戈三角洲
+    center: [-19.5, 23.0]
+    archetypes: [内陆三角洲]
+  - id: pantanal
+    name: 潘塔纳尔
+    center: [-17.5, -57.0]
+    archetypes: [巨型湿地]
+  - id: great_barrier_reef
+    name: 大堡礁
+    center: [-18.0, 147.0]
+    archetypes: [珊瑚环礁群与堡礁]
+  - id: maldives
+    name: 马尔代夫
+    center: [3.0, 73.0]
+    archetypes: [珊瑚环礁群与堡礁]
+  - id: bay_of_fundy
+    name: 芬迪湾
+    center: [45.0, -66.0]
+    archetypes: [共振海湾与涌潮河口]
+  - id: caspian
+    name: 里海
+    center: [42.0, 51.0]
+    archetypes: [内陆巨湖]
+  - id: wadden_north_sea
+    name: 北海与瓦登海
+    center: [54.0, 5.0]
+    archetypes: [大型潮滩, 海蚀崖与海蚀柱（多佛白崖）]
+  - id: manicouagan
+    name: 曼尼古根撞击构造
+    center: [51.4, -68.7]
+    archetypes: [复杂撞击坑（中央峰）, 环形撞击湖]
+  - id: chicxulub
+    name: 尤卡坦半岛（希克苏鲁伯）
+    center: [21.0, -89.0]
+    archetypes: [多环巨型撞击构造, 蓝洞（伯利兹，区域）]
+  - id: transantarctic
+    name: 南极横贯山脉
+    center: [-84.0, 175.0]
+    archetypes: [冰原岛峰, 冰盖与冰架]
+  - id: toba_sumatra
+    name: 苏门答腊与多巴湖
+    center: [2.5, 99.0]
+    archetypes: [破火山口湖、超级火山（多巴）]
+  - id: siberia_permafrost
+    name: 西伯利亚东北
+    center: [66.0, 135.0]
+    archetypes: [冻土与冰丘]
