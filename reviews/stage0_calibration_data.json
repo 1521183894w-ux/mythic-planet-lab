@@ -1,7 +1,7 @@
 {
  "description": "阶段 0.7 尺子校准的指标对比（reviews/stage0_calibration.md）",
- "code_version": "355af25-dirty",
- "generated": "2026-10-21 22:12:41",
+ "code_version": "e4d6af5-dirty",
+ "generated": "2026-10-21 22:22:55",
  "resolutions": {
   "2048x1024": {
    "earth_continents_current_reference": {
