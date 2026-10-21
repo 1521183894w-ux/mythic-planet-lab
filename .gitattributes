@@ -1,0 +1,29 @@
+# 换行规则：仓库内和工作区一律用 LF，不受各机器 core.autocrlf 设置影响。
+# 这样两台电脑来回提交不会产生"整文件换行改动"，在 WSL 里运行的脚本也不会因 CRLF 出错。
+* text=auto eol=lf
+
+# 必须固定换行的文件
+*.sh   text eol=lf
+*.ps1  text eol=crlf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+
+# 二进制文件（不做换行转换，不做文本 diff）
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.pdf  binary
+*.tif  binary
+*.tiff binary
+*.nc   binary
+*.npy  binary
+*.npz  binary
+*.h5   binary
+*.hdf5 binary
+*.zip  binary
+*.gz   binary
+*.7z   binary
+*.vhdx binary
+*.exe  binary

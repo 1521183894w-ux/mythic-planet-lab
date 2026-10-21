@@ -1,0 +1,60 @@
+# ---- 环境（每台电脑各自重建，不同步）----
+environment/
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# WSL 虚拟磁盘（绝不进 Git，卸载前必须先 wsl --unregister）
+*.vhdx
+
+# ---- 可重建的数据与缓存 ----
+.cache/
+figures/
+logs/
+data/worlds/**/frames/
+data/worlds/**/cache/
+data/earth_reference/raw/
+
+# 大型科学数据（需要保留的主世界数据另行商定同步方式）
+*.nc
+*.zarr/
+*.tif
+*.tiff
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+# 下载的压缩包、安装包、发行版镜像（放在 .cache/ 或 environment/ 下，这里再兜底一次）
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.AppxBundle
+*.exe
+*.msi
+
+# ---- 系统与编辑器 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.tmp
+~$*
+
+# ---- 本地设置（含个人信息或机器特定配置）----
+.claude/settings.local.json
+.env
