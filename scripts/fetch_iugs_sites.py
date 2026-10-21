@@ -77,7 +77,7 @@ def main() -> int:
             "published": r["date"][:10], "url": r["link"],
         })
     with open(OUT_CSV, "w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(out[0]))
+        w = csv.DictWriter(f, fieldnames=list(out[0]), lineterminator="\n")
         w.writeheader()
         w.writerows(out)
     meta = {"source": ENDPOINT, "homepage": "https://iugs-geoheritage.org", "queried": time.strftime("%Y-%m-%d %H:%M:%S"),
