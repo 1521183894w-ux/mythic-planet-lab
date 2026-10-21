@@ -10,6 +10,9 @@ import matplotlib
 import numpy as np
 from matplotlib.colors import LightSource, LinearSegmentedColormap, ListedColormap, TwoSlopeNorm
 
+# 指标文本框的字体：显式给出列表，matplotlib 会对缺失字形逐个回退（西文等宽 Consolas，中文雅黑）
+MONO_FAMILY = ["Consolas", "Microsoft YaHei", "SimHei", "DejaVu Sans Mono"]
+
 ELEV_MIN_M = -8000.0
 ELEV_MAX_M = 6000.0
 
@@ -38,7 +41,20 @@ def shaded_elevation(elev_m: np.ndarray, pixel_km: float, vert_exag: float = 1.0
 
 def setup_fonts() -> None:
     matplotlib.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei", "DejaVu Sans"]
+    # 等宽字体（图中的指标文本框）：西文用等宽字体，中文字形缺失时由 matplotlib 按列表顺序回退到雅黑
+    matplotlib.rcParams["font.monospace"] = ["Consolas", "DejaVu Sans Mono", "Microsoft YaHei", "SimHei"]
     matplotlib.rcParams["axes.unicode_minus"] = False
+
+
+def stamp(fig, world, method_note: str, extra: list[str] | None = None, fontsize: float = 7.5) -> None:
+    """图底部的固定说明：世界、格网、种子、代码版本、method_class、数据来源、生成时间（review_protocol §2.1）。"""
+    import time
+
+    lines = list(extra or [])
+    lines.append(f"世界：{world.display_name}（{world.world_id}） · 格网 {world.resolution} · 种子 {world.seed} · "
+                 f"代码 {world.code_version} · 生成 {time.strftime('%Y-%m-%d %H:%M')}")
+    lines.append(f"method_class：{method_note} · 数据：{world.source}")
+    fig.text(0.01, 0.005, "\n".join(lines), fontsize=fontsize, va="bottom", ha="left", color="0.2")
 
 
 def add_scalebar(ax, extent_km, length_km: float = 500.0, color: str = "k") -> None:

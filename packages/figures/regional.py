@@ -57,6 +57,37 @@ def graticule_lines(center_lat: float, center_lon: float, lat: np.ndarray, lon: 
     return lines
 
 
+def draw_graticule(ax, center, lat, lon, extent, step=5.0, label_lat: bool = True) -> None:
+    """经纬网：直接投影每条经线/纬线（极点附近经线间隔放大）。纬线在左侧边缘标注。"""
+    x0, x1, y0, y1 = extent
+    for kind, v, x, y in graticule_lines(center[0], center[1], lat, lon, step):
+        ok = (x >= x0) & (x <= x1) & (y >= y0) & (y <= y1)
+        if ok.sum() < 2:
+            continue
+        xs, ys = np.where(ok, x, np.nan), np.where(ok, y, np.nan)
+        ax.plot(xs, ys, color="0.3", lw=0.4, alpha=0.6)
+        if kind == "lat" and label_lat:
+            k = int(np.nanargmin(np.where(ok, x, np.inf)))
+            ax.text(x[k], y[k], f"{abs(v):g}°{'N' if v >= 0 else 'S'}", fontsize=6, color="0.25", va="bottom")
+
+
+def draw_elevation_panel(ax, elev, land, lat, lon, extent, pixel_km, title, center, graticule_step=5.0) -> None:
+    """区域窗口面板：分层设色 + 山体阴影、海岸线（陆地掩膜 0.5 等值线）、经纬网、比例尺。"""
+    from .style import add_scalebar, shaded_elevation
+
+    ax.imshow(shaded_elevation(elev, pixel_km, vert_exag=2.0 if pixel_km > 5 else 1.0), extent=extent,
+              interpolation="nearest")
+    ax.contour(land.astype(float), levels=[0.5], colors="k", linewidths=0.6, extent=extent, origin="upper")
+    draw_graticule(ax, center, lat, lon, extent, graticule_step)
+    ax.set_xlim(extent[0], extent[1])
+    ax.set_ylim(extent[2], extent[3])
+    width = extent[1] - extent[0]
+    add_scalebar(ax, extent, 1000.0 if width >= 3000 else (500.0 if width >= 1500 else 200.0))
+    ax.set_title(title, fontsize=9)
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+
 def sample_global(field: np.ndarray, lat: np.ndarray, lon: np.ndarray, order: int = 1) -> np.ndarray:
     """在全球等经纬度格网（像元配准、第 0 行在北、第 0 列从 180°W 起）上取样，经度环绕。
     order=0 最近邻（如实显示格网像元），order=1 双线性。"""

@@ -24,6 +24,22 @@
 
 指标定义与地球基准值见 `docs/metrics_definitions.md`。
 
+## 标准出图管线（阶段 0.6）
+
+| 脚本 | 用途 |
+|---|---|
+| `make_figures.py` | 对一个世界生成标准图组（docs/review_protocol.md §2）：全球与极地高程、A 层陆块与主内海、半岛海湾、距海距离、坡度、山系、与同分辨率地球的对比图、8 张自动选取的区域放大图（各配同比例尺地球对照），以及 `metrics.json`、`regions.json`、`manifest.json` 和 `index.html` 画廊。地球 2048x1024 约 45 秒 |
+
+```
+powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\make_figures.py                      # 地球
+powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\make_figures.py --world 世界文件.nc    # 虚构世界
+```
+
+- 输出在 `figures/stage<N>/<world_id>/`（不进 Git，可重建）。用浏览器打开其中的 `index.html` 看图。
+- 世界文件格式见 `packages/figures/world.py`：`elevation`（m）+ 可选 `land`，全局属性 `method_class_elevation` 必填。
+- 对比用的地球格网必须与世界同分辨率（512x256 / 1024x512 / 2048x1024），新机器上需先建好地球格网（见上一节）。
+- 8 张区域图的选取规则见 `packages/figures/select_regions.py` 开头的说明。
+
 ## 奇景覆盖度核对（阶段 0.5b）
 
 | 脚本 | 用途 |

@@ -22,59 +22,22 @@ import numpy as np
 import xarray as xr
 import yaml
 
+from mythic.figures.world import EARTH_RANGE_UNITS as RANGE_UNITS
+from mythic.figures.world import EARTH_REGION_GROUPS as GROUPS
+from mythic.figures.world import EARTH_REGION_NAMES as NAMES
+from mythic.figures.world import earth_ice_mask, to_jsonable
+from mythic.figures.world import earth_ranges as ranges
 from mythic.metrics.compute import DEFAULT_CONFIG, compute_all, load_config
 
 ROOT = Path(__file__).resolve().parents[1]
 REF = ROOT / "data" / "earth_reference"
 RESOLUTIONS = ["512x256", "1024x512", "2048x1024"]
-NAMES = {1: "Africa", 2: "Europe", 3: "Asia", 4: "North America", 5: "South America", 6: "Oceania", 7: "Antarctica"}
-GROUPS = {"Afro-Eurasia": [1, 2, 3], "Americas": [4, 5]}
-# 用于"地球合理范围"的区域；南极洲（冰架/冰崖海岸）单独列出但不计入范围
-RANGE_UNITS = ["Afro-Eurasia", "Europe", "Asia", "Africa", "North America", "South America", "Oceania"]
-RANGE_KEYS = ["fractal_dimension", "coastline_development", "peninsula_index", "bay_index",
-              "land_fraction_beyond_1000km", "distance_to_sea_median_km"]
-
-
-def to_jsonable(x):
-    if isinstance(x, dict):
-        return {str(k): to_jsonable(v) for k, v in x.items() if not str(k).startswith("_")}
-    if isinstance(x, (list, tuple)):
-        return [to_jsonable(v) for v in x]
-    if isinstance(x, (np.floating,)):
-        return float(x)
-    if isinstance(x, (np.integer,)):
-        return int(x)
-    if isinstance(x, (np.bool_,)):
-        return bool(x)
-    if isinstance(x, np.ndarray):
-        return x.tolist()
-    if isinstance(x, float) and not np.isfinite(x):
-        return None
-    return x
-
-
 def git_commit() -> str:
     try:
         return subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True,
                               check=True).stdout.strip()
     except Exception:  # noqa: BLE001
         return "unknown"
-
-
-def ranges(by_region: dict) -> dict:
-    out = {}
-    for key in RANGE_KEYS:
-        vals = {u: by_region[u][key] for u in RANGE_UNITS if u in by_region}
-        if isinstance(next(iter(vals.values())), dict):  # 按半径分的指标
-            radii = next(iter(vals.values())).keys()
-            out[key] = {r: {"min": min(v[r] for v in vals.values()), "max": max(v[r] for v in vals.values()),
-                            "min_unit": min(vals, key=lambda u: vals[u][r]), "max_unit": max(vals, key=lambda u: vals[u][r])}
-                        for r in radii}
-        else:
-            finite = {u: v for u, v in vals.items() if v is not None and np.isfinite(v)}
-            out[key] = {"min": min(finite.values()), "max": max(finite.values()),
-                        "min_unit": min(finite, key=finite.get), "max_unit": max(finite, key=finite.get)}
-    return out
 
 
 def main() -> None:
@@ -88,9 +51,7 @@ def main() -> None:
         elev = ds.elevation.values.astype("float64")
         land = ds.land_fraction.values >= 0.5
         cont = ds.continent_id.values.astype(int)
-        lat2 = np.broadcast_to(ds.lat.values[:, None], cont.shape)
-        lon2 = np.broadcast_to(ds.lon.values[None, :], cont.shape)
-        ice = (cont == 7) | ((cont == 4) & (lat2 > 59) & (lon2 > -75) & (lon2 < -10))
+        ice = earth_ice_mask(cont, ds.lat.values, ds.lon.values)
         result = compute_all(elev, land, cont, NAMES, GROUPS, cfg, mountain_exclude=ice)
         land_etopo = ds.land_fraction_etopo.values >= 0.5
         from mythic.metrics.grid import LatLonGrid
@@ -108,7 +69,8 @@ def main() -> None:
                 "land_mask": "Natural Earth 10m land fraction >= 0.5",
                 "regions": "Natural Earth admin-0 CONTINENT（俄罗斯按 60°E 划分欧亚）",
                 "mountain_exclusion": "南极洲 + 格陵兰（59°N 以北、75°W–10°W）冰盖",
-                "manifests": {k: {f["name"]: f.get("sha256") for f in v.get("files", [])} for k, v in manifests.items()},
+                "manifests": {k: {f["name"]: f.get("sha256") for f in v["files"]}
+                              for k, v in manifests.items() if v.get("files")},
             },
             "sensitivity": {
                 "ocean_fraction_if_land_is_etopo_elevation_gt_0": float(1 - (a * land_etopo).sum() / a.sum()),

@@ -26,8 +26,8 @@ import yaml
 from rasterio.features import rasterize
 from rasterio.transform import from_origin
 
-from mythic.figures.regional import graticule_lines, laea_window, sample_global
-from mythic.figures.style import add_scalebar, elevation_cmap_norm, setup_fonts, shaded_elevation
+from mythic.figures.regional import draw_elevation_panel, laea_window, sample_global
+from mythic.figures.style import elevation_cmap_norm, setup_fonts
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -60,33 +60,6 @@ def load_fine():
     return z, mask
 
 
-def graticule(ax, center, lat, lon, extent, step=5.0):
-    """经纬网：直接投影每条经线/纬线（极点附近经线间隔放大到 15°）。纬线在左侧边缘标注。"""
-    x0, x1, y0, y1 = extent
-    for kind, v, x, y in graticule_lines(center[0], center[1], lat, lon, step):
-        ok = (x >= x0) & (x <= x1) & (y >= y0) & (y <= y1)
-        if ok.sum() < 2:
-            continue
-        xs, ys = np.where(ok, x, np.nan), np.where(ok, y, np.nan)
-        ax.plot(xs, ys, color="0.3", lw=0.4, alpha=0.6)
-        if kind == "lat":
-            k = int(np.nanargmin(np.where(ok, x, np.inf)))
-            ax.text(x[k], y[k], f"{abs(v):g}°{'N' if v >= 0 else 'S'}", fontsize=6, color="0.25", va="bottom")
-
-
-def panel(ax, elev, land, lat, lon, extent, pixel_km, title, center):
-    ax.imshow(shaded_elevation(elev, pixel_km, vert_exag=2.0 if pixel_km > 5 else 1.0), extent=extent,
-              interpolation="nearest")
-    ax.contour(land.astype(float), levels=[0.5], colors="k", linewidths=0.6, extent=extent, origin="upper")
-    graticule(ax, center, lat, lon, extent)
-    ax.set_xlim(extent[0], extent[1])
-    ax.set_ylim(extent[2], extent[3])
-    add_scalebar(ax, extent, 500.0 if extent[1] - extent[0] >= 1500 else 200.0)
-    ax.set_title(title, fontsize=9)
-    ax.set_xticks([])
-    ax.set_yticks([])
-
-
 def main(selected: list[str]) -> None:
     setup_fonts()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -111,10 +84,10 @@ def main(selected: list[str]) -> None:
 
         fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.4))
         fig.subplots_adjust(top=0.9, bottom=0.14, wspace=0.05)
-        panel(axes[0], e_g, l_g, lat_g, lon_g, ext, GRID_PIXEL_KM,
-              f"世界标准格网分辨率（2048×1024，约 {GRID_PIXEL_KM:.1f} km）—— 评审并排对照用", (clat, clon))
-        panel(axes[1], e_f, l_f, lat_f, lon_f, ext_f, FINE_PIXEL_KM,
-              f"ETOPO 2022 60″（约 {FINE_PIXEL_KM:.0f} km 重采样）—— 真实细节", (clat, clon))
+        draw_elevation_panel(axes[0], e_g, l_g, lat_g, lon_g, ext, GRID_PIXEL_KM,
+                             f"世界标准格网分辨率（2048×1024，约 {GRID_PIXEL_KM:.1f} km）—— 评审并排对照用", (clat, clon))
+        draw_elevation_panel(axes[1], e_f, l_f, lat_f, lon_f, ext_f, FINE_PIXEL_KM,
+                             f"ETOPO 2022 60″（约 {FINE_PIXEL_KM:.0f} km 重采样）—— 真实细节", (clat, clon))
         sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
         cb = fig.colorbar(sm, ax=axes, shrink=0.75, pad=0.02)
         cb.set_label("高程 / 水深（m，EGM2008；海平面处色带断开）")
