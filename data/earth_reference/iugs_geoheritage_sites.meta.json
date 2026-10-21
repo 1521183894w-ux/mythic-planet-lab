@@ -1,0 +1,25 @@
+{
+ "source": "https://iugs-geoheritage.org/wp-json/wp/v2/geoheritage_sites",
+ "homepage": "https://iugs-geoheritage.org",
+ "queried": "2026-10-22 01:24:46",
+ "n_sites": 202,
+ "n_reported_by_api": 202,
+ "by_batch": {
+  "第一批（2022）": 100,
+  "第二批（2024）": 100,
+  "2026 年新增": 2
+ },
+ "by_category": {
+  "地学史": 24,
+  "火成岩与变质岩": 17,
+  "构造": 18,
+  "地层与沉积": 31,
+  "古生物": 33,
+  "火山": 27,
+  "地学史 / 火山": 1,
+  "矿物与矿床": 8,
+  "地貌与活动地质过程": 38,
+  "撞击构造与地外岩石": 5
+ },
+ "note": "只保存名称、分类、发布日期与链接（事实信息）；网站文字与图片版权归 IUGS，未保存。"
+}

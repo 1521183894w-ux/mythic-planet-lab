@@ -1,0 +1,23 @@
+# 外部数据清单：IUGS 地质遗产地名单
+# 注意：本清单没有 files 字段，download_earth_data.py 不处理它；数据由 scripts/fetch_iugs_sites.py 查询生成。
+dataset: IUGS 地质遗产地（IUGS Geological Heritage Sites）
+producer: 国际地质科学联合会（IUGS）国际地质遗产委员会（ICG）
+homepage: https://iugs-geoheritage.org
+query_service: https://iugs-geoheritage.org/wp-json/wp/v2/geoheritage_sites（WordPress 公开接口）
+fields_kept: 网站条目编号、名称、分类、发布日期、链接
+license: >-
+  名称、分类等事实信息；网站的描述文字与图片版权归 IUGS，本项目不保存。
+  完整介绍见 IUGS 免费发布的两本图册：
+  https://iugs-geoheritage.org/publications-dl/IUGS-FIRST-100-SITES-WEB-BOOK.pdf 、
+  https://iugs-geoheritage.org/publications-dl/IUGS-SECOND-100-SITES-WEB-BOOK.pdf（未下载）。
+queried: 2026-10-22
+completeness_check: >-
+  接口报告 202 处，实际取到 202 处。按发布日期：2022 年 100 处（第一批）、2024 年 100 处（第二批）、2026 年 2 处
+  （蒙希克碱性杂岩、佩尼谢下侏罗统参考剖面），与官方"两批各 100 处"一致。
+outputs:
+  - local_path: data/earth_reference/iugs_geoheritage_sites.csv
+    rows: 202
+    meta: data/earth_reference/iugs_geoheritage_sites.meta.json（来源、查询时间、统计）
+    used_for: 阶段 0.5c 奇景覆盖度核对的第二份清单（docs/archetype_coverage.md 第 7 节）
+    in_git: 是（约 40 KB）
+    rebuild: powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python scripts\fetch_iugs_sites.py（IUGS 以后增补时，重跑结果会多出新条目）

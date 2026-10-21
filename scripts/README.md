@@ -53,12 +53,13 @@ powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\make_
 
 校准结论见 `reviews/stage0_calibration.md`。
 
-## 奇景覆盖度核对（阶段 0.5b）
+## 奇景覆盖度核对（阶段 0.5b、0.5c）
 
 | 脚本 | 用途 |
 |---|---|
 | `fetch_whc_sites.py` | 从 Wikidata 获取 UNESCO 世界遗产中符合标准 (vii)/(viii) 的遗产地，写 `data/earth_reference/whc_vii_viii.csv`，约 10 秒 |
-| `archetype_coverage.py` | 校验遗产地 → 原型的归类（`data/earth_reference/whc_archetype_map.yaml`），生成 `docs/archetype_coverage.md` 的统计附录；`--check` 只校验 |
+| `fetch_iugs_sites.py` | 0.5c：从 IUGS 地质遗产委员会网站的公开接口获取地质遗产地名单（只取名称、分类、日期、链接），写 `data/earth_reference/iugs_geoheritage_sites.csv`，约 5 秒 |
+| `archetype_coverage.py` | 校验两份清单 → 原型的归类（`whc_archetype_map.yaml`、`iugs_archetype_map.yaml`，矿床类型对照 `docs/mineral_resources.md`），生成 `docs/archetype_coverage.md` 的两个统计附录；`--check` 只校验 |
 
 详细说明见 `docs/environment.md`。
 
