@@ -203,7 +203,24 @@ def compute_all(
         "B2": B2,
         "C": C,
         "by_region": by_region,
+        "resolution_warnings": resolution_warnings(grid, cfg),
         "timings_s": timings,
         "config_version": cfg.get("version"),
     }
     return (result, fields) if return_fields else result
+
+
+def resolution_warnings(grid: LatLonGrid, cfg: dict) -> list[str]:
+    """形态学判定以格点中心距离定义"半径 r 的圆盘"。当格点间距（南北向）大于 r 时，该判定在此分辨率下无法分辨，
+    结果不可靠（阶段 0.5 实测：512x256 格网上一个格点宽的海峡不会被切断，地中海与大西洋连成一片）。"""
+    pix = np.pi * grid.radius_km / grid.ny
+    out = []
+    ca, cb = cfg["A_hard_constraints"], cfg["B1_coast"]
+    checks = [("主大陆细线连接（半径）", ca["main_continent"]["thin_link_width_km"] / 2),
+              ("主内海海峡（半径）", ca["main_inland_sea"]["strait_max_width_km"] / 2)]
+    checks += [(f"半岛指数 r={r} km", r) for r in cb["peninsula_radii_km"]]
+    checks += [(f"海湾指数 r={r} km", r) for r in cb["bay_radii_km"]]
+    for name, r in checks:
+        if pix > r:
+            out.append(f"{name}：判定半径 {r:g} km 小于格点间距 {pix:.0f} km，此分辨率下不可靠")
+    return out
