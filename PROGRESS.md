@@ -8,14 +8,15 @@
 ## 当前状态
 
 - 当前阶段：阶段 0 · 环境、工具验证与地球基准
-- 当前工作单元：0.5 已完成（质量指标代码 + 地球基准 + 区域图集）；下一步 0.5b 奇景覆盖度核对，或 0.6 标准出图管线
-- 当前使用的机器：台式机（HANS600452）
+- 当前工作单元：0.5 已完成（质量指标代码 + 地球基准 + 区域图集）；笔记本交接已完成；下一步 0.5b 奇景覆盖度核对，或 0.6 标准出图管线
+- 当前使用的机器：笔记本（Ezreal）
 - 最近一次提交：见 `git log -1`；已推送到 `origin/main`（https://github.com/1521183894w-ux/mythic-planet-lab）
 
 ## 已完成
 
 （按时间倒序，每条一行：日期 · 工作单元 · 简述 · 产出路径）
 
+- 2026-10-21 · 笔记本交接（0.1 + 0.3 + 0.5 复现）· 笔记本 Ezreal（i7-12700H 14 核 20 线程，16 GB DDR5 双通道，RTX 3060 Laptop 6 GB，Win11 26H2 补丁最新，WSL 未装）只读审计；`setup_env.ps1` 新机器首次安装 11.6 分钟（台式机 5.6 分钟，差在下载），自检 50 项、pytest 40 项全过，占用 3.88 GB 与台式机相同；下载地球原始数据（NOAA 多次断线，续传后 SHA256 全部通过）并依次重算格网、基准、51 区图集；**三个分辨率的基准 JSON 所有指标数值与台式机完全一致**，差异只有生成时间、代码提交号和耗时（重算文件未提交）；发现笔记本的代理变量没写进用户环境，`env_vars.ps1` 加了系统代理回退并实测 · `docs/setup_report_Ezreal.md`、`docs/environment.md` §4/§7、`scripts/env_vars.ps1`
 - 2026-10-21 · 0.5 质量指标代码 + 地球基准 · 下载 ETOPO 2022 60″（478 MB）与 Natural Earth 10m（清单含 SHA256）；构建三级格网（海陆用 Natural Earth，避免干旱洼地误判；俄罗斯按乌拉尔划分欧亚）；实现 A/B1/B2/C 层只需高程的全部指标（球面环绕、面积加权、大圆距离、球面形态学），40 项单元测试全过；地球基准三级 JSON（海洋 71.2%，主内海自动识别为地中海，离海最远点 2510 km 与文献一致）；亚大陆颈部与海峡宽度做了敏感性分析；51 区地球区域参照图集（两联图，全部目视核对） · `packages/metrics/`、`packages/figures/`、`config/metrics.yaml`、`config/earth_regions.yaml`、`data/earth_reference/baselines_*.json`、`docs/metrics_definitions.md`、图集在 `data/earth_reference/regions/`
 - 2026-10-21 · 0.4 科学工具快速验证 · 6 个 spike 全部实际运行并看图核对：stripy 网格 L8（65.5 万点）建网 1.4 s；pyGPlates 旋转/层级/速度与解析值一致；zarr/netCDF 元数据（含中文）无损；地球陆地数据验证经度环绕、面积加权、球面距海距离（欧亚离海最远点 2486 km，文献 ≈2510 km）；Fastscape 内核稳态坡度—面积关系与理论吻合（-0.398 vs -0.4），比 Landlab 快约 40 倍；richdem 与 Fastscape 汇水面积相关 0.99。发现 fastscape 封装层（xarray-simlab）与 pysheds 不兼容 numpy 2.x/zarr 3。goSPL、ExoPlaSim 只调研（均需 WSL）。构造方法调研读了 Cortial 2019 全文，列出两条候选路线 · `docs/tool_evaluation.md`、`docs/tectonics_survey.md`、`spikes/stage0_tools/`、图在 `figures/stage0/tools/`
 - 2026-10-21 · 0.3 Python 环境 · uv 小实验（26 个包中 gdal、richdem 无 Windows wheel，fastscape 缺 Fortran 核心）后选定 micromamba 2.9.0 + conda-forge + Python 3.12；351 个包按 md5 锁定；`setup_env.ps1` 台式机从零重建（清空缓存、重新下载）5.6 分钟，有缓存 0.5 分钟，真实占用 3.88 GB；自检 49 项全过，pytest 2 项通过；修复 micromamba 分片缓存与 gplately 缓存写 C 盘的问题 · `environment.yml`、`environment.win-64.lock.txt`、`scripts/setup_env.ps1` 等、`docs/environment.md`
@@ -25,11 +26,7 @@
 
 ## 进行中
 
-- 笔记本尚未做（2026-10-21 用户准备换到笔记本）：
-  1. 0.1 环境审计 → `docs/setup_report_<笔记本机器名>.md`；
-  2. 0.3 环境重建实测：`setup_env.ps1`，记录耗时与占用，补到 `docs/environment.md` §6；
-  3. 地球数据重建：`scripts/download_earth_data.py`（按清单下载并校验 SHA256，已有文件跳过）→ `build_earth_reference.py` → `compute_earth_baselines.py` → `build_region_atlas.py`；
-  4. 可复现性核对：重算后 `git diff data/earth_reference/baselines_*.json`，除生成时间、代码提交号、耗时外，数值应与台式机完全一致；若不一致，查原因并记录。
+- 两台电脑的环境与地球数据都已就绪，以后换机只需"拉取最新，然后继续"。
 - 下一个工作单元（两台电脑都可以）：0.5b 奇景覆盖度核对，或 0.6 标准出图管线。
 
 ## 问题与待决事项
@@ -49,6 +46,8 @@
 - U9（阶段 1.1）构造方案由用户在看过两条路线的原型对比图后选定。调研的初步倾向是路线 B（pyGPlates 管运动学 + 自写地壳规则），但不是决定。
 - U10（阶段 2/3 前）启用 WSL：goSPL（全球侵蚀候选）和 ExoPlaSim（大气环流候选）都只能在 WSL 里运行。
 - U11（0.7 时提交用户确认）B1 海岸复杂度的比较方式：非洲、南美海岸本身很"圆"（分形维数 1.01–1.08），若目标是"落在各大洲 [最小, 最大] 范围内"，圆润世界可能凭"像非洲"过关。0.7 用圆润世界实测后，提出具体比较方式（与全球值/亚非欧比，或要求落在上半区间），单独请用户确认。
+- U13（笔记本，推送时）笔记本是否已登录过 GitHub 无法只读确认。推送时如弹出登录窗口，需要用户本人选 "Sign in with your browser" 完成授权（`使用说明.md` 第 3 节第 4 步）。
+- U14（可选，以后再说）笔记本 D 盘剩 99 GB，E 盘（另一块 1 TB 固态）剩 252 GB。目前够用；若阶段 1 多种子运行后 D 盘紧张，再讨论是否允许把 `data/worlds/` 放到 E 盘（要改 CLAUDE.md 第 5 节，由用户决定）。
 - U12（知会）以下指标定义是 0.5 新定的初版，依据地球敏感性分析选取：亚大陆颈部半径 250 km、主内海海峡宽度 150 km、山系 v1 阈值（见 `docs/metrics_definitions.md` §3）。之后修改需经用户同意。
 
 ## 已知局限
@@ -68,7 +67,9 @@
 - 指标的分辨率限制：判定半径小于格点间距时结果不可靠（512x256 上主内海判定失败、细线连接与 r=50 km 指数无效；1024x512 上细线连接无效），结果 JSON 中 `resolution_warnings` 会列出。阶段 1 指标建议在 ≥1024x512 上计算。
 - 小岛在格网上消失：远洋空旷度被高估（2048 上 3695 km，真实尼莫点约 2688 km）；大陆架被面积平均低估（格网 6–7%，实际约 7–8%）。
 - 山系统计是 v1：阿尔卑斯–喜马拉雅–青藏被连成一个约 1 万 km 的山系，阿巴拉契亚、乌拉尔因低于 1000 m 不计入。
-- 地球区域图集 PNG 不进 Git（约 20 MB，2 分钟可重建）；笔记本上首次使用需先下载原始数据并运行三个基准脚本。
+- 地球区域图集 PNG 不进 Git（约 20 MB，2 分钟可重建）；新机器上首次使用需先下载原始数据并运行三个基准脚本（笔记本已做）。
+- 两台机器的计时只能比量级：笔记本（接电源、野兽模式）算 512/1024 基准的各步耗时约为台式机的 2 倍，2048 上相近。原因未查（可能是能效核调度或功耗状态），对结果无影响；性能预算以台式机为准。
+- NOAA 数据服务器经代理下载 ETOPO 时，6 段并行几乎每段都断线 1–3 次，靠续传完成（笔记本 6 分钟，约 1.4 MB/s）。
 
 ## 阶段完成记录
 

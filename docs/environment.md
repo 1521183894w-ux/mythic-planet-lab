@@ -100,8 +100,11 @@
 | `PYTHONUTF8=1` | — | 系统代码页 GBK，强制 Python 用 UTF-8 |
 | `PYTHONNOUSERSITE=1` | — | 不加载 `%APPDATA%\Python` 下的用户级包 |
 | `CONDA_PREFIX`、`GDAL_DATA`、`PROJ_DATA`、`GDAL_DRIVER_PATH`、`PATH` | 环境内对应目录 | 模拟 conda 激活 |
+| `HTTPS_PROXY`、`HTTP_PROXY`、`NO_PROXY` | **仅在未设置时**取 Windows 系统代理（WinINET），如 `http://127.0.0.1:7890` | 不设置（micromamba 只认环境变量，不认系统代理） |
 
 `check_env.py` 会逐项核对这些位置是否在工作区内，不在就判为失败。
+
+关于代理：conda-forge 在两台机器上直连都不通。台式机把代理变量写在了用户环境里；笔记本没有写（只开了 FlClash 的系统代理），在用户自己打开的终端里运行 `setup_env.ps1` 会连不上 conda-forge。因此 `env_vars.ps1` 在没有 `HTTPS_PROXY` 时读取系统代理补上（2026-10-21 加入，已在清空变量的子进程里实测）。已有变量时不动。Python 的 `requests`（地球数据下载脚本）在没有环境变量时本来就会读系统代理。
 
 ---
 
@@ -139,4 +142,16 @@
 - 重建过程中扫描了 C 盘用户目录：除 Claude Code 自身的日志外，没有新写入。
 - 网络：走本机代理，conda-forge 下载约 3 MB/s（见环境审计报告）。
 
-笔记本（RTX 3060 那台）尚未实测，换机时运行同一条命令并把结果补到这里。
+## 7. 实测（笔记本 Ezreal，2026-10-21）
+
+新机器第一次安装（没有任何包缓存，等同冷启动），在 Claude Code 会话里运行：
+
+| 场景 | 命令 | 耗时 | 结果 |
+|---|---|---|---|
+| **新机器首次安装（冷启动）** | `setup_env.ps1` | **11.6 分钟**（19:17:49 开始，下载 micromamba 11 秒，按锁文件下载并安装 351 个包约 11 分钟） | 自检 50 项全部通过（比第 6 节多 1 项：0.5 新增的 `mythic.metrics` 导入检查）；`pytest` 40 项全部通过 |
+
+- 比台式机（5.6 分钟）慢一倍，主要是下载：conda-forge 经代理时出现 4 次 "Download error (56) Failure when receiving data from the peer"，micromamba 自动重试后成功。安装日志里还有 micromamba 常规的"文件已存在"提示（例如 `xorg-libx11` 与 pip 的 `__pycache__` 重叠），不影响结果。
+- 磁盘占用与台式机**完全相同**：`.cache\mamba-pkgs` 69,707 个文件 3.73 GB，`environment\` 另加 0.15 GB，合计 **3.88 GB**。
+- 加上地球原始数据（466 MB）和图集后，整个工作区真实占用 4.40 GB（`disk_usage.py`，硬链接只算一次）。
+- C 盘检查：扫描安装开始后 `%LOCALAPPDATA%`、`%APPDATA%`、`.conda`、`.cache`、`.local` 下的新写入，与项目有关的只有 `%USERPROFILE%\.conda\environments.txt`（38 字节，本机原先没有这个文件，是 micromamba 新建的，见第 5 节第 4 条）；其余都是 Edge、WPS、Claude 等应用自己的写入。
+- 代理：本次运行时会话里已有 `HTTPS_PROXY`；用户自己开的终端里可能没有，`env_vars.ps1` 已加系统代理回退（第 4 节）。

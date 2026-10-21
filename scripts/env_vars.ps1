@@ -12,6 +12,29 @@ $MythicCache     = Join-Path $MythicRoot '.cache'
 
 $env:MYTHIC_ROOT = $MythicRoot
 
+# 代理：micromamba（libcurl）只认 HTTP(S)_PROXY 环境变量，不认 Windows 系统代理。
+# 笔记本 Ezreal 上这两个变量没有写进用户/系统环境（2026-10-21 审计），用户自己开的终端里可能没有，
+# 而 conda-forge 在两台机器上都必须走代理。没有变量、系统代理（WinINET）又已开启时，
+# 把系统代理设为本进程的代理变量。只影响当前进程，不改用户或系统设置。
+if (-not $env:HTTPS_PROXY) {
+    try {
+        $inet = Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -ErrorAction Stop
+        if ($inet.ProxyEnable -eq 1 -and $inet.ProxyServer) {
+            # 形如 "127.0.0.1:7890"，或按协议分开写的 "http=host:port;https=host:port;socks=..."
+            $server = [string]$inet.ProxyServer
+            if ($server -match '(?:^|;)https=([^;]+)')    { $server = $Matches[1] }
+            elseif ($server -match '(?:^|;)http=([^;]+)') { $server = $Matches[1] }
+            elseif ($server -match '=')                   { $server = $null }   # 只有 socks 等，不处理
+            if ($server) {
+                if ($server -notmatch '^\w+://') { $server = "http://$server" }
+                $env:HTTPS_PROXY = $server
+                if (-not $env:HTTP_PROXY) { $env:HTTP_PROXY = $server }
+                if (-not $env:NO_PROXY)   { $env:NO_PROXY = 'localhost,127.0.0.1,::1,.local' }
+            }
+        }
+    } catch { }
+}
+
 # micromamba：根目录（配置、元数据）与包缓存
 $env:MAMBA_ROOT_PREFIX = Join-Path $MythicRoot 'environment\mamba'
 $env:CONDA_PKGS_DIRS   = Join-Path $MythicCache 'mamba-pkgs'
