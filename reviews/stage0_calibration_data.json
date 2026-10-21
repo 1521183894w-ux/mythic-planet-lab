@@ -1,7 +1,7 @@
 {
  "description": "阶段 0.7 尺子校准的指标对比（reviews/stage0_calibration.md）",
- "code_version": "4532ff3-dirty",
- "generated": "2026-10-22 00:08:32",
+ "code_version": "b510ae9-dirty",
+ "generated": "2026-10-22 00:28:13",
  "resolutions": {
   "2048x1024": {
    "earth_continents_current_reference": {
@@ -110,6 +110,19 @@
      ],
      "inland_sea_Mkm2": 2.3952481502393153,
      "inland_sea_straits": 1,
+     "inland_sea_checks": {
+      "area_in_range": true,
+      "ratio_to_second_ok": true,
+      "straits_ok": true,
+      "bordering_subcontinents_ok": true,
+      "elongation_ok": true
+     },
+     "inland_sea_aspect_ratio": 3.33015370307206,
+     "inland_sea_bordering_subcontinents": 2,
+     "inland_sea_border_shares": [
+      0.3381302809714534,
+      0.32646364774426717
+     ],
      "north_deg": 77.607421875,
      "south_deg": -34.716796875,
      "polar_continents": 1,
@@ -198,6 +211,19 @@
       ],
       "land_fraction_beyond_500km": 0.42978536682095586,
       "land_fraction_beyond_1000km": 0.1745569937288807
+     },
+     "coast_complexity_spread": {
+      "window_km": 2000,
+      "smooth_radius_km": 100,
+      "n_windows": 3732,
+      "p10": 1.1999694681250581,
+      "p50": 2.2233523196535137,
+      "p90": 4.055432773607402,
+      "p90_over_p10": 3.3796132996150146,
+      "cv": 0.5191173838937748,
+      "min": 1.0092185741199715,
+      "straight_fraction": 0.24383708467309753,
+      "straight_max": 1.5
      },
      "mountains": {
       "n_systems": 48,
@@ -1503,7 +1529,7 @@
      "ocean_fraction": true,
      "main_continent": true,
      "subcontinents": true,
-     "main_inland_sea": true,
+     "main_inland_sea": false,
      "main_continent_latitude": true,
      "polar_continent": true,
      "open_ocean": true
@@ -1520,6 +1546,21 @@
      ],
      "inland_sea_Mkm2": 2.845930279849696,
      "inland_sea_straits": 1,
+     "inland_sea_checks": {
+      "area_in_range": true,
+      "ratio_to_second_ok": true,
+      "straits_ok": true,
+      "bordering_subcontinents_ok": false,
+      "elongation_ok": false
+     },
+     "inland_sea_aspect_ratio": 1.041452510386874,
+     "inland_sea_bordering_subcontinents": 1,
+     "inland_sea_border_shares": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
      "north_deg": 71.982421875,
      "south_deg": -51.943359375,
      "polar_continents": 1,
@@ -1595,6 +1636,19 @@
       ],
       "land_fraction_beyond_500km": 0.6566893735941526,
       "land_fraction_beyond_1000km": 0.39166907156574304
+     },
+     "coast_complexity_spread": {
+      "window_km": 2000,
+      "smooth_radius_km": 100,
+      "n_windows": 1244,
+      "p10": 1.0,
+      "p50": 1.0000802933122674,
+      "p90": 1.0096048675342892,
+      "p90_over_p10": 1.0096048675342892,
+      "cv": 0.06821545106549383,
+      "min": 0.9508926290241578,
+      "straight_fraction": 0.9991961414790996,
+      "straight_max": 1.5
      },
      "mountains": {
       "n_systems": 33,
@@ -1709,7 +1763,7 @@
      "ocean_fraction": true,
      "main_continent": true,
      "subcontinents": true,
-     "main_inland_sea": true,
+     "main_inland_sea": false,
      "main_continent_latitude": true,
      "polar_continent": true,
      "open_ocean": true
@@ -1726,6 +1780,21 @@
      ],
      "inland_sea_Mkm2": 2.941004431444688,
      "inland_sea_straits": 1,
+     "inland_sea_checks": {
+      "area_in_range": true,
+      "ratio_to_second_ok": true,
+      "straits_ok": true,
+      "bordering_subcontinents_ok": false,
+      "elongation_ok": false
+     },
+     "inland_sea_aspect_ratio": 1.0751170661545502,
+     "inland_sea_bordering_subcontinents": 1,
+     "inland_sea_border_shares": [
+      0.8925124310747495,
+      0.0,
+      0.0,
+      0.0
+     ],
      "north_deg": 73.740234375,
      "south_deg": -58.798828125,
      "polar_continents": 1,
@@ -1801,6 +1870,19 @@
       ],
       "land_fraction_beyond_500km": 0.45843434155265267,
       "land_fraction_beyond_1000km": 0.21340836901050206
+     },
+     "coast_complexity_spread": {
+      "window_km": 2000,
+      "smooth_radius_km": 100,
+      "n_windows": 3849,
+      "p10": 2.012751625233274,
+      "p50": 2.5575141055952644,
+      "p90": 3.661267421153006,
+      "p90_over_p10": 1.8190358786711558,
+      "cv": 0.24209823965568608,
+      "min": 1.4477845608898838,
+      "straight_fraction": 0.0002598077422707197,
+      "straight_max": 1.5
      },
      "mountains": {
       "n_systems": 32,
@@ -2018,6 +2100,19 @@
      ],
      "inland_sea_Mkm2": 2.3937012467551857,
      "inland_sea_straits": 1,
+     "inland_sea_checks": {
+      "area_in_range": true,
+      "ratio_to_second_ok": true,
+      "straits_ok": true,
+      "bordering_subcontinents_ok": true,
+      "elongation_ok": true
+     },
+     "inland_sea_aspect_ratio": 3.328337736155507,
+     "inland_sea_bordering_subcontinents": 2,
+     "inland_sea_border_shares": [
+      0.39503769340547823,
+      0.35786499208017
+     ],
      "north_deg": 77.51953125,
      "south_deg": -34.62890625,
      "polar_continents": 1,
@@ -2106,6 +2201,19 @@
       ],
       "land_fraction_beyond_500km": 0.4417272774533491,
       "land_fraction_beyond_1000km": 0.1801424063306811
+     },
+     "coast_complexity_spread": {
+      "window_km": 2000,
+      "smooth_radius_km": 100,
+      "n_windows": 3027,
+      "p10": 1.0701441723654734,
+      "p50": 1.7429165267980489,
+      "p90": 3.179728558518385,
+      "p90_over_p10": 2.9713085775067425,
+      "cv": 0.490611433040948,
+      "min": 0.9909583768482597,
+      "straight_fraction": 0.37661050545094155,
+      "straight_max": 1.5
      },
      "mountains": {
       "n_systems": 43,
@@ -3411,7 +3519,7 @@
      "ocean_fraction": true,
      "main_continent": true,
      "subcontinents": true,
-     "main_inland_sea": true,
+     "main_inland_sea": false,
      "main_continent_latitude": true,
      "polar_continent": true,
      "open_ocean": true
@@ -3428,6 +3536,21 @@
      ],
      "inland_sea_Mkm2": 2.8305902520599946,
      "inland_sea_straits": 1,
+     "inland_sea_checks": {
+      "area_in_range": true,
+      "ratio_to_second_ok": true,
+      "straits_ok": true,
+      "bordering_subcontinents_ok": false,
+      "elongation_ok": false
+     },
+     "inland_sea_aspect_ratio": 1.0242172443850437,
+     "inland_sea_bordering_subcontinents": 1,
+     "inland_sea_border_shares": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
      "north_deg": 71.89453125,
      "south_deg": -51.85546875,
      "polar_continents": 1,
@@ -3503,6 +3626,19 @@
       ],
       "land_fraction_beyond_500km": 0.6609785640617364,
       "land_fraction_beyond_1000km": 0.394220135944172
+     },
+     "coast_complexity_spread": {
+      "window_km": 2000,
+      "smooth_radius_km": 100,
+      "n_windows": 1245,
+      "p10": 0.999597976503599,
+      "p50": 1.000095753121558,
+      "p90": 1.0109614989788351,
+      "p90_over_p10": 1.011368092715617,
+      "cv": 0.06640959148942326,
+      "min": 0.985800154149291,
+      "straight_fraction": 1.0,
+      "straight_max": 1.5
      },
      "mountains": {
       "n_systems": 32,
@@ -3617,7 +3753,7 @@
      "ocean_fraction": true,
      "main_continent": true,
      "subcontinents": true,
-     "main_inland_sea": true,
+     "main_inland_sea": false,
      "main_continent_latitude": true,
      "polar_continent": true,
      "open_ocean": true
@@ -3634,6 +3770,21 @@
      ],
      "inland_sea_Mkm2": 2.877564081855614,
      "inland_sea_straits": 1,
+     "inland_sea_checks": {
+      "area_in_range": true,
+      "ratio_to_second_ok": true,
+      "straits_ok": true,
+      "bordering_subcontinents_ok": false,
+      "elongation_ok": false
+     },
+     "inland_sea_aspect_ratio": 1.076436928630565,
+     "inland_sea_bordering_subcontinents": 1,
+     "inland_sea_border_shares": [
+      0.9608785353914531,
+      0.0,
+      0.0,
+      0.0
+     ],
      "north_deg": 73.65234375,
      "south_deg": -58.88671875,
      "polar_continents": 1,
@@ -3709,6 +3860,19 @@
       ],
       "land_fraction_beyond_500km": 0.4737602355447669,
       "land_fraction_beyond_1000km": 0.2245510010239457
+     },
+     "coast_complexity_spread": {
+      "window_km": 2000,
+      "smooth_radius_km": 100,
+      "n_windows": 3144,
+      "p10": 1.657485846567111,
+      "p50": 2.0717639986671728,
+      "p90": 2.9398979555526816,
+      "p90_over_p10": 1.7737092365775724,
+      "cv": 0.23900465899260384,
+      "min": 1.2395054116061819,
+      "straight_fraction": 0.03244274809160305,
+      "straight_max": 1.5
      },
      "mountains": {
       "n_systems": 29,

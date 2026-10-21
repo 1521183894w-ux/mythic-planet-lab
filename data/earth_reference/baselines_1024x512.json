@@ -1,12 +1,12 @@
 {
  "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
  "grid": "1024x512",
- "generated": "2026-10-21 22:57:15",
- "code_commit": "a1e01d8",
+ "generated": "2026-10-22 00:25:41",
+ "code_commit": "b510ae9",
  "config": {
   "path": "config/metrics.yaml",
-  "version": 2,
-  "sha256": "a2608e42731490fafe9fcf613e421567195c4e88adb5c69d7dd63588a924c30c"
+  "version": 3,
+  "sha256": "d538276342c5de4ff2255c04f67353fa6c6bac0a762137c936436e34b2329ef6"
  },
  "inputs": {
   "grid_file": "data/earth_reference/earth_grid_1024x512.nc (scripts/build_earth_reference.py)",
@@ -286,10 +286,28 @@
    "checks": {
     "area_in_range": true,
     "ratio_to_second_ok": true,
-    "straits_ok": true
+    "straits_ok": true,
+    "bordering_subcontinents_ok": true,
+    "elongation_ok": true
    },
    "passes": true,
    "n_inland_candidates": 8,
+   "geometry": {
+    "aspect_ratio": 3.328337736155507,
+    "orientation_deg": 103.43438205380498,
+    "subcontinent_border_shares": [
+     {
+      "subcontinent_id": 8,
+      "border_share": 0.39503769340547823
+     },
+     {
+      "subcontinent_id": 1,
+      "border_share": 0.35786499208017
+     }
+    ],
+    "min_border_share": 0.15,
+    "n_bordering_subcontinents": 2
+   },
    "pass": true,
    "candidate_seas": [
     {
@@ -555,6 +573,19 @@
    "50": 0.013003181519114454,
    "100": 0.03592932213758233,
    "200": 0.08622998513715033
+  },
+  "coast_complexity_spread": {
+   "window_km": 2000,
+   "smooth_radius_km": 100,
+   "n_windows": 3027,
+   "p10": 1.0701441723654734,
+   "p50": 1.7429165267980489,
+   "p90": 3.179728558518385,
+   "p90_over_p10": 2.9713085775067425,
+   "cv": 0.490611433040948,
+   "min": 0.9909583768482597,
+   "straight_fraction": 0.37661050545094155,
+   "straight_max": 1.5
   },
   "islands": {
    "n_landmasses": 220,
@@ -1678,17 +1709,18 @@
   "主大陆细线连接（半径）：判定半径 25 km 小于格点间距 39 km，此分辨率下不可靠"
  ],
  "timings_s": {
-  "A_units": 0.13,
-  "A_subcontinents": 0.04,
-  "A_inland_seas": 0.44,
-  "A_open_ocean": 0.06,
+  "A_units": 0.14,
+  "A_subcontinents": 0.03,
+  "A_inland_seas": 0.5,
+  "A_open_ocean": 0.07,
   "B1_coastline": 0.16,
-  "B1_morphology": 0.5,
+  "B1_morphology": 0.54,
+  "B1_complexity_spread": 0.46,
   "B1_islands_shelf": 0.01,
   "B2_distance": 0.06,
-  "by_region": 0.58,
+  "by_region": 0.59,
   "C_hypsometry_slope": 0.09,
-  "C_mountains": 0.42
+  "C_mountains": 0.43
  },
- "config_version": 2
+ "config_version": 3
 }

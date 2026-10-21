@@ -1,12 +1,12 @@
 {
  "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
  "grid": "512x256",
- "generated": "2026-10-21 22:57:11",
- "code_commit": "a1e01d8",
+ "generated": "2026-10-22 00:25:35",
+ "code_commit": "b510ae9",
  "config": {
   "path": "config/metrics.yaml",
-  "version": 2,
-  "sha256": "a2608e42731490fafe9fcf613e421567195c4e88adb5c69d7dd63588a924c30c"
+  "version": 3,
+  "sha256": "d538276342c5de4ff2255c04f67353fa6c6bac0a762137c936436e34b2329ef6"
  },
  "inputs": {
   "grid_file": "data/earth_reference/earth_grid_512x256.nc (scripts/build_earth_reference.py)",
@@ -286,10 +286,28 @@
    "checks": {
     "area_in_range": false,
     "ratio_to_second_ok": false,
-    "straits_ok": false
+    "straits_ok": false,
+    "bordering_subcontinents_ok": false,
+    "elongation_ok": false
    },
    "passes": false,
    "n_inland_candidates": 6,
+   "geometry": {
+    "aspect_ratio": 1.8189784180281867,
+    "orientation_deg": 92.56406463920929,
+    "subcontinent_border_shares": [
+     {
+      "subcontinent_id": 1,
+      "border_share": 1.0
+     },
+     {
+      "subcontinent_id": 5,
+      "border_share": 0.0
+     }
+    ],
+    "min_border_share": 0.15,
+    "n_bordering_subcontinents": 1
+   },
    "pass": false,
    "candidate_seas": [
     {
@@ -525,6 +543,19 @@
    "50": 0.004351816042706376,
    "100": 0.025065029511479906,
    "200": 0.0658232208922619
+  },
+  "coast_complexity_spread": {
+   "window_km": 2000,
+   "smooth_radius_km": 100,
+   "n_windows": 2652,
+   "p10": 1.0274928082133306,
+   "p50": 1.3679320025200905,
+   "p90": 2.3096576394568573,
+   "p90_over_p10": 2.2478577183163315,
+   "cv": 0.4078524598443694,
+   "min": 0.9844590397625002,
+   "straight_fraction": 0.6029411764705882,
+   "straight_max": 1.5
   },
   "islands": {
    "n_landmasses": 87,
@@ -1657,11 +1688,12 @@
   "A_open_ocean": 0.02,
   "B1_coastline": 0.06,
   "B1_morphology": 0.15,
+  "B1_complexity_spread": 0.25,
   "B1_islands_shelf": 0.0,
   "B2_distance": 0.01,
-  "by_region": 0.15,
+  "by_region": 0.16,
   "C_hypsometry_slope": 0.02,
   "C_mountains": 0.16
  },
- "config_version": 2
+ "config_version": 3
 }
