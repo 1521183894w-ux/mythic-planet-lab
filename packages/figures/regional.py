@@ -75,7 +75,7 @@ def draw_elevation_panel(ax, elev, land, lat, lon, extent, pixel_km, title, cent
     """区域窗口面板：分层设色 + 山体阴影、海岸线（陆地掩膜 0.5 等值线）、经纬网、比例尺。"""
     from .style import add_scalebar, shaded_elevation
 
-    ax.imshow(shaded_elevation(elev, pixel_km, vert_exag=2.0 if pixel_km > 5 else 1.0), extent=extent,
+    ax.imshow(shaded_elevation(elev, pixel_km, vert_exag=2.0 if pixel_km > 5 else 1.0, land=land), extent=extent,
               interpolation="nearest")
     ax.contour(land.astype(float), levels=[0.5], colors="k", linewidths=0.6, extent=extent, origin="upper")
     draw_graticule(ax, center, lat, lon, extent, graticule_step)

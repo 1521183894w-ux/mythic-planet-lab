@@ -28,6 +28,7 @@ from mythic.figures.select_regions import CoastAnalysis, select_regions
 from mythic.figures.style import setup_fonts
 from mythic.figures.world import EARTH_REF, ROOT, blinded, load, load_earth, mirrored, to_jsonable
 from mythic.metrics.compute import compute_all, load_config
+from mythic.metrics.verdict import b_verdict, b_verdict_flat
 
 EARTH_RESOLUTIONS = ["512x256", "1024x512", "2048x1024"]
 
@@ -77,12 +78,25 @@ def main() -> int:
         em, ef = compute_all(earth.elevation, earth.land, cfg=cfg, return_fields=True, **earth.compute_kwargs())
         log(f"同分辨率地球指标 {time.perf_counter() - t0:.1f} s")
 
+    # B1/B2 判定（U11）：与同分辨率地球大陆级陆块本体同类比较，参照取自基准文件
+    base = json.loads((EARTH_REF / f"baselines_{world.resolution}.json").read_text(encoding="utf-8"))
+    reference = base.get("landmass_unit_reference")
+    if reference is None:
+        raise SystemExit("地球基准文件缺少 landmass_unit_reference，请先运行 scripts/compute_earth_baselines.py")
+    verdict = (b_verdict_flat(reference["units"], reference, cfg) if world.is_earth
+               else b_verdict(metrics["by_region"], reference, cfg))
+    log("B1/B2 判定：" + "；".join(f"{u} {v['n_pass']}/{v['n_judged']}" for u, v in verdict["units"].items()))
+
     er_cfg = yaml.safe_load((ROOT / "config" / "earth_regions.yaml").read_text(encoding="utf-8"))
     earth_regions = {r["id"]: r for r in er_cfg["regions"]}
     sizes = {k: float(r.get("size_km", er_cfg["default_size_km"])) for k, r in earth_regions.items()}
     t0 = time.perf_counter()
     picks, ca = select_regions(world.world_id, world.grid, world.land, metrics, fields, cfg, sizes)
-    earth_ca = ca if world.is_earth else CoastAnalysis(earth.grid, earth.land)
+    if world.is_earth:
+        earth_ca, earth_picks = ca, {p.key: p for p in picks}
+    else:
+        ep, earth_ca = select_regions(earth.world_id, earth.grid, earth.land, em, ef, cfg, sizes)
+        earth_picks = {p.key: p for p in ep}
     log(f"区域选取 {time.perf_counter() - t0:.1f} s：" + "；".join(
         f"{p.key}={'缺' if p.missing else f'{p.center[0]:.1f},{p.center[1]:.1f}'}" for p in picks))
 
@@ -118,14 +132,14 @@ def main() -> int:
     add("charts", "09_hypsometry.png", "高程曲线与高程分布（与地球对比）")
     charts.slope_distance_mountains(world, metrics, fields, em, ef, earth, out / "10_slope_distance_mountains.png")
     add("charts", "10_slope_distance_mountains.png", "坡度、距海距离、山系长度（与地球对比）")
-    charts.coast_vs_earth(world, metrics, em, earth, cfg, out / "11_coast_vs_earth.png")
-    add("charts", "11_coast_vs_earth.png", "海岸盒计数、岛屿面积分布、各大陆海岸指标与地球范围")
+    charts.coast_vs_earth(world, metrics, em, earth, cfg, verdict, reference, out / "11_coast_vs_earth.png")
+    add("charts", "11_coast_vs_earth.png", "海岸盒计数、岛屿面积分布、各大陆级陆块的 B1/B2 判定（与地球陆块本体同类比较）")
     log(f"对比图 {time.perf_counter() - t0:.1f} s")
 
     t0 = time.perf_counter()
     region_records = []
     for n, p in enumerate(picks, 1):
-        ref = earth_reference(p, world, earth_regions, earth_ca)
+        ref = earth_reference(p, world, earth_regions, earth_ca, earth_picks)
         f = f"regions/{p.key}.png"
         region_pair(p, world, earth, ref, out / f, n)
         add("regions", f, f"区域 {n} · {p.title}", (p.missing and f"未找到：{p.missing}") or p.reason,
@@ -137,13 +151,14 @@ def main() -> int:
             "seed": world.seed, "code_version": world.code_version, "method_class_elevation": world.method_label,
             "source": world.source, "stage": args.stage, "generated": time.strftime("%Y-%m-%d %H:%M:%S"),
             "config_version": cfg.get("version")}
-    (out / "metrics.json").write_text(json.dumps(to_jsonable({**meta, "metrics": metrics}), ensure_ascii=False, indent=1),
+    (out / "metrics.json").write_text(json.dumps(to_jsonable({**meta, "b_verdict": verdict, "metrics": metrics}), ensure_ascii=False, indent=1),
                                       encoding="utf-8", newline="\n")
     (out / "regions.json").write_text(json.dumps(to_jsonable({**meta, "regions": region_records}), ensure_ascii=False,
                                                  indent=1), encoding="utf-8", newline="\n")
     (out / "manifest.json").write_text(json.dumps({**meta, "figures": figures}, ensure_ascii=False, indent=1),
                                        encoding="utf-8", newline="\n")
-    page = write_gallery(out, world, args.stage, metrics, em, figures, region_records, EARTH_REF / "regions")
+    page = write_gallery(out, world, args.stage, metrics, em, verdict, reference, figures, region_records,
+                         EARTH_REF / "regions")
     log(f"完成：{len(figures)} 张图，画廊 {page}，总用时 {time.perf_counter() - t_all:.0f} s")
     return 0
 

@@ -24,8 +24,19 @@ def _window(world, center, size_km):
     return elev, land, lat, lon, ext, px
 
 
-def earth_reference(pick: RegionPick, world, earth_regions: dict, earth_ca: CoastAnalysis) -> dict:
-    """地球对照窗口：按角色取 config/earth_regions.yaml 中的区域；随机海岸则在地球上同样随机抽一段。"""
+# 这些规则的地球对照改为"地球上按同一规则选出的窗口"（0.7 校准评审员 B #10）：
+# 例如"最平直海岸"在地球上按同一规则选出的是纳米布海岸，比固定的几内亚湾更公平。
+RULE_MATCHED = {"r6_smoothest_coast"}
+
+
+def earth_reference(pick: RegionPick, world, earth_regions: dict, earth_ca: CoastAnalysis,
+                    earth_picks: dict | None = None) -> dict:
+    """地球对照窗口：同一规则选出的地球窗口（RULE_MATCHED 中的规则）；否则取 config/earth_regions.yaml 中
+    同类的区域；随机海岸则在地球上同样随机抽一段。"""
+    ep = (earth_picks or {}).get(pick.key)
+    if pick.key in RULE_MATCHED and ep is not None and ep.center is not None:
+        return {"id": f"earth_rule_{pick.key}", "name": f"地球上按同一规则选出的窗口", "center": tuple(ep.center),
+                "note": f"地球上按同一规则选出：{ep.reason}"}
     if pick.earth_ref:
         r = earth_regions[pick.earth_ref]
         return {"id": r["id"], "name": r["name"], "center": tuple(r["center"]),

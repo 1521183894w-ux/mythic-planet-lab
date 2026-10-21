@@ -8,7 +8,6 @@ import os
 import time
 from pathlib import Path
 
-from .world import EARTH_RANGE_UNITS, RANGE_KEYS, earth_ranges
 
 CSS = """
 :root { --bg:#f6f5f2; --card:#ffffff; --ink:#1f2328; --muted:#5b6370; --line:#d9d6cf; --good:#1e7b4a; --bad:#b03a2e; --accent:#2c5d8a; }
@@ -89,36 +88,52 @@ def a_table(metrics) -> str:
     return f"<table><tr><th>A 层硬约束</th><th>值</th><th>目标</th><th>结果</th></tr>{body}</table>"
 
 
-def b_table(world, metrics, earth_metrics) -> str:
-    rng = earth_ranges(earth_metrics["by_region"])
-    br = metrics["by_region"]
-    if world.is_earth:
-        cols = [u for u in EARTH_RANGE_UNITS + ["Antarctica"] if u in br]
-    else:
-        cols = [k for k in br if k == "main_continent" or k.startswith("unit_")] or ["all_land"]
-    names = {"fractal_dimension": "分形维数 D", "coastline_development": "海岸发育系数", "peninsula_index": "半岛指数",
-             "bay_index": "海湾指数", "land_fraction_beyond_1000km": "离海 > 1000 km 的陆地比例",
-             "distance_to_sea_median_km": "距海距离中位数（km）"}
-    head = "<tr><th>指标</th><th>地球各大洲范围（同分辨率）</th>" + "".join(
-        f"<th>{_e('主大陆' if c == 'main_continent' else c)}</th>" for c in cols) + "</tr>"
+METRIC_NAMES = {"fractal_dimension": "分形维数 D", "coastline_development": "海岸发育系数", "peninsula_index": "半岛指数",
+                "bay_index": "海湾指数", "land_fraction_beyond_1000km": "离海 > 1000 km 的陆地比例",
+                "distance_to_sea_median_km": "距海距离中位数（km）"}
+
+
+def metric_label(k: str) -> str:
+    base, _, r = k.partition("@")
+    return METRIC_NAMES[base] + (f"（半径 {r} km）" if r else "")
+
+
+def unit_label(u: str, name: str | None = None) -> str:
+    if name and name != u:
+        return name
+    return "主大陆" if u == "main_continent" else f"陆块 {u.removeprefix('unit_')}"
+
+
+def b_table(verdict: dict, reference: dict) -> str:
+    """B1/B2 判定表（U11：与地球大陆级陆块本体同类比较）。"""
+    units = verdict["units"]
+    cols = list(units)
+    head = ("<tr><th>指标</th><th>地球合格线<br><span class='meta'>大陆级陆块本体中最平滑者</span></th>"
+            "<th>主大陆目标<br><span class='meta'>地球亚非欧本体</span></th>"
+            + "".join(f"<th>{_e(unit_label(u, units[u].get('name')))}<br><span class='meta'>"
+                      f"{units[u]['area_km2'] / 1e6:.1f} 百万 km²</span></th>" for u in cols) + "</tr>")
+    target = reference.get("target_main_continent") or {}
     rows = []
-    for key in RANGE_KEYS:
-        subs = sorted(rng[key], key=float) if "min" not in rng[key] else [None]
-        for r in subs:
-            band = rng[key][r] if r else rng[key]
-            nd = 0 if key == "distance_to_sea_median_km" else 3
-            cells = []
-            for c in cols:
-                v = br[c][key][r] if r else br[c][key]
-                inside = v is not None and band["min"] <= v <= band["max"]
-                cells.append(f'<td class="num">{_fmt(v, nd)} <span class="{"ok" if inside else "no"}">'
-                             f'{"范围内" if inside else "范围外"}</span></td>')
-            label = names[key] + (f"（半径 {r} km）" if r else "")
-            rows.append(f"<tr><td>{_e(label)}</td><td>{_fmt(band['min'], nd)}（{_e(band['min_unit'])}）– "
-                        f"{_fmt(band['max'], nd)}（{_e(band['max_unit'])}）</td>{''.join(cells)}</tr>")
-    note = ("<p class='meta'>地球范围取 " + "、".join(EARTH_RANGE_UNITS) + "（南极洲单独列出，不计入范围）。"
-            "“范围内/范围外”只是参考：B1 的比较方式（落在范围内，或要求落在上半区间）待用户确认（PROGRESS U11），"
-            "非洲、南美这类本身就很“圆”的大陆会把范围下限拉低。</p>")
+    for k, line in reference["pass_line"].items():
+        nd = 0 if k.startswith("distance_to_sea") else 3
+        sign = "≤" if line["direction"] == "max" else "≥"
+        line_name = reference["units"][line["unit"]]["name"]
+        cells = []
+        for u in cols:
+            r = units[u]["metrics"][k]
+            tag = ('<span class="meta">参考</span>' if r["pass"] is None else
+                   ('<span class="ok">达标</span>' if r["pass"] else '<span class="no">未达标</span>'))
+            cells.append(f'<td class="num">{_fmt(r["value"], nd)} {tag}</td>')
+        ref_only = units[cols[0]]["metrics"][k]["pass"] is None if cols else False
+        rows.append(f"<tr><td>{_e(metric_label(k))}{'（只作参考）' if ref_only else ''}</td>"
+                    f"<td class='num'>{sign} {_fmt(line['value'], nd)}<br><span class='meta'>{_e(line_name)}</span></td>"
+                    f"<td class='num'>{_fmt(target.get(k), nd)}</td>{''.join(cells)}</tr>")
+    summary = "；".join(f"{unit_label(u, units[u].get('name'))} {units[u]['n_pass']}/{units[u]['n_judged']} 项达标"
+                       for u in cols)
+    note = ("<p class='meta'>判定方式（U11，2026-10-21 用户同意）：地球参照与世界用同一种切分（陆块单元，连通本体），"
+            "世界每个大陆级陆块的各项不低于地球大陆级陆块本体中的最小值（距海距离类不高于最大值）。"
+            "海岸发育系数随陆块面积增大，只作参考。地球亚非欧本体是主大陆的评分目标，不是硬门槛。"
+            f"本世界：{_e(summary)}。</p>")
     return f"<div class='scroll'><table>{head}{''.join(rows)}</table></div>{note}"
 
 
@@ -134,6 +149,10 @@ def c_table(metrics, earth_metrics) -> str:
         row("山系数", lambda m: m["C"]["mountains"]["n_systems"], 0),
         row("长度 > 1000 km 的山系数", lambda m: m["C"]["mountains"]["n_longer_than_min_length"], 0),
         row("山地占陆地比例", lambda m: m["C"]["mountains"]["mountain_land_fraction"], 3),
+        row("最长山系（km）", lambda m: m["C"]["mountains"]["longest_km"], 0),
+        row("面积加权主轴长宽比（成带程度）", lambda m: m["C"]["mountains"]["area_weighted_aspect_ratio"]),
+        row("成带山系（主轴长宽比 ≥ 3）的面积占比", lambda m: m["C"]["mountains"]["elongated_area_fraction"]),
+        row("低矮山地一级：长 > 1000 km 的山系数", lambda m: m["C"]["mountains"]["low_tier"]["n_longer_than_min_length"], 0),
         row("岛屿数", lambda m: m["B1"]["islands"]["n_islands"], 0),
         row("Korčak 指数 b", lambda m: m["B1"]["islands"]["korcak"]["b"]),
         row("大陆架占海洋比例", lambda m: m["B1"]["shelf_fraction_of_ocean"], 3),
@@ -147,7 +166,8 @@ def _card(fig: dict, out_dir: Path) -> str:
             f"alt='{_e(fig['title'])}'></a><div class='cap'><b>{_e(fig['title'])}</b>{why}</div></div>")
 
 
-def write_gallery(out_dir: Path, world, stage: int, metrics: dict, earth_metrics: dict, figures: list[dict],
+def write_gallery(out_dir: Path, world, stage: int, metrics: dict, earth_metrics: dict, verdict: dict, reference: dict,
+                  figures: list[dict],
                   regions: list[dict], atlas_dir: Path) -> Path:
     sections = []
     groups = [("global", "全球与极地", "grid"), ("maps", "指标分布图", "grid"), ("charts", "与地球对比", "grid wide"),
@@ -191,8 +211,8 @@ def write_gallery(out_dir: Path, world, stage: int, metrics: dict, earth_metrics
 <main>
 <section id="summary"><h2>指标摘要</h2>
 {a_table(metrics)}
-<h3>B1 海岸复杂度、B2 距海距离：与地球各大洲对比</h3>
-{b_table(world, metrics, earth_metrics)}
+<h3>B1 海岸复杂度、B2 距海距离：与地球大陆级陆块本体同类比较</h3>
+{b_table(verdict, reference)}
 <h3>C 层与其他</h3>
 {c_table(metrics, earth_metrics)}
 <h3>分辨率提示</h3>{warn_html}

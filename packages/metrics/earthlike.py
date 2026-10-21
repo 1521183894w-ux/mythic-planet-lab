@@ -109,12 +109,39 @@ def _skeleton_longest_path(grid: LatLonGrid, comp: np.ndarray) -> dict:
     return {"length_km": length, "sinuosity": length / straight if straight > 0 else float("nan")}
 
 
+def shape_axes(grid: LatLonGrid, comp: np.ndarray) -> dict:
+    """区域形状的主轴（U16）：把格点投影到区域质心处的切平面（km），对面积加权的协方差做主成分分解。
+    主轴长宽比 = sqrt(λ1/λ2)：圆斑约 1，成带的山脉明显大于 1（C 形、环形山地也接近 1，这正是要区分的）。
+    走向方位角：主轴与正北的夹角（0 = 南北向，90 = 东西向），取值 [0, 180)。"""
+    w = grid.cell_area_km2[comp]
+    p = grid.xyz[comp]
+    c = (p * w[:, None]).sum(axis=0)
+    c /= np.linalg.norm(c)
+    ref = np.array([0.0, 0.0, 1.0]) if abs(c[2]) < 0.99 else np.array([1.0, 0.0, 0.0])
+    east = np.cross(ref, c)
+    east /= np.linalg.norm(east)
+    north = np.cross(c, east)
+    uv = np.column_stack([p @ east, p @ north]) * grid.radius_km
+    mu = (uv * w[:, None]).sum(axis=0) / w.sum()
+    d = uv - mu
+    cov = (d * w[:, None]).T @ d / w.sum()
+    vals, vecs = np.linalg.eigh(cov)
+    l2, l1 = max(vals[0], 1e-9), max(vals[1], 1e-9)
+    ax = vecs[:, 1]
+    return {"aspect_ratio": float(np.sqrt(l1 / l2)),
+            "orientation_deg": float(np.degrees(np.arctan2(ax[0], ax[1])) % 180.0)}
+
+
 def mountain_systems(grid: LatLonGrid, elevation: np.ndarray, land: np.ndarray, cfg: dict,
                      exclude: np.ndarray | None = None) -> tuple[dict, np.ndarray]:
     """山系（v1 定义，参数见 config/metrics.yaml）：
     山地格点 = 陆地 & 高程 ≥ min_elevation_m & 局部起伏（±relief_radius_km）≥ min_relief_m；
     以半径 merge_gap_km/2 的闭运算把间断的山地连成山系；每个山系量骨架最长路径长度、平均宽度（面积/长度）、弯曲度。
-    exclude 用于剔除冰盖（地球的 ETOPO 是冰面高程，南极与格陵兰冰穹不是山）。"""
+    U16（2026-10-21 用户同意）增加形态量：主轴长宽比与走向（shape_axes）、骨架长宽比（长度/平均宽度），
+    汇总最长山系、前三长度、面积加权主轴长宽比、"成带"山系（主轴长宽比 ≥ elongated_aspect_min）的面积占比，
+    以及"低矮山地"一级（low_tier 阈值，识别乌拉尔、阿巴拉契亚这类古老剥蚀山地）。
+    弯曲度对 C 形、环形山地会给出很大的值（路径绕行而端点很近），判断"是否成带"请用主轴长宽比。
+    exclude 用于剔除冰盖（世界的高程为冰面高程时；目前只有地球的 ETOPO 是这样）。"""
     relief = local_relief(grid, elevation, cfg["relief_radius_km"])
     mtn = land & (elevation >= cfg["min_elevation_m"]) & (relief >= cfg["min_relief_m"])
     if exclude is not None:
@@ -128,13 +155,33 @@ def mountain_systems(grid: LatLonGrid, elevation: np.ndarray, land: np.ndarray, 
     for k in np.argsort(areas[1:])[::-1] + 1:
         if areas[k] < cfg["min_area_km2"]:
             break
-        sk = _skeleton_longest_path(grid, lab == k)
-        rows = np.flatnonzero((lab == k).any(axis=1))
+        comp = lab == k
+        sk = _skeleton_longest_path(grid, comp)
+        rows = np.flatnonzero(comp.any(axis=1))
         width = areas[k] / sk["length_km"] if sk["length_km"] > 0 else float("nan")
+        shape = shape_axes(grid, comp)
         systems.append({"area_km2": float(areas[k]), "length_km": round(sk["length_km"], 1),
                         "mean_width_km": round(float(width), 1), "sinuosity": round(sk["sinuosity"], 3),
+                        "elongation": round(sk["length_km"] / width, 2) if width and width > 0 else float("nan"),
+                        "aspect_ratio": round(shape["aspect_ratio"], 2), "orientation_deg": round(shape["orientation_deg"], 1),
                         "lat_range": [float(grid.lat[rows.max()]), float(grid.lat[rows.min()])]})
     long_ones = [s for s in systems if s["length_km"] >= cfg["min_length_km"]]
-    return {"n_systems": len(systems), "n_longer_than_min_length": len(long_ones),
-            "mountain_land_fraction": float((grid.cell_area_km2 * mtn).sum() / (grid.cell_area_km2 * land).sum()),
-            "systems": systems[:20]}, merged
+    lengths = sorted((s["length_km"] for s in systems), reverse=True)
+    a = np.array([s["area_km2"] for s in systems])
+    asp = np.array([s["aspect_ratio"] for s in systems])
+    elong_min = cfg.get("elongated_aspect_min", 3.0)
+    out = {"n_systems": len(systems), "n_longer_than_min_length": len(long_ones),
+           "mountain_land_fraction": float((grid.cell_area_km2 * mtn).sum() / (grid.cell_area_km2 * land).sum()),
+           "longest_km": lengths[0] if lengths else 0.0,
+           "top3_length_km": lengths[:3],
+           "area_weighted_aspect_ratio": float((a * asp).sum() / a.sum()) if a.size else float("nan"),
+           "elongated_area_fraction": float(a[asp >= elong_min].sum() / a.sum()) if a.size else float("nan"),
+           "systems": systems[:20]}
+    if "low_tier" in cfg:
+        low_cfg = {**cfg, **cfg["low_tier"]}
+        low_cfg.pop("low_tier")
+        low, _ = mountain_systems(grid, elevation, land, low_cfg, exclude=exclude)
+        out["low_tier"] = {k: low[k] for k in ("n_systems", "n_longer_than_min_length", "mountain_land_fraction",
+                                               "longest_km", "top3_length_km", "area_weighted_aspect_ratio",
+                                               "elongated_area_fraction")}
+    return out, merged

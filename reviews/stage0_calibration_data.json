@@ -1,7 +1,7 @@
 {
  "description": "阶段 0.7 尺子校准的指标对比（reviews/stage0_calibration.md）",
- "code_version": "5112e10",
- "generated": "2026-10-21 22:23:40",
+ "code_version": "c3a96cb-dirty",
+ "generated": "2026-10-21 22:53:33",
  "resolutions": {
   "2048x1024": {
    "earth_continents_current_reference": {
@@ -202,48 +202,85 @@
      "mountains": {
       "n_systems": 48,
       "n_longer_than_min_length": 14,
-      "mountain_land_fraction": 0.13482260781032096
+      "mountain_land_fraction": 0.13482260781032096,
+      "longest_km": 10691.3,
+      "top3_length_km": [
+       10691.3,
+       8377.8,
+       8076.2
+      ],
+      "area_weighted_aspect_ratio": 3.062525478608642,
+      "elongated_area_fraction": 0.38993640864022033,
+      "low_tier": {
+       "n_systems": 66,
+       "n_longer_than_min_length": 26,
+       "mountain_land_fraction": 0.36343433606307685,
+       "longest_km": 30028.8,
+       "top3_length_km": [
+        30028.8,
+        10666.9,
+        9013.0
+       ],
+       "area_weighted_aspect_ratio": 3.1461678300617377,
+       "elongated_area_fraction": 0.2914150302278364
+      }
      },
      "mountain_top8": [
       {
        "length_km": 10691.3,
        "mean_width_km": 907.2,
-       "sinuosity": 1.472
+       "sinuosity": 1.472,
+       "aspect_ratio": 1.98,
+       "orientation_deg": 93.1
       },
       {
        "length_km": 8076.2,
        "mean_width_km": 574.7,
-       "sinuosity": 1.228
+       "sinuosity": 1.228,
+       "aspect_ratio": 5.07,
+       "orientation_deg": 152.3
       },
       {
        "length_km": 8377.8,
        "mean_width_km": 275.9,
-       "sinuosity": 1.238
+       "sinuosity": 1.238,
+       "aspect_ratio": 4.31,
+       "orientation_deg": 171.1
       },
       {
        "length_km": 3795.9,
        "mean_width_km": 279.8,
-       "sinuosity": 14.915
+       "sinuosity": 14.915,
+       "aspect_ratio": 1.65,
+       "orientation_deg": 8.3
       },
       {
        "length_km": 2505.2,
        "mean_width_km": 313.4,
-       "sinuosity": 1.771
+       "sinuosity": 1.771,
+       "aspect_ratio": 1.08,
+       "orientation_deg": 13.9
       },
       {
        "length_km": 2509.5,
        "mean_width_km": 198.5,
-       "sinuosity": 1.686
+       "sinuosity": 1.686,
+       "aspect_ratio": 1.95,
+       "orientation_deg": 121.6
       },
       {
        "length_km": 3094.8,
        "mean_width_km": 118.9,
-       "sinuosity": 1.399
+       "sinuosity": 1.399,
+       "aspect_ratio": 5.62,
+       "orientation_deg": 148.2
       },
       {
        "length_km": 2075.5,
        "mean_width_km": 152.3,
-       "sinuosity": 1.279
+       "sinuosity": 1.279,
+       "aspect_ratio": 2.84,
+       "orientation_deg": 48.4
       }
      ],
      "slope_land_quantiles_deg": {
@@ -371,48 +408,85 @@
      "mountains": {
       "n_systems": 33,
       "n_longer_than_min_length": 12,
-      "mountain_land_fraction": 0.06559414238965375
+      "mountain_land_fraction": 0.06559414238965375,
+      "longest_km": 2104.1,
+      "top3_length_km": [
+       2104.1,
+       2015.3,
+       1783.3
+      ],
+      "area_weighted_aspect_ratio": 1.6549452133950944,
+      "elongated_area_fraction": 0.007853717931648388,
+      "low_tier": {
+       "n_systems": 196,
+       "n_longer_than_min_length": 52,
+       "mountain_land_fraction": 0.27719636732034136,
+       "longest_km": 6361.6,
+       "top3_length_km": [
+        6361.6,
+        4193.1,
+        3658.8
+       ],
+       "area_weighted_aspect_ratio": 2.20242363917704,
+       "elongated_area_fraction": 0.14593718769891167
+      }
      },
      "mountain_top8": [
       {
        "length_km": 1537.4,
        "mean_width_km": 785.9,
-       "sinuosity": 1.533
+       "sinuosity": 1.533,
+       "aspect_ratio": 1.52,
+       "orientation_deg": 65.9
       },
       {
        "length_km": 1438.8,
        "mean_width_km": 522.6,
-       "sinuosity": 1.249
+       "sinuosity": 1.249,
+       "aspect_ratio": 1.86,
+       "orientation_deg": 29.4
       },
       {
        "length_km": 1783.3,
        "mean_width_km": 345.8,
-       "sinuosity": 1.219
+       "sinuosity": 1.219,
+       "aspect_ratio": 1.84,
+       "orientation_deg": 20.8
       },
       {
        "length_km": 1675.0,
        "mean_width_km": 355.1,
-       "sinuosity": 1.74
+       "sinuosity": 1.74,
+       "aspect_ratio": 1.36,
+       "orientation_deg": 21.7
       },
       {
        "length_km": 1015.6,
        "mean_width_km": 564.1,
-       "sinuosity": 1.298
+       "sinuosity": 1.298,
+       "aspect_ratio": 1.39,
+       "orientation_deg": 31.5
       },
       {
        "length_km": 2015.3,
        "mean_width_km": 241.1,
-       "sinuosity": 1.197
+       "sinuosity": 1.197,
+       "aspect_ratio": 2.75,
+       "orientation_deg": 57.3
       },
       {
        "length_km": 827.3,
        "mean_width_km": 550.0,
-       "sinuosity": 1.51
+       "sinuosity": 1.51,
+       "aspect_ratio": 1.04,
+       "orientation_deg": 83.6
       },
       {
        "length_km": 1721.6,
        "mean_width_km": 238.4,
-       "sinuosity": 1.319
+       "sinuosity": 1.319,
+       "aspect_ratio": 1.91,
+       "orientation_deg": 171.7
       }
      ],
      "slope_land_quantiles_deg": {
@@ -685,6 +759,575 @@
      }
     }
    },
+   "b_verdict": {
+    "earth": {
+     "method": "landmass_unit_floor",
+     "units": {
+      "main_continent": {
+       "area_km2": 79548405.3553266,
+       "name": "main_continent",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.1177639785024325,
+         "line": 1.0505969608678478,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 4.592873189678059,
+         "line": 1.8079862056416196,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.006214837508539101,
+         "line": 0.006214837508539101,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.01617893500171744,
+         "line": 0.01617893500171744,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.037604316778851773,
+         "line": 0.03331557578108608,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.008229315251233925,
+         "line": 0.008229315251233925,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.02239093300862085,
+         "line": 0.020343281182913127,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.062089696027203656,
+         "line": 0.03465109700892182,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.25514747136218474,
+         "line": 0.25514747136218474,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 527.7415463794486,
+         "line": 527.7415463794486,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      },
+      "unit_28": {
+       "area_km2": 37898122.85630295,
+       "name": "unit_28",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.1142683925361516,
+         "line": 1.0505969608678478,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 4.281673703548825,
+         "line": 1.8079862056416196,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.012978529280011645,
+         "line": 0.006214837508539101,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.03156438676406742,
+         "line": 0.01617893500171744,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.06198368918598491,
+         "line": 0.03331557578108608,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.013168570720184024,
+         "line": 0.008229315251233925,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.029146759433635563,
+         "line": 0.020343281182913127,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.04395885477081443,
+         "line": 0.03465109700892182,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.12952618436343513,
+         "line": 0.25514747136218474,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 392.8559543398197,
+         "line": 527.7415463794486,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      },
+      "unit_113": {
+       "area_km2": 7616234.043762966,
+       "name": "unit_113",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.0505969608678478,
+         "line": 1.0505969608678478,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 1.8079862056416196,
+         "line": 1.8079862056416196,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.007992738585136404,
+         "line": 0.006214837508539101,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.016208516051823,
+         "line": 0.01617893500171744,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.03331557578108608,
+         "line": 0.03331557578108608,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.00977744899742911,
+         "line": 0.008229315251233925,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.020343281182913127,
+         "line": 0.020343281182913127,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.03465109700892182,
+         "line": 0.03465109700892182,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.0,
+         "line": 0.25514747136218474,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 319.750796397962,
+         "line": 527.7415463794486,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      },
+      "unit_132": {
+       "area_km2": 12070604.95246956,
+       "name": "unit_132",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.1601235606055493,
+         "line": 1.0505969608678478,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 3.1776329443133275,
+         "line": 1.8079862056416196,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.020661027727497422,
+         "line": 0.006214837508539101,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.03194545662693438,
+         "line": 0.01617893500171744,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.06677060599254302,
+         "line": 0.03331557578108608,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.025469647970833547,
+         "line": 0.008229315251233925,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.05046104129765684,
+         "line": 0.020343281182913127,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.065266892875049,
+         "line": 0.03465109700892182,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.032923138191056675,
+         "line": 0.25514747136218474,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 336.408792234151,
+         "line": 527.7415463794486,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      }
+     },
+     "main_continent_all_pass": true,
+     "all_units_pass": true
+    },
+    "rounded": {
+     "method": "landmass_unit_floor",
+     "units": {
+      "main_continent": {
+       "area_km2": 109145348.22959693,
+       "name": "main_continent",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 0.9752246768741437,
+         "line": 1.0505969608678478,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "coastline_development": {
+         "value": 2.6921396928028343,
+         "line": 1.8079862056416196,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 1.655870564587311e-05,
+         "line": 0.006214837508539101,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@100": {
+         "value": 0.00010774507088010444,
+         "line": 0.01617893500171744,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@200": {
+         "value": 0.006373105101403866,
+         "line": 0.03331557578108608,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@50": {
+         "value": 6.064985362279315e-05,
+         "line": 0.008229315251233925,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@100": {
+         "value": 0.0008702152730497184,
+         "line": 0.020343281182913127,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@200": {
+         "value": 0.001356171443734997,
+         "line": 0.03465109700892182,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.3954818736516732,
+         "line": 0.25514747136218474,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        },
+        "distance_to_sea_median_km": {
+         "value": 786.1699794353943,
+         "line": 527.7415463794486,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 0,
+       "all_pass": false
+      },
+      "unit_3": {
+       "area_km2": 28288334.52336707,
+       "name": "unit_3",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 0.9913144564382662,
+         "line": 1.0505969608678478,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "coastline_development": {
+         "value": 1.058305500189858,
+         "line": 1.8079862056416196,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.0,
+         "line": 0.006214837508539101,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@100": {
+         "value": 0.0,
+         "line": 0.01617893500171744,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@200": {
+         "value": 7.856135209317857e-05,
+         "line": 0.03331557578108608,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@50": {
+         "value": 0.0,
+         "line": 0.008229315251233925,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@100": {
+         "value": 0.0,
+         "line": 0.020343281182913127,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@200": {
+         "value": 1.2750452843224973e-05,
+         "line": 0.03465109700892182,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.4543573106982511,
+         "line": 0.25514747136218474,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        },
+        "distance_to_sea_median_km": {
+         "value": 899.6955238044346,
+         "line": 527.7415463794486,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 0,
+       "all_pass": false
+      },
+      "unit_7": {
+       "area_km2": 9874724.278626146,
+       "name": "unit_7",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 0.9776902035057574,
+         "line": 1.0505969608678478,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "coastline_development": {
+         "value": 0.9999996375994685,
+         "line": 1.8079862056416196,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.0,
+         "line": 0.006214837508539101,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@100": {
+         "value": 0.0,
+         "line": 0.01617893500171744,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@200": {
+         "value": 0.0,
+         "line": 0.03331557578108608,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@50": {
+         "value": 0.0,
+         "line": 0.008229315251233925,
+         "line_unit": "main_continent",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@100": {
+         "value": 0.0,
+         "line": 0.020343281182913127,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@200": {
+         "value": 0.0,
+         "line": 0.03465109700892182,
+         "line_unit": "unit_113",
+         "direction": "min",
+         "pass": false
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.19422933264717543,
+         "line": 0.25514747136218474,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 527.741546379449,
+         "line": 527.7415463794486,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 1,
+       "all_pass": false
+      }
+     },
+     "main_continent_all_pass": false,
+     "all_units_pass": false
+    }
+   },
    "wasserstein_elevation_m": {
     "global": 552.6888374465018,
     "land": 387.29912115008904
@@ -889,48 +1532,85 @@
      "mountains": {
       "n_systems": 43,
       "n_longer_than_min_length": 14,
-      "mountain_land_fraction": 0.12379590429181422
+      "mountain_land_fraction": 0.12379590429181422,
+      "longest_km": 10415.1,
+      "top3_length_km": [
+       10415.1,
+       8586.5,
+       7464.1
+      ],
+      "area_weighted_aspect_ratio": 3.095469972063112,
+      "elongated_area_fraction": 0.40344743959070445,
+      "low_tier": {
+       "n_systems": 73,
+       "n_longer_than_min_length": 26,
+       "mountain_land_fraction": 0.3591058041522576,
+       "longest_km": 17429.3,
+       "top3_length_km": [
+        17429.3,
+        14614.5,
+        8827.4
+       ],
+       "area_weighted_aspect_ratio": 2.599169093147099,
+       "elongated_area_fraction": 0.326205893148214
+      }
      },
      "mountain_top8": [
       {
        "length_km": 10415.1,
        "mean_width_km": 802.8,
-       "sinuosity": 1.463
+       "sinuosity": 1.463,
+       "aspect_ratio": 2.24,
+       "orientation_deg": 93.3
       },
       {
        "length_km": 8586.5,
        "mean_width_km": 456.3,
-       "sinuosity": 1.365
+       "sinuosity": 1.365,
+       "aspect_ratio": 4.77,
+       "orientation_deg": 152.6
       },
       {
        "length_km": 7464.1,
        "mean_width_km": 281.5,
-       "sinuosity": 1.239
+       "sinuosity": 1.239,
+       "aspect_ratio": 4.05,
+       "orientation_deg": 167.8
       },
       {
        "length_km": 2033.1,
        "mean_width_km": 363.1,
-       "sinuosity": 1.772
+       "sinuosity": 1.772,
+       "aspect_ratio": 1.27,
+       "orientation_deg": 177.9
       },
       {
        "length_km": 2608.4,
        "mean_width_km": 250.0,
-       "sinuosity": 1.804
+       "sinuosity": 1.804,
+       "aspect_ratio": 2.27,
+       "orientation_deg": 16.9
       },
       {
        "length_km": 1834.5,
        "mean_width_km": 155.5,
-       "sinuosity": 1.266
+       "sinuosity": 1.266,
+       "aspect_ratio": 3.19,
+       "orientation_deg": 143.9
       },
       {
        "length_km": 1220.0,
        "mean_width_km": 231.9,
-       "sinuosity": 1.198
+       "sinuosity": 1.198,
+       "aspect_ratio": 2.29,
+       "orientation_deg": 59.4
       },
       {
        "length_km": 1303.1,
        "mean_width_km": 207.1,
-       "sinuosity": 7.852
+       "sinuosity": 7.852,
+       "aspect_ratio": 1.33,
+       "orientation_deg": 1.2
       }
      ],
      "slope_land_quantiles_deg": {
@@ -1058,48 +1738,85 @@
      "mountains": {
       "n_systems": 32,
       "n_longer_than_min_length": 10,
-      "mountain_land_fraction": 0.07083956240279286
+      "mountain_land_fraction": 0.07083956240279286,
+      "longest_km": 2102.1,
+      "top3_length_km": [
+       2102.1,
+       2005.3,
+       1953.3
+      ],
+      "area_weighted_aspect_ratio": 1.7338321485147279,
+      "elongated_area_fraction": 0.0120260104874356,
+      "low_tier": {
+       "n_systems": 184,
+       "n_longer_than_min_length": 48,
+       "mountain_land_fraction": 0.30852059509561325,
+       "longest_km": 5686.1,
+       "top3_length_km": [
+        5686.1,
+        4878.1,
+        4474.7
+       ],
+       "area_weighted_aspect_ratio": 2.1771019950665758,
+       "elongated_area_fraction": 0.13332924196636672
+      }
      },
      "mountain_top8": [
       {
        "length_km": 1611.2,
        "mean_width_km": 777.6,
-       "sinuosity": 1.241
+       "sinuosity": 1.241,
+       "aspect_ratio": 1.49,
+       "orientation_deg": 65.8
       },
       {
        "length_km": 1483.7,
        "mean_width_km": 505.9,
-       "sinuosity": 1.337
+       "sinuosity": 1.337,
+       "aspect_ratio": 1.87,
+       "orientation_deg": 28.3
       },
       {
        "length_km": 2102.1,
        "mean_width_km": 329.8,
-       "sinuosity": 1.66
+       "sinuosity": 1.66,
+       "aspect_ratio": 2.08,
+       "orientation_deg": 56.3
       },
       {
        "length_km": 2005.3,
        "mean_width_km": 329.4,
-       "sinuosity": 2.137
+       "sinuosity": 2.137,
+       "aspect_ratio": 1.51,
+       "orientation_deg": 15.0
       },
       {
        "length_km": 1707.1,
        "mean_width_km": 382.0,
-       "sinuosity": 1.182
+       "sinuosity": 1.182,
+       "aspect_ratio": 1.87,
+       "orientation_deg": 21.0
       },
       {
        "length_km": 1034.7,
        "mean_width_km": 567.0,
-       "sinuosity": 1.288
+       "sinuosity": 1.288,
+       "aspect_ratio": 1.45,
+       "orientation_deg": 31.4
       },
       {
        "length_km": 1953.3,
        "mean_width_km": 295.4,
-       "sinuosity": 1.155
+       "sinuosity": 1.155,
+       "aspect_ratio": 2.99,
+       "orientation_deg": 56.5
       },
       {
        "length_km": 1578.2,
        "mean_width_km": 294.3,
-       "sinuosity": 1.355
+       "sinuosity": 1.355,
+       "aspect_ratio": 2.05,
+       "orientation_deg": 173.3
       }
      ],
      "slope_land_quantiles_deg": {
@@ -1370,6 +2087,575 @@
       "opt3_ref": 541.0616565522338,
       "opt3_pass": false
      }
+    }
+   },
+   "b_verdict": {
+    "earth": {
+     "method": "landmass_unit_floor",
+     "units": {
+      "main_continent": {
+       "area_km2": 79591952.89238752,
+       "name": "main_continent",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.1304695964945597,
+         "line": 1.0242489122247758,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 4.126578081188913,
+         "line": 1.5994347529558954,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.004608506045687188,
+         "line": 0.004345193198417012,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.013242916957768107,
+         "line": 0.011118544781998767,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.033377894336580054,
+         "line": 0.02963906198122597,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.0055981457212369475,
+         "line": 0.003963963953479565,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.017814445870313767,
+         "line": 0.013452134066602704,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.061401958078168395,
+         "line": 0.028290655627188344,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.2613154070512948,
+         "line": 0.2613154070512948,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 541.0616565522338,
+         "line": 541.0616565522338,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      },
+      "unit_22": {
+       "area_km2": 38962000.45953888,
+       "name": "unit_22",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.1513592332582496,
+         "line": 1.0242489122247758,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 4.444182899823685,
+         "line": 1.5994347529558954,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.012880650185806771,
+         "line": 0.004345193198417012,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.0342427841978433,
+         "line": 0.011118544781998767,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.07785956782608189,
+         "line": 0.02963906198122597,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.012768609314095833,
+         "line": 0.003963963953479565,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.032906653998696564,
+         "line": 0.013452134066602704,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.054777993782528636,
+         "line": 0.028290655627188344,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.1322053762723999,
+         "line": 0.2613154070512948,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 396.13359345500277,
+         "line": 541.0616565522338,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      },
+      "unit_127": {
+       "area_km2": 7611054.300634436,
+       "name": "unit_127",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.0242489122247758,
+         "line": 1.0242489122247758,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 1.5994347529558954,
+         "line": 1.5994347529558954,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.004345193198417012,
+         "line": 0.004345193198417012,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.011118544781998767,
+         "line": 0.011118544781998767,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.02963906198122597,
+         "line": 0.02963906198122597,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.003963963953479565,
+         "line": 0.003963963953479565,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.013452134066602704,
+         "line": 0.013452134066602704,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.028290655627188344,
+         "line": 0.028290655627188344,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.0,
+         "line": 0.2613154070512948,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 332.00512965807803,
+         "line": 541.0616565522338,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      },
+      "unit_152": {
+       "area_km2": 12072723.994557098,
+       "name": "unit_152",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 1.1334780749764053,
+         "line": 1.0242489122247758,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "coastline_development": {
+         "value": 2.7942186060757255,
+         "line": 1.5994347529558954,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.01766526465818653,
+         "line": 0.004345193198417012,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@100": {
+         "value": 0.02718261325822804,
+         "line": 0.011118544781998767,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "peninsula_index@200": {
+         "value": 0.06055535885255805,
+         "line": 0.02963906198122597,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@50": {
+         "value": 0.01895075753061994,
+         "line": 0.003963963953479565,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@100": {
+         "value": 0.04211178165073015,
+         "line": 0.013452134066602704,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "bay_index@200": {
+         "value": 0.06071427560861204,
+         "line": 0.028290655627188344,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": true
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.03769808776689126,
+         "line": 0.2613154070512948,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 351.8276975862993,
+         "line": 541.0616565522338,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 9,
+       "all_pass": true
+      }
+     },
+     "main_continent_all_pass": true,
+     "all_units_pass": true
+    },
+    "rounded": {
+     "method": "landmass_unit_floor",
+     "units": {
+      "main_continent": {
+       "area_km2": 109307704.55716635,
+       "name": "main_continent",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 0.9796467899144561,
+         "line": 1.0242489122247758,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "coastline_development": {
+         "value": 2.6895584509034682,
+         "line": 1.5994347529558954,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 2.0120382601173224e-05,
+         "line": 0.004345193198417012,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@100": {
+         "value": 9.464340022976422e-05,
+         "line": 0.011118544781998767,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@200": {
+         "value": 0.006607813272104818,
+         "line": 0.02963906198122597,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@50": {
+         "value": 0.0002588358661863331,
+         "line": 0.003963963953479565,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@100": {
+         "value": 0.0008782833504275548,
+         "line": 0.013452134066602704,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@200": {
+         "value": 0.0014619541051855678,
+         "line": 0.028290655627188344,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.39744467464030425,
+         "line": 0.2613154070512948,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        },
+        "distance_to_sea_median_km": {
+         "value": 789.8415984272418,
+         "line": 541.0616565522338,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 0,
+       "all_pass": false
+      },
+      "unit_3": {
+       "area_km2": 28387049.18898771,
+       "name": "unit_3",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 0.9806901434810853,
+         "line": 1.0242489122247758,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "coastline_development": {
+         "value": 1.0606017014207338,
+         "line": 1.5994347529558954,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.0,
+         "line": 0.004345193198417012,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@100": {
+         "value": 0.00010714841620213089,
+         "line": 0.011118544781998767,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@200": {
+         "value": 0.00015406959079168687,
+         "line": 0.02963906198122597,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@50": {
+         "value": 0.0,
+         "line": 0.003963963953479565,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@100": {
+         "value": 0.0,
+         "line": 0.013452134066602704,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@200": {
+         "value": 5.0851558442505385e-05,
+         "line": 0.028290655627188344,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.4569953912957029,
+         "line": 0.2613154070512948,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        },
+        "distance_to_sea_median_km": {
+         "value": 903.7343736848112,
+         "line": 541.0616565522338,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 0,
+       "all_pass": false
+      },
+      "unit_7": {
+       "area_km2": 9660262.964097833,
+       "name": "unit_7",
+       "metrics": {
+        "fractal_dimension": {
+         "value": 0.9799880263206892,
+         "line": 1.0242489122247758,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "coastline_development": {
+         "value": 0.9999985478607399,
+         "line": 1.5994347529558954,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": null
+        },
+        "peninsula_index@50": {
+         "value": 0.0,
+         "line": 0.004345193198417012,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@100": {
+         "value": 0.0,
+         "line": 0.011118544781998767,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "peninsula_index@200": {
+         "value": 0.0,
+         "line": 0.02963906198122597,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@50": {
+         "value": 0.0,
+         "line": 0.003963963953479565,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@100": {
+         "value": 0.0,
+         "line": 0.013452134066602704,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "bay_index@200": {
+         "value": 0.0,
+         "line": 0.028290655627188344,
+         "line_unit": "unit_127",
+         "direction": "min",
+         "pass": false
+        },
+        "land_fraction_beyond_1000km": {
+         "value": 0.1985412937350132,
+         "line": 0.2613154070512948,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": true
+        },
+        "distance_to_sea_median_km": {
+         "value": 547.2875295786883,
+         "line": 541.0616565522338,
+         "line_unit": "main_continent",
+         "direction": "max",
+         "pass": false
+        }
+       },
+       "n_judged": 9,
+       "n_pass": 1,
+       "all_pass": false
+      }
+     },
+     "main_continent_all_pass": false,
+     "all_units_pass": false
     }
    },
    "wasserstein_elevation_m": {

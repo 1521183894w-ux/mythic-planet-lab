@@ -1,12 +1,12 @@
 {
  "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
  "grid": "2048x1024",
- "generated": "2026-10-21 17:04:00",
- "code_commit": "4383608",
+ "generated": "2026-10-21 22:48:47",
+ "code_commit": "c3a96cb",
  "config": {
   "path": "config/metrics.yaml",
-  "version": 1,
-  "sha256": "6a77fd0411368d2f0a5f68830f6559732589217604bdfc1dd99c61b83562914f"
+  "version": 2,
+  "sha256": "a2608e42731490fafe9fcf613e421567195c4e88adb5c69d7dd63588a924c30c"
  },
  "inputs": {
   "grid_file": "data/earth_reference/earth_grid_2048x1024.nc (scripts/build_earth_reference.py)",
@@ -102,6 +102,133 @@
     "min_unit": "Europe",
     "max_unit": "Africa"
    }
+  },
+  "note": "大洲口径（含近岸岛屿）。0.7 校准后 B1 判定改用 landmass_unit_reference（U11），本节保留作参考"
+ },
+ "landmass_unit_reference": {
+  "description": "地球陆块单元本体（与虚构世界同一切分方式）的 B1/B2 数值与合格线（U11）",
+  "unit_min_area_km2": 5000000.0,
+  "units": {
+   "main_continent": {
+    "name": "Afro-Eurasia（本体）",
+    "area_km2": 79548405.3553266,
+    "fractal_dimension": 1.1177639785024325,
+    "coastline_development": 4.592873189678059,
+    "peninsula_index@50": 0.006214837508539101,
+    "peninsula_index@100": 0.01617893500171744,
+    "peninsula_index@200": 0.037604316778851773,
+    "bay_index@50": 0.008229315251233925,
+    "bay_index@100": 0.02239093300862085,
+    "bay_index@200": 0.062089696027203656,
+    "land_fraction_beyond_1000km": 0.25514747136218474,
+    "distance_to_sea_median_km": 527.7415463794486
+   },
+   "unit_28": {
+    "name": "Americas（本体）",
+    "area_km2": 37898122.85630295,
+    "fractal_dimension": 1.1142683925361516,
+    "coastline_development": 4.281673703548825,
+    "peninsula_index@50": 0.012978529280011645,
+    "peninsula_index@100": 0.03156438676406742,
+    "peninsula_index@200": 0.06198368918598491,
+    "bay_index@50": 0.013168570720184024,
+    "bay_index@100": 0.029146759433635563,
+    "bay_index@200": 0.04395885477081443,
+    "land_fraction_beyond_1000km": 0.12952618436343513,
+    "distance_to_sea_median_km": 392.8559543398197
+   },
+   "unit_113": {
+    "name": "Oceania（本体）",
+    "area_km2": 7616234.043762966,
+    "fractal_dimension": 1.0505969608678478,
+    "coastline_development": 1.8079862056416196,
+    "peninsula_index@50": 0.007992738585136404,
+    "peninsula_index@100": 0.016208516051823,
+    "peninsula_index@200": 0.03331557578108608,
+    "bay_index@50": 0.00977744899742911,
+    "bay_index@100": 0.020343281182913127,
+    "bay_index@200": 0.03465109700892182,
+    "land_fraction_beyond_1000km": 0.0,
+    "distance_to_sea_median_km": 319.750796397962
+   },
+   "unit_132": {
+    "name": "Antarctica（本体）",
+    "area_km2": 12070604.95246956,
+    "fractal_dimension": 1.1601235606055493,
+    "coastline_development": 3.1776329443133275,
+    "peninsula_index@50": 0.020661027727497422,
+    "peninsula_index@100": 0.03194545662693438,
+    "peninsula_index@200": 0.06677060599254302,
+    "bay_index@50": 0.025469647970833547,
+    "bay_index@100": 0.05046104129765684,
+    "bay_index@200": 0.065266892875049,
+    "land_fraction_beyond_1000km": 0.032923138191056675,
+    "distance_to_sea_median_km": 336.408792234151
+   }
+  },
+  "pass_line": {
+   "fractal_dimension": {
+    "value": 1.0505969608678478,
+    "unit": "unit_113",
+    "direction": "min"
+   },
+   "coastline_development": {
+    "value": 1.8079862056416196,
+    "unit": "unit_113",
+    "direction": "min"
+   },
+   "peninsula_index@50": {
+    "value": 0.006214837508539101,
+    "unit": "main_continent",
+    "direction": "min"
+   },
+   "peninsula_index@100": {
+    "value": 0.01617893500171744,
+    "unit": "main_continent",
+    "direction": "min"
+   },
+   "peninsula_index@200": {
+    "value": 0.03331557578108608,
+    "unit": "unit_113",
+    "direction": "min"
+   },
+   "bay_index@50": {
+    "value": 0.008229315251233925,
+    "unit": "main_continent",
+    "direction": "min"
+   },
+   "bay_index@100": {
+    "value": 0.020343281182913127,
+    "unit": "unit_113",
+    "direction": "min"
+   },
+   "bay_index@200": {
+    "value": 0.03465109700892182,
+    "unit": "unit_113",
+    "direction": "min"
+   },
+   "land_fraction_beyond_1000km": {
+    "value": 0.25514747136218474,
+    "unit": "main_continent",
+    "direction": "max"
+   },
+   "distance_to_sea_median_km": {
+    "value": 527.7415463794486,
+    "unit": "main_continent",
+    "direction": "max"
+   }
+  },
+  "target_main_continent": {
+   "fractal_dimension": 1.1177639785024325,
+   "coastline_development": 4.592873189678059,
+   "peninsula_index@50": 0.006214837508539101,
+   "peninsula_index@100": 0.01617893500171744,
+   "peninsula_index@200": 0.037604316778851773,
+   "bay_index@50": 0.008229315251233925,
+   "bay_index@100": 0.02239093300862085,
+   "bay_index@200": 0.062089696027203656,
+   "land_fraction_beyond_1000km": 0.25514747136218474,
+   "distance_to_sea_median_km": 527.7415463794486
   }
  },
  "pixel_km_equator": 19.54598319923884,
@@ -1020,12 +1147,23 @@
    "n_systems": 48,
    "n_longer_than_min_length": 14,
    "mountain_land_fraction": 0.13482260781032096,
+   "longest_km": 10691.3,
+   "top3_length_km": [
+    10691.3,
+    8377.8,
+    8076.2
+   ],
+   "area_weighted_aspect_ratio": 3.062525478608642,
+   "elongated_area_fraction": 0.38993640864022033,
    "systems": [
     {
      "area_km2": 9698871.729548395,
      "length_km": 10691.3,
      "mean_width_km": 907.2,
      "sinuosity": 1.472,
+     "elongation": 11.79,
+     "aspect_ratio": 1.98,
+     "orientation_deg": 93.1,
      "lat_range": [
       18.896484375,
       59.501953125
@@ -1036,6 +1174,9 @@
      "length_km": 8076.2,
      "mean_width_km": 574.7,
      "sinuosity": 1.228,
+     "elongation": 14.05,
+     "aspect_ratio": 5.07,
+     "orientation_deg": 152.3,
      "lat_range": [
       16.083984375,
       65.830078125
@@ -1046,6 +1187,9 @@
      "length_km": 8377.8,
      "mean_width_km": 275.9,
      "sinuosity": 1.238,
+     "elongation": 30.37,
+     "aspect_ratio": 4.31,
+     "orientation_deg": 171.1,
      "lat_range": [
       -51.064453125,
       10.283203125
@@ -1056,6 +1200,9 @@
      "length_km": 3795.9,
      "mean_width_km": 279.8,
      "sinuosity": 14.915,
+     "elongation": 13.57,
+     "aspect_ratio": 1.65,
+     "orientation_deg": 8.3,
      "lat_range": [
       -15.908203125,
       4.482421875
@@ -1066,6 +1213,9 @@
      "length_km": 2505.2,
      "mean_width_km": 313.4,
      "sinuosity": 1.771,
+     "elongation": 7.99,
+     "aspect_ratio": 1.08,
+     "orientation_deg": 13.9,
      "lat_range": [
       3.427734375,
       17.666015625
@@ -1076,6 +1226,9 @@
      "length_km": 2509.5,
      "mean_width_km": 198.5,
      "sinuosity": 1.686,
+     "elongation": 12.64,
+     "aspect_ratio": 1.95,
+     "orientation_deg": 121.6,
      "lat_range": [
       59.853515625,
       69.873046875
@@ -1086,6 +1239,9 @@
      "length_km": 3094.8,
      "mean_width_km": 118.9,
      "sinuosity": 1.399,
+     "elongation": 26.02,
+     "aspect_ratio": 5.62,
+     "orientation_deg": 148.2,
      "lat_range": [
       13.271484375,
       30.849609375
@@ -1096,6 +1252,9 @@
      "length_km": 2075.5,
      "mean_width_km": 152.3,
      "sinuosity": 1.279,
+     "elongation": 13.63,
+     "aspect_ratio": 2.84,
+     "orientation_deg": 48.4,
      "lat_range": [
       -33.837890625,
       -22.939453125
@@ -1106,6 +1265,9 @@
      "length_km": 2533.0,
      "mean_width_km": 94.7,
      "sinuosity": 1.153,
+     "elongation": 26.75,
+     "aspect_ratio": 5.9,
+     "orientation_deg": 173.3,
      "lat_range": [
       -27.861328125,
       -7.998046875
@@ -1116,6 +1278,9 @@
      "length_km": 1476.6,
      "mean_width_km": 137.1,
      "sinuosity": 1.144,
+     "elongation": 10.77,
+     "aspect_ratio": 4.23,
+     "orientation_deg": 57.5,
      "lat_range": [
       29.267578125,
       35.771484375
@@ -1126,6 +1291,9 @@
      "length_km": 1734.3,
      "mean_width_km": 101.0,
      "sinuosity": 1.152,
+     "elongation": 17.16,
+     "aspect_ratio": 6.67,
+     "orientation_deg": 109.9,
      "lat_range": [
       -9.580078125,
       -3.251953125
@@ -1136,6 +1304,9 @@
      "length_km": 1080.4,
      "mean_width_km": 136.2,
      "sinuosity": 1.51,
+     "elongation": 7.93,
+     "aspect_ratio": 3.44,
+     "orientation_deg": 69.4,
      "lat_range": [
       43.857421875,
       47.724609375
@@ -1146,6 +1317,9 @@
      "length_km": 1033.8,
      "mean_width_km": 133.0,
      "sinuosity": 1.164,
+     "elongation": 7.77,
+     "aspect_ratio": 1.64,
+     "orientation_deg": 137.3,
      "lat_range": [
       37.529296875,
       44.384765625
@@ -1156,6 +1330,9 @@
      "length_km": 1019.2,
      "mean_width_km": 115.4,
      "sinuosity": 1.128,
+     "elongation": 8.83,
+     "aspect_ratio": 4.17,
+     "orientation_deg": 106.9,
      "lat_range": [
       13.095703125,
       17.314453125
@@ -1166,6 +1343,9 @@
      "length_km": 974.2,
      "mean_width_km": 118.6,
      "sinuosity": 1.137,
+     "elongation": 8.21,
+     "aspect_ratio": 3.76,
+     "orientation_deg": 15.2,
      "lat_range": [
       -24.169921875,
       -16.259765625
@@ -1176,6 +1356,9 @@
      "length_km": 623.2,
      "mean_width_km": 174.9,
      "sinuosity": 1.217,
+     "elongation": 3.56,
+     "aspect_ratio": 2.1,
+     "orientation_deg": 56.3,
      "lat_range": [
       47.373046875,
       50.712890625
@@ -1186,6 +1369,9 @@
      "length_km": 857.2,
      "mean_width_km": 114.1,
      "sinuosity": 1.338,
+     "elongation": 7.51,
+     "aspect_ratio": 2.21,
+     "orientation_deg": 129.7,
      "lat_range": [
       54.580078125,
       58.271484375
@@ -1196,6 +1382,9 @@
      "length_km": 526.1,
      "mean_width_km": 132.1,
      "sinuosity": 1.494,
+     "elongation": 3.98,
+     "aspect_ratio": 1.23,
+     "orientation_deg": 72.7,
      "lat_range": [
       19.599609375,
       22.763671875
@@ -1206,6 +1395,9 @@
      "length_km": 783.7,
      "mean_width_km": 84.9,
      "sinuosity": 1.195,
+     "elongation": 9.24,
+     "aspect_ratio": 4.51,
+     "orientation_deg": 74.0,
      "lat_range": [
       67.060546875,
       69.345703125
@@ -1216,12 +1408,28 @@
      "length_km": 664.8,
      "mean_width_km": 96.6,
      "sinuosity": 1.973,
+     "elongation": 6.88,
+     "aspect_ratio": 1.77,
+     "orientation_deg": 153.7,
      "lat_range": [
       -20.302734375,
       -16.611328125
      ]
     }
-   ]
+   ],
+   "low_tier": {
+    "n_systems": 66,
+    "n_longer_than_min_length": 26,
+    "mountain_land_fraction": 0.36343433606307685,
+    "longest_km": 30028.8,
+    "top3_length_km": [
+     30028.8,
+     10666.9,
+     9013.0
+    ],
+    "area_weighted_aspect_ratio": 3.1461678300617377,
+    "elongated_area_fraction": 0.2914150302278364
+   }
   }
  },
  "by_region": {
@@ -1468,17 +1676,17 @@
  },
  "resolution_warnings": [],
  "timings_s": {
-  "A_units": 0.68,
-  "A_subcontinents": 0.15,
-  "A_inland_seas": 2.43,
-  "A_open_ocean": 1.1,
-  "B1_coastline": 0.91,
-  "B1_morphology": 4.64,
-  "B1_islands_shelf": 0.05,
-  "B2_distance": 0.74,
-  "by_region": 3.04,
-  "C_hypsometry_slope": 0.73,
-  "C_mountains": 1.07
+  "A_units": 0.67,
+  "A_subcontinents": 0.13,
+  "A_inland_seas": 2.35,
+  "A_open_ocean": 0.35,
+  "B1_coastline": 0.56,
+  "B1_morphology": 2.09,
+  "B1_islands_shelf": 0.04,
+  "B2_distance": 0.3,
+  "by_region": 2.33,
+  "C_hypsometry_slope": 0.37,
+  "C_mountains": 1.57
  },
- "config_version": 1
+ "config_version": 2
 }

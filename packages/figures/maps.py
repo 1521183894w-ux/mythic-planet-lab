@@ -19,7 +19,15 @@ from mythic.metrics.grid import LatLonGrid  # noqa: E402
 from mythic.metrics.topology import component_sums, label  # noqa: E402
 
 from .regional import draw_graticule, laea_window, sample_global  # noqa: E402
-from .style import MONO_FAMILY, add_scalebar, elevation_cmap_norm, shaded_elevation, stamp  # noqa: E402
+from .style import (  # noqa: E402
+    ICE_SHELF_RGB,
+    MONO_FAMILY,
+    add_scalebar,
+    elevation_cmap_norm,
+    has_ice_shelf,
+    shaded_elevation,
+    stamp,
+)
 
 KM_PER_DEG = np.pi * 6371.0 / 180.0
 GLOBAL_FIGSIZE = (16, 8.6)
@@ -65,16 +73,27 @@ def global_elevation(world, path, vert_exag: float = 3.0):
     g = world.grid
     fig = plt.figure(figsize=GLOBAL_FIGSIZE)
     ax = _global_axes(fig)
-    _imshow_global(ax, shaded_elevation(world.elevation, g.pixel_km_equator, vert_exag=vert_exag))
+    _imshow_global(ax, shaded_elevation(world.elevation, g.pixel_km_equator, vert_exag=vert_exag, land=world.land))
     _coastline(ax, g, world.land)
     _meridional_scalebar(ax)
+    _ice_legend(ax, world.elevation, world.land)
     cmap, norm = elevation_cmap_norm()
     cax = fig.add_axes((0.9, 0.2, 0.015, 0.64))
     cb = fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=cax)
     cb.set_label("高程 / 水深（m）；海平面处色带断开")
     ax.set_title(f"{world.display_name} · 高程（分层设色 + 山体阴影，垂直夸张 {vert_exag:g}×）· 等距圆柱投影", fontsize=13)
-    stamp(fig, world, f"{world.method_label}（高程）", ["黑线：海岸线（陆地掩膜 0.5 等值线）。"])
+    stamp(fig, world, f"{world.method_label}（高程）", [MASK_NOTE])
     _save(fig, path)
+
+
+MASK_NOTE = "黑线：海岸线（陆地掩膜 0.5 等值线）。着色服从海陆掩膜：低于海平面的陆地（干洼地）按陆地色，海洋不显示正高程。"
+
+
+def _ice_legend(ax, elev, land, loc="lower right"):
+    """掩膜为海、高程为正的格点（漂浮冰架）存在时，加图例说明。"""
+    if has_ice_shelf(elev, land):
+        ax.legend(handles=[Patch(color=ICE_SHELF_RGB, label="冰架（漂浮冰：海陆掩膜按海计，高程为冰面）")],
+                  loc=loc, fontsize=8, framealpha=0.85)
 
 
 def polar_elevation(world, path, north: bool = True, edge_lat: float = 40.0):
@@ -89,7 +108,7 @@ def polar_elevation(world, path, north: bool = True, edge_lat: float = 40.0):
     xs = np.linspace(ext[0], ext[1], land.shape[1])
     ys = np.linspace(ext[3], ext[2], land.shape[0])
     inside = np.hypot(*np.meshgrid(xs, ys)) <= size / 2  # 只显示到纬度 edge_lat 的圆盘
-    rgba = np.dstack([shaded_elevation(elev, g.pixel_km_equator, vert_exag=3.0)[..., :3], inside.astype(float)])
+    rgba = np.dstack([shaded_elevation(elev, g.pixel_km_equator, vert_exag=3.0, land=land)[..., :3], inside.astype(float)])
     ax.imshow(rgba, extent=ext, interpolation="nearest")
     ax.contour(xs, ys, np.where(inside, land, np.nan), levels=[0.5], colors="k", linewidths=0.5)
     draw_graticule(ax, (clat, 0.0), lat, lon, ext, step=10.0)
@@ -114,9 +133,8 @@ def polar_elevation(world, path, north: bool = True, edge_lat: float = 40.0):
     hemi = "北" if north else "南"
     ax.set_title(f"{world.display_name} · {hemi}极区高程（{hemi}纬 {edge_lat:g}° 以{'北' if north else '南'}）· "
                  f"以极点为中心的等面积方位投影", fontsize=12)
-    notes = ["极地图避免等距圆柱投影的高纬拉伸掩盖问题；按格网像元最近邻取样，经纬网 10°。"]
-    if world.is_earth and not north:
-        notes.append("注：南极冰架是漂浮冰，Natural Earth 不算陆地（海岸线把它圈在海中），但 ETOPO 给的是冰面高程，所以显示为正高程。")
+    _ice_legend(ax, elev[inside], land[inside], loc="upper right")
+    notes = ["极地图避免等距圆柱投影的高纬拉伸掩盖问题；按格网像元最近邻取样，经纬网 10°。", MASK_NOTE]
     stamp(fig, world, f"{world.method_label}（高程）", notes)
     _save(fig, path)
 
@@ -314,12 +332,17 @@ def mountain_systems(world, metrics, fields, path, n_label: int = 12):
     mt = metrics["C"]["mountains"]
     ax.legend(handles=[Patch(color=(0.55, 0.2, 0.2, 0.8), label=f"编号 {n_label} 以外的山系，以及面积不足山系下限的零散山地")],
               loc="upper left", bbox_to_anchor=(1.01, 1.0), fontsize=8, frameon=False)
-    txt = ["C 层山系（v1 定义）", f"山系数       {mt['n_systems']}", f"长 > 1000 km {mt['n_longer_than_min_length']}",
-           f"山地占陆地   {mt['mountain_land_fraction']:.3f}", "", "编号  长度 km  平均宽 km"]
-    txt += [f"{i + 1:>3}  {s['length_km']:>8.0f}  {s['mean_width_km']:>8.0f}" for i, s in enumerate(systems[:n_label])]
+    txt = ["C 层山系（v1 定义 + U16 形态量）", f"山系数       {mt['n_systems']}", f"长 > 1000 km {mt['n_longer_than_min_length']}",
+           f"山地占陆地   {mt['mountain_land_fraction']:.3f}", f"最长山系     {mt['longest_km']:.0f} km",
+           f"加权长宽比   {mt['area_weighted_aspect_ratio']:.2f}", f"成带面积占比 {mt['elongated_area_fraction']:.2f}",
+           "", "编号  长度km 宽km 长宽比 走向°"]
+    txt += [f"{i + 1:>3} {s['length_km']:>7.0f} {s['mean_width_km']:>5.0f} {s['aspect_ratio']:>5.2f} {s['orientation_deg']:>5.0f}"
+            for i, s in enumerate(systems[:n_label])]
+    txt += ["", "长宽比 = 主轴长宽比（圆斑≈1）；", "走向 0° = 南北，90° = 东西"]
     fig.text(0.755, 0.12, "\n".join(txt), fontsize=8.5, va="bottom", family=MONO_FAMILY)
     ax.set_title(f"{world.display_name} · 山系（按面积编号；底图为陆地高程灰度）", fontsize=13)
     stamp(fig, world, f"由高程派生（输入 {world.method_label}）",
           ["山地 = 高程 ≥ 1000 m 且 ±100 km 内起伏 ≥ 1000 m；间隔 < 100 km 的连成山系；长度为骨架最长路径。"
-           + ("地球已剔除南极与格陵兰冰盖。" if world.is_earth else "")])
+           + ("本世界带冰盖掩膜（高程为冰面高程），冰盖区不计入山系（对所有带冰盖掩膜的世界同样适用）。"
+              if world.mountain_exclude is not None else "")])
     _save(fig, path)

@@ -5,7 +5,7 @@
 #
 # 距离一律为大圆距离（km），面积为球面面积（km²），形态学运算以格点中心距离定义圆盘。
 
-version: 1
+version: 2                               # v2（2026-10-21）：U11 B1 同类比较、U16 山系形态指标；v1 的数值定义不变
 
 A_hard_constraints:
   ocean_fraction:
@@ -48,7 +48,13 @@ B1_coast:
   islands:
     min_area_pixels: 4                   # Korčak 拟合的面积下限 = 4 个赤道格点
   shelf_depth_m: 200
-  target: 落在地球各大洲同分辨率基准的范围内（data/earth_reference/baselines_<分辨率>.json）
+  # U11（2026-10-21 用户同意，见 reviews/stage0_calibration.md §5 R1）：0.7 校准发现原比较方式口径不一致
+  # （地球按含近岸岛屿的"大洲"，世界按陆块本体），且以最圆的非洲为下限。改为同类比较：
+  verdict:
+    method: landmass_unit_floor          # 与地球大陆级陆块本体（陆块单元切分）比较，实现见 packages/metrics/verdict.py
+    unit_min_area_km2: 5.0e+6            # 参与判定、也用来构成地球参照的陆块下限（= continent_min_area_km2）
+    reference_only: [coastline_development]   # 随面积增大，只作参考、不判定
+  target: 世界每个大陆级陆块的各项不低于地球大陆级陆块本体中的最小值（距海距离类不高于最大值），同分辨率、同一切分方式；地球亚非欧本体为主大陆的评分目标（baselines_<分辨率>.json 的 landmass_unit_reference）
 
 B2_dryness:
   distance_to_sea_thresholds_km: [500, 1000]
@@ -62,3 +68,8 @@ C_earthlike:
     merge_gap_km: 100                    # 间隔 < 100 km 的山地连成同一山系
     min_area_km2: 2.0e+4
     min_length_km: 1000                  # 统计"长度 > 1000 km 的山系数量"
+    # U16（2026-10-21 用户同意，见 reviews/stage0_calibration.md §5 R2）：0.7 校准发现单靠山系计数识别不出噪声斑块山
+    elongated_aspect_min: 3.0            # 主轴长宽比 ≥ 3 的山系算"成带"，统计其面积占比
+    low_tier:                            # 低矮山地一级：识别乌拉尔、阿巴拉契亚这类古老剥蚀山地（v1 阈值下看不见）
+      min_elevation_m: 300
+      min_relief_m: 500

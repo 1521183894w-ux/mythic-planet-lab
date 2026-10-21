@@ -30,13 +30,32 @@ def elevation_cmap_norm():
     return cmap, norm
 
 
-def shaded_elevation(elev_m: np.ndarray, pixel_km: float, vert_exag: float = 1.0) -> np.ndarray:
-    """分层设色 + 山体阴影的 RGB 图像。"""
+ICE_SHELF_RGB = (0.89, 0.94, 0.97)
+
+
+def shaded_elevation(elev_m: np.ndarray, pixel_km: float, vert_exag: float = 1.0,
+                     land: np.ndarray | None = None) -> np.ndarray:
+    """分层设色 + 山体阴影的 RGB 图像。
+
+    给出 land（海陆掩膜）时，着色服从掩膜（0.7 校准评审员 B #9）：陆地格点即使低于海平面（干洼地）也用陆地色带，
+    海洋格点用海洋色带；掩膜为海、高程却为正的格点（漂浮冰架：海陆按海计，ETOPO 给冰面高程）涂成冰色。"""
     cmap, norm = elevation_cmap_norm()
     z = np.clip(elev_m, ELEV_MIN_M, ELEV_MAX_M)
+    ice = None
+    if land is not None:
+        land = np.asarray(land) >= 0.5
+        ice = (~land) & (z > 0)
+        z = np.where(land, np.maximum(z, 1.0), np.minimum(z, -1.0))
     ls = LightSource(azdeg=315, altdeg=45)
-    return ls.shade(z, cmap=cmap, norm=norm, blend_mode="soft", vert_exag=vert_exag,
-                    dx=pixel_km * 1000.0, dy=pixel_km * 1000.0)
+    rgb = ls.shade(z, cmap=cmap, norm=norm, blend_mode="soft", vert_exag=vert_exag,
+                   dx=pixel_km * 1000.0, dy=pixel_km * 1000.0)
+    if ice is not None and ice.any():
+        rgb[ice, :3] = ICE_SHELF_RGB
+    return rgb
+
+
+def has_ice_shelf(elev_m: np.ndarray, land: np.ndarray) -> bool:
+    return bool(((np.asarray(land) < 0.5) & (elev_m > 0)).any())
 
 
 def setup_fonts() -> None:

@@ -22,6 +22,7 @@ import numpy as np
 from mythic.figures.world import EARTH_RANGE_UNITS, RANGE_KEYS, ROOT, code_version, load_earth, load_world_nc, to_jsonable
 from mythic.metrics.compute import compute_all, load_config
 from mythic.metrics.distributions import wasserstein
+from mythic.metrics.verdict import b_verdict
 
 COMPLEX_REFS = ["Afro-Eurasia", "Europe", "Asia", "North America"]
 SMALLER_IS_BETTER = {"land_fraction_beyond_1000km", "distance_to_sea_median_km"}
@@ -57,8 +58,11 @@ def summarize(m: dict, cfg: dict) -> dict:
         "global": {"fractal_D": m["B1"]["fractal_dimension"]["D"], "coastline_km": m["B1"]["coastline_length_km"],
                    "islands": m["B1"]["islands"]["n_islands"], "korcak_b": m["B1"]["islands"]["korcak"]["b"],
                    "shelf_fraction": m["B1"]["shelf_fraction_of_ocean"], "B2": m["B2"],
-                   "mountains": {k: m["C"]["mountains"][k] for k in ("n_systems", "n_longer_than_min_length", "mountain_land_fraction")},
-                   "mountain_top8": [{k: s[k] for k in ("length_km", "mean_width_km", "sinuosity")} for s in m["C"]["mountains"]["systems"][:8]],
+                   "mountains": {k: m["C"]["mountains"][k] for k in (
+                       "n_systems", "n_longer_than_min_length", "mountain_land_fraction", "longest_km", "top3_length_km",
+                       "area_weighted_aspect_ratio", "elongated_area_fraction", "low_tier")},
+                   "mountain_top8": [{k: s[k] for k in ("length_km", "mean_width_km", "sinuosity", "aspect_ratio", "orientation_deg")}
+                                     for s in m["C"]["mountains"]["systems"][:8]],
                    "slope_land_quantiles_deg": m["C"]["slope"]["quantiles_land_deg"],
                    "elevation_land_quantiles_m": m["C"]["hypsometry"]["quantiles_land_m"]},
     }
@@ -98,21 +102,29 @@ def main() -> None:
         rm = compute_all(rw.elevation, rw.land, cfg=cfg)
         es, rs = summarize(em, cfg), summarize(rm, cfg)
         a_e, a_r = ew.grid.cell_area_km2, rw.grid.cell_area_km2
+        reference = base["landmass_unit_reference"]
         result["resolutions"][res] = {
             "earth_continents_current_reference": continents,
             "earth_as_world": es, "rounded": rs,
             "verdicts_main_continent": {"earth": verdicts(es["units"]["main_continent"], continents, es["units"]),
                                         "rounded": verdicts(rs["units"]["main_continent"], continents, es["units"])},
+            # 正式判定（U11 采纳后，config/metrics.yaml B1_coast.verdict；实现 packages/metrics/verdict.py）
+            "b_verdict": {"earth": b_verdict(em["by_region"], reference, cfg), "rounded": b_verdict(rm["by_region"], reference, cfg)},
             "wasserstein_elevation_m": {"global": wasserstein(rw.elevation, a_r, ew.elevation, a_e),
                                         "land": wasserstein(rw.elevation[rw.land], a_r[rw.land], ew.elevation[ew.land], a_e[ew.land])},
         }
         v = result["resolutions"][res]["verdicts_main_continent"]
-        for name in ("earth", "rounded"):
+        bv = result["resolutions"][res]["b_verdict"]
+        for name, s in (("earth", es), ("rounded", rs)):
             n = len(v[name])
-            print(f"[{res}] {name}: A 全部达标={all((es if name == 'earth' else rs)['A_pass'].values())}；主大陆 B1/B2 {n} 项中 "
-                  f"现行范围内 {sum(d['current_in_range'] for d in v[name].values())}，"
+            mt = s["global"]["mountains"]
+            print(f"[{res}] {name}: A 全部达标={all(s['A_pass'].values())}；主大陆 B1/B2 {n} 项中 "
+                  f"旧范围内 {sum(d['current_in_range'] for d in v[name].values())}，"
                   f"方式 1 通过 {sum(d['opt1_pass'] for d in v[name].values())}，"
-                  f"方式 3 通过 {sum(d['opt3_pass'] for d in v[name].values())}", flush=True)
+                  f"方式 3 通过 {sum(d['opt3_pass'] for d in v[name].values())}；正式判定 "
+                  + "、".join(f"{u} {x['n_pass']}/{x['n_judged']}" for u, x in bv[name]["units"].items())
+                  + f"；山系 最长 {mt['longest_km']:.0f} km，加权长宽比 {mt['area_weighted_aspect_ratio']:.2f}，"
+                  f"成带面积占比 {mt['elongated_area_fraction']:.2f}", flush=True)
     out = ROOT / "reviews" / "stage0_calibration_data.json"
     out.write_text(json.dumps(to_jsonable(result), ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print(f"写出 {out.relative_to(ROOT)}")

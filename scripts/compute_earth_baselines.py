@@ -28,6 +28,7 @@ from mythic.figures.world import EARTH_REGION_NAMES as NAMES
 from mythic.figures.world import earth_ice_mask, to_jsonable
 from mythic.figures.world import earth_ranges as ranges
 from mythic.metrics.compute import DEFAULT_CONFIG, compute_all, load_config
+from mythic.metrics.verdict import earth_unit_reference
 
 ROOT = Path(__file__).resolve().parents[1]
 REF = ROOT / "data" / "earth_reference"
@@ -38,6 +39,24 @@ def git_commit() -> str:
                               check=True).stdout.strip()
     except Exception:  # noqa: BLE001
         return "unknown"
+
+
+def unit_names(units: np.ndarray, cont: np.ndarray, area: np.ndarray, min_area_km2: float) -> dict:
+    """给地球的大陆级陆块单元起名：取占该陆块面积 ≥ 10% 的大洲；正好是"亚非欧""美洲"这样的组合就用组合名。"""
+    u_area = np.bincount(units.ravel(), weights=area.ravel())
+    main_id = int(np.argmax(u_area[1:]) + 1)
+    names = {}
+    for u in np.flatnonzero(u_area >= min_area_km2):
+        if u == 0:
+            continue
+        m = units == u
+        shares = {int(i): float(area[m & (cont == i)].sum()) for i in np.unique(cont[m]) if i > 0}
+        tot = sum(shares.values()) or 1.0
+        major = sorted(i for i, s in shares.items() if s / tot >= 0.1)
+        group = next((gname for gname, gids in GROUPS.items() if sorted(gids) == major), None)
+        label = group or "+".join(NAMES[i] for i in major)
+        names["main_continent" if u == main_id else f"unit_{int(u)}"] = f"{label}（本体）"
+    return names
 
 
 def main() -> None:
@@ -57,6 +76,10 @@ def main() -> None:
         from mythic.metrics.grid import LatLonGrid
         g = LatLonGrid.from_shape(land.shape)
         a = g.cell_area_km2
+        # U11：按陆块单元（与虚构世界同一切分）再算一遍，得到同口径的地球参照
+        by_unit, fields = compute_all(elev, land, cfg=cfg, mountain_exclude=ice, return_fields=True)
+        min_unit = cfg["B1_coast"]["verdict"]["unit_min_area_km2"]
+        unit_ref = earth_unit_reference(by_unit["by_region"], min_unit, unit_names(fields["units"], cont, a, min_unit))
         payload = {
             "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
             "grid": res,
@@ -75,7 +98,10 @@ def main() -> None:
             "sensitivity": {
                 "ocean_fraction_if_land_is_etopo_elevation_gt_0": float(1 - (a * land_etopo).sum() / a.sum()),
             },
-            "earth_ranges_over_continents": {"units": RANGE_UNITS, "values": ranges(result["by_region"])},
+            "earth_ranges_over_continents": {
+                "units": RANGE_UNITS, "values": ranges(result["by_region"]),
+                "note": "大洲口径（含近岸岛屿）。0.7 校准后 B1 判定改用 landmass_unit_reference（U11），本节保留作参考"},
+            "landmass_unit_reference": unit_ref,
             **result,
         }
         out = REF / f"baselines_{res}.json"

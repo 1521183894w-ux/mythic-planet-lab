@@ -16,7 +16,6 @@ from matplotlib.ticker import MaxNLocator  # noqa: E402
 from mythic.metrics.topology import component_sums, label  # noqa: E402
 
 from .style import stamp  # noqa: E402
-from .world import EARTH_RANGE_UNITS, RANGE_KEYS, earth_ranges  # noqa: E402
 
 WORLD_C = "#c0392b"
 EARTH_C = "#2c3e50"
@@ -105,7 +104,7 @@ def _island_areas(w, cont_min):
     return np.sort(a[a < cont_min])[::-1]
 
 
-def coast_vs_earth(world, metrics, earth_metrics, earth_world, cfg, path):
+def coast_vs_earth(world, metrics, earth_metrics, earth_world, cfg, verdict, reference, path):
     """海岸：盒计数（分形维数）、岛屿面积分布（Korčak），以及各大陆 B1/B2 指标与地球各大洲范围。"""
     wl, el = _labels(world)
     fig = plt.figure(figsize=(18, 11))
@@ -133,53 +132,44 @@ def coast_vs_earth(world, metrics, earth_metrics, earth_world, cfg, path):
         ax.grid(alpha=0.3, which="both")
         ax.legend(fontsize=9)
 
-    # 各大陆指标与地球各大洲范围
-    rng = earth_ranges(earth_metrics["by_region"])
-    items = []
-    for key in RANGE_KEYS:
-        if isinstance(rng[key], dict) and "min" not in rng[key]:
-            for r in sorted(rng[key], key=float):
-                items.append((key, r))
-        else:
-            items.append((key, None))
+    # 各大陆级陆块的 B1/B2 与地球大陆级陆块本体（U11：同一切分方式）
     titles = {"fractal_dimension": "分形维数 D", "coastline_development": "海岸发育系数", "peninsula_index": "半岛指数",
               "bay_index": "海湾指数", "land_fraction_beyond_1000km": "离海 > 1000 km 陆地比例",
               "distance_to_sea_median_km": "距海距离中位数（km）"}
-    regions = _world_regions(world, metrics)
+    items = list(reference["pass_line"])
+    wunits = list(verdict["units"])
     sub = gs[1, :].subgridspec(1, len(items), wspace=0.9)
-    for n, (key, r) in enumerate(items):
+    for n, k in enumerate(items):
         ax = fig.add_subplot(sub[0, n])
-        band = rng[key][r] if r else rng[key]
-        ax.axhspan(band["min"], band["max"], color="0.85", zorder=0)
-        e_vals = [(u, _get(earth_metrics["by_region"][u][key], r)) for u in EARTH_RANGE_UNITS
-                  if u in earth_metrics["by_region"]]
-        ax.scatter(np.zeros(len(e_vals)), [v for _, v in e_vals], s=14, color=EARTH_C, zorder=2)
-        for k, (name, rid) in enumerate(regions):
-            v = _get(metrics["by_region"][rid][key], r)
-            ax.scatter([1 + 0.15 * k], [v], s=30, color=WORLD_C if k == 0 else "#e67e22", marker="D", zorder=3)
+        line = reference["pass_line"][k]
+        e_vals = [u[k] for u in reference["units"].values()]
+        ax.scatter(np.zeros(len(e_vals)), e_vals, s=16, color=EARTH_C, zorder=2)
+        ref_only = bool(wunits) and verdict["units"][wunits[0]]["metrics"][k]["pass"] is None
+        ax.axhline(line["value"], color="0.45" if ref_only else "#2e7d32", ls="--", lw=1.2, zorder=1)
+        for j, u in enumerate(wunits):
+            r = verdict["units"][u]["metrics"][k]
+            ax.scatter([1 + 0.15 * j], [r["value"]], s=34, marker="D", zorder=3,
+                       color=WORLD_C if j == 0 else "#e67e22", edgecolors="k" if r["pass"] else "none")
         ax.set_xticks([0, 1])
         ax.set_xticklabels(["地球", "本世界"], fontsize=8)
         ax.set_xlim(-0.6, 1.9)
-        ax.set_title(titles[key] + (f"\n半径 {r} km" if r else ""), fontsize=8.5)
+        base, _, rad = k.partition("@")
+        ax.set_title(titles[base] + (f"\n半径 {rad} km" if rad else "") + ("\n（只作参考）" if ref_only else ""), fontsize=8.5)
         ax.tick_params(axis="y", labelsize=7)
         ax.grid(alpha=0.3, axis="y")
-    fig.text(0.01, 0.075, "下排：灰带 = 地球各大洲（" + "、".join(EARTH_RANGE_UNITS) + "）同分辨率的 [最小, 最大]；深色点 = 地球各大洲；"
-             f"红色菱形 = {regions[0][0]}" + (f"，橙色菱形 = 其余大陆级陆块（{'、'.join(n for n, _ in regions[1:])}）" if len(regions) > 1 else "")
-             + "。B1 的比较方式（落在范围内 / 与上半区间比）待用户确认（PROGRESS U11）。", fontsize=8.5)
+    names = "、".join(v["name"] for v in reference["units"].values())
+
+    def label(u):
+        n = verdict["units"][u].get("name", u)
+        if n != u:
+            return n
+        return "主大陆" if u == "main_continent" else f"陆块 {u.removeprefix('unit_')}"
+
+    wn = [label(u) for u in wunits]
+    fig.text(0.01, 0.06, f"下排（U11 同类比较）：深色点 = 地球大陆级陆块本体（{names}），与世界同一切分方式；"
+             "绿色虚线 = 合格线（不低于其中最小值，距海距离类不高于其中最大值）；灰色虚线 = 只作参考的指标。\n"
+             f"红色菱形 = {wn[0] if wn else '—'}" + (f"，橙色菱形 = 其余大陆级陆块（{'、'.join(wn[1:])}）" if len(wn) > 1 else "")
+             + "；菱形带黑边 = 达标。", fontsize=8.5)
     fig.suptitle(f"{world.display_name} · 海岸复杂度与距海距离：与同分辨率地球对比（B1、B2）", fontsize=13)
     stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_label}）")
     _save(fig, path)
-
-
-def _get(v, r):
-    return v[r] if r is not None else v
-
-
-def _world_regions(world, metrics) -> list[tuple[str, str]]:
-    """右侧要画的世界区域：地球用亚非欧与美洲；虚构世界用主大陆和其余大陆级陆块。"""
-    br = metrics["by_region"]
-    if world.is_earth:
-        return [(n, n) for n in ("Afro-Eurasia", "Americas") if n in br]
-    out = [("主大陆", "main_continent")] if "main_continent" in br else []
-    out += [(k, k) for k in br if k.startswith("unit_")]
-    return out or [("全部陆地", "all_land")]
