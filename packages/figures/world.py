@@ -80,12 +80,18 @@ def earth_ice_mask(continent_id: np.ndarray, lat: np.ndarray, lon: np.ndarray) -
     return (continent_id == 7) | ((continent_id == 4) & (lat2 > 59) & (lon2 > -75) & (lon2 < -10))
 
 
+CODE_PATHS = ["packages", "scripts", "config", "pyproject.toml", "environment.yml", "environment.win-64.lock.txt"]
+
+
 def code_version() -> str:
-    """当前代码版本：Git 短提交号；有未提交的已跟踪文件改动时加 "-dirty"。"""
+    """当前代码版本：Git 短提交号；代码、配置或环境文件（CODE_PATHS）有未提交的改动或未跟踪的新文件时加 "-dirty"。
+    数据、文档、评审报告的改动不算：它们不影响计算结果，而且重算数据本身就会改写已跟踪的数据文件
+    （例如先重算地球基准，后面的脚本就会误报 dirty）。未跟踪的新脚本算 dirty：0.7 曾出现过用未提交的脚本生成数据、
+    版本号却显示干净的情况。"""
     try:
         commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True,
                                 check=True).stdout.strip()
-        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=ROOT,
+        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=normal", "--", *CODE_PATHS], cwd=ROOT,
                                capture_output=True, text=True, check=True).stdout.strip()
         return commit + ("-dirty" if dirty else "")
     except Exception:  # noqa: BLE001
