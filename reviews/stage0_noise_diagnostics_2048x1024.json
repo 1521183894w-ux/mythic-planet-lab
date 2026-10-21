@@ -1,8 +1,8 @@
 {
  "description": "探索性诊断：识别'有复杂度、无成因'的海岸（不是正式指标）",
  "resolution": "2048x1024",
- "code_version": "b510ae9-dirty",
- "generated": "2026-10-22 00:29:27",
+ "code_version": "1c6b80e",
+ "generated": "2026-10-22 00:39:22",
  "worlds": {
   "earth": {
    "n_windows": 3732,
