@@ -1,0 +1,131 @@
+{
+ "description": "探索性诊断：识别'有复杂度、无成因'的海岸（不是正式指标）",
+ "resolution": "2048x1024",
+ "code_version": "4773059-dirty",
+ "generated": "2026-10-22 00:01:06",
+ "worlds": {
+  "earth": {
+   "n_windows": 3732,
+   "complexity_p10_p50_p90": [
+    1.1999694681250581,
+    2.2233523196535137,
+    4.055432773607402
+   ],
+   "complexity_p90_over_p10": 3.3796132996150146,
+   "complexity_cv": 0.5191173838937748,
+   "spearman_complexity_vs_abslat": 0.6110599762137652,
+   "spearman_complexity_vs_relief": -0.007719629179576749,
+   "largest_landmass_Mkm2": 79.58671825479908,
+   "largest_landmass_peninsula_bay_by_radius_km": {
+    "100": {
+     "peninsula": 0.016652544649121782,
+     "bay": 0.018226739193899045
+    },
+    "200": {
+     "peninsula": 0.03806761228695782,
+     "bay": 0.050911010274469086
+    },
+    "300": {
+     "peninsula": 0.06597850088941498,
+     "bay": 0.07756484512239364
+    },
+    "500": {
+     "peninsula": 0.11897725597962965,
+     "bay": 0.10304633980329603
+    }
+   },
+   "islands_counted": 169,
+   "oceanic_islands_beyond_1000km": 42,
+   "oceanic_island_fraction": 0.2485207100591716,
+   "mountains": {
+    "n_systems": 48,
+    "n_longer_than_min_length": 14,
+    "longest_km": 10691.3,
+    "area_weighted_aspect_ratio": 3.062525478608642,
+    "elongated_area_fraction": 0.38993640864022033
+   }
+  },
+  "rounded": {
+   "n_windows": 1244,
+   "complexity_p10_p50_p90": [
+    1.0,
+    1.0000802933122674,
+    1.0096048675342892
+   ],
+   "complexity_p90_over_p10": 1.0096048675342892,
+   "complexity_cv": 0.06821545106549383,
+   "spearman_complexity_vs_abslat": -0.012542862002203007,
+   "spearman_complexity_vs_relief": 0.051817259975289805,
+   "largest_landmass_Mkm2": 109.14534822959331,
+   "largest_landmass_peninsula_bay_by_radius_km": {
+    "100": {
+     "peninsula": 0.00010774507088010444,
+     "bay": 0.0007301568217219419
+    },
+    "200": {
+     "peninsula": 0.006373105101403866,
+     "bay": 0.0010629220670239227
+    },
+    "300": {
+     "peninsula": 0.007455145346282229,
+     "bay": 0.001805459729270665
+    },
+    "500": {
+     "peninsula": 0.015964588926183184,
+     "bay": 0.004731389460333986
+    }
+   },
+   "islands_counted": 4,
+   "oceanic_islands_beyond_1000km": 3,
+   "oceanic_island_fraction": 0.75,
+   "mountains": {
+    "n_systems": 33,
+    "n_longer_than_min_length": 12,
+    "longest_km": 2104.1,
+    "area_weighted_aspect_ratio": 1.6549452133950944,
+    "elongated_area_fraction": 0.007853717931648388
+   }
+  },
+  "noise": {
+   "n_windows": 3849,
+   "complexity_p10_p50_p90": [
+    2.012751625233274,
+    2.5575141055952644,
+    3.661267421153006
+   ],
+   "complexity_p90_over_p10": 1.8190358786711558,
+   "complexity_cv": 0.24209823965568608,
+   "spearman_complexity_vs_abslat": -0.05343871847123348,
+   "spearman_complexity_vs_relief": -0.04357210972075656,
+   "largest_landmass_Mkm2": 109.07504467902926,
+   "largest_landmass_peninsula_bay_by_radius_km": {
+    "100": {
+     "peninsula": 0.05482650092683763,
+     "bay": 0.0400036792900801
+    },
+    "200": {
+     "peninsula": 0.10147136337684898,
+     "bay": 0.06060417846295513
+    },
+    "300": {
+     "peninsula": 0.1333162538593668,
+     "bay": 0.0770307274803256
+    },
+    "500": {
+     "peninsula": 0.1800987074878468,
+     "bay": 0.10330099830386676
+    }
+   },
+   "islands_counted": 189,
+   "oceanic_islands_beyond_1000km": 19,
+   "oceanic_island_fraction": 0.10052910052910052,
+   "mountains": {
+    "n_systems": 32,
+    "n_longer_than_min_length": 11,
+    "longest_km": 5220.5,
+    "area_weighted_aspect_ratio": 2.018986716787853,
+    "elongated_area_fraction": 0.17320050839328244
+   }
+  }
+ }
+}

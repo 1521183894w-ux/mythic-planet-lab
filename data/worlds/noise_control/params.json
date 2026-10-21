@@ -1,0 +1,41 @@
+{
+ "description": "阶段 0.7 第二个对照样本（噪声海岸世界）的生成参数（重建：scripts/make_noise_world.py）",
+ "method_class_elevation": "visual_only",
+ "template": "scripts/make_rounded_world.py 的有符号距离场",
+ "secondary_radius_deg_tuned": 25.706973671913147,
+ "noise": {
+  "amp0_km": 250.0,
+  "hurst": 0.5,
+  "octaves_km": [
+   2000.0,
+   1000.0,
+   500.0,
+   250.0,
+   125.0,
+   62.5
+  ],
+  "waves_per_octave": 160
+ },
+ "protection_km": [
+  150.0,
+  500.0
+ ],
+ "threshold_km": 0.0,
+ "seed": 1,
+ "seed_screening": [
+  {
+   "seed": 1,
+   "A_all_1024": true,
+   "A_failed": [],
+   "main_B_all_1024": true,
+   "A_all_2048": true
+  }
+ ],
+ "files": {
+  "2048x1024": "data/worlds/noise_control/noise_control_2048x1024.nc",
+  "1024x512": "data/worlds/noise_control/noise_control_1024x512.nc",
+  "512x256": "data/worlds/noise_control/noise_control_512x256.nc"
+ },
+ "code_version": "4773059",
+ "generated": "2026-10-21 23:47:41"
+}

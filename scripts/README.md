@@ -47,7 +47,9 @@ powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\make_
 | 脚本 | 用途 |
 |---|---|
 | `make_rounded_world.py` | 生成"圆润世界"对照样本（故意做坏：光滑解析几何 + 噪声斑块山，能通过 A 层），写 `data/worlds/rounded_control/`（nc 不进 Git，`params.json` 进 Git），约 2 分钟 |
-| `calibration_metrics.py` | 地球与圆润世界的指标对比、B1 比较方式试算，写 `reviews/stage0_calibration_data.json`，约 1 分钟 |
+| `make_noise_world.py` | 生成第二个对照样本"噪声海岸世界"（圆润世界的大格局 + 多尺度分形噪声海岸，method_class visual_only；故意调参让 A 层和 B1 都通过），写 `data/worlds/noise_control/`（nc 不进 Git，`params.json` 进 Git），约 3 分钟。`--explore` 只试几组噪声参数 |
+| `calibration_metrics.py` | 地球与两个对照样本的指标对比、B1 判定，写 `reviews/stage0_calibration_data.json`，约 1 分钟 |
+| `coast_origin_diagnostics.py` | 探索性诊断（不是正式指标）：海岸复杂度的空间异质性、与纬度和地形的相关、远洋岛屿、大尺度半岛海湾指数、山系形态，比较地球与两个对照样本，写 `reviews/stage0_noise_diagnostics_<分辨率>.json`，2048x1024 约 40 秒 |
 
 校准结论见 `reviews/stage0_calibration.md`。
 

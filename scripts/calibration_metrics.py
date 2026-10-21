@@ -1,4 +1,5 @@
-"""阶段 0.7 尺子校准的指标对比：地球 vs 圆润世界（2048x1024、1024x512）。输出 reviews/stage0_calibration_data.json。
+"""阶段 0.7 尺子校准的指标对比：地球 vs 对照样本（圆润世界、噪声海岸世界；2048x1024、1024x512）。
+输出 reviews/stage0_calibration_data.json。
 
 内容：
 - 两个世界都按"陆块单元"分区（虚构世界的标准处理；地球也这样算，才能同类比较）的 A 层、B1/B2 分区数值、全球 B1/B2/C 摘要；
@@ -6,9 +7,11 @@
 - PROGRESS U11 的两种候选比较方式的试算（只是试算，不改 config/metrics.yaml）：
   方式 1：主大陆不低于地球"海岸复杂"的参照（亚非欧、欧洲、亚洲、北美，大洲口径）中的最小值；
   方式 3（同类比较）：主大陆不低于地球大陆级陆块本体（陆块单元口径）中的最小值；
-- 高程分布的 Wasserstein-1 距离（圆润世界 vs 地球）。
+- 正式的 B1/B2 判定（b_verdict，U11 采纳后的同类比较）；
+- 高程分布的 Wasserstein-1 距离（每个对照样本 vs 地球，按世界名分键）。
 
-前置：scripts/make_rounded_world.py 已生成 data/worlds/rounded_control/。
+前置：scripts/make_rounded_world.py、scripts/make_noise_world.py 已生成 data/worlds/rounded_control/、noise_control/
+（缺哪个就跳过哪个）。
 用法：powershell -ExecutionPolicy Bypass -File scripts\\run.ps1 python -u scripts\\calibration_metrics.py
 """
 
@@ -27,6 +30,8 @@ from mythic.metrics.verdict import b_verdict
 COMPLEX_REFS = ["Afro-Eurasia", "Europe", "Asia", "North America"]
 SMALLER_IS_BETTER = {"land_fraction_beyond_1000km", "distance_to_sea_median_km"}
 RESOLUTIONS = ["2048x1024", "1024x512"]
+CONTROLS = {"rounded": "data/worlds/rounded_control/rounded_control_{res}.nc",   # 第一个对照样本
+            "noise": "data/worlds/noise_control/noise_control_{res}.nc"}         # 第二个对照样本（噪声海岸）
 
 
 def flat(region: dict) -> dict:
@@ -96,26 +101,34 @@ def main() -> None:
         base = json.loads((ROOT / f"data/earth_reference/baselines_{res}.json").read_text(encoding="utf-8"))
         continents = {u: flat(base["by_region"][u]) for u in EARTH_RANGE_UNITS}
         ew = load_earth(res)
-        rw = load_world_nc(ROOT / f"data/worlds/rounded_control/rounded_control_{res}.nc")
-        # 两个世界一视同仁：按陆块单元分区；地球的山系统计照基准剔除冰盖（圆润世界没有冰盖，不受影响）
+        # 所有世界一视同仁：按陆块单元分区；地球的山系统计照基准剔除冰盖（对照样本没有冰盖，不受影响）
         em = compute_all(ew.elevation, ew.land, cfg=cfg, mountain_exclude=ew.mountain_exclude)
-        rm = compute_all(rw.elevation, rw.land, cfg=cfg)
-        es, rs = summarize(em, cfg), summarize(rm, cfg)
-        a_e, a_r = ew.grid.cell_area_km2, rw.grid.cell_area_km2
+        es = summarize(em, cfg)
         reference = base["landmass_unit_reference"]
-        result["resolutions"][res] = {
-            "earth_continents_current_reference": continents,
-            "earth_as_world": es, "rounded": rs,
-            "verdicts_main_continent": {"earth": verdicts(es["units"]["main_continent"], continents, es["units"]),
-                                        "rounded": verdicts(rs["units"]["main_continent"], continents, es["units"])},
-            # 正式判定（U11 采纳后，config/metrics.yaml B1_coast.verdict；实现 packages/metrics/verdict.py）
-            "b_verdict": {"earth": b_verdict(em["by_region"], reference, cfg), "rounded": b_verdict(rm["by_region"], reference, cfg)},
-            "wasserstein_elevation_m": {"global": wasserstein(rw.elevation, a_r, ew.elevation, a_e),
-                                        "land": wasserstein(rw.elevation[rw.land], a_r[rw.land], ew.elevation[ew.land], a_e[ew.land])},
-        }
-        v = result["resolutions"][res]["verdicts_main_continent"]
-        bv = result["resolutions"][res]["b_verdict"]
-        for name, s in (("earth", es), ("rounded", rs)):
+        r = {"earth_continents_current_reference": continents, "earth_as_world": es,
+             "verdicts_main_continent": {"earth": verdicts(es["units"]["main_continent"], continents, es["units"])},
+             # 正式判定（U11 采纳后，config/metrics.yaml B1_coast.verdict；实现 packages/metrics/verdict.py）
+             "b_verdict": {"earth": b_verdict(em["by_region"], reference, cfg)},
+             "wasserstein_elevation_m": {}}
+        summaries = {"earth": es}
+        for name, path in CONTROLS.items():
+            p = ROOT / path.format(res=res)
+            if not p.exists():
+                continue
+            w = load_world_nc(p)
+            m = compute_all(w.elevation, w.land, cfg=cfg)
+            s = summarize(m, cfg)
+            summaries[name] = r[name] = s
+            r["verdicts_main_continent"][name] = verdicts(s["units"]["main_continent"], continents, es["units"])
+            r["b_verdict"][name] = b_verdict(m["by_region"], reference, cfg)
+            a_w, a_e = w.grid.cell_area_km2, ew.grid.cell_area_km2
+            r["wasserstein_elevation_m"][name] = {
+                "global": wasserstein(w.elevation, a_w, ew.elevation, a_e),
+                "land": wasserstein(w.elevation[w.land], a_w[w.land], ew.elevation[ew.land], a_e[ew.land])}
+        result["resolutions"][res] = r
+        v = r["verdicts_main_continent"]
+        bv = r["b_verdict"]
+        for name, s in summaries.items():
             n = len(v[name])
             mt = s["global"]["mountains"]
             print(f"[{res}] {name}: A 全部达标={all(s['A_pass'].values())}；主大陆 B1/B2 {n} 项中 "
