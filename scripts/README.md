@@ -13,6 +13,16 @@
 | `check_env.py` | 环境自检：导入、GDAL/PROJ 冒烟测试、缓存位置检查 |
 | `disk_usage.py` | 统计目录真实磁盘占用（硬链接只算一次） |
 
+## 地球基准相关脚本（阶段 0.5）
+
+| 脚本 | 用途 |
+|---|---|
+| `build_earth_reference.py` | ETOPO 2022 + Natural Earth -> 三级格网（高程、陆地比例、湖泊、大洲），约 30 秒 |
+| `compute_earth_baselines.py` | 用指标代码计算地球基准，写 `data/earth_reference/baselines_*.json`，约 20 秒 |
+| `build_region_atlas.py` | 地球区域参照图集（51 区，两联图），约 2 分钟 |
+
+指标定义与地球基准值见 `docs/metrics_definitions.md`。
+
 详细说明见 `docs/environment.md`。
 
 ## 编写约定
