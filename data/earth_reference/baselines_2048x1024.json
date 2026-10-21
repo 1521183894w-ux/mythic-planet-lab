@@ -1,8 +1,8 @@
 {
  "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
  "grid": "2048x1024",
- "generated": "2026-10-21 22:48:47",
- "code_commit": "c3a96cb",
+ "generated": "2026-10-21 22:57:36",
+ "code_commit": "a1e01d8",
  "config": {
   "path": "config/metrics.yaml",
   "version": 2,
@@ -1676,16 +1676,16 @@
  },
  "resolution_warnings": [],
  "timings_s": {
-  "A_units": 0.67,
+  "A_units": 0.65,
   "A_subcontinents": 0.13,
-  "A_inland_seas": 2.35,
-  "A_open_ocean": 0.35,
-  "B1_coastline": 0.56,
-  "B1_morphology": 2.09,
+  "A_inland_seas": 2.33,
+  "A_open_ocean": 0.34,
+  "B1_coastline": 0.57,
+  "B1_morphology": 1.97,
   "B1_islands_shelf": 0.04,
-  "B2_distance": 0.3,
+  "B2_distance": 0.28,
   "by_region": 2.33,
-  "C_hypsometry_slope": 0.37,
+  "C_hypsometry_slope": 0.36,
   "C_mountains": 1.57
  },
  "config_version": 2

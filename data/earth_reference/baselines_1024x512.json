@@ -1,8 +1,8 @@
 {
  "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
  "grid": "1024x512",
- "generated": "2026-10-21 22:48:26",
- "code_commit": "c3a96cb",
+ "generated": "2026-10-21 22:57:15",
+ "code_commit": "a1e01d8",
  "config": {
   "path": "config/metrics.yaml",
   "version": 2,
@@ -1678,14 +1678,14 @@
   "主大陆细线连接（半径）：判定半径 25 km 小于格点间距 39 km，此分辨率下不可靠"
  ],
  "timings_s": {
-  "A_units": 0.14,
+  "A_units": 0.13,
   "A_subcontinents": 0.04,
   "A_inland_seas": 0.44,
   "A_open_ocean": 0.06,
   "B1_coastline": 0.16,
-  "B1_morphology": 0.49,
+  "B1_morphology": 0.5,
   "B1_islands_shelf": 0.01,
-  "B2_distance": 0.05,
+  "B2_distance": 0.06,
   "by_region": 0.58,
   "C_hypsometry_slope": 0.09,
   "C_mountains": 0.42
