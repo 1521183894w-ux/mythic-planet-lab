@@ -1,0 +1,26 @@
+# 本项目自己的 Python 代码（packages/ 目录）以 `mythic` 包名安装到项目环境中：
+#   packages/metrics/  ->  import mythic.metrics
+# 依赖由 environment.yml（conda-forge）管理，这里不重复声明；
+# scripts/setup_env.ps1 在建好环境后以可编辑模式安装：pip install -e . --no-deps --no-build-isolation
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mythic-planet-lab"
+version = "0.0.1"
+description = "Mythic Planet Laboratory: a fictional Earth-like planet built from geological and climate processes"
+requires-python = ">=3.12"
+
+[tool.setuptools]
+package-dir = { "mythic" = "packages" }
+# 新增子包（例如 tectonics）时在这里登记，并给该目录加 __init__.py
+packages = ["mythic", "mythic.metrics"]
+
+[tool.setuptools.package-data]
+"mythic.metrics" = ["*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

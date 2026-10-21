@@ -61,6 +61,7 @@ PACKAGES = [
     ("requests", "requests"),
     ("tqdm", "tqdm"),
     ("pytest", "pytest"),
+    ("mythic.metrics", "mythic-planet-lab"),  # 本项目代码（setup_env.ps1 以可编辑模式安装）
 ]
 
 results: list[dict] = []

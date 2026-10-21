@@ -1,0 +1,35 @@
+# 外部数据清单：Natural Earth（矢量）
+dataset: Natural Earth
+producer: Natural Earth（北美制图信息协会 NACIS 支持）
+homepage: https://www.naturalearthdata.com
+license: 公有领域（Public Domain），无需许可即可使用；建议注明 "Made with Natural Earth"。
+terms: https://www.naturalearthdata.com/about/terms-of-use/
+downloaded: 2026-10-21
+files:
+  - name: ne_10m_land.zip
+    scale: 1:10m
+    version: 5.1.1
+    url: https://naciscdn.org/naturalearth/10m/physical/ne_10m_land.zip
+    local_path: data/earth_reference/raw/natural_earth/ne_10m_land.zip
+    bytes: 3269070
+    sha256: e547d749445eaa0964aba76738090ec88f5e63c4585122170f98c67a7ea922dc
+    used_for: 地球海陆划分（权威陆地多边形，不受低于海平面的干旱洼地影响）
+  - name: ne_10m_admin_0_countries.zip
+    scale: 1:10m
+    version: 5.1.1
+    url: https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_0_countries.zip
+    local_path: data/earth_reference/raw/natural_earth/ne_10m_admin_0_countries.zip
+    bytes: 4930492
+    sha256: ce1ac7036499a0edd641fbc093cd209a98f96a49d2eca8480aaacad35138a7f6
+    used_for: 按大洲划分陆地（CONTINENT 字段），用于分大洲计算海岸复杂度
+  - name: ne_10m_lakes.zip
+    scale: 1:10m
+    version: 5.0.0
+    url: https://naciscdn.org/naturalearth/10m/physical/ne_10m_lakes.zip
+    local_path: data/earth_reference/raw/natural_earth/ne_10m_lakes.zip
+    bytes: 2349685
+    sha256: 0803a06f9c3cb4671d89b68c48b142aad9366ba40f665245e12a913fbc61722a
+    used_for: 标记大湖，避免把湖岸当作海岸
+also_cached_by_cartopy: >-
+  0.4 的 spike 通过 cartopy 自动下载过 ne_50m_land / ne_50m_coastline / ne_110m_coastline，
+  位于 .cache/xdg-data/cartopy/（仅用于出图时叠加海岸线，不作为基准数据）。

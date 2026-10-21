@@ -1,0 +1,39 @@
+# 外部数据清单：NOAA ETOPO 2022（全球地形与水深）
+dataset: ETOPO 2022 Global Relief Model
+version: v1 (ETOPO_2022_v1)
+variant: 60 arc-second, surface elevation（冰盖表面高程；另有 bed 冰下基岩版，本项目未下载）
+producer: NOAA National Centers for Environmental Information (NCEI)
+doi: 10.25921/fd45-gt74
+citation: >-
+  NOAA National Centers for Environmental Information. 2022: ETOPO 2022 15 Arc-Second
+  Global Relief Model. NOAA National Centers for Environmental Information.
+  https://doi.org/10.25921/fd45-gt74
+product_page: https://www.ncei.noaa.gov/products/etopo-global-relief-model
+license: >-
+  美国联邦政府作品，属公有领域（NOAA/NCEI 数据无使用限制）；使用时注明来源。
+files:
+  - name: ETOPO_2022_v1_60s_N90W180_surface.nc
+    url: https://www.ngdc.noaa.gov/thredds/fileServer/global/ETOPO2022/60s/60s_surface_elev_netcdf/ETOPO_2022_v1_60s_N90W180_surface.nc
+    local_path: data/earth_reference/raw/etopo2022/ETOPO_2022_v1_60s_N90W180_surface.nc
+    bytes: 478290125
+    sha256: 74bbc5c23e85188d93f0beba8116babf69e1a8f160e8dc9f053bf8df01b197b6
+    server_last_modified: 2022-10-04
+    downloaded: 2026-10-21
+    download_note: >-
+      经本机代理下载（直连不通）。单连接在约 97.6 MB 处被服务器中断，余下部分按字节范围
+      分 6 段并行下载后拼接；拼接后大小与服务器 Content-Range 报告一致，并完整读取一遍
+      全部数据验证无损坏。
+format:
+  type: netCDF4 (CF-1.5)
+  variable: z (float32, 单位 m, positive up, _FillValue -99999)
+  shape: [10800, 21600]   # lat x lon，格点中心 ±89.99167°、±179.99167°，像元配准（node_offset=1）
+  vertical_datum: EGM2008 大地水准面（EPSG:3855）
+sanity_checks_2026_10_21:
+  full_read: 成功，无 NaN
+  max: 8157 m @ 27.992N 86.925E（珠峰所在位置；60 角秒格点平均使峰值低于 8849 m）
+  min: -10752 m @ 23.225S 174.742W（汤加海沟 Horizon Deep 附近）
+used_for:
+  - 地球基准的高程与水深（高程曲线、坡度、大陆架、山系）
+  - 区域参照图集
+not_used_for:
+  - 海陆划分（低于海平面的干旱洼地如卡塔拉洼地会被误判为海；改用 Natural Earth 陆地多边形，见 natural_earth.yaml）

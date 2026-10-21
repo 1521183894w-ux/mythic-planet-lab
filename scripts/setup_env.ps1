@@ -121,15 +121,23 @@ if ($FromSpec) {
     Write-Step "锁文件已更新：$Lock（$count 个包）"
 }
 
-# ---- 5. 自检 ----------------------------------------------------------------
+# ---- 5. 安装本项目代码（packages/ -> import mythic），可编辑模式 ---------------
 . (Join-Path $PSScriptRoot 'env_vars.ps1')   # 环境刚建好，重新设置 PATH 与 GDAL/PROJ 变量
+Write-Step "以可编辑模式安装本项目代码（pyproject.toml，包名 mythic）..."
+Push-Location $MythicRoot
+try {
+    & $MythicPython -m pip install -e . --no-deps --no-build-isolation --quiet
+    if ($LASTEXITCODE -ne 0) { throw "安装本项目代码失败（退出码 $LASTEXITCODE）" }
+} finally { Pop-Location }
+
+# ---- 6. 自检 ----------------------------------------------------------------
 if (-not $SkipCheck) {
     Write-Step "运行自检 scripts\check_env.py ..."
     & $MythicPython (Join-Path $PSScriptRoot 'check_env.py')
     if ($LASTEXITCODE -ne 0) { throw "自检未通过（退出码 $LASTEXITCODE），详见上方输出与 environment\env_report.json" }
 }
 
-# ---- 6. 耗时与占用 ----------------------------------------------------------
+# ---- 7. 耗时与占用 ----------------------------------------------------------
 $stopwatch.Stop()
 Write-Step ("完成。耗时 {0:N1} 分钟" -f $stopwatch.Elapsed.TotalMinutes)
 # 环境目录里大部分文件是包缓存的硬链接，按目录直接相加会重复计算，所以用 disk_usage.py 去重统计
