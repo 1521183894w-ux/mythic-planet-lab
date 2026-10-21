@@ -17,6 +17,7 @@
 
 | 脚本 | 用途 |
 |---|---|
+| `download_earth_data.py` | 按 `data/external_manifests/` 下载地球原始数据（约 490 MB），分段并行、断线续传、SHA256 校验；已有文件跳过 |
 | `build_earth_reference.py` | ETOPO 2022 + Natural Earth -> 三级格网（高程、陆地比例、湖泊、大洲），约 30 秒 |
 | `compute_earth_baselines.py` | 用指标代码计算地球基准，写 `data/earth_reference/baselines_*.json`，约 20 秒 |
 | `build_region_atlas.py` | 地球区域参照图集（51 区，两联图），约 2 分钟 |

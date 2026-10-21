@@ -25,7 +25,12 @@
 
 ## 进行中
 
-- 笔记本尚未做：0.1 环境审计、0.3 环境重建实测（用户换到笔记本时提醒）
+- 笔记本尚未做（2026-10-21 用户准备换到笔记本）：
+  1. 0.1 环境审计 → `docs/setup_report_<笔记本机器名>.md`；
+  2. 0.3 环境重建实测：`setup_env.ps1`，记录耗时与占用，补到 `docs/environment.md` §6；
+  3. 地球数据重建：`scripts/download_earth_data.py`（按清单下载并校验 SHA256，已有文件跳过）→ `build_earth_reference.py` → `compute_earth_baselines.py` → `build_region_atlas.py`；
+  4. 可复现性核对：重算后 `git diff data/earth_reference/baselines_*.json`，除生成时间、代码提交号、耗时外，数值应与台式机完全一致；若不一致，查原因并记录。
+- 下一个工作单元（两台电脑都可以）：0.5b 奇景覆盖度核对，或 0.6 标准出图管线。
 
 ## 问题与待决事项
 
