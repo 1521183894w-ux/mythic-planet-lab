@@ -1,0 +1,64 @@
+# 质量指标的定义参数与目标（对应 docs/quality_metrics.md）
+#
+# ⚠ 修改本文件中的定义、阈值、权重，必须单独提出、说明理由，并经用户同意（CLAUDE.md 第 2 节第 5 条）。
+#   初版参数在阶段 0.5 用地球数据做敏感性分析后确定，依据见 docs/metrics_definitions.md。
+#
+# 距离一律为大圆距离（km），面积为球面面积（km²），形态学运算以格点中心距离定义圆盘。
+
+version: 1
+
+A_hard_constraints:
+  ocean_fraction:
+    target: [0.69, 0.73]                 # 71% ± 2%
+  main_continent:
+    thin_link_width_km: 50               # 宽度 < 50 km 的细线连接不算相连（实现：半径 25 km 开运算）
+    share_of_land:
+      target: [0.70, 0.85]
+  subcontinents:
+    neck_radius_km: 250                  # 颈部宽度 < 500 km 处切开（敏感性见文档）
+    min_area_km2: 1.0e+6                  # 面积 ≥ 100 万 km² 才算亚大陆
+    count:
+      target: [3, 6]
+  main_inland_sea:
+    strait_max_width_km: 150             # 宽度 < 150 km 的水道视为海峡（敏感性见文档）
+    min_main_border_fraction: 0.5        # 沿岸陆地至少一半属于主大陆才算"主大陆内部"
+    min_candidate_area_km2: 5.0e+4
+    area_km2:
+      target: [1.0e+6, 5.0e+6]
+    min_ratio_to_second: 2.0
+    straits_to_ocean:
+      target: [1, 3]
+  main_continent_latitude:
+    north_min_deg: 62                    # 北端 ≥ 62°N（软边界）
+    south_max_deg: -30                   # 南端 ≤ 30°S（软边界）
+  polar_continent:
+    min_abs_centroid_lat_deg: 70
+    area_km2: [5.0e+6, 1.5e+7]
+  open_ocean:
+    min_land_free_diameter_km: 3000
+
+B1_coast:
+  continent_min_area_km2: 5.0e+6          # ≥ 500 万 km² 的连通陆块算大陆（澳大利亚 7.6 是大陆，格陵兰 2.2 是岛）
+  peninsula_radii_km: [50, 100, 200]
+  bay_radii_km: [50, 100, 200]
+  fractal:
+    min_size_km: 10                      # 盒子尺度下限 = max(10 km, 2 个格点南北跨度)
+    max_size_km: 500                     # 上限 500 km；不足 1 个数量级时放宽到下限的 8 倍
+    n_sizes: 8
+  islands:
+    min_area_pixels: 4                   # Korčak 拟合的面积下限 = 4 个赤道格点
+  shelf_depth_m: 200
+  target: 落在地球各大洲同分辨率基准的范围内（data/earth_reference/baselines_<分辨率>.json）
+
+B2_dryness:
+  distance_to_sea_thresholds_km: [500, 1000]
+
+C_earthlike:
+  hypsometry_bin_m: 100
+  mountains:                             # v1 定义：山地 = 高程与局部起伏同时超过阈值
+    min_elevation_m: 1000
+    relief_radius_km: 100
+    min_relief_m: 1000
+    merge_gap_km: 100                    # 间隔 < 100 km 的山地连成同一山系
+    min_area_km2: 2.0e+4
+    min_length_km: 1000                  # 统计"长度 > 1000 km 的山系数量"
