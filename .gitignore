@@ -20,7 +20,7 @@ htmlcov/
 
 # ---- 可重建的数据与缓存 ----
 .cache/
-figures/
+/figures/
 logs/
 *.log
 data/worlds/**/frames/
