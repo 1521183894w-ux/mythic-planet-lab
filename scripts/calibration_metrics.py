@@ -62,6 +62,7 @@ def summarize(m: dict, cfg: dict) -> dict:
                      "inland_sea_border_shares": [s["border_share"] for s in mis.get("geometry", {}).get("subcontinent_border_shares", [])],
                      "north_deg": A["main_continent_latitude"]["north_deg"], "south_deg": A["main_continent_latitude"]["south_deg"],
                      "polar_continents": len(A["polar_continent"]["found"]), "open_ocean_diameter_km": A["open_ocean"]["land_free_circle_diameter_km"]},
+        "soft_limits": m.get("soft_limits"),
         "units": {k: {"area_Mkm2": v["area_km2"] / 1e6, **flat(v)} for k, v in units.items()},
         "all_land": flat(m["by_region"]["all_land"]),
         "global": {"fractal_D": m["B1"]["fractal_dimension"]["D"], "coastline_km": m["B1"]["coastline_length_km"],

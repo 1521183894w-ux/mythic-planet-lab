@@ -5,7 +5,14 @@
 #
 # 距离一律为大圆距离（km），面积为球面面积（km²），形态学运算以格点中心距离定义圆盘。
 
-version: 3                               # v3（2026-10-21）：U18 主内海接壤与形状条件、海岸复杂度空间分布统计；v2（同日）：U11 B1 同类比较、U16 山系形态；此前的数值定义不变
+version: 4                               # v4（2026-10-21）：U17 软限制（北极圈面积、南端、次大陆）；v3（同日）：U18 主内海接壤与形状、海岸复杂度空间分布；v2（同日）：U11、U16；此前的数值定义不变
+
+# U17（2026-10-21 用户同意）：软限制。不淘汰种子，只在阶段 1 起的种子评分中扣分（docs/quality_metrics.md §E）。
+soft_limits:
+  arctic_circle_deg: 66.56               # 90° − 轴倾角 23.44°（docs/physical_baseline.md）
+  max_main_area_fraction_north_of_arctic_circle: 0.05   # 主大陆在北极圈以北的面积占比；地球亚非欧本体 4.6%（北端 77.5°N 只是泰梅尔半岛尖角，所以不限最北点）
+  main_continent_south_limit_deg: -50    # 主大陆南端超过 50°S 扣分（简报约 40°S；0.7 噪声海岸世界到了 58.8°S）
+  max_secondary_continents: 1            # 主大陆与极区陆块之外，≥ 500 万 km² 的陆块最多一块（简报 §5）
 
 A_hard_constraints:
   ocean_fraction:
@@ -18,7 +25,7 @@ A_hard_constraints:
     neck_radius_km: 250                  # 颈部宽度 < 500 km 处切开（敏感性见文档）
     min_area_km2: 1.0e+6                  # 面积 ≥ 100 万 km² 才算亚大陆
     count:
-      target: [3, 6]
+      target: [3, 6]                     # U17(a)（2026-10-21 用户确认保持）：地球亚非欧按此定义只有 2 个（欧亚、非洲），生成世界要比它更碎；放宽颈宽结果不稳定（500/800–1000/1200/1500 km 依次切出 2/3/5/2 个）
   main_inland_sea:
     strait_max_width_km: 150             # 宽度 < 150 km 的水道视为海峡（敏感性见文档）
     min_main_border_fraction: 0.5        # 沿岸陆地至少一半属于主大陆才算"主大陆内部"

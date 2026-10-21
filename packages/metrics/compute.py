@@ -108,6 +108,9 @@ def compute_all(
              if abs(clat[k]) >= cp["min_abs_centroid_lat_deg"] and cp["area_km2"][0] <= units["areas_km2"][k] <= cp["area_km2"][1]]
     A["polar_continent"] = {"found": polar, "pass": bool(polar), "criteria": cp}
 
+    soft = (hard.soft_limits(grid, units, clat, south, cfg["soft_limits"], cp["min_abs_centroid_lat_deg"],
+                             cfg["B1_coast"]["continent_min_area_km2"]) if "soft_limits" in cfg else None)
+
     t0 = time.perf_counter()
     oo = hard.open_ocean_emptiness(grid, land)
     A["open_ocean"] = {**oo, "target_min_diameter_km": ca["open_ocean"]["min_land_free_diameter_km"],
@@ -213,6 +216,7 @@ def compute_all(
         "grid": grid.name,
         "pixel_km_equator": grid.pixel_km_equator,
         "A": A,
+        "soft_limits": soft,
         "B1": B1,
         "B2": B2,
         "C": C,

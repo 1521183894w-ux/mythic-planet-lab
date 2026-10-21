@@ -218,3 +218,29 @@ def test_compute_all_on_synthetic_world():
     assert lat["north_deg"] == pytest.approx(70.0, abs=0.5)
     assert lat["south_deg"] == pytest.approx(-30.0, abs=0.5)
     assert res["resolution_warnings"]  # 1024x512 上 25 km 的细线判定应给出警告
+    # U17 软限制：北端 70°N，北极圈（66.56°N）以北只有很小的一角；南端 30°S；没有次大陆
+    soft = res["soft_limits"]
+    assert 0 < soft["north_arctic_area"]["value"] < 0.01 and soft["north_arctic_area"]["ok"]
+    assert soft["south_tip"]["ok"]
+    assert soft["secondary_continents"]["count"] == 0 and soft["secondary_continents"]["ok"]
+
+
+def test_soft_limits_flag_arctic_land_far_south_tip_and_two_secondary_continents():
+    """主大陆压在北极圈里、南端伸到 55°S，另有两块非极区大陆（各约 1000 万 km²）和一块极地大陆：三项软限制都不满足。"""
+    g = G1024
+    main = cap(g, 40, 0, 50)                         # 约 90°N…−10°S，北极圈以北面积占比远超 5%
+    main |= cap(g, -10, 0, 12) | cap(g, -35, 0, 20)  # 向南延伸到约 55°S，与主体连成一块
+    land = main | cap(g, 0, 120, 18) | cap(g, 0, -120, 18) | cap(g, -90, 0, 15)
+    cfg = CFG
+    u = hard.landmass_units(g, land, 50)
+    clat = hard.unit_centroid_latitudes(g, u["labels"], u["n"])
+    rows = np.flatnonzero(u["main_mask"].any(axis=1))
+    south = float(g.lat[rows.max()])
+    soft = hard.soft_limits(g, u, clat, south, cfg["soft_limits"],
+                            cfg["A_hard_constraints"]["polar_continent"]["min_abs_centroid_lat_deg"],
+                            cfg["B1_coast"]["continent_min_area_km2"])
+    assert soft["north_arctic_area"]["value"] > 0.05 and not soft["north_arctic_area"]["ok"]
+    assert south < -50 and not soft["south_tip"]["ok"]
+    sec = soft["secondary_continents"]
+    assert sec["count"] == 2 and not sec["ok"]       # 极地大陆不算次大陆
+    assert all(abs(s["centroid_lat_deg"]) < 5 for s in sec["found"])

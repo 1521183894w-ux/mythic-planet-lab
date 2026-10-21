@@ -229,6 +229,38 @@ def apply_inland_sea_geometry(check: dict, geometry: dict, cfg: dict) -> dict:
     return {**check, "geometry": geometry, "checks": checks, "passes": all(checks.values())}
 
 
+def soft_limits(grid: LatLonGrid, units: dict, centroid_lat: np.ndarray, south_deg: float, cfg: dict,
+                polar_min_abs_lat_deg: float, continent_min_area_km2: float) -> dict:
+    """软限制（U17，2026-10-21 用户同意）：不淘汰种子，只在阶段 1 起的种子评分中扣分（docs/quality_metrics.md §E）。
+
+    - 北极圈以北的主大陆面积占比（U17(b)）：不限最北点（伸向高纬的窄半岛正是简报要的峡湾海岸），
+      只限大片陆地深入北极圈。地球亚非欧本体为 4.6%（北端 77.5°N 只是泰梅尔半岛的尖角）。
+    - 主大陆南端（U17(b)）：简报约到 40°S，超过 main_continent_south_limit_deg 扣分。
+    - 次大陆（U17(c)）：主大陆之外、质心不在极区（|纬度| < polar_min_abs_lat_deg）、面积 ≥ continent_min_area_km2 的陆块，
+      简报允许最多一块。"""
+    area = grid.cell_area_km2
+    main = units["main_mask"]
+    m_area = float((area * main).sum())
+    north_frac = (float((area * main * (grid.lat[:, None] > cfg["arctic_circle_deg"])).sum() / m_area)
+                  if m_area else float("nan"))
+    secondary = []
+    for k in range(1, units["n"] + 1):
+        a = float(units["areas_km2"][k])
+        if k != units["main_id"] and a >= continent_min_area_km2 and abs(centroid_lat[k]) < polar_min_abs_lat_deg:
+            secondary.append({"unit_id": k, "area_km2": a, "centroid_lat_deg": float(centroid_lat[k])})
+    secondary.sort(key=lambda s: s["area_km2"], reverse=True)
+    return {
+        "note": "软限制：只扣分、不淘汰（U17）",
+        "north_arctic_area": {"value": north_frac, "max": cfg["max_main_area_fraction_north_of_arctic_circle"],
+                              "arctic_circle_deg": cfg["arctic_circle_deg"],
+                              "ok": bool(north_frac <= cfg["max_main_area_fraction_north_of_arctic_circle"])},
+        "south_tip": {"value_deg": south_deg, "limit_deg": cfg["main_continent_south_limit_deg"],
+                      "ok": bool(south_deg >= cfg["main_continent_south_limit_deg"])},
+        "secondary_continents": {"count": len(secondary), "max": cfg["max_secondary_continents"], "found": secondary,
+                                 "ok": len(secondary) <= cfg["max_secondary_continents"]},
+    }
+
+
 def open_ocean_emptiness(grid: LatLonGrid, land: np.ndarray) -> dict:
     """远洋空旷度：海洋中离陆地最远的点（"海洋难抵极"）。最大无陆地圆的直径 = 2 × 该距离。"""
     d = distance_to_set_km(grid, land, query=~land)

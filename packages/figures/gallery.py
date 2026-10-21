@@ -117,6 +117,25 @@ def unit_label(u: str, name: str | None = None) -> str:
     return "主大陆" if u == "main_continent" else f"陆块 {u.removeprefix('unit_')}"
 
 
+def soft_table(metrics) -> str:
+    """软限制（U17）：只在种子评分中扣分，不淘汰。"""
+    s = metrics.get("soft_limits")
+    if not s:
+        return ""
+    na, st, sc = s["north_arctic_area"], s["south_tip"], s["secondary_continents"]
+    found = "；".join(f"{c['area_km2'] / 1e6:.1f} 百万 km²，质心 {c['centroid_lat_deg']:.0f}°" for c in sc["found"]) or "无"
+    rows = [
+        ("主大陆在北极圈（{:.2f}°N）以北的面积占比".format(na["arctic_circle_deg"]), f"{na['value']:.1%}",
+         f"≤ {na['max']:.0%}（地球亚非欧 4.6%）", na["ok"]),
+        ("主大陆南端", f"{st['value_deg']:.1f}°", f"不超过 {abs(st['limit_deg']):.0f}°S", st["ok"]),
+        ("次大陆（主大陆、极区陆块之外 ≥ 500 万 km² 的陆块）", f"{sc['count']} 块：{found}", f"≤ {sc['max']} 块", sc["ok"]),
+    ]
+    body = "".join(f"<tr><td>{_e(a)}</td><td>{_e(b)}</td><td>{_e(c)}</td><td>{'符合' if d else '超出（扣分）'}</td></tr>"
+                   for a, b, c, d in rows)
+    return ("<h3>软限制：只扣分、不淘汰（PROGRESS U17）</h3>"
+            f"<table><tr><th>项目</th><th>值</th><th>参考</th><th>结果</th></tr>{body}</table>")
+
+
 def b_table(verdict: dict, reference: dict) -> str:
     """B1/B2 判定表（U11：与地球大陆级陆块本体同类比较）。"""
     units = verdict["units"]
@@ -234,6 +253,7 @@ def write_gallery(out_dir: Path, world, stage: int, metrics: dict, earth_metrics
 <main>
 <section id="summary"><h2>指标摘要</h2>
 {a_table(metrics)}
+{soft_table(metrics)}
 <h3>B1 海岸复杂度、B2 距海距离：与地球大陆级陆块本体同类比较</h3>
 {b_table(verdict, reference)}
 <h3>C 层与其他</h3>
