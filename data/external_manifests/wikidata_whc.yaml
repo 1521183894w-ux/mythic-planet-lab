@@ -1,0 +1,25 @@
+# 外部数据清单：UNESCO 世界遗产名单（经 Wikidata 获取）
+# 注意：本清单没有 files 字段，download_earth_data.py 不处理它；数据由 scripts/fetch_whc_sites.py 查询生成。
+dataset: UNESCO 世界遗产中符合入选标准 (vii) 或 (viii) 的遗产地
+producer: Wikidata 社区（数据最终来自 UNESCO 世界遗产中心的名单）
+homepage: https://www.wikidata.org
+query_service: https://query.wikidata.org/sparql
+properties: P757（世界遗产编号）、P2614（入选标准）、P17（国家）、P625（坐标）
+license: CC0 1.0（Wikidata 结构化数据，可自由使用）
+queried: 2026-10-21
+why_not_unesco_directly: >-
+  UNESCO 官网（whc.unesco.org）的名单下载接口（/en/list/xml/ 等）对脚本返回人机验证页面（2026-10-21 实测 403），
+  项目不绕过人机验证，因此改用 Wikidata。
+completeness_check: >-
+  Wikidata 中带世界遗产编号的遗产地 1279 个，比 UNESCO 现有总数（开发者记忆约 1250 处，未核实）多约 30 个，
+  原因未逐一核查（可能是已除名、编号拆分或重复条目）；
+  其中只有 4 个缺入选标准，均为文化遗产（1121、1156、1671、180），不影响本清单。
+  已知出入：加兰巴国家公园（136）在 Wikidata 记为 (ix)(x)，开发者记忆中 UNESCO 为 (vii)(x)，未能核实；
+  伯吉斯页岩（133）1984 年已并入加拿大落基山公园群（304），Wikidata 仍单列。
+outputs:
+  - local_path: data/earth_reference/whc_vii_viii.csv
+    rows: 192
+    meta: data/earth_reference/whc_vii_viii.meta.json（查询语句、查询时间、统计）
+    used_for: 阶段 0.5b 奇景覆盖度核对（docs/archetype_coverage.md）
+    in_git: 是（约 30 KB，CC0）
+    rebuild: powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python scripts\fetch_whc_sites.py（Wikidata 会更新，重跑结果可能略有不同）

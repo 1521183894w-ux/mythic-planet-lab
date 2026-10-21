@@ -1,0 +1,19 @@
+{
+  "source": "Wikidata Query Service (https://query.wikidata.org/)，属性 P757 世界遗产编号、P2614 入选标准",
+  "license": "CC0 1.0（Wikidata 结构化数据）",
+  "query_time": "2026-10-21 20:00:32 +0800",
+  "query": "SELECT ?item ?id ?crit ?en ?zh ?countryEn ?coord WHERE {\n  ?item wdt:P757 ?id .\n  OPTIONAL { ?item wdt:P2614 ?crit . }\n  OPTIONAL { ?item rdfs:label ?en . FILTER(LANG(?en) = \"en\") }\n  OPTIONAL { ?item rdfs:label ?zh . FILTER(LANG(?zh) = \"zh\") }\n  OPTIONAL { ?item wdt:P17 ?country . ?country rdfs:label ?countryEn . FILTER(LANG(?countryEn) = \"en\") }\n  OPTIONAL { ?item wdt:P625 ?coord . }\n}",
+  "rows_returned": 10044,
+  "sites_with_whc_id": 1279,
+  "sites_missing_criteria": 4,
+  "sites_missing_criteria_ids": [
+    "1121",
+    "1156",
+    "1671",
+    "180"
+  ],
+  "sites_vii_or_viii": 192,
+  "sites_vii": 154,
+  "sites_viii": 102,
+  "notes": "UNESCO 官网名单下载接口有人机验证，未使用。Wikidata 是社区维护数据，可能与 UNESCO 官方名单有出入，见 docs/archetype_coverage.md 的核对说明。"
+}

@@ -24,6 +24,13 @@
 
 指标定义与地球基准值见 `docs/metrics_definitions.md`。
 
+## 奇景覆盖度核对（阶段 0.5b）
+
+| 脚本 | 用途 |
+|---|---|
+| `fetch_whc_sites.py` | 从 Wikidata 获取 UNESCO 世界遗产中符合标准 (vii)/(viii) 的遗产地，写 `data/earth_reference/whc_vii_viii.csv`，约 10 秒 |
+| `archetype_coverage.py` | 校验遗产地 → 原型的归类（`data/earth_reference/whc_archetype_map.yaml`），生成 `docs/archetype_coverage.md` 的统计附录；`--check` 只校验 |
+
 详细说明见 `docs/environment.md`。
 
 ## 编写约定

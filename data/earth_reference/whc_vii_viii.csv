@@ -1,0 +1,193 @@
+whc_id,name_en,name_zh,criteria,vii,viii,countries,lat,lon,wikidata
+1,Galapagos Islands / Galápagos Islands,加拉帕戈斯群岛,vii viii ix x,1,1,Ecuador,-0.623,-90.361,Q117188122 Q38095
+9,Simien Mountains National Park,塞米恩国家公园,vii x,1,0,Ethiopia,13.183,38.067,Q504315
+24,Nahanni National Park Reserve,納漢尼國家公園保留地,vii viii,1,1,Canada,61.597,-125.852,Q391391
+25,Djoudj National Bird Sanctuary,朱贾国家鸟类保护区,vii x,1,0,Senegal,16.358,-16.274,Q733676
+28,Yellowstone National Park,黃石國家公園,vii viii ix x,1,1,United States,44.600,-110.500,Q351
+39,Ngorongoro Conservation Area,恩戈罗恩戈罗自然保护区,iv vii viii ix x,1,1,Tanzania,-3.210,35.460,Q1217726
+63,Virunga National Park,維龍加國家公園,vii viii x,1,1,Democratic Republic of the Congo,-0.500,29.500,Q223589
+71,Dinosaur Provincial Park,省立恐龙公园,vii viii,1,1,Canada,50.762,-111.485,Q289466
+72,Kluane / Wrangell – St. Elias / Glacier Bay / Tatshenshini-Alsek,克盧恩/弗蘭格爾-聖伊萊亞斯/冰川灣/塔琴希尼-阿爾塞克,vii viii ix x,1,1,Canada; United States,61.197,-140.992,Q604604
+75,Grand Canyon National Park,大峽谷國家公園,vii viii ix x,1,1,United States,36.055,-112.122,Q220289
+76,Everglades National Park,大沼澤地國家公園,viii ix x,0,1,United States,25.312,-80.688,Q274131
+98,Plitvice Lakes National Park,普利特维采湖群国家公园,vii viii ix,1,1,Croatia,44.880,15.616,Q189849
+99,Natural and Cultural Heritage of the Ohrid region,奥赫里德地区文化历史遗迹及其自然景观世界文化与自然双重遗产,i iii iv vii ix,1,0,Albania; North Macedonia,40.901,20.664,Q2215414
+100,Durmitor National Park,塔拉河峽谷,vii viii x,1,1,Bosnia and Herzegovina; Montenegro,43.153,19.037,Q2574575 Q3364446
+111,Bale Mountains National Park,巴萊山國家公園,vii x,1,0,Ethiopia,6.750,39.750,Q804881
+120,Sagarmatha National Park,萨加玛塔国家公园,vii,1,0,Nepal,27.891,86.693,Q2211959
+133,Burgess Shale,伯吉斯頁岩,viii,0,1,Canada,51.433,-116.467,Q852085
+134,Redwood National and State Parks,紅木國家公園,vii ix,1,0,United States,41.374,-123.998,Q63863168
+145,Los Glaciares National Park,冰川国家公园,vii viii,1,1,Argentina,-50.331,-73.234,Q215992
+147,Kakadu National Park,卡卡杜国家公园,i vi vii ix x,1,0,Australia,-13.005,132.519,Q65096742
+150,Mammoth Cave National Park,猛犸洞国家公园,vii viii x,1,1,United States,37.187,-86.101,Q242681
+151,Olympic National Park,奧林匹克國家公園,vii ix,1,0,United States,47.700,-123.750,Q372093
+154,Great Barrier Reef,大堡礁,vii viii ix x,1,1,Australia,-16.400,145.800,Q7343
+156,Serengeti National Park,塞伦盖蒂国家公园,vii x,1,0,Tanzania,-2.400,34.600,Q11812902
+159,Darién National Park,達連國家公園,vii ix x,1,0,Panama,7.736,-77.547,Q48608
+167,Willandra Lakes Region,威兰德拉湖区,iii viii,0,1,Australia,-33.618,143.101,Q747875
+179,Tassili n'Ajjer,阿杰尔的塔西利,i iii vii viii,1,1,Algeria,25.667,9.000,Q190048
+181,Tasmanian Wilderness,塔斯曼尼亞荒野,iii iv vi vii viii ix x,1,1,Australia,-42.596,146.173,Q138170
+185,Aldabra,阿尔达布拉环礁,vii ix x,1,0,Seychelles,-9.416,46.416,Q272768
+186,Lord Howe Island Group,,vii x,1,0,Australia,-31.556,159.080,Q1869866
+195,Taï National Park,塔伊国家公园,vii x,1,0,Ivory Coast,5.750,-7.120,Q328577
+196,Río Plátano Biosphere Reserve,雷奥普拉塔诺生物圈保留地,vii viii ix x,1,1,Honduras,15.250,-84.730,Q752181
+205,Talamanca Range-La Amistad Reserves,,vii viii ix x,1,1,Costa Rica; Panama,9.407,-82.939,Q6106226
+225,Pirin National Park,皮林国家公园,vii viii ix,1,1,Bulgaria,41.672,23.488,Q651314
+256,Wood Buffalo National Park,森林野牛国家公园,vii ix x,1,0,Canada,59.383,-112.983,Q391338
+258,"Gulf of Porto: Calanche of Piana, Gulf of Girolata, Scandola Reserve",波尔托湾：皮亚纳－卡兰切斯、基罗拉塔湾、斯康多拉保护区,vii viii x,1,1,France,42.325,8.629,Q15728421
+259,Great Smoky Mountains National Park,大煙山國家公園,vii viii ix x,1,1,United States,35.611,-83.425,Q464004
+260,Sangay National Park,桑蓋國家公園,vii viii ix x,1,1,Ecuador,-1.833,-78.333,Q839603
+261,Vallée de Mai,马埃谷地自然保护区,vii viii ix x,1,1,Seychelles,-4.329,55.737,Q573558
+262,Dungonab Bay / Sanganeb Marine National Park and Dungonab Bay – Mukkawar Island Marine National Park,敦戈奈卜湾 / 桑加奈卜國家海洋公園和敦戈奈卜灣-姆卡瓦島國家海洋公園,vii ix x,1,0,Sudan,20.937,37.255,Q26267357 Q65937857
+274,Historic Sanctuary of Machu Picchu,马丘比丘古城,i iii vii ix,1,0,Peru,-13.117,-72.583,Q3331815
+280,Salonga National Park,萨隆加国家公园,vii ix,1,0,Democratic Republic of the Congo,-2.000,21.000,Q328488
+284,Chitwan National Park,奇特旺国家公园,vii ix x,1,0,Nepal,27.500,84.333,Q1075023
+289,Lake Malawi National Park,马拉维湖国家公园,vii ix x,1,0,Malawi,-14.033,34.883,Q1077596
+302,"Mana Pools National Park, Sapi and Chewore Safari Areas",马纳波尔斯国家公园、萨比和切俄雷自然保护区,vii ix x,1,0,Zimbabwe,-15.819,29.408,Q15728398
+303,Iguazú National Park World Heritage Site,伊瓜苏国家公园,vii x,1,0,Argentina,-25.667,-54.400,Q57072712
+304,Canadian Rocky Mountain Parks World Heritage Site,加拿大落基山公園群,vii viii,1,1,Canada,51.425,-116.480,Q72895
+308,Yosemite National Park,優勝美地國家公園,vii viii,1,1,United States,37.742,-119.537,Q180402
+333,Huascarán National Park,瓦斯卡兰国家公园,vii viii,1,1,Peru,-9.400,-77.400,Q917369
+335,Nanda Devi and Valley of Flowers National Parks,楠达戴维山国家公园和花谷国家公园,vii x,1,0,India,30.717,79.667,Q15839097
+338,Manas National Park,馬納斯國家公園,vii ix x,1,0,India,26.717,90.933,Q506511
+354,Waterton-Glacier International Peace Park,沃特頓-冰川國際和平公園,vii ix,1,0,Canada; United States,48.996,-113.904,Q828212
+355,Iguaçu National Park,伊瓜苏国家公园,vii x,1,0,Brazil,-25.500,-53.950,Q742315
+357,Göreme National Park and the Rock Sites of Cappadocia,,i iii v vii,1,0,Turkey,38.667,34.850,Q64705367
+368,Gondwana Rainforests of Australia,中东部雨林保护区,viii ix x,0,1,Australia,-29.600,149.600,Q643063
+369,Giant's Causeway,巨人堤道,vii viii,1,1,United Kingdom,55.241,-6.512,Q106187
+380,Garajonay National Park,加拉霍奈国家公园,vii ix,1,0,Spain,28.126,-17.237,Q464942
+387,St Kilda,聖基爾達島,iii v vii ix x,1,0,United Kingdom,57.815,-8.588,Q166479
+390,Škocjan Caves,什科茨扬溶洞,vii viii,1,1,Slovenia,45.665,13.995,Q500376
+403,Kilimanjaro National Park,乞力马扎罗国家公园,vii,1,0,Tanzania,-3.067,37.367,Q756790
+409,Hawaiʻi Volcanoes National Park,夏威夷火山國家公園,viii,0,1,United States,19.401,-155.124,Q205952
+410,Sian Ka'an,錫安卡恩,vii x,1,0,Mexico,19.383,-87.792,Q559789
+419,Gros Morne National Park,格罗莫讷国家公园,vii viii,1,1,Canada,49.689,-57.738,Q257598
+421,Tongariro National Park,東格里羅國家公園,vi vii viii,1,1,New Zealand,-39.200,175.583,Q202845
+437,Mount Tai,泰山,i ii iii iv v vi vii,1,0,People's Republic of China,36.267,117.100,Q216059
+447,Uluṟu-Kata Tjuṯa National Park,烏魯魯－卡塔丘塔國家公園,v vi vii viii,1,1,Australia,-25.322,130.986,Q251999
+454,Mount Athos,阿索斯山,i ii iv v vi vii,1,0,Greece,40.158,24.327,Q136100444
+455,Meteora,迈泰奥拉,i ii iv v vii,1,0,Greece,39.712,21.627,Q3125051
+485,Hierapolis-Pamukkale,赫拉波利斯和帕穆克卡莱,iii iv vii,1,0,Turkey,37.924,29.123,Q15924669
+486,Wet Tropics of Queensland,昆士蘭濕熱帶地區,vii viii ix x,1,1,Australia,-17.200,145.800,Q1135808
+487,Henderson Island,亨德森岛,vii x,1,0,United Kingdom,-24.375,-128.325,Q379759
+494,Tsingy de Bemaraha Strict Nature Reserve,黥基·德·贝马拉哈自然保护区,vii x,1,0,Madagascar,-18.667,44.750,Q1405154
+509,Mosi-oa-Tunya / Victoria Falls,,vii viii,1,1,Zambia; Zimbabwe,,,Q139989268
+516,Bandiagara Escarpment,邦贾加拉悬崖,v vii,1,0,Mali,14.417,-3.317,Q650546
+547,Huangshan,黄山,ii vii x,1,0,People's Republic of China,30.125,118.167,Q36034
+548,Río Abiseo National Park,阿比赛欧河国家公园,iii vii ix x,1,0,Peru,-7.750,-77.250,Q941412
+551,Te Wahipounamu,特瓦希波納姆,vii viii ix x,1,1,New Zealand,-45.036,167.320,Q575398
+573,Aïr and Ténéré National Nature Reserve,阿德尔和泰内雷自然保护区,vii ix x,1,0,Niger,18.000,9.000,Q794643
+577,Heard Island and McDonald Islands,赫德島和麥克唐納群島,viii ix,0,1,Australia,-53.078,73.507,Q131198
+578,Shark Bay,,vii viii ix x,1,1,Australia,-25.929,113.605,Q38167074
+588,Danube Delta,多瑙河三角洲,vii x,1,0,Romania; Ukraine,45.200,29.500,Q184429
+591,Thungyai Naresuan Wildlife Sanctuary / Thungyai-Huai Kha Khaeng Wildlife Sanctuaries,通艾会卡肯野生生物保护区,vii ix x,1,0,Thailand,15.333,98.917,Q15725130 Q422995
+608,Ujung Kulon National Park,乌戎库隆国家公园,vii x,1,0,Indonesia,-6.750,105.333,Q4522
+609,Komodo National Park,科莫多国家公园,vii x,1,0,Indonesia,-8.652,119.577,Q4520
+629,Macquarie Island,麦夸里岛,vii viii,1,1,Australia,-54.630,158.860,Q46650
+630,K'gari,弗雷澤島,vii viii ix,1,1,Australia,-25.240,153.150,Q134905
+637,Jiuzhaigou Valley,九寨沟风景名胜区,vii,1,0,People's Republic of China,33.200,103.900,Q4111
+638,Huanglong,黄龙风景名胜区,vii,1,0,People's Republic of China,32.741,103.831,Q4107
+640,Wulingyuan,武陵源,vii,1,0,People's Republic of China,29.346,110.467,Q4187
+652,Puerto Princesa Subterranean River National Park,普林塞萨港地下河国家公园,vii x,1,0,Philippines,10.167,118.917,Q824602
+653,Tubbataha Reef,图巴塔哈群礁,vii ix x,1,0,Philippines,8.953,119.868,Q927108
+662,Yakushima,屋久島,vii ix,1,0,Japan,30.359,130.529,Q242176
+672,Ha Long Bay,下龍灣,vii viii,1,1,Vietnam,20.900,107.200,Q190128
+682,Bwindi Impenetrable National Park,布恩迪难以穿越的国家公园,vii x,1,0,Uganda,-1.050,29.717,Q500397
+684,Rwenzori Mountains National Park,鲁文佐里山国家公园,vii x,1,0,Uganda,0.400,29.950,Q838928
+685,Doñana National Park,多尼亞納國家公園,vii ix x,1,0,Spain,37.020,-6.440,Q463141
+686,Miguasha National Park,米瓜夏國家公園,viii,0,1,Canada,48.111,-66.369,Q631128
+698,Australian Fossil Mammal Sites (Riversleigh / Naracoorte),澳大利亚哺乳动物化石地点群,viii ix,0,1,Australia,-19.083,138.717,Q15933552
+701,Canaima National Park,加奈馬國家公園,vii viii ix x,1,1,Venezuela,5.319,-61.795,Q1244337
+719,Virgin Komi Forests,科米原始森林,vii ix,1,0,Russia,65.067,60.150,Q593870
+720,Messel pit,梅塞尔坑,viii,0,1,Germany,49.917,8.757,Q639217
+721,Carlsbad Caverns National Park,卡尔斯巴德洞窟国家公园,vii viii,1,1,United States,32.175,-104.444,Q273195
+725,Caves of Aggtelek Karst and Slovak Karst / Imolai-ördöglyuk,奧格泰萊克的喀斯特岩洞群和斯洛伐克的喀斯特地貌,viii,0,1,Hungary; Slovakia,48.472,20.495,Q56390612 Q608090
+740,Gough and Inaccessible Islands,戈夫岛和伊纳克塞瑟布尔岛,vii x,1,0,United Kingdom,-37.300,-12.680,Q16891784
+754,Lake Baikal,贝加尔湖,vii viii ix x,1,1,Russia,53.303,108.005,Q5513
+764,Belize Barrier Reef,伯利兹堡礁,vii ix x,1,0,Belize,17.262,-88.053,Q28361
+765,Volcanoes of Kamchatka,勘察加火山群,vii viii ix x,1,1,Russia,52.000,157.830,Q64746144
+773,Pyrénées – Mont Perdu World Heritage Site,珀杜山,iii iv v vii viii,1,1,France; Spain,42.650,0.050,Q3411434
+774,Laponian National Park,拉普兰地区,iii v vii viii ix,1,1,Sweden,67.333,17.583,Q1137314
+800,Mount Kenya National Park,肯尼亚山国家公园,vii ix,1,0,Kenya,-0.124,37.337,Q1639468
+801,Lake Turkana National Parks,图尔卡纳湖国家公园,viii x,0,1,Kenya,3.051,36.504,Q1647948
+814,Morne Trois Pitons National Park,三峰山国家公园,viii x,0,1,Dominica,15.267,-61.283,Q629436
+889,Desembarco del Granma National Park,德桑巴尔科国家公园,vii viii,1,1,Cuba,19.883,-77.633,Q909755
+893,Atlantic Forest South-East Reserves,大西洋东南热带雨林保护区,vii ix x,1,0,Brazil,-24.167,-48.000,Q2521895
+898,High Coast/Kvarken Archipelago,,viii,0,1,Finland; Sweden,63.067,20.450,Q10532185
+908,Aeolian Islands,埃奥利群岛,viii,0,1,Italy,38.497,14.936,Q179883
+911,Wuyi Mountains,武夷山,iii vi vii x,1,0,People's Republic of China,27.717,117.683,Q207692
+914,Maputo National Park / iSimangaliso Wetland Park,伊西曼格利索湿地公园 / 馬普托國家公園,vii ix x,1,0,Mozambique; South Africa,-28.000,32.500,Q130019294 Q310719
+951,Hin Nam No National Protected Area / Phong Nha–Ke Bang National Park,峰牙－己榜國家公園 / 石林國家保護區,viii ix x,0,1,Laos; Vietnam,17.458,105.933,Q23513 Q5765542
+955,Lorentz National Park,洛伦茨国家公园,viii ix x,0,1,Indonesia,-4.750,137.833,Q4516
+966,Ischigualasto / Talampaya Natural Parks,伊沙瓜拉斯托－塔拉姆佩雅自然公园,viii,0,1,Argentina,-29.800,-67.833,Q17132555
+985,Maloti-Drakensberg Park,马罗提-德拉肯斯堡公园,i iii vii x,1,0,Lesotho; South Africa,-29.466,29.394,Q6744547
+999,Pantanal Conservation Area / 판타나우,潘塔奈尔保护区 / 潘塔納爾濕地,vii ix x,1,0,Bolivia; Brazil; Paraguay,-17.400,-57.500,Q157603 Q99237891
+1000,Brazilian Atlantic Islands: Fernando de Noronha and Atol das Rocas Reserves / Rocas Atoll,巴西大西洋群岛：费尔南多－迪诺罗尼亚群岛和罗卡斯环形礁保护区 / 罗卡斯环礁,vii ix x,1,0,Brazil,-3.858,-32.425,Q15224654 Q241074
+1013,Gunung Mulu National Park,姆鲁山国家公园,vii viii ix x,1,1,Malaysia,4.043,114.812,Q61535
+1029,Jurassic Coast,侏罗纪海岸,viii,0,1,United Kingdom,50.706,-2.990,Q575976
+1037,Jungfrau-Aletsch protected area,阿萊奇自然保護區,vii viii ix,1,1,Switzerland,46.500,8.033,Q616912
+1060,Kenya Lake System in the Great Rift Valley,肯尼亚东非大裂谷的湖泊系统,vii ix x,1,0,Kenya,0.443,36.240,Q2384313
+1083,Three Parallel Rivers National Park,云南三江并流保护区,vii viii ix x,1,1,People's Republic of China,27.895,98.406,Q575035
+1090,Monte San Giorgio site fossils,圣乔治山,viii,0,1,Italy; Switzerland,45.889,8.915,Q16648 Q3485435
+1094,Purnululu National Park,波奴魯魯國家公園,vii viii,1,1,Australia,-17.449,128.546,Q679568
+1115,New Caledonia Barrier Reef,新喀里多尼亚潟湖：礁石多样性和相关生态系统,vii ix x,1,0,France,-20.412,164.566,Q1330981
+1149,Ilulissat Icefjord,伊卢利萨特冰峡湾,vii viii,1,1,Greenland,69.150,-49.550,Q828071
+1161,Pitons,皮通山,vii viii,1,1,Saint Lucia,13.807,-61.070,Q639487
+1162,Vredefort crater,弗里德堡隕石坑,viii,0,1,South Africa,-27.000,27.500,Q330095
+1167,Tropical Rainforest Heritage of Sumatra,苏门答腊热带雨林,vii ix x,1,0,Indonesia,-2.500,101.500,Q4521
+1179,Glarus thrust,萨多纳地质结构区,viii,0,1,Switzerland,46.917,9.250,Q312118
+1182,Islands and Protected Areas of the Gulf of California,,vii ix x,1,0,Mexico,27.753,-111.673,Q2383410
+1186,Wadi Al-Hitan,鯨魚谷,viii,0,1,Egypt,29.271,30.044,Q501833
+1195,West Norwegian Fjords – Geirangerfjord and Nærøyfjord,,vii viii,1,1,Norway,60.966,6.978,Q12269990
+1216,Malpelo Fauna and Flora Sanctuary,,vii ix,1,0,Colombia,4.000,-81.600,Q108379504
+1234,Putorana Plateau,普托拉納高原,vii ix,1,0,Russia,69.000,93.000,Q277576
+1237,The Dolomites,,vii viii,1,1,Italy,46.613,12.163,Q65028346
+1248,South China Karst,中国南方喀斯特,vii viii,1,1,People's Republic of China,24.923,110.354,Q853364
+1252,Pamir National Park,帕米爾國家公園,vii viii,1,1,Tajikistan,38.741,72.120,Q3076575
+1258,Teide National Park,泰德國家公園,vii viii,1,1,Spain,28.265,-16.618,Q715124
+1264,Jeju Volcanic Island and Lava Tubes,济州,vii viii,1,1,South Korea,33.361,126.532,Q495733
+1285,Joggins Fossil Cliffs,乔金斯化石崖壁,viii,0,1,Canada,45.752,-64.418,Q1439433
+1290,Monarch Butterfly Biosphere Reserve,莫那其蝴蝶生物圈保护区,vii,1,0,Mexico,19.606,-100.242,Q852546
+1292,Mount Sanqing,三清山,vii,1,0,People's Republic of China,28.952,118.052,Q873358
+1299,Lena Pillars,勒那河柱状岩自然公园,viii,0,1,Russia,61.107,127.362,Q277683
+1314,Wadden Sea,,viii ix x,0,1,Denmark; Germany; Netherlands,53.529,8.556,Q64590476
+1317,"Pitons, cirques and remparts of Reunion Island",留尼汪的皮通斯、环谷和环壁,vii x,1,0,France,-21.099,55.480,Q2710055
+1325,Phoenix Islands Protected Area,菲尼克斯群岛保护区,vii ix,1,0,Kiribati,-3.650,-172.857,Q863815
+1326,Papahānaumokuākea Marine National Monument,地母天父海洋國家名勝,iii vi viii ix x,0,1,United States,25.500,-170.500,Q787425
+1335,China Danxia,中國丹霞,vii viii,1,1,People's Republic of China,28.422,106.043,Q1286650
+1369,Ningaloo Reef,甯格羅海岸,vii x,1,0,Australia,-22.739,113.628,Q1541665
+1377,Wadi Rum,瓦地倫,iii v vii,1,0,Jordan,29.576,35.420,Q40729
+1386,Rock Islands Southern Lagoon,,iii v vii ix x,1,0,Palau,7.247,134.352,Q17215490
+1388,Chengjiang Fossil Site,澄江化石地,viii,0,1,People's Republic of China,24.669,102.977,Q3485434
+1400,Lakes of Ounianga,乌尼昂加湖泊群,vii,1,0,Chad,18.983,20.667,Q547375
+1410,El Pinacate y Gran Desierto de Altar Biosphere Reserve,,vii viii x,1,1,Mexico,32.000,-113.917,Q3821829
+1414,Xinjiang Tianshan,,vii ix,1,0,People's Republic of China,41.968,80.354,Q17993813
+1416,Stevns Klint,斯泰温斯崖,viii,0,1,Denmark,55.282,12.450,Q1614152
+1427,Etna Park,,viii,0,1,Italy,37.765,15.000,Q499242
+1430,Namib / Namib Sand Sea,纳米布沙漠,vii viii ix x,1,1,Namibia,-23.000,15.000,Q131377 Q65241628
+1432,Okavango Delta,奥卡万戈三角洲,vii ix x,1,0,Botswana,-19.400,22.900,Q650872
+1434,Chaîne des Puys - Limagne fault tectonic arena,多姆山链-利马涅断层构造区,viii,0,1,France,45.779,2.965,Q64832437
+1438,Tràng An,长安名胜群,v vii viii,1,1,Vietnam,20.256,105.916,Q10810559
+1475,Ennedi Plateau,恩内迪高原,iii vii ix,1,0,Chad,17.000,23.000,Q1343339
+1497,Mistaken Point Ecological Reserve,米斯塔肯角生态保护区,viii,0,1,Canada,46.632,-53.190,Q3301928
+1505,Dasht-e Lut,盧特沙漠,vii viii,1,1,Iran,30.264,59.241,Q767128
+1510,Revillagigedo Islands,雷维利亚希赫多群岛,vii ix x,1,0,Mexico,18.821,-112.764,Q849318
+1513,Khangchendzonga National Park,干城章嘉國家公園,iii vi vii x,1,0,India,27.656,88.312,Q2605019
+1526,Los Alerces National Park,洛斯阿莱尔塞斯国家公园,vii x,1,0,Argentina,-42.807,-71.899,Q828291
+1540,Hoh Xil,可可西里,vii x,1,0,People's Republic of China,35.150,91.000,Q1790760
+1575,Makhonjwa Mountains,巴伯顿玛空瓦山脉,viii,0,1,South Africa,-33.400,22.000,Q19605615
+1603,French Austral Lands and Seas / French Southern and Antarctic Lands nature reserve,,vii ix x,1,0,France,-49.140,69.581,Q140814404 Q3457508
+1604,Vatnajökull National Park,瓦特纳冰川国家公园,viii,0,1,Iceland,64.500,-17.000,Q1353292
+1611,Lençóis Maranhenses National Park,倫索伊斯馬拉年塞斯國家公園,vii viii x,1,1,Brazil,-2.483,-43.133,Q647777
+1638,Badain Jaran Desert,巴丹吉林沙漠,vii viii,1,1,People's Republic of China,40.400,102.000,Q939033
+1642,Mount Kumgang,金剛山,iii vii,1,0,North Korea,38.657,128.105,Q495501
+1657,Volcanoes and Forests of Mount Pelée and the Pitons of Northern Martinique,培雷山和马提尼克北部山峰的火山和森林,viii x,0,1,France,14.758,-61.073,Q64842970
+1673,Vjetrenica,,vii x,1,0,Bosnia and Herzegovina,42.846,17.984,Q2880621
+1686,Anticosti,,viii,0,1,Canada,49.539,-63.245,Q122707293
+1692,Evaporitic Karst and Caves of Northern Apennines,,viii,0,1,Italy,44.380,10.389,Q122730699
+1699,'Uruq Bani Ma'arid,奥鲁克·巴尼·马阿里德,vii ix x,1,0,Saudi Arabia,19.337,45.904,Q21994709
+1707,Marquesas Islands,馬克薩斯群島,iii v vii ix x,1,0,France,-8.900,-139.600,Q172697
+1728,Møns Klint,默恩崖,viii,0,1,Denmark,54.964,12.552,Q1517331
+1747,Cavernas do Peruaçu Environmental Protection Area / Peruaçu River Canyon,,vii viii,1,1,Brazil,-14.900,-44.050,Q141673269 Q5055056
+1758,The Bony Fish Fossils of the Western Limfjord – Evolution and Climate Adaptation in the Earliest Eocene,利姆水道西段硬骨鱼化石——始新世最早期的演化和气候适应,viii,0,1,Denmark,56.896,8.752,Q127521592
+1808,Boma-Badingilo Migratory Landscape,博马—巴丁吉罗迁徙景观,vii ix x,1,0,South Sudan,6.514,32.959,Q60848196
