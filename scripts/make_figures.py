@@ -6,7 +6,7 @@
   powershell -ExecutionPolicy Bypass -File scripts\\run.ps1 python -u scripts\\make_figures.py --world data/worlds/xxx.nc
 
 输出：figures/stage<N>/<world_id>/（不进 Git，可由"世界数据 + 代码版本"重建）
-  01–08 全球图、极地图与指标分布图；09–11 与同分辨率地球的对比图；regions/r1–r8 区域放大图（世界 | 地球对照）；
+  01–08 全球图、极地图与指标分布图；09–12 与同分辨率地球的对比图；regions/r1–r8 区域放大图（世界 | 地球对照）；
   metrics.json（全部指标）、regions.json（8 个区域的选取依据）、manifest.json（图件清单）、index.html（画廊）。
 
 世界文件格式见 packages/figures/world.py。对比用的地球格网必须与世界同分辨率（512x256 / 1024x512 / 2048x1024）。
@@ -134,6 +134,9 @@ def main() -> int:
     add("charts", "10_slope_distance_mountains.png", "坡度、距海距离、山系长度（与地球对比）")
     charts.coast_vs_earth(world, metrics, em, earth, cfg, verdict, reference, out / "11_coast_vs_earth.png")
     add("charts", "11_coast_vs_earth.png", "海岸盒计数、岛屿面积分布、各大陆级陆块的 B1/B2 判定（与地球陆块本体同类比较）")
+    charts.coast_complexity_spread(world, ca, metrics, earth, earth_ca, em, out / "12_coast_complexity_spread.png")
+    add("charts", "12_coast_complexity_spread.png", "海岸复杂度的空间分布（与地球对比，只作统计）",
+        "B1 只量海岸复杂度的多少；这张图看它在空间上怎么分布：哪里碎、哪里直（U18(a)）。")
     log(f"对比图 {time.perf_counter() - t0:.1f} s")
 
     t0 = time.perf_counter()

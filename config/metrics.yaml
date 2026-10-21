@@ -5,7 +5,7 @@
 #
 # 距离一律为大圆距离（km），面积为球面面积（km²），形态学运算以格点中心距离定义圆盘。
 
-version: 2                               # v2（2026-10-21）：U11 B1 同类比较、U16 山系形态指标；v1 的数值定义不变
+version: 3                               # v3（2026-10-21）：U18 主内海接壤与形状条件、海岸复杂度空间分布统计；v2（同日）：U11 B1 同类比较、U16 山系形态；此前的数值定义不变
 
 A_hard_constraints:
   ocean_fraction:
@@ -28,6 +28,13 @@ A_hard_constraints:
     min_ratio_to_second: 2.0
     straits_to_ocean:
       target: [1, 3]
+    # U18(c)（2026-10-21 用户同意，校准报告 §9.5/§10）：两个对照样本的主内海都是"一个亚大陆里挖出的圆海"却通过了 A 层。
+    # 简报 §4 要的是两个陆块合拢残留的古洋盆。依据（地球 1024/2048 实测）：地中海接壤欧亚 34%、非洲 33%，主轴长宽比 3.3；
+    # 其他半封闭海：红海 6.5、里海 2.7、黑海 2.2、波罗的海 1.95、哈德逊湾 1.4；两个对照样本 1.04–1.08，各只接壤 1 个亚大陆。
+    bordering_subcontinents:
+      min_border_share: 0.15             # 沿岸陆地（面积加权）中属于该亚大陆的比例 ≥ 15% 才算接壤（地中海的非洲岸约 33%）
+      min_count: 2                       # 至少与 2 个亚大陆接壤
+    min_aspect_ratio: 2.0                # 主轴长宽比 ≥ 2（伸长的残留洋盆；近圆约 1）
   main_continent_latitude:
     north_min_deg: 62                    # 北端 ≥ 62°N（软边界）
     south_max_deg: -30                   # 南端 ≤ 30°S（软边界）
@@ -54,6 +61,13 @@ B1_coast:
     method: landmass_unit_floor          # 与地球大陆级陆块本体（陆块单元切分）比较，实现见 packages/metrics/verdict.py
     unit_min_area_km2: 5.0e+6            # 参与判定、也用来构成地球参照的陆块下限（= continent_min_area_km2）
     reference_only: [coastline_development]   # 随面积增大，只作参考、不判定
+  # U18(a)（2026-10-21 用户同意）：海岸复杂度的空间分布。0.7 噪声海岸世界的 B1 全部达标，但它的海岸处处一样碎；
+  # 地球的海岸有的地方碎、有的地方直。只作统计、显示在标准图组里，不设合格线（调制噪声振幅就能骗过它）。
+  complexity_spread:
+    window_km: 2000                      # 窗口边长（与区域放大图相同）；复杂度 = 内切圆内海岸长度 ÷ max(平滑后长度, 半径)
+    smooth_radius_km: 100                # 平滑 = 半径 100 km 的开运算再闭运算
+    candidate_step_km: 100               # 窗口中心沿海岸每 100 km 取一个
+    reference_only: true
   target: 世界每个大陆级陆块的各项不低于地球大陆级陆块本体中的最小值（距海距离类不高于最大值），同分辨率、同一切分方式；地球亚非欧本体为主大陆的评分目标（baselines_<分辨率>.json 的 landmass_unit_reference）
 
 B2_dryness:

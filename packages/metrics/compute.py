@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from . import coastal, earthlike, hard
+from . import coast_windows, coastal, earthlike, hard
 from .coast import coastline_development
 from .distributions import weighted_quantiles
 from .grid import LatLonGrid
@@ -84,6 +84,10 @@ def compute_all(
     seas = hard.inland_seas(grid, land, main_mask, cis["strait_max_width_km"], cis["min_main_border_fraction"],
                             cis["min_candidate_area_km2"])
     check = hard.main_inland_sea_check(seas["seas"], cis)
+    if check.get("exists"):
+        geo = hard.inland_sea_geometry(grid, land, seas["region_labels"] == check["main"]["region_id"], sub["labels"],
+                                       sub["big_ids"], cis.get("bordering_subcontinents", {}).get("min_border_share", 0.0))
+        check = hard.apply_inland_sea_geometry(check, geo, cis)
     A["main_inland_sea"] = {**check, "pass": bool(check.get("passes", False)),
                             "candidate_seas": seas["seas"][:12]}
     fields["sea_regions"] = seas.get("region_labels")
@@ -143,6 +147,16 @@ def compute_all(
     B1["peninsula_index"] = pen
     B1["bay_index"] = bay
     tick("B1_morphology", t0)
+
+    if "complexity_spread" in cb:
+        # U18(a)：海岸复杂度的空间分布（只作统计，不设合格线）；窗口留给区域放大图的选取复用
+        t0 = time.perf_counter()
+        cs_cfg = cb["complexity_spread"]
+        cw = coast_windows.CoastWindows(grid, land, cs_cfg["window_km"], cs_cfg["smooth_radius_km"],
+                                        cs_cfg["candidate_step_km"])
+        B1["coast_complexity_spread"] = coast_windows.complexity_spread(cw)
+        fields["coast_windows"] = cw
+        tick("B1_complexity_spread", t0)
 
     t0 = time.perf_counter()
     B1["islands"] = coastal.island_stats(grid, land, cb["continent_min_area_km2"], cb["islands"]["min_area_pixels"])

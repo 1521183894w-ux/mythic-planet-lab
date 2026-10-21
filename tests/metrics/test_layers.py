@@ -66,6 +66,57 @@ def test_inland_sea_with_one_strait():
     assert chk["passes"]
 
 
+def _inland_sea_geometry(g, land):
+    """跑一遍 A 层主内海判定（含 U18 的形状与接壤条件），返回判定结果。"""
+    cfg = CFG["A_hard_constraints"]
+    main = hard.landmass_units(g, land, 50)["main_mask"]
+    sub = hard.subcontinents(g, main, cfg["subcontinents"]["neck_radius_km"], cfg["subcontinents"]["min_area_km2"])
+    seas = hard.inland_seas(g, land, main, 150, 0.5)
+    cis = cfg["main_inland_sea"]
+    chk = hard.main_inland_sea_check(seas["seas"], cis)
+    geo = hard.inland_sea_geometry(g, land, seas["region_labels"] == chk["main"]["region_id"], sub["labels"],
+                                   sub["big_ids"], cis["bordering_subcontinents"]["min_border_share"])
+    return sub, hard.apply_inland_sea_geometry(chk, geo, cis)
+
+
+def test_inland_sea_between_two_subcontinents_is_elongated_and_bordered_twice():
+    """赤道上一块大陆，中间一条东西向的狭长海（约 7100 × 670 km）几乎把它切成南北两半，
+    两端各留约 330 km 宽的颈部（亚大陆在此切开），东端颈部开一条 1 格宽的海峡通外洋。"""
+    g = G1024
+    cont = cap(g, 0, 20, 35)
+    sea = (np.abs(g.lat)[:, None] < 3) & (angular_distance_deg(g, 0, 20) < 32)
+    land = cont & ~sea
+    i, _ = g.rowcol(0.1, 52)
+    _, j0 = g.rowcol(0, 51)
+    _, j1 = g.rowcol(0, 57)
+    land[i, j0:j1] = False
+    sub, chk = _inland_sea_geometry(g, land)
+    assert sub["count"] == 2
+    geo = chk["geometry"]
+    assert geo["n_bordering_subcontinents"] == 2
+    assert all(s["border_share"] > 0.3 for s in geo["subcontinent_border_shares"])
+    assert geo["aspect_ratio"] > 5
+    assert 80 < geo["orientation_deg"] < 100          # 东西走向
+    assert chk["checks"]["bordering_subcontinents_ok"] and chk["checks"]["elongation_ok"]
+
+
+def test_round_sea_inside_one_subcontinent_fails_shape_and_border_checks():
+    """圆形内海挖在一块大陆中间（圆润世界、噪声海岸世界的情形）：旧的三项通过，新的两项不通过。"""
+    g = G1024
+    land = cap(g, 30, 20, 35) & ~cap(g, 30, 20, 10)
+    _, j = g.rowcol(30, 20)
+    i_top, _ = g.rowcol(66, 20)
+    i_sea, _ = g.rowcol(39, 20)
+    land[i_top:i_sea, j] = False
+    sub, chk = _inland_sea_geometry(g, land)
+    assert sub["count"] == 1
+    assert chk["geometry"]["aspect_ratio"] < 1.3
+    assert chk["geometry"]["n_bordering_subcontinents"] == 1
+    assert chk["checks"]["area_in_range"] and chk["checks"]["straits_ok"]
+    assert not chk["checks"]["bordering_subcontinents_ok"] and not chk["checks"]["elongation_ok"]
+    assert not chk["passes"]
+
+
 def test_open_ocean_emptiness_and_polar_continent():
     g = G1024
     land = cap(g, -90, 0, 18)  # 南极大陆，约 1250 万 km²

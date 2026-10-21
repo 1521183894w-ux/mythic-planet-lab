@@ -94,6 +94,23 @@ def test_archipelago_and_smooth_coast(synth):
     assert p6.missing is None and p6.score < 1.3  # 光滑球冠海岸：复杂度约为 1
 
 
+def test_coast_windows_shared_with_metrics(synth):
+    """U18(a)：区域选取复用 compute_all 算好的海岸窗口，结果与重新计算完全相同；定义与 config 一致。"""
+    g, land, m, f, cfg, picks, ca = synth
+    assert "coast_windows" in f
+    fresh = CoastAnalysis(g, land)
+    np.testing.assert_array_equal(ca.complexity, fresh.complexity)
+    np.testing.assert_array_equal(ca.cand_sea_cell, fresh.cand_sea_cell)
+    cs = cfg["B1_coast"]["complexity_spread"]
+    from mythic.figures import select_regions as sr
+    assert (cs["window_km"], cs["smooth_radius_km"], cs["candidate_step_km"]) == (
+        sr.DEFAULT_SIZE_KM, sr.SMOOTH_RADIUS_KM, sr.CANDIDATE_STEP_KM)
+    spread = m["B1"]["coast_complexity_spread"]
+    # 合成世界的大陆都是光滑球冠：成形海岸窗口几乎都平直（小岛群在平滑时被抹掉，不算成形海岸）
+    assert spread["n_windows"] > 100
+    assert spread["p50"] < 1.3 and spread["straight_fraction"] > 0.8
+
+
 def test_random_coast_is_reproducible(synth):
     g, land, m, f, cfg, picks, ca = synth
     again, _ = select_regions("synthetic_test", g, land, m, f, cfg, {}, ca=ca)

@@ -56,6 +56,10 @@ def summarize(m: dict, cfg: dict) -> dict:
                      "subcontinents": A["subcontinents"]["count"], "subcontinent_areas_Mkm2": [a / 1e6 for a in A["subcontinents"]["areas_km2"]],
                      "inland_sea_Mkm2": mis["main"]["area_km2"] / 1e6 if mis.get("exists") else None,
                      "inland_sea_straits": mis["main"]["straits_to_world_ocean"] if mis.get("exists") else None,
+                     "inland_sea_checks": mis.get("checks"),
+                     "inland_sea_aspect_ratio": mis.get("geometry", {}).get("aspect_ratio"),
+                     "inland_sea_bordering_subcontinents": mis.get("geometry", {}).get("n_bordering_subcontinents"),
+                     "inland_sea_border_shares": [s["border_share"] for s in mis.get("geometry", {}).get("subcontinent_border_shares", [])],
                      "north_deg": A["main_continent_latitude"]["north_deg"], "south_deg": A["main_continent_latitude"]["south_deg"],
                      "polar_continents": len(A["polar_continent"]["found"]), "open_ocean_diameter_km": A["open_ocean"]["land_free_circle_diameter_km"]},
         "units": {k: {"area_Mkm2": v["area_km2"] / 1e6, **flat(v)} for k, v in units.items()},
@@ -63,6 +67,7 @@ def summarize(m: dict, cfg: dict) -> dict:
         "global": {"fractal_D": m["B1"]["fractal_dimension"]["D"], "coastline_km": m["B1"]["coastline_length_km"],
                    "islands": m["B1"]["islands"]["n_islands"], "korcak_b": m["B1"]["islands"]["korcak"]["b"],
                    "shelf_fraction": m["B1"]["shelf_fraction_of_ocean"], "B2": m["B2"],
+                   "coast_complexity_spread": m["B1"].get("coast_complexity_spread"),
                    "mountains": {k: m["C"]["mountains"][k] for k in (
                        "n_systems", "n_longer_than_min_length", "mountain_land_fraction", "longest_km", "top3_length_km",
                        "area_weighted_aspect_ratio", "elongated_area_fraction", "low_tier")},
@@ -137,7 +142,11 @@ def main() -> None:
                   f"方式 3 通过 {sum(d['opt3_pass'] for d in v[name].values())}；正式判定 "
                   + "、".join(f"{u} {x['n_pass']}/{x['n_judged']}" for u, x in bv[name]["units"].items())
                   + f"；山系 最长 {mt['longest_km']:.0f} km，加权长宽比 {mt['area_weighted_aspect_ratio']:.2f}，"
-                  f"成带面积占比 {mt['elongated_area_fraction']:.2f}", flush=True)
+                  f"成带面积占比 {mt['elongated_area_fraction']:.2f}"
+                  f"；主内海 长宽比 {s['A_values']['inland_sea_aspect_ratio'] or float('nan'):.2f}、"
+                  f"接壤亚大陆 {s['A_values']['inland_sea_bordering_subcontinents']}"
+                  f"；海岸复杂度 CV {s['global']['coast_complexity_spread']['cv']:.2f}、"
+                  f"较平直占比 {s['global']['coast_complexity_spread']['straight_fraction']:.2f}", flush=True)
     out = ROOT / "reviews" / "stage0_calibration_data.json"
     out.write_text(json.dumps(to_jsonable(result), ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print(f"写出 {out.relative_to(ROOT)}")

@@ -121,7 +121,18 @@ def land_field(grid: LatLonGrid, seed: int, amp0: float, hurst: float) -> tuple[
     return smax(s0, r * KM_PER_DEG - sec) + noise, r
 
 
+def screening_config(cfg: dict) -> dict:
+    """筛种子按 0.7 制作时的 A 层规则（config v2）：去掉 U18(c) 之后加的主内海接壤与形状条件。
+    这个样本的主内海就是圆的、只在一个亚大陆里，按 v3 规则任何种子都过不了；为了能复现 params.json 里的世界，筛选时不用这两条。"""
+    out = json.loads(json.dumps(cfg))
+    mis = out["A_hard_constraints"]["main_inland_sea"]
+    mis.pop("bordering_subcontinents", None)
+    mis.pop("min_aspect_ratio", None)
+    return out
+
+
 def evaluate(grid: LatLonGrid, land: np.ndarray, cfg: dict, res: str) -> dict:
+    cfg = screening_config(cfg)
     m = compute_all(np.where(land, 500.0, -4000.0), land, cfg=cfg)
     base = json.loads((ROOT / f"data/earth_reference/baselines_{res}.json").read_text(encoding="utf-8"))
     v = b_verdict(m["by_region"], base["landmass_unit_reference"], cfg)

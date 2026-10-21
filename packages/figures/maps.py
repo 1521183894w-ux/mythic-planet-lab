@@ -218,6 +218,9 @@ def a_layer_text(metrics) -> str:
     if mis.get("exists"):
         m = mis["main"]
         lines.append(f"主内海     {m['area_km2'] / 1e6:.2f} 百万 km²，海峡 {m['straits_to_world_ocean']} 条  {_ok(mis['pass'])}")
+        geo = mis.get("geometry")
+        if geo:
+            lines.append(f"  接壤亚大陆 {geo['n_bordering_subcontinents']} 个，主轴长宽比 {geo['aspect_ratio']:.2f}")
     else:
         lines.append(f"主内海     无  {_ok(False)}")
     lat = A["main_continent_latitude"]

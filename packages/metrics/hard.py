@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from .earthlike import shape_axes
 from .grid import LatLonGrid
 from .spherical import distance_to_set_km, erode, nearest_index, opening
 from .topology import any_neighbor, component_sums, label
@@ -83,20 +84,23 @@ def unit_centroid_latitudes(grid: LatLonGrid, labels: np.ndarray, n: int) -> np.
 
 def subcontinents(grid: LatLonGrid, main_mask: np.ndarray, neck_radius_km: float, min_area_km2: float) -> dict:
     """亚大陆：把主大陆按"瓶颈"切分。对主大陆做半径 neck_radius_km 的腐蚀，宽度小于 2r 的地峡/颈部被切断，
-    剩余的核心各自代表一个亚大陆；主大陆其余格点归属最近的核心。面积 ≥ min_area_km2 的才计数。"""
+    剩余的核心各自代表一个亚大陆；主大陆其余格点归属最近的核心。面积 ≥ min_area_km2 的才计数。
+    labels 中每个"瓣"一个编号（含面积不足下限的小瓣）；big_ids 是计数的亚大陆编号，按面积从大到小。"""
     area = grid.cell_area_km2
     core = erode(grid, main_mask, neck_radius_km)
     lab, n = label(core)
     lobes = np.zeros(grid.shape, np.int64)
     if n == 0:
-        return {"count": 1 if main_mask.any() else 0, "areas_km2": [float((area * main_mask).sum())], "labels": main_mask.astype(int)}
+        return {"count": 1 if main_mask.any() else 0, "areas_km2": [float((area * main_mask).sum())],
+                "labels": main_mask.astype(int), "big_ids": [1] if main_mask.any() else []}
     lobes[core] = lab[core]
     rest = main_mask & ~core
     if rest.any():
         lobes[rest] = lab.ravel()[nearest_index(grid, core, rest)]
     areas = component_sums(lobes, n, area)[1:]
-    big = np.sort(areas[areas >= min_area_km2])[::-1]
-    return {"count": int(big.size), "areas_km2": [float(a) for a in big], "labels": lobes}
+    order = [int(k) for k in np.argsort(areas)[::-1] if areas[k] >= min_area_km2]
+    return {"count": len(order), "areas_km2": [float(areas[k]) for k in order], "labels": lobes,
+            "big_ids": [k + 1 for k in order]}
 
 
 def inland_seas(
@@ -191,6 +195,38 @@ def main_inland_sea_check(seas: list[dict], cfg: dict) -> dict:
         "passes": all(checks.values()),
         "n_inland_candidates": len(inland),
     }
+
+
+def inland_sea_geometry(grid: LatLonGrid, land: np.ndarray, sea: np.ndarray, lobes: np.ndarray, big_ids: list[int],
+                        min_border_share: float) -> dict:
+    """主内海的形状与接壤关系（U18(c)，2026-10-21 用户同意）。
+
+    - 接壤亚大陆：沿岸陆地格点（与海域相邻的陆地，按面积加权）中属于各亚大陆的比例；
+      比例 ≥ min_border_share 的亚大陆才算"接壤"（只在尖角处碰到的不算）。
+    - 形状：海域的主轴长宽比与走向（与山系同一个 shape_axes：切平面上面积加权协方差的 sqrt(λ1/λ2)）。
+      近圆的海约为 1，地中海约 3.3。海岸毛边几乎不影响它，所以噪声边缘的圆海骗不过。"""
+    area = grid.cell_area_km2
+    bw = area * (land & any_neighbor(sea))
+    tot = float(bw.sum())
+    shares = sorted(({"subcontinent_id": int(k), "border_share": float((bw * (lobes == k)).sum() / tot) if tot else 0.0}
+                     for k in big_ids), key=lambda s: s["border_share"], reverse=True)
+    sh = shape_axes(grid, sea)
+    return {"aspect_ratio": sh["aspect_ratio"], "orientation_deg": sh["orientation_deg"],
+            "subcontinent_border_shares": shares, "min_border_share": min_border_share,
+            "n_bordering_subcontinents": int(sum(s["border_share"] >= min_border_share for s in shares))}
+
+
+def apply_inland_sea_geometry(check: dict, geometry: dict, cfg: dict) -> dict:
+    """把形状与接壤条件并入主内海判定。config 中没有对应键时只记录、不判定（便于按旧版规则复现对照样本）。"""
+    if not check.get("exists"):
+        return check
+    checks = dict(check["checks"])
+    bc = cfg.get("bordering_subcontinents")
+    if bc:
+        checks["bordering_subcontinents_ok"] = geometry["n_bordering_subcontinents"] >= bc["min_count"]
+    if "min_aspect_ratio" in cfg:
+        checks["elongation_ok"] = geometry["aspect_ratio"] >= cfg["min_aspect_ratio"]
+    return {**check, "geometry": geometry, "checks": checks, "passes": all(checks.values())}
 
 
 def open_ocean_emptiness(grid: LatLonGrid, land: np.ndarray) -> dict:

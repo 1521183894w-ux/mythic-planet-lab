@@ -173,3 +173,81 @@ def coast_vs_earth(world, metrics, earth_metrics, earth_world, cfg, verdict, ref
     fig.suptitle(f"{world.display_name} · 海岸复杂度与距海距离：与同分辨率地球对比（B1、B2）", fontsize=13)
     stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_label}）")
     _save(fig, path)
+
+
+def _window_latlon(cw):
+    c = cw.cand[cw.formed]
+    return np.degrees(np.arcsin(np.clip(c[:, 2], -1, 1))), np.degrees(np.arctan2(c[:, 1], c[:, 0])), cw.complexity[cw.formed]
+
+
+def coast_complexity_spread(world, ca, metrics, earth_world, earth_ca, earth_metrics, path):
+    """U18(a)：海岸复杂度的空间分布（只作统计，不设合格线）。上排两张地图标出每个成形海岸窗口的复杂度，
+    下排是复杂度的累积分布与汇总量。地球的海岸有的地方碎、有的地方直；噪声海岸处处一样碎。"""
+    wl, el = _labels(world)
+    fig = plt.figure(figsize=(18, 11.5))
+    gs = fig.add_gridspec(2, 2, height_ratios=[1.0, 0.85], hspace=0.32, wspace=0.12, bottom=0.12, top=0.92,
+                          left=0.05, right=0.97)
+    norm = matplotlib.colors.LogNorm(vmin=1.0, vmax=6.0)
+    cmap = plt.get_cmap("viridis")
+    for col, (w, cw, lab) in enumerate(((world, ca, wl), (earth_world, earth_ca, el))):
+        ax = fig.add_subplot(gs[0, col])
+        ax.imshow(np.where(w.land, 0.82, 0.97), extent=(-180, 180, -90, 90), cmap="gray", vmin=0, vmax=1,
+                  interpolation="nearest", aspect="auto")
+        lat, lon, c = _window_latlon(cw)
+        o = np.argsort(c)
+        sc = ax.scatter(lon[o], lat[o], c=c[o], s=5, cmap=cmap, norm=norm, linewidths=0)
+        ax.set_xlim(-180, 180)
+        ax.set_ylim(-90, 90)
+        ax.set_xticks(range(-180, 181, 60))
+        ax.set_yticks(range(-90, 91, 30))
+        ax.tick_params(labelsize=7)
+        ax.grid(alpha=0.25, lw=0.5)
+        ax.set_title(f"{lab}\n每个点是一个 2000 km 窗口的中心，颜色 = 窗口内海岸复杂度", fontsize=9.5)
+    cb = fig.colorbar(sc, ax=fig.axes[:2], orientation="vertical", fraction=0.015, pad=0.01)
+    cb.set_label("海岸复杂度（对数色标；1 = 平直）", fontsize=8.5)
+    cb.set_ticks([1, 1.5, 2, 3, 4, 6])
+    cb.set_ticklabels(["1", "1.5", "2", "3", "4", "6"])
+
+    ax = fig.add_subplot(gs[1, 0])
+    stats = []
+    for cw, m, lab, c, ls in ((ca, metrics, wl, WORLD_C, "-"), (earth_ca, earth_metrics, el, EARTH_C, "--")):
+        v = np.sort(cw.complexity[cw.formed])
+        if v.size:
+            ax.plot(v, np.arange(1, v.size + 1) / v.size, color=c, ls=ls, lw=1.8, label=lab)
+        stats.append((lab, m["B1"].get("coast_complexity_spread", {})))
+    ax.axvline(1.5, color="0.5", ls=":", lw=1)
+    ax.set_xscale("log")
+    ax.set_xlim(0.95, 8)
+    ax.set_xticks([1, 1.5, 2, 3, 4, 6, 8])
+    ax.set_xticklabels(["1", "1.5", "2", "3", "4", "6", "8"])
+    ax.set_xlabel("窗口内海岸复杂度（对数轴）")
+    ax.set_ylabel("累积比例（按海岸长度）")
+    ax.set_title("复杂度的累积分布：曲线越陡 = 各处越一样", fontsize=10)
+    ax.grid(alpha=0.3, which="both")
+    ax.legend(fontsize=9, loc="lower right")
+
+    ax = fig.add_subplot(gs[1, 1])
+    ax.axis("off")
+    rows = [("成形海岸窗口数", "n_windows", "{:.0f}"), ("p10 / p50 / p90", None, None), ("p90 ÷ p10", "p90_over_p10", "{:.2f}"),
+            ("变异系数 CV", "cv", "{:.2f}"), ("最平直的一个窗口", "min", "{:.2f}"),
+            ("较平直窗口占比（< 1.5）", "straight_fraction", "{:.0%}")]
+
+    def fmt(s, key, f):
+        if key is None:
+            return "—" if s.get("p10") is None else f"{s['p10']:.2f} / {s['p50']:.2f} / {s['p90']:.2f}"
+        return "—" if s.get(key) is None else f.format(s[key])
+
+    cell = [[name] + [fmt(s, key, f) for _, s in stats] for name, key, f in rows]
+    tb = ax.table(cellText=cell, colLabels=["", "本世界", "地球"], loc="upper center", cellLoc="center", colWidths=[0.42, 0.25, 0.25])
+    tb.auto_set_font_size(False)
+    tb.set_fontsize(10)
+    tb.scale(1, 1.8)
+    ax.text(0.0, 0.08, "只作统计，不设合格线（PROGRESS U18(a)）。\n"
+            "地球：被动陆缘与沙漠海岸平直、峡湾与群岛区破碎，复杂度分布宽；\n"
+            "随机噪声生成的海岸处处一样碎，没有平直海岸，分布窄。\n"
+            "再加一层噪声去调节粗糙程度就能骗过这项统计，所以它只是必要条件。", fontsize=9, transform=ax.transAxes, va="bottom")
+    fig.suptitle(f"{world.display_name} · 海岸复杂度的空间分布：与同分辨率地球对比（B1 统计）", fontsize=13)
+    stamp(fig, world, f"由海陆掩膜派生（输入 {world.method_label}）",
+          ["复杂度 = 窗口内切圆（半径 1000 km）内的海岸线长度 ÷ max(半径 100 km 平滑后的长度, 1000 km)；"
+           "只统计中心落在平滑海岸上、平滑后仍有 ≥ 1000 km 海岸的窗口（定义见 mythic.metrics.coast_windows）。"])
+    _save(fig, path)

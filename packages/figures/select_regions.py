@@ -4,10 +4,8 @@
 （config/earth_regions.yaml 中的 id；随机海岸则在地球上同样随机抽一段）。
 
 用到的量（全部在球面上计算，与指标代码同一套格网和形态学定义）：
-- 海岸线采样点：陆地掩膜 0.5 等值线按约 20 km 加密，每点代表一小段海岸长度；
-- 平滑海岸：对陆地做半径 100 km 的开运算再闭运算，去掉宽度 < 200 km 的半岛、海湾和小岛后的海岸线；
-- 窗口内的海岸复杂度 = 窗口内切圆（半径 = 边长/2）内的海岸线长度 ÷ max(平滑海岸线长度, 圆的半径)。
-  平直海岸约为 1，海岸越破碎、半岛海湾岛屿越多，比值越大。
+- 海岸线采样点、平滑海岸、窗口内的海岸复杂度：定义见 mythic.metrics.coast_windows（与 U18(a) 的
+  "海岸复杂度空间分布"统计共用）。平直海岸约为 1，海岸越破碎、半岛海湾岛屿越多，比值越大。
 - 群岛：面积小于"大陆"门槛（config/metrics.yaml 的 continent_min_area_km2）的连通陆块，按质心计数。
 """
 
@@ -19,16 +17,14 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.spatial import cKDTree
 
-from mythic.metrics.coast import coastline_segments, densify_km, polyline_lengths_km
+from mythic.metrics.coast_windows import (CANDIDATE_STEP_KM, COAST_STEP_KM, SMOOTH_RADIUS_KM,  # noqa: F401（供外部沿用旧名）
+                                          CoastWindows, ball_sums, coast_points)
+from mythic.metrics.coast_windows import DEFAULT_WINDOW_KM as DEFAULT_SIZE_KM
 from mythic.metrics.grid import LatLonGrid, chord_to_km, km_to_chord
 from mythic.metrics.hard import unit_centroid_latitudes
-from mythic.metrics.spherical import closing, opening
 from mythic.metrics.topology import component_sums, label
 
-DEFAULT_SIZE_KM = 2000.0
-SMOOTH_RADIUS_KM = 100.0
-COAST_STEP_KM = 20.0
-CANDIDATE_STEP_KM = 100.0
+_ball_sums = ball_sums  # 旧名
 
 # (键, 标题, 规则说明, 地球对照区域 id)
 ROLES = [
@@ -67,52 +63,19 @@ def _xyz_to_latlon(v: np.ndarray) -> tuple[float, float]:
     return float(np.degrees(np.arcsin(np.clip(v[2], -1, 1)))), float(np.degrees(np.arctan2(v[1], v[0])))
 
 
-def coast_points(grid: LatLonGrid, land: np.ndarray, step_km: float = COAST_STEP_KM) -> tuple[np.ndarray, np.ndarray]:
-    """海岸线加密采样点（单位向量）与每点代表的海岸长度（km）。"""
-    pts, wts = [], []
-    for s in coastline_segments(grid, land):
-        if len(s) < 2:
-            continue
-        p = densify_km(grid, [s], step_km) / grid.radius_km
-        pts.append(p)
-        wts.append(np.full(len(p), polyline_lengths_km(grid, s).sum() / len(p)))
-    if not pts:
-        return np.zeros((0, 3)), np.zeros(0)
-    return np.concatenate(pts), np.concatenate(wts)
+class CoastAnalysis(CoastWindows):
+    """一个世界的海岸采样、候选窗口与复杂度（CoastWindows），外加每个候选点最近的陆地、海洋格点。
+    windows：compute_all 已算好的 CoastWindows（fields["coast_windows"]），给了就直接复用，不重算。"""
 
-
-def _ball_sums(tree: cKDTree, weights: np.ndarray, centers: np.ndarray, chord: float, chunk: int = 400) -> np.ndarray:
-    out = np.zeros(len(centers))
-    for a in range(0, len(centers), chunk):
-        for k, idx in enumerate(tree.query_ball_point(centers[a:a + chunk], chord, workers=-1)):
-            out[a + k] = weights[idx].sum() if idx else 0.0
-    return out
-
-
-class CoastAnalysis:
-    """一个世界的海岸采样、候选窗口与复杂度。"""
-
-    def __init__(self, grid: LatLonGrid, land: np.ndarray, size_km: float = DEFAULT_SIZE_KM):
-        self.grid, self.land, self.size_km = grid, land, size_km
-        self.radius_km = size_km / 2.0
-        self.pts, self.w = coast_points(grid, land)
-        smooth = closing(grid, opening(grid, land, SMOOTH_RADIUS_KM), SMOOTH_RADIUS_KM)
-        self.spts, self.sw = coast_points(grid, smooth)
-        cand, _ = coast_points(grid, land, CANDIDATE_STEP_KM)
-        self.cand = cand
-        chord = float(km_to_chord(self.radius_km, grid.radius_km))
-        self.L_raw = _ball_sums(cKDTree(self.pts), self.w, cand, chord) if len(self.pts) else np.zeros(len(cand))
-        self.L_smooth = (_ball_sums(cKDTree(self.spts), self.sw, cand, chord) if len(self.spts)
-                         else np.zeros(len(cand)))
-        # 分母下限取窗口半径：平滑海岸很短的窗口（例如只有小岛）比值不会发散
-        self.complexity = self.L_raw / np.maximum(self.L_smooth, self.radius_km)
-        # 候选点是否位于平滑后仍存在的海岸上（距平滑海岸 ≤ 平滑半径）：保证窗口中心真的落在一段成形的海岸上
-        if len(self.spts) and len(cand):
-            d, _ = cKDTree(self.spts).query(cand, workers=-1)
-            self.on_smooth = chord_to_km(d, grid.radius_km) <= SMOOTH_RADIUS_KM
+    def __init__(self, grid: LatLonGrid, land: np.ndarray, size_km: float = DEFAULT_SIZE_KM,
+                 windows: CoastWindows | None = None):
+        if (windows is not None and windows.size_km == size_km and windows.smooth_radius_km == SMOOTH_RADIUS_KM
+                and windows.land.shape == land.shape and np.array_equal(windows.land, land)):
+            self.__dict__.update(windows.__dict__)
         else:
-            self.on_smooth = np.zeros(len(cand), bool)
+            super().__init__(grid, land, size_km)
         # 每个候选点 -> 最近的陆地格点、最近的海洋格点（扁平索引），用于判断属于哪块陆地、哪片海
+        cand = self.cand
         xyz = grid.xyz.reshape(-1, 3)
         land_idx = np.flatnonzero(land.ravel())
         sea_idx = np.flatnonzero(~land.ravel())
@@ -140,7 +103,7 @@ def random_coast_center(ca: CoastAnalysis, world_id: str, salt: str = "r8") -> t
 def select_regions(world_id: str, grid: LatLonGrid, land: np.ndarray, metrics: dict, fields: dict, cfg: dict,
                    earth_sizes: dict[str, float], ca: CoastAnalysis | None = None) -> tuple[list[RegionPick], CoastAnalysis]:
     """按 8 条规则选窗口。metrics/fields 是 compute_all(..., return_fields=True) 的输出。"""
-    ca = ca or CoastAnalysis(grid, land)
+    ca = ca or CoastAnalysis(grid, land, windows=fields.get("coast_windows"))
     picks = {k: RegionPick(k, t, r, e) for k, t, r, e in ROLES}
     big_coast = ca.L_raw >= ca.radius_km  # 窗口内至少有 1000 km 海岸，才算"一段海岸"
     area = grid.cell_area_km2

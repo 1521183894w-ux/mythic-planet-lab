@@ -60,6 +60,10 @@ def _fmt(v, nd=3):
     return _e(v)
 
 
+CHECK_NAMES = {"area_in_range": "面积", "ratio_to_second_ok": "唯一性", "straits_ok": "海峡数",
+               "bordering_subcontinents_ok": "接壤亚大陆数", "elongation_ok": "形状（近圆）"}
+
+
 def a_table(metrics) -> str:
     A = metrics["A"]
     rows = []
@@ -73,9 +77,18 @@ def a_table(metrics) -> str:
         m = mis["main"]
         v = f"{m['area_km2'] / 1e6:.2f} 百万 km²；通外洋海峡 {m['straits_to_world_ocean']} 条；为第二大内部海域的 " \
             f"{(mis['ratio_to_second'] or float('inf')):.1f} 倍"
+        geo = mis.get("geometry")
+        if geo:
+            v += (f"；接壤亚大陆 {geo['n_bordering_subcontinents']} 个（沿岸占比 "
+                  + "、".join(f"{s['border_share']:.0%}" for s in geo["subcontinent_border_shares"] if s["border_share"] >= 0.01)
+                  + f"）；主轴长宽比 {geo['aspect_ratio']:.2f}")
+        failed = [k for k, ok in mis.get("checks", {}).items() if not ok]
+        if failed:
+            v += "；未过：" + "、".join(CHECK_NAMES.get(k, k) for k in failed)
     else:
         v = "无"
-    rows.append(("主内海", v, "1–5 百万 km²；1–3 条海峡；≥ 第二大的 2 倍", mis.get("pass", False)))
+    rows.append(("主内海", v, "1–5 百万 km²；1–3 条海峡；≥ 第二大的 2 倍；至少接壤 2 个亚大陆（各占沿岸 ≥ 15%）；主轴长宽比 ≥ 2",
+                 mis.get("pass", False)))
     lat = A["main_continent_latitude"]
     rows.append(("主大陆南北端纬度", f"{lat['north_deg']:.1f}° / {lat['south_deg']:.1f}°",
                  f"北端 ≥ {lat['target']['north_min']}°，南端 ≤ {lat['target']['south_max']}°", lat["pass"]))
@@ -137,6 +150,11 @@ def b_table(verdict: dict, reference: dict) -> str:
     return f"<div class='scroll'><table>{head}{''.join(rows)}</table></div>{note}"
 
 
+def _spread(m, key):
+    v = m["B1"].get("coast_complexity_spread", {}).get(key)
+    return float("nan") if v is None else v
+
+
 def c_table(metrics, earth_metrics) -> str:
     def row(name, f, nd=2):
         return f"<tr><td>{_e(name)}</td><td class='num'>{_fmt(f(metrics), nd)}</td><td class='num'>{_fmt(f(earth_metrics), nd)}</td></tr>"
@@ -153,6 +171,11 @@ def c_table(metrics, earth_metrics) -> str:
         row("面积加权主轴长宽比（成带程度）", lambda m: m["C"]["mountains"]["area_weighted_aspect_ratio"]),
         row("成带山系（主轴长宽比 ≥ 3）的面积占比", lambda m: m["C"]["mountains"]["elongated_area_fraction"]),
         row("低矮山地一级：长 > 1000 km 的山系数", lambda m: m["C"]["mountains"]["low_tier"]["n_longer_than_min_length"], 0),
+        row("海岸复杂度 p10（只作统计，U18）", lambda m: _spread(m, "p10")),
+        row("海岸复杂度 p50", lambda m: _spread(m, "p50")),
+        row("海岸复杂度 p90", lambda m: _spread(m, "p90")),
+        row("海岸复杂度变异系数（越小 = 各处越一样）", lambda m: _spread(m, "cv")),
+        row("较平直海岸窗口占比（复杂度 < 1.5）", lambda m: _spread(m, "straight_fraction")),
         row("岛屿数", lambda m: m["B1"]["islands"]["n_islands"], 0),
         row("Korčak 指数 b", lambda m: m["B1"]["islands"]["korcak"]["b"]),
         row("大陆架占海洋比例", lambda m: m["B1"]["shelf_fraction_of_ocean"], 3),
