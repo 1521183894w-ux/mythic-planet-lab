@@ -31,6 +31,7 @@
 | 亚大陆数 | 主大陆做半径 250 km 腐蚀（宽度 < 500 km 的颈部被切断），剩余核心各为一个亚大陆，主大陆其余格点归属最近核心；面积 ≥ 100 万 km² 才计数 | 颈部半径 250 km；最小面积 1 Mkm²；目标 3–6 | `test_subcontinents_split_at_neck` |
 | 主内海 | 海洋做半径 75 km 开运算（宽度 < 150 km 的水道被切断），最大海域为外洋，其余为候选海域，其余海洋格点归属最近海域；统计面积、沿岸陆地中主大陆的比例、与外洋相接的海峡段数。主内海 = 沿岸 ≥ 50% 属主大陆的最大海域；须面积 1–5 Mkm²、≥ 第二大内部水体 2 倍、1–3 条海峡通外洋 | 海峡宽度 150 km | `test_inland_sea_with_one_strait` |
 | 主内海的接壤与形状（U18(c)，config v3） | **接壤亚大陆**：与主内海相邻的陆地格点（面积加权）中各亚大陆所占比例，≥ 15% 的才算接壤，须至少 2 个。**形状**：海域的主轴长宽比（与山系同一个 `shape_axes`），须 ≥ 2。海岸毛边几乎不影响主轴长宽比，所以带噪声边缘的圆海也骗不过。地球（1024/2048 相同）：地中海接壤欧亚 34%、非洲 33%，长宽比 3.33；其他半封闭海的长宽比：红海 6.5、里海 2.7、黑海 2.2、波罗的海 1.95、哈德逊湾 1.4。圆润世界和噪声海岸世界的主内海 1.04–1.08，各只接壤 1 个亚大陆 | 接壤占比 15%、至少 2 个；长宽比 ≥ 2 | `test_inland_sea_between_two_subcontinents_is_elongated_and_bordered_twice`、`test_round_sea_inside_one_subcontinent_fails_shape_and_border_checks` |
+| 软限制（U17，config v4，**只扣分、不淘汰**，结果在 `soft_limits`） | `hard.soft_limits`：①主大陆在北极圈（90° − 轴倾角 23.44° = 66.56°N）以北的面积占比；②主大陆南端纬度；③次大陆数 = 主大陆之外、质心 \|纬度\| < 70°（不在极区）、面积 ≥ 500 万 km² 的陆块数。地球：①亚非欧本体 4.4%（2048）/ 4.6%（1024），北端 77.5°N 只是泰梅尔半岛尖角，所以限面积不限最北点；②34.7°S；③2 块（美洲、澳大利亚）。圆润世界与噪声海岸世界：①1.5–1.8%，②51.9°S、58.8°S（超出），③各 1 块 | 北极圈以北 ≤ 5%；南端不超过 50°S；次大陆 ≤ 1 块 | `test_compute_all_on_synthetic_world`、`test_soft_limits_flag_arctic_land_far_south_tip_and_two_secondary_continents` |
 | 主大陆纬度范围 | 主大陆格点中心的最北/最南纬度 | 北端 ≥ 62°N，南端 ≤ 30°S | `test_compute_all_on_synthetic_world` |
 | 极地大陆 | 陆块单元面积加权质心纬度 \|φ\| ≥ 70°，面积 5–15 Mkm² | — | `test_open_ocean_emptiness_and_polar_continent` |
 | 远洋空旷度 | 海洋格点到最近陆地格点的最大大圆距离 d；最大无陆地圆直径 = 2d | 目标直径 ≥ 3000 km | 同上 |
@@ -194,7 +195,7 @@
 powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\build_earth_reference.py   # 约 30 秒
 powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\compute_earth_baselines.py # 约 30 秒（含陆块单元参照）
 powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\build_region_atlas.py      # 约 2 分钟
-powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -m pytest                              # 全部测试（2026-10-21 为 58 项）
+powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -m pytest                              # 全部测试（2026-10-21 为 59 项）
 ```
 
 前提：`data/earth_reference/raw/` 中有 ETOPO 与 Natural Earth 原始文件（见 `data/external_manifests/` 的下载地址与 SHA256）。

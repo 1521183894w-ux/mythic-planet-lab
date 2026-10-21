@@ -1,12 +1,12 @@
 {
  "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
  "grid": "1024x512",
- "generated": "2026-10-22 00:25:41",
- "code_commit": "b510ae9",
+ "generated": "2026-10-22 00:56:19",
+ "code_commit": "18c9a32",
  "config": {
   "path": "config/metrics.yaml",
-  "version": 3,
-  "sha256": "d538276342c5de4ff2255c04f67353fa6c6bac0a762137c936436e34b2329ef6"
+  "version": 4,
+  "sha256": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603"
  },
  "inputs": {
   "grid_file": "data/earth_reference/earth_grid_1024x512.nc (scripts/build_earth_reference.py)",
@@ -526,6 +526,37 @@
    ],
    "target_min_diameter_km": 3000,
    "pass": true
+  }
+ },
+ "soft_limits": {
+  "note": "软限制：只扣分、不淘汰（U17）",
+  "north_arctic_area": {
+   "value": 0.04572230925785034,
+   "max": 0.05,
+   "arctic_circle_deg": 66.56,
+   "ok": true
+  },
+  "south_tip": {
+   "value_deg": -34.62890625,
+   "limit_deg": -50,
+   "ok": true
+  },
+  "secondary_continents": {
+   "count": 2,
+   "max": 1,
+   "found": [
+    {
+     "unit_id": 22,
+     "area_km2": 38962000.45953927,
+     "centroid_lat_deg": 21.406337787470996
+    },
+    {
+     "unit_id": 127,
+     "area_km2": 7611054.3006343115,
+     "centroid_lat_deg": -25.641780110307423
+    }
+   ],
+   "ok": false
   }
  },
  "B1": {
@@ -1709,18 +1740,18 @@
   "主大陆细线连接（半径）：判定半径 25 km 小于格点间距 39 km，此分辨率下不可靠"
  ],
  "timings_s": {
-  "A_units": 0.14,
-  "A_subcontinents": 0.03,
-  "A_inland_seas": 0.5,
-  "A_open_ocean": 0.07,
-  "B1_coastline": 0.16,
-  "B1_morphology": 0.54,
-  "B1_complexity_spread": 0.46,
-  "B1_islands_shelf": 0.01,
-  "B2_distance": 0.06,
-  "by_region": 0.59,
-  "C_hypsometry_slope": 0.09,
-  "C_mountains": 0.43
+  "A_units": 0.25,
+  "A_subcontinents": 0.05,
+  "A_inland_seas": 0.88,
+  "A_open_ocean": 0.14,
+  "B1_coastline": 0.31,
+  "B1_morphology": 0.92,
+  "B1_complexity_spread": 0.91,
+  "B1_islands_shelf": 0.02,
+  "B2_distance": 0.11,
+  "by_region": 1.01,
+  "C_hypsometry_slope": 0.26,
+  "C_mountains": 0.79
  },
- "config_version": 3
+ "config_version": 4
 }

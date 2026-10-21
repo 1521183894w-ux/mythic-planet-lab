@@ -1,7 +1,7 @@
 {
  "description": "阶段 0.7 尺子校准的指标对比（reviews/stage0_calibration.md）",
- "code_version": "1c6b80e",
- "generated": "2026-10-22 00:38:11",
+ "code_version": "18c9a32",
+ "generated": "2026-10-22 00:59:30",
  "resolutions": {
   "2048x1024": {
    "earth_continents_current_reference": {
@@ -127,6 +127,37 @@
      "south_deg": -34.716796875,
      "polar_continents": 1,
      "open_ocean_diameter_km": 7389.501819236433
+    },
+    "soft_limits": {
+     "note": "软限制：只扣分、不淘汰（U17）",
+     "north_arctic_area": {
+      "value": 0.04376816347155458,
+      "max": 0.05,
+      "arctic_circle_deg": 66.56,
+      "ok": true
+     },
+     "south_tip": {
+      "value_deg": -34.716796875,
+      "limit_deg": -50,
+      "ok": true
+     },
+     "secondary_continents": {
+      "count": 2,
+      "max": 1,
+      "found": [
+       {
+        "unit_id": 28,
+        "area_km2": 37898122.85629692,
+        "centroid_lat_deg": 20.14665644109557
+       },
+       {
+        "unit_id": 113,
+        "area_km2": 7616234.043763811,
+        "centroid_lat_deg": -25.630747503500686
+       }
+      ],
+      "ok": false
+     }
     },
     "units": {
      "main_continent": {
@@ -1566,6 +1597,32 @@
      "polar_continents": 1,
      "open_ocean_diameter_km": 8487.257570675765
     },
+    "soft_limits": {
+     "note": "软限制：只扣分、不淘汰（U17）",
+     "north_arctic_area": {
+      "value": 0.014600693999529506,
+      "max": 0.05,
+      "arctic_circle_deg": 66.56,
+      "ok": true
+     },
+     "south_tip": {
+      "value_deg": -51.943359375,
+      "limit_deg": -50,
+      "ok": false
+     },
+     "secondary_continents": {
+      "count": 1,
+      "max": 1,
+      "found": [
+       {
+        "unit_id": 3,
+        "area_km2": 28288334.523363806,
+        "centroid_lat_deg": 4.99692721917818
+       }
+      ],
+      "ok": true
+     }
+    },
     "units": {
      "main_continent": {
       "area_Mkm2": 109.14534822959693,
@@ -1799,6 +1856,32 @@
      "south_deg": -58.798828125,
      "polar_continents": 1,
      "open_ocean_diameter_km": 7570.082027070405
+    },
+    "soft_limits": {
+     "note": "软限制：只扣分、不淘汰（U17）",
+     "north_arctic_area": {
+      "value": 0.017400177546223073,
+      "max": 0.05,
+      "arctic_circle_deg": 66.56,
+      "ok": true
+     },
+     "south_tip": {
+      "value_deg": -58.798828125,
+      "limit_deg": -50,
+      "ok": false
+     },
+     "secondary_continents": {
+      "count": 1,
+      "max": 1,
+      "found": [
+       {
+        "unit_id": 29,
+        "area_km2": 24458426.273278292,
+        "centroid_lat_deg": 5.363936813834848
+       }
+      ],
+      "ok": true
+     }
     },
     "units": {
      "main_continent": {
@@ -2117,6 +2200,37 @@
      "south_deg": -34.62890625,
      "polar_continents": 1,
      "open_ocean_diameter_km": 9738.606182443615
+    },
+    "soft_limits": {
+     "note": "软限制：只扣分、不淘汰（U17）",
+     "north_arctic_area": {
+      "value": 0.04572230925785034,
+      "max": 0.05,
+      "arctic_circle_deg": 66.56,
+      "ok": true
+     },
+     "south_tip": {
+      "value_deg": -34.62890625,
+      "limit_deg": -50,
+      "ok": true
+     },
+     "secondary_continents": {
+      "count": 2,
+      "max": 1,
+      "found": [
+       {
+        "unit_id": 22,
+        "area_km2": 38962000.45953927,
+        "centroid_lat_deg": 21.406337787470996
+       },
+       {
+        "unit_id": 127,
+        "area_km2": 7611054.3006343115,
+        "centroid_lat_deg": -25.641780110307423
+       }
+      ],
+      "ok": false
+     }
     },
     "units": {
      "main_continent": {
@@ -3556,6 +3670,32 @@
      "polar_continents": 1,
      "open_ocean_diameter_km": 8483.038250652951
     },
+    "soft_limits": {
+     "note": "软限制：只扣分、不淘汰（U17）",
+     "north_arctic_area": {
+      "value": 0.015776031142887028,
+      "max": 0.05,
+      "arctic_circle_deg": 66.56,
+      "ok": true
+     },
+     "south_tip": {
+      "value_deg": -51.85546875,
+      "limit_deg": -50,
+      "ok": false
+     },
+     "secondary_continents": {
+      "count": 1,
+      "max": 1,
+      "found": [
+       {
+        "unit_id": 3,
+        "area_km2": 28387049.188986935,
+        "centroid_lat_deg": 5.007340002981298
+       }
+      ],
+      "ok": true
+     }
+    },
     "units": {
      "main_continent": {
       "area_Mkm2": 109.30770455716635,
@@ -3789,6 +3929,32 @@
      "south_deg": -58.88671875,
      "polar_continents": 1,
      "open_ocean_diameter_km": 7571.208893113949
+    },
+    "soft_limits": {
+     "note": "软限制：只扣分、不淘汰（U17）",
+     "north_arctic_area": {
+      "value": 0.01841359916006259,
+      "max": 0.05,
+      "arctic_circle_deg": 66.56,
+      "ok": true
+     },
+     "south_tip": {
+      "value_deg": -58.88671875,
+      "limit_deg": -50,
+      "ok": false
+     },
+     "secondary_continents": {
+      "count": 1,
+      "max": 1,
+      "found": [
+       {
+        "unit_id": 38,
+        "area_km2": 24830953.619828045,
+        "centroid_lat_deg": 5.449833995597089
+       }
+      ],
+      "ok": true
+     }
     },
     "units": {
      "main_continent": {

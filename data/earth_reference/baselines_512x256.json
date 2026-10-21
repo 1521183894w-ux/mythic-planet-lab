@@ -1,12 +1,12 @@
 {
  "description": "地球基准：与虚构世界相同的指标代码在同一格网上计算（docs/quality_metrics.md §F）",
  "grid": "512x256",
- "generated": "2026-10-22 00:25:35",
- "code_commit": "b510ae9",
+ "generated": "2026-10-22 00:56:09",
+ "code_commit": "18c9a32",
  "config": {
   "path": "config/metrics.yaml",
-  "version": 3,
-  "sha256": "d538276342c5de4ff2255c04f67353fa6c6bac0a762137c936436e34b2329ef6"
+  "version": 4,
+  "sha256": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603"
  },
  "inputs": {
   "grid_file": "data/earth_reference/earth_grid_512x256.nc (scripts/build_earth_reference.py)",
@@ -496,6 +496,37 @@
    ],
    "target_min_diameter_km": 3000,
    "pass": true
+  }
+ },
+ "soft_limits": {
+  "note": "软限制：只扣分、不淘汰（U17）",
+  "north_arctic_area": {
+   "value": 0.04182581365338627,
+   "max": 0.05,
+   "arctic_circle_deg": 66.56,
+   "ok": true
+  },
+  "south_tip": {
+   "value_deg": -34.1015625,
+   "limit_deg": -50,
+   "ok": true
+  },
+  "secondary_continents": {
+   "count": 2,
+   "max": 1,
+   "found": [
+    {
+     "unit_id": 16,
+     "area_km2": 39186309.8753027,
+     "centroid_lat_deg": 21.61024478333167
+    },
+    {
+     "unit_id": 65,
+     "area_km2": 7632464.965820329,
+     "centroid_lat_deg": -25.555282997939056
+    }
+   ],
+   "ok": false
   }
  },
  "B1": {
@@ -1684,16 +1715,16 @@
  "timings_s": {
   "A_units": 0.04,
   "A_subcontinents": 0.01,
-  "A_inland_seas": 0.09,
+  "A_inland_seas": 0.11,
   "A_open_ocean": 0.02,
   "B1_coastline": 0.06,
-  "B1_morphology": 0.15,
-  "B1_complexity_spread": 0.25,
-  "B1_islands_shelf": 0.0,
-  "B2_distance": 0.01,
-  "by_region": 0.16,
-  "C_hypsometry_slope": 0.02,
-  "C_mountains": 0.16
+  "B1_morphology": 0.19,
+  "B1_complexity_spread": 0.33,
+  "B1_islands_shelf": 0.01,
+  "B2_distance": 0.03,
+  "by_region": 0.34,
+  "C_hypsometry_slope": 0.05,
+  "C_mountains": 0.31
  },
- "config_version": 3
+ "config_version": 4
 }

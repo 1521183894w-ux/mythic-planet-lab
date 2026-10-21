@@ -126,7 +126,7 @@ def soft_table(metrics) -> str:
     found = "；".join(f"{c['area_km2'] / 1e6:.1f} 百万 km²，质心 {c['centroid_lat_deg']:.0f}°" for c in sc["found"]) or "无"
     rows = [
         ("主大陆在北极圈（{:.2f}°N）以北的面积占比".format(na["arctic_circle_deg"]), f"{na['value']:.1%}",
-         f"≤ {na['max']:.0%}（地球亚非欧 4.6%）", na["ok"]),
+         f"≤ {na['max']:.0%}（地球亚非欧约 4.5%）", na["ok"]),
         ("主大陆南端", f"{st['value_deg']:.1f}°", f"不超过 {abs(st['limit_deg']):.0f}°S", st["ok"]),
         ("次大陆（主大陆、极区陆块之外 ≥ 500 万 km² 的陆块）", f"{sc['count']} 块：{found}", f"≤ {sc['max']} 块", sc["ok"]),
     ]
