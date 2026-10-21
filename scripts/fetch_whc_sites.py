@@ -151,7 +151,7 @@ def main() -> int:
         "sites_viii": sum("viii" in s["criteria"] for s in selected.values()),
         "notes": "UNESCO 官网名单下载接口有人机验证，未使用。Wikidata 是社区维护数据，可能与 UNESCO 官方名单有出入，见 docs/archetype_coverage.md 的核对说明。",
     }
-    OUT_META.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT_META.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"写出 {OUT_CSV.relative_to(ROOT)}（{len(selected)} 行）与元数据，用时 {time.time() - t0:.0f} s")
     return 0
 

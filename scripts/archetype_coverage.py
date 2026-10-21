@@ -194,7 +194,7 @@ def main() -> int:
         return 1
     head, rest = text.split(BEGIN, 1)
     _, tail = rest.split(END, 1)
-    DOC.write_text(head + BEGIN + "\n" + render(lib, sites, mapping) + END + tail, encoding="utf-8")
+    DOC.write_text(head + BEGIN + "\n" + render(lib, sites, mapping) + END + tail, encoding="utf-8", newline="\n")
     print(f"已更新 {DOC.relative_to(ROOT)}")
     return 0
 
