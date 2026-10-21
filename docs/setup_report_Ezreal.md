@@ -15,7 +15,7 @@
 | CPU / 内存 / 磁盘 | i7-12700H（14 核 20 线程），16 GB DDR5-4800 双通道，D 盘剩余 99 GB | 计算能力强于台式机；但性能预算仍以台式机为下限 |
 | GPU | RTX 3060 Laptop，6 GB，驱动 572.61，计算能力 8.6 | 可以在这台机器上试 GPU 加速（只作可选项，必须有 CPU 回退） |
 | Python | 系统里有多个旧 Python（3.6–3.13）和 uv，**均不使用**；PATH 上的 `python` 是 Windows 应用商店别名 | 项目环境自包含，不受影响 |
-| Git | 2.55.0 + LFS 3.7.1，Git Credential Manager；全局没有提交身份 | 已在本仓库设置 U2 身份；**推送前用户需在这台机器登录一次 GitHub** |
+| Git | 2.55.0 + LFS 3.7.1，Git Credential Manager；全局没有提交身份 | 已在本仓库设置 U2 身份；GitHub 凭据已存在，推送正常 |
 | WSL | **未安装**；虚拟化固件已开启；Windows 11 26H2、补丁是最新的（2026-10-18） | 将来启用 WSL 可直接走 `wsl --install` 新路线，不需要先打补丁（台式机的 U6 在这里不存在） |
 | 网络 | FlClash 系统代理 127.0.0.1:7890；**conda-forge、raw.githubusercontent、NOAA 数据服务器直连不通**，走代理都通；GitHub 主站直连可达 | **代理环境变量没有写进用户/系统环境**，用户自己开的终端里可能没有，见 §7 |
 | 端口 | 8000、5173 空闲；旧 Codex 项目目录 `D:\一个世界观` 在本机也存在但未运行 | 无冲突 |
@@ -106,7 +106,7 @@
 - 系统级（`D:\Git\etc\gitconfig`）：`core.autocrlf=true`、`core.symlinks=false`、`init.defaultbranch=master`、`credential.helper=manager`——与台式机相同，仓库里的 `.gitattributes` 已固定 LF，不受影响。
 - 全局（`C:\Users\15211\.gitconfig`）：只有 `safe.directory`，**没有 user.name / user.email**，没有 `http.proxy`。
 - 本仓库：克隆时没有提交身份。审计后已按 U2 设置 `user.name=1521183894w-ux`、`user.email=1521183894w@gmail.com`、`core.quotepath=false`（只写进 `.git/config`，不改全局）。
-- GitHub 推送凭据：本机是否已登录过 GitHub 无法只读确认（GCM 存在 Windows 凭据管理器里）。第一次推送时如弹出登录窗口，需要用户本人完成授权。
+- GitHub 推送凭据：Windows 凭据管理器里已有 `git:https://github.com` 条目（只看了条目名）；审计后的第一次推送成功，没有弹出登录窗口。
 
 ## 5. Python 与科学包
 
@@ -181,7 +181,7 @@
 ### 需要用户决定或本人操作的
 | # | 事项 | 何时需要 | 建议 |
 |---|---|---|---|
-| U13 | 在本机登录一次 GitHub（推送需要） | 本机第一次推送时 | 运行 `git -C D:/mythic-planet-lab push`，弹窗里选 "Sign in with your browser"；如果之前登录过就不会弹窗 |
+| U13 | 在本机登录一次 GitHub（推送需要） | — | **已解决**：凭据已存在，推送成功 |
 | U5 | 火绒（联想杀毒）是否信任 `D:\mythic-planet-lab\environment` 和 `.cache` | 可选 | 同台式机：不加也能用，本机冷启动 11.6 分钟，主要慢在下载而不是解压，目前没有必要 |
 | U10 | WSL 启用方式 | 阶段 2/3 前 | 本机系统已是最新，可直接 `wsl --install --no-distribution`（管理员）；台式机仍按 U6 决定 |
 | U14 | 将来 D 盘不够时是否允许用 E 盘 | 阶段 1 多种子运行时再看 | D 盘剩 99 GB，目前够用 |
