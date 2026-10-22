@@ -24,6 +24,10 @@ OUT = ROOT / "figures" / "stage1" / "prehistory"
 NOTE = ("method_class：省份拼贴（几何、年龄、类型、厚度）= 程序生成的初始条件（procedural_constrained）；"
         "陆块分界、陆缘减薄、夭折裂谷、漂移、新洋壳、岛弧 = 过程（procedural_constrained / GDH1、Airy = parameterized_physics）")
 B1_KEYS = ["fractal_dimension", "peninsula_index@100", "peninsula_index@200", "bay_index@100", "bay_index@200"]
+# 盘古大陆裂解留下的碎块（今天的陆地面积约值，Mkm²；西兰大陆为大陆地壳面积）：只用于图 7 比较量级与分布形状
+EARTH_FRAGMENTS = {"欧亚（除印度、阿拉伯）": 47.0, "非洲": 30.4, "北美": 22.5, "南美": 17.8, "南极洲": 14.2,
+                   "澳大利亚—新几内亚": 8.6, "西兰大陆": 4.9, "印度": 4.4, "阿拉伯": 3.2, "格陵兰": 2.2,
+                   "马达加斯加": 0.59, "斯里兰卡": 0.066}
 
 
 def parse_seeds(s):
@@ -181,20 +185,32 @@ def figures(level: int, seeds: list[int]):
     ax.scatter(lo[blk0], la[blk0], s=5, c="#f4a261", transform=PC, linewidths=0, rasterized=True)
     oa, ob = f["origin"][e[:, 0]], f["origin"][e[:, 1]]
     cc = (f["ctype"][e[:, 0]] == 1) & (f["ctype"][e[:, 1]] == 1) & (oa != ob)
-    lo_c, la_c = xyz_to_lonlat(unit(mesh.xyz[e[cc, 0]] + mesh.xyz[e[cc, 1]]))
-    ax.scatter(lo_c, la_c, s=3, c="#c1121f", transform=PC, linewidths=0, rasterized=True)
+    # 穿过省份内部（截弯）：两侧同一省份，且离最近的省份边界超过 120 km。分界整理在 L6 设计网格上做，省份边界在 L7 上的
+    # 位置与 L6 差一个格点，不加距离判断时沿省份边界走的分界在 L7 上也会一段段被算成"穿过"
+    from scipy.spatial import cKDTree as _KD
+    pb_e = (f["ctype"][e[:, 0]] == 1) & (f["ctype"][e[:, 1]] == 1) & (f["prov"][e[:, 0]] != f["prov"][e[:, 1]])
+    d_pb = km_from_chord(_KD(unit(mesh.xyz[e[pb_e, 0]] + mesh.xyz[e[pb_e, 1]])).query(
+        unit(mesh.xyz[e[:, 0]] + mesh.xyz[e[:, 1]]))[0])
+    thr_e = cc & (f["prov"][e[:, 0]] == f["prov"][e[:, 1]]) & (d_pb > 120.0)
+    for m_, col in ((cc & ~thr_e, "#c1121f"), (thr_e, "#1d3fbf")):
+        lo_c, la_c = xyz_to_lonlat(unit(mesh.xyz[e[m_, 0]] + mesh.xyz[e[m_, 1]]))
+        ax.scatter(lo_c, la_c, s=3, c=col, transform=PC, linewidths=0, rasterized=True)
     ax.scatter(lo[fail], la[fail], s=4, c="#7a0177", transform=PC, linewidths=0, rasterized=True)
     ax.set_global()
+    ct_ = js["events"][0]["drift"].get("cut_through_provinces") or {}
+    thr_txt = (f"\n设计网格上：裂开的分界共 {ct_['boundary_km'] / 1000:.0f} 千 km，其中穿过省份 "
+               f"{ct_['through_km'] / ct_['boundary_km']:.0%}，最长一段 {ct_['longest_through_km']:.0f} km"
+               if ct_.get("boundary_km") else "")
     ax.set_title(f"种子 {s0}，{f['t']:.0f} Ma：地壳省份（{len(js['provinces'])} 个）与薄弱带（灰线越深越薄弱）\n"
-                 f"橙 = 分块时沿薄弱带的分界，红 = 整理后真正裂开的分界（洋脊段 + 转换断层），紫 = 夭折裂谷",
+                 f"橙 = 分块时沿薄弱带的分界；真正裂开的分界：红 = 沿省份边界，蓝 = 穿过省份（截弯）；紫 = 夭折裂谷{thr_txt}",
                  fontsize=9.5)
     ax = fig.add_subplot(1, 2, 2, projection=proj)
     shaded(ax, f["elev"])
     ax.set_global()
     ax.set_title(f"{f['t']:.0f} Ma 高程（裂解刚发生：裂谷陆缘与夭折裂谷减薄，省份厚度不同造成内陆起伏）", fontsize=9.5)
     hs = [Patch(color=c, label=l) for c, l in zip(colors, labels)]
-    hs += [Patch(color="#f4a261", label="分块时的分界（沿薄弱带）"), Patch(color="#c1121f", label="真正裂开的分界"),
-           Patch(color="#7a0177", label="夭折裂谷")]
+    hs += [Patch(color="#f4a261", label="分块时的分界（沿薄弱带）"), Patch(color="#c1121f", label="真正裂开的分界：沿省份边界"),
+           Patch(color="#1d3fbf", label="真正裂开的分界：穿过省份"), Patch(color="#7a0177", label="夭折裂谷")]
     fig.legend(handles=hs, loc="lower center", ncol=4, fontsize=8, frameon=False, bbox_to_anchor=(0.5, 0.03))
     fig.suptitle("前史第 1–2 步：老超大陆的地壳省份拼贴，沿薄弱缝合带分成陆块", fontsize=11)
     stamp(fig)
@@ -225,9 +241,12 @@ def figures(level: int, seeds: list[int]):
         shaded(ax, fr[-1]["elev"])
         bv = js["b_verdict"]["units"]
         big = max(bv.values(), key=lambda u: u["area_km2"]) if bv else None
-        txt = (f"种子 {s}：陆块 {len(js['blocks'])} 块、编组后 {len(js['groups'])} 组"
-               f"（{'可用' if js['usable'] else '不可用'}），陆地 {js['land_fraction_300Ma']:.0%}；"
-               f"≥500 万 km² 陆块 {js['n_units']} 个，B1 全部达标 {js['n_units_all_pass']} 个")
+        n_micro = sum(1 for ev in js["events"] if ev.get("kind") == "ridge_jump_microcontinent")
+        areas = sorted((b["area_km2"] / 1e6 for b in js["blocks"]), reverse=True)
+        txt = (f"种子 {s}：陆块 {len(js['blocks'])} 块（含微大陆 {n_micro}）、编组后 {len(js['groups'])} 组"
+               f"（{'可用' if js['usable'] else '不可用'}），陆地 {js['land_fraction_300Ma']:.0%}\n"
+               f"陆块面积 Mkm²：{' '.join(f'{a_:.1f}' if a_ < 3 else f'{a_:.0f}' for a_ in areas)}；"
+               f"≥500 万 km² 的 {js['n_units']} 个，B1 全部达标 {js['n_units_all_pass']} 个")
         if big:
             m = big["metrics"]
             txt += (f"\n最大陆块 {big['area_km2'] / 1e6:.0f} Mkm²：分形维数 {m['fractal_dimension']['value']:.3f}"
@@ -365,6 +384,29 @@ def figures(level: int, seeds: list[int]):
                  "黑点 = 组内陆块的分界；浅灰 = 太小不参与规划的陆壳）", fontsize=11)
     stamp(fig)
     fig.savefig(OUT / "06_groups_300Ma.png", dpi=100, bbox_inches="tight")
+    plt.close(fig)
+
+    # 图 7：陆块大小分布（名次—面积），与盘古大陆裂解留下的碎块比较（U20 修订二：第一版陆块大小太平均、没有微大陆）
+    fig, ax = plt.subplots(figsize=(9, 5.5))
+    for k, s in enumerate(seeds):
+        js, _ = runs[s]
+        a_ = sorted((b["area_km2"] / 1e6 for b in js["blocks"]), reverse=True)
+        ax.plot(range(1, len(a_) + 1), a_, "o-", ms=3.5, lw=1, alpha=0.8, label=f"种子 {s}")
+    efr = sorted(EARTH_FRAGMENTS.items(), key=lambda x: -x[1])
+    ax.plot(range(1, len(efr) + 1), [v for _, v in efr], "s--", color="k", ms=5, lw=1.6, label="地球：盘古大陆的碎块（约值）")
+    for r_, (nm, v) in enumerate(efr, start=1):
+        ax.annotate(nm, (r_, v), textcoords="offset points", xytext=(5, 3), fontsize=7, color="0.25")
+    ax.set_yscale("log")
+    ax.set_xlabel("名次（按面积从大到小）")
+    ax.set_ylabel("面积（Mkm²，对数）")
+    ax.axhline(3.0, color="0.6", lw=0.8, ls=":")
+    ax.text(0.6, 3.1, "3 Mkm²：小于此的陆块剧本规划器不单独规划", fontsize=7, color="0.4")
+    ax.legend(fontsize=7, ncol=2)
+    ax.set_title("300 Ma 各陆块面积的名次分布（含洋脊跃迁分出的微大陆）与地球比较", fontsize=10)
+    fig.text(0.01, 0.005, "地球数值为今天的陆地面积约值（含附属岛屿；西兰大陆为大陆地壳面积，94% 在水下），只看量级与分布形状。\n"
+             + NOTE, fontsize=6.5, color="0.3", va="bottom")
+    fig.tight_layout(rect=(0, 0.07, 1, 1))
+    fig.savefig(OUT / "07_block_sizes.png", dpi=110, bbox_inches="tight")
     plt.close(fig)
 
     summary = {str(s): {k: v for k, v in runs[s][0].items() if k in ("blocks", "land_fraction_300Ma", "cont_area_300Ma_km2",

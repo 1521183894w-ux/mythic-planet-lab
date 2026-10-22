@@ -104,3 +104,45 @@ def test_rift_cut_limits_transform_offsets():
     free = monotone_cut(X, is_b, axis, 1, 2, 100.0, 120.0, 3000.0)
     assert min_gap(limited) > gap - 100.0       # 带宽 100 km 的离散误差
     assert min_gap(free) < 150.0
+
+
+def test_microcontinents_ridge_jump(mesh, world):
+    """U20 修订二：洋脊跃迁分出的微大陆先随一侧陆块、跃迁后随另一侧运动，到 300 Ma 与两侧陆块都已隔开（不相贴）。"""
+    p = PrehistoryParams()
+    micro = [e for e in world.events if e["kind"] == "ridge_jump_microcontinent"]
+    assert micro                                               # 种子 3 在设计网格上分出了微大陆
+    fin = world.snapshots[-1]
+    e = mesh.edges
+    for m in micro:
+        q = m["block"]
+        assert p.micro_area_km2[0] <= m["area_km2"] <= 1.5 * p.micro_area_km2[1]
+        assert p.t_end < m["t_jump"] < p.t_start
+        cq = (fin["origin"] == q) & (fin["ctype"] == CONT)
+        assert cq.any()
+        for nb_ in (m["from_block"], m["toward_block"]):
+            cn = (fin["origin"] == nb_) & (fin["ctype"] == CONT)
+            assert not ((cq[e[:, 0]] & cn[e[:, 1]]) | (cn[e[:, 0]] & cq[e[:, 1]])).any()
+
+
+def test_rift_cut_keeps_narrow_teeth():
+    """U20 修订二：来回的齿（先凸出再缩回）只要齿高 ≤ 位移 - gap_km 就不必截掉：对方沿齿的两侧滑出，位移超过齿高后分开。
+    第一版把错开限额平摊到每条带，把这种齿也截成直线（分界从齿中间直线切过省份）。"""
+    from scipy.spatial import cKDTree
+
+    from mythic.tectonics.geometry import DEG, km_from_chord, lonlat_to_xyz, rotmat
+    from mythic.tectonics.prehistory import monotone_cut
+
+    rng = np.random.default_rng(1)
+    lon = rng.uniform(-20, 20, 40000)
+    lat = rng.uniform(-20, 20, 40000)
+    X = lonlat_to_xyz(lon, lat)
+    # 方波分界：每 2° 纬度（约 220 km，窄于 gap 400 km）在经度上来回 4°（约 445 km，小于位移 - gap ≈ 710 km）
+    is_b = lon > 2.0 + 2.0 * np.sign(np.sin(np.radians(lat) * 90.0))
+    axis = np.array([0.0, 0.0, 1.0])
+    total = 10.0 * DEG
+    ct = monotone_cut(X, is_b, axis, 1, 2, 100.0, 120.0, 3000.0, total_angle=total, gap_km=400.0)
+    ok, to_b = ct.assign_b(X)
+    side_b = np.where(ok, to_b, is_b)
+    assert (side_b != is_b).mean() < 0.02    # 齿基本保留（只剩带宽 100 km 的离散误差；从齿中间截直会改划约 5%）
+    A, B = X[~side_b], X[side_b] @ rotmat(axis, total).T
+    assert km_from_chord(cKDTree(B).query(A)[0].min()) > 300.0

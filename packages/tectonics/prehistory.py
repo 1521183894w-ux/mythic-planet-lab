@@ -19,6 +19,11 @@
    相对运动极下的"洋脊段 + 转换断层"：沿极的每条纬度带只穿过一次，陆块沿纬度圈分开时处处张开。整理时尽量沿原来的
    薄弱带走（动态规划，偏离一个单元、错开一次都有代价），只在咬合处局部截弯。
    1.2b 初版的分界逐段沿省份边界，参差咬合，任何刚体漂移都分不开，到 300 Ma 多数陆块对仍只隔一个网格。
+   整理的张开条件（U20 修订二）：任意 400 km 内分界位置沿运动方向的变化幅度 ≤ 位移 - 400 km。来回的齿可以保留，
+   同向累加的错开才截；U20 第一版把限额平摊到每一步，连齿一起截成直线。原分界有与运动方向冲突的大弯时仍要横穿省份
+   截开，这些段是直线；漂移抽样时优先选最长直线段短的那组运动，但没有消除，是目前的主要局限。
+   分块大小悬殊（对数正态，外圈方位疏密不一）；另在位移大的裂谷陆缘按"洋脊跃迁"分出 1–4 块微大陆
+   （扬马延、罗卡尔—哈顿、塞舌尔式：先随一侧陆块，洋脊跳到它背后后随另一侧）。
    没被用作分界的强薄弱带，挑几条从陆缘伸进内陆的减薄成"夭折裂谷"（例如贝努埃槽），以后会成为深入内陆的海湾、低地。
    新裂开的陆缘按距离减薄（陆架、陆坡）。
 3. 漂移（过程，引擎 + 剧本 + pyGPlates）：t_start -> t_end（默认 400 -> 300 Ma），各陆块按上一步定的角速度散开，
@@ -61,7 +66,11 @@ class PrehistoryParams:
     n_seeds: int = 320                   # 全球省份种子数（平均间距约 1400 km；大小、伸长各不相同）
     n_cratons: tuple = (8, 12)           # 太古宙克拉通个数
     n_blocks: tuple = (8, 12)            # U20：1.2b 初版 5–7 块，主大陆只由两三块拼成（亚非欧由十多块拼成）
-    block_size_sigma: float = 0.35       # 分块大小权重的对数标准差：陆块大小有大有小
+    # 分块大小权重的对数标准差。U20 第一版取 0.35，外圈方位又均匀，8 个种子的陆块全在 7–57 Mkm²、最大/最小 1.7–6 倍，
+    # 像一块盘子均匀裂开；盘古大陆裂成的非洲约 30、南美 18、南极 14、澳大利亚 8、印度 4、阿拉伯 3 Mkm²，相差一个量级
+    # 0.8 时权重小的块长不起来、被并进邻块（一个种子只剩 3 块大陆），取 0.6
+    block_size_sigma: float = 0.6
+    sector_gap_conc: float = 2.0         # 外圈分块种子的方位间隔 ~ Dirichlet(这个值)：越小越不均匀（第一版是等间隔加小扰动）
     n_basins: tuple = (3, 5)
     n_failed_rifts: tuple = (2, 4)
     n_ocean_plates: int = 3
@@ -87,7 +96,24 @@ class PrehistoryParams:
                                          # 错开太长的转换断层两侧一直滑过、到 300 Ma 仍挨着
     rift_gap_km: float = 400.0           # 分界整理：这一范围内的累计错开（转换断层）≤ 漂移总位移 - 这个值，相邻陆块到 t_end
                                          # 在整理过的分界上处处至少隔开这么远（见 monotone_cut）
+    # 漂移抽样评分：最长一段穿过省份的分界（截弯直线段）每 1 km 扣这么多分。同一个分块换一组相对运动，需要截弯的地方不同
+    # （U20 修订二，效果见 docs/tectonics_method.md）
+    drift_longest_weight: float = 0.3
+    # 夭折的分界：选定漂移后，某对陆块的分界仍有一段穿过省份超过这个长度（必须横切省份才分得开），就让这条裂谷夭折、
+    # 两块合并，重选漂移（最多 fail_rounds 次，合并后至少留 min_blocks_after_fail 块）。地球上较直的裂谷陆缘段约
+    # 1000–2000 km（厄加勒斯约 1200 km、红海约 2000 km）；夭折裂谷如贝努埃槽、北美中部裂谷
+    fail_through_km: float = 1500.0
+    fail_rounds: int = 2
+    min_blocks_after_fail: int = 6
     min_block_km2: float = 3.0e6
+    # 洋脊跃迁分出的微大陆（U20 修订二）：地球上盘古裂解留下一串微大陆（扬马延、罗卡尔—哈顿、弗莱明角、塞舌尔、马达加斯加），
+    # 多由洋脊跃迁形成：一段陆缘先随一侧大陆漂移，洋脊跳到它背后，它改随另一侧运动，两侧都成了裂谷陆缘
+    n_micro: tuple = (2, 4)
+    micro_area_km2: tuple = (3.0e5, 2.5e6)
+    micro_min_disp_km: float = 1200.0    # 只在漂移总位移够大的分界上跃迁（跃迁后的新裂谷也要张开）
+    micro_jump_frac: tuple = (0.4, 0.65)  # 跃迁后的时间占漂移期的比例（新裂谷的张开量约为这一比例 × 总位移）
+    micro_gap_km: float = 200.0          # 微大陆到 t_end 时与两侧陆块至少隔开这么远（刚体估计）
+    micro_third_km: float = 500.0        # 离第三块陆块至少这么远（避开三联点，那里的相对运动不止一种）
     design_level: int = 6                # 设计网格（所有抽样与省份级决定都在这上面做）
 
 
@@ -356,10 +382,10 @@ def boundary_weakness(rng, ptype, craton, pairs):
     return w
 
 
-def sector_seeds(rng, members, centers, c_sc, k, cratons, rho):
-    """分块种子：超大陆中央一块，其余 k-1 块按方位角均匀分布在外圈（离中心 0.55–0.75 倍超大陆半径），
-    有克拉通在附近就用克拉通。超大陆像橘子瓣一样裂开：中央一块基本不动，外圈各瓣向外散开（盘古大陆裂解时非洲居中、
-    美洲、欧亚、南极、澳大利亚、印度向四周散开）。"""
+def sector_seeds(rng, members, centers, c_sc, k, cratons, rho, gap_conc: float = 2.0):
+    """分块种子：超大陆中央一块，其余 k-1 块分布在外圈（离中心 0.55–0.75 倍超大陆半径），方位间隔按 Dirichlet(gap_conc)
+    随机（有疏有密，第一版等间隔），有克拉通在附近就用克拉通。超大陆像橘子瓣一样裂开：中央一块基本不动，外圈各瓣向外散开
+    （盘古大陆裂解时非洲居中、美洲、欧亚、南极、澳大利亚、印度向四周散开）。"""
     mem = np.array(sorted(members))
     e1 = unit(np.cross(c_sc, [0.0, 0.0, 1.0]) if abs(c_sc[2]) < 0.9 else np.cross(c_sc, [1.0, 0.0, 0.0]))
     e2 = np.cross(c_sc, e1)
@@ -374,8 +400,9 @@ def sector_seeds(rng, members, centers, c_sc, k, cratons, rho):
 
     chosen = [nearest(c_sc, set())]
     az0 = rng.uniform(0, 2 * np.pi)
-    for i in range(k - 1):
-        az = az0 + 2 * np.pi * i / (k - 1) + rng.uniform(-0.25, 0.25) * 2 * np.pi / (k - 1)
+    gaps = rng.dirichlet(np.full(k - 1, gap_conc)) * 2 * np.pi
+    azs = az0 + np.concatenate([[0.0], np.cumsum(gaps)[:-1]])
+    for az in azs:
         r = rng.uniform(0.55, 0.75) * rho
         x = np.cos(r) * c_sc + np.sin(r) * (np.cos(az) * e1 + np.sin(az) * e2)
         chosen.append(nearest(x, set(chosen)))
@@ -448,6 +475,7 @@ class RiftCut:
     dth: float
     cut: np.ndarray
     window_km: float
+    split_prov: tuple = ()      # 微大陆：应用这条分界前，先把 a 上属于这些省份的单元划给 b（新陆块）
 
     def polar(self, X):
         th = np.arccos(np.clip(X @ self.axis, -1, 1))
@@ -460,6 +488,43 @@ class RiftCut:
         _, d, k = self.polar(X)
         ok = (k >= 0) & (k < len(self.cut))
         return ok, d > self.cut[np.clip(k, 0, len(self.cut) - 1)]
+
+
+def cut_through_provinces(mesh: Mesh, blk: np.ndarray, cell: np.ndarray) -> dict:
+    """陆块分界中穿过省份内部（两侧是同一个省份，不沿任何继承的薄弱带）的部分：总长、最长一段（km）、分界总长，
+    以及每对陆块最长的一段（by_pair，{(a, b): km}）。截弯穿过省份的段是直线，最长一段就是最显眼的直线段。
+    长度按分界一侧（编号小的陆块）的边界节点数 × 网格间距估计；最长一段按节点的最大跨度。
+    离最近的省份边界不到 1.1 个网格间距的不算：分界整理按带（宽一个网格）做，沿省份边界走的分界常差一格。"""
+    e = mesh.edges
+    bu, bv = blk[e[:, 0]], blk[e[:, 1]]
+    eb = e[(bu > 0) & (bv > 0) & (bu != bv)]
+    if len(eb) == 0:
+        return {"boundary_km": 0.0, "through_km": 0.0, "longest_through_km": 0.0, "by_pair": {}}
+    inner = cell[eb[:, 0]] == cell[eb[:, 1]]
+    pe = e[(cell[e[:, 0]] >= 0) & (cell[e[:, 1]] >= 0) & (cell[e[:, 0]] != cell[e[:, 1]])]
+    if len(pe) and inner.any():
+        mid = unit(mesh.xyz[eb[inner, 0]] + mesh.xyz[eb[inner, 1]])
+        d_pb = km_from_chord(cKDTree(unit(mesh.xyz[pe[:, 0]] + mesh.xyz[pe[:, 1]])).query(mid)[0])
+        inner[np.flatnonzero(inner)[d_pb <= 1.1 * mesh.h_km]] = False
+    lo = np.where(blk[eb[:, 0]] < blk[eb[:, 1]], eb[:, 0], eb[:, 1])
+    hi = np.where(blk[eb[:, 0]] < blk[eb[:, 1]], eb[:, 1], eb[:, 0])
+    all_nodes = np.unique(lo)
+    in_nodes = np.unique(lo[inner])
+    by_pair = {}
+    pa, pb = blk[lo], blk[hi]
+    for a, b in sorted({(int(x), int(y)) for x, y in zip(pa[inner], pb[inner])}):
+        nodes = np.unique(lo[inner & (pa == a) & (pb == b)])
+        m = np.zeros(mesh.n, bool)
+        m[nodes] = True
+        lab = graph_components(mesh.n, e[m[e[:, 0]] & m[e[:, 1]]])
+        best = 0.0
+        for l_ in np.unique(lab[nodes]):
+            X = mesh.xyz[nodes[lab[nodes] == l_]]
+            far = X[np.argmin(X @ unit(X.mean(0)))]             # 离中心最远的一点，再找离它最远的一点：近似最大跨度
+            best = max(best, float(np.arccos(np.clip((X @ far).min(), -1, 1)) * R_KM))
+        by_pair[(a, b)] = best
+    return {"boundary_km": float(all_nodes.size * mesh.h_km), "through_km": float(in_nodes.size * mesh.h_km),
+            "longest_through_km": max(by_pair.values(), default=0.0), "by_pair": by_pair}
 
 
 def monotone_cut(X, is_b, axis, a, b, bin_km, jump_km, window_km, total_angle: float | None = None,
@@ -490,27 +555,53 @@ def monotone_cut(X, is_b, axis, a, b, bin_km, jump_km, window_km, total_angle: f
         db = np.sort(d[sel & is_b])
         cost[kk] = (len(da) - np.searchsorted(da, G, "right")) + np.searchsorted(db, G, "left")
     th_mid = th0 + (np.arange(nbin) + 0.5) * dth
-    tot = cost[0].copy()
-    back = np.zeros((nbin, M), np.int64)
     dG = np.abs(G[:, None] - G[None, :])
-    for kk in range(1, nbin):
-        s_th = max(np.sin(th_mid[kk]), 0.05)
-        trans = tot[None, :] + s_th * R_KM / jump_km * dG
-        if total_angle is not None:
-            # 允许的错开（φ 角）：位移 total_angle·sinθ·R 减去目标间距；位移本身不够时不许错开（只能沿洋脊方向走）。
-            # 条件对任意相距不到 gap_km 的两条带都要成立（同向的几步错开会累加：只限单步时，连续三步累计错开 1500 km、
-            # 位移只有 860 km 的分界两侧仍相贴），所以按 gap_km 内的带数平分，是保守的充分条件
-            n_win = max(1, int(np.ceil(gap_km / bin_km)))
-            max_dphi = max(total_angle - gap_km / (s_th * R_KM), 0.0) / n_win
-            trans = np.where(dG <= max_dphi + 1e-9, trans, np.inf)
-        back[kk] = np.argmin(trans, 1)
-        tot = cost[kk] + trans[np.arange(M), back[kk]]
-    g = int(np.argmin(tot))
-    path = [g]
-    for kk in range(nbin - 1, 0, -1):
-        g = int(back[kk, g])
-        path.append(g)
-    return RiftCut(a, b, w, e1, e2, phi_ref, th0, dth, G[np.array(path[::-1])], window_km)
+    ar = np.arange(M)
+    s_th = np.maximum(np.sin(th_mid), 0.05)
+
+    def solve(lim):
+        """每步错开 ≤ lim[kk]（φ 角）的最小代价路径。"""
+        tot = cost[0].copy()
+        back = np.zeros((nbin, M), np.int64)
+        for kk in range(1, nbin):
+            trans = tot[None, :] + s_th[kk] * R_KM / jump_km * dG
+            if np.isfinite(lim[kk]):
+                trans = np.where(dG <= lim[kk] + 1e-9, trans, np.inf)
+            back[kk] = np.argmin(trans, 1)
+            tot = cost[kk] + trans[ar, back[kk]]
+        g = int(np.argmin(tot))
+        path = [g]
+        for kk in range(nbin - 1, 0, -1):
+            g = int(back[kk, g])
+            path.append(g)
+        return path[::-1]
+
+    if total_angle is None:
+        path = solve(np.full(nbin, np.inf))
+    else:
+        # 张开条件：b 转过 total_angle 后，a 在带 i 上伸到 φ = c_i，b 在带 j 上从 c_j + total_angle 开始；两带相距不到 gap_km 时
+        # 要隔开 gap_km，充分条件是 c_i - c_j ≤ J = total_angle - gap_km/(R sinθ)，即任意 n_win 条带（gap_km）内分界位置的
+        # 变化幅度 ≤ J。位移本身不够（J = 0）时不许错开，只能沿洋脊方向走。
+        # 来回的齿（先凸出再缩回）只要齿高 ≤ J 就满足：对方陆块沿齿的两侧滑出（转换断层），位移超过齿高后分开。
+        # 同向的错开会累加：只限单步时，连续三步累计错开 1500 km、位移只有 860 km 的分界两侧仍相贴。
+        # U20 第一版把 J 平摊到每条带（每步 ≤ J/n_win），连齿一起禁掉，分界遇到参差咬合的薄弱带只能从齿中间直线切过
+        # （种子 1 中部约 2000 km 的直线段）。现在先只限单步 ≤ J，找出违反条件的窗口，只在那里收紧到 J/n_win，重算到满足为止
+        # （最后退回到处处 J/n_win，那样一定满足）。
+        J = np.maximum(total_angle - gap_km / (s_th * R_KM), 0.0)
+        n_win = max(1, int(np.ceil(gap_km / bin_km)))
+        lim = J.copy()
+        for it in range(10):
+            path = solve(lim if it < 9 else J / n_win)
+            c = G[np.asarray(path)]
+            bad = np.zeros(nbin, bool)
+            for k0 in range(nbin):
+                k1 = min(nbin, k0 + n_win)
+                if c[k0:k1].max() - c[k0:k1].min() > J[k0:k1].min() + 1e-9:
+                    bad[k0:k1] = True
+            if not bad.any():
+                break
+            lim = np.where(bad, np.minimum(lim, J / n_win), lim)
+    return RiftCut(a, b, w, e1, e2, phi_ref, th0, dth, G[np.asarray(path)], window_km)
 
 
 def _pair_list(mesh: Mesh, blk: np.ndarray):
@@ -552,14 +643,16 @@ def _pair_samples(mesh: Mesh, blk: np.ndarray, a: int, b: int, local_km: float =
     return out
 
 
-def apply_cuts(mesh: Mesh, blk: np.ndarray, cuts: list, passes: int = 2) -> np.ndarray:
+def apply_cuts(mesh: Mesh, blk: np.ndarray, cuts: list, passes: int = 2, prov: np.ndarray | None = None) -> np.ndarray:
     """按顺序把各分界整理结果用到某个网格上（设计网格与目标网格用同一函数，结果一致）。
     走两遍：三块陆块交汇处，后整理的分界会改动先整理的分界附近的单元，第二遍把它们改回来（只走一遍时每对陆块
-    有 5–30 个单元留在错的一侧）。"""
+    有 5–30 个单元留在错的一侧）。微大陆的分界（split_prov）要用每个节点的省份 prov。"""
     blk = blk.copy()
     cont = blk > 0
     for _ in range(passes):
         for ct in cuts:
+            if ct.split_prov:
+                blk[(blk == ct.a) & np.isin(prov, ct.split_prov)] = ct.b
             ma, mb = blk == ct.a, blk == ct.b
             q = np.flatnonzero(ma | mb)
             d = _boundary_distance(mesh, ma, mb, q, ct.window_km)
@@ -571,7 +664,8 @@ def apply_cuts(mesh: Mesh, blk: np.ndarray, cuts: list, passes: int = 2) -> np.n
     return np.where(cont, keep_largest(mesh, blk, cont), 0)
 
 
-def choose_drift(mesh: Mesh, blk: np.ndarray, nb: int, c_sc: np.ndarray, p: "PrehistoryParams", rng):
+def choose_drift(mesh: Mesh, blk: np.ndarray, nb: int, c_sc: np.ndarray, p: "PrehistoryParams", rng,
+                 prov: np.ndarray | None = None):
     """各陆块的漂移角速度（rad/Myr）与各条分界的整理结果。每次抽样：
     1. 目标漂移 ω̃：以老超大陆中心为心的膨胀——离开中心，速率与到中心的角距成正比（expansion_per_myr），
        方向偏转 ±15°、速率 ±15%，加少量自转。分块是"中央一块 + 外圈楔形"（sector_seeds、breakup_blocks），
@@ -634,29 +728,8 @@ def choose_drift(mesh: Mesh, blk: np.ndarray, nb: int, c_sc: np.ndarray, p: "Pre
                                                         for i in range(nb)])}]
     bounds = [(None, None)] * nz + [(0.0, None)] * m_
     dur = float(p.t_start - p.t_end)
-    best = None
-    for k in range(p.drift_tries):
-        target = np.zeros(nz)
-        for b in range(1, nb + 1):
-            cb = cbs[b]
-            r_deg = float(np.degrees(np.arccos(np.clip(cb @ c_sc, -1, 1))))
-            d = cb - (cb @ c_sc) * c_sc
-            if np.linalg.norm(d) < 0.05:                    # 中央一块：基本不动
-                d = rng.normal(size=3)
-                d = d - (d @ cb) * cb
-            d = rotmat(cb, np.radians(rng.uniform(-15.0, 15.0))) @ unit(d)
-            rate = p.expansion_per_myr * r_deg * rng.uniform(0.85, 1.15)
-            target[3 * (b - 1):3 * b] = unit(np.cross(cb, d)) * rate + cb * rng.uniform(-0.03, 0.03)
-        if m_:
-            y0 = np.concatenate([target, np.maximum(lo - A @ target, 0.0)])
-            res = minimize(lambda y: 0.5 * float((y[:nz] - target) @ (y[:nz] - target)) + 0.5 * lam * float(y[nz:] @ y[nz:]),
-                           y0, jac=lambda y: np.concatenate([y[:nz] - target, lam * y[nz:]]),
-                           constraints=cons, bounds=bounds, method="SLSQP", options={"maxiter": 300})
-            z = res.x[:nz]
-            slack = float(res.x[nz:].max()) if m_ else 0.0
-        else:
-            z, slack = target, 0.0
-        om = {b: z[3 * (b - 1):3 * b] * DEG for b in range(1, nb + 1)}
+
+    def evaluate(om, tries_no, slack):
         cuts = []
         cur = blk.copy()
         for a, b in pairs:
@@ -677,6 +750,7 @@ def choose_drift(mesh: Mesh, blk: np.ndarray, nb: int, c_sc: np.ndarray, p: "Pre
         cur = apply_cuts(mesh, blk, cuts)
         moved = int(((cur != blk) & (blk > 0)).sum())
         moved_mkm2 = float(mesh.area_km2[(cur != blk) & (blk > 0)].sum() / 1e6)
+        thr = cut_through_provinces(mesh, cur, prov) if prov is not None else {}
         # 整理分界不得把一块陆块大半划给邻块（转换断层受限时，动态规划可能把一块小陆块整块划走）
         a_before = np.bincount(blk, weights=mesh.area_km2, minlength=nb + 1)[1:]
         a_after = np.bincount(cur, weights=mesh.area_km2, minlength=nb + 1)[1:]
@@ -724,21 +798,171 @@ def choose_drift(mesh: Mesh, blk: np.ndarray, nb: int, c_sc: np.ndarray, p: "Pre
         groups = len({find(b) for b in range(1, nb + 1)})
         apart = [g for g in gaps.values() if g >= p.touch_km]
         score = (1000.0 * groups - 1500.0 * crossings - 50.0 * moved_mkm2
-                 + 0.5 * min(min(apart) if apart else 0.0, 1500.0) - (1.0e5 if kept < 0.6 else 0.0))
-        if best is None or score > best[0]:
-            best = (score, om, cuts, gaps, crossings, k + 1, slack, moved, groups, kept)
-        if groups == nb and crossings == 0 and gmin >= p.min_gap_km and kept >= 0.6:
+                 + 0.5 * min(min(apart) if apart else 0.0, 1500.0) - (1.0e5 if kept < 0.6 else 0.0)
+                 - p.drift_longest_weight * thr.get("longest_through_km", 0.0))
+        perfect = groups == nb and crossings == 0 and gmin >= p.min_gap_km and kept >= 0.6
+        return (score, om, cuts, gaps, crossings, tries_no, slack, moved, groups, kept, thr, perfect)
+
+    best = None
+    for k in range(p.drift_tries):
+        target = np.zeros(nz)
+        for b in range(1, nb + 1):
+            cb = cbs[b]
+            r_deg = float(np.degrees(np.arccos(np.clip(cb @ c_sc, -1, 1))))
+            d = cb - (cb @ c_sc) * c_sc
+            if np.linalg.norm(d) < 0.05:                    # 中央一块：基本不动
+                d = rng.normal(size=3)
+                d = d - (d @ cb) * cb
+            d = rotmat(cb, np.radians(rng.uniform(-15.0, 15.0))) @ unit(d)
+            rate = p.expansion_per_myr * r_deg * rng.uniform(0.85, 1.15)
+            target[3 * (b - 1):3 * b] = unit(np.cross(cb, d)) * rate + cb * rng.uniform(-0.03, 0.03)
+        if m_:
+            y0 = np.concatenate([target, np.maximum(lo - A @ target, 0.0)])
+            res = minimize(lambda y: 0.5 * float((y[:nz] - target) @ (y[:nz] - target)) + 0.5 * lam * float(y[nz:] @ y[nz:]),
+                           y0, jac=lambda y: np.concatenate([y[:nz] - target, lam * y[nz:]]),
+                           constraints=cons, bounds=bounds, method="SLSQP", options={"maxiter": 300})
+            z = res.x[:nz]
+            slack = float(res.x[nz:].max()) if m_ else 0.0
+        else:
+            z, slack = target, 0.0
+        om = {b: z[3 * (b - 1):3 * b] * DEG for b in range(1, nb + 1)}
+        r_ = evaluate(om, k + 1, slack)
+        if best is None or r_[0] > best[0]:
+            best = r_
+        if r_[-1]:
             break
-    score, om, cuts, gaps, crossings, tries, slack, moved, groups, kept = best
+    score, om, cuts, gaps, crossings, tries, slack, moved, groups, kept, thr, _ = best
     close = sorted(gaps.items(), key=lambda x: x[1])[:4]
     links = sorted([int(a), int(b)] for (a, b), g in gaps.items() if g < p.touch_km)
     info = {"groups_rigid": groups, "min_gap_km_rigid": float(min(gaps.values())) if gaps else None,
             "target_gap_km": p.min_gap_km,
             "crossings": crossings, "best_try": tries, "qp_max_slack_deg": slack, "n_adjacent_pairs": len(pairs),
             "cells_reassigned_by_cuts": moved, "min_block_area_kept": kept,
+            "cut_through_provinces": {k_: round(v_) for k_, v_ in thr.items() if k_ != "by_pair"},
+            "longest_through_by_pair": sorted([[int(a), int(b), round(v)] for (a, b), v in thr.get("by_pair", {}).items()],
+                                              key=lambda x: -x[2]),
             "closest_pairs_km": [[a, b, round(v)] for (a, b), v in close], "links": links,
             "rates_deg": {b: float(np.linalg.norm(w) / DEG) for b, w in om.items()}}
     return om, cuts, info
+
+
+def _rigid_two_stage(X, om_first, om_second, t_split, t_start, t_end, t):
+    """先绕 om_first 转到 t_split，再绕 om_second 转（刚体估计；t 为时刻，Ma）。"""
+    d1 = min(t_start - t, t_start - t_split)
+    d2 = max(t_split - t, 0.0)
+    return X @ omega_rotmat(om_first, d1).T @ omega_rotmat(om_second, d2).T
+
+
+def ridge_jump_micro(mesh: Mesh, blk: np.ndarray, prov: np.ndarray, cuts: list, omega: dict, nb: int,
+                     weak: dict, p: "PrehistoryParams", rng):
+    """洋脊跃迁分出的微大陆。在漂移位移够大的分界上，挑分界一侧（s）紧贴分界、远离三联点、与 s 其余部分之间是薄弱带的
+    一个省份：它先随 s 漂移，t_jump 时洋脊跳到它背后，之后随对侧（o）运动。新裂谷按 o 相对 s 的运动极整理成
+    "洋脊段 + 转换断层"（与原分界同一个极，所以两条分界都在张开），转换断层受跃迁后的位移限制。
+    返回 (新的 blk, 新增分界, 新增陆块的角速度分段 {id: [(t_from, t_to, ω)]}, 记录, 新增 links)。"""
+    dur = float(p.t_start - p.t_end)
+    e = mesh.edges
+    n_target = int(rng.integers(*p.n_micro, endpoint=True))
+    blk = blk.copy()
+    new_cuts, stages, info, links = [], {}, [], []
+    used_pairs, used_prov = set(), set()
+    cand = []
+    for ct in cuts:
+        a, b = ct.a, ct.b
+        rel = omega[b] - omega[a]
+        sel = ((blk[e[:, 0]] == a) & (blk[e[:, 1]] == b)) | ((blk[e[:, 0]] == b) & (blk[e[:, 1]] == a))
+        if not sel.any():
+            continue
+        xm = unit(mesh.xyz[e[sel].ravel()].mean(0))
+        disp = float(np.linalg.norm(np.cross(rel, xm)) * R_KM * dur)
+        if disp < p.micro_min_disp_km:
+            continue
+        for s_, o_ in ((a, b), (b, a)):
+            ms, mo = blk == s_, blk == o_
+            touch = np.unique(np.concatenate([e[ms[e[:, 0]] & mo[e[:, 1]], 0], e[ms[e[:, 1]] & mo[e[:, 0]], 1]]))
+            third = (blk > 0) & ~ms & ~mo
+            t3 = cKDTree(mesh.xyz[third]) if third.any() else None
+            for pid in np.unique(prov[touch]):
+                if pid < 0:
+                    continue
+                cells = ms & (prov == pid)
+                full = prov == pid
+                area = float(mesh.area_km2[cells].sum())
+                if not (p.micro_area_km2[0] <= area <= p.micro_area_km2[1]) or cells.sum() < 0.7 * full.sum():
+                    continue
+                if t3 is not None and km_from_chord(t3.query(mesh.xyz[cells])[0].min()) < p.micro_third_km:
+                    continue
+                # 与 o 相贴的边界占周长的比例（沿裂谷伸长的省份更像被洋脊跃迁切下的陆缘），与 s 其余部分之间的薄弱度
+                out_e = (cells[e[:, 0]] != cells[e[:, 1]])
+                eo = e[out_e]
+                inside_end = np.where(cells[eo[:, 0]], eo[:, 0], eo[:, 1])
+                other_end = np.where(cells[eo[:, 0]], eo[:, 1], eo[:, 0])
+                f_o = float((blk[other_end] == o_).mean())
+                rest = (blk[other_end] == s_) & (prov[other_end] != pid)
+                if f_o < 0.2 or not rest.any():
+                    continue
+                wv = [weak.get((min(pid, q_), max(pid, q_)), 0.0) for q_ in prov[other_end[rest]]]
+                cand.append((float(np.mean(wv)) + f_o + 0.3 * rng.random(), int(pid), s_, o_, (min(a, b), max(a, b)),
+                             area, disp))
+    cand.sort(reverse=True)
+    q = nb
+    for score, pid, s_, o_, pair, area, disp in cand:
+        if len(info) >= n_target:
+            break
+        if pair in used_pairs or pid in used_prov:
+            continue
+        q_new = q + 1
+        frac = float(rng.uniform(*p.micro_jump_frac))
+        t_jump = int(round(p.t_end + frac * dur))
+        trial = blk.copy()
+        trial[(trial == s_) & (prov == pid)] = q_new
+        ms, mq = trial == s_, trial == q_new
+        idx = np.flatnonzero(ms | mq)
+        dd = _boundary_distance(mesh, ms, mq, idx, p.cut_window_km)
+        idx = idx[np.isfinite(dd)]
+        w = omega[o_] - omega[s_]
+        ct = monotone_cut(mesh.xyz[idx], trial[idx] == q_new, w, s_, q_new, mesh.h_km, p.cut_jump_km, p.cut_window_km,
+                          total_angle=float(np.linalg.norm(w)) * (t_jump - p.t_end), gap_km=p.micro_gap_km)
+        ct.split_prov = (pid,)
+        ok, to_q = ct.assign_b(mesh.xyz[idx])
+        trial[idx[ok]] = np.where(to_q[ok], q_new, s_)
+        cont = trial > 0
+        trial = np.where(cont, keep_largest(mesh, trial, cont), 0)
+        a_q = float(mesh.area_km2[trial == q_new].sum())
+        a_s0 = float(mesh.area_km2[blk == s_].sum())
+        if not (p.micro_area_km2[0] <= a_q <= 1.5 * p.micro_area_km2[1]) or mesh.area_km2[trial == s_].sum() < 0.8 * a_s0:
+            continue
+        # 刚体估计：到 t_end 与两侧陆块隔开 micro_gap_km，途中不与任何陆块相压
+        Xq = mesh.xyz[trial == q_new]
+        good, gaps = True, {}
+        for t in (p.t_start - 0.25 * dur, p.t_start - 0.5 * dur, p.t_start - 0.75 * dur, float(p.t_end)):
+            Pq = _rigid_two_stage(Xq, omega[s_], omega[o_], t_jump, p.t_start, p.t_end, t)
+            tq = cKDTree(Pq)
+            for bb in range(1, q_new):
+                if bb in stages:
+                    Xb = _rigid_two_stage(mesh.xyz[trial == bb], *stages[bb]["om"], stages[bb]["t_jump"],
+                                          p.t_start, p.t_end, t)
+                else:
+                    Xb = mesh.xyz[trial == bb] @ omega_rotmat(omega[bb], p.t_start - t).T
+                if not len(Xb):
+                    continue
+                g = float(km_from_chord(tq.query(Xb)[0].min()))
+                if t == p.t_end:
+                    gaps[bb] = g
+                elif g < 0.6 * mesh.h_km and not (bb == s_ and t > t_jump):
+                    good = False
+        if not good or min(gaps.get(s_, 0.0), gaps.get(o_, 0.0)) < p.micro_gap_km:
+            continue
+        blk = trial
+        q = q_new
+        new_cuts.append(ct)
+        stages[q_new] = {"om": (omega[s_], omega[o_]), "t_jump": t_jump}
+        used_pairs.add(pair)
+        used_prov.add(pid)
+        links += [[min(bb, q_new), max(bb, q_new)] for bb, g in gaps.items() if g < p.touch_km]
+        info.append({"block": q_new, "province": pid + 1, "from_block": s_, "toward_block": o_, "t_jump": t_jump,
+                     "area_km2": a_q, "pair_displacement_km": round(disp),
+                     "gaps_km_t_end": {int(bb): round(g) for bb, g in sorted(gaps.items(), key=lambda x: x[1])[:3]}})
+    return blk, new_cuts, stages, info, links
 
 
 # ---- 设计（固定网格）与生成（目标网格） ------------------------------------------------------------
@@ -761,6 +985,7 @@ class Design:
     nb: int
     n_cratons: int
     h_km: float
+    stages: dict = field(default_factory=dict)   # 微大陆：{陆块: {"om": (跃迁前 ω, 跃迁后 ω), "t_jump": Ma}}
 
 
 def design_prehistory(dm: Mesh, seed: int, p: PrehistoryParams) -> Design:
@@ -796,7 +1021,7 @@ def design_prehistory(dm: Mesh, seed: int, p: PrehistoryParams) -> Design:
     k = int(rng.integers(*p.n_blocks, endpoint=True))
     c_sc = unit((centers[:n] * cell_area[:n, None]).sum(0))
     rho = np.arccos(1.0 - cell_area[:n].sum() / (2 * np.pi * R_KM ** 2))
-    bseeds = sector_seeds(rng, members, centers, c_sc, k, cratons, rho)
+    bseeds = sector_seeds(rng, members, centers, c_sc, k, cratons, rho, p.sector_gap_conc)
     size_w = rng.lognormal(0.0, p.block_size_sigma, len(bseeds))
     owner = breakup_blocks(members, bseeds, nbrs, weak, cell_area, size_w, centers, c_sc, p.tangential_cost)
     while True:                                       # 太小的块并入共享边界最长的相邻块
@@ -844,15 +1069,40 @@ def design_prehistory(dm: Mesh, seed: int, p: PrehistoryParams) -> Design:
         for i in owner:
             if owner[i] == nested[0]:
                 owner[i] = nested[1]
-    block_ids = {b: kk + 1 for kk, b in enumerate(sorted(set(owner.values())))}
-    owner = {i: block_ids[b] for i, b in owner.items()}
-    nb = len(block_ids)
-    # 漂移与能张开的分界
+    # 漂移与能张开的分界；必须长段横切省份才分得开的分界让它夭折（两块合并），重选漂移
     cont = mos.cell >= 0
-    blk0 = np.zeros(dm.n, np.int64)
-    blk0[cont] = [owner[i] for i in mos.cell[cont]]
-    omega, cuts, drift = choose_drift(dm, blk0, nb, c_sc, p, np.random.default_rng([seed, 4]))
+    unopened = []
+    for rnd in range(p.fail_rounds + 1):
+        block_ids = {b: kk + 1 for kk, b in enumerate(sorted(set(owner.values())))}
+        owner = {i: block_ids[b] for i, b in owner.items()}
+        nb = len(block_ids)
+        blk0 = np.zeros(dm.n, np.int64)
+        blk0[cont] = [owner[i] for i in mos.cell[cont]]
+        omega, cuts, drift = choose_drift(dm, blk0, nb, c_sc, p, np.random.default_rng([seed, 4]), prov=mos.cell)
+        bad = [x for x in drift["longest_through_by_pair"] if x[2] > p.fail_through_km]
+        if rnd == p.fail_rounds or not bad or nb - 1 < p.min_blocks_after_fail:
+            break
+        a_, b_, L_ = bad[0]
+        area_b = np.bincount(blk0, weights=dm.area_km2, minlength=nb + 1)
+        small_, big_ = (a_, b_) if area_b[a_] < area_b[b_] else (b_, a_)
+        for i in owner:
+            if owner[i] == small_:
+                owner[i] = big_
+        unopened.append({"round": rnd, "pair_at_round": [int(a_), int(b_)], "longest_through_km": int(L_),
+                         "merged_area_km2": float(area_b[small_]), "into_area_km2": float(area_b[big_])})
+    drift["unopened_rifts"] = unopened
     blk = apply_cuts(dm, blk0, cuts)
+    # 洋脊跃迁分出的微大陆（新陆块编号接在后面）
+    _, mcuts, stages, micro, mlinks = ridge_jump_micro(dm, blk, mos.cell, cuts, omega, nb, weak, p,
+                                                       np.random.default_rng([seed, 5]))
+    if mcuts:
+        cuts = cuts + mcuts
+        for q_, st in stages.items():
+            omega[q_] = st["om"][1]
+        nb += len(mcuts)
+        drift["links"] = sorted(drift["links"] + mlinks)
+        blk = apply_cuts(dm, blk0, cuts, prov=mos.cell)
+    drift["micro"] = micro
     block_of_prov = {}
     for i in range(n):
         m = mos.cell == i
@@ -874,7 +1124,7 @@ def design_prehistory(dm: Mesh, seed: int, p: PrehistoryParams) -> Design:
     oseeds = unit(rng.normal(size=(p.n_ocean_plates, 3)))
     o_omega = {q: unit(rng.normal(size=3)) * rng.uniform(0.03, 0.12) * DEG for q in range(p.n_ocean_plates)}
     return Design(seed, dm.level, mos, provinces, weak, in_pairs, owner, block_of_prov, cuts, omega, drift, failed,
-                  oseeds, o_omega, nb, len(cratons), dm.h_km)
+                  oseeds, o_omega, nb, len(cratons), dm.h_km, stages)
 
 
 def realize(mesh: Mesh, ds: Design, p: PrehistoryParams):
@@ -888,7 +1138,7 @@ def realize(mesh: Mesh, ds: Design, p: PrehistoryParams):
     c.t_form[cont] = [ds.provinces[i]["age_ma"] for i in prov[cont]]
     blk0 = np.zeros(mesh.n, np.int64)
     blk0[cont] = [ds.owner[i] for i in prov[cont]]
-    blk = apply_cuts(mesh, blk0, ds.cuts)
+    blk = apply_cuts(mesh, blk0, ds.cuts, prov=prov)
     c.origin[cont] = blk[cont]
     T = np.zeros(mesh.n)
     T[cont] = [ds.provinces[i]["T_km"] for i in prov[cont]]
@@ -965,7 +1215,14 @@ def build_initial_world(mesh: Mesh, seed: int, params: PrehistoryParams | None =
     script = StageScript(p.t_start)
     for q, w in omega0.items():
         script.add_plate(q, 0, f"block {q}" if q <= nb else f"ocean {q}")
-        script.set_absolute(q, w, p.t_start, p.t_end if p.t_end > 0 else 0)
+        if q in ds.stages:                                # 微大陆：洋脊跃迁前随一侧陆块，之后随另一侧
+            w0, w1 = ds.stages[q]["om"]
+            tj = ds.stages[q]["t_jump"]
+            script.set_absolute(q, w0, p.t_start, tj)
+            script.set_absolute(q, w1, tj, p.t_end if p.t_end > 0 else 0)
+            omega0[q] = w0
+        else:
+            script.set_absolute(q, w, p.t_start, p.t_end if p.t_end > 0 else 0)
         if p.t_end > 0:
             script.set_absolute(q, w, p.t_end, 0)        # 旋转文件要求写到 0 Ma；t_end 之后不使用
     work = Path(work_dir or (CACHE / "prehistory"))
@@ -974,6 +1231,7 @@ def build_initial_world(mesh: Mesh, seed: int, params: PrehistoryParams | None =
     events = [{"t": float(p.t_start), "kind": "supercontinent_breakup", "n_blocks": nb,
                "n_provinces": len(ds.provinces), "n_cratons": ds.n_cratons, "failed_rifts": failed,
                "drift": ds.drift, "design_level": ds.level}]
+    events += [{"t": float(m["t_jump"]), "kind": "ridge_jump_microcontinent", **m} for m in ds.drift.get("micro", [])]
     eng = Engine(mesh, c, Params(), float(p.t_start), omega0)
     snaps = [eng.snapshot()]
     t = p.t_start
