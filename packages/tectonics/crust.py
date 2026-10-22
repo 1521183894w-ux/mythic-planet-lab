@@ -30,8 +30,10 @@ class Params:
     cont_lith_age: float = 100.0       # 减薄陆缘下方岩石圈按 100 Myr 洋壳的热沉降处理
     arc_rate_km_myr: float = 0.8       # 俯冲上盘最大增厚速率（相对速度 10 cm/yr 时）
     v0_cm_yr: float = 10.0
-    arc_peak_km: float = 150.0         # 增厚在距俯冲前缘 150 km 处最大（火山弧位置）
-    arc_max_km: float = 600.0          # 600 km 外为 0
+    arc_peak_km: float = 150.0         # 陆缘弧（安第斯型）：增厚在距俯冲前缘 150 km 处最大（火山弧位置）
+    arc_max_km: float = 600.0          # 600 km 外为 0（含弧后褶皱冲断带）
+    arc_peak_ocean_km: float = 70.0    # 洋内弧：上盘是洋壳时增厚带窄得多（伊豆—小笠原、阿留申弧宽 100–200 km）
+    arc_max_ocean_km: float = 200.0    # （1.1 原型中洋内弧也用 600 km，增生的陆壳偏多）
     arc_to_cont_T_km: float = 18.0     # 洋内弧增厚到 18 km 后视为浮力地壳，不再俯冲
     front_memory_myr: float = 3.0      # 俯冲前缘取最近 3 Myr 内被消耗的单元位置
     collision_radius_km: float = 400.0 # 碰撞时被拼贴地壳的体积分配到上盘 400 km 半径内
@@ -54,7 +56,7 @@ def gdh1_depth_m(age_myr):
 class Crust:
     """地块单元表（每行一个单元）。node 是该单元在所属板块参照系中的网格节点编号；uid 是单元的永久编号。
     Engine.view() 返回的"固定网格视图"也用这个类，此时 node = 固定网格节点编号。"""
-    FIELDS = ("uid", "plate", "node", "ctype", "T", "age", "origin", "oro", "oro_t")
+    FIELDS = ("uid", "plate", "node", "ctype", "T", "age", "origin", "prov", "t_form", "oro", "oro_t")
 
     def __init__(self, n: int):
         self.uid = np.arange(n, dtype=np.int64)
@@ -64,6 +66,8 @@ class Crust:
         self.T = np.full(n, 7.0)
         self.age = np.zeros(n)
         self.origin = np.zeros(n, np.int16)   # 地体来源：初始陆块编号；90 = 洋内弧增生；0 = 洋壳
+        self.prov = np.zeros(n, np.int32)     # 所属古老地壳省份（前史生成，见 prehistory.py）；0 = 无
+        self.t_form = np.full(n, np.nan)      # 地壳形成时间（Ma）：洋壳 = 洋脊生成时刻，弧地壳 = 转为陆壳时刻，省份 = 省份年龄
         self.oro = np.zeros(n, np.int8)       # 最近一次构造改造的类型
         self.oro_t = np.full(n, np.nan)       # 最近一次构造改造的时间（Ma）
 

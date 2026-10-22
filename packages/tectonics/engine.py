@@ -314,7 +314,10 @@ class Engine:
                                          workers=KD_WORKERS)
             ok = np.isfinite(d)
             j = tgt[ok]
-            f = arc_profile(km_from_chord(d[ok]), p.arc_peak_km, p.arc_max_km)
+            dk = km_from_chord(d[ok])
+            oceanic = c.ctype[j] == OCEAN          # 洋壳上盘：窄的洋内弧；陆壳上盘：宽的安第斯型带
+            f = np.where(oceanic, arc_profile(dk, p.arc_peak_ocean_km, p.arc_max_ocean_km),
+                         arc_profile(dk, p.arc_peak_km, p.arc_max_km))
             dT = p.arc_rate_km_myr * f * np.clip(V[sel][k[ok]] / p.v0_cm_yr, 0.0, 1.5) * p.dt
             c.T[j] += dT
             self.budget["arc_added"] += float((dT * self.area[j])[c.ctype[j] == CONT].sum())
@@ -325,6 +328,7 @@ class Engine:
             if conv.size:
                 c.ctype[conv] = CONT
                 c.origin[conv] = ORIGIN_ARC
+                c.t_form[conv] = self.t
                 self.budget["arc_converted"] += float((c.T[conv] * self.area[conv]).sum())
 
     def trench_now(self, pos: np.ndarray | None = None) -> np.ndarray:
@@ -473,6 +477,7 @@ class Engine:
             g.node = bn[uniq]
             g.T[:] = p.T_ocean
             g.age = age[uniq]
+            g.t_form = self.t + g.age
             new = new.concat(g)
             n_new = int(uniq.size)
         self.c = new
@@ -530,25 +535,32 @@ class Engine:
     def snapshot(self) -> dict:
         v, tr = self.view(with_trench=True)
         return {"t": self.t, "plate": v.plate.copy(), "ctype": v.ctype.copy(), "T": v.T.copy(), "age": v.age.copy(),
-                "origin": v.origin.copy(), "oro": v.oro.copy(), "oro_t": v.oro_t.copy(),
+                "origin": v.origin.copy(), "prov": v.prov.copy(), "t_form": v.t_form.copy(),
+                "oro": v.oro.copy(), "oro_t": v.oro_t.copy(),
                 "elev": elevation(v, self.p, tr), "omega": {q: self.omega[q].copy() for q in self.plates}}
 
     # ---- 离散事件：裂解与地体转移（只在提交后进行）------------------------------------------
-    def split_plate(self, parent: int, s1: np.ndarray, s2: np.ndarray, axis: np.ndarray, new_id: int,
+    def split_plate(self, parent: int, s1: np.ndarray | None, s2: np.ndarray | None, axis: np.ndarray, new_id: int,
                     rng: np.random.Generator, seg_km=(200.0, 600.0), offset_km=(30.0, 150.0),
                     p_extra_offset: float = 0.3, margin_km: float = 200.0, min_frac: float = 0.05,
-                    omega_new: np.ndarray | None = None) -> np.ndarray | None:
-        """把板块 parent 沿 s1、s2 的垂直平分线附近裂开，s2 一侧成为新板块 new_id（继承 parent 的参照系，不重新取样）。
+                    omega_new: np.ndarray | None = None, new_mask: np.ndarray | None = None,
+                    staircase: bool = True) -> np.ndarray | None:
+        """把板块 parent 裂开，一侧成为新板块 new_id（继承 parent 的参照系，不重新取样）。
 
-        裂谷线改成洋脊—转换断层阶梯：以相对运动欧拉极 axis 为极，洋脊段沿经线、转换断层沿纬线；阶梯跟随裂谷总体走向，
-        只有 p_extra_offset 比例的段再加随机错距 offset_km。段长 seg_km 随机。新陆缘在 margin_km 内按距离减薄。
-        成功返回新板块的单元，失败（新板块太小或太大）返回 None。"""
+        裂开的位置：给了 new_mask（按单元的布尔掩膜）就沿它的边界（例如古老省份之间的缝合带，见 prehistory.py），
+        否则沿 s1、s2 的垂直平分线，s2 一侧为新板块。
+        staircase=True 时把裂谷线改成洋脊—转换断层阶梯：以相对运动欧拉极 axis 为极，洋脊段沿经线、转换断层沿纬线；
+        阶梯跟随裂谷总体走向，只有 p_extra_offset 比例的段再加随机错距 offset_km。段长 seg_km 随机。
+        新陆缘在 margin_km 内按距离减薄。成功返回新板块的单元，失败（新板块太小或太大）返回 None。"""
         assert self.steps_since_commit == 0, "裂解只在提交后进行"
         c = self.c
         pos = self.positions()
         nodes = np.flatnonzero(self.alive & (c.plate == parent))
         x = pos[nodes]
-        base_new = (x @ (np.asarray(s2) - np.asarray(s1))) > 0
+        if new_mask is not None:
+            base_new = np.asarray(new_mask, bool)[nodes]
+        else:
+            base_new = (x @ (np.asarray(s2) - np.asarray(s1))) > 0
         w = unit(axis)
         e1 = unit(np.cross(w, [0.0, 0.0, 1.0]) if abs(w[2]) < 0.9 else np.cross(w, [1.0, 0.0, 0.0]))
         e2 = np.cross(w, e1)
@@ -563,7 +575,7 @@ class Engine:
             return None
         new = base_new.copy()
         th = theta[bnodes].min() - 1e-6
-        th_end = theta[bnodes].max() + 1e-6
+        th_end = theta[bnodes].max() + 1e-6 if staircase else th
         n_seg = 0
         while th < th_end:
             th2 = th + rng.uniform(*seg_km) / R_KM
@@ -586,7 +598,11 @@ class Engine:
         if not new.any():
             return None
         lab = graph_components(nodes.size, ee[new[ee[:, 0]] & new[ee[:, 1]]])
-        seed = np.flatnonzero(new)[np.argmax(x[new] @ unit(s2))]
+        if s2 is not None:
+            seed = np.flatnonzero(new)[np.argmax(x[new] @ unit(s2))]
+        else:                                   # 按掩膜裂开：取新侧最大的连通块
+            vals, cnt = np.unique(lab[new], return_counts=True)
+            seed = np.flatnonzero(new & (lab == vals[np.argmax(cnt)]))[0]
         keep_local = np.flatnonzero(new & (lab == lab[seed]))
         if keep_local.size < min_frac * nodes.size or keep_local.size > (1 - min_frac) * nodes.size:
             return None
@@ -609,7 +625,7 @@ class Engine:
             c.oro[j] = ORO_RIFT
             c.oro_t[j] = self.t
         self._rebuild()
-        xm = x[bnd_local].mean(0) if bnd_local.size else s1 + s2
+        xm = x[bnd_local].mean(0) if bnd_local.size else x.mean(0)
         self._event("rift", parent=parent, new_plate=new_id, n_parcels=int(keep.size), n_segments=n_seg,
                     **_lat_lon(xm))
         return keep
