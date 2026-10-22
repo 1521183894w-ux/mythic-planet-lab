@@ -74,3 +74,33 @@ def test_deterministic_rebuild(mesh, world, tmp_path_factory):
         assert (a[f] == b[f]).all(), f
     assert np.allclose(a["elev"], b["elev"])
     assert [e["kind"] for e in world.events] == [e["kind"] for e in again.events]
+
+
+def test_rift_cut_limits_transform_offsets():
+    """U20：分界整理成"洋脊段 + 转换断层"时，任意 gap_km 范围内的累计错开不超过位移减 gap_km，
+    刚体漂移后两侧处处至少隔开约 gap_km。不加限制时锯齿分界的长转换断层两侧一直相贴。"""
+    from scipy.spatial import cKDTree
+
+    from mythic.tectonics.geometry import DEG, R_KM, km_from_chord, lonlat_to_xyz, rotmat
+    from mythic.tectonics.prehistory import monotone_cut
+
+    rng = np.random.default_rng(0)
+    lon = rng.uniform(-20, 20, 40000)
+    lat = rng.uniform(-20, 20, 40000)
+    X = lonlat_to_xyz(lon, lat)
+    # 锯齿分界：每 4° 纬度在经度上来回错开 ±6°（约 670 km 的转换断层）
+    is_b = lon > 6.0 * np.sign(np.sin(np.radians(lat) * 45.0))
+    axis = np.array([0.0, 0.0, 1.0])            # b 相对 a 绕自转轴向东转
+    total = 10.0 * DEG                          # 赤道位移约 1110 km
+    gap = 400.0
+
+    def min_gap(ct):
+        ok, to_b = ct.assign_b(X)
+        side_b = np.where(ok, to_b, is_b)
+        A, B = X[~side_b], X[side_b] @ rotmat(axis, total).T
+        return float(km_from_chord(cKDTree(B).query(A)[0].min()))
+
+    limited = monotone_cut(X, is_b, axis, 1, 2, 100.0, 120.0, 3000.0, total_angle=total, gap_km=gap)
+    free = monotone_cut(X, is_b, axis, 1, 2, 100.0, 120.0, 3000.0)
+    assert min_gap(limited) > gap - 100.0       # 带宽 100 km 的离散误差
+    assert min_gap(free) < 150.0

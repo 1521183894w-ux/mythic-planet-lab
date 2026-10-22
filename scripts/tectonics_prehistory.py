@@ -1,9 +1,10 @@
-"""阶段 1.2b 检查点：前史生成 300 Ma 初始大陆（多个种子），用阶段 0 的 B1 判定与地球大陆比较，出图。
+"""阶段 1.2b 检查点（U20 修订）：前史生成 300 Ma 初始大陆（多个种子），用阶段 0 的 B1 判定与地球大陆比较，
+按剧本规划器的标准编组（300 Ma 时相距 < 250 km 的陆块一起运动），出图。
 
-    powershell -ExecutionPolicy Bypass -File scripts\\run.ps1 python -u scripts\\tectonics_prehistory.py --seeds 1-6
+    powershell -ExecutionPolicy Bypass -File scripts\\run.ps1 python -u scripts\\tectonics_prehistory.py --seeds 1-8
 
 输出：figures/stage1/prehistory/（图与 summary.json，不进 Git）；.cache/tectonics/prehistory/（各种子的快照）。
-台式机 L7、6 个种子 3 进程并行约 3 分钟。
+U20 起所有抽样都在 L6 设计网格上做（prehistory.design_prehistory），L7 只按同一份设计生成地壳。
 """
 
 from __future__ import annotations
@@ -53,6 +54,7 @@ def run_one(level: int, seed: int) -> dict:
     from mythic.metrics.verdict import b_verdict
     from mythic.tectonics.mesh import CACHE, Raster, load_mesh
     from mythic.tectonics.prehistory import build_initial_world
+    from mythic.tectonics.scenario import ScenarioParams, blocks_from_world, group_adjacent, world_usable
 
     mesh = load_mesh(level)
     t0 = time.perf_counter()
@@ -65,6 +67,11 @@ def run_one(level: int, seed: int) -> dict:
     ref = json.loads((ROOT / "data" / "earth_reference" / "baselines_1024x512.json").read_text(encoding="utf-8"))
     m = compute_all(E, E > 0, cfg=cfg)
     bv = b_verdict(m["by_region"], ref["landmass_unit_reference"], cfg)
+    raw = blocks_from_world(mesh, w)
+    grp = group_adjacent(mesh, raw, links=w.links)
+    usable, why = world_usable(grp, ScenarioParams())
+    groups = [{"lead": int(b), "members": [int(x) for x in (G.members or (b,))], "area_km2": float(G.area_km2)}
+              for b, G in sorted(grp.items(), key=lambda kv: -kv[1].area_km2)]
     d = CACHE / "prehistory"
     d.mkdir(parents=True, exist_ok=True)
     arrs = {"times": np.array([s["t"] for s in w.snapshots])}
@@ -81,11 +88,13 @@ def run_one(level: int, seed: int) -> dict:
                "land_fraction_300Ma": float((raster.grid.cell_area_km2 * land).sum() / raster.grid.total_area_km2),
                "cont_area_300Ma_km2": float(mesh.area_km2[w.crust.ctype == 1].sum()),
                "b_verdict": bv, "n_units": len(bv["units"]),
+               "planner_blocks": sorted(int(b) for b in raw), "groups": groups, "usable": usable, "unusable_why": why,
                "n_units_all_pass": int(sum(u["all_pass"] for u in bv["units"].values())),
                "step_wall_s_mean": None}
     (d / f"prehistory_L{level}_s{seed}.json").write_text(json.dumps(_jsonable(summary), ensure_ascii=False, indent=1),
                                                         encoding="utf-8")
     return {"seed": seed, "wall_s": round(wall, 1), "blocks": [round(b["area_km2"] / 1e6, 1) for b in w.blocks],
+            "groups": [g["members"] for g in groups], "usable": usable,
             "land": round(summary["land_fraction_300Ma"], 3), "units": summary["n_units"],
             "units_pass": summary["n_units_all_pass"]}
 
@@ -103,7 +112,7 @@ def figures(level: int, seeds: list[int]):
 
     from mythic.figures.style import setup_fonts, shaded_elevation
     from mythic.figures.world import EARTH_REF, code_version
-    from mythic.tectonics.geometry import R_KM, unit, xyz_to_lonlat
+    from mythic.tectonics.geometry import R_KM, km_from_chord, unit, xyz_to_lonlat
     from mythic.tectonics.mesh import CACHE, Raster, load_mesh
 
     setup_fonts()
@@ -163,21 +172,29 @@ def figures(level: int, seeds: list[int]):
     mid = unit(mesh.xyz[e[sel, 0]] + mesh.xyz[e[sel, 1]])
     lo, la = xyz_to_lonlat(mid)
     wk = np.array([i["weakness"] if i else 0 for i in info])
-    blk = np.array([bool(i and i["block_boundary"]) for i in info], bool)
     fail = np.array([bool(i and i["failed_rift"]) for i in info], bool)
-    ax.scatter(lo[~blk & ~fail], la[~blk & ~fail], s=1.5, c=wk[~blk & ~fail], cmap="Greys", vmin=0, vmax=1.6, transform=PC,
+    # 分块时的分界（沿省份边界）与整理后真正裂开的分界（相对运动极下的洋脊段 + 转换断层，U20）
+    bb = {p["id"]: p.get("block_breakup", p["block"]) for p in js["provinces"]}
+    blk0 = np.array([bb.get(int(a)) != bb.get(int(b)) for a, b in zip(pa[sel], pb[sel])], bool)
+    ax.scatter(lo[~fail], la[~fail], s=1.5, c=wk[~fail], cmap="Greys", vmin=0, vmax=1.6, transform=PC,
                linewidths=0, rasterized=True)
-    ax.scatter(lo[blk], la[blk], s=4, c="#d7301f", transform=PC, linewidths=0, rasterized=True)
+    ax.scatter(lo[blk0], la[blk0], s=5, c="#f4a261", transform=PC, linewidths=0, rasterized=True)
+    oa, ob = f["origin"][e[:, 0]], f["origin"][e[:, 1]]
+    cc = (f["ctype"][e[:, 0]] == 1) & (f["ctype"][e[:, 1]] == 1) & (oa != ob)
+    lo_c, la_c = xyz_to_lonlat(unit(mesh.xyz[e[cc, 0]] + mesh.xyz[e[cc, 1]]))
+    ax.scatter(lo_c, la_c, s=3, c="#c1121f", transform=PC, linewidths=0, rasterized=True)
     ax.scatter(lo[fail], la[fail], s=4, c="#7a0177", transform=PC, linewidths=0, rasterized=True)
     ax.set_global()
-    ax.set_title(f"种子 {s0}，{f['t']:.0f} Ma：地壳省份（{len(js['provinces'])} 个）与薄弱带\n灰线越深越薄弱；红 = 被选为陆块分界（裂谷），紫 = 夭折裂谷",
+    ax.set_title(f"种子 {s0}，{f['t']:.0f} Ma：地壳省份（{len(js['provinces'])} 个）与薄弱带（灰线越深越薄弱）\n"
+                 f"橙 = 分块时沿薄弱带的分界，红 = 整理后真正裂开的分界（洋脊段 + 转换断层），紫 = 夭折裂谷",
                  fontsize=9.5)
     ax = fig.add_subplot(1, 2, 2, projection=proj)
     shaded(ax, f["elev"])
     ax.set_global()
     ax.set_title(f"{f['t']:.0f} Ma 高程（裂解刚发生：裂谷陆缘与夭折裂谷减薄，省份厚度不同造成内陆起伏）", fontsize=9.5)
     hs = [Patch(color=c, label=l) for c, l in zip(colors, labels)]
-    hs += [Patch(color="#d7301f", label="陆块分界（裂谷）"), Patch(color="#7a0177", label="夭折裂谷")]
+    hs += [Patch(color="#f4a261", label="分块时的分界（沿薄弱带）"), Patch(color="#c1121f", label="真正裂开的分界"),
+           Patch(color="#7a0177", label="夭折裂谷")]
     fig.legend(handles=hs, loc="lower center", ncol=4, fontsize=8, frameon=False, bbox_to_anchor=(0.5, 0.03))
     fig.suptitle("前史第 1–2 步：老超大陆的地壳省份拼贴，沿薄弱缝合带分成陆块", fontsize=11)
     stamp(fig)
@@ -208,7 +225,8 @@ def figures(level: int, seeds: list[int]):
         shaded(ax, fr[-1]["elev"])
         bv = js["b_verdict"]["units"]
         big = max(bv.values(), key=lambda u: u["area_km2"]) if bv else None
-        txt = (f"种子 {s}：陆块 {len(js['blocks'])} 块，陆地 {js['land_fraction_300Ma']:.0%}；"
+        txt = (f"种子 {s}：陆块 {len(js['blocks'])} 块、编组后 {len(js['groups'])} 组"
+               f"（{'可用' if js['usable'] else '不可用'}），陆地 {js['land_fraction_300Ma']:.0%}；"
                f"≥500 万 km² 陆块 {js['n_units']} 个，B1 全部达标 {js['n_units_all_pass']} 个")
         if big:
             m = big["metrics"]
@@ -248,21 +266,48 @@ def figures(level: int, seeds: list[int]):
     fig.savefig(OUT / "04_b1_vs_earth.png", dpi=105, bbox_inches="tight")
     plt.close(fig)
 
-    # 图 5：裂谷陆缘放大，与南大西洋两岸同比例尺
+    # 图 5：裂谷陆缘放大，与南大西洋两岸同比例尺。选 400 Ma 时共享分界最长的两对陆块，窗口放在 300 Ma 时
+    # 两侧相对的裂谷陆缘（oro = 裂谷）之间
+    from scipy.spatial import cKDTree
+
     js, fr = runs[s0]
     f = fr[-1]
-    rift = (f["oro"] == 3) & (f["ctype"] == 1)
-    lo_r, la_r = xyz_to_lonlat(unit(mesh.xyz[rift].mean(0))) if rift.any() else (0.0, 0.0)
+    f0 = fr[0]
+    o0a, o0b = f0["origin"][e[:, 0]], f0["origin"][e[:, 1]]
+    c0 = (f0["ctype"][e[:, 0]] == 1) & (f0["ctype"][e[:, 1]] == 1) & (o0a != o0b) & (o0a > 0) & (o0b > 0)
+    pr, cnt = np.unique(np.sort(np.stack([o0a[c0], o0b[c0]], 1), 1), axis=0, return_counts=True)
+    wins = []
+    for (a_, b_) in pr[np.argsort(cnt)[::-1]]:
+        ra = np.flatnonzero((f["origin"] == a_) & (f["ctype"] == 1) & (f["oro"] == 3))
+        rb = np.flatnonzero((f["origin"] == b_) & (f["ctype"] == 1) & (f["oro"] == 3))
+        if len(ra) < 5 or len(rb) < 5:
+            continue
+        da = km_from_chord(cKDTree(mesh.xyz[rb]).query(mesh.xyz[ra])[0])
+        db = km_from_chord(cKDTree(mesh.xyz[ra]).query(mesh.xyz[rb])[0])
+        fa, fb = ra[da < 2500], rb[db < 2500]
+        if len(fa) < 5 or len(fb) < 5:
+            continue
+        cx = unit(unit(mesh.xyz[fa].mean(0)) + unit(mesh.xyz[fb].mean(0)))
+        if wins and min(np.arccos(np.clip(cx @ w_[0], -1, 1)) for w_ in wins) < np.radians(25):
+            continue
+        wins.append((cx, int(a_), int(b_), float(min(da.min(), db.min()))))
+        if len(wins) == 2:
+            break
     with xr.open_dataset(EARTH_REF / "earth_grid_1024x512.nc") as ds:
         ee = ds.elevation.values.astype(float)
         el = ds.land_fraction.values >= 0.5
     W, H = 3000e3, 2200e3
-    fig = plt.figure(figsize=(15, 6))
-    for k, (elev, land, lat0_, lon0_, title) in enumerate([
-            (raster(f["elev"]), raster(f["elev"]) > 0, float(la_r), float(lo_r), f"种子 {s0}，300 Ma：裂谷陆缘一带"),
-            (ee, el, -12.0, -15.0, "地球：南大西洋两岸（裂开约 1.3 亿年）")]):
+    E_s = raster(f["elev"])
+    panels = []
+    for cx, a_, b_, gmin in wins:
+        lo_r, la_r = xyz_to_lonlat(cx)
+        panels.append((E_s, E_s > 0, float(la_r), float(lo_r),
+                       f"种子 {s0}，300 Ma：陆块 {a_} 与 {b_} 之间的裂谷陆缘（最近处 {gmin:.0f} km）"))
+    panels.append((ee, el, -12.0, -15.0, "地球：南大西洋两岸（裂开约 1.3 亿年）"))
+    fig = plt.figure(figsize=(7.5 * len(panels), 6))
+    for k, (elev, land, lat0_, lon0_, title) in enumerate(panels):
         p_ = ccrs.AzimuthalEquidistant(central_longitude=lon0_, central_latitude=lat0_)
-        ax = fig.add_subplot(1, 2, k + 1, projection=p_)
+        ax = fig.add_subplot(1, len(panels), k + 1, projection=p_)
         ax.imshow(shaded_elevation(elev, 2 * np.pi * R_KM / elev.shape[1], land=land), transform=PC,
                   extent=(-180, 180, -90, 90), origin="upper", interpolation="nearest")
         ax.set_extent((-W, W, -H, H), crs=p_)
@@ -275,8 +320,56 @@ def figures(level: int, seeds: list[int]):
     fig.savefig(OUT / "05_margin_zoom.png", dpi=105, bbox_inches="tight")
     plt.close(fig)
 
+    # 图 6：300 Ma 陆块与编组（U20 的核心结果）：前史设计阶段判定仍相连的陆块（InitialWorld.links）编成一组一起运动，
+    # 组数决定主大陆能由几块拼成
+    pal = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
+    fig = plt.figure(figsize=(17, 4.6 * nrow + 0.8))
+    for k, s in enumerate(seeds):
+        js, fr = runs[s]
+        f = fr[-1]
+        lo_, _ = sc_center(fr[0])
+        ax = fig.add_subplot(nrow, ncol, k + 1, projection=ccrs.Robinson(central_longitude=lo_))
+        gid = np.full(mesh.n, -1)
+        g_of_plate = {}
+        for gi, g in enumerate(js["groups"]):
+            for b_ in g["members"]:
+                g_of_plate[b_] = gi
+        cont = f["ctype"] == 1
+        gp = np.array([g_of_plate.get(int(q), -2) for q in f["plate"]])
+        gid[cont] = gp[cont]
+        rgb = np.ones((mesh.n, 3)) * np.array([0.86, 0.91, 0.95])
+        rgb[gid == -2] = (0.62, 0.62, 0.62)
+        for gi in range(len(js["groups"])):
+            rgb[gid == gi] = matplotlib.colors.to_rgb(pal[gi]) if gi < len(pal) else (0.24, 0.24, 0.24)
+        img = rgb[raster.idx]
+        ax.imshow(img, transform=PC, extent=(-180, 180, -90, 90), origin="upper", interpolation="nearest")
+        pa_, pb_ = f["plate"][e[:, 0]], f["plate"][e[:, 1]]
+        inner = cont[e[:, 0]] & cont[e[:, 1]] & (pa_ != pb_) & (gid[e[:, 0]] >= 0) & (gid[e[:, 0]] == gid[e[:, 1]])
+        lo_i, la_i = xyz_to_lonlat(unit(mesh.xyz[e[inner, 0]] + mesh.xyz[e[inner, 1]]))
+        ax.scatter(lo_i, la_i, s=1.5, c="k", transform=PC, linewidths=0, rasterized=True)
+        for gi, g in enumerate(js["groups"]):
+            m_ = gid == gi
+            if not m_.any():
+                continue
+            glo, gla = xyz_to_lonlat(unit((mesh.xyz[m_] * mesh.area_km2[m_, None]).sum(0)))
+            ax.text(float(glo), float(gla), f"G{gi + 1}  {g['area_km2'] / 1e6:.0f}\n块 {','.join(map(str, g['members']))}",
+                    transform=PC, fontsize=7, ha="center", va="center", color="k",
+                    bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="none", alpha=0.75))
+        ax.set_global()
+        ax.gridlines(color="0.5", lw=0.3, alpha=0.5)
+        dr = js["events"][0]["drift"]
+        ax.set_title(f"种子 {s}：陆块 {len(js['blocks'])} 块 -> 编组后 {len(js['groups'])} 组"
+                     f"（{'可用' if js['usable'] else '不可用：' + js['unusable_why']}）\n"
+                     f"刚体估计最近一对 {dr['min_gap_km_rigid']:.0f} km；各组面积单位 Mkm²", fontsize=8)
+    fig.suptitle("300 Ma 陆块编组：设计阶段（L6 网格刚体估计）相距 < 250 km 的陆块在剧本里一起运动（颜色 = 组，第 9 组起为深灰、看标签；"
+                 "黑点 = 组内陆块的分界；浅灰 = 太小不参与规划的陆壳）", fontsize=11)
+    stamp(fig)
+    fig.savefig(OUT / "06_groups_300Ma.png", dpi=100, bbox_inches="tight")
+    plt.close(fig)
+
     summary = {str(s): {k: v for k, v in runs[s][0].items() if k in ("blocks", "land_fraction_300Ma", "cont_area_300Ma_km2",
-                                                                      "n_units", "n_units_all_pass", "wall_s", "code_version")}
+                                                                      "n_units", "n_units_all_pass", "wall_s", "code_version",
+                                                                      "groups", "usable", "unusable_why")}
                for s in seeds}
     (OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
 
@@ -284,8 +377,8 @@ def figures(level: int, seeds: list[int]):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--level", type=int, default=7)
-    ap.add_argument("--seeds", default="1-6")
-    ap.add_argument("--workers", type=int, default=3)
+    ap.add_argument("--seeds", default="1-8")
+    ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--figures-only", action="store_true")
     a = ap.parse_args()
     seeds = parse_seeds(a.seeds)

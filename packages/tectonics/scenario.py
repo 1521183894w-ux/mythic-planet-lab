@@ -178,13 +178,17 @@ class Block:
     members: tuple = ()     # 编组的各板块（见 group_adjacent）；空 = 只有 id 本身
 
 
-def group_adjacent(mesh: Mesh, blocks: dict, merge_km: float = 250.0) -> dict:
+def group_adjacent(mesh: Mesh, blocks: dict, merge_km: float = 250.0, links: list | None = None,
+                   safety_km: float = 100.0) -> dict:
     """300 Ma 时相距不到 merge_km 的陆块编成一组，整组一起运动（组里最大的一块领头，其余跟随）。
     前史裂解后不少陆块对到 300 Ma 仍然贴在一起（8 个世界种子里 7 个有相距只一个网格的陆块对：
     裂解沿省份边界走，分界参差咬合，各块又大体同向漂离老超大陆中心），剧本里只要其中一块一动就撞上另一块；
     1.2c 早期把它们当独立陆块规划，8 个种子里有 5 个在 288 Ma 前后就出现计划外接触。
     物理上相当于这条裂谷停滞（夭折裂谷），两侧之后一起运动。
-    （试过改前史的漂移方向让各块彼此分开，参差咬合的分界使刚体漂移无法处处分开，没有采用。）"""
+    （试过改前史的漂移方向让各块彼此分开，参差咬合的分界使刚体漂移无法处处分开，没有采用。）
+    U20 起前史的分界能张开，并在设计网格上判定哪些陆块对到 300 Ma 仍连在一起（InitialWorld.links）。给出 links 时按它编组，
+    另外只把引擎结果里主体真正贴上（< safety_km）的陆块对补并进来：在各自网格上按 merge_km 量间距编组时，
+    贴近 250 km 的陆块对会随网格翻转（L6/L7 差 ±50 km），L6 上的筛查就不能代表 L7。"""
     ids = sorted(blocks, key=lambda b: -blocks[b].area_km2)
     root = {b: b for b in ids}
 
@@ -194,7 +198,18 @@ def group_adjacent(mesh: Mesh, blocks: dict, merge_km: float = 250.0) -> dict:
             x = root[x]
         return x
 
-    r = chord_from_km(merge_km)
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            return
+        big, small = (ra, rb) if blocks[ra].area_km2 >= blocks[rb].area_km2 else (rb, ra)
+        root[small] = big
+
+    if links is not None:
+        for a, b in links:
+            if a in root and b in root:
+                union(a, b)
+    r = chord_from_km(merge_km if links is None else safety_km)
     trees = {b: cKDTree(mesh.xyz[blocks[b].cont]) for b in ids}
     for i, a in enumerate(ids):
         for b in ids[i + 1:]:
@@ -202,9 +217,7 @@ def group_adjacent(mesh: Mesh, blocks: dict, merge_km: float = 250.0) -> dict:
                 continue
             d = trees[b].query(mesh.xyz[blocks[a].cont], distance_upper_bound=r)[0]
             if np.isfinite(d).any():
-                ra, rb = find(a), find(b)
-                big, small = (ra, rb) if blocks[ra].area_km2 >= blocks[rb].area_km2 else (rb, ra)
-                root[small] = big
+                union(a, b)
     out = {}
     for lead in ids:
         if find(lead) != lead:
@@ -385,7 +398,7 @@ class Planner:
         self.p = params or ScenarioParams()
         self.rng = np.random.default_rng(10_000 + seed)
         self.seed = seed
-        self.blocks = group_adjacent(self.m, blocks_from_world(self.m, self.pw))
+        self.blocks = group_adjacent(self.m, blocks_from_world(self.m, self.pw), links=getattr(world, "links", None))
         self.follower_of = {q: b for b, B in self.blocks.items() for q in B.members if q != b}
         self.usable, self.unusable_reason = world_usable(self.blocks, self.p)
         self.notes: list[str] = []

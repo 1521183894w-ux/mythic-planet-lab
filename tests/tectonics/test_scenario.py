@@ -75,6 +75,11 @@ def test_group_adjacent_merges_only_touching(mesh):
     lead = [k for k in g if k != 3][0]
     assert set(g[lead].members) == {1, 2}
     assert g[lead].area_km2 == pytest.approx(a.area_km2 + b.area_km2)
+    # U20：给出前史设计阶段的 links 时按它编组（与网格无关），只补并真正贴上（< safety_km）的陆块对
+    g2 = group_adjacent(mesh, {1: a, 2: b, 3: c}, links=[[1, 3]], safety_km=0.5 * mesh.h_km)
+    assert sorted(sorted(B.members or (k,)) for k, B in g2.items()) == [[1, 3], [2]]
+    g3 = group_adjacent(mesh, {1: a, 2: b, 3: c}, links=[], safety_km=2.0 * mesh.h_km)
+    assert sorted(sorted(B.members or (k,)) for k, B in g3.items()) == [[1, 2], [3]]
 
 
 def test_script_matches_plan(planned):

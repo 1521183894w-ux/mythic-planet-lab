@@ -20,13 +20,13 @@ def one(args):
     mesh = load_mesh(level)
     w = build_initial_world(mesh, seed)
     raw = blocks_from_world(mesh, w)
-    g = group_adjacent(mesh, raw)
+    g = group_adjacent(mesh, raw, links=w.links)
     ok, why = world_usable(g, ScenarioParams())
     dr = w.events[0]["drift"]
     return (seed, round(time.perf_counter() - t), w.events[0]["n_blocks"], len(raw), len(g),
             sorted([round(b.area_km2 / 1e6, 1) for b in g.values()], reverse=True), ok, why,
             {"rigid_groups": dr.get("groups_rigid"), "rigid_min_gap": round(dr["min_gap_km_rigid"] or 0),
-             "crossings": dr["crossings"], "moved": dr["cells_reassigned_by_cuts"]},
+             "crossings": dr["crossings"], "moved": dr["cells_reassigned_by_cuts"], "links": dr.get("links")},
             {b: B.members for b, B in g.items() if B.members})
 
 

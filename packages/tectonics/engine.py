@@ -385,6 +385,7 @@ class Engine:
         ae = e[self.alive[e[:, 0]] & self.alive[e[:, 1]]]
         adj_all = csr_matrix((np.ones(2 * len(ae)), (np.r_[ae[:, 0], ae[:, 1]], np.r_[ae[:, 1], ae[:, 0]])), shape=(M, M))
         widened = []
+        near = None                             # 按当前位置找相邻单元（只在本板块上没有邻居时用，见下）
         oi = np.flatnonzero(over)
         local = np.full(M, -1, np.int64)
         local[oi] = np.arange(oi.size)
@@ -406,8 +407,19 @@ class Engine:
                     # 1.2c 之前这里把多余体积留在原处，洋内弧岛被岛弧增厚反复加厚到 600 km（高程 80 km）。
                     ring = np.unique(adj_all[frontier].indices)
                     ring = ring[~visited[ring]]
+                    if ring.size == 0:
+                        # 本板块参照格网上连一个存活的相邻单元都没有（碰撞前缘残留在别的板块中间的一两个单元）：
+                        # 按当前位置向任何板块的相邻单元摊。U20 后的 L5 剧本试验里这样一个单元被碰撞拼贴反复加厚到 149 km
+                        if near is None:
+                            ai = np.flatnonzero(self.alive)
+                            pos = self.positions()
+                            near = (ai, pos, cKDTree(pos[ai]))
+                        ai, pos, tr = near
+                        hits = tr.query_ball_point(pos[frontier], r=chord_from_km(1.5 * self.m.h_km))
+                        ring = np.unique(ai[np.concatenate([np.asarray(h, np.int64) for h in hits])])
+                        ring = ring[~visited[ring]]
                     widened.append(ring)
-                if ring.size == 0:          # 整块板块都填满了（实际不会发生）：多余体积留在原处
+                if ring.size == 0:          # 周围什么都没有（实际不会发生）：多余体积留在原处
                     c.T[members] += E / self.area[members].sum()
                     break
                 cap = np.maximum(p.T_max_km - c.T[ring], 0.0) * self.area[ring]
