@@ -61,6 +61,14 @@ powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\make_
 | `fetch_iugs_sites.py` | 0.5c：从 IUGS 地质遗产委员会网站的公开接口获取地质遗产地名单（只取名称、分类、日期、链接），写 `data/earth_reference/iugs_geoheritage_sites.csv`，约 5 秒 |
 | `archetype_coverage.py` | 校验两份清单 → 原型的归类（`whc_archetype_map.yaml`、`iugs_archetype_map.yaml`，矿床类型对照 `docs/mineral_resources.md`），生成 `docs/archetype_coverage.md` 的两个统计附录；`--check` 只校验 |
 
+## 构造模拟（阶段 1）
+
+| 脚本 | 用途 |
+|---|---|
+| `tectonics_synthetic.py` | 1.2a 检查点：两个合成试验（裂谷 -> 洋盆扩张、碰撞 -> 造山）在 L7 上的图与耗时，写 `figures/stage1/synthetic/`，约 1 分钟 |
+
+1.1 方案对比的原型在 `spikes/stage1_methods/`（运行方法见那里的 README）。方法说明见 `docs/tectonics_method.md`。
+
 详细说明见 `docs/environment.md`。
 
 ## 编写约定

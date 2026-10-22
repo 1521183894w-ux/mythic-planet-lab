@@ -16,7 +16,7 @@ requires-python = ">=3.12"
 [tool.setuptools]
 package-dir = { "mythic" = "packages" }
 # 新增子包（例如 tectonics）时在这里登记，并给该目录加 __init__.py
-packages = ["mythic", "mythic.metrics", "mythic.figures"]
+packages = ["mythic", "mythic.metrics", "mythic.figures", "mythic.tectonics"]
 
 [tool.setuptools.package-data]
 "mythic.metrics" = ["*.yaml"]
