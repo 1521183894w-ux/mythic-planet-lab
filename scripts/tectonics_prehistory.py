@@ -233,7 +233,7 @@ def figures(level: int, seeds: list[int]):
     # 图 3：各种子 300 Ma 联系表与 B1
     ncol = 3
     nrow = int(np.ceil(len(seeds) / ncol))
-    fig = plt.figure(figsize=(17, 4.6 * nrow + 0.8))
+    fig = plt.figure(figsize=(21, 5.2 * nrow + 0.8))
     for k, s in enumerate(seeds):
         js, fr = runs[s]
         lo_, _ = sc_center(fr[0])
@@ -342,7 +342,7 @@ def figures(level: int, seeds: list[int]):
     # 图 6：300 Ma 陆块与编组（U20 的核心结果）：前史设计阶段判定仍相连的陆块（InitialWorld.links）编成一组一起运动，
     # 组数决定主大陆能由几块拼成
     pal = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
-    fig = plt.figure(figsize=(17, 4.6 * nrow + 0.8))
+    fig = plt.figure(figsize=(21, 5.2 * nrow + 0.8))
     for k, s in enumerate(seeds):
         js, fr = runs[s]
         f = fr[-1]
