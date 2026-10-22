@@ -382,6 +382,9 @@ class Engine:
         e = self.pedges
         ce = e[cont[e[:, 0]] & cont[e[:, 1]]]
         adj = csr_matrix((np.ones(2 * len(ce)), (np.r_[ce[:, 0], ce[:, 1]], np.r_[ce[:, 1], ce[:, 0]])), shape=(M, M))
+        ae = e[self.alive[e[:, 0]] & self.alive[e[:, 1]]]
+        adj_all = csr_matrix((np.ones(2 * len(ae)), (np.r_[ae[:, 0], ae[:, 1]], np.r_[ae[:, 1], ae[:, 0]])), shape=(M, M))
+        widened = []
         oi = np.flatnonzero(over)
         local = np.full(M, -1, np.int64)
         local[oi] = np.arange(oi.size)
@@ -398,7 +401,13 @@ class Engine:
             while E > 1e-9:
                 ring = np.unique(adj[frontier].indices)
                 ring = ring[~visited[ring]]
-                if ring.size == 0:          # 没有可填的外围（孤立地块）：多余体积留在原处
+                if ring.size == 0:
+                    # 外围没有陆壳了（孤立的弧岛、小地块）：向同板块相邻的洋壳摊，岛向外长大。
+                    # 1.2c 之前这里把多余体积留在原处，洋内弧岛被岛弧增厚反复加厚到 600 km（高程 80 km）。
+                    ring = np.unique(adj_all[frontier].indices)
+                    ring = ring[~visited[ring]]
+                    widened.append(ring)
+                if ring.size == 0:          # 整块板块都填满了（实际不会发生）：多余体积留在原处
                     c.T[members] += E / self.area[members].sum()
                     break
                 cap = np.maximum(p.T_max_km - c.T[ring], 0.0) * self.area[ring]
@@ -411,6 +420,16 @@ class Engine:
                     E -= C
                 visited[ring] = True
                 frontier = ring
+        if widened:                         # 摊到的洋壳够厚就成为陆壳（与岛弧转化同一标准）
+            w = np.unique(np.concatenate(widened))
+            conv = w[(c.ctype[w] == OCEAN) & (c.T[w] >= p.arc_to_cont_T_km)]
+            if conv.size:
+                c.ctype[conv] = CONT
+                c.origin[conv] = ORIGIN_ARC
+                c.t_form[conv] = self.t
+                c.oro[conv] = np.where(c.oro[conv] == ORO_COLL, ORO_COLL, ORO_ARC)
+                c.oro_t[conv] = self.t
+                self.budget["arc_converted"] += float((c.T[conv] * self.area[conv]).sum())
 
     # ---- 固定网格覆盖 -----------------------------------------------------------------------
     def cover_fixed(self, pos: np.ndarray | None = None) -> np.ndarray:

@@ -1,0 +1,1140 @@
+"""剧本生成器 v1（阶段 1.2c）：从 300 Ma 初始大陆（prehistory.py）出发，按情景族写 300 -> 0 Ma 的板块运动剧本。
+
+情景族（tasks/stage1_tectonics.md）：300 Ma 分散的陆块 -> 汇聚成相连的超大陆、留下一个残留洋盆（主内海） -> 局部裂解；
+一块陆块漂到极地成为极地大陆；最多一块次大陆留在远洋另一侧。
+
+规划都只做刚体旋转（不跑地壳规则），在"锚定陆块"（最大的主陆块）的 300 Ma 参照系里进行：
+1. 分角色：极地大陆、次大陆（可选）、主大陆各块；锚定陆块不动。
+2. 依次拼合：每块从它所在一侧向已拼好的大陆滑过去，接触后再楔入 penetration_km 为目标位置；
+   从 300 Ma 位置到目标位置用一个固定欧拉极匀速旋转，到 dock 时刻抵达，之后保留 residual 比例的汇聚 residual_myr，
+   然后锁定。检查途中不会提前撞上别的陆块、速度不超过 max_rate_deg。
+3. 主内海：最后拼上的那块，搜索接近方向、自转、楔入量，让两侧轮廓不吻合处圈出残留洋盆；先用网格上的快速代理筛选，
+   再用阶段 0 的 A 层主内海代码（mythic.metrics.hard）在 1024x512 上核对。
+4. 整体定位：把拼好的主大陆整体转到目标纬度（北端、南端、北极圈内面积、主内海纬度），锚定陆块在 300 Myr 内匀速完成这个旋转。
+5. 极地大陆、次大陆：相对锚定陆块分段匀速运动，0 Ma 抵达目标位置（整体定位时已让它们要走的路尽量短）；全程不碰撞。
+6. 局部裂解（按概率抽样）：沿拼合缝合带"剪刀式"张开（一端仍相连，形成狭长裂谷海），或从陆块边缘裂出微大陆。都避开主内海。
+最后写成 PLATES4 旋转文件，引擎完整模拟；0 Ma 用 A 层、B1 代码评估。
+
+method_class：运动 = procedural_constrained（剧本设定，速度受地球范围约束）。
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from pathlib import Path
+
+import numpy as np
+from scipy.spatial import cKDTree
+
+from .crust import CONT, Crust, Params
+from .engine import Engine, graph_components
+from .geometry import DEG, R_KM, axis_angle, chord_from_km, km_from_chord, lonlat_to_xyz, rotmat, unit, xyz_to_lonlat
+from .kinematics import RotationFileKinematics, StageScript
+from .mesh import CACHE, KD_WORKERS, Mesh, Raster
+from .prehistory import InitialWorld
+
+
+@dataclass
+class ScenarioParams:
+    t0: int = 300
+    dock_window: tuple = (240, 125)        # 各主陆块拼上的时刻（Ma）
+    penetration_km: float = 150.0          # 接触后再楔入多少锁定
+    residual: float = 0.10                 # 锁定后保留的汇聚比例（青藏式持续楔入）
+    residual_myr: float = 20.0             # （1.2c 初版 250 km + 15% × 25 Myr，碰撞带长出好几个青藏级高原）
+    main_share_max: float = 0.85           # 主大陆占陆地比例上限（简报 §3）；超过就必须设次大陆
+    max_rate_deg: float = 0.75             # 相对运动最大角速度（°/Myr；赤道约 8.3 cm/yr）
+    polar_area_km2: tuple = (5.0e6, 1.6e7)
+    secondary_area_km2: tuple = (8.0e6, 2.6e7)
+    p_secondary: float = 0.6
+    max_block_km2: float = 1.1e8           # 前史种子筛选：最大陆块（编组后）超过这个就不用（1.2b 局限）
+    min_groups: int = 4                    # 前史种子筛选：编组后至少这么多个陆块组
+    inner_sea_area_km2: tuple = (1.0e6, 5.0e6)
+    breakup_window: tuple = (110, 25)
+    n_breakup: tuple = (1, 3)
+    target_north: tuple = (62.0, 72.0)     # 主大陆北端（简报 §3：65–70°N）
+    target_south: tuple = (-45.0, -30.0)   # 主大陆南端（简报：约 40°S，软限制 50°S）
+    inner_sea_lat: tuple = (30.0, 42.0)    # 主内海纬度（地中海气候）
+    polar_lat: float = -82.0
+
+
+@dataclass
+class Dock:
+    """一块主陆块的拼合运动（锚定参照系）。segs 按时间先后：(起始时刻, 结束时刻, 欧拉极, 转角 rad)，每段绕固定欧拉极匀速转动。
+    一般的拼合只有一段；主内海那次是两段：先接近到第一处接触，再绕接触点转动到另一端只剩窄海峡。"""
+    block: int
+    t_dock: float
+    segs: list = field(default_factory=list)
+    t_contact: float | None = None         # 计划中的第一次接触时刻（途中检查到此为止）；None = t_dock + 15
+    inner_sea: bool = False
+
+    @property
+    def angle(self) -> float:
+        return float(sum(abs(s[3]) for s in self.segs))
+
+
+def dock_pose(d: "Dock | None", t: float, residual: float, residual_myr: float) -> np.ndarray:
+    """锚定参照系中 t 时刻的旋转：已完成的段全转，进行中的段按比例；dock 之后按最后一段的速率保留 residual 的汇聚。"""
+    if d is None or not d.segs:
+        return np.eye(3)
+    R = np.eye(3)
+    for ta, tb, ax, ang in d.segs:
+        if t >= ta:
+            break
+        f = min(1.0, (ta - t) / (ta - tb))
+        R = rotmat(ax, ang * f) @ R
+    if t < d.t_dock:
+        ta, tb, ax, ang = d.segs[-1]
+        R = rotmat(ax, residual * ang / (ta - tb) * min(d.t_dock - t, residual_myr)) @ R
+    return R
+
+
+@dataclass
+class Plan:
+    seed: int
+    anchor: int
+    roles: dict
+    docks: dict
+    G_axis: np.ndarray
+    G_angle: float
+    moves: dict                            # 极地大陆、次大陆、孤立陆块：分段 [(起, 止, 欧拉极, 转角)]（锚定参照系，相对锚定陆块）
+    breakups: list
+    inner_sea: dict
+    script: StageScript | None = None
+    notes: list = field(default_factory=list)
+    score: float = 0.0
+    placement: dict = field(default_factory=dict)
+    conflicts: list = field(default_factory=list)
+
+
+# ---- 几何小工具 -------------------------------------------------------------------------------
+def move_to(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    ax = np.cross(a, b)
+    s = np.linalg.norm(ax)
+    if s < 1e-12:
+        return np.eye(3)
+    return rotmat(ax / s, np.arctan2(s, float(a @ b)))
+
+
+def _centroid(X, w=None):
+    return unit((X * (1.0 if w is None else w[:, None])).sum(0))
+
+
+def _ang(a, b):
+    return float(np.arccos(np.clip(a @ b, -1, 1)))
+
+
+class Contact:
+    """已拼好部分的陆壳点集：判断一组点是否与之接触（距离 < 0.6 网格间距）。"""
+
+    def __init__(self, pts: np.ndarray, h_km: float):
+        self.tree = cKDTree(pts) if len(pts) else None
+        self.r = chord_from_km(0.6 * h_km)
+
+    # 查询点都只有几百到几千个：单线程（多线程查询每次都要起线程，规划中几十万次查询的线程开销占了总时间的大半）
+    def hits(self, Y: np.ndarray) -> bool:
+        if self.tree is None:
+            return False
+        return bool(np.isfinite(self.tree.query(Y, distance_upper_bound=self.r)[0]).any())
+
+    def min_dist(self, Y: np.ndarray, cap: float = 2 * np.sin(np.radians(2.5))) -> float:
+        """Y 到已拼好部分的最近距离（弦长，单位球），最多算到 cap（默认 5°）：远处的点不用细查，查询快一个数量级。"""
+        if self.tree is None:
+            return cap
+        d = self.tree.query(Y, distance_upper_bound=cap)[0].min()
+        return float(d) if np.isfinite(d) else cap
+
+
+def slide_to_contact(Y, n_axis, total, contact: Contact, min_step=np.radians(0.1)):
+    """把 Y 绕 n_axis 旋转，返回第一次接触的角度（rad；二分到约 0.01°），total 内没有接触返回 None。
+    保守推进：转过角度 a 时任何一点的位移（弦长）不超过 a，所以每步可以放心转过"当前最近距离 - 接触半径"。"""
+    a = 0.0
+    prev = None
+    while a <= total:
+        d = contact.min_dist(Y @ rotmat(n_axis, a).T)
+        if d < contact.r:
+            if prev is None:
+                return 0.0
+            lo, hi = prev, a
+            for _ in range(5):
+                mid = 0.5 * (lo + hi)
+                if contact.hits(Y @ rotmat(n_axis, mid).T):
+                    hi = mid
+                else:
+                    lo = mid
+            return hi
+        prev = a
+        a += max(d - contact.r, min_step)
+    return None
+
+
+# ---- 陆块 --------------------------------------------------------------------------------------
+@dataclass
+class Block:
+    id: int
+    cont: np.ndarray        # 陆壳节点（固定网格编号，300 Ma）
+    land: np.ndarray        # 其中高出海面的节点
+    area_km2: float
+    centroid: np.ndarray
+    members: tuple = ()     # 编组的各板块（见 group_adjacent）；空 = 只有 id 本身
+
+
+def group_adjacent(mesh: Mesh, blocks: dict, merge_km: float = 250.0) -> dict:
+    """300 Ma 时相距不到 merge_km 的陆块编成一组，整组一起运动（组里最大的一块领头，其余跟随）。
+    前史裂解后不少陆块对到 300 Ma 仍然贴在一起（8 个世界种子里 7 个有相距只一个网格的陆块对：
+    裂解沿省份边界走，分界参差咬合，各块又大体同向漂离老超大陆中心），剧本里只要其中一块一动就撞上另一块；
+    1.2c 早期把它们当独立陆块规划，8 个种子里有 5 个在 288 Ma 前后就出现计划外接触。
+    物理上相当于这条裂谷停滞（夭折裂谷），两侧之后一起运动。
+    （试过改前史的漂移方向让各块彼此分开，参差咬合的分界使刚体漂移无法处处分开，没有采用。）"""
+    ids = sorted(blocks, key=lambda b: -blocks[b].area_km2)
+    root = {b: b for b in ids}
+
+    def find(x):
+        while root[x] != x:
+            root[x] = root[root[x]]
+            x = root[x]
+        return x
+
+    r = chord_from_km(merge_km)
+    trees = {b: cKDTree(mesh.xyz[blocks[b].cont]) for b in ids}
+    for i, a in enumerate(ids):
+        for b in ids[i + 1:]:
+            if find(a) == find(b):
+                continue
+            d = trees[b].query(mesh.xyz[blocks[a].cont], distance_upper_bound=r)[0]
+            if np.isfinite(d).any():
+                ra, rb = find(a), find(b)
+                big, small = (ra, rb) if blocks[ra].area_km2 >= blocks[rb].area_km2 else (rb, ra)
+                root[small] = big
+    out = {}
+    for lead in ids:
+        if find(lead) != lead:
+            continue
+        mem = [b for b in ids if find(b) == lead]
+        if len(mem) == 1:
+            out[lead] = blocks[lead]
+            continue
+        cont = np.concatenate([blocks[b].cont for b in mem])
+        land = np.concatenate([blocks[b].land for b in mem])
+        a = float(sum(blocks[b].area_km2 for b in mem))
+        out[lead] = Block(lead, cont, land, a, _centroid(mesh.xyz[cont], mesh.area_km2[cont]), tuple(mem))
+    return out
+
+
+def blocks_from_world(mesh: Mesh, w: InitialWorld, min_km2: float = 3.0e6, body_km2: float = 1.0e6,
+                      strip_km: float = 300.0) -> dict:
+    """各板块上的陆块主体，规划拼合与接触都只用主体：
+    - 去掉窄于 strip_km 的细带（形态学开运算：先去掉离海不到 strip_km/2 的部分，再向外扩回）——板块洋壳上的岛弧带
+      只有一个网格宽、却可以连着主体延伸数千公里，1.2c 初版把它们算进去，陆块碰到这些细带就停下；
+    - 再只取面积 ≥ body_km2 的连通部分。
+    细带仍在板块上，物理模拟里照常参与碰撞。"""
+    v = w.crust
+    elev = w.snapshots[-1]["elev"]
+    out = {}
+    e = mesh.edges
+    cont_all = v.ctype == CONT
+    d_sea = km_from_chord(cKDTree(mesh.xyz[~cont_all]).query(mesh.xyz, workers=KD_WORKERS)[0])
+    core = cont_all & (d_sea >= strip_km / 2.0)
+    d_core = km_from_chord(cKDTree(mesh.xyz[core]).query(mesh.xyz, workers=KD_WORKERS)[0]) if core.any() else np.full(mesh.n, np.inf)
+    body = cont_all & (d_core <= strip_km / 2.0 + mesh.h_km)
+    for q in np.unique(v.plate):
+        m = (v.plate == q) & body
+        if not m.any():
+            continue
+        lab = graph_components(mesh.n, e[m[e[:, 0]] & m[e[:, 1]]])
+        areas = np.bincount(lab[m], weights=mesh.area_km2[m])
+        big = np.flatnonzero(areas >= body_km2)
+        cont = np.flatnonzero(m & np.isin(lab, big))
+        a = float(mesh.area_km2[cont].sum())
+        if a < min_km2:
+            continue
+        land = cont[elev[cont] > 0]
+        out[int(q)] = Block(int(q), cont, land, a, _centroid(mesh.xyz[cont], mesh.area_km2[cont]))
+    return out
+
+
+def world_usable(blocks: dict, p: "ScenarioParams") -> tuple[bool, str]:
+    """前史种子筛选：编组后至少 min_groups 个陆块组（主大陆至少要两块拼合，外加极地、次大陆），最大一组不超过 max_block_km2
+    （一组就占了大半陆壳时，"分散的陆块汇聚"这个情景无从谈起）。"""
+    n = len(blocks)
+    amax = max((b.area_km2 for b in blocks.values()), default=0.0)
+    if n < p.min_groups:
+        return False, f"编组后只有 {n} 个陆块组（至少 {p.min_groups}）"
+    if amax > p.max_block_km2:
+        return False, f"最大陆块组 {amax / 1e6:.0f} Mkm² 超过 {p.max_block_km2 / 1e6:.0f}"
+    return True, ""
+
+
+# ---- 主内海代理（网格上快速估计） --------------------------------------------------------------
+def basin_proxy(mesh: Mesh, land_pts: list, strait_km: float = 150.0, min_km2: float = 3.0e5):
+    """land_pts：各部分（陆块）的陆地点集（已摆好位置）。返回被窄于 strait_km 的水道与外洋隔开的水体列表：
+    面积、长宽比、两岸属于各部分的比例、质心。"""
+    pts = np.concatenate(land_pts)
+    part = np.concatenate([np.full(len(p), k) for k, p in enumerate(land_pts)])
+    d, k = cKDTree(pts).query(mesh.xyz, workers=KD_WORKERS)
+    dkm = km_from_chord(d)
+    land = dkm < 0.6 * mesh.h_km
+    deep = ~land & (dkm > strait_km / 2.0)
+    e = mesh.edges
+    lab = graph_components(mesh.n, e[deep[e[:, 0]] & deep[e[:, 1]]])
+    a_all = np.bincount(lab[deep], weights=mesh.area_km2[deep])
+    ids = np.flatnonzero(a_all > 0)
+    areas = a_all[ids]
+    if ids.size < 2:
+        return []
+    world = ids[np.argmax(areas)]
+    out = []
+    oc = np.flatnonzero(~land)
+    dn = np.flatnonzero(deep)
+    _, kk = cKDTree(mesh.xyz[dn]).query(mesh.xyz[oc], workers=KD_WORKERS)
+    region = np.full(mesh.n, -1, np.int64)
+    region[oc] = lab[dn[kk]]
+    for i, a in zip(ids, areas):
+        if i == world or a < min_km2 * 0.5:
+            continue
+        reg = region == i
+        A = float(mesh.area_km2[reg].sum())
+        if A < min_km2:
+            continue
+        # 沿岸陆地按部分统计
+        nb = np.zeros(mesh.n, bool)
+        nb[e[reg[e[:, 0]], 1]] = True
+        nb[e[reg[e[:, 1]], 0]] = True
+        coast = nb & land
+        cnt = np.bincount(part[k[coast]], weights=mesh.area_km2[coast], minlength=len(land_pts))
+        shares = cnt / max(cnt.sum(), 1e-9)
+        X = mesh.xyz[reg]
+        c = _centroid(X, mesh.area_km2[reg])
+        e1 = unit(np.cross(c, [0.0, 0.0, 1.0]) if abs(c[2]) < 0.9 else np.cross(c, [1.0, 0.0, 0.0]))
+        e2 = np.cross(c, e1)
+        uv = np.stack([X @ e1, X @ e2], 1)
+        wgt = mesh.area_km2[reg]
+        mu = (uv * wgt[:, None]).sum(0) / wgt.sum()
+        cov = ((uv - mu).T * wgt) @ (uv - mu) / wgt.sum()
+        ev = np.sort(np.linalg.eigvalsh(cov))
+        asp = float(np.sqrt(ev[1] / max(ev[0], 1e-12)))
+        out.append({"area_km2": A, "aspect": asp, "shares": shares.tolist(), "centroid": c})
+    return out
+
+
+def official_inland_sea(mesh: Mesh, raster: Raster, land_nodes: np.ndarray, part_of_node: np.ndarray) -> dict:
+    """用阶段 0 的 A 层代码核对（mesh 节点上的陆地掩膜栅格化到 1024x512）。part_of_node：每个陆地节点属于哪一部分。"""
+    from mythic.metrics.compute import load_config
+    from mythic.metrics.earthlike import shape_axes
+    from mythic.metrics.hard import inland_seas, landmass_units, main_inland_sea_check
+    from mythic.metrics.topology import any_neighbor
+
+    cfg = load_config()["A_hard_constraints"]
+    g = raster.grid
+    land = raster(land_nodes)
+    part = raster(part_of_node)
+    units = landmass_units(g, land, cfg["main_continent"]["thin_link_width_km"])
+    cis = cfg["main_inland_sea"]
+    seas = inland_seas(g, land, units["main_mask"], cis["strait_max_width_km"], cis["min_main_border_fraction"],
+                       cis["min_candidate_area_km2"])
+    chk = main_inland_sea_check(seas["seas"], cis)
+    if not chk.get("exists"):
+        return {"pass": False, "reason": chk.get("reason")}
+    sea = seas["region_labels"] == chk["main"]["region_id"]
+    bw = g.cell_area_km2 * (land & any_neighbor(sea))
+    shares = {int(p): float((bw * (part == p)).sum() / bw.sum()) for p in np.unique(part[land & any_neighbor(sea)])}
+    asp = float(shape_axes(g, sea)["aspect_ratio"])
+    two = sum(s >= 0.15 for s in shares.values()) >= 2
+    # 海峡：规划网格（L6，约 110 km）分辨不出 150 km 以下的海峡，计划留的 60–200 km 缺口栅格化后常被陆地封死（海峡数 0）。
+    # 规划阶段把"0 条海峡"视为待定（unresolved），由 0 Ma 的完整模拟按 A 层判定。
+    straits = chk["main"]["straits_to_world_ocean"]
+    checks = dict(chk["checks"])
+    unresolved = straits == 0
+    if unresolved:
+        checks["straits_ok"] = True
+    ok = bool(all(checks.values()) and asp >= cis["min_aspect_ratio"] and two)
+    lat, lon = chk["main"]["sample_lat_lon"]
+    return {"pass": ok, "area_km2": chk["main"]["area_km2"], "straits": straits, "strait_unresolved": unresolved,
+            "aspect": asp, "shares": shares, "checks": checks, "lat": lat, "lon": lon}
+
+
+# ---- 规划 ------------------------------------------------------------------------------------------
+@dataclass
+class _PlanWorld:
+    """规划用的粗网格世界：只要板块、地壳类型、省份与高程。"""
+    crust: Crust
+    snapshots: list
+    seed: int
+
+
+def coarsen_world(mesh_run: Mesh, world: InitialWorld, mesh_plan: Mesh) -> _PlanWorld:
+    """把运行网格上的 300 Ma 世界映射到规划网格（每个规划节点取最近的运行节点）。"""
+    _, idx = mesh_run.tree.query(mesh_plan.xyz, workers=KD_WORKERS)
+    c = world.crust.gather(idx)
+    c.node = np.arange(mesh_plan.n)
+    return _PlanWorld(c, [{"elev": world.snapshots[-1]["elev"][idx]}], world.seed)
+
+
+class Planner:
+    """规划都在粗网格（默认 L6，约 110 km）上做：只是刚体旋转，与分辨率无关，写出的剧本直接用于细网格（L7/L8）的模拟。"""
+
+    def __init__(self, mesh: Mesh, world: InitialWorld, seed: int, params: ScenarioParams | None = None,
+                 plan_level: int = 6):
+        from .mesh import load_mesh
+        self.w = world
+        if mesh.level > plan_level:
+            self.m = load_mesh(plan_level)
+            self.pw = coarsen_world(mesh, world, self.m)
+        else:
+            self.m = mesh
+            self.pw = world
+        self.p = params or ScenarioParams()
+        self.rng = np.random.default_rng(10_000 + seed)
+        self.seed = seed
+        self.blocks = group_adjacent(self.m, blocks_from_world(self.m, self.pw))
+        self.follower_of = {q: b for b, B in self.blocks.items() for q in B.members if q != b}
+        self.usable, self.unusable_reason = world_usable(self.blocks, self.p)
+        self.notes: list[str] = []
+
+    # 锚定参照系中第 b 块在时刻 t 的旋转（拼合规划用；锁定后的残余汇聚计入最终位置）
+    def pose(self, b: int, t: float) -> np.ndarray:
+        return dock_pose(self.docks.get(b), t, self.p.residual, self.p.residual_myr)
+
+    def posed(self, b: int, t: float, which: str = "cont", sub: int = 1) -> np.ndarray:
+        idx = getattr(self.blocks[b], which)[::sub]
+        return self.m.xyz[idx] @ self.pose(b, t).T
+
+    def assign_roles(self):
+        p, rng = self.p, self.rng
+        bl = sorted(self.blocks.values(), key=lambda b: -b.area_km2)
+        roles = {}
+        polar = [b for b in bl[1:] if p.polar_area_km2[0] <= b.area_km2 <= p.polar_area_km2[1]]
+        if polar:
+            # 离最大陆块（锚定陆块）最远的那块：主大陆在它周围拼合，离得远的不容易被拼合中的陆块碾过；
+            # 整体定位再把南极放到它附近（plan_placement）。候选多时随机在前两名里挑。
+            polar.sort(key=lambda b: -_ang(b.centroid, bl[0].centroid))
+            roles[polar[int(rng.integers(min(2, len(polar))))].id] = "polar"
+        else:
+            self.notes.append("没有面积合适的陆块做极地大陆")
+        sec = [b for b in bl[1:] if b.id not in roles and p.secondary_area_km2[0] <= b.area_km2 <= p.secondary_area_km2[1]]
+        main_left = [b for b in bl if b.id not in roles]
+        total = sum(b.area_km2 for b in bl)
+        share_if_none = sum(b.area_km2 for b in main_left) / total
+        need = share_if_none > p.main_share_max          # 不设次大陆主大陆就会超过 85%
+        if sec and len(main_left) >= 3 and (need or rng.random() < p.p_secondary):
+            # 需要时挑能把主大陆占比压到上限以下、又最接近 78% 的那块
+            pick = min(sec, key=lambda b: abs((sum(x.area_km2 for x in main_left) - b.area_km2) / total - 0.78))
+            roles[pick.id if need else sec[int(rng.integers(len(sec)))].id] = "secondary"
+        for b in bl:
+            roles.setdefault(b.id, "main")
+        self.roles = roles
+        self.main = [b.id for b in bl if roles[b.id] == "main"]
+        self.anchor = self.main[0]
+        return roles
+
+    def _axis_dir(self, b: int, C: np.ndarray) -> np.ndarray:
+        """拼合主轴在 C 处的切向，朝向第 b 块所在的那一端（让主大陆拼成长条，见 plan_assembly）。"""
+        u = unit(self.axis_u - (self.axis_u @ C) * C)
+        cb = self.blocks[b].centroid
+        return u if (cb @ u) >= 0 else -u
+
+    def _plan_dock(self, b: int, t_dock: float, az_offsets, spins, pens, check_transit=True):
+        """返回满足速度（与途中无碰撞，check_transit 时）的候选（Dock 列表），按接近方向偏离程度排序。
+        接近方向以拼合主轴为基准（偏离 az_offsets 度）。"""
+        p, m = self.p, self.m
+        docked = [k for k in self.docks]
+        cl_pts = np.concatenate([self.posed(k, 0.0) for k in docked])
+        contact = Contact(cl_pts, m.h_km)
+        C = _centroid(cl_pts)
+        rad_cl = max(_ang(C, x) for x in cl_pts[::7])
+        X = m.xyz[self.blocks[b].cont]
+        cb = self.blocks[b].centroid
+        rad_b = max(_ang(cb, x) for x in X[::7])
+        t = self._axis_dir(b, C)
+        out = []
+        for az in az_offsets:
+            dir_ = rotmat(C, np.radians(az)) @ t
+            far = min(rad_cl + rad_b + np.radians(10), np.pi - 0.05)
+            F = np.cos(far) * C + np.sin(far) * dir_
+            for sp in spins:
+                P0 = move_to(cb, F) @ rotmat(cb, np.radians(sp))
+                Y = X @ P0.T
+                n_ax = unit(np.cross(F, C))
+                a_c = slide_to_contact(Y, n_ax, far, contact)
+                if a_c is None or a_c == 0.0:
+                    continue
+                for pen in pens:
+                    R = rotmat(n_ax, a_c + pen / R_KM) @ P0
+                    ax, ang = axis_angle(R)
+                    if np.degrees(ang) / (p.t0 - t_dock) > p.max_rate_deg:
+                        continue
+                    d = Dock(b, t_dock, [(float(p.t0), float(t_dock), ax, ang)])
+                    d._R1, d._contact_pts = R, None
+                    if not check_transit or self._transit_ok(b, d, docked):
+                        out.append((abs(az) + 0.3 * abs(sp), d))
+        out.sort(key=lambda x: x[0])
+        return [d for _, d in out]
+
+    def _transit_ok(self, b, d: Dock, docked) -> bool:
+        """途中不提前撞上已规划的陆块：检查到计划的第一次接触前 10 Myr（一段式拼合取 dock 前 15 Myr）。"""
+        p = self.p
+        X = self.m.xyz[self.blocks[b].cont[::3]]
+        # 极地陆块、次大陆陆块在头 40 Myr 按 300 Ma 位置当障碍：拼合路线不得一开始就碾过它们
+        # （世界种子 3：极地陆块夹在锚定陆块和另一块主陆块之间，那块主陆块的拼合路线正好扫过它，极地陆块无路可走）。
+        # 只管头 40 Myr，给它们留出离开的时间；它们之后的路线在 plan_movers 里对照全部拼合路线检查
+        # （全程当障碍太严：最后一块主陆块就近拼合的路线几乎都要经过次大陆陆块的出发位置）。
+        obst = tuple(k for k in getattr(self, "_obstacles", ()) if k != b)
+        t_obst = p.t0 - 40.0
+        if not hasattr(self, "_tcache") or self._tcache[0] != (tuple(docked), obst):
+            self._tcache = ((tuple(docked), obst), {})
+        cache = self._tcache[1]
+        t_stop = (d.t_contact + 10.0) if d.t_contact is not None else (d.t_dock + 15.0)
+        for t in np.arange(p.t0 - 2.0, t_stop, -3.0):
+            Y = X @ dock_pose(d, t, p.residual, p.residual_myr).T
+            key = round(float(t), 1)
+            if key not in cache:
+                pts = [self.posed(k, t, sub=3) for k in docked]
+                if t >= t_obst:
+                    pts += [self.m.xyz[self.blocks[k].cont[::3]] for k in obst]
+                cache[key] = Contact(np.concatenate(pts), self.m.h_km * 1.2)
+            if cache[key].hits(Y):
+                return False
+        return True
+
+    def plan_assembly(self):
+        p, rng = self.p, self.rng
+        self.docks: dict[int, Dock] = {}
+        self.docks[self.anchor] = Dock(self.anchor, float(p.t0), [])
+        self.inner_sea = {"found": False}
+        self._obstacles = tuple(b for b, r in self.roles.items() if r in ("polar", "secondary"))
+        rest = [b for b in self.main if b != self.anchor]
+        if not rest:
+            self.notes.append("只有一块主陆块，无法拼合")
+            return
+        # 拼合主轴：各主陆块从主轴两端接上去，主大陆拼成长条（1.2c 初版各块从四面拼上，成了大圆团，
+        # 约 1.3 亿 km² 的圆团纬度跨度 140°，放不进 40°S–70°N；亚非欧也是东西向长条）。
+        # 主轴取其余主陆块质心在锚定陆块切平面上的主方向（少走路），再随机偏转 ±20°。
+        ca = self.blocks[self.anchor].centroid
+        e1 = unit(np.cross(ca, [0.0, 0.0, 1.0]) if abs(ca[2]) < 0.9 else np.cross(ca, [1.0, 0.0, 0.0]))
+        e2 = np.cross(ca, e1)
+        uv = np.array([[self.blocks[b].centroid @ e1, self.blocks[b].centroid @ e2] for b in rest])
+        if len(rest) >= 2:
+            w_, v_ = np.linalg.eigh(uv.T @ uv)
+            a0 = np.arctan2(v_[1, -1], v_[0, -1])
+        else:
+            a0 = np.arctan2(uv[0, 1], uv[0, 0])
+        a0 += np.radians(rng.uniform(-20, 20))
+        self.axis_u = np.cos(a0) * e1 + np.sin(a0) * e2
+        inner = rest[0]                                # 第二大的主陆块最后拼上，圈出主内海
+        others = sorted(rest[1:], key=lambda b: _ang(self.blocks[b].centroid, self.blocks[self.anchor].centroid))
+        times = np.linspace(p.dock_window[0], p.dock_window[1], len(rest) + 1)[:-1] if len(rest) > 1 else []
+        times = [float(5 * round((tt + rng.uniform(-8, 8)) / 5)) for tt in times]
+        for b, tdock in zip(others, times):
+            cands = self._plan_dock(b, tdock, [0, -20, 20, -40, 40], [0, -30, 30], [p.penetration_km])
+            if not cands:
+                cands = self._plan_dock(b, max(tdock - 30, p.dock_window[1]), [0, -30, 30, -60, 60, -90, 90],
+                                        [0, -45, 45], [p.penetration_km])
+            if not cands:
+                self.notes.append(f"陆块 {b} 找不到无碰撞的拼合路线，改为留在原处")
+                self.roles[b] = "island"
+                continue
+            self.docks[b] = cands[0]
+        self.inner_sea = self._plan_inner_sea(inner, float(5 * round(p.dock_window[1] / 5)))
+
+    def _pivot_candidates(self, b: int, t_dock: float) -> list:
+        """两段式拼合候选：先接近到第一处接触 P1（并楔入），再绕 P1 转动，直到另一端几乎碰上，只留 gap 宽的海峡。
+        一次滑动只会在一点接触，两块凸形大陆之间留下两头敞开的海湾，圈不出内海（1.2c 初版的失败）；
+        两处接触之间才可能夹出残留洋盆（阿拉伯、印度的转动碰撞也是这样）。"""
+        p, m = self.p, self.m
+        firsts = self._plan_dock(b, t_dock, list(range(-60, 61, 20)), [-30, 0, 30], [p.penetration_km, 400.0],
+                                 check_transit=False)
+        docked = [k for k in self.docks if k != b]
+        cl = np.concatenate([self.posed(k, 0.0) for k in docked])
+        tree_cl = cKDTree(cl)
+        X = m.xyz[self.blocks[b].cont]
+        Xl = m.xyz[self.blocks[b].land]
+        out = []
+        for d1 in firsts:
+            R1 = d1._R1
+            Z = X @ R1.T
+            dd = km_from_chord(tree_cl.query(Z)[0])
+            cpts = Z[dd < m.h_km]
+            if len(cpts) < 3:
+                continue
+            P1 = _centroid(cpts)
+            far_cl = cl[km_from_chord(np.linalg.norm(cl - P1, axis=1)) > 700.0]
+            # 另一端按新来陆块海面以上的陆地去贴近：它的被动陆缘（水下陆壳，常宽 100–300 km）会在海峡处碰撞、俯冲，
+            # 留下的海峡宽度是陆地到陆地的距离（1.2c 早期按全部陆壳留 60–200 km，加上陆缘宽度，海峡总是宽过 150 km，圈不住海）
+            Zl = Xl @ R1.T
+            Zf = Zl[km_from_chord(np.linalg.norm(Zl - P1, axis=1)) > 700.0]
+            if len(far_cl) == 0 or len(Zf) == 0:
+                continue
+            cf = Contact(far_cl, m.h_km)
+            tf = cKDTree(far_cl)
+            for sgn in (1.0, -1.0):
+                phi2 = None
+                for phd in range(1, 71):
+                    if cf.hits(Zf @ rotmat(P1, sgn * np.radians(phd)).T):
+                        phi2 = np.radians(phd)
+                        break
+                if phi2 is None:
+                    continue
+                Zc = Zf @ rotmat(P1, sgn * phi2).T
+                c2 = Zc[np.argmin(tf.query(Zc)[0])]
+                L2 = km_from_chord(np.linalg.norm(c2 - P1))
+                ax1, ang1 = axis_angle(R1)
+                for gap in (60.0, 120.0, 200.0):
+                    phi = phi2 - gap / max(L2, 1.0)
+                    if phi < np.radians(2):
+                        continue
+                    t_c = float(5 * round((t_dock + max(15.0, np.degrees(phi) / 0.5)) / 5))
+                    if t_c >= p.t0 - 20:
+                        continue
+                    if np.degrees(ang1) / (p.t0 - t_c) > p.max_rate_deg:
+                        continue
+                    segs = [(float(p.t0), t_c, ax1, ang1), (t_c, float(t_dock), P1, sgn * phi)]
+                    out.append(Dock(b, float(t_dock), segs, t_contact=t_c, inner_sea=True))
+        return out
+
+    def _plan_inner_sea(self, b: int, t_dock: float) -> dict:
+        """最后一块：在两段式与一段式候选里找让主大陆圈出主内海的（代理评分 -> 途中检查 -> A 层核对）。
+        主内海不一定要挨着最后这块：前面几块拼合时可能已经夹出残留洋盆，最后这块只要把它收窄到合适大小、或不破坏它即可
+        （1.2c 早期只认挨着最后一块的水体，世界种子 3 上前面已经夹出的 5.7 Mkm² 残留洋盆被忽略）。
+        评分按 A 层的判定方式：取最大的内部水体，面积在目标范围、至少是第二大的 2 倍、至少两块陆块各占沿岸 15%、伸长。"""
+        p, m = self.p, self.m
+        cands = self._pivot_candidates(b, t_dock)
+        n_pivot = len(cands)
+        cands += self._plan_dock(b, t_dock, list(range(-90, 91, 30)), [-30, 0, 30], [p.penetration_km, 400.0],
+                                 check_transit=False)
+        if not cands:
+            self.notes.append(f"主内海陆块 {b} 找不到拼合路线")
+            self.roles[b] = "island"
+            return {"found": False}
+        lo, hi = p.inner_sea_area_km2
+        scored = []
+        for d in cands:
+            self.docks[b] = d
+            # 已拼好的部分按全部陆壳（上盘陆缘会被俯冲抬升成陆），新来的一块按海面以上的陆地（下行的被动陆缘仍在水下）
+            parts = [self.posed(k, 0.0, "land" if k == b else "cont") for k in self.docks]
+            seas = sorted(basin_proxy(m, parts), key=lambda s: -s["area_km2"])
+            if not seas:
+                continue
+            s = seas[0]
+            if not (lo * 0.6 <= s["area_km2"] <= hi * 1.2):
+                continue
+            sh = sorted(s["shares"], reverse=True)
+            second = seas[1]["area_km2"] if len(seas) > 1 else 0.0
+            score = (abs(np.log(s["area_km2"] / 2.5e6)) + max(0.0, 3.0 - s["aspect"]) * 0.5
+                     + max(0.0, 2.2 - s["aspect"]) * 3.0         # A 层要求长宽比 ≥ 2
+                     + max(0.0, 0.2 - sh[1]) * 5 + (1.0 if second and s["area_km2"] < 2.2 * second else 0.0))
+            scored.append((score, d, s))
+        scored.sort(key=lambda x: x[0])
+        n_in_range = len(scored)
+        docked_before = [k for k in self.docks if k != b]
+        scored = [x for x in scored[:10] if self._transit_ok(b, x[1], docked_before)] + \
+                 [x for x in scored[10:20] if self._transit_ok(b, x[1], docked_before)]
+        raster = Raster(m, 512)
+        info = {"n_candidates": len(cands), "n_pivot": n_pivot, "n_in_range": n_in_range, "n_scored": len(scored),
+                "official_fails": []}
+        for score, d, s in scored[:6]:
+            self.docks[b] = d
+            land_nodes, part = self._land_nodes_final(incoming=b)
+            chk = official_inland_sea(m, raster, land_nodes, part)
+            if chk["pass"]:
+                self.docks[b].inner_sea = True
+                return {"found": True, "proxy": {k: v for k, v in s.items() if k != "centroid"},
+                        "centroid": s["centroid"], "official": chk, **info}
+            info["official_fails"].append(
+                {"reason": chk.get("reason"), "area_Mkm2": round(chk.get("area_km2", 0) / 1e6, 2),
+                 "aspect": round(chk.get("aspect", 0), 2), "straits": chk.get("straits"),
+                 "failed": [k for k, v in chk.get("checks", {}).items() if not v],
+                 "shares": {k: round(v, 2) for k, v in chk.get("shares", {}).items()}})
+        if scored:
+            score, d, s = scored[0]
+            self.docks[b] = d
+            self.docks[b].inner_sea = True
+            self.notes.append("主内海：没有候选通过 A 层核对，采用代理评分最好的")
+            return {"found": False, "proxy": {k: v for k, v in s.items() if k != "centroid"}, "centroid": s["centroid"],
+                    **info}
+        ok = [d for d in cands if self._transit_ok(b, d, docked_before)]
+        self.docks[b] = (ok or cands)[0]
+        self.notes.append("主内海：没有候选能圈出大小合适、途中不碰撞的水体")
+        return {"found": False, **info}
+
+    def _land_nodes_final(self, incoming: int | None = None):
+        """所有已拼合主陆块在最终位置的陆地，映射回固定网格节点（锚定参照系）。incoming 之外的按全部陆壳计（同 basin_proxy）。"""
+        m = self.m
+        pts, part = [], []
+        for k in self.docks:
+            P = self.posed(k, 0.0, "land" if (incoming is None or k == incoming) else "cont")
+            pts.append(P)
+            part.append(np.full(len(P), k))
+        pts, part = np.concatenate(pts), np.concatenate(part)
+        d, kk = cKDTree(pts).query(m.xyz, workers=KD_WORKERS)
+        land = km_from_chord(d) < 0.6 * m.h_km
+        return land, np.where(land, part[kk], 0)
+
+    def _sec_targets(self, G: np.ndarray, C: np.ndarray, lats=(-20.0, 0.0, 20.0), dlons=(150.0, 180.0, 210.0)):
+        """次大陆目标（锚定参照系）：0 Ma 时在主大陆质心经度 +140°–220°（远洋另一侧）、低纬。"""
+        lon_c, _ = xyz_to_lonlat(G @ C)
+        return [G.T @ lonlat_to_xyz(float(lon_c) + dl, la) for la in lats for dl in dlons]
+
+    def plan_placement(self):
+        """整体定位：把拼好的主大陆（锚定参照系）转到目标纬度。
+        纬度满足要求的定位里，再挑极地大陆、次大陆（相对主大陆）要走的路最短的（1.2c 早期南极随便放，
+        极地陆块要横穿正在拼合的主大陆去南极，常常找不到不碰撞的路线）。"""
+        p, m, rng = self.p, self.m, self.rng
+        pts = np.concatenate([self.posed(k, 0.0, "land", sub=2) for k in self.docks])
+        wts = np.concatenate([m.area_km2[self.blocks[k].land[::2]] for k in self.docks])
+        C = _centroid(pts, wts)
+        sea_c = self.inner_sea.get("centroid") if self.inner_sea else None
+        polar = [b for b, r in self.roles.items() if r == "polar" and b not in self.docks]
+        sec = [b for b, r in self.roles.items() if r == "secondary" and b not in self.docks]
+        S = np.array([0.0, 0.0, -1.0])
+        best = None
+        for lat_c in (5.0, 10.0, 15.0, 20.0, 25.0):
+            T = lonlat_to_xyz(rng.uniform(-180, 180), lat_c)
+            M = move_to(C, T)
+            for sp in range(0, 360, 10):
+                G = rotmat(T, np.radians(sp)) @ M
+                Y = pts @ G.T
+                lat = np.degrees(np.arcsin(np.clip(Y[:, 2], -1, 1)))
+                north, south = np.percentile(lat, 99.7), np.percentile(lat, 0.3)
+                arctic = wts[lat > 66.56].sum() / wts.sum()
+                pen = (max(0, p.target_north[0] - north) + max(0, north - p.target_north[1])
+                       + max(0, p.target_south[0] - south) + max(0, south - p.target_south[1]) + 300 * max(0, arctic - 0.05))
+                if sea_c is not None:
+                    sl = np.degrees(np.arcsin((G @ sea_c)[2]))
+                    pen += max(0, p.inner_sea_lat[0] - sl) + max(0, sl - p.inner_sea_lat[1])
+                travel = 0.0
+                for b in polar:
+                    travel += max(0.0, np.degrees(_ang(self.blocks[b].centroid, G.T @ S)) - (90.0 + p.polar_lat))
+                for b in sec:
+                    travel += min(np.degrees(_ang(self.blocks[b].centroid, x)) for x in self._sec_targets(G, C))
+                score = pen + 0.02 * travel
+                if best is None or score < best[0]:
+                    best = (score, pen, travel, G, north, south, arctic)
+        score, pen, travel, G, north, south, arctic = best
+        self.G = G
+        self.G_axis, self.G_angle = axis_angle(G)
+        self.main_C = C
+        self.placement = {"penalty": float(pen), "travel_deg": float(travel), "north_deg": float(north),
+                          "south_deg": float(south), "arctic_fraction": float(arctic)}
+
+    def abs_main(self, t: float, sub: int = 4) -> np.ndarray:
+        """主大陆各块在 t 时刻的绝对位置（锚定陆块的整体定位旋转 × 锚定参照系中的位置）。"""
+        Ra = rotmat(self.G_axis, self.G_angle * (self.p.t0 - t) / self.p.t0)
+        return np.concatenate([self.posed(k, t, sub=sub) for k in self.docks]) @ Ra.T
+
+    def plan_movers(self):
+        """极地大陆、次大陆、没拼进主大陆的孤立陆块：相对锚定陆块运动（锚定参照系），0 Ma 时抵达整体定位后的目标位置；
+        全程（300 -> 0 Ma）不得碰到主大陆各块或彼此。路线可以是直接一段，也可以先背离主大陆绕出去一段再去目标（两段）；
+        出发时刻可以晚一些。目标位置按路程从近到远优先试。
+        （1.2c 初版只检查了终点，极地陆块南下途中撞穿一块主陆块，被吞掉的陆壳把那块整个变成了高原；
+        之后在绝对参照系里规划，主大陆整体定位的旋转会扫过大半个地球，极地陆块常常找不到路。
+        碰撞只取决于相对运动，所以改在锚定参照系里规划，并让整体定位把南极放到极地陆块附近。）"""
+        p, m, rng = self.p, self.m, self.rng
+        self._obstacles = ()
+        G = self.G
+        main0 = np.concatenate([self.posed(k, 0.0, sub=4) for k in self.docks])
+        main_c = _centroid(main0)
+        main_t0 = np.concatenate([self.posed(k, float(p.t0), sub=2) for k in self.docks])
+        tree_t0 = cKDTree(main_t0)
+        rad_main = max(_ang(main_c, x) for x in main0[::5])
+        times = np.arange(p.t0 - 12.0, -0.1, -4.0)        # 开头 12 Myr 不查：300 Ma 时相邻的陆块会先分开
+        main_ct = {t: Contact(np.concatenate([self.posed(k, t, sub=4) for k in self.docks]), m.h_km * 1.3)
+                   for t in times}
+        self.moves = {}
+        placed = []                                       # (点集, 分段)
+        order = {"polar": 0, "secondary": 1, "island": 2}
+        movers = sorted([b for b, r in self.roles.items() if r in order and b not in self.docks],
+                        key=lambda b: order[self.roles[b]])
+        self.mover_log = {}
+        for b in movers:
+            role = self.roles[b]
+            X = m.xyz[self.blocks[b].cont]
+            Xs = X[::4]
+            cb = self.blocks[b].centroid
+            if role == "polar":
+                targets = [G.T @ lonlat_to_xyz(lo, p.polar_lat) for lo in rng.uniform(-180, 180, 60)]
+            elif role == "secondary":
+                targets = self._sec_targets(G, self.main_C, lats=rng.uniform(-25, 25, 8), dlons=rng.uniform(140, 220, 8))
+            else:                                         # 孤立陆块：远离主大陆的任意位置
+                targets = [T for T in (unit(x) for x in rng.normal(size=(200, 3)))
+                           if _ang(T, main_c) >= rad_main + np.radians(25)]
+            if not targets:
+                targets = [cb]
+            targets.sort(key=lambda T: _ang(cb, T))
+            near = targets[:max(8, len(targets) // 4)]
+            # 300 Ma 时离它最近的主陆块点：绕行路线的第一段背离它（前史留下的相邻陆块可能只隔 100 km，
+            # 1.2c 早期背离主大陆质心，方向不对就在出发时撞上邻居）
+            dn, jn = tree_t0.query(Xs)
+            nb_pt = main_t0[jn[np.argmin(dn)]]
+            ok = False
+            first_clash = []
+            away = np.cross(nb_pt, cb)
+            away = unit(away) if np.linalg.norm(away) > 1e-6 else unit(np.cross(main_c, cb))
+            for _ in range(120):
+                T = near[int(rng.integers(len(near)))]
+                t_start = float(rng.choice([p.t0, p.t0, p.t0 - 20, p.t0 - 40, p.t0 - 80]))
+                t_arr = float(5 * round(rng.uniform(60, 250) / 5))
+                if t_arr >= t_start - 30:
+                    continue
+                spin = 0.0 if rng.random() < 0.4 else rng.uniform(-np.pi, np.pi)
+                kind = rng.choice(["direct", "detour", "orbit"], p=[0.3, 0.3, 0.4])
+                esc = rotmat(cb, np.radians(rng.uniform(-60, 60))) @ away     # 背离方向随机偏转 ±60°
+                if kind == "direct":
+                    Rs = [rotmat(T, spin) @ move_to(cb, T)]
+                elif kind == "detour":                    # 先背离最近的主陆块绕出去 10–40°，再去目标
+                    R1 = rotmat(esc, np.radians(rng.uniform(10, 40)))
+                    Rs = [R1, rotmat(T, spin) @ move_to(R1 @ cb, T)]
+                else:
+                    # 背离邻居 -> 绕主大陆（最终位置的质心）转到目标所在的方位 -> 去目标：
+                    # 目标常在锚定陆块的另一侧（前史的锚定陆块常是一大片），直线过去要穿过它
+                    R1 = rotmat(esc, np.radians(rng.uniform(5, 25)))
+                    c1 = R1 @ cb
+                    u1, uT = c1 - (c1 @ main_c) * main_c, T - (T @ main_c) * main_c
+                    if np.linalg.norm(u1) < 1e-6 or np.linalg.norm(uT) < 1e-6:
+                        continue
+                    u1, uT = unit(u1), unit(uT)
+                    dphi = np.arctan2(np.cross(u1, uT) @ main_c, u1 @ uT)
+                    R2 = rotmat(main_c, dphi)
+                    Rs = [R1, R2, rotmat(T, spin) @ move_to(R2 @ c1, T)]
+                angs = [axis_angle(R) for R in Rs]
+                wts_ = np.array([max(a, np.radians(3.0)) for _, a in angs])
+                cuts = t_start - np.concatenate([[0.0], np.cumsum(wts_ / wts_.sum())]) * (t_start - t_arr)
+                cuts = [float(round(c)) for c in cuts]
+                if any(cuts[i] <= cuts[i + 1] for i in range(len(Rs))):
+                    continue
+                segs = [(cuts[i], cuts[i + 1], ax, a) for i, (ax, a) in enumerate(angs)]
+                if any(np.degrees(a) / (ta - tb) > p.max_rate_deg for ta, tb, _, a in segs):
+                    continue
+                clash = None
+                for t in times:
+                    Y = Xs @ dock_pose(Dock(b, t_arr, segs), t, 0.0, 0.0).T
+                    if main_ct[t].hits(Y):
+                        clash = t
+                        break
+                    for Xo, so in placed:
+                        if Contact(Xo @ dock_pose(Dock(0, so[-1][1], so), t, 0.0, 0.0).T, m.h_km * 1.3).hits(Y):
+                            clash = t
+                            break
+                    if clash is not None:
+                        break
+                if clash is None:
+                    self.moves[b] = segs
+                    placed.append((Xs, segs))
+                    ok = True
+                    break
+                first_clash.append(float(clash))
+            self.mover_log[b] = {"role": role, "ok": ok, "travel_deg": float(np.degrees(_ang(cb, near[0]))),
+                                 "first_clash_Ma": sorted(first_clash, reverse=True)[:10]}
+            if not ok:
+                # 找不到无碰撞路线：改为有计划地拼进主大陆（增生地体，接触后锁定），免得被拼合中的主陆块碾过
+                d = self._late_dock(b)
+                if d is not None:
+                    self.docks[b] = d
+                    self.roles[b] = "main"
+                    self.notes.append(f"{role} 陆块 {b} 找不到全程不碰撞的路线，改为在 {d.t_dock:.0f} Ma 拼进主大陆")
+                else:
+                    self.notes.append(f"{role} 陆块 {b} 找不到全程不碰撞的路线，也拼不进主大陆，留在原处缓慢漂移")
+                    self.roles[b] = "island_static"
+
+    def _late_dock(self, b: int) -> "Dock | None":
+        """把一块陆块有计划地拼进主大陆（远离主内海），途中不碰别的陆块。"""
+        p = self.p
+        sea_c = self.inner_sea.get("centroid") if self.inner_sea else None
+        for t_dock in (170.0, 150.0, 200.0, 130.0):
+            cands = self._plan_dock(b, t_dock, [0, -30, 30, -60, 60, -90, 90, 120, -120, 180], [0, -40, 40],
+                                    [p.penetration_km])
+            for d in cands:
+                if sea_c is not None:
+                    Y = self.m.xyz[self.blocks[b].cont[::5]] @ dock_pose(d, 0.0, p.residual, p.residual_myr).T
+                    if min(_ang(y, sea_c) for y in Y) * R_KM < 1200:
+                        continue
+                return d
+        return None
+
+    def validate_script(self, step: float = 4.0) -> list:
+        """按写好的剧本（绝对参照系）检查所有陆块之间的接触，列出计划外的接触（陆块对、首次时刻）。
+        计划内：主陆块之间在各自 dock 前 15 Myr 以后的接触、300 Ma 起 12 Myr 内的初始相邻。"""
+        p, m, s = self.p, self.m, self.script
+        ids = [b for b in self.blocks if b in s.stages]
+        pts = {b: m.xyz[self.blocks[b].cont[::4]] for b in ids}
+        found = {}
+        for t in np.arange(p.t0 - 12.0, -0.1, -step):
+            tt = int(round(t))
+            P = {b: pts[b] @ s.forward_total(b, tt).T for b in ids}
+            allp = np.concatenate([P[b] for b in ids])
+            lab = np.concatenate([np.full(len(P[b]), b) for b in ids])
+            tree = cKDTree(allp)
+            r = chord_from_km(0.45 * m.h_km)        # 只算互相穿插（挨着的陆块最近点约相距一个网格间距，不算）
+            for b in ids:
+                nb = tree.query_ball_point(P[b], r)
+                hit = {int(lab[j]) for lst in nb for j in lst} - {b}
+                for o in hit:
+                    pair = tuple(sorted((b, o)))
+                    if pair in found:
+                        continue
+                    both_main = all(self.roles.get(x) == "main" and x in self.docks for x in pair)
+                    if both_main:
+                        def t_allow(x):
+                            d = self.docks[x]
+                            return (d.t_contact + 3.0) if d.t_contact is not None else (d.t_dock + 15.0)
+                        nonanchor = [x for x in pair if x != self.anchor]
+                        t_ok = max(t_allow(x) for x in nonanchor) if nonanchor else p.t0
+                        if t <= t_ok:
+                            continue
+                    found[pair] = float(t)
+        return [{"pair": list(k), "t": v} for k, v in sorted(found.items(), key=lambda x: -x[1])]
+
+    def plan_breakup(self):
+        """局部裂解：剪刀式张开拼合缝合带（一端仍相连）或裂出微大陆。都避开主内海。"""
+        p, m, rng = self.p, self.m, self.rng
+        self.breakups = []
+        n = int(rng.integers(p.n_breakup[0], p.n_breakup[1] + 1))
+        sea_c = self.inner_sea.get("centroid") if self.inner_sea else None
+        cands = [b for b in self.docks if b != self.anchor and not self.docks[b].inner_sea]
+        rng.shuffle(cands)
+        next_id = max(int(q) for q in np.unique(self.w.crust.plate)) + 1
+        used = set()
+        for _ in range(n):
+            kind = "reopen" if (cands and rng.random() < 0.6) else "micro"
+            t_r = float(5 * round(rng.uniform(min(p.breakup_window), max(p.breakup_window)) / 5))
+            dur = float(int(rng.uniform(25, 50)))
+            if kind == "reopen":
+                ev = self._plan_reopen(cands, used, sea_c, t_r, dur)
+            else:
+                ev = self._plan_micro(used, sea_c, t_r, dur, next_id)
+                if ev:
+                    next_id += 1
+            if ev:
+                self.breakups.append(ev)
+
+    def _plan_reopen(self, cands, used, sea_c, t_r, dur):
+        m, rng = self.m, self.rng
+        for b in cands:
+            if b in used:
+                continue
+            Xb = self.posed(b, 0.0)
+            others = np.concatenate([self.posed(k, 0.0) for k in self.docks if k != b])
+            d, _ = cKDTree(others).query(Xb)
+            cn = Xb[km_from_chord(d) < 2.0 * m.h_km]
+            if len(cn) < 10:
+                continue
+            c = _centroid(cn)
+            e1 = unit(np.cross(c, [0.0, 0.0, 1.0]) if abs(c[2]) < 0.9 else np.cross(c, [1.0, 0.0, 0.0]))
+            e2 = np.cross(c, e1)
+            uv = np.stack([cn @ e1, cn @ e2], 1)
+            w_, v_ = np.linalg.eigh(np.cov(uv.T))
+            s = uv @ v_[:, -1]
+            ends = [cn[np.argmin(s)], cn[np.argmax(s)]]
+            L = km_from_chord(np.linalg.norm(ends[0] - ends[1]))
+            if L < 800:
+                continue
+            if sea_c is not None:
+                ends.sort(key=lambda x: _ang(x, sea_c))        # 极点放在离主内海近的一端，张开处远离主内海
+                if _ang(ends[1], sea_c) * R_KM < 1200:
+                    continue
+            P = unit(ends[0])
+            dmax = km_from_chord(np.linalg.norm(Xb - P, axis=1)).max()
+            theta = rng.uniform(300, 800) / dmax                 # 陆块上离极点最远处的位移 300–800 km（红海式）
+            far = []
+            for sgn in (1, -1):
+                Y = Xb @ rotmat(P, sgn * theta).T
+                dd = km_from_chord(cKDTree(others).query(Y)[0])
+                far.append(np.percentile(dd, 10))
+            sgn = 1 if far[0] >= far[1] else -1
+            used.add(b)
+            return {"kind": "reopen", "block": b, "t": t_r, "dur": dur, "pole": P, "angle": sgn * theta,
+                    "contact_km": float(L)}
+        return None
+
+    def _plan_micro(self, used, sea_c, t_r, dur, new_id):
+        m, rng, w = self.m, self.rng, self.pw
+        v = w.crust
+        provs = []
+        for b in self.docks:
+            if b in used:
+                continue
+            R = self.pose(b, 0.0)
+            others = np.concatenate([self.posed(k, 0.0) for k in self.docks if k != b])
+            tree_o = cKDTree(others)
+            cl = self.blocks[b].cont
+            cl = cl[v.plate[cl] == b]                         # 编组陆块只从领头板块上裂（引擎按板块拆分）
+            for pid in np.unique(v.prov[cl]):
+                if pid <= 0:
+                    continue
+                idx = cl[v.prov[cl] == pid]
+                a = m.area_km2[idx].sum()
+                if not (3e5 <= a <= 3e6):
+                    continue
+                Y = m.xyz[idx] @ R.T
+                if km_from_chord(tree_o.query(Y)[0]).min() < 600:
+                    continue                                  # 挨着别的陆块（在大陆内部）
+                c = _centroid(Y)
+                if sea_c is not None and _ang(c, sea_c) * R_KM < 1500:
+                    continue
+                # 必须在本陆块的外缘：省份到本陆块以外海域的距离
+                own = m.xyz[self.blocks[b].cont] @ R.T
+                cb = _centroid(own)
+                if _ang(c, cb) < 0.5 * max(_ang(cb, x) for x in own[::9]):
+                    continue
+                provs.append((b, int(pid), c, cb))
+        if not provs:
+            return None
+        b, pid, c, cb = provs[int(rng.integers(len(provs)))]
+        used.add(b)
+        scissor = bool(rng.random() < 0.5)
+        axis = unit(np.cross(cb, c))
+        rate = float(rng.uniform(0.25, 0.5))
+        return {"kind": "micro", "block": b, "province": pid, "new_plate": new_id, "t": t_r, "dur": dur,
+                "axis": axis, "rate_deg": rate, "scissor": scissor}
+
+    # ---- 剧本 -----------------------------------------------------------------------------------
+    def build_script(self) -> StageScript:
+        p = self.p
+        t0 = p.t0
+        s = StageScript(t0)
+        plates = sorted(int(q) for q in np.unique(self.w.crust.plate))
+        role = {q: self.roles.get(q, "ocean") for q in plates}
+        s.add_plate(self.anchor, 0, f"anchor block {self.anchor}")
+        s.set_absolute(self.anchor, self.G_axis * self.G_angle / t0, t0, 0)
+        for q in plates:
+            if q == self.anchor or q in self.follower_of:
+                continue
+            r = role[q]
+            if r == "main" and q in self.docks:
+                s.add_plate(q, self.anchor, f"main block {q}")
+                d = self.docks[q]
+                segs = [(ta, tb, ax * ang / (ta - tb)) for ta, tb, ax, ang in d.segs]
+                tr = max(d.t_dock - p.residual_myr, 0)
+                if d.t_dock > tr:
+                    segs.append((d.t_dock, tr, segs[-1][2] * p.residual))
+                ev = [e for e in self.breakups if e["kind"] == "reopen" and e["block"] == q]
+                cur = tr
+                for e in sorted(ev, key=lambda e: -e["t"]):
+                    tb, te = min(e["t"], cur), max(min(e["t"], cur) - e["dur"], 0)
+                    if cur > tb:
+                        segs.append((cur, tb, np.zeros(3)))
+                    segs.append((tb, te, e["pole"] * e["angle"] / max(tb - te, 1)))
+                    cur = te
+                if cur > 0:
+                    segs.append((cur, 0, np.zeros(3)))
+                for a, b_, wv in segs:
+                    a, b_ = int(round(a)), int(round(b_))
+                    if a > b_:
+                        s.set_relative(q, self.anchor, wv, a, b_, frame_t=t0)
+            elif q in self.moves:
+                s.add_plate(q, self.anchor, f"{r} block {q}")
+                cur = t0
+                for ta, tb, ax, ang in self.moves[q]:
+                    ta, tb = int(round(ta)), int(round(tb))
+                    if cur > ta:
+                        s.set_relative(q, self.anchor, np.zeros(3), cur, ta, frame_t=t0)
+                    s.set_relative(q, self.anchor, ax * ang / (ta - tb), ta, tb, frame_t=t0)
+                    cur = tb
+                if cur > 0:
+                    s.set_relative(q, self.anchor, np.zeros(3), cur, 0, frame_t=t0)
+            elif q in self.blocks:
+                # 没有安排去处的陆块：跟着锚定陆块，只有很慢的相对漂移（绝对参照系里不动的话，整体定位中的主大陆会碾过它）
+                s.add_plate(q, self.anchor, f"{r} block {q}")
+                s.set_relative(q, self.anchor, unit(self.rng.normal(size=3)) * self.rng.uniform(0.02, 0.06) * DEG, t0, 0,
+                               frame_t=t0)
+            else:
+                s.add_plate(q, 0, f"{r} plate {q}")
+                s.set_absolute(q, unit(self.rng.normal(size=3)) * self.rng.uniform(0.03, 0.12) * DEG, t0, 0)
+        for q, lead in sorted(self.follower_of.items()):          # 编组陆块：与领头陆块一起运动
+            s.add_plate(q, lead, f"block {q} (moves with block {lead})")
+            s.set_relative(q, lead, np.zeros(3), t0, 0, frame_t=t0)
+        for e in self.breakups:
+            if e["kind"] != "micro":
+                continue
+            q, par = e["new_plate"], e["block"]
+            s.add_plate(q, par, f"microcontinent from block {par}")
+            tr, te = int(round(e["t"])), int(round(max(e["t"] - e["dur"], 0)))
+            s.follow(q, par, t0, tr)
+            # 轴在锚定参照系（= 父陆块锁定后的参照系）中给出，换成父陆块 300 Ma 参照系
+            Rpar = self.pose(par, 0.0)
+            w = Rpar.T @ e["axis"] * e["rate_deg"] * DEG
+            s.set_relative(q, par, w, tr, te, frame_t=t0)
+            if te > 0:
+                s.set_relative(q, par, np.zeros(3), te, 0, frame_t=t0)
+        self.script = s
+        return s
+
+    def plan(self, attempts: int = 4) -> Plan:
+        """规划；有计划外接触、没找到主内海或极地大陆时换一组随机抽样重来，取评分最好的一次。"""
+        best = None
+        for k in range(attempts):
+            self.rng = np.random.default_rng(10_000 + 97 * self.seed + k)
+            self.notes = []
+            self._tcache = ((), {})
+            plan = self._plan_once()
+            score = (10 * len(self.conflicts) + (0 if self.inner_sea.get("found") else 3)
+                     + (0 if "polar" in self.roles.values() else 2) + round(self.placement["penalty"] / 5.0, 1))
+            plan.notes.append(f"第 {k + 1} 次规划，评分 {score}（计划外接触 ×10、无主内海 +3、无极地大陆 +2、纬度偏差每 5° +1）")
+            plan.score = score
+            if best is None or score < best[0]:
+                best = (score, plan)
+            if score == 0:
+                break
+        return best[1]
+
+    def _plan_once(self) -> Plan:
+        self.assign_roles()
+        self.plan_assembly()
+        self.plan_placement()
+        self.plan_movers()
+        self.plan_breakup()
+        self.build_script()
+        self.conflicts = self.validate_script()
+        for c in self.conflicts:
+            self.notes.append(f"计划外接触：陆块 {c['pair'][0]} 与 {c['pair'][1]}，约 {c['t']:.0f} Ma 起")
+        return Plan(self.seed, self.anchor, dict(self.roles), dict(self.docks), self.G_axis, self.G_angle,
+                    dict(self.moves), list(self.breakups), dict(self.inner_sea), self.script, list(self.notes),
+                    placement=dict(self.placement), conflicts=list(self.conflicts))
+
+
+# ---- 运行 ------------------------------------------------------------------------------------------
+@dataclass
+class ScenarioRun:
+    plan: Plan
+    engine: Engine
+    snapshots: list
+    rot_path: str
+    wall_s: float
+    planner: "Planner | None" = None
+
+
+def run_scenario(mesh: Mesh, world: InitialWorld, seed: int, params: ScenarioParams | None = None,
+                 snap_every: int = 10, work_dir: Path | None = None) -> ScenarioRun:
+    import time
+
+    t_start = time.perf_counter()
+    planner = Planner(mesh, world, seed, params)
+    plan = planner.plan()
+    p = planner.p
+    work = Path(work_dir or (CACHE / "scenario"))
+    rot = plan.script.write_rot(work / f"scenario_L{mesh.level}_w{world.seed}_s{seed}.rot")
+    kin = RotationFileKinematics(rot)
+    c = world.crust.gather(np.arange(len(world.crust)))
+    c.uid = np.arange(len(c), dtype=np.int64)
+    c.node = np.arange(len(c), dtype=np.int64)
+    plates0 = sorted(int(q) for q in np.unique(c.plate))
+    _, om = kin.step_rotations(plates0, p.t0)
+    eng = Engine(mesh, c, Params(), float(p.t0), om)
+    snaps = [eng.snapshot()]
+    micro = {int(round(e["t"])): e for e in plan.breakups if e["kind"] == "micro"}
+    rng = np.random.default_rng(20_000 + seed)
+    t = p.t0
+    while t > 0:
+        dR, om = kin.step_rotations(eng.plates, t)
+        committed = eng.step(dR, om)
+        t -= 1
+        if committed:
+            e = micro.get(t)
+            if e and e["block"] in eng.plates:
+                mask = (eng.c.prov == e["province"]) & (eng.c.plate == e["block"]) & eng.alive
+                if mask.sum() > 20:
+                    om4 = kin.step_rotations([e["new_plate"]], t)[1][e["new_plate"]]
+                    ax_abs = unit(om4 - om[e["block"]]) if np.linalg.norm(om4 - om[e["block"]]) > 0 else np.array([0, 0, 1.0])
+                    eng.split_plate(e["block"], None, None, ax_abs, e["new_plate"], rng, new_mask=mask, omega_new=om4,
+                                    margin_km=150.0)
+            if t % snap_every == 0:
+                snaps.append(eng.snapshot())
+    return ScenarioRun(plan, eng, snaps, str(rot), time.perf_counter() - t_start, planner)

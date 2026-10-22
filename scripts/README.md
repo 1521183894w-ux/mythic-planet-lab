@@ -67,6 +67,7 @@ powershell -ExecutionPolicy Bypass -File scripts\run.ps1 python -u scripts\make_
 |---|---|
 | `tectonics_synthetic.py` | 1.2a 检查点：两个合成试验（裂谷 -> 洋盆扩张、碰撞 -> 造山）在 L7 上的图与耗时，写 `figures/stage1/synthetic/`，约 1 分钟 |
 | `tectonics_prehistory.py` | 1.2b 检查点：前史生成 300 Ma 初始大陆（`--seeds 1-6`），B1 与地球比较，写 `figures/stage1/prehistory/` 与 `.cache/tectonics/prehistory/`，台式机约 3 分钟 |
+| `tectonics_scenario.py` | 1.2c 检查点：剧本生成器 + 300 -> 0 Ma 完整模拟（`--runs 3:1,3:2,3:3,8:1,8:2 --level 7 --workers 4`），0 Ma 用 A 层与 B1 评估，写 `figures/stage1/scenario/` 与 `.cache/tectonics/scenario/`（每 10 Ma 一帧、剧本、事件日志），台式机 5 个运行约 5 分钟 |
 
 1.1 方案对比的原型在 `spikes/stage1_methods/`（运行方法见那里的 README）。方法说明见 `docs/tectonics_method.md`。
 
