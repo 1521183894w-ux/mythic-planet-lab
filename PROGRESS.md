@@ -8,7 +8,7 @@
 ## 当前状态
 
 - 当前阶段：**阶段 1 · 构造演化与多种子筛选（进行中）**。阶段 0 已于 2026-10-22 通过。
-- 当前工作单元：**1.2c 第二轮（进行中，未完成）**：拼合按陆地接触、微大陆随邻块、途中检查加严、主内海闭环代码已就绪；主大陆占比 3/4 达标，**主内海仍 0/4**（规划阶段选不出主内海，闭环没有启动）。下一步见"进行中"。图 `figures/stage1/scenario/`（`scripts/tectonics_scenario.py --runs 1:1,2:1,4:1,8:1 --workers 4`，前史有缓存时笔记本约 5 分钟）。300 Ma 初始大陆（U20 修订二）用户已同意继续（2026-10-22），图 `figures/stage1/prehistory/` 01–07（`scripts/tectonics_prehistory.py --seeds 1-8`，笔记本约 15 分钟）。方法与工作单元划分见 `docs/tectonics_method.md`；检查点图（本地生成，不进 Git）：1.2c `figures/stage1/scenario/`（`scripts/tectonics_scenario.py`，约 5 分钟），1.2b `figures/stage1/prehistory/`（`scripts/tectonics_prehistory.py`，8 个种子笔记本约 6 分钟），1.2a `figures/stage1/synthetic/`（`scripts/tectonics_synthetic.py`，约 1 分钟）。1.1 对比报告 `docs/stage1_method_comparison.md`。
+- 当前工作单元：**1.2c 第三步（进行中，代码已改、未验证）**：主内海改为先规划、其余陆块避开它。检查点 93330de（第二轮）：主大陆占比 3/4 达标，主内海 0/4。明天从"进行中"的 1.2c 第三步接着做。图 `figures/stage1/scenario/`（`scripts/tectonics_scenario.py --runs 1:1,2:1,4:1,8:1 --workers 4`，前史有缓存时笔记本约 5 分钟）。300 Ma 初始大陆（U20 修订二）用户已同意继续（2026-10-22），图 `figures/stage1/prehistory/` 01–07（`scripts/tectonics_prehistory.py --seeds 1-8`，笔记本约 15 分钟）。方法与工作单元划分见 `docs/tectonics_method.md`；检查点图（本地生成，不进 Git）：1.2c `figures/stage1/scenario/`（`scripts/tectonics_scenario.py`，约 5 分钟），1.2b `figures/stage1/prehistory/`（`scripts/tectonics_prehistory.py`，8 个种子笔记本约 6 分钟），1.2a `figures/stage1/synthetic/`（`scripts/tectonics_synthetic.py`，约 1 分钟）。1.1 对比报告 `docs/stage1_method_comparison.md`。
   - 阶段 0 的图组（本地生成，不进 Git）：地球 `figures/stage0/earth_2048x1024/index.html`、圆润世界 `figures/stage0/rounded_control/index.html`、噪声海岸世界 `figures/stage0/noise_control/index.html`；校准报告 `reviews/stage0_calibration.md`；奇景覆盖度 `docs/archetype_coverage.md`。
 - 当前使用的机器：笔记本（Ezreal）
 - 最近一次提交：见 `git log -1`；已推送到 `origin/main`（https://github.com/1521183894w-ux/mythic-planet-lab）
@@ -59,7 +59,11 @@
 
 - 两台电脑的环境与地球数据都已就绪，以后换机只需"拉取最新，然后继续"。（换机后要先重跑 1.1 原型才能看图：`spikes/stage1_methods/README.md`，台式机约 7 分钟。）
 - **U20 修订二已实施，用户同意继续 1.2c**（2026-10-22）。剩下的穿省份直线段（最长 0.2–1.1 千 km）经开发者评估在科学允许范围内（运动学上必须、地球上也有同量级的直海岸），不再处理；"所有裂谷同时张开"记为已知局限，若 0 Ma 上看得出痕迹再改成分批裂开。筛查 `scripts/tectonics_prehistory_screen.py 6 4 1,2,3,4,5,6,7,8`（笔记本约 10 分钟），L6 结果对 L7 有效。
-- **1.2c 第二轮下一步**：主内海改为在锚定陆块与第二大陆块之间先规划（像特提斯洋夹在欧亚与非洲之间），其余陆块再避开这片海从外侧拼上，主内海那块不再是最受约束的最后一块；然后跑闭环、扩大到 8 个世界，处理剩下的计划外接触与世界 8"两大团没连上"。详见 `docs/tectonics_method.md` 1.2c 第二轮。
+- **1.2c 第三步（进行中，代码已改、未验证，2026-10-23 凌晨停下）**：用户同意"主内海改成在最大的两块陆块之间先规划，其余陆块从外侧拼上，然后跑闭环、扩大到 8 个世界"。已做：
+  - 锚定陆块就位后先规划第二大陆块的两段式拼合，圈出主内海；其余陆块随后规划，候选须通过护海检查（`_sea_intact`）；全部拼完后用 A 层再核对一次（`inner_sea["official_final"]`）。
+  - 第一版试跑（护海检查按代理水体重新识别"同一片海"）：世界 1、8 规划阶段选出了主内海且全部拼完后仍通过 A 层；世界 2、4 仍选不出。但护海太严，多块陆块拼不上、成了孤岛，计划外接触变多，世界 2 主大陆只剩 20%。世界 1 选中的是一段式拼合，闭环没法调；世界 8 模拟后海只剩 0.65 Mkm²（规划 1.3），面积不合格，而当时的闭环不处理面积。
+  - 随后又改了 4 处，**还没跑出结果、也没重跑测试**：护海检查改为"陆地占规划海域 ≤ 15%、离远端海峡 ≥ 300 km"；闭环里海太小就放宽、太大就收窄；选主内海优先两段式拼合；其余陆块拼不上时多试一轮更大范围的接近方向。
+  - **明天先做**：重跑 `scripts/tectonics_scenario.py --runs 1:1,2:1,4:1,8:1 --workers 4`（前史有缓存，约 5–15 分钟）和 `pytest tests/tectonics/test_scenario.py`，看这一版是否比检查点 93330de（主大陆占比 3/4 达标）更好；好就扩大到 8 个世界跑闭环，不好就先回到 93330de 的拼合顺序再想办法。注意：`figures/stage1/scenario/` 与 `.cache/tectonics/scenario/` 里现在是未验证版本的试跑结果，不是 93330de 的检查点图。
 - （以下为第二轮之前的记录）**1.2c 继续（用户认可 300 Ma 的图后）**：剧本生成器初版能跑通，但当时陆块太少、主内海 0/5。用新前史重跑剧本，再做规划闭环（规划 -> 完整模拟 -> 核对 -> 修正主内海）。剧本规划器的编组已改为读前史的 links。**台式机上已有的 1.2c 图（`figures/stage1/scenario/`）是旧前史、旧引擎的结果，重跑前不要当作现状。**之后 1.2d 新过程（弧后扩张、微板块、海平面）、1.2e 岩性（`docs/tectonics_method.md` §4）。
 - 用户看过 1.2b 的图后认可初始大陆（转录自对话，2026-10-22）："初始大陆可以接受，继续 1.2c 剧本生成器。"
 - 1.2c 中途用户要求"请再试一次"（会话中断后，2026-10-22），开发者随后继续调剧本生成器。

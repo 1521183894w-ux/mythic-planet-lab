@@ -126,8 +126,8 @@ def test_run_scenario_invariants(mesh, world, tmp_path):
 
 
 def test_inner_sea_gap_override(mesh, world, planned):
-    """主内海闭环：只重做同一次随机抽样，主内海那块（两段式拼合）第二段多转 dgap / L2，远端海峡收窄约 dgap km，
-    其余陆块的拼合不变。"""
+    """主内海闭环：只重做同一次随机抽样，主内海那块（两段式拼合）第二段多转 dgap / L2，远端海峡收窄约 dgap km。
+    （主内海先规划，其余陆块要避开它，拼合可能随之略变，这里只比第一段——锚定陆块之外最先规划的就是主内海那块。）"""
     pl, plan = planned
     b = next((k for k, d in plan.docks.items() if d.inner_sea), None)
     if b is None or not getattr(plan.docks[b], "_L2", None):
@@ -137,9 +137,8 @@ def test_inner_sea_gap_override(mesh, world, planned):
     plan2 = pl2.plan(only_attempt=plan.attempt, inner_dgap_km=100.0)
     d2 = plan2.docks[b]
     assert abs(abs(d2.segs[-1][3]) - (abs(d0.segs[-1][3]) + 100.0 / d0._L2)) < 1e-9
-    for k, d in plan.docks.items():
-        if k != b and d.segs:
-            assert np.allclose(np.asarray(d.segs[0][2]), np.asarray(plan2.docks[k].segs[0][2]))
+    assert np.allclose(np.asarray(d2.segs[0][2]), np.asarray(d0.segs[0][2]))     # 第一段（接近到第一处接触）不变
+    assert plan2.roles[b] == plan.roles[b]
 
 
 def test_small_plates_follow_lead(planned):
