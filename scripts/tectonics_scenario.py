@@ -72,24 +72,51 @@ def plan_record(plan, planner) -> dict:
     }
 
 
-def run_one(level: int, wseed: int, sseed: int) -> dict:
+def cached_initial_world(mesh, wseed: int):
+    """300 Ma 初始世界（前史）。前史只取决于种子、参数和代码，按前史相关源码的哈希缓存（.cache，不进 Git）：
+    调剧本时每轮省 3–8 分钟。源码一改，哈希就变，自动重算。"""
+    import hashlib
+    import pickle
+
+    from mythic.tectonics.mesh import CACHE
+    from mythic.tectonics.prehistory import build_initial_world
+
+    src = ROOT / "packages" / "tectonics"
+    h = hashlib.sha1()
+    for f in ("prehistory.py", "engine.py", "crust.py", "geometry.py", "kinematics.py", "mesh.py"):
+        h.update((src / f).read_bytes())
+    path = CACHE / "prehistory" / f"world_L{mesh.level}_s{wseed}_{h.hexdigest()[:10]}.pkl"
+    if path.exists():
+        with open(path, "rb") as fh:
+            return pickle.load(fh)
+    w = build_initial_world(mesh, wseed)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "wb") as fh:
+        pickle.dump(w, fh, protocol=pickle.HIGHEST_PROTOCOL)
+    return w
+
+
+def run_one(level: int, wseed: int, sseed: int, loop: bool = True) -> dict:
     from mythic.figures.world import code_version
     from mythic.metrics.compute import compute_all, load_config
     from mythic.metrics.verdict import b_verdict
-    from mythic.tectonics.mesh import CACHE, Raster, load_mesh
-    from mythic.tectonics.prehistory import build_initial_world
-    from mythic.tectonics.scenario import run_scenario
+    from mythic.tectonics.mesh import CACHE, load_mesh
+    from mythic.tectonics.scenario import run_scenario, run_scenario_loop
 
     mesh = load_mesh(level)
     t0 = time.perf_counter()
-    w = build_initial_world(mesh, wseed)
+    w = cached_initial_world(mesh, wseed)
     t_pre = time.perf_counter() - t0
-    run = run_scenario(mesh, w, sseed)
-    raster = Raster(mesh, 512)
-    E = raster(run.snapshots[-1]["elev"])
+    run = run_scenario_loop(mesh, w, sseed) if loop else run_scenario(mesh, w, sseed)
     cfg = load_config()
     ref = json.loads((ROOT / "data" / "earth_reference" / "baselines_1024x512.json").read_text(encoding="utf-8"))
-    m = compute_all(E, E > 0, cfg=cfg)
+    if run.metrics is not None:
+        m = run.metrics
+    else:
+        from mythic.tectonics.mesh import Raster
+        raster = Raster(mesh, 512)
+        E = raster(run.snapshots[-1]["elev"])
+        m = compute_all(E, E > 0, cfg=cfg)
     bv = b_verdict(m["by_region"], ref["landmass_unit_reference"], cfg)
     d = CACHE / "scenario"
     d.mkdir(parents=True, exist_ok=True)
@@ -107,12 +134,14 @@ def run_one(level: int, wseed: int, sseed: int) -> dict:
                           "step_mean": float(np.mean([s["wall_s"] for s in run.engine.step_log]))},
                "plan": plan_record(run.plan, run.planner), "rot_path": run.rot_path,
                "engine_events": run.engine.events, "A": A, "soft": m.get("soft"), "b_verdict": bv,
-               "A_all_pass": all(x["pass"] for x in A.values())}
+               "A_all_pass": all(x["pass"] for x in A.values()), "inner_sea_loop": run.loop,
+               "attached_small_plates": getattr(run.planner, "attached", {})}
     (d / f"{tag}.json").write_text(json.dumps(_jsonable(summary), ensure_ascii=False, indent=1), encoding="utf-8")
     return {"run": f"w{wseed}:s{sseed}", "plan_score": run.plan.score, "wall_s": round(run.wall_s),
             "A": {k: bool(x["pass"]) for k, x in A.items()},
             "main_share": round(A["main_continent"]["share_of_land"], 3),
             "inner_sea": {k: A["main_inland_sea"].get(k) for k in ("exists", "passes")},
+            "loop": [(h["round"], h["dgap_km"], h["planned_sea"].get("state"), h["inner_sea_pass"]) for h in run.loop],
             "B1_units_all_pass": f"{sum(u['all_pass'] for u in bv['units'].values())}/{len(bv['units'])}"}
 
 
@@ -290,12 +319,14 @@ def main():
     ap.add_argument("--runs", default="19:1,11:1")
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--figures-only", action="store_true")
+    ap.add_argument("--no-loop", action="store_true", help="不做主内海闭环修正（只规划、模拟一次）")
     a = ap.parse_args()
     runs = parse_runs(a.runs)
     if not a.figures_only:
         os.environ["MYTHIC_KD_WORKERS"] = str(max(1, (os.cpu_count() or 4) // a.workers))
         with ProcessPoolExecutor(max_workers=a.workers) as ex:
-            for r in ex.map(run_one, [a.level] * len(runs), [w for w, _ in runs], [s for _, s in runs]):
+            for r in ex.map(run_one, [a.level] * len(runs), [w for w, _ in runs], [s for _, s in runs],
+                            [not a.no_loop] * len(runs)):
                 print(json.dumps(r, ensure_ascii=False), flush=True)
     figures(a.level, runs)
     print("figures done", flush=True)

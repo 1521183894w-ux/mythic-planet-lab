@@ -123,3 +123,29 @@ def test_run_scenario_invariants(mesh, world, tmp_path):
     # 允许一步内的增厚暂时越过上限（下一次摊平前；L5 上实测最多 +5 km）
     assert max(float(s["T"].max()) for s in run.snapshots) <= Params().T_max_km + 10.0
     assert max(float(s["elev"].max()) for s in run.snapshots) < 9000.0
+
+
+def test_inner_sea_gap_override(mesh, world, planned):
+    """主内海闭环：只重做同一次随机抽样，主内海那块（两段式拼合）第二段多转 dgap / L2，远端海峡收窄约 dgap km，
+    其余陆块的拼合不变。"""
+    pl, plan = planned
+    b = next((k for k, d in plan.docks.items() if d.inner_sea), None)
+    if b is None or not getattr(plan.docks[b], "_L2", None):
+        pytest.skip("这个种子的主内海那块不是两段式拼合")
+    d0 = plan.docks[b]
+    pl2 = Planner(mesh, world, seed=1)
+    plan2 = pl2.plan(only_attempt=plan.attempt, inner_dgap_km=100.0)
+    d2 = plan2.docks[b]
+    assert abs(abs(d2.segs[-1][3]) - (abs(d0.segs[-1][3]) + 100.0 / d0._L2)) < 1e-9
+    for k, d in plan.docks.items():
+        if k != b and d.segs:
+            assert np.allclose(np.asarray(d.segs[0][2]), np.asarray(plan2.docks[k].segs[0][2]))
+
+
+def test_small_plates_follow_lead(planned):
+    """前史的微大陆等不单独规划的陆块板块跟随最近的规划陆块运动（离岸地体），不再按洋板块随机漂移。"""
+    pl, plan = planned
+    s = plan.script
+    for q, info in pl.attached.items():
+        assert pl.follower_of[q] == info["lead"]
+        assert np.allclose(s.forward_total(q, 0), s.forward_total(info["lead"], 0), atol=1e-6)
