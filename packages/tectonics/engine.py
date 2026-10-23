@@ -319,6 +319,9 @@ class Engine:
             f = np.where(oceanic, arc_profile(dk, p.arc_peak_ocean_km, p.arc_max_ocean_km),
                          arc_profile(dk, p.arc_peak_km, p.arc_max_km))
             dT = p.arc_rate_km_myr * f * np.clip(V[sel][k[ok]] / p.v0_cm_yr, 0.0, 1.5) * p.dt
+            if p.arc_ocean_T_max_km is not None:    # 洋内弧增厚上限（见 Params.arc_ocean_T_max_km）
+                juv = (c.ctype[j] == OCEAN) | (c.origin[j] == ORIGIN_ARC)
+                dT = np.where(juv, np.minimum(dT, np.maximum(p.arc_ocean_T_max_km - c.T[j], 0.0)), dT)
             c.T[j] += dT
             self.budget["arc_added"] += float((dT * self.area[j])[c.ctype[j] == CONT].sum())
             strong = j[f > 0.3]

@@ -1,0 +1,585 @@
+"""U25 正向演化 I：引擎按倒推的旋转文件从 300 Ma 跑到 0 Ma，与终图对照（PROGRESS U22、docs/tectonics_method.md §4）。
+
+    powershell -ExecutionPolicy Bypass -File scripts\\run.ps1 python -u scripts\\design_forward.py --design v2 --history v2
+
+输入：U24 的初始世界 .cache/tectonics/design/initial_<design>_<history>_L<level>.pkl（先跑 scripts/design_initial_world.py）、
+旋转文件 data/worlds/design_<design>/history_<history>.rot（scripts/design_history.py）、终图 config/design/final_map_<design>.yaml。
+输出：
+- .cache/tectonics/design/forward_<design>_<history>_L<level>.npz：每 10 Myr 一帧（不进 Git，可重算）；
+- data/worlds/design_<design>/forward_<history>.json：0 Ma 与终图的对照、A 层、山系与高原、引擎事件与收支（进 Git）；
+- figures/design/<design>/forward/：01 终图与 0 Ma 并排、02 海陆差异与偏差编号、03 古地理序列（引擎与刚体块轮廓）、
+  04 山系与高原对照、05 0 Ma 地壳（厚度、最近一次造山的类型与时间）。
+method_class：地壳 procedural_constrained（运动由倒推设定，地壳过程是引擎的经验规则）；高程是构造尺度的
+（Airy 均衡 + GDH1 洋深，parameterized_physics），不含河流与冰川侵蚀。
+--figures-only：不重跑模拟，读缓存出图与对照。
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import pickle
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+import yaml
+from scipy import ndimage
+from scipy.spatial import cKDTree
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "packages"))
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from design_final_map import apply_options, build, elevation as design_elevation, label_points, line_distance_km, \
+    lonlat_mask  # noqa: E402
+from design_history import PANEL_TIMES, assign_blocks, build_history, raster_at  # noqa: E402
+from mythic.figures.world import code_version  # noqa: E402
+from mythic.metrics.grid import LatLonGrid  # noqa: E402
+from mythic.tectonics.crust import CONT, ORO_ARC, ORO_COLL, ORO_RIFT, Params  # noqa: E402
+from mythic.tectonics.engine import Engine  # noqa: E402
+from mythic.tectonics.geometry import km_from_chord, unit, xyz_to_lonlat  # noqa: E402
+from mythic.tectonics.kinematics import RotationFileKinematics  # noqa: E402
+from mythic.tectonics.mesh import CACHE, Raster, load_mesh  # noqa: E402
+from mythic.tectonics.prehistory import InitialWorld  # noqa: E402,F401  （反序列化要用）
+
+FIELDS = {"elev": np.float32, "T": np.float32, "age": np.float32, "t_form": np.float32, "oro_t": np.float32,
+          "plate": np.int16, "ctype": np.int8, "origin": np.int16, "oro": np.int8, "prov": np.int32}
+MIN_REGION_KM2 = 50_000.0          # 偏差清单只列面积不小于约 220 km × 220 km 的差异区
+
+
+def log(msg: str) -> None:
+    print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
+
+
+# ---------------------------------------------------------------------------
+# 模拟
+# ---------------------------------------------------------------------------
+def preset_polarity(hcfg: dict) -> dict:
+    """按设计预设俯冲方向：{板块对键: 下行板块}。键与 Engine.polarity 相同（小编号 × 1000 + 大编号）。
+    history yaml 的 ocean.subduction 每条 down × over；先写的优先；外大洋板块与任何大陆相遇都是它下行。
+    （第一次运行按首次接触时的洋壳年龄决定，269 Ma 洲 B 被当成下行板块、陆壳被拼贴到洲 A 上。）"""
+    oc = hcfg.get("ocean") or {}
+    code_id = {b["code"]: int(b["id"]) for b in hcfg["blocks"]}
+    out = {}
+    for r in oc.get("subduction", []):
+        for d in r["down"]:
+            for o in r["over"]:
+                a, b = code_id[d], code_id[o]
+                out.setdefault(min(a, b) * 1000 + max(a, b), a)
+    if oc.get("background"):
+        bg = int(oc["background"]["id"])
+        for q in code_id.values():
+            out.setdefault(min(q, bg) * 1000 + max(q, bg), bg)
+    return out
+
+
+def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict):
+    kin = RotationFileKinematics(rot)
+    c = world.crust.gather(np.arange(len(world.crust)))
+    c.uid = np.arange(len(c), dtype=np.int64)
+    c.node = np.arange(len(c), dtype=np.int64)
+    t0 = int(round(world.t))
+    plates0 = sorted(int(q) for q in np.unique(c.plate))
+    _, om = kin.step_rotations(plates0, t0)
+    eng = Engine(mesh, c, params, float(t0), om)
+    eng.polarity.update(polarity)
+    frames = [eng.snapshot()]
+    t = t0
+    tw = time.perf_counter()
+    while t > 0:
+        dR, om = kin.step_rotations(eng.plates, t)
+        committed = eng.step(dR, om)
+        t -= 1
+        if committed and t % snap_every == 0:
+            frames.append(eng.snapshot())
+            cl = eng.commit_log[-1]
+            log(f"  {t:3d} Ma：陆壳 {cl['cont_area_km2'] / 1e6:6.1f}、海平面以上 {cl['land_area_km2'] / 1e6:6.1f} 百万 km²，"
+                f"陆壳体积 {cl['cont_volume_km3'] / 1e9:6.3f}×10⁹ km³，单元 {cl['n_parcels']}，"
+                f"板块 {len(eng.plates)}（{time.perf_counter() - tw:.0f} s）")
+    return eng, frames
+
+
+def save_run(path: Path, eng, frames, meta: dict) -> None:
+    arrs = {"times": np.array([f["t"] for f in frames], float)}
+    for k, f in enumerate(frames):
+        for name, dt in FIELDS.items():
+            arrs[f"{name}_{k}"] = np.asarray(f[name]).astype(dt)
+    np.savez_compressed(path.with_suffix(".npz"), **arrs)
+    js = {**meta, "events": eng.events, "budget": eng.budget,
+          "commit_log": [{k: v for k, v in cl.items() if k != "plate_area_km2"} for cl in eng.commit_log],
+          "step_wall_s_total": round(sum(s["wall_s"] for s in eng.step_log), 1)}
+    path.with_suffix(".json").write_text(json.dumps(js, ensure_ascii=False, default=float), encoding="utf-8")
+
+
+def load_run(path: Path):
+    z = np.load(path.with_suffix(".npz"))
+    frames = [{name: z[f"{name}_{k}"] for name in FIELDS} | {"t": float(t)} for k, t in enumerate(z["times"])]
+    js = json.loads(path.with_suffix(".json").read_text(encoding="utf-8"))
+    return frames, js
+
+
+# ---------------------------------------------------------------------------
+# 对照
+# ---------------------------------------------------------------------------
+def label_wrap(mask: np.ndarray):
+    """8 连通标记，经度方向首尾相接（180° 经线两侧算同一块）。"""
+    lab, n = ndimage.label(mask, structure=np.ones((3, 3), int))
+    if n == 0:
+        return lab, 0
+    parent = np.arange(n + 1)
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+
+    ny = mask.shape[0]
+    for i in range(ny):
+        for di in (-1, 0, 1):
+            k = i + di
+            if 0 <= k < ny:
+                a, b = lab[i, 0], lab[k, -1]
+                if a and b:
+                    ra, rb = find(a), find(b)
+                    if ra != rb:
+                        parent[max(ra, rb)] = min(ra, rb)
+    roots = np.array([find(a) for a in range(n + 1)])
+    _, new = np.unique(roots, return_inverse=True)
+    return new[lab], int(new.max())
+
+
+def coast_mask(land: np.ndarray) -> np.ndarray:
+    er = ndimage.binary_erosion(land, structure=np.ones((3, 3), bool), border_value=0)
+    return land & ~er
+
+
+def compare(design, grid, b, ids, info, E_eng, E_fin, labels):
+    area = grid.cell_area_km2
+    Lf, Le = b["land"], E_eng > 0
+    both, miss, extra = Lf & Le, Lf & ~Le, Le & ~Lf
+    out = {"final_land_Mkm2": round(float(area[Lf].sum()) / 1e6, 1),
+           "engine_land_Mkm2": round(float(area[Le].sum()) / 1e6, 1),
+           "both_land_Mkm2": round(float(area[both].sum()) / 1e6, 1),
+           "missing_land_Mkm2": round(float(area[miss].sum()) / 1e6, 1),
+           "extra_land_Mkm2": round(float(area[extra].sum()) / 1e6, 1)}
+    out["land_iou"] = round(float(area[both].sum() / area[Lf | Le].sum()), 3)
+    # 海岸线偏移：引擎海岸点到终图海岸的距离，反之亦然
+    cf, ce = coast_mask(Lf), coast_mask(Le)
+    tf, te = cKDTree(grid.xyz[cf]), cKDTree(grid.xyz[ce])
+    d_ef = km_from_chord(tf.query(grid.xyz[ce])[0])
+    d_fe = km_from_chord(te.query(grid.xyz[cf])[0])
+    out["coast_offset_km"] = {"engine_to_final": {"median": round(float(np.median(d_ef))),
+                                                  "p90": round(float(np.percentile(d_ef, 90)))},
+                              "final_to_engine": {"median": round(float(np.median(d_fe))),
+                                                  "p90": round(float(np.percentile(d_fe, 90)))}}
+    # 各刚体块与新生地壳在 0 Ma 仍是陆地的比例
+    per = {}
+    for code, blk in info.items():
+        m = ids == blk["id"]
+        per[code] = {"name": blk["name"], "area_Mkm2": round(float(area[m].sum()) / 1e6, 2),
+                     "land_fraction": round(float(area[m & Le].sum() / max(area[m].sum(), 1)), 3)}
+    m = ids == -1
+    per["juvenile"] = {"name": "新生地壳（岛弧、热点岛、孤岛等）", "area_Mkm2": round(float(area[m].sum()) / 1e6, 2),
+                       "land_fraction": round(float(area[m & Le].sum() / max(area[m].sum(), 1)), 3)}
+    out["blocks"] = per
+    # 偏差区：差异的连通块（≥ MIN_REGION_KM2），按面积排序，用最近的终图要素命名
+    lab_pts = [(k, f, n, lo, la) for k, f, n, lo, la in labels]
+    lp_xyz = unit(np.stack([np.cos(np.radians([p[4] for p in lab_pts])) * np.cos(np.radians([p[3] for p in lab_pts])),
+                            np.cos(np.radians([p[4] for p in lab_pts])) * np.sin(np.radians([p[3] for p in lab_pts])),
+                            np.sin(np.radians([p[4] for p in lab_pts]))], axis=1))
+    lp_tree = cKDTree(lp_xyz)
+    regions = []
+    for kind, msk in (("missing", miss), ("extra", extra)):
+        lab, n = label_wrap(msk)
+        if n == 0:
+            continue
+        a = ndimage.sum(area, lab, index=np.arange(1, n + 1))
+        for k in np.flatnonzero(a >= MIN_REGION_KM2):
+            sel = lab == k + 1
+            v = unit((grid.xyz[sel] * area[sel][:, None]).sum(0))
+            lo, la = xyz_to_lonlat(v)
+            near = lp_tree.query(v, k=2)[1]
+            blk_ids, cnt = np.unique(ids[sel], return_counts=True)
+            regions.append({"kind": kind, "area_Mkm2": round(float(a[k]) / 1e6, 2), "lon": round(float(lo), 1),
+                            "lat": round(float(la), 1),
+                            "near_features": [lab_pts[j][2] for j in np.atleast_1d(near)],
+                            "final_block_cells": {str(int(x)): int(c) for x, c in zip(blk_ids, cnt)},
+                            "engine_elev_m_median": round(float(np.median(E_eng[sel]))),
+                            "_mask": sel})
+    regions.sort(key=lambda r: -r["area_Mkm2"])
+    for i, r in enumerate(regions):
+        r["no"] = i + 1
+    out["regions"] = regions
+    # 山系：沿山脊线 width_km/2 以内，引擎与终图示意高程的 90 分位
+    mts = []
+    for m in design.get("mountains", []):
+        hw = 0.5 * float(m.get("width_km", 150))
+        d = line_distance_km(grid, m["line"], np.ones(grid.shape, bool), hw)
+        sel = np.isfinite(d) & Lf
+        if not sel.any():
+            continue
+        mts.append({"id": m["id"], "name": m["name"], "design_height_m": int(m.get("height_m", 0)),
+                    "final_p90_m": round(float(np.percentile(E_fin[sel], 90))),
+                    "engine_p90_m": round(float(np.percentile(E_eng[sel], 90))),
+                    "engine_land_fraction": round(float(Le[sel].mean()), 2), "cause": m.get("cause", "")})
+    out["mountains"] = mts
+    pls = []
+    for kind, key in (("plateau", "plateaus"), ("basin", "basins")):
+        for p in design.get(key, []):
+            sel = lonlat_mask(grid, p["poly"]) & Lf
+            if not sel.any():
+                continue
+            pls.append({"kind": kind, "id": p["id"], "name": p["name"], "design_height_m": int(p["height_m"]),
+                        "engine_median_m": round(float(np.median(E_eng[sel]))),
+                        "final_median_m": round(float(np.median(E_fin[sel]))), "cause": p.get("cause", "")})
+    out["plateaus_basins"] = pls
+    return out
+
+
+def a_summary(m: dict) -> dict:
+    A = m["A"]
+    isea = A["main_inland_sea"]
+    return {"all_pass": all(v["pass"] for v in A.values()),
+            "pass": {k: bool(v["pass"]) for k, v in A.items()},
+            "ocean_fraction": round(A["ocean_fraction"]["value"], 3),
+            "main_continent_share": round(A["main_continent"].get("share_of_land", float("nan")), 3),
+            "subcontinents": A["subcontinents"].get("count"),
+            "subcontinent_areas_Mkm2": [round(x / 1e6, 1) for x in A["subcontinents"].get("areas_km2", [])],
+            "main_inland_sea": ({"area_Mkm2": round(isea["main"]["area_km2"] / 1e6, 2),
+                                 "straits": isea["main"]["straits_to_world_ocean"],
+                                 "aspect": (isea.get("geometry") or {}).get("aspect_ratio"),
+                                 "checks": isea.get("checks")} if isea.get("exists") else
+                                {"reason": isea.get("reason", "无")}),
+            "latitude": [A["main_continent_latitude"].get("north_deg"), A["main_continent_latitude"].get("south_deg")],
+            "polar_Mkm2": [round(p["area_km2"] / 1e6, 1) for p in A["polar_continent"].get("found", [])]}
+
+
+# ---------------------------------------------------------------------------
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--design", default="v2")
+    ap.add_argument("--history", default="v2")
+    ap.add_argument("--level", type=int, default=7)
+    ap.add_argument("--snap-every", type=int, default=10)
+    ap.add_argument("--figures-only", action="store_true")
+    ap.add_argument("--no-figures", action="store_true")
+    args = ap.parse_args()
+    t_start = time.perf_counter()
+    tag = f"{args.design}_{args.history}_L{args.level}"
+    run_path = CACHE / "design" / f"forward_{tag}"
+    rot = ROOT / "data" / "worlds" / f"design_{args.design}" / f"history_{args.history}.rot"
+    mesh = load_mesh(args.level)
+    hcfg = yaml.safe_load((ROOT / "config" / "design" / f"history_{args.history}.yaml").read_text(encoding="utf-8"))
+    fcfg = hcfg.get("forward") or {}
+    params = Params(**fcfg.get("engine_params", {}))
+    polarity = preset_polarity(hcfg)
+    if not args.figures_only:
+        pkl = CACHE / "design" / f"initial_{tag}.pkl"
+        if not pkl.exists():
+            raise SystemExit(f"缺少初始世界 {pkl}：先跑 scripts/design_history.py 与 scripts/design_initial_world.py")
+        with open(pkl, "rb") as fh:
+            world = pickle.load(fh)
+        log(f"正向演化：{world.t:g} -> 0 Ma，L{mesh.level}（{mesh.n} 个节点），旋转文件 {rot.relative_to(ROOT).as_posix()}")
+        tw = time.perf_counter()
+        log(f"引擎参数（history yaml forward.engine_params）：{fcfg.get('engine_params', {})}；预设俯冲方向 {len(polarity)} 对")
+        eng, frames = simulate(world, mesh, rot, args.snap_every, params, polarity)
+        wall = time.perf_counter() - tw
+        log(f"模拟完成，用时 {wall:.0f} s")
+        save_run(run_path, eng, frames, {"design": args.design, "history": args.history, "level": mesh.level,
+                                         "code_version": code_version(), "wall_s": round(wall, 1),
+                                         "rotation_file": rot.relative_to(ROOT).as_posix(),
+                                         "engine_params": fcfg.get("engine_params", {}),
+                                         "preset_polarity": {str(k): v for k, v in polarity.items()}})
+    frames, run_js = load_run(run_path)
+
+    log("对照终图（1024x512）")
+    design = apply_options(yaml.safe_load((ROOT / "config" / "design" / f"final_map_{args.design}.yaml")
+                                          .read_text(encoding="utf-8")), set())
+    design["_ver"] = args.design
+    grid = LatLonGrid(1024, 512)
+    b = build(design, grid)
+    ids, info = assign_blocks(hcfg, grid, b)
+    E_fin = design_elevation(design, grid, b)
+    raster = Raster(mesh, 512)
+    E_eng = raster(frames[-1]["elev"]).astype(float)
+    cmp_ = compare(design, grid, b, ids, info, E_eng, E_fin, label_points(design))
+
+    from mythic.metrics.compute import compute_all, load_config
+    cfg = load_config()
+    m_eng, f_eng = compute_all(E_eng, E_eng > 0, cfg=cfg, return_fields=True)
+    m_fin, f_fin = compute_all(E_fin, b["land"], cfg=cfg, return_fields=True)
+    A_eng, A_fin = a_summary(m_eng), a_summary(m_fin)
+
+    c0 = frames[-1]
+    A7 = mesh.area_km2
+    cont = c0["ctype"] == CONT
+    oro_area = {name: round(float(A7[cont & (c0["oro"] == k)].sum()) / 1e6, 2)
+                for name, k in (("collision", ORO_COLL), ("arc", ORO_ARC), ("rift", ORO_RIFT))}
+    ev_counts = {}
+    for e in run_js["events"]:
+        ev_counts[e["kind"]] = ev_counts.get(e["kind"], 0) + 1
+    cl0, cl1 = run_js["commit_log"][0], run_js["commit_log"][-1]
+    summary = {
+        "description": "U25 正向演化：引擎按倒推的旋转文件从 300 Ma 跑到 0 Ma，与终图对照（重建：scripts/design_forward.py；"
+                       "每 10 Myr 一帧的缓存在 .cache/tectonics/design/，不进 Git）",
+        "design": args.design, "history": args.history, "mesh_level": args.level,
+        "run_code_version": run_js["code_version"], "code_version": code_version(), "wall_s": run_js["wall_s"],
+        "compare_grid": "1024x512",
+        "comparison": {k: v for k, v in cmp_.items() if k != "regions"},
+        "deviation_regions": [{k: v for k, v in r.items() if not k.startswith("_")} for r in cmp_["regions"]],
+        "A_engine_0Ma": A_eng, "A_final_map_1024": A_fin,
+        "crust_0Ma": {"continental_Mkm2": round(float(A7[cont].sum()) / 1e6, 1),
+                      "arc_origin_continental_Mkm2": round(float(A7[cont & (c0["origin"] == 90)].sum()) / 1e6, 2),
+                      "last_orogeny_area_Mkm2": oro_area,
+                      "thickness_km_p99": round(float(np.percentile(c0["T"][cont], 99)), 1),
+                      "elev_m_p99_land": round(float(np.percentile(c0["elev"][c0["elev"] > 0], 99)))},
+        "volume_change": round(cl1["cont_volume_km3"] / cl0["cont_volume_km3"] - 1, 4),
+        "budget_km3": {k: round(v) for k, v in run_js["budget"].items()},
+        "engine_event_counts": ev_counts,
+        "collision_onsets": [e for e in run_js["events"] if e["kind"] in ("collision_onset", "continent_contact")],
+        "generated": time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    out_w = ROOT / "data" / "worlds" / f"design_{args.design}"
+    from mythic.figures.world import to_jsonable
+    (out_w / f"forward_{args.history}.json").write_text(json.dumps(to_jsonable(summary), ensure_ascii=False, indent=1),
+                                                       encoding="utf-8", newline="\n")
+    c = summary["comparison"]
+    log(f"终图陆地 {c['final_land_Mkm2']}，引擎 0 Ma 陆地 {c['engine_land_Mkm2']}，两者都是陆地 {c['both_land_Mkm2']}，"
+        f"终图有而引擎没有 {c['missing_land_Mkm2']}，引擎多出 {c['extra_land_Mkm2']} 百万 km²；IoU {c['land_iou']}")
+    log(f"海岸偏移（中位 / 90 分位）：引擎 -> 终图 {c['coast_offset_km']['engine_to_final']}，"
+        f"终图 -> 引擎 {c['coast_offset_km']['final_to_engine']} km")
+    for k, v in c["blocks"].items():
+        log(f"  {k:9s} {v['name']}：{v['area_Mkm2']} 百万 km²，0 Ma 仍是陆地 {v['land_fraction']:.0%}")
+    for r in cmp_["regions"][:25]:
+        log(f"  偏差 {r['no']:2d} {'缺陆地' if r['kind'] == 'missing' else '多出陆地'} {r['area_Mkm2']:5.2f} 百万 km² "
+            f"({r['lon']}, {r['lat']}) 近 {'、'.join(r['near_features'])}，引擎高程中位 {r['engine_elev_m_median']} m")
+    for mt in cmp_["mountains"]:
+        log(f"  山系 {mt['id']:5s} {mt['name']}：设计 {mt['design_height_m']} m，引擎 90 分位 {mt['engine_p90_m']} m"
+            f"（陆地 {mt['engine_land_fraction']:.0%}）")
+    for p in cmp_["plateaus_basins"]:
+        log(f"  {p['kind']} {p['id']} {p['name']}：设计 {p['design_height_m']} m，引擎中位 {p['engine_median_m']} m")
+    log(f"A 层（引擎 0 Ma）：{A_eng}")
+    log(f"A 层（终图，1024x512）：{A_fin}")
+    log(f"陆壳体积变化 {summary['volume_change'] * 100:.2f}%；引擎事件 {ev_counts}")
+    if not args.no_figures:
+        log("出图")
+        figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng, E_fin, cmp_, m_eng, f_eng,
+                A_eng, A_fin, run_js)
+    log(f"完成，用时 {time.perf_counter() - t_start:.0f} s")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# 出图
+# ---------------------------------------------------------------------------
+def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng, E_fin, cmp_, m_eng, f_eng,
+            A_eng, A_fin, run_js):
+    import cartopy.crs as ccrs
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.patheffects as pe
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import ListedColormap, to_rgb
+    from matplotlib.patches import Patch
+
+    from mythic.figures.style import setup_fonts, shaded_elevation
+
+    setup_fonts()
+    out = ROOT / "figures" / "design" / args.design / "forward"
+    out.mkdir(parents=True, exist_ok=True)
+    PC = ccrs.PlateCarree()
+    proj = ccrs.EqualEarth(central_longitude=float(design.get("map_central_longitude", 30)))
+    halo = [pe.withStroke(linewidth=2.4, foreground="white")]
+    ver = code_version()
+    lon = grid.lon
+    lat = grid.lat
+    Lf = b["land"]
+
+    def stamp(fig, extra=""):
+        fig.text(0.01, 0.004, f"U25 正向演化 · 终图 final_map_{args.design}.yaml · 历史 history_{args.history}.yaml · "
+                 f"L{args.level} · scripts/design_forward.py · 运行代码 {run_js['code_version']} · 出图代码 {ver} · "
+                 f"method_class：地壳 procedural_constrained，高程为构造尺度（Airy + GDH1，不含侵蚀）{extra}",
+                 fontsize=7.5, color="#555555")
+
+    def show(ax, E, land=None):
+        ax.set_global()
+        ax.imshow(shaded_elevation(E, grid.pixel_km_equator, vert_exag=3.0, land=(E > 0) if land is None else land)[..., :3],
+                  extent=(-180, 180, -90, 90), transform=PC, origin="upper", regrid_shape=(2000, 1000),
+                  interpolation="nearest")
+        ax.gridlines(xlocs=range(-180, 181, 30), ylocs=range(-60, 61, 30), color="#888888", lw=0.3)
+
+    def a_line(A):
+        ok = lambda k: "√" if A["pass"][k] else "×"
+        s = A["main_inland_sea"]
+        sea = (f"{s['area_Mkm2']} Mkm²、海峡 {s['straits']}、长宽比 {s['aspect']:.1f}" if "area_Mkm2" in s
+               else s.get("reason", "无"))
+        return (f"海洋 {A['ocean_fraction']:.1%} {ok('ocean_fraction')} · 主大陆占陆地 {A['main_continent_share']:.0%} "
+                f"{ok('main_continent')} · 亚大陆 {A['subcontinents']} {ok('subcontinents')} · 主内海 {sea} "
+                f"{ok('main_inland_sea')} · 极地大陆 {A['polar_Mkm2'] or '无'} {ok('polar_continent')} · "
+                f"纬度 {ok('main_continent_latitude')} · 开阔大洋 {ok('open_ocean')}")
+
+    # ---- 01 终图与 0 Ma 并排 ----
+    fig = plt.figure(figsize=(20, 21))
+    ax = fig.add_axes([0.02, 0.52, 0.96, 0.42], projection=proj)
+    show(ax, E_fin, Lf)
+    ax.set_title(f"(a) 终图 v2（设计；示意高程 visual_only）\nA 层（1024x512）：{a_line(A_fin)}", fontsize=11)
+    ax = fig.add_axes([0.02, 0.05, 0.96, 0.42], projection=proj)
+    show(ax, E_eng)
+    ax.contour(lon, lat, Lf.astype(float), levels=[0.5], colors="#d62728", linewidths=0.5, transform=PC)
+    ax.set_title(f"(b) 引擎正向演化 0 Ma（300 Ma 初始世界 + 倒推的板块运动；红线 = 终图海岸）\nA 层：{a_line(A_eng)}",
+                 fontsize=11)
+    fig.text(0.5, 0.985, "终图与正向演化的 0 Ma 对照（同一投影、同一配色；引擎高程是构造尺度，没有侵蚀、河谷与海岸细节）",
+             fontsize=15, ha="center", va="top")
+    stamp(fig)
+    fig.savefig(out / "01_final_vs_0Ma.png", dpi=110)
+    plt.close(fig)
+
+    # ---- 02 海陆差异与偏差编号 ----
+    fig = plt.figure(figsize=(20, 11.5))
+    ax = fig.add_axes([0.01, 0.07, 0.98, 0.84], projection=proj)
+    ax.set_global()
+    cat = np.zeros(grid.shape, int)
+    cat[Lf & (E_eng > 0)] = 1
+    cat[Lf & (E_eng <= 0)] = 2
+    cat[~Lf & (E_eng > 0)] = 3
+    cmap = ListedColormap(["#dbe9f6", "#bdbdbd", "#e6550d", "#3182bd"])
+    ax.imshow(cat, extent=(-180, 180, -90, 90), transform=PC, origin="upper", cmap=cmap, vmin=-0.5, vmax=3.5,
+              regrid_shape=(2000, 1000), interpolation="nearest")
+    ax.contour(lon, lat, Lf.astype(float), levels=[0.5], colors="#333333", linewidths=0.35, transform=PC)
+    ax.gridlines(xlocs=range(-180, 181, 30), ylocs=range(-60, 61, 30), color="#888888", lw=0.3)
+    for r in cmp_["regions"][:30]:
+        ax.text(r["lon"], r["lat"], str(r["no"]), transform=PC, fontsize=9, weight="bold", ha="center", va="center",
+                color="#a63603" if r["kind"] == "missing" else "#08519c", path_effects=halo)
+    cc = cmp_
+    hs = [Patch(fc="#bdbdbd", label=f"两者都是陆地 {cc['both_land_Mkm2']} 百万 km²"),
+          Patch(fc="#e6550d", label=f"终图是陆地、引擎是海 {cc['missing_land_Mkm2']}"),
+          Patch(fc="#3182bd", label=f"引擎多出的陆地 {cc['extra_land_Mkm2']}")]
+    ax.legend(handles=hs, loc="lower left", fontsize=10, framealpha=0.92)
+    co = cc["coast_offset_km"]
+    fig.text(0.5, 0.975, f"海陆差异（陆地 IoU {cc['land_iou']}；海岸偏移中位 {co['engine_to_final']['median']} km、"
+             f"90 分位 {co['engine_to_final']['p90']} km）· 数字 = 偏差编号（≥ 5 万 km² 的差异区，按面积排序，见 forward_"
+             f"{args.history}.json）", fontsize=13, ha="center", va="top")
+    stamp(fig)
+    fig.savefig(out / "02_land_difference.png", dpi=120)
+    plt.close(fig)
+
+    # ---- 03 古地理序列：引擎与刚体块轮廓 ----
+    area = grid.cell_area_km2
+    blocks = {}
+    for code, blk in info.items():
+        msk = ids == blk["id"]
+        blocks[blk["id"]] = {"code": code, "color": blk["color"],
+                             "centroid": unit((grid.xyz[msk] * area[msk][:, None]).sum(0))}
+    h = build_history(hcfg, {k: v["centroid"] for k, v in blocks.items()})
+    tgt = LatLonGrid(720, 360)
+    times = [t for t in PANEL_TIMES if any(abs(f["t"] - t) < 0.5 for f in frames)]
+    nrow = int(np.ceil(len(times) / 2))
+    fig = plt.figure(figsize=(18, 4.6 * nrow + 0.8))
+    for k, t in enumerate(times):
+        f = min(frames, key=lambda fr: abs(fr["t"] - t))
+        ax = fig.add_subplot(nrow, 2, k + 1, projection=proj)
+        show(ax, raster(f["elev"]).astype(float))
+        own, _ = raster_at(h, blocks, ids, grid, float(t), tgt)
+        for pid, v in blocks.items():
+            ax.contour(tgt.lon, tgt.lat, (own == pid).astype(float), levels=[0.5], colors=[v["color"]],
+                       linewidths=0.8, transform=PC)
+        ax.set_title(f"{t} Ma", fontsize=11)
+    fig.suptitle("古地理序列：底图 = 引擎正向演化（构造尺度高程），彩色线 = U23 刚体块在同一时刻的轮廓（只倒推运动的设计位置）",
+                 fontsize=13)
+    stamp(fig)
+    fig.savefig(out / "03_paleogeography.png", dpi=95, bbox_inches="tight")
+    plt.close(fig)
+
+    # ---- 04 山系与高原：引擎 vs 设计 ----
+    mts = cmp_["mountains"]
+    pls = cmp_["plateaus_basins"]
+    fig = plt.figure(figsize=(20, 14))
+    ax = fig.add_axes([0.01, 0.40, 0.98, 0.54], projection=proj)
+    show(ax, E_eng)
+    for m in design.get("mountains", []):
+        p = np.asarray(m["line"], float)
+        ax.plot(p[:, 0], p[:, 1], color="#7f0000", lw=1.0, alpha=0.7, transform=ccrs.Geodetic())
+    for mt in mts:
+        m = next(x for x in design["mountains"] if x["id"] == mt["id"])
+        p = np.asarray(m["line"], float)[len(m["line"]) // 2]
+        ax.text(p[0], p[1], mt["id"], transform=PC, fontsize=7.5, color="#7f0000", path_effects=halo)
+    ax.set_title("引擎 0 Ma 高程，暗红线 = 终图山脊线（编号见下表）", fontsize=12)
+    ax2 = fig.add_axes([0.05, 0.05, 0.55, 0.30])
+    x = np.arange(len(mts))
+    ax2.bar(x - 0.2, [m["design_height_m"] for m in mts], 0.4, color="#bdbdbd", label="终图设计高度")
+    ax2.bar(x + 0.2, [m["engine_p90_m"] for m in mts], 0.4, color="#8c510a", label="引擎 0 Ma（山脊带 90 分位）")
+    ax2.set_xticks(x)
+    ax2.set_xticklabels([m["id"] for m in mts], rotation=90, fontsize=7)
+    ax2.set_ylabel("m")
+    ax2.axhline(0, color="k", lw=0.5)
+    ax2.legend(fontsize=9)
+    ax2.set_title("山系：设计高度 vs 引擎（不含侵蚀的构造高程）", fontsize=11)
+    ax3 = fig.add_axes([0.66, 0.05, 0.32, 0.30])
+    y = np.arange(len(pls))
+    ax3.barh(y + 0.2, [p["design_height_m"] for p in pls], 0.4, color="#bdbdbd", label="设计")
+    ax3.barh(y - 0.2, [p["engine_median_m"] for p in pls], 0.4, color="#8c510a", label="引擎中位")
+    ax3.set_yticks(y)
+    ax3.set_yticklabels([f"{p['id']} {p['name']}" for p in pls], fontsize=7.5)
+    ax3.invert_yaxis()
+    ax3.axvline(0, color="k", lw=0.5)
+    ax3.legend(fontsize=9)
+    ax3.set_title("高原与盆地", fontsize=11)
+    stamp(fig)
+    fig.savefig(out / "04_mountains_plateaus.png", dpi=110)
+    plt.close(fig)
+
+    # ---- 05 0 Ma 地壳 ----
+    c0 = frames[-1]
+    fig = plt.figure(figsize=(20, 11))
+    cont = raster(c0["ctype"]) == CONT
+    panels = [("a", "陆壳厚度（km）"), ("b", "最近一次构造改造的时间（Ma；碰撞 = 暖色，俯冲弧 = 冷色）"),
+              ("c", "地壳来源（初始陆块 / 岛弧增生）"), ("d", "洋底年龄（Myr）")]
+    for k, (tg, title) in enumerate(panels):
+        r, cc_ = divmod(k, 2)
+        ax = fig.add_axes([0.01 + cc_ * 0.495, 0.50 - r * 0.46, 0.48, 0.42], projection=proj)
+        ax.set_global()
+        if tg == "a":
+            im = ax.imshow(np.ma.masked_where(~cont, raster(c0["T"])), extent=(-180, 180, -90, 90), transform=PC,
+                           origin="upper", cmap="YlOrBr", vmin=20, vmax=65, regrid_shape=(1600, 800),
+                           interpolation="nearest")
+        elif tg == "b":
+            oro = raster(c0["oro"])
+            ot = raster(c0["oro_t"]).astype(float)
+            ax.imshow(np.ma.masked_where(~cont, np.zeros(grid.shape)), extent=(-180, 180, -90, 90), transform=PC,
+                      origin="upper", cmap=ListedColormap(["#eeeeee"]), regrid_shape=(1600, 800), interpolation="nearest")
+            for code, cm in ((ORO_COLL, "autumn"), (ORO_ARC, "winter")):
+                im = ax.imshow(np.ma.masked_where(~cont | (oro != code), ot), extent=(-180, 180, -90, 90), transform=PC,
+                               origin="upper", cmap=cm, vmin=0, vmax=300, regrid_shape=(1600, 800),
+                               interpolation="nearest")
+        elif tg == "c":
+            org = raster(c0["origin"]).astype(float)
+            img = np.broadcast_to(np.array([0.86, 0.91, 0.96]), grid.shape + (3,)).copy()
+            for code, blk in info.items():
+                img[cont & (org == blk["id"])] = to_rgb(blk["color"])
+            img[cont & (org == 90)] = (0.1, 0.1, 0.1)
+            ax.imshow(img, extent=(-180, 180, -90, 90), transform=PC, origin="upper", regrid_shape=(1600, 800),
+                      interpolation="nearest")
+            im = None
+        else:
+            im = ax.imshow(np.ma.masked_where(cont, raster(c0["age"])), extent=(-180, 180, -90, 90), transform=PC,
+                           origin="upper", cmap="RdYlBu", vmin=0, vmax=180, regrid_shape=(1600, 800),
+                           interpolation="nearest")
+        if im is not None:
+            plt.colorbar(im, ax=ax, shrink=0.6, pad=0.01)
+        ax.contour(lon, lat, Lf.astype(float), levels=[0.5], colors="#444444", linewidths=0.3, transform=PC)
+        ax.gridlines(xlocs=range(-180, 181, 30), ylocs=range(-60, 61, 30), color="#888888", lw=0.3)
+        ax.set_title(f"({tg}) {title}", fontsize=11)
+    hs = [Patch(fc=v["color"], label=f"{k} {v['name']}") for k, v in info.items()] + [Patch(fc="#1a1a1a", label="岛弧增生")]
+    fig.legend(handles=hs, loc="lower center", ncol=6, fontsize=8)
+    fig.text(0.5, 0.99, "0 Ma 地壳（灰线 = 终图海岸）", fontsize=14, ha="center", va="top")
+    stamp(fig)
+    fig.savefig(out / "05_crust_0Ma.png", dpi=105)
+    plt.close(fig)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

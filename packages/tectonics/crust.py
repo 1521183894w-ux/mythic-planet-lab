@@ -35,6 +35,10 @@ class Params:
     arc_peak_ocean_km: float = 70.0    # 洋内弧：上盘是洋壳时增厚带窄得多（伊豆—小笠原、阿留申弧宽 100–200 km）
     arc_max_ocean_km: float = 200.0    # （1.1 原型中洋内弧也用 600 km，增生的陆壳偏多）
     arc_to_cont_T_km: float = 18.0     # 洋内弧增厚到 18 km 后视为浮力地壳，不再俯冲
+    arc_ocean_T_max_km: float | None = None  # 洋内弧（洋壳与岛弧增生地壳）的俯冲增厚上限；None = 不限（1.2c 及以前）。
+                                       # 成熟洋内弧地壳 20–35 km（伊豆—小笠原约 20 km，阿留申约 35 km），整体是水下脊、
+                                       # 只有火山顶露出海面。不限时洋内弧一直增厚到 65 km、长成条带状平顶"陆地"
+                                       # （1.2c 世界 6 的梳状条带、U25 第一次运行的 14 百万 km² 洋内弧陆地）
     front_memory_myr: float = 3.0      # 俯冲前缘取最近 3 Myr 内被消耗的单元位置
     collision_radius_km: float = 400.0 # 碰撞时被拼贴地壳的体积分配到上盘 400 km 半径内
     tau_oro_myr: float = 120.0         # 超出 35 km 的地壳厚度按 120 Myr 时间尺度衰减（剥蚀 + 垮塌）

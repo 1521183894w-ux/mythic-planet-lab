@@ -257,9 +257,65 @@ def initial_crust(mesh, history: PlateHistory, t0: float, block_ids: list, core:
     return c, owner, kind
 
 
+def assign_ocean_plates(mesh, plate: np.ndarray, cont: np.ndarray, rules: list, forearc_km: float,
+                        corridor_km: float, background: int, between_cos: float = -0.5) -> np.ndarray:
+    """洋壳归哪块板块（U25）。返回每个节点的板块编号（陆壳节点不变）。
+
+    按"离哪块大陆近就归谁"划分时，两块大陆之间的板块边界落在大洋正中，汇聚时海沟和岛弧出现在大洋中间
+    （U25 第一次运行：洋内弧长成 14 百万 km² 的条带状陆地，还先于设计撞上大陆）。地球上汇聚的两块大陆之间，
+    洋壳随下行一方运动，海沟在上盘陆缘外不远处（安第斯、苏门答腊的海沟离海岸 100–250 km）。所以：
+    - 离大陆 forearc_km 以内的洋壳随该大陆（上盘的弧前，或被动陆缘）；
+    - rules（[{down: [板块], over: [板块]}]，按顺序，先匹配的生效）：最近的大陆属于这条规则的一方、另一方最近的大陆
+      在它的另一侧（两个方向夹角的余弦小于 between_cos，默认 -0.5 即大于 120°）、两边距离之和不超过 corridor_km 的洋壳，
+      归最近的下行板块。（第一版按 90° 判断，洲 A 分到的"A、B 之间"的洋壳一直伸到两洲南边很远，A 拼上 B 后挡在
+      A、B 南岸外，南方陆块群的洋壳在大洋中间撞上它，长出洋内弧，洲 C 北缘又撞上这条弧被消耗。）
+    - 其余洋壳归外大洋板块 background（不属于任何大陆）。"""
+    from scipy.spatial import cKDTree
+
+    from .geometry import km_from_chord
+
+    out = plate.copy()
+    pids = sorted(int(q) for q in np.unique(plate[cont]))
+    oc = np.flatnonzero(~cont)
+    X = mesh.xyz[oc]
+    n = oc.size
+    ar = np.arange(n)
+    D = np.empty((len(pids), n))
+    P = np.empty((len(pids), n, 3))
+    for k, q in enumerate(pids):
+        idx = np.flatnonzero(cont & (plate == q))
+        d, i = cKDTree(mesh.xyz[idx]).query(X)
+        D[k], P[k] = km_from_chord(d), mesh.xyz[idx[i]]
+    k1 = D.argmin(0)
+    d1 = D[k1, ar]
+    res = np.where(d1 <= forearc_km, np.asarray(pids)[k1], background)
+    done = d1 <= forearc_km
+
+    def tangent(Q):
+        v = Q - X
+        v = v - np.sum(v * X, axis=1, keepdims=True) * X
+        return v / np.maximum(np.linalg.norm(v, axis=1, keepdims=True), 1e-12)
+
+    for r in rules:
+        ko = [pids.index(q) for q in r["over"] if q in pids]
+        kd = [pids.index(q) for q in r["down"] if q in pids]
+        if not ko or not kd:
+            continue
+        io, idn = D[ko].argmin(0), D[kd].argmin(0)
+        do, dd = D[ko][io, ar], D[kd][idn, ar]
+        po, pd = P[ko][io, ar], P[kd][idn, ar]
+        between = np.sum(tangent(po) * tangent(pd), axis=1) < between_cos
+        sel = ~done & between & (do + dd <= corridor_km) & (np.minimum(do, dd) <= d1 + 1e-6)
+        res[sel] = np.asarray(pids)[np.asarray(kd)[idn[sel]]]
+        done |= sel
+    out[oc] = res
+    return out
+
+
 def fill_ocean(mesh, c, owner: np.ndarray, t0: float, half_rate_km_myr: float = 25.0, max_age: float = 180.0):
     """洋壳：每个洋节点归离它最近的陆块所在的板块；洋底年龄按到板块边界的距离（半扩张速率 2.5 cm/yr），
-    边界附近年轻（洋脊）、远离边界的陆缘外侧古老，封顶 180 Myr。"""
+    边界附近年轻（洋脊）、远离边界的陆缘外侧古老，封顶 180 Myr。
+    （U25 起板块归属再由 assign_ocean_plates 按俯冲设计改写；年龄仍按这里的划分，相当于洋盆中线是老洋脊。）"""
     from scipy.spatial import cKDTree
 
     from .crust import OCEAN

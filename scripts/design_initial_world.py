@@ -37,7 +37,7 @@ from mythic.tectonics.geometry import R_KM, km_from_chord, smoothstep, unit, xyz
 from mythic.tectonics.kinematics import RotationFileKinematics  # noqa: E402
 from mythic.tectonics.mesh import CACHE, load_mesh  # noqa: E402
 from mythic.tectonics.prehistory import InitialWorld  # noqa: E402
-from mythic.tectonics.reverse import fill_ocean, initial_crust  # noqa: E402
+from mythic.tectonics.reverse import assign_ocean_plates, fill_ocean, initial_crust  # noqa: E402
 
 
 def log(msg: str) -> None:
@@ -120,13 +120,17 @@ def main() -> int:
             dk = dist_to_mask_km(grid, ids == pid, m)
             far, near = float(ini["ext_T_far_km"]), float(ini["ext_T_near_km"])
             T_ext[m] = far + (near - far) * np.exp(-dk[m] / float(ini["ext_taper_km"]))
-    # 块边缘按被动陆缘减薄（本体 + 被挤掉的陆缘合起来算边缘）
-    mk, mmin = float(ini["margin_km"]), float(ini["margin_min"])
+    # 块边缘（本体 + 被挤掉的陆缘合起来算边缘）往海岸减薄：本体是现今陆地，只减薄到 coast_T_km（约 +100 m 的滨海平原），
+    # 现今海岸留在海平面附近；被挤掉的陆缘按被动陆缘减薄到 margin_min（大部分在海平面以下）。
+    # （U24 曾把本体边缘也减薄到 72%，约 −1 km：U25 第一次正向运行时现今海岸带与窄小陆块整片沉到海下。）
+    mk, mmin, cT = float(ini["margin_km"]), float(ini["margin_min"]), float(ini.get("coast_T_km", 0.0))
     for pid in id_code:
         whole = (ids == pid) | (ext == pid)
         dk = dist_to_mask_km(grid, ~whole, whole)
-        f = mmin + (1.0 - mmin) * smoothstep(dk / mk)
-        T = np.where(ids == pid, T * f, T)
+        s = smoothstep(dk / mk)
+        f = mmin + (1.0 - mmin) * s
+        body = ids == pid
+        T = np.where(body & (T > cT), cT + (T - cT) * s, T) if cT > 0 else np.where(body, T * f, T)
         T_ext = np.where(ext == pid, T_ext * f, T_ext)
     # 省份：每块（本体 + 被挤掉的陆缘）泊松撒点、就近划分；古陆核省份最老，往外变年轻，被挤掉的陆缘最年轻
     sep = float(ini["province_sep_km"])
@@ -188,6 +192,17 @@ def main() -> int:
     c, owner, kind = initial_crust(mesh, h, t0, order, ids, ext,
                                    {"T": T, "t_form": tf, "prov": prov}, {"T": T_ext, "t_form": tf_ext, "prov": prov_ext})
     c = fill_ocean(mesh, c, owner, t0, float(ini["half_spreading_km_myr"]))
+    oc_cfg = hcfg.get("ocean")
+    if oc_cfg:                              # 洋壳归属按俯冲设计（U25），见 history yaml 的 ocean 一节
+        rules = [{"down": [code_id[x] for x in r["down"]], "over": [code_id[x] for x in r["over"]]}
+                 for r in oc_cfg.get("subduction", [])]
+        bg = int(oc_cfg["background"]["id"])
+        c.plate = assign_ocean_plates(mesh, c.plate.astype(np.int64), c.ctype == CONT, rules,
+                                      float(oc_cfg["forearc_km"]), float(oc_cfg["corridor_km"]), bg,
+                                      float(oc_cfg.get("between_cos", -0.5))).astype(c.plate.dtype)
+        log(f"  洋壳归属：外大洋板块 {mesh.area_km2[c.plate == bg].sum() / 1e6:.0f} 百万 km²；"
+            + "，".join(f"{id_code[q]} {mesh.area_km2[(c.plate == q) & (c.ctype != CONT)].sum() / 1e6:.0f}"
+                       for q in order))
     kin = RotationFileKinematics(rot)
     plates = sorted(int(q) for q in np.unique(c.plate))
     _, omega = kin.step_rotations(plates, int(t0))

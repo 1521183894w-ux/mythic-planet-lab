@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "d29f635-dirty",
+ "code_version": "324f2f4-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -55,13 +55,13 @@
  "continental_crust_Mkm2": 147.9,
  "of_which_consumed_margin_Mkm2": 4.2,
  "present_rigid_blocks_Mkm2": 144.1,
- "land_above_sea_level_Mkm2": 113.7,
- "ocean_fraction": 0.777,
+ "land_above_sea_level_Mkm2": 143.7,
+ "ocean_fraction": 0.718,
  "elevation_m_percentiles_land": {
-  "5": 258,
+  "5": 119,
   "50": 400,
-  "95": 401,
-  "99": 850
+  "95": 400,
+  "99": 730
  },
  "continental_thickness_km": {
   "median": 35.0,
@@ -80,7 +80,7 @@
    "name": "洲 B（北方地台与东方地块）",
    "core_Mkm2": 35.53,
    "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 133.9
+   "plate_Mkm2": 41.1
   },
   {
    "id": 103,
@@ -88,7 +88,7 @@
    "name": "洲 A",
    "core_Mkm2": 7.63,
    "consumed_margin_Mkm2": 0.13,
-   "plate_Mkm2": 55.5
+   "plate_Mkm2": 26.5
   },
   {
    "id": 102,
@@ -96,7 +96,7 @@
    "name": "东南增生地块",
    "core_Mkm2": 2.43,
    "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 10.9
+   "plate_Mkm2": 12.4
   },
   {
    "id": 301,
@@ -104,7 +104,7 @@
    "name": "洲 C",
    "core_Mkm2": 35.83,
    "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 70.7
+   "plate_Mkm2": 59.0
   },
   {
    "id": 401,
@@ -112,7 +112,7 @@
    "name": "洲 D",
    "core_Mkm2": 23.01,
    "consumed_margin_Mkm2": 1.52,
-   "plate_Mkm2": 49.8
+   "plate_Mkm2": 64.8
   },
   {
    "id": 501,
@@ -120,7 +120,7 @@
    "name": "远方大陆",
    "core_Mkm2": 21.69,
    "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 106.4
+   "plate_Mkm2": 24.8
   },
   {
    "id": 601,
@@ -128,7 +128,7 @@
    "name": "极地大陆",
    "core_Mkm2": 13.2,
    "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 51.7
+   "plate_Mkm2": 16.0
   },
   {
    "id": 702,
@@ -136,7 +136,7 @@
    "name": "南方地盾陆块（印度式）",
    "core_Mkm2": 3.79,
    "consumed_margin_Mkm2": 2.52,
-   "plate_Mkm2": 16.2
+   "plate_Mkm2": 13.7
   },
   {
    "id": 701,
@@ -152,8 +152,8 @@
    "name": "南洋陆块",
    "core_Mkm2": 0.29,
    "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 14.0
+   "plate_Mkm2": 4.4
   }
  ],
- "generated": "2026-10-24 01:00:43"
+ "generated": "2026-10-24 02:39:53"
 }

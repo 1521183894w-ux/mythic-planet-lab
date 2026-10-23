@@ -122,6 +122,9 @@ def build_history(hist_cfg: dict, centroids: dict) -> PlateHistory:
         if keys[-1][0] < hist_cfg["t0"]:
             keys.append((float(hist_cfg["t0"]), keys[-1][1]))
         h.add(blk["id"], par, blk["code"], keys)
+    bg = (hist_cfg.get("ocean") or {}).get("background")
+    if bg:                                  # 外大洋板块：固定在地幔（热点）参照系里（U25）
+        h.add(int(bg["id"]), 0, "OCEAN", [(0.0, np.eye(3)), (float(hist_cfg["t0"]), np.eye(3))])
     return h
 
 

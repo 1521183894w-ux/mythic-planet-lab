@@ -56,3 +56,27 @@ def test_initial_crust_reconstructs_rotated_block():
     assert abs(area / expect - 1) < 0.08
     c = fill_ocean(mesh, c, owner, 100.0)
     assert (c.plate == 7).all() and (c.age[~cont] >= 2).all()        # 只有一块板块：洋壳都归它
+
+
+def test_ocean_between_converging_blocks_goes_with_the_downgoing_plate():
+    """U25：汇聚的两块之间的洋壳归下行一方，上盘只留弧前洋壳；其余洋壳归外大洋板块。"""
+    from mythic.tectonics.reverse import assign_ocean_plates
+
+    mesh = load_mesh(5)
+    lon, lat = mesh.lon, mesh.lat
+    plate = np.zeros(mesh.n, np.int64)
+    over = (lat > 20) & (lat < 40) & (np.abs(lon) < 20)
+    down = (lat < -20) & (lat > -40) & (np.abs(lon) < 20)
+    plate[over], plate[down] = 1, 2
+    cont = over | down
+    out = assign_ocean_plates(mesh, plate, cont, [{"down": [2], "over": [1]}], forearc_km=250.0,
+                              corridor_km=6500.0, background=900)
+
+    def at(lo, la):
+        return out[int(np.argmin((mesh.xyz @ lonlat_to_xyz(lo, la))[None, :] * -1))]
+
+    assert (out[cont] == plate[cont]).all()
+    assert at(0, 0) == 2            # 两块之间：归下行一方
+    assert at(0, 18.5) == 1         # 上盘陆缘外 250 km 内：弧前，归上盘
+    assert at(0, 60) == 900         # 上盘背后（下行块在同一方向）：外大洋
+    assert at(150, 0) == 900        # 远离两块：外大洋

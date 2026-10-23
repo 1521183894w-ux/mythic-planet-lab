@@ -120,6 +120,31 @@ collisions:
   - {down: D, up: C, t: 180, max_km: 900, what: 洲 C、D 碰撞}
   - {down: D, up: B, t: 60, max_km: 1600, what: 洲 D 东北角撞上洲 B（东方地峡）}
 
+# U25：洋壳归属与俯冲方向（packages/tectonics/reverse.py assign_ocean_plates；scripts/design_forward.py 预设俯冲方向）。
+# 第一次正向运行按"离哪块大陆近就归谁"分洋壳，板块边界在大洋正中，海沟与岛弧长在大洋中间、长成条带状陆地，
+# 俯冲方向又按首次接触随机决定（洲 B 被当成下行板块被洲 A 吃掉）。改为按成因设计：
+# - 汇聚的两块之间的洋壳归下行一方，海沟在上盘陆缘外 forearc_km（安第斯、苏门答腊的海沟离海岸 100–250 km）；
+# - 其余洋壳归外大洋板块，固定在地幔（热点）参照系里：各大陆向前漂移时在前缘压到它之上（安第斯型陆缘），
+#   后缘张开新洋壳（被动陆缘）。外大洋板块的运动没有倒推（大洋长链热点岛链要它相对热点运动，留到 1.2d）；
+# - subduction 每条：down 是下行板块（碰撞时被消耗），over 是上盘；先写的优先。外大洋板块与任何大陆相遇都是它下行。
+ocean:
+  background: {id: 900, name: 外大洋板块}
+  forearc_km: 120
+  corridor_km: 6500
+  between_cos: -0.5         # "在两块之间"：两块方向夹角大于 120°（90° 时洲 A 分到的洋壳伸到 A、B 南边很远，见 reverse.py）
+  subduction:               # 先写的优先：洲 A 撞洲 B 排在古洋之后，洲 A 只拿 A、B 之间那条缺口里的洋壳
+    - {down: [BSE], over: [B], what: 东南增生地块北上拼到洲 B 南缘（280–120 Ma）}
+    - {down: [IN], over: [B], what: 南方地盾陆块撞洲 B（约 48 Ma，东方大高原）}
+    - {down: [D], over: [C], what: 洲 C、D 碰撞（180–150 Ma）}
+    - {down: [C, D, IN, MD, POL, ZL], over: [A, B],
+       what: 古洋向北俯冲到洲 A、B 南缘之下，残留洋盆成为主内海（内海北岸山系 M1 的成因）；洲 D 东北角撞洲 B（东方地峡）}
+    - {down: [A], over: [B], what: 洲 A 撞洲 B（250–220 Ma）}
+
+# U25：正向演化（scripts/design_forward.py）的引擎参数，覆盖 packages/tectonics/crust.py Params 的默认值
+forward:
+  engine_params:
+    arc_ocean_T_max_km: 30.0          # 洋内弧增厚上限（成熟洋内弧 20–35 km，整体是水下脊）；第一次运行不限，长出 14 百万 km² 条带陆地
+
 # 300 Ma 以前就有的构造（终图里写明是"古老"的）。300 Ma 以后形成的山与高原不预先放，由正向演化产生。
 # 厚度按 Airy 均衡决定高程（35 km 约 +400 m，每 km 约 150 m），所以克拉通只略厚（地球上克拉通低平）。
 initial:
@@ -133,8 +158,11 @@ initial:
   old_orogens: {ids: [M6, M13b, M16, M8b], add_km: 4.0, half_width_km: 150}
   tablelands: {ids: [PL7], add_km: 7.0, ramp_km: 70}
   basins: {ids: [B1, B2, B3], sub_km: 0.8, ramp_km: 300}
-  margin_km: 250                                        # 块边缘按被动陆缘减薄
-  margin_min: 0.72
+  margin_km: 250                                        # 块边缘 250 km 内往海岸减薄
+  margin_min: 0.72                                      # 被挤掉的陆缘按被动陆缘减薄到 72%（大部分在海平面以下）
+  coast_T_km: 33.0                                      # 块本体（现今陆地）只减薄到 33 km（Airy 均衡下约 +100 m 的滨海平原），
+                                                        # 现今海岸留在海平面附近。U24 曾把本体边缘也减薄到 72%（25 km，
+                                                        # 约 −1 km），U25 第一次运行时现今海岸带与窄小陆块整片沉到海下
   ext_continental_km: 1000                              # 被挤掉的陆缘只补离下行块 1000 km 以内的陆壳；更远处是陆缘外侧的
                                                         # 洋盆（大印度盆地式，van Hinsbergen 等 2012），按洋壳处理
   ext_T_near_km: 30.0                                   # 被挤掉的陆缘：贴着下行块处约 30 km，往外减薄到超伸展陆缘约 16 km
