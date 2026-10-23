@@ -1,0 +1,133 @@
+{
+ "description": "终图设计的面积与 A 层核对（重建：scripts/design_final_map.py）",
+ "design_file": "config/design/final_map_v1.yaml",
+ "files": {
+  "2048x1024": "data/worlds/design_v1/design_v1_2048x1024.nc",
+  "1024x512": "data/worlds/design_v1/design_v1_1024x512.nc"
+ },
+ "code_version": "1854eee-dirty",
+ "ocean_fraction": 0.7158266344512714,
+ "areas_km2": {
+  "land_km2": 144946737.6294395,
+  "continents_km2": {
+   "A": 7684082.609825103,
+   "B": 39575433.144253485,
+   "C": 32992496.36235418,
+   "D": 25906078.673788317,
+   "polar": 13388946.179216413,
+   "far": 21006181.562071748
+  },
+  "polar_km2": 13388946.179216413
+ },
+ "A": {
+  "ocean_fraction": {
+   "value": 0.7158266344512714,
+   "pass": true
+  },
+  "main_continent": {
+   "area_km2": 106941727.48097844,
+   "share_of_land": 0.737800168737692,
+   "pass": true
+  },
+  "subcontinents": {
+   "count": 4,
+   "areas_km2": [
+    58553091.83708568,
+    38614384.30178747,
+    6405641.733528208,
+    1612944.7751458872
+   ],
+   "pass": true
+  },
+  "main_inland_sea": {
+   "pass": true
+  },
+  "main_continent_latitude": {
+   "north_deg": 79.013671875,
+   "south_deg": -43.330078125,
+   "pass": true
+  },
+  "polar_continent": {
+   "found": [
+    {
+     "area_km2": 13388946.17921725,
+     "centroid_lat_deg": -87.06182874038393
+    }
+   ],
+   "pass": true
+  },
+  "open_ocean": {
+   "pass": true
+  }
+ },
+ "main_inland_sea": {
+  "exists": true,
+  "main": {
+   "region_id": 4,
+   "area_km2": 4164606.027675409,
+   "main_continent_border_fraction": 0.9,
+   "straits_to_world_ocean": 1,
+   "straits_to_other_seas": 1,
+   "lat_range": [
+    25.400390625,
+    45.263671875
+   ],
+   "sample_lat_lon": [
+    37.001953125,
+    19.248046875
+   ]
+  },
+  "geometry": {
+   "aspect_ratio": 3.30224218154222,
+   "orientation_deg": 91.12416111442094,
+   "subcontinent_border_shares": [
+    {
+     "subcontinent_id": 6,
+     "border_share": 0.450449241190432
+    },
+    {
+     "subcontinent_id": 4,
+     "border_share": 0.22539629161530325
+    },
+    {
+     "subcontinent_id": 1,
+     "border_share": 0.16286162580838576
+    },
+    {
+     "subcontinent_id": 7,
+     "border_share": 0.0
+    }
+   ],
+   "min_border_share": 0.15,
+   "n_bordering_subcontinents": 3
+  },
+  "passes": true
+ },
+ "soft_limits": {
+  "note": "软限制：只扣分、不淘汰（U17）",
+  "north_arctic_area": {
+   "value": 0.02422073712036718,
+   "max": 0.05,
+   "arctic_circle_deg": 66.56,
+   "ok": true
+  },
+  "south_tip": {
+   "value_deg": -43.330078125,
+   "limit_deg": -50,
+   "ok": true
+  },
+  "secondary_continents": {
+   "count": 1,
+   "max": 1,
+   "found": [
+    {
+     "unit_id": 12,
+     "area_km2": 21006181.562073585,
+     "centroid_lat_deg": -6.247362334816119
+    }
+   ],
+   "ok": true
+  }
+ },
+ "generated": "2026-10-23 16:52:11"
+}
