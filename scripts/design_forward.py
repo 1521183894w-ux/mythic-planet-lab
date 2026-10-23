@@ -158,11 +158,44 @@ def ocean_gap_prefer(hcfg: dict) -> dict:
     if not oc.get("background"):
         return {}
     bg = int(oc["background"]["id"])
-    return {min(bg, int(p["id"])) * 1000 + max(bg, int(p["id"])): int(p["id"]) for p in oc.get("plates", [])}
+    out = {min(bg, int(p["id"])) * 1000 + max(bg, int(p["id"])): int(p["id"]) for p in oc.get("plates", [])}
+    # U27 试验（默认关）：大洋板块与大陆之间张开的新洋壳也全归大洋板块（东大洋由大洋板块主导，太平洋式）。
+    # 按最近单元归属时，远方大陆 300 Myr 一路北移、西移，后缘张开的新洋壳归了它，积成占满东南大洋的围裙，南方几条热点链
+    # 落在它的洋壳上。打开后南方珊瑚岛群方向对了（296° / 终图 288°），但大洋板块更大、俯冲更久，洲 B 东岸与远方大陆南段
+    # 山系都被弧增厚推到引擎上限 4945 m（设计 2300、3000 m），陆壳体积 +7%：弧增厚在长期快速俯冲下饱和，留到 U28 一起标定
+    if (hcfg.get("forward") or {}).get("ocean_plates_take_continent_gaps"):
+        for p in oc.get("plates", []):
+            for b in hcfg["blocks"]:
+                a, q = int(b["id"]), int(p["id"])
+                out[min(a, q) * 1000 + max(a, q)] = q
+    return out
+
+
+def build_hotspots(hcfg: dict, kin, vp) -> list:
+    """history yaml 的 hotspots 目录 -> Hotspot 列表（U27）。已熄灭的老海山（old）：热点位置 = 所在大洋板块上该点在形成时刻的位置。"""
+    from mythic.tectonics.geometry import lonlat_to_xyz
+    from mythic.tectonics.volcanism import Hotspot
+
+    oc = hcfg.get("ocean") or {}
+    ids = {p["code"]: int(p["id"]) for p in oc.get("plates", [])}
+    if oc.get("background"):
+        ids["OCEAN"] = int(oc["background"]["id"])
+    out = []
+    for h in hcfg.get("hotspots", []):
+        flux, smax = float(vp.flux_km3_myr[h["flux"]]), float(vp.summit_max_m[h["flux"]])
+        if "old" in h:
+            o = h["old"]
+            age, half = float(o["age"]), 0.5 * float(h["active_myr"])
+            x = unit(kin.total_from(ids[o["plate"]], 0.0, age) @ lonlat_to_xyz(*o["at"]))
+            out.append(Hotspot(h["id"], h["name"], x, age + half, max(age - half, 0.0), flux, smax))
+        else:
+            out.append(Hotspot(h["id"], h["name"], lonlat_to_xyz(*h["at"]), float(h["active"][0]),
+                               float(h["active"][1]), flux, smax))
+    return out
 
 
 def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict, aprons: dict | None = None,
-             gap_prefer: dict | None = None):
+             gap_prefer: dict | None = None, volc=None):
     kin = RotationFileKinematics(rot)
     c = world.crust.gather(np.arange(len(world.crust)))
     c.uid = np.arange(len(c), dtype=np.int64)
@@ -177,6 +210,7 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         aprons["pairs"] = over_down_pairs(aprons["hcfg"])
     moved = 0.0
     frames = [eng.snapshot()]
+    vframes = [volc.state(eng)] if volc is not None else []
     t = t0
     tw = time.perf_counter()
     while t > 0:
@@ -186,33 +220,54 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         if committed and aprons:
             moved += strip_aprons(eng, aprons["pairs"], aprons["forearc_km"], aprons["approach_km"], aprons["between_cos"],
                                   aprons["min_conv_cm_yr"])
+        if volc is not None:
+            volc.step(eng)
         if committed and t % snap_every == 0:
             frames.append(eng.snapshot())
+            if volc is not None:
+                vframes.append(volc.state(eng))
             cl = eng.commit_log[-1]
             log(f"  {t:3d} Ma：陆壳 {cl['cont_area_km2'] / 1e6:6.1f}、海平面以上 {cl['land_area_km2'] / 1e6:6.1f} 百万 km²，"
                 f"陆壳体积 {cl['cont_volume_km3'] / 1e9:6.3f}×10⁹ km³，单元 {cl['n_parcels']}，"
                 f"板块 {len(eng.plates)}" + (f"，累计转给下行板块的洋壳围裙 {moved / 1e6:.1f} 百万 km²" if aprons else "")
+                + (f"，火山 {int(volc.alive.sum())} 座" if volc is not None else "")
                 + f"（{time.perf_counter() - tw:.0f} s）")
-    return eng, frames
+    return eng, frames, vframes
 
 
-def save_run(path: Path, eng, frames, meta: dict) -> None:
+VFIELDS = ("lon", "lat", "plate", "hotspot", "t_birth", "height_km", "summit_m", "kind", "radius_km")
+
+
+def save_run(path: Path, eng, frames, meta: dict, vframes=None, volc=None) -> None:
     arrs = {"times": np.array([f["t"] for f in frames], float)}
     for k, f in enumerate(frames):
         for name, dt in FIELDS.items():
             arrs[f"{name}_{k}"] = np.asarray(f[name]).astype(dt)
+    if vframes:                             # 火山：各帧拼成一张表，v_frame 是帧序号
+        arrs["v_frame"] = np.concatenate([np.full(len(v["lon"]), k) for k, v in enumerate(vframes)])
+        for name in VFIELDS:
+            col = np.concatenate([np.asarray(v[name]) for v in vframes])
+            arrs[f"v_{name}"] = col.astype(str) if name == "hotspot" else col
     np.savez_compressed(path.with_suffix(".npz"), **arrs)
     js = {**meta, "events": eng.events, "budget": eng.budget,
           "commit_log": [{k: v for k, v in cl.items() if k != "plate_area_km2"} for cl in eng.commit_log],
           "step_wall_s_total": round(sum(s["wall_s"] for s in eng.step_log), 1)}
+    if volc is not None:
+        js["volcano_events"] = volc.events
+        js["hotspot_on_continent"] = volc.continental
     path.with_suffix(".json").write_text(json.dumps(js, ensure_ascii=False, default=float), encoding="utf-8")
 
 
 def load_run(path: Path):
     z = np.load(path.with_suffix(".npz"))
     frames = [{name: z[f"{name}_{k}"] for name in FIELDS} | {"t": float(t)} for k, t in enumerate(z["times"])]
+    vframes = []
+    if "v_frame" in z.files:
+        for k in range(len(frames)):
+            s = z["v_frame"] == k
+            vframes.append({name: z[f"v_{name}"][s] for name in VFIELDS})
     js = json.loads(path.with_suffix(".json").read_text(encoding="utf-8"))
-    return frames, js
+    return frames, js, vframes
 
 
 # ---------------------------------------------------------------------------
@@ -334,6 +389,59 @@ def compare(design, grid, b, ids, info, E_eng, E_fin, labels):
     return out
 
 
+def bearing_deg(lon1, lat1, lon2, lat2) -> float:
+    """从 (lon1, lat1) 指向 (lon2, lat2) 的方位角（0 = 北，90 = 东）。"""
+    p1, p2, dl = np.radians(lat1), np.radians(lat2), np.radians(lon2 - lon1)
+    y = np.sin(dl) * np.cos(p2)
+    x = np.cos(p1) * np.sin(p2) - np.sin(p1) * np.cos(p2) * np.cos(dl)
+    return float(np.degrees(np.arctan2(y, x)) % 360.0)
+
+
+def compare_hotspots(design: dict, hcfg: dict, v0: dict) -> list:
+    """0 Ma 各热点的火山（岛、环礁、海山）与终图对照：岛数与大小、链的方向（热点指向 3–40 Myr 的老火山的质心）、链长。"""
+    from mythic.tectonics.geometry import lonlat_to_xyz
+    from mythic.tectonics.volcanism import ATOLL, ISLAND, SEAMOUNT
+
+    lines = {i["id"]: i for i in design.get("islands", [])}
+    lone = {i["id"]: i for i in design.get("lone_islands", [])}
+    out = []
+    for h in hcfg.get("hotspots", []):
+        hid = h["id"]
+        sel = v0["hotspot"] == hid
+        kind, age = v0["kind"][sel], v0["t_birth"][sel]
+        lon, lat, rad = v0["lon"][sel], v0["lat"][sel], v0["radius_km"][sel]
+        at = h["old"]["at"] if "old" in h else h["at"]
+        x0 = lonlat_to_xyz(*at)
+        X = np.stack([np.cos(np.radians(lat)) * np.cos(np.radians(lon)), np.cos(np.radians(lat)) * np.sin(np.radians(lon)),
+                      np.sin(np.radians(lat))], axis=1) if sel.any() else np.zeros((0, 3))
+        dist = km_from_chord(np.linalg.norm(X - x0, axis=1)) if sel.any() else np.zeros(0)
+        row = {"id": hid, "name": h["name"], "n_island": int((kind == ISLAND).sum()), "n_atoll": int((kind == ATOLL).sum()),
+               "n_seamount": int((kind == SEAMOUNT).sum()),
+               "max_island_radius_km": round(float(rad.max()), 1) if sel.any() else 0.0,
+               "oldest_Ma": round(float(age.max()), 1) if sel.any() else None,
+               "max_dist_km": round(float(dist.max())) if sel.any() else 0,
+               "engine_bearing_deg": None, "design_bearing_deg": None, "design_length_km": None, "design_size_km": None}
+        old = sel.any() and (age >= 3) & (age <= 40)
+        if np.any(old):
+            cen = unit(X[old].mean(0))
+            clo, cla = xyz_to_lonlat(cen)
+            row["engine_bearing_deg"] = round(bearing_deg(at[0], at[1], float(clo), float(cla)))
+        key = hid if hid in lines or hid in lone else hid.rstrip("ab")
+        if key in lines:
+            ln = np.asarray(lines[key]["line"], float)
+            row["design_bearing_deg"] = round(bearing_deg(ln[0, 0], ln[0, 1], ln[1, 0], ln[1, 1]))
+            P = np.stack([lonlat_to_xyz(*q) for q in ln])
+            row["design_length_km"] = round(float(km_from_chord(np.linalg.norm(np.diff(P, axis=0), axis=1)).sum()))
+            if lines[key]["type"] == "spine":
+                row["design_size_km"] = max(np.atleast_1d(lines[key]["width_km"]))
+        elif key in lone:
+            row["design_size_km"] = max(np.atleast_1d(lone[key]["size_km"]))
+        if "old" in h and sel.any():
+            row["nearest_to_design_km"] = round(float(dist.min()))
+        out.append(row)
+    return out
+
+
 def a_summary(m: dict) -> dict:
     A = m["A"]
     isea = A["main_inland_sea"]
@@ -386,7 +494,15 @@ def main() -> int:
                    "between_cos": float(oc.get("between_cos", -0.5)),
                    "approach_km": float(ap["approach_km"]), "min_conv_cm_yr": float(ap.get("min_conv_cm_yr", 0.5))}
                   if ap and ap.get("strip", True) else None)
-        eng, frames = simulate(world, mesh, rot, args.snap_every, params, polarity, aprons, ocean_gap_prefer(hcfg))
+        volc = None
+        if hcfg.get("hotspots"):
+            from mythic.tectonics.volcanism import VolcanoField, VolcanoParams
+            vp = VolcanoParams(**fcfg.get("volcano_params", {}))
+            hs = build_hotspots(hcfg, RotationFileKinematics(rot), vp)
+            volc = VolcanoField(hs, vp)
+            log(f"热点 {len(hs)} 个（history yaml hotspots）")
+        eng, frames, vframes = simulate(world, mesh, rot, args.snap_every, params, polarity, aprons,
+                                        ocean_gap_prefer(hcfg), volc)
         wall = time.perf_counter() - tw
         log(f"模拟完成，用时 {wall:.0f} s")
         save_run(run_path, eng, frames, {"design": args.design, "history": args.history, "level": mesh.level,
@@ -394,8 +510,9 @@ def main() -> int:
                                          "rotation_file": rot.relative_to(ROOT).as_posix(),
                                          "engine_params": fcfg.get("engine_params", {}),
                                          "aprons": fcfg.get("aprons"),
-                                         "preset_polarity": {str(k): v for k, v in polarity.items()}})
-    frames, run_js = load_run(run_path)
+                                         "preset_polarity": {str(k): v for k, v in polarity.items()}},
+                 vframes, volc)
+    frames, run_js, vframes = load_run(run_path)
 
     log("对照终图（1024x512）")
     design = apply_options(yaml.safe_load((ROOT / "config" / "design" / f"final_map_{args.design}.yaml")
@@ -407,6 +524,19 @@ def main() -> int:
     E_fin = design_elevation(design, grid, b)
     raster = Raster(mesh, 512)
     E_eng = raster(frames[-1]["elev"]).astype(float)
+    v0 = vframes[-1] if vframes else None
+    hs_cmp = []
+    if v0 is not None:
+        # 火山岛：半径不小于约半个格点的画进海陆掩膜（与终图同一约定），高程至少 +100 m 以便出图着色
+        from design_final_map import MIN_ISLAND_RADIUS_KM
+        from mythic.tectonics.volcanism import island_mask
+        isl = island_mask(grid, v0, MIN_ISLAND_RADIUS_KM)
+        E_eng = np.where(isl & (E_eng <= 0), 100.0, E_eng)
+        hs_cmp = compare_hotspots(design, hcfg, v0)
+        for r in hs_cmp:
+            log(f"  热点 {r['id']:4s} {r['name']}：岛 {r['n_island']}（最大半径 {r['max_island_radius_km']} km，终图 {r['design_size_km']}），"
+                f"环礁 {r['n_atoll']}，海山 {r['n_seamount']}；链的方向 {r['engine_bearing_deg']}°（终图 {r['design_bearing_deg']}°），"
+                f"最老的 {r['oldest_Ma']} Ma，离热点最远 {r['max_dist_km']} km（终图链长 {r['design_length_km']} km）")
     cmp_ = compare(design, grid, b, ids, info, E_eng, E_fin, label_points(design))
 
     # 体积账（U26）：写了 volume_balance 的碰撞，终图上它垫出的高原与山系范围内，0 Ma 实际有多少超额地壳
@@ -453,6 +583,7 @@ def main() -> int:
         "deviation_regions": [{k: v for k, v in r.items() if not k.startswith("_")} for r in cmp_["regions"]],
         "A_engine_0Ma": A_eng, "A_final_map_1024": A_fin,
         "volume_balance_0Ma": vbal,
+        "hotspots_0Ma": hs_cmp,
         "crust_0Ma": {"continental_Mkm2": round(float(A7[cont].sum()) / 1e6, 1),
                       "arc_origin_continental_Mkm2": round(float(A7[cont & (c0["origin"] == 90)].sum()) / 1e6, 2),
                       "last_orogeny_area_Mkm2": oro_area,
@@ -489,7 +620,7 @@ def main() -> int:
     if not args.no_figures:
         log("出图")
         figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng, E_fin, cmp_, m_eng, f_eng,
-                A_eng, A_fin, run_js)
+                A_eng, A_fin, run_js, v0, hs_cmp)
     log(f"完成，用时 {time.perf_counter() - t_start:.0f} s")
     return 0
 
@@ -498,7 +629,7 @@ def main() -> int:
 # 出图
 # ---------------------------------------------------------------------------
 def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng, E_fin, cmp_, m_eng, f_eng,
-            A_eng, A_fin, run_js):
+            A_eng, A_fin, run_js, v0=None, hs_cmp=None):
     import cartopy.crs as ccrs
     import matplotlib
 
@@ -702,6 +833,61 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
     fig.savefig(out / "05_crust_0Ma.png", dpi=105)
     plt.close(fig)
 
+
+    # ---- 06 热点：终图的热点链与孤岛（灰）vs 引擎 0 Ma 的火山（U27） ----
+    if v0 is not None:
+        from mythic.tectonics.volcanism import ATOLL, ISLAND, SEAMOUNT
+        hs_at = {h["id"]: (h["old"]["at"] if "old" in h else h["at"]) for h in hcfg.get("hotspots", [])}
+        GEO = ccrs.Geodetic()
+
+        def draw(ax, ms_scale=1.0, labels=False):
+            for isl in design.get("islands", []):
+                if isl["type"] == "hotspot":
+                    q = np.asarray(isl["line"], float)
+                    ax.plot(q[:, 0], q[:, 1], "--", color="#7f7f7f", lw=1.0, transform=GEO, zorder=3)
+            for sym in b["symbols"]:
+                mk = "o" if "atoll" in sym["kind"] else "^"
+                ax.plot(sym["lon"], sym["lat"], mk, ms=5 * ms_scale, mfc="none", mec="#7f7f7f", mew=0.8, transform=PC, zorder=3)
+            k = v0["kind"]
+            age = v0["t_birth"]
+            s = k == SEAMOUNT
+            ax.scatter(v0["lon"][s], v0["lat"][s], s=4 * ms_scale, c=age[s], cmap="viridis_r", vmin=0, vmax=100,
+                       transform=PC, zorder=4, linewidths=0)
+            s = k == ATOLL
+            ax.scatter(v0["lon"][s], v0["lat"][s], s=30 * ms_scale, facecolors="none", edgecolors="#0868ac", linewidths=1.2,
+                       transform=PC, zorder=5)
+            s = k == ISLAND
+            ax.scatter(v0["lon"][s], v0["lat"][s], s=(8 + 2.0 * v0["radius_km"][s]) * ms_scale, marker="^", c="#d7301f",
+                       edgecolors="k", linewidths=0.4, transform=PC, zorder=6)
+            for hid, (lo, la) in hs_at.items():
+                ax.plot(lo, la, "*", ms=9 * ms_scale, mfc="#ffd92f", mec="k", mew=0.5, transform=PC, zorder=7)
+                if labels:
+                    ax.text(lo + 1.0, la + 1.0, hid, transform=PC, fontsize=8, path_effects=halo, zorder=8, clip_on=True)
+
+        fig = plt.figure(figsize=(20, 19))
+        ax = fig.add_axes([0.02, 0.50, 0.96, 0.44], projection=proj)
+        show(ax, E_eng)
+        draw(ax, 0.8)
+        ax.set_title("全球：灰色虚线与空心符号 = 终图的热点链与孤岛；红三角 = 引擎 0 Ma 的火山岛（大小 ∝ 半径），"
+                     "蓝圈 = 环礁，点 = 海山（颜色 = 形成时刻，深 = 老）；黄星 = 热点（地幔参照系）", fontsize=11)
+        regions = [("东大洋", (-180, -105, -45, 45)), ("西大洋与北洋", (-75, -20, -60, 75)), ("东洋与南大洋", (25, 90, -60, -5))]
+        for j, (nm, (x0, x1, y0, y1)) in enumerate(regions):
+            ax = fig.add_axes([0.02 + j * 0.33, 0.03, 0.30, 0.38], projection=PC)
+            ax.set_extent((x0, x1, y0, y1), crs=PC)
+            ax.imshow(shaded_elevation(E_eng, grid.pixel_km_equator, vert_exag=3.0, land=E_eng > 0)[..., :3],
+                      extent=(-180, 180, -90, 90), transform=PC, origin="upper", interpolation="nearest")
+            draw(ax, 1.3, labels=True)
+            ax.gridlines(draw_labels=True, color="#888888", lw=0.3)
+            ax.set_title(nm, fontsize=12)
+        rows = [f"{r['id']} {r['name']}：岛 {r['n_island']} / 环礁 {r['n_atoll']} / 海山 {r['n_seamount']}"
+                + (f"，方向 {r['engine_bearing_deg']}°（终图 {r['design_bearing_deg']}°）" if r["design_bearing_deg"] is not None else "")
+                for r in (hs_cmp or [])]
+        fig.text(0.5, 0.985, "U27 热点岛链与孤岛：终图 vs 正向演化 0 Ma", fontsize=15, ha="center", va="top")
+        fig.text(0.01, 0.485, "；".join(rows[:8]) + "\n" + "；".join(rows[8:16]) + "\n" + "；".join(rows[16:]),
+                 fontsize=8, va="top")
+        stamp(fig)
+        fig.savefig(out / "06_hotspots.png", dpi=105)
+        plt.close(fig)
 
 if __name__ == "__main__":
     raise SystemExit(main())

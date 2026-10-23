@@ -3,15 +3,15 @@
  "design": "v2",
  "history": "v2",
  "mesh_level": 7,
- "run_code_version": "8621a82-dirty",
- "code_version": "8621a82-dirty",
- "wall_s": 214.4,
+ "run_code_version": "7a26906-dirty",
+ "code_version": "7a26906-dirty",
+ "wall_s": 152.6,
  "compare_grid": "1024x512",
  "comparison": {
   "final_land_Mkm2": 145.6,
   "engine_land_Mkm2": 142.9,
-  "both_land_Mkm2": 141.0,
-  "missing_land_Mkm2": 4.6,
+  "both_land_Mkm2": 141.1,
+  "missing_land_Mkm2": 4.5,
   "extra_land_Mkm2": 1.8,
   "land_iou": 0.957,
   "coast_offset_km": {
@@ -33,7 +33,7 @@
    "ZL": {
     "name": "南洋陆块",
     "area_Mkm2": 0.35,
-    "land_fraction": 0.715
+    "land_fraction": 0.719
    },
    "IN": {
     "name": "南方地盾陆块（印度式）",
@@ -78,7 +78,7 @@
    "juvenile": {
     "name": "新生地壳（岛弧、热点岛、孤岛等）",
     "area_Mkm2": 1.49,
-    "land_fraction": 0.002
+    "land_fraction": 0.014
    }
   },
   "mountains": [
@@ -222,7 +222,7 @@
     "name": "东南沿海山地",
     "design_height_m": 1800,
     "final_p90_m": 1615,
-    "engine_p90_m": 520,
+    "engine_p90_m": 481,
     "engine_land_fraction": 0.99,
     "cause": "古老活动陆缘的花岗岩山地"
    },
@@ -231,7 +231,7 @@
     "name": "东岸山系",
     "design_height_m": 2300,
     "final_p90_m": 1963,
-    "engine_p90_m": 770,
+    "engine_p90_m": 813,
     "engine_land_fraction": 0.97,
     "cause": "东缘长期俯冲的活动陆缘"
    },
@@ -240,7 +240,7 @@
     "name": "东北半岛火山脊",
     "design_height_m": 2800,
     "final_p90_m": 2378,
-    "engine_p90_m": 2987,
+    "engine_p90_m": 3360,
     "engine_land_fraction": 0.99,
     "cause": "俯冲带火山弧"
    },
@@ -249,7 +249,7 @@
     "name": "东岸半岛山脊",
     "design_height_m": 1500,
     "final_p90_m": 1328,
-    "engine_p90_m": 539,
+    "engine_p90_m": 566,
     "engine_land_fraction": 1.0,
     "cause": "断块山"
    },
@@ -258,7 +258,7 @@
     "name": "远方大陆西岸山系",
     "design_height_m": 5600,
     "final_p90_m": 4540,
-    "engine_p90_m": 4239,
+    "engine_p90_m": 4793,
     "engine_land_fraction": 0.98,
     "cause": "大洋板块向东俯冲到远方大陆之下（安第斯型）"
    },
@@ -267,7 +267,7 @@
     "name": "远方大陆南段冰原山系",
     "design_height_m": 3000,
     "final_p90_m": 2807,
-    "engine_p90_m": 2107,
+    "engine_p90_m": 689,
     "engine_land_fraction": 1.0,
     "cause": "同一俯冲带的南段；高纬多雪，山顶是山地冰原"
    },
@@ -276,7 +276,7 @@
     "name": "远方大陆东部古老高地",
     "design_height_m": 1300,
     "final_p90_m": 1244,
-    "engine_p90_m": 567,
+    "engine_p90_m": 464,
     "engine_land_fraction": 0.99,
     "cause": "古老地盾的剥蚀高地"
    },
@@ -285,7 +285,7 @@
     "name": "远方大陆北缘山地",
     "design_height_m": 2500,
     "final_p90_m": 2158,
-    "engine_p90_m": 973,
+    "engine_p90_m": 406,
     "engine_land_fraction": 1.0,
     "cause": "北缘小俯冲带的火山弧"
    },
@@ -303,7 +303,7 @@
     "name": "冰原长半岛山脊",
     "design_height_m": 2600,
     "final_p90_m": 2123,
-    "engine_p90_m": 2168,
+    "engine_p90_m": 1476,
     "engine_land_fraction": 0.98,
     "cause": "古老岩浆弧"
    },
@@ -339,7 +339,7 @@
     "name": "东北山地",
     "design_height_m": 2000,
     "final_p90_m": 1890,
-    "engine_p90_m": 499,
+    "engine_p90_m": 617,
     "engine_land_fraction": 1.0,
     "cause": "增生地体褶皱"
    },
@@ -348,7 +348,7 @@
     "name": "东南半岛山脊",
     "design_height_m": 2400,
     "final_p90_m": 2088,
-    "engine_p90_m": 3575,
+    "engine_p90_m": 3577,
     "engine_land_fraction": 0.99,
     "cause": "增生地体缝合带"
    },
@@ -429,7 +429,7 @@
     "name": "南洋陆块山脉",
     "design_height_m": 2800,
     "final_p90_m": 880,
-    "engine_p90_m": 998,
+    "engine_p90_m": 1017,
     "engine_land_fraction": 0.97,
     "cause": "沿板块边界的走滑挤压"
    },
@@ -438,7 +438,7 @@
     "name": "东方岛弧山地",
     "design_height_m": 2400,
     "final_p90_m": 884,
-    "engine_p90_m": 1091,
+    "engine_p90_m": 1490,
     "engine_land_fraction": 1.0,
     "cause": "岛弧火山与增生楔"
    },
@@ -447,7 +447,7 @@
     "name": "东南大岛山地",
     "design_height_m": 2400,
     "final_p90_m": 900,
-    "engine_p90_m": 765,
+    "engine_p90_m": 768,
     "engine_land_fraction": 1.0,
     "cause": "岛上的增生地体"
    },
@@ -503,7 +503,7 @@
     "id": "PL5",
     "name": "远方大陆高原",
     "design_height_m": 3900,
-    "engine_median_m": 1588,
+    "engine_median_m": 1899,
     "final_median_m": 3894,
     "cause": "安第斯型陆缘后方的高原"
    },
@@ -521,7 +521,7 @@
     "id": "PL7",
     "name": "砂岩台地群",
     "design_height_m": 1500,
-    "engine_median_m": 478,
+    "engine_median_m": 479,
     "final_median_m": 1500,
     "cause": "古陆核上平铺的古老石英砂岩盖层（岩性区 LT3）被长期剥蚀切成孤立平顶山，台地边缘是千米陡崖（罗赖马式）"
    },
@@ -530,7 +530,7 @@
     "id": "PL8",
     "name": "南方喀斯特高原",
     "design_height_m": 1400,
-    "engine_median_m": 1170,
+    "engine_median_m": 1166,
     "final_median_m": 759,
     "cause": "厚层碳酸盐台地（岩性区 LT1）随东方大高原碰撞整体抬升的高原（云贵式），季风湿热下溶蚀成峰林与天坑"
    },
@@ -603,7 +603,7 @@
    "final_block_cells": {
     "-1": 470
    },
-   "engine_elev_m_median": -5383,
+   "engine_elev_m_median": -5355,
    "no": 1
   },
   {
@@ -650,7 +650,7 @@
    "final_block_cells": {
     "-1": 85
    },
-   "engine_elev_m_median": -5577,
+   "engine_elev_m_median": -5588,
    "no": 4
   },
   {
@@ -671,21 +671,6 @@
   {
    "kind": "missing",
    "area_Mkm2": 0.12,
-   "lon": -47.6,
-   "lat": 63.6,
-   "near_features": [
-    "北方火山岛",
-    "北洋冰火岛"
-   ],
-   "final_block_cells": {
-    "-1": 177
-   },
-   "engine_elev_m_median": -5423,
-   "no": 6
-  },
-  {
-   "kind": "missing",
-   "area_Mkm2": 0.12,
    "lon": 120.9,
    "lat": 16.0,
    "near_features": [
@@ -695,7 +680,22 @@
    "final_block_cells": {
     "-1": 80
    },
-   "engine_elev_m_median": -5645,
+   "engine_elev_m_median": -5646,
+   "no": 6
+  },
+  {
+   "kind": "missing",
+   "area_Mkm2": 0.11,
+   "lon": -47.6,
+   "lat": 63.6,
+   "near_features": [
+    "北方火山岛",
+    "北洋冰火岛"
+   ],
+   "final_block_cells": {
+    "-1": 164
+   },
+   "engine_elev_m_median": -5423,
    "no": 7
   },
   {
@@ -741,7 +741,7 @@
    "final_block_cells": {
     "-1": 36
    },
-   "engine_elev_m_median": -5578,
+   "engine_elev_m_median": -5618,
    "no": 10
   }
  ],
@@ -844,26 +844,325 @@
    "engine_0Ma_elev_m_median": 2290
   }
  ],
+ "hotspots_0Ma": [
+  {
+   "id": "H1",
+   "name": "大洋长链",
+   "n_island": 12,
+   "n_atoll": 24,
+   "n_seamount": 56,
+   "max_island_radius_km": 38.1,
+   "oldest_Ma": 100.0,
+   "max_dist_km": 5065,
+   "engine_bearing_deg": 300,
+   "design_bearing_deg": 297,
+   "design_length_km": 3457,
+   "design_size_km": null
+  },
+  {
+   "id": "H2",
+   "name": "南方珊瑚岛群",
+   "n_island": 6,
+   "n_atoll": 24,
+   "n_seamount": 4,
+   "max_island_radius_km": 11.8,
+   "oldest_Ma": 70.0,
+   "max_dist_km": 2463,
+   "engine_bearing_deg": 239,
+   "design_bearing_deg": 288,
+   "design_length_km": 2053,
+   "design_size_km": null
+  },
+  {
+   "id": "H7",
+   "name": "南方孤岛链",
+   "n_island": 2,
+   "n_atoll": 3,
+   "n_seamount": 1,
+   "max_island_radius_km": 2.3,
+   "oldest_Ma": 15.0,
+   "max_dist_km": 496,
+   "engine_bearing_deg": 238,
+   "design_bearing_deg": 297,
+   "design_length_km": 1358,
+   "design_size_km": null
+  },
+  {
+   "id": "H3",
+   "name": "西大洋火山群",
+   "n_island": 5,
+   "n_atoll": 9,
+   "n_seamount": 0,
+   "max_island_radius_km": 10.5,
+   "oldest_Ma": 40.0,
+   "max_dist_km": 235,
+   "engine_bearing_deg": 306,
+   "design_bearing_deg": 150,
+   "design_length_km": 665,
+   "design_size_km": null
+  },
+  {
+   "id": "H5",
+   "name": "东洋火山岛",
+   "n_island": 10,
+   "n_atoll": 51,
+   "n_seamount": 0,
+   "max_island_radius_km": 38.1,
+   "oldest_Ma": 72.0,
+   "max_dist_km": 4274,
+   "engine_bearing_deg": 0,
+   "design_bearing_deg": 316,
+   "design_length_km": 4023,
+   "design_size_km": null
+  },
+  {
+   "id": "H6",
+   "name": "洋中脊群岛",
+   "n_island": 13,
+   "n_atoll": 0,
+   "n_seamount": 4,
+   "max_island_radius_km": 4.9,
+   "oldest_Ma": 30.0,
+   "max_dist_km": 174,
+   "engine_bearing_deg": 265,
+   "design_bearing_deg": 76,
+   "design_length_km": 705,
+   "design_size_km": null
+  },
+  {
+   "id": "I9",
+   "name": "北方火山岛",
+   "n_island": 34,
+   "n_atoll": 0,
+   "n_seamount": 27,
+   "max_island_radius_km": 38.1,
+   "oldest_Ma": 60.0,
+   "max_dist_km": 342,
+   "engine_bearing_deg": 260,
+   "design_bearing_deg": 74,
+   "design_length_km": 276,
+   "design_size_km": 270
+  },
+  {
+   "id": "K1",
+   "name": "中脊孤岛",
+   "n_island": 2,
+   "n_atoll": 1,
+   "n_seamount": 0,
+   "max_island_radius_km": 2.8,
+   "oldest_Ma": 10.0,
+   "max_dist_km": 309,
+   "engine_bearing_deg": 269,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 14
+  },
+  {
+   "id": "K2",
+   "name": "信风孤岛",
+   "n_island": 2,
+   "n_atoll": 4,
+   "n_seamount": 0,
+   "max_island_radius_km": 7.6,
+   "oldest_Ma": 20.0,
+   "max_dist_km": 542,
+   "engine_bearing_deg": 285,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 16
+  },
+  {
+   "id": "K3",
+   "name": "西风双岛",
+   "n_island": 5,
+   "n_atoll": 0,
+   "n_seamount": 6,
+   "max_island_radius_km": 12.7,
+   "oldest_Ma": 30.0,
+   "max_dist_km": 482,
+   "engine_bearing_deg": 261,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 18
+  },
+  {
+   "id": "K4",
+   "name": "冰海孤岛",
+   "n_island": 1,
+   "n_atoll": 0,
+   "n_seamount": 1,
+   "max_island_radius_km": 1.5,
+   "oldest_Ma": 10.0,
+   "max_dist_km": 54,
+   "engine_bearing_deg": 295,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 12
+  },
+  {
+   "id": "K5",
+   "name": "北洋冰火岛",
+   "n_island": 2,
+   "n_atoll": 0,
+   "n_seamount": 1,
+   "max_island_radius_km": 3.0,
+   "oldest_Ma": 15.0,
+   "max_dist_km": 35,
+   "engine_bearing_deg": 313,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 18
+  },
+  {
+   "id": "K6",
+   "name": "赤道群岛",
+   "n_island": 4,
+   "n_atoll": 1,
+   "n_seamount": 1,
+   "max_island_radius_km": 12.7,
+   "oldest_Ma": 15.0,
+   "max_dist_km": 35,
+   "engine_bearing_deg": 286,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 70
+  },
+  {
+   "id": "K7",
+   "name": "极远孤岛",
+   "n_island": 0,
+   "n_atoll": 0,
+   "n_seamount": 4,
+   "max_island_radius_km": 0.0,
+   "oldest_Ma": 10.0,
+   "max_dist_km": 289,
+   "engine_bearing_deg": 234,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 20
+  },
+  {
+   "id": "K8",
+   "name": "东洋孤礁",
+   "n_island": 2,
+   "n_atoll": 0,
+   "n_seamount": 1,
+   "max_island_radius_km": 0.3,
+   "oldest_Ma": 15.0,
+   "max_dist_km": 709,
+   "engine_bearing_deg": 308,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 6,
+   "nearest_to_design_km": 651
+  },
+  {
+   "id": "K9a",
+   "name": "北洋环礁",
+   "n_island": 0,
+   "n_atoll": 3,
+   "n_seamount": 0,
+   "max_island_radius_km": 0.0,
+   "oldest_Ma": 100.0,
+   "max_dist_km": 5480,
+   "engine_bearing_deg": null,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 6,
+   "nearest_to_design_km": 5401
+  },
+  {
+   "id": "K9b",
+   "name": "北洋环礁",
+   "n_island": 0,
+   "n_atoll": 2,
+   "n_seamount": 3,
+   "max_island_radius_km": 0.0,
+   "oldest_Ma": 99.0,
+   "max_dist_km": 5432,
+   "engine_bearing_deg": null,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 6,
+   "nearest_to_design_km": 5261
+  },
+  {
+   "id": "K11",
+   "name": "南大洋孤岛群",
+   "n_island": 5,
+   "n_atoll": 0,
+   "n_seamount": 6,
+   "max_island_radius_km": 14.2,
+   "oldest_Ma": 20.0,
+   "max_dist_km": 378,
+   "engine_bearing_deg": 3,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 16
+  },
+  {
+   "id": "K12",
+   "name": "西风小岛",
+   "n_island": 2,
+   "n_atoll": 0,
+   "n_seamount": 1,
+   "max_island_radius_km": 1.7,
+   "oldest_Ma": 10.0,
+   "max_dist_km": 186,
+   "engine_bearing_deg": 13,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 14
+  },
+  {
+   "id": "K13",
+   "name": "中脊双岛",
+   "n_island": 3,
+   "n_atoll": 0,
+   "n_seamount": 1,
+   "max_island_radius_km": 3.9,
+   "oldest_Ma": 10.0,
+   "max_dist_km": 276,
+   "engine_bearing_deg": 109,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 10
+  },
+  {
+   "id": "K14",
+   "name": "冰火孤岛",
+   "n_island": 4,
+   "n_atoll": 0,
+   "n_seamount": 3,
+   "max_island_radius_km": 19.0,
+   "oldest_Ma": 20.0,
+   "max_dist_km": 481,
+   "engine_bearing_deg": 113,
+   "design_bearing_deg": null,
+   "design_length_km": null,
+   "design_size_km": 18
+  }
+ ],
  "crust_0Ma": {
   "continental_Mkm2": 142.8,
-  "arc_origin_continental_Mkm2": 0.02,
+  "arc_origin_continental_Mkm2": 0.03,
   "last_orogeny_area_Mkm2": {
-   "collision": 5.89,
-   "arc": 41.73,
+   "collision": 5.9,
+   "arc": 42.96,
    "rift": 0.0
   },
   "thickness_km_p99": 65.0,
   "elev_m_p99_land": 4945
  },
- "volume_change": 0.0319,
+ "volume_change": 0.0346,
  "budget_km3": {
-  "arc_added": 620102358,
-  "eroded": 456823227,
+  "arc_added": 674679162,
+  "eroded": 497587918,
   "rift_thinning": 0,
-  "arc_converted": 694931
+  "arc_converted": 981160
  },
  "engine_event_counts": {
-  "subduction_start": 12,
+  "subduction_start": 14,
   "apron_transfer": 286,
   "collision_onset": 12
  },
@@ -965,5 +1264,5 @@
    "lon": 83.93
   }
  ],
- "generated": "2026-10-24 04:23:30"
+ "generated": "2026-10-24 05:33:02"
 }

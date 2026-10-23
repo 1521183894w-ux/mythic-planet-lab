@@ -271,9 +271,9 @@ def assign_ocean_plates(mesh, plate: np.ndarray, cont: np.ndarray, rules: list, 
       归最近的下行板块。（第一版按 90° 判断，洲 A 分到的"A、B 之间"的洋壳一直伸到两洲南边很远，A 拼上 B 后挡在
       A、B 南岸外，南方陆块群的洋壳在大洋中间撞上它，长出洋内弧，洲 C 北缘又撞上这条弧被消耗。）
     - 其余洋壳归外大洋板块 background（不属于任何大陆）；
-    - ocean_plates（U26，[{id, near: 板块, side: "west"/"east", lat: [南, 北]}]）：外大洋里最近的大陆是 near、位于它的
-      西侧/东侧（指向它质心的方向与正东方向夹角小于 60° / 与正西方向夹角小于 60°）、纬度在 lat 范围内的洋壳，
-      另成一块大洋板块 id。"""
+    - ocean_plates（U26，[{id, near: 板块, side: "west"/"east", lat: [南, 北], lon: [西, 东]}]，按顺序）：外大洋里
+      纬度在 lat、经度在 lon（可省；西 > 东 时跨过 180° 经线）范围内，且（写了 near 时）最近的大陆是 near、位于它的
+      西侧/东侧（指向它质心的方向与正东方向夹角小于 60° / 与正西方向夹角小于 60°）的洋壳，另成一块大洋板块 id。"""
     from scipy.spatial import cKDTree
 
     from .geometry import km_from_chord
@@ -317,15 +317,22 @@ def assign_ocean_plates(mesh, plate: np.ndarray, cont: np.ndarray, rules: list, 
         east /= np.maximum(np.linalg.norm(east, axis=1, keepdims=True), 1e-12)
         lat = np.degrees(np.arcsin(np.clip(X[:, 2], -1, 1)))
         p1 = np.asarray(pids)[k1]
+        lon = np.degrees(np.arctan2(X[:, 1], X[:, 0]))
         for op in ocean_plates:
-            # 在哪一侧按"指向该陆块质心的方向"判断（第一版按指向最近海岸点的方向，海岸凹凸处方向突然翻转，
-            # 范围碎成一条条斜条纹，夹在中间的外大洋碎条在正向演化里变成大洋里锯齿状的水下弧脊）
-            blk = cont & (plate == int(op["near"]))
-            cen = mesh.xyz[blk].sum(0)
-            cen = cen / np.linalg.norm(cen)
-            te = np.sum(tangent(np.broadcast_to(cen, X.shape)) * east, axis=1)
-            side = te > 0.5 if op["side"] == "west" else te < -0.5
-            sel = (res == background) & (p1 == int(op["near"])) & side & (lat >= op["lat"][0]) & (lat <= op["lat"][1])
+            sel = (res == background) & (lat >= op["lat"][0]) & (lat <= op["lat"][1])
+            if op.get("lon"):                  # 经度范围 [西, 东]，西 > 东 时跨过 180° 经线
+                w, e = op["lon"]
+                sel &= ((lon >= w) & (lon <= e)) if w <= e else ((lon >= w) | (lon <= e))
+            if op.get("near") is not None:
+                # 在哪一侧按"指向该陆块质心的方向"判断（第一版按指向最近海岸点的方向，海岸凹凸处方向突然翻转，
+                # 范围碎成一条条斜条纹，夹在中间的外大洋碎条在正向演化里变成大洋里锯齿状的水下弧脊）
+                blk = cont & (plate == int(op["near"]))
+                cen = mesh.xyz[blk].sum(0)
+                cen = cen / np.linalg.norm(cen)
+                te = np.sum(tangent(np.broadcast_to(cen, X.shape)) * east, axis=1)
+                sd = op.get("side", "any")
+                side = te > 0.5 if sd == "west" else te < -0.5 if sd == "east" else np.ones(n, bool)
+                sel &= (p1 == int(op["near"])) & side
             res[sel] = int(op["id"])
     out[oc] = res
     return out

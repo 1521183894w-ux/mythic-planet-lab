@@ -150,11 +150,25 @@ ocean:
   # 运动：绕固定欧拉极（地幔参照系）匀速转动，欧拉极取在 300 Ma 范围质心与"朝向海岸"方向所在大圆的极上，
   # 质心处速度 = speed。地球上纳斯卡板块约 7 cm/yr、太平洋板块 7–10 cm/yr；这里取 5 与 4 cm/yr（加上远方大陆
   # 150 Ma 以后约 2.5 cm/yr 的西漂，远方大陆西岸汇聚约 7.5 cm/yr）。欧拉极由 300 Ma 几何算出后写在这里。
+  # U27：按终图东大洋热点链重定。终图的大洋长链、南方珊瑚岛群、南方孤岛链都越老越往西北（首段方位 288°–297°），
+  # 所在板块向西北运动；U26 第一版的东大洋板块（向东）正好盖住这三条链，正向演化出的链朝东南（129°–130°），反了。
+  # 改为以约 128°W 的扩张脊（300 Ma 时的位置；东太平洋海隆式）为界：东侧向东俯冲到远方大陆（纳斯卡式），
+  # 西侧一直到洲 B 东岸、向西北运动并载着热点链（太平洋式）。西侧板块的欧拉极由三条链的首段方位拟合
+  # （0–30 Ma 极 (120°E, 66°S)，三处方位 293°–295°，平均误差 4.4°，大洋长链热点处 6 cm/yr）；
+  # 大洋长链在 (174°W, 26°N) 转向北（老段方位 331°–355°），活动端到弯点 1790 km，按 6 cm/yr 约 30 Ma 转弯：
+  # 30–60 Ma 绕 (115.4°E, 9.4°S)，热点处向 350°（夏威夷—天皇海山链式）；60 Ma 以前沿用第一段。
   plates:
-    - {id: 910, code: EO, name: 东大洋板块, near: FAR, side: west, lat: [-45, 25], pole: [-46.99, 52.80], speed_cm_yr: 5.0,
-       what: 向东俯冲到远方大陆西岸之下（安第斯型，M8、M8c）}
-    - {id: 920, code: NO, name: 北大洋板块, near: B, side: east, lat: [10, 62], pole: [126.97, -40.18], speed_cm_yr: 4.0,
-       what: 向西俯冲到洲 B 东岸之下（M7 东岸山系；东岸岛弧要 1.2d 的过程）}
+    # 东侧板块包住 300 Ma 时远方大陆西、西南、南侧所有最近的洋壳（第一版只取正西方向：南侧、西南侧是固定的外大洋，
+    # 150 Ma 以前远方大陆随洲 C 向东走，身后张开的新洋壳都归了它，积成一大片围裙；150 Ma 后远方大陆西移，东侧板块被夹在
+    # 海岸与围裙之间、0 Ma 前整块俯冲完，南方几条热点链落在远方大陆的围裙上、跟着它向西南走）
+    - {id: 910, code: EO, name: 东大洋东侧板块, near: FAR, lat: [-60, 30], lon: [-128, -30],
+       pole: [-46.99, 52.80], speed_cm_yr: 5.8,   # 与西侧板块的西向分量（约 5.5 cm/yr）相当，扩张脊大体不动
+       what: 向东俯冲到远方大陆西岸之下（安第斯型，M8、M8c）；西缘是与西侧板块之间的扩张脊}
+    - {id: 920, code: PA, name: 东大洋西侧板块, lat: [-50, 62], lon: [125, -128],
+       motion: [{from: 0, to: 30, pole: [120.0, -66.0], rate_deg_myr: 0.558},
+                {from: 30, to: 60, pole: [115.37, -9.42], rate_deg_myr: 0.540},
+                {from: 60, to: 300, pole: [120.0, -66.0], rate_deg_myr: 0.558}],
+       what: 向西北运动，载着大洋长链等热点链；向西俯冲到洲 B 东岸之下（M7 东岸山系；东岸岛弧属 U28）}
   subduction:               # 先写的优先：洲 A 撞洲 B 排在古洋之后，洲 A 只拿 A、B 之间那条缺口里的洋壳
     - {down: [BSE], over: [B], what: 东南增生地块北上拼到洲 B 南缘（280–120 Ma）}
     - {down: [IN], over: [B], what: 南方地盾陆块撞洲 B（约 48 Ma，东方大高原）}
@@ -167,6 +181,35 @@ ocean:
     - {down: [C, D, IN, MD, POL, ZL], over: [A, B],
        what: 古洋向北俯冲到洲 A、B 南缘之下，残留洋盆成为主内海（内海北岸山系 M1 的成因）；洲 D 东北角撞洲 B（东方地峡）}
     - {down: [A], over: [B], what: 洲 A 撞洲 B（250–220 Ma）}
+
+# U27：热点目录（packages/tectonics/volcanism.py；scripts/design_forward.py 正向演化时在上方板块上长火山）。
+# 热点在地幔（热点）参照系里固定，与 hotspot_checks 同一参照系。at = 终图热点链的活动端（第一个点）或孤岛的位置；
+# active = [开始, 停止] Ma；flux = 岩浆通量等级（packages/tectonics/volcanism.py VolcanoParams：强 1.2×10⁵、中 4×10⁴、
+# 弱 1.5×10⁴ km³/Myr；夏威夷近几百万年约 2×10⁵，圣赫勒拿、阿森松这类小岛的火山体约 1–2×10⁴ km³）。
+# 已熄灭、只剩环礁的老海山（东洋孤礁、北洋环礁）：old = {plate: 所在大洋板块, age: 形成时刻}，热点位置按该板块的运动
+# 倒回到形成时刻（终图上的位置是它 0 Ma 的位置）。南大洋高原（大火成岩省）与南洋孤岛（蛇绿岩）不是热点火山，属 U29、U28。
+hotspots:
+  - {id: H1, name: 大洋长链, at: [-158.0, 19.5], active: [100, 0], flux: strong}      # 夏威夷式，中途转向记录板块转向
+  - {id: H2, name: 南方珊瑚岛群, at: [-140.0, -17.0], active: [70, 0], flux: medium}  # 老段沉降成环礁
+  - {id: H7, name: 南方孤岛链, at: [-128.0, -25.0], active: [15, 0], flux: weak}      # 年轻的小热点
+  - {id: H3, name: 西大洋火山群, at: [-40.0, 21.0], active: [40, 0], flux: medium}    # 慢速板块上，岛屿聚成一团
+  - {id: H5, name: 东洋火山岛, at: [63.0, -21.0], active: [80, 0], flux: strong}      # 留尼汪式；约 75 Ma 南方地盾陆块经过（溢流玄武岩属 U29）
+  - {id: H6, name: 洋中脊群岛, at: [-42.0, 38.5], active: [30, 0], flux: weak}
+  - {id: I9, name: 北方火山岛, at: [-48.0, 63.5], active: [60, 0], flux: strong}     # 洋中脊上的强热点（冰岛式）
+  - {id: K1, name: 中脊孤岛, at: [-55.5, -7.5], active: [10, 0], flux: weak}
+  - {id: K2, name: 信风孤岛, at: [-44.0, -17.0], active: [20, 0], flux: weak}
+  - {id: K3, name: 西风双岛, at: [-60.5, -37.4], active: [30, 0], flux: medium}
+  - {id: K4, name: 冰海孤岛, at: [-47.5, -54.6], active: [10, 0], flux: weak}
+  - {id: K5, name: 北洋冰火岛, at: [-41.6, 70.6], active: [15, 0], flux: weak}
+  - {id: K6, name: 赤道群岛, at: [-131.6, -0.4], active: [15, 0], flux: medium}
+  - {id: K7, name: 极远孤岛, at: [-124.0, -36.0], active: [10, 0], flux: weak}
+  - {id: K8, name: 东洋孤礁, old: {at: [-127.0, 10.4], plate: EO, age: 12}, active_myr: 6, flux: medium}   # 东侧板块向东走，要在扩张脊以东长成，只能年轻
+  - {id: K9a, name: 北洋环礁, old: {at: [156.4, 22.6], plate: PA, age: 100}, active_myr: 8, flux: medium}
+  - {id: K9b, name: 北洋环礁, old: {at: [164.0, 18.8], plate: PA, age: 95}, active_myr: 8, flux: medium}
+  - {id: K11, name: 南大洋孤岛群, at: [51.0, -46.2], active: [20, 0], flux: medium}
+  - {id: K12, name: 西风小岛, at: [37.6, -46.8], active: [10, 0], flux: weak}
+  - {id: K13, name: 中脊双岛, at: [78.0, -37.8], active: [10, 0], flux: weak}
+  - {id: K14, name: 冰火孤岛, at: [74.6, -53.4], active: [20, 0], flux: medium}
 
 # U25：正向演化（scripts/design_forward.py）的引擎参数，覆盖 packages/tectonics/crust.py Params 的默认值
 forward:

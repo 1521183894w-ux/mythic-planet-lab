@@ -126,13 +126,20 @@ def build_history(hist_cfg: dict, centroids: dict) -> PlateHistory:
     t0 = float(hist_cfg["t0"])
     if oc.get("background"):                # 外大洋板块：固定在地幔（热点）参照系里（U25）
         h.add(int(oc["background"]["id"]), 0, "OCEAN", [(0.0, np.eye(3)), (t0, np.eye(3))])
-    for op in oc.get("plates", []):         # 单独运动的大洋板块：绕固定欧拉极匀速转动（U26）
-        axis = lonlat_to_xyz(*op["pole"])
-        w = float(op["speed_cm_yr"]) * 10.0 / R_KM                      # rad/Myr（欧拉极离范围质心 90°，质心处速度 = speed）
-        # 现今 -> t 时刻：倒转 w·t。关键帧每 60 Myr 一个（四元数插值的转角不超过 180°）
-        keys = [(float(t), rotmat(axis, -w * float(t))) for t in np.arange(0.0, t0 + 0.1, 60.0)]
-        if keys[-1][0] < t0:
-            keys.append((t0, rotmat(axis, -w * t0)))
+    for op in oc.get("plates", []):         # 单独运动的大洋板块：绕固定欧拉极分段匀速转动（U26、U27）
+        # motion：[{from, to, pole: [经, 纬], rate_deg_myr}]（按时间往回排）；没写时用 pole + speed_cm_yr 全程一段
+        # （欧拉极离 300 Ma 范围的质心 90°，质心处速度 = speed）
+        segs = op.get("motion") or [{"from": 0.0, "to": t0, "pole": op["pole"],
+                                     "rate_deg_myr": np.degrees(float(op["speed_cm_yr"]) * 10.0 / R_KM)}]
+        R, keys = np.eye(3), [(0.0, np.eye(3))]
+        for sg in sorted(segs, key=lambda s: float(s["from"])):
+            a, b = float(sg["from"]), float(sg["to"])
+            axis, w = lonlat_to_xyz(*sg["pole"]), np.radians(float(sg["rate_deg_myr"]))
+            # 现今 -> t：先倒回这一段之前已走过的（R），再绕本段的极倒转 w·(t − a)。关键帧在分段处与每 60 Myr
+            ts = sorted(set(np.arange(a, b, 60.0).tolist()[1:] + [b]))
+            for t in ts:
+                keys.append((float(t), rotmat(axis, -w * (t - a)) @ R))
+            R = rotmat(axis, -w * (b - a)) @ R
         h.add(int(op["id"]), 0, op["code"], keys)
     return h
 
