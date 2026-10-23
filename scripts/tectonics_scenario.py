@@ -62,8 +62,11 @@ def plan_record(plan, planner) -> dict:
         "seed": plan.seed, "anchor": plan.anchor, "roles": plan.roles, "score": plan.score,
         "groups": {b: list(B.members) for b, B in planner.blocks.items() if B.members},
         "block_area_km2": {b: B.area_km2 for b, B in planner.blocks.items()},
-        "docks": {b: {"t_dock": d.t_dock, "t_contact": d.t_contact, "inner_sea": d.inner_sea, "segs": segs(d.segs)}
+        "docks": {b: {"t_dock": d.t_dock, "t_contact": d.t_contact, "inner_sea": d.inner_sea, "segs": segs(d.segs),
+                      "parent": d.parent, "t_allow": planner._t_allow(d) if d.segs else None}
                   for b, d in plan.docks.items()},
+        "continents": plan.continents, "pairs": plan.pairs, "welds": plan.welds, "routes": plan.routes,
+        "departing": plan.departing, "movers": getattr(planner, "mover_log", {}),
         "moves": {b: segs(ss) for b, ss in plan.moves.items()},
         "placement": {**plan.placement, "pole_lat_lon": _ll(plan.G_axis), "angle_deg": float(np.degrees(plan.G_angle))},
         "breakups": [{k: (_ll(v) if k in ("pole", "axis") else v) for k, v in e.items()} for e in plan.breakups],
@@ -225,13 +228,17 @@ def figures(level: int, runs: list[tuple[int, int]]):
             ev = []
             for b, dk in plan["docks"].items():
                 if dk["segs"] and t <= dk["t_dock"] < t_prev:
-                    ev.append(f"陆块 {b} 拼上" + ("（圈出主内海）" if dk["inner_sea"] else ""))
+                    onto = f"拼上 {dk['parent']}" if dk.get("parent") not in (None, plan["anchor"]) else "拼上"
+                    ev.append(f"陆块 {b} {onto}" + ("（圈出主内海）" if dk["inner_sea"] else ""))
             for e in plan["breakups"]:
                 if t <= e["t"] < t_prev:
                     ev.append({"reopen": f"陆块 {e['block']} 沿缝合带张开", "micro": f"陆块 {e['block']} 裂出微大陆"}[e["kind"]])
             ax.set_title(f"{f['t']:.0f} Ma" + ("：" + "；".join(ev) if ev else ""), fontsize=9.5)
         roles = plan["roles"]
         rl = "；".join(f"{b} {dict(main='主大陆', polar='极地', secondary='次大陆').get(r, r)}" for b, r in roles.items())
+        if plan.get("continents"):
+            rl += "；洲：" + "，".join("+".join(str(x) for x in v) for v in plan["continents"].values()) \
+                  + "；分组：" + " | ".join("+".join(str(x) for x in g) for g in plan.get("pairs", []) if g)
         fig.suptitle(f"世界种子 {w} · 剧本种子 {s}：300 -> 0 Ma 古地理（陆块角色：{rl}）\n0 Ma A 层：{a_text(js)}",
                      fontsize=10.5)
         stamp(fig)

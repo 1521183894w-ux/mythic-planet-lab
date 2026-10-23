@@ -77,7 +77,11 @@ def analyse(mesh, w: int, level: int, sseed: int) -> dict:
             if weld + facing >= 300.0:
                 pairs.append({"pair": [a, b], "weld_km": weld, "facing_km": facing})
     wt, ft = sum(p["weld_km"] for p in pairs), sum(p["facing_km"] for p in pairs)
+    # U21：各块属于哪个洲（剧本记录的 continents；1.2c 第三步以前的剧本没有，按块各自着色）
+    cont_of = {int(b): int(c) for c, mem in (plan.get("continents") or {}).items() for b in mem}
     return {"world": w, "main_blocks": {b: plan["block_area_km2"][str(b)] for b in main},
+            "continents": {int(c): [int(b) for b in mem] for c, mem in (plan.get("continents") or {}).items()},
+            "_cont": cont_of,
             "main_land_km2": tot, "pieces_ge_1Mkm2": int((comp >= 1e6).sum()),
             "largest_piece_share": float(comp[0] / tot) if tot else 0.0, "pieces_km2": comp[:6].tolist(),
             "weld_km": wt, "facing_km": ft, "weld_share": wt / max(wt + ft, 1.0), "pairs": pairs,
@@ -109,8 +113,14 @@ def figure(mesh, res: list[dict], path: Path):
         land = elev > 0
         col = np.zeros((mesh.n, 3)) + np.array([0.80, 0.86, 0.93])
         col[land] = (0.75, 0.75, 0.72)
+        cont = r.get("_cont") or {}
+        cores = sorted(set(cont.values()), key=lambda c: main.index(c) if c in main else 99)
         for i, b in enumerate(main):
-            col[land & (blk == b)] = cmap(i % 10)[:3]
+            if cont.get(b) in cores:                      # 按洲着色，卫星陆块颜色浅一些
+                c = np.array(cmap(cores.index(cont[b]) % 10)[:3])
+                col[land & (blk == b)] = c if b == cont[b] else 0.55 * c + 0.45
+            else:
+                col[land & (blk == b)] = cmap(i % 10)[:3]
         ew = E[land[E[:, 0]] & land[E[:, 1]] & (blk[E[:, 0]] != blk[E[:, 1]]) & np.isin(blk[E[:, 0]], main)
                & np.isin(blk[E[:, 1]], main)]
         img = np.stack([raster(col[:, c]) for c in range(3)], -1)
@@ -123,7 +133,9 @@ def figure(mesh, res: list[dict], path: Path):
             ax.scatter(lo, la, s=1.2, c="k", transform=PC, lw=0)
         ax.set_global()
         ax.gridlines(color="0.5", lw=0.3, alpha=0.5)
-        ax.set_title(f"世界 {r['world']}：主陆块 {len(main)} 块（各色）· 陆地连成 {r['pieces_ge_1Mkm2']} 片，最大占 "
+        nc = f"{len(cores)} 个洲、" if cores else ""
+        ax.set_title(f"世界 {r['world']}：{nc}主陆块 {len(main)} 块（{'按洲着色，卫星陆块浅色' if cores else '各色'}）· "
+                     f"陆地连成 {r['pieces_ge_1Mkm2']} 片，最大占 "
                      f"{r['largest_piece_share']:.0%} · 焊上 {r['weld_km'] / 1e3:.1f} 千 km / 隔窄海面对面 "
                      f"{r['facing_km'] / 1e3:.1f} 千 km（焊上 {r['weld_share']:.0%}）", fontsize=8.5)
     fig.suptitle("0 Ma：主大陆由哪些陆块拼成、哪里真正焊上（黑点 = 不同主陆块的陆地相接处；灰 = 其他陆地：极地、次大陆、岛弧等）",

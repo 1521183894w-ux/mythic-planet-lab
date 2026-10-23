@@ -7,8 +7,8 @@ from mythic.tectonics.crust import Params
 from mythic.tectonics.geometry import R_KM, chord_from_km, lonlat_to_xyz, rotmat, unit
 from mythic.tectonics.mesh import load_mesh
 from mythic.tectonics.prehistory import build_initial_world
-from mythic.tectonics.scenario import (Block, Contact, Dock, Planner, dock_pose, group_adjacent, run_scenario,
-                                       slide_to_contact)
+from mythic.tectonics.scenario import (Block, Contact, Dock, Planner, ScenarioParams, dock_pose, group_adjacent,
+                                       run_scenario, slide_to_contact)
 
 
 @pytest.fixture(scope="module")
@@ -96,9 +96,16 @@ def test_script_matches_plan(planned):
             # 剧本按整 Myr 写，规划的分段端点是 5 Myr 的整数倍，二者应几乎一致
             assert np.abs(rel - pl.pose(b, float(t))).max() < 2e-3, (b, t)
     for b, segs in plan.moves.items():
+        info = plan.departing.get(b)
         for t in (260, 150, 0):
             rel = Fa(t).T @ s.forward_total(b, t)
-            assert np.abs(rel - dock_pose(Dock(b, segs[-1][1], segs), float(t), 0.0, 0.0)).max() < 2e-2, (b, t)
+            if info and t >= info["t"]:                       # 离开前随它的洲（U21 第二版）
+                want = pl.pose(b, float(t))
+            elif info:
+                want = dock_pose(Dock(b, segs[-1][1], segs), float(t), 0.0, 0.0) @ pl.pose(b, float(info["t"]))
+            else:
+                want = dock_pose(Dock(b, segs[-1][1], segs), float(t), 0.0, 0.0)
+            assert np.abs(rel - want).max() < 2e-2, (b, t)
     for q, lead in pl.follower_of.items():                     # 编组陆块与领头陆块一起运动
         assert np.allclose(s.forward_total(q, 0), s.forward_total(lead, 0), atol=1e-6)
     # 整体定位：锚定陆块 300 Myr 内匀速完成 G
@@ -153,7 +160,8 @@ def test_inner_sea_min_aspect(mesh, world, planned):
     if not plan.inner_sea.get("found"):
         pytest.skip("这个种子规划阶段没有选出主内海")
     asp = plan.inner_sea["official"]["aspect"]
-    same = Planner(mesh, world, seed=1).plan(only_attempt=plan.attempt, inner_min_aspect=asp - 1e-6)
+    # 要求超过 2.2 时也进代理评分（need_asp），候选排序会变；取原主内海已满足、又不改评分的要求
+    same = Planner(mesh, world, seed=1).plan(only_attempt=plan.attempt, inner_min_aspect=min(asp, 2.2) - 1e-6)
     assert same.inner_sea.get("found") and abs(same.inner_sea["official"]["aspect"] - asp) < 1e-9
     strict = Planner(mesh, world, seed=1).plan(only_attempt=plan.attempt, inner_min_aspect=asp + 50.0)
     assert not strict.inner_sea.get("found")
@@ -168,7 +176,7 @@ def test_staged_routes_keep_end_pose(planned):
     for b, d in plan.docks.items():
         if b == plan.anchor or not d.segs:
             continue
-        vs = pl._staged_routes(b, d, [k for k in plan.docks if k != b], n=6)
+        vs = pl._staged_routes(b, d, n=6)
         for v in vs:
             assert np.allclose(dock_pose(v, float(p.t0), p.residual, p.residual_myr), np.eye(3))
             for t in (d.segs[0][1], 0.0):
@@ -179,6 +187,62 @@ def test_staged_routes_keep_end_pose(planned):
             assert all(np.degrees(abs(a)) / (ta - tb) <= p.max_rate_deg + 1e-9 for ta, tb, _, a in new)
             n += 1
     assert n > 0
+
+
+def _bare_planner(mesh=None):
+    pl = Planner.__new__(Planner)
+    pl.p = ScenarioParams()
+    pl.docks, pl.parent, pl._poscache = {}, {}, {}
+    pl.m = mesh
+    return pl
+
+
+def test_rel_pose_composes_parent_chain():
+    """U21 分层拼合：卫星陆块相对洲核心、洲核心相对锚定陆块各有一级拼合，锚定参照系中的位姿是沿父链的组合
+    （x = R_核心 · R_卫星 · x0），相对核心的位姿只含卫星那一级。"""
+    pl = _bare_planner()
+    a1, a2 = unit(np.array([0.0, 0.3, 1.0])), unit(np.array([1.0, 0.0, 0.2]))
+    pl.docks = {1: Dock(1, 300.0, []), 2: Dock(2, 150.0, [(300.0, 150.0, a1, 0.5)], parent=1),
+                3: Dock(3, 220.0, [(300.0, 220.0, a2, 0.3)], parent=2)}
+    pl.parent = {2: 1, 3: 2}
+    p = pl.p
+    for t in (260.0, 180.0, 0.0):
+        R2 = dock_pose(pl.docks[2], t, p.residual, p.residual_myr)
+        R3 = dock_pose(pl.docks[3], t, p.residual, p.residual_myr)
+        assert np.allclose(pl.pose(3, t), R2 @ R3)
+        assert np.allclose(pl.rel_pose(3, 2, t), R3)
+    assert pl._subtree(2) == [2, 3] and pl._ancestors(3) == [2, 1]
+
+
+def test_weld_eval_contact_vs_gap(mesh):
+    """焊合评分：两块沿一条边界相接时 weld_frac 接近 1、没有重叠；分开 400 km（隔海对望）时为 0。"""
+    pl = _bare_planner(mesh)
+    x = mesh.xyz
+    lon = np.degrees(np.arctan2(x[:, 1], x[:, 0]))
+    lat = np.degrees(np.arcsin(x[:, 2]))
+    band = np.abs(lat) < 25
+    T = x[band & (lon > -40) & (lon <= 0)]
+    for gap_deg, lo, hi in ((0.0, 0.9, 1.0), (400.0 / R_KM * 180 / np.pi, 0.0, 0.01)):
+        Y = x[band & (lon > gap_deg) & (lon <= 40 + gap_deg)]
+        met = pl._weld_eval(pl._weld_ctx(T), Y, len(Y) * 1.0, len(T) * 1.0)
+        assert lo <= met["weld_frac"] <= hi, (gap_deg, met)
+        assert met["overlap_frac"] < 0.02
+
+
+def test_pair_allow_uses_whole_chain():
+    """剧本核对的计划内接触（U21）：卫星 s（拼到洲 C 上）与第一组的锚定陆块 A 之间，要等 C 拼到 A 那一级进入接触阶段
+    才算计划内，不能按 s 自己早早拼上 C 的时刻放行；同一个洲里的两块按它们那一级。"""
+    pl = _bare_planner()
+    def dk(b, par, t_stop):
+        d = Dock(b, t_stop - 10.0, [(300.0, t_stop - 10.0, np.array([0.0, 0.0, 1.0]), 0.1)], parent=par)
+        d._t_stop = t_stop
+        return d
+    pl.docks = {1: Dock(1, 300.0, []), 5: dk(5, 1, 140.0), 6: dk(6, 5, 240.0), 2: dk(2, 1, 190.0)}
+    pl.parent = {5: 1, 6: 5, 2: 1}
+    assert pl._pair_allow(6, 1) == 140.0          # 卫星 6 -> 洲 5 -> 锚定 1：取较晚开始接触的那一级
+    assert pl._pair_allow(6, 5) == 240.0
+    assert pl._pair_allow(6, 2) == 140.0
+    assert pl._pair_allow(2, 1) == 190.0
 
 
 def test_small_plates_follow_lead(planned):
