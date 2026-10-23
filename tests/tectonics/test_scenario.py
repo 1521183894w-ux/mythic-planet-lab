@@ -146,6 +146,20 @@ def test_inner_sea_gap_override(mesh, world, planned):
             assert np.allclose(np.asarray(plan.docks[k].segs[0][2]), np.asarray(plan2.docks[k].segs[0][2]))
 
 
+def test_inner_sea_min_aspect(mesh, world, planned):
+    """闭环的形状修正：提高长宽比要求后，只重做同一次抽样，A 层核对通过但长宽比不够的候选被拒绝；要求不高于原主内海的
+    长宽比时，选出的主内海不变。"""
+    pl, plan = planned
+    if not plan.inner_sea.get("found"):
+        pytest.skip("这个种子规划阶段没有选出主内海")
+    asp = plan.inner_sea["official"]["aspect"]
+    same = Planner(mesh, world, seed=1).plan(only_attempt=plan.attempt, inner_min_aspect=asp - 1e-6)
+    assert same.inner_sea.get("found") and abs(same.inner_sea["official"]["aspect"] - asp) < 1e-9
+    strict = Planner(mesh, world, seed=1).plan(only_attempt=plan.attempt, inner_min_aspect=asp + 50.0)
+    assert not strict.inner_sea.get("found")
+    assert any("loop_aspect_ok" in f["failed"] for f in strict.inner_sea.get("official_fails", []))
+
+
 def test_staged_routes_keep_end_pose(planned):
     """分段路线（背离邻居 -> 绕行 -> 接近）只换走法：300 Ma 时在原处、到达时刻与终点都与原拼合相同，各段首尾相接、不超速。"""
     pl, plan = planned

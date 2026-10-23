@@ -56,12 +56,22 @@ class ScenarioParams:
     max_block_km2: float = 1.1e8           # 前史种子筛选：最大陆块（编组后）超过这个就不用（1.2b 局限）
     min_groups: int = 4                    # 前史种子筛选：编组后至少这么多个陆块组
     inner_sea_area_km2: tuple = (1.0e6, 5.0e6)
+    # 内洋：主大陆圈住的水体（规划网格上按 150 km 海峡与外洋隔开）超过这个面积就拒绝。A 层把最大的内部水体当主内海
+    # （要求 1–5 Mkm²），圈出更大的水体时主内海必然不合格（1.2c 第三步世界 2 圈出 2750 万 km²）；取上限的 1.6 倍，给规划
+    # 代理的误差留余地
+    inner_ocean_km2: float = 8.0e6
+    # 主内海那块的出发位置当其他陆块障碍的时长（见 Planner.plan_assembly）。1.2c 第三步试过 20 Myr：世界 1、2、4、8 主大陆占比
+    # 69/43/42/75%（不加 80/43/44/75%），主内海那块照样途中碰撞（碰撞推迟到 268–280 Ma），没有改善，默认不用
+    inner_obstacle_myr: float = 0.0
     breakup_window: tuple = (110, 25)
     n_breakup: tuple = (1, 3)
     target_north: tuple = (62.0, 72.0)     # 主大陆北端（简报 §3：65–70°N）
     target_south: tuple = (-45.0, -30.0)   # 主大陆南端（简报：约 40°S，软限制 50°S）
     inner_sea_lat: tuple = (30.0, 42.0)    # 主内海纬度（地中海气候）
     polar_lat: float = -82.0
+
+
+OWN_OFFSETS = (-40, -20, 0, 20, 40)        # 主内海那块：以它自己所在方位为基准的接近方向（度），见 Planner._plan_dock
 
 
 @dataclass
@@ -503,10 +513,12 @@ class Planner:
         cb = self.blocks[b].centroid
         return u if (cb @ u) >= 0 else -u
 
-    def _plan_dock(self, b: int, t_dock: float, az_offsets, spins, pens, check_transit=True, staged=True):
+    def _plan_dock(self, b: int, t_dock: float, az_offsets, spins, pens, check_transit=True, staged=True,
+                   own_offsets=()):
         """返回满足速度（与途中无碰撞，check_transit 时）的候选（Dock 列表），按接近方向偏离程度排序。
-        接近方向以拼合主轴为基准（偏离 az_offsets 度）。直接路线都在途中碰撞时，按偏离程度试前几个终点的分段路线
-        （_staged_routes）。"""
+        接近方向以拼合主轴为基准（偏离 az_offsets 度）；own_offsets 另加以陆块自身所在方位（从已拼部分中心看）为基准的
+        接近方向——陆块坐在主轴侧面时，从主轴端点接近要绕过半个已拼部分（1.2c 第三步：世界 4 的主内海那块要转 119°）。
+        直接路线都在途中碰撞时，按偏离程度试前几个终点的分段路线（_staged_routes）。"""
         p, m = self.p, self.m
         docked = [k for k in self.docks]
         cl_pts = np.concatenate([self.posed(k, 0.0) for k in docked])
@@ -517,8 +529,14 @@ class Planner:
         cb = self.blocks[b].centroid
         rad_b = max(_ang(cb, x) for x in X[::7])
         t = self._axis_dir(b, C)
+        dirs = [(float(az), abs(az)) for az in az_offsets]                 # (相对主轴的方位角, 排序用的偏离量)
+        ub = cb - (cb @ C) * C
+        if len(own_offsets) and np.linalg.norm(ub) > 1e-6:
+            ub = unit(ub)
+            az_b = float(np.degrees(np.arctan2(C @ np.cross(t, ub), t @ ub)))
+            dirs += [(az_b + o, abs(o)) for o in own_offsets]
         out, fails = [], []
-        for az in az_offsets:
+        for az, dev in dirs:
             dir_ = rotmat(C, np.radians(az)) @ t
             far = min(rad_cl + rad_b + np.radians(10), np.pi - 0.05)
             F = np.cos(far) * C + np.sin(far) * dir_
@@ -537,10 +555,11 @@ class Planner:
                     d = Dock(b, t_dock, [(float(p.t0), float(t_dock), ax, ang)])
                     d._R1, d._contact_pts = R, None
                     d._t_stop = t_dock + self._margin_myr(ax, ang / (p.t0 - t_dock), cb, pen)
+                    d._approach_az = float(az)
                     if not check_transit or self._transit_ok(b, d, docked):
-                        out.append((abs(az) + 0.3 * abs(sp), d))
+                        out.append((dev + 0.3 * abs(sp), d))
                     else:
-                        fails.append((abs(az) + 0.3 * abs(sp), d))
+                        fails.append((dev + 0.3 * abs(sp), d))
         if check_transit and staged and not out:
             for sc, d in sorted(fails, key=lambda x: x[0])[:6]:
                 v = next((v for v in self._staged_routes(b, d, docked, n=8) if self._transit_ok(b, v, docked)), None)
@@ -571,8 +590,9 @@ class Planner:
         # （世界种子 3：极地陆块夹在锚定陆块和另一块主陆块之间，那块主陆块的拼合路线正好扫过它，极地陆块无路可走）。
         # 只管头 40 Myr，给它们留出离开的时间；它们之后的路线在 plan_movers 里对照全部拼合路线检查
         # （全程当障碍太严：最后一块主陆块就近拼合的路线几乎都要经过次大陆陆块的出发位置）。
+        # 主内海那块（最后规划）只在头 inner_obstacle_myr 当障碍（_obst_until），给它留出发的空间
         obst = tuple(k for k in getattr(self, "_obstacles", ()) if k != b)
-        t_obst = p.t0 - 40.0
+        until = getattr(self, "_obst_until", {})
         ckey = (tuple(docked), obst, len(getattr(self, "_placed_movers", [])))
         if not hasattr(self, "_tcache") or self._tcache[0] != ckey:
             self._tcache = (ckey, {})
@@ -583,8 +603,7 @@ class Planner:
             key = round(float(t), 1)
             if key not in cache:
                 pts = [self.posed(k, t, sub=3) for k in docked]
-                if t >= t_obst:
-                    pts += [self.m.xyz[self.blocks[k].cont[::3]] for k in obst]
+                pts += [self.m.xyz[self.blocks[k].cont[::3]] for k in obst if t >= until.get(k, p.t0 - 40.0)]
                 # 已排好路线的极地、次大陆陆块（补拼进主大陆的陆块要避开它们，1.2c 初版只查已拼合的主陆块）
                 for Xo, so in getattr(self, "_placed_movers", []):
                     pts.append(Xo[::2] @ dock_pose(Dock(0, so[-1][1], so), t, 0.0, 0.0).T)
@@ -599,10 +618,17 @@ class Planner:
         self.docks[self.anchor] = Dock(self.anchor, float(p.t0), [])
         self.inner_sea = {"found": False}
         self._obstacles = tuple(b for b, r in self.roles.items() if r in ("polar", "secondary"))
+        self._obst_until = {}
         rest = [b for b in self.main if b != self.anchor]
         if not rest:
             self.notes.append("只有一块主陆块，无法拼合")
             return
+        if len(rest) > 1 and p.inner_obstacle_myr > 0:
+            # 主内海那块（rest[0]，最后规划）的出发位置在头 inner_obstacle_myr 内当其他陆块的障碍：先规划的邻近陆块的路线
+            # 常在出发后 4–12 Myr 扫过它的出发位置，它之后怎么走都会撞上（1.2c 第三步世界 1：陆块 7 与主内海那块 1，
+            # 300 Ma 相距 331 km，296 Ma 只剩 46 km）。第二轮试过 40 Myr（当时没有分段路线，其他陆块无路可绕，整体变差）
+            self._obstacles += (rest[0],)
+            self._obst_until[rest[0]] = p.t0 - p.inner_obstacle_myr
         # 拼合主轴：各主陆块从主轴两端接上去，主大陆拼成长条（1.2c 初版各块从四面拼上，成了大圆团，
         # 约 1.3 亿 km² 的圆团纬度跨度 140°，放不进 40°S–70°N；亚非欧也是东西向长条）。
         # 主轴取其余主陆块质心在锚定陆块切平面上的主方向（少走路），再随机偏转 ±20°。
@@ -639,8 +665,36 @@ class Planner:
                 self.notes.append(f"陆块 {b} 找不到无碰撞的拼合路线，改为留在原处")
                 self.roles[b] = "island"
                 continue
-            self.docks[b] = cands[0]
+            # 不圈出内洋：优先选拼上后已拼部分圈住的水体不超过 inner_ocean_km2 的候选
+            pick = None
+            for d in cands[:8]:
+                self.docks[b] = d
+                if self._max_enclosed_km2() <= p.inner_ocean_km2:
+                    pick = d
+                    break
+            if pick is None:
+                pick = cands[0]
+                self.notes.append(f"陆块 {b} 的拼合候选都圈出内洋（> {p.inner_ocean_km2 / 1e6:.0f} Mkm²），取第一个")
+            self.docks[b] = pick
         self.inner_sea = self._plan_inner_sea(inner, float(5 * round(p.dock_window[1] / 5)))
+
+    def _max_enclosed_final(self) -> float:
+        """按写好的剧本，所有规划陆块（含极地、次大陆、留在原处的陆块）0 Ma 的陆地圈住的最大水体面积。
+        只看拼合陆块不够：1.2c 第三步世界 2 规划时拼合陆块只圈住 0.7 Mkm²，模拟里一块留在原处的陆块把 2400 万 km² 的
+        海围了起来。"""
+        s = self.script
+        parts = [self.m.xyz[getattr(B, self._dock_which(b))] @ s.forward_total(b, 0).T
+                 for b, B in self.blocks.items() if b in s.stages]
+        if len(parts) < 2:
+            return 0.0
+        return max((x["area_km2"] for x in basin_proxy(self.m, parts)), default=0.0)
+
+    def _max_enclosed_km2(self) -> float:
+        """已拼合各块（0 Ma 位置、按陆地）圈住的最大水体面积（与外洋之间只有窄于 150 km 的水道），用于拒绝内洋。"""
+        parts = [self.posed(k, 0.0, "dock") for k in self.docks]
+        if len(parts) < 2:
+            return 0.0
+        return max((s["area_km2"] for s in basin_proxy(self.m, parts)), default=0.0)
 
     def _staged_routes(self, b: int, d: Dock, docked: list, n: int = 10) -> list:
         """同一个终点（d 第一段转到的位置 R1，之后各段不变），换成分段路线：可选的原地等待 -> 背离 300 Ma 时最近的邻居
@@ -723,8 +777,10 @@ class Planner:
         一次滑动只会在一点接触，两块凸形大陆之间留下两头敞开的海湾，圈不出内海（1.2c 初版的失败）；
         两处接触之间才可能夹出残留洋盆（阿拉伯、印度的转动碰撞也是这样）。"""
         p, m = self.p, self.m
+        # 接近方向：拼合主轴 ±60°，另加它自己所在方位 ±40°（在已拼部分的侧面圈海，像非洲在欧亚南侧圈出地中海）
         firsts = self._plan_dock(b, t_dock, list(range(-60, 61, 20)), [-30, 0, 30],
-                                 [p.penetration_km, p.penetration_km + 250.0], check_transit=False)
+                                 [p.penetration_km, p.penetration_km + 250.0], check_transit=False,
+                                 own_offsets=OWN_OFFSETS)
         docked = [k for k in self.docks if k != b]
         # 两端都按陆地：第一处接触是陆地碰陆地；另一端的海峡宽度是陆地到陆地的距离。两侧的被动陆缘（水下陆壳，宽 100–300 km）
         # 在 0 Ma 仍在水下（1.2c 初版已拼部分按全部陆壳算，模拟里口子总比规划宽，4/5 次运行因此圈不住海）
@@ -800,12 +856,15 @@ class Planner:
         cands = self._pivot_candidates(b, t_dock)
         n_pivot = len(cands)
         cands += self._plan_dock(b, t_dock, list(range(-90, 91, 30)), [-30, 0, 30],
-                                 [p.penetration_km, p.penetration_km + 250.0], check_transit=False)
+                                 [p.penetration_km, p.penetration_km + 250.0], check_transit=False,
+                                 own_offsets=OWN_OFFSETS)
         if not cands:
             self.notes.append(f"主内海陆块 {b} 找不到拼合路线")
             self.roles[b] = "island"
             return {"found": False}
         lo, hi = p.inner_sea_area_km2
+        # 长宽比要求：A 层是 ≥ 2；闭环发现模拟里海比规划的圆（碰撞增厚、岛弧把海挤短挤宽），会按缩水比例提高（inner_min_aspect）
+        need_asp = max(2.2, getattr(self, "inner_min_aspect", 0.0))
         scored = []
         for d in cands:
             self.docks[b] = d
@@ -819,8 +878,8 @@ class Planner:
                 continue
             sh = sorted(s["shares"], reverse=True)
             second = seas[1]["area_km2"] if len(seas) > 1 else 0.0
-            score = (abs(np.log(s["area_km2"] / 2.5e6)) + max(0.0, 3.0 - s["aspect"]) * 0.5
-                     + max(0.0, 2.2 - s["aspect"]) * 3.0         # A 层要求长宽比 ≥ 2
+            score = (abs(np.log(s["area_km2"] / 2.5e6)) + max(0.0, need_asp + 0.8 - s["aspect"]) * 0.5
+                     + max(0.0, need_asp - s["aspect"]) * 3.0     # A 层要求长宽比 ≥ 2
                      + max(0.0, 0.2 - sh[1]) * 5 + (1.0 if second and s["area_km2"] < 2.2 * second else 0.0)
                      + (0.0 if getattr(d, "_L2", None) else 0.6))   # 优先两段式：闭环要调它第二段的转角
             scored.append((score, d, s))
@@ -845,6 +904,8 @@ class Planner:
             self.docks[b] = d
             land_nodes, part = self._land_nodes_final(incoming=b)
             chk = official_inland_sea(m, raster, land_nodes, part)
+            if chk["pass"] and chk.get("aspect", 0.0) < getattr(self, "inner_min_aspect", 0.0):
+                chk = {**chk, "pass": False, "checks": {**chk["checks"], "loop_aspect_ok": False}}
             if chk["pass"]:
                 self.docks[b].inner_sea = True
                 return {"found": True, "proxy": {k: v for k, v in s.items() if k not in ("centroid", "nodes")}, "_nodes": s["nodes"],
@@ -861,6 +922,7 @@ class Planner:
             self.notes.append("主内海：没有候选通过 A 层核对，采用代理评分最好的")
             return {"found": False, "proxy": {k: v for k, v in s.items() if k not in ("centroid", "nodes")}, "_nodes": s["nodes"], "centroid": s["centroid"],
                     **info}
+        cands = sorted(cands, key=lambda d: d.angle)                      # 退路：路线短的优先，少碰撞
         ok = [d for d in cands if self._transit_ok(b, d, docked_before)]
         if not ok:
             # 退而求其次时也先试分段路线，免得直接取一条途中碰撞的（世界 1、4 因此在 288 Ma 就有计划外接触）
@@ -1305,12 +1367,14 @@ class Planner:
         self.script = s
         return s
 
-    def plan(self, attempts: int = 4, only_attempt: int | None = None, inner_dgap_km: float = 0.0) -> Plan:
-        """规划；有计划外接触、没找到主内海或极地大陆时换一组随机抽样重来，取评分最好的一次。
+    def plan(self, attempts: int = 4, only_attempt: int | None = None, inner_dgap_km: float = 0.0,
+             inner_min_aspect: float = 0.0) -> Plan:
+        """规划；有计划外接触、没找到主内海或极地大陆、圈出内洋时换一组随机抽样重来，取评分最好的一次。
         闭环修正（run_scenario_loop）时只重做选中的那一次（only_attempt，随机抽样相同），并把主内海那块远端海峡收窄
-        inner_dgap_km（负值放宽）。"""
+        inner_dgap_km（负值放宽），或按 inner_min_aspect 提高主内海的长宽比要求、重选它的拼法。"""
         best = None
         self.inner_dgap_km = inner_dgap_km
+        self.inner_min_aspect = inner_min_aspect
         for k in ([only_attempt] if only_attempt is not None else range(attempts)):
             self.rng = np.random.default_rng(10_000 + 97 * self.seed + k)
             self.notes = []
@@ -1318,9 +1382,12 @@ class Planner:
             self._placed_movers = []
             plan = self._plan_once()
             plan.attempt = k
+            ocean = self.max_enclosed > self.p.inner_ocean_km2
             score = (10 * len(self.conflicts) + (0 if self.inner_sea.get("found") else 3)
-                     + (0 if "polar" in self.roles.values() else 2) + round(self.placement["penalty"] / 5.0, 1))
-            plan.notes.append(f"第 {k + 1} 次规划，评分 {score}（计划外接触 ×10、无主内海 +3、无极地大陆 +2、纬度偏差每 5° +1）")
+                     + (0 if "polar" in self.roles.values() else 2) + round(self.placement["penalty"] / 5.0, 1)
+                     + (5 if ocean else 0))
+            plan.notes.append(f"第 {k + 1} 次规划，评分 {score}（计划外接触 ×10、无主内海 +3、无极地大陆 +2、"
+                              f"纬度偏差每 5° +1、圈出内洋 +5）")
             plan.score = score
             if best is None or score < best[0]:
                 best = (score, plan)
@@ -1338,6 +1405,10 @@ class Planner:
         self.conflicts = self.validate_script()
         for c in self.conflicts:
             self.notes.append(f"计划外接触：陆块 {c['pair'][0]} 与 {c['pair'][1]}，约 {c['t']:.0f} Ma 起")
+        self.max_enclosed = self._max_enclosed_final()
+        if self.max_enclosed > self.p.inner_ocean_km2:
+            self.notes.append(f"主大陆圈出内洋 {self.max_enclosed / 1e6:.1f} Mkm²（规划预测）")
+        self.placement["max_enclosed_km2"] = float(self.max_enclosed)
         return Plan(self.seed, self.anchor, dict(self.roles), dict(self.docks), self.G_axis, self.G_angle,
                     dict(self.moves), list(self.breakups), dict(self.inner_sea), self.script, list(self.notes),
                     placement=dict(self.placement), conflicts=list(self.conflicts))
@@ -1407,16 +1478,21 @@ def locate_planned_sea(plan: Plan, A: dict, fields: dict, raster: Raster, E: np.
 
 
 def run_scenario_loop(mesh: Mesh, world: InitialWorld, seed: int, params: ScenarioParams | None = None,
-                      max_rounds: int = 3, snap_every: int = 10, work_dir: Path | None = None) -> ScenarioRun:
-    """主内海闭环：规划 -> 完整模拟 -> 0 Ma 按 A 层核对 -> 修正主内海那块的远端海峡宽度 -> 重新规划、模拟（确定性）。
-    口子太宽就收窄、被封死就放宽，二分夹逼（首次收窄 120 km、放宽 80 km）；其他原因（面积、接壤、长宽比）调海峡解决不了，停止。
-    返回主内海最好的一次（通过 A 层的优先），run.loop 记录每一轮。"""
+                      max_rounds: int = 4, snap_every: int = 10, work_dir: Path | None = None) -> ScenarioRun:
+    """主内海闭环：规划 -> 完整模拟 -> 0 Ma 按 A 层核对 -> 修正 -> 重新规划、模拟（确定性），最多 max_rounds 次模拟。
+    两种修正：
+    - 海峡：口子太宽（并进外洋、海峡多于 3 条、面积超上限）就收窄主内海那块的远端海峡，被封死（0 条海峡、面积不到下限）就放宽，
+      二分夹逼（首次收窄 120 km、放宽 80 km）；
+    - 形状：海峡与面积都合格、规划的海就是 A 层主内海、只差长宽比时，按模拟里长宽比缩水的比例提高规划时的要求
+      （inner_min_aspect = 2.1 × 规划长宽比 / 模拟长宽比），重选主内海那块的拼法，海峡宽度从头调。
+      （1.2c 第三步世界 8：规划时 2.23，模拟后 1.99，碰撞带增厚与岛弧把海挤短挤宽；调海峡改不了形状。）
+    其他原因（接壤、第二大水体太大等）停止。返回主内海最好的一次（通过 A 层的优先），run.loop 记录每一轮。"""
     import time
 
     t_start = time.perf_counter()
     planner = Planner(mesh, world, seed, params)
     plan = planner.plan()
-    dgap, too_open, too_closed = 0.0, None, None
+    dgap, too_open, too_closed, min_asp = 0.0, None, None, 0.0
     history, best = [], None
     for rnd in range(max_rounds):
         run = simulate_plan(mesh, world, planner, plan, seed, snap_every, work_dir)
@@ -1425,14 +1501,16 @@ def run_scenario_loop(mesh: Mesh, world: InitialWorld, seed: int, params: Scenar
         isea = A["main_inland_sea"]
         loc = locate_planned_sea(plan, A, fields, raster, E)
         n_fail = sum(1 for v in A.values() if not v["pass"])
-        rec = {"round": rnd, "dgap_km": dgap, "planned_sea": loc, "inner_sea_pass": bool(isea["pass"]),
+        rec = {"round": rnd, "dgap_km": dgap, "min_aspect": min_asp, "planned_sea": loc,
+               "plan_aspect": (plan.inner_sea.get("official") or {}).get("aspect"),
+               "sim_aspect": (isea.get("geometry") or {}).get("aspect_ratio"), "inner_sea_pass": bool(isea["pass"]),
                "inner_sea_checks": isea.get("checks"), "A_fail": [k for k, v in A.items() if not v["pass"]],
                "plan_score": plan.score}
         history.append(rec)
         key = (0 if isea["pass"] else 1, n_fail)
         if best is None or key < best[0]:
             best = (key, run, m)
-        if isea["pass"]:
+        if isea["pass"] or rnd == max_rounds - 1:
             break
         d = plan.docks.get(next((b for b, dk in plan.docks.items() if dk.inner_sea), -1))
         # 海找到了但面积不在目标范围：太小就放宽远端海峡（少转一点，两岸张得更开），太大就收窄
@@ -1442,7 +1520,23 @@ def run_scenario_loop(mesh: Mesh, world: InitialWorld, seed: int, params: Scenar
             direction = "closed"
         elif direction == "found" and loc.get("area_km2", 0.0) > hi_a:
             direction = "open"
+        chk = isea.get("checks") or {}
+        if direction == "found" and loc.get("is_main") and not chk.get("elongation_ok", True) \
+                and chk.get("straits_ok") and chk.get("area_in_range") and rec["plan_aspect"] and rec["sim_aspect"]:
+            direction = "reshape"
         rec["direction"] = direction
+        if direction == "reshape":
+            new = max(min_asp + 0.3, 2.1 * rec["plan_aspect"] / max(rec["sim_aspect"], 0.5))
+            if new > 6.0:
+                rec["stop"] = f"要求的规划长宽比 {new:.1f} 太高"
+                break
+            min_asp, dgap, too_open, too_closed = float(new), 0.0, None, None
+            planner = Planner(mesh, world, seed, params)
+            plan = planner.plan(only_attempt=plan.attempt, inner_dgap_km=0.0, inner_min_aspect=min_asp)
+            if not plan.inner_sea.get("found"):
+                rec["stop"] = f"长宽比要求提高到 {min_asp:.2f} 后选不出主内海"
+                break
+            continue
         if d is None or not getattr(d, "_L2", None) or direction not in ("open", "closed"):
             rec["stop"] = "主内海那块不是两段式拼合" if d is None or not getattr(d, "_L2", None) \
                 else f"规划的海状态 {loc['state']}：调海峡解决不了"
@@ -1454,7 +1548,7 @@ def run_scenario_loop(mesh: Mesh, world: InitialWorld, seed: int, params: Scenar
             too_closed = dgap if too_closed is None else min(too_closed, dgap)
             dgap = 0.5 * (dgap + too_open) if too_open is not None else dgap - 80.0
         planner = Planner(mesh, world, seed, params)
-        plan = planner.plan(only_attempt=plan.attempt, inner_dgap_km=dgap)
+        plan = planner.plan(only_attempt=plan.attempt, inner_dgap_km=dgap, inner_min_aspect=min_asp)
     _, run, m = best
     run.loop = history
     run.metrics = m
