@@ -38,3 +38,34 @@ def test_coast_mask_is_the_outer_ring_of_land():
     assert c[2, 2] and c[7, 5] and not c[4, 4]
     assert not (c & ~land).any()
     assert c.sum() == 6 * 6 - 4 * 4
+
+
+def test_excess_thickness_follows_airy_and_engine_cap():
+    """U26 体积平衡：终图高度按 Airy 均衡换算成超出 35 km 的厚度，与引擎同一组常数，封顶于 65 km。"""
+    init = _load("design_initial_world", "design_initial_world.py")
+    from mythic.tectonics.crust import Crust, CONT, Params, elevation
+
+    p = Params()
+    ex = init.excess_thickness_km(np.array([-500.0, 400.0, 2000.0, 4945.0, 8000.0]))
+    assert ex[0] == 0 and ex[1] == 0
+    assert abs(ex[3] - (p.T_max_km - p.T_cont)) < 0.01 and ex[4] == ex[3]
+    c = Crust(1)                                  # 反过来：引擎按这个厚度算出的高程就是 2000 m
+    c.ctype[:] = CONT
+    c.T[:] = p.T_cont + ex[2]
+    assert abs(float(elevation(c, p)[0]) - 2000.0) < 1.0
+
+
+def test_feature_mask_unions_polygons_and_ridge_bands():
+    fm = _load("design_final_map", "design_final_map.py")
+    from mythic.metrics.grid import LatLonGrid
+
+    g = LatLonGrid(360, 180)
+    land = np.ones(g.shape, bool)
+    design = {"plateaus": [{"id": "P", "poly": [[10, 10], [20, 10], [20, 20], [10, 20]]}],
+              "mountains": [{"id": "M", "line": [[-40, 0], [-30, 0]], "width_km": 400}]}
+    LO, LA = np.meshgrid(g.lon, g.lat)
+    m = fm.feature_mask(design, g, land, ["P", "M"])
+    assert m[(LO > 11) & (LO < 19) & (LA > 11) & (LA < 19)].all()
+    assert m[(np.abs(LA) < 1) & (LO > -39) & (LO < -31)].all()
+    assert not m[(np.abs(LA) > 3) & (LO > -39) & (LO < -31)].any()        # 山脊两侧各 200 km（约 1.8°）以外
+    assert not fm.feature_mask(design, g, np.zeros(g.shape, bool), ["P", "M"]).any()

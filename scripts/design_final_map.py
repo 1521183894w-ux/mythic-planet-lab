@@ -518,6 +518,20 @@ def downsample(field: np.ndarray, f: int) -> np.ndarray:
 # ---------------------------------------------------------------------------
 # 出图
 # ---------------------------------------------------------------------------
+def feature_mask(design: dict, grid: LatLonGrid, land: np.ndarray, fids) -> np.ndarray:
+    """要素的范围（并集，限陆地）：高原、盆地取多边形，山脉取山脊线两侧 width_km/2 以内（U26 体积平衡用）。"""
+    by = {p["id"]: ("poly", p) for key in ("plateaus", "basins") for p in design.get(key, [])}
+    by.update({m["id"]: ("line", m) for m in design.get("mountains", [])})
+    out = np.zeros(grid.shape, bool)
+    for fid in fids:
+        kind, f = by[fid]
+        if kind == "poly":
+            out |= lonlat_mask(grid, f["poly"])
+        else:
+            out |= np.isfinite(line_distance_km(grid, f["line"], np.ones(grid.shape, bool), 0.5 * float(f.get("width_km", 150))))
+    return out & land
+
+
 def label_points(design: dict):
     """每个要素的标注位置与文字。"""
     out = []

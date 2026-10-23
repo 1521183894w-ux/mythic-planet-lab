@@ -28,7 +28,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "packages"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from design_final_map import apply_options, build, densify, lonlat_mask  # noqa: E402
+from design_final_map import apply_options, build, densify, feature_mask, lonlat_mask  # noqa: E402
+from design_final_map import elevation as design_elevation  # noqa: E402
 from design_history import assign_blocks, build_history, consumed_margins  # noqa: E402
 from mythic.figures.world import code_version  # noqa: E402
 from mythic.metrics.grid import LatLonGrid  # noqa: E402
@@ -42,6 +43,33 @@ from mythic.tectonics.reverse import assign_ocean_plates, fill_ocean, initial_cr
 
 def log(msg: str) -> None:
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
+
+
+def excess_thickness_km(elev_m: np.ndarray, p: Params | None = None) -> np.ndarray:
+    """终图高度按 Airy 均衡换算成高出正常陆壳的厚度（km），封顶于引擎的厚度上限（与 crust.elevation 同一组常数）。"""
+    p = p or Params()
+    e_max = p.e_cont_ref_m + (p.T_max_km - p.T_cont) * p.iso_m_per_km
+    return np.clip((np.clip(elev_m, p.e_cont_ref_m, e_max) - p.e_cont_ref_m) / p.iso_m_per_km, 0.0, None)
+
+
+def volume_balance(hcfg, design, grid, b, ext_masks, T_ext) -> list:
+    """碰撞的体积账（U26）：补回的陆缘（下行块被挤掉的陆壳）有多少体积；写了 volume_balance 的碰撞，
+    再算终图上它垫出的高原与山系需要多少超额地壳（Airy 均衡由终图高度反算，乘面积）。"""
+    area = grid.cell_area_km2
+    rows, need = [], None
+    for col, m in zip(hcfg.get("collisions", []), ext_masks):
+        row = {"down": col["down"], "up": col["up"], "t": col["t"],
+               "consumed_margin_Mkm2": round(float(area[m].sum()) / 1e6, 2),
+               "supply_1e6_km3": round(float((area[m] * T_ext[m]).sum()) / 1e6, 1)}
+        vb = col.get("volume_balance")
+        if vb:
+            if need is None:
+                need = excess_thickness_km(design_elevation(design, grid, b))
+            tm = feature_mask(design, grid, b["land"], vb["builds"])
+            row.update({"builds": vb["builds"], "target_area_Mkm2": round(float(area[tm].sum()) / 1e6, 2),
+                        "target_excess_1e6_km3": round(float((area[tm] * need[tm]).sum()) / 1e6, 1)})
+        rows.append(row)
+    return rows
 
 
 def dist_to_mask_km(grid: LatLonGrid, mask: np.ndarray, query: np.ndarray) -> np.ndarray:
@@ -132,6 +160,11 @@ def main() -> int:
         body = ids == pid
         T = np.where(body & (T > cT), cT + (T - cT) * s, T) if cT > 0 else np.where(body, T * f, T)
         T_ext = np.where(ext == pid, T_ext * f, T_ext)
+    vb_rows = volume_balance(hcfg, design, grid, b, ext_masks, T_ext)
+    for r in vb_rows:
+        log(f"  体积账 {r['down']} <- {r['up']}（{r['t']} Ma）：补回陆缘 {r['consumed_margin_Mkm2']} 百万 km²，"
+            f"{r['supply_1e6_km3']}×10⁶ km³" + (f"；终图上要垫出的 {'、'.join(r['builds'])} 共 {r['target_area_Mkm2']} 百万 km²，"
+                                               f"需要超额地壳 {r['target_excess_1e6_km3']}×10⁶ km³" if "builds" in r else ""))
     # 省份：每块（本体 + 被挤掉的陆缘）泊松撒点、就近划分；古陆核省份最老，往外变年轻，被挤掉的陆缘最年轻
     sep = float(ini["province_sep_km"])
     prov = np.zeros(grid.shape, int)
@@ -232,6 +265,7 @@ def main() -> int:
         "design": args.design, "history": args.history, "code_version": code_version(), "t0": t0,
         "mesh_level": mesh.level, "rotation_file": rot.relative_to(ROOT).as_posix(),
         "consumed_margins": ext_info,
+        "volume_balance": vb_rows,
         "continental_crust_Mkm2": round(float(A[cont].sum()) / 1e6, 1),
         "of_which_consumed_margin_Mkm2": round(float(A[kind == 2].sum()) / 1e6, 1),
         "present_rigid_blocks_Mkm2": round(float(area[ids > 0].sum()) / 1e6, 1),

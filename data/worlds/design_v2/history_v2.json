@@ -2,7 +2,7 @@
  "description": "终图倒推历史的审计（重建：scripts/design_history.py）",
  "design": "v2",
  "history": "v2",
- "code_version": "e8fdcf8-dirty",
+ "code_version": "8621a82-dirty",
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
  "blocks": {
   "MD": {
@@ -131,21 +131,21 @@
   "BSE": {
    "abs_median_over_time": {
     "median": 1.23,
-    "p95": 3.59,
-    "max": 3.67,
+    "p95": 3.52,
+    "max": 4.08,
     "t_of_max": 280
    },
    "abs_max_point": {
     "median": 1.33,
-    "p95": 4.44,
-    "max": 4.52,
+    "p95": 4.42,
+    "max": 5.51,
     "t_of_max": 280
    },
    "rel_median_over_time": {
     "median": 0.87,
-    "p95": 3.01,
-    "max": 3.01,
-    "t_of_max": 249
+    "p95": 2.93,
+    "max": 3.98,
+    "t_of_max": 266
    }
   },
   "A": {
@@ -286,10 +286,6 @@
    "Mkm2": 0.27,
    "t": 91
   },
-  "IN-BSE": {
-   "Mkm2": 0.22,
-   "t": 259
-  },
   "D-POL": {
    "Mkm2": 0.19,
    "t": 266
@@ -306,6 +302,14 @@
    "Mkm2": 0.07,
    "t": 128
   },
+  "BSE-POL": {
+   "Mkm2": 0.06,
+   "t": 275
+  },
+  "IN-BSE": {
+   "Mkm2": 0.05,
+   "t": 51
+  },
   "ZL-POL": {
    "Mkm2": 0.04,
    "t": 210
@@ -313,10 +317,6 @@
   "ZL-BSE": {
    "Mkm2": 0.04,
    "t": 299
-  },
-  "BSE-POL": {
-   "Mkm2": 0.04,
-   "t": 277
   },
   "B-D": {
    "Mkm2": 0.01,
@@ -357,11 +357,23 @@
    "up": "B",
    "t": 48,
    "max_km": 2600,
+   "continental_km": 2200.0,
    "what": "南方地盾陆块撞上洲 B（大印度式陆缘）",
+   "volume_balance": {
+    "builds": [
+     "PL1",
+     "PL8",
+     "M3",
+     "M3b",
+     "M3c",
+     "M3d",
+     "M3e",
+     "M3f"
+    ]
+   },
    "swept_Mkm2": 7.55,
-   "continental_Mkm2": 2.53,
-   "continental_km": 1000.0,
-   "trimmed_conflict_Mkm2": 1.39
+   "continental_Mkm2": 4.73,
+   "trimmed_conflict_Mkm2": 2.82
   },
   {
    "down": "A",
@@ -397,5 +409,5 @@
    "trimmed_conflict_Mkm2": 0.0
   }
  ],
- "generated": "2026-10-24 03:26:34"
+ "generated": "2026-10-24 04:18:19"
 }

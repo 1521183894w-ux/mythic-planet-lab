@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "e8fdcf8-dirty",
+ "code_version": "8621a82-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -12,11 +12,23 @@
    "up": "B",
    "t": 48,
    "max_km": 2600,
+   "continental_km": 2200.0,
    "what": "南方地盾陆块撞上洲 B（大印度式陆缘）",
+   "volume_balance": {
+    "builds": [
+     "PL1",
+     "PL8",
+     "M3",
+     "M3b",
+     "M3c",
+     "M3d",
+     "M3e",
+     "M3f"
+    ]
+   },
    "swept_Mkm2": 7.55,
-   "continental_Mkm2": 2.53,
-   "continental_km": 1000.0,
-   "trimmed_conflict_Mkm2": 1.39
+   "continental_Mkm2": 4.73,
+   "trimmed_conflict_Mkm2": 2.82
   },
   {
    "down": "A",
@@ -52,8 +64,50 @@
    "trimmed_conflict_Mkm2": 0.0
   }
  ],
- "continental_crust_Mkm2": 147.9,
- "of_which_consumed_margin_Mkm2": 4.2,
+ "volume_balance": [
+  {
+   "down": "IN",
+   "up": "B",
+   "t": 48,
+   "consumed_margin_Mkm2": 4.73,
+   "supply_1e6_km3": 89.6,
+   "builds": [
+    "PL1",
+    "PL8",
+    "M3",
+    "M3b",
+    "M3c",
+    "M3d",
+    "M3e",
+    "M3f"
+   ],
+   "target_area_Mkm2": 5.59,
+   "target_excess_1e6_km3": 95.1
+  },
+  {
+   "down": "A",
+   "up": "B",
+   "t": 250,
+   "consumed_margin_Mkm2": 0.13,
+   "supply_1e6_km3": 2.7
+  },
+  {
+   "down": "D",
+   "up": "C",
+   "t": 180,
+   "consumed_margin_Mkm2": 1.25,
+   "supply_1e6_km3": 29.4
+  },
+  {
+   "down": "D",
+   "up": "B",
+   "t": 60,
+   "consumed_margin_Mkm2": 0.26,
+   "supply_1e6_km3": 4.8
+  }
+ ],
+ "continental_crust_Mkm2": 150.1,
+ "of_which_consumed_margin_Mkm2": 6.4,
  "present_rigid_blocks_Mkm2": 144.1,
  "land_above_sea_level_Mkm2": 143.7,
  "ocean_fraction": 0.718,
@@ -65,14 +119,14 @@
  },
  "continental_thickness_km": {
   "median": 35.0,
-  "min": 13.1,
+  "min": 11.9,
   "max": 42.0
  },
  "ocean_age_myr": {
-  "median": 35.5,
+  "median": 35.8,
   "max": 180.0
  },
- "n_provinces": 285,
+ "n_provinces": 289,
  "blocks": [
   {
    "id": 101,
@@ -88,7 +142,7 @@
    "name": "洲 A",
    "core_Mkm2": 7.63,
    "consumed_margin_Mkm2": 0.13,
-   "plate_Mkm2": 26.5
+   "plate_Mkm2": 26.7
   },
   {
    "id": 102,
@@ -96,7 +150,7 @@
    "name": "东南增生地块",
    "core_Mkm2": 2.43,
    "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 12.4
+   "plate_Mkm2": 10.9
   },
   {
    "id": 301,
@@ -135,8 +189,8 @@
    "code": "IN",
    "name": "南方地盾陆块（印度式）",
    "core_Mkm2": 3.79,
-   "consumed_margin_Mkm2": 2.52,
-   "plate_Mkm2": 17.0
+   "consumed_margin_Mkm2": 4.73,
+   "plate_Mkm2": 20.2
   },
   {
    "id": 701,
@@ -155,5 +209,5 @@
    "plate_Mkm2": 4.4
   }
  ],
- "generated": "2026-10-24 03:28:40"
+ "generated": "2026-10-24 04:19:12"
 }

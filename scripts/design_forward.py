@@ -409,6 +409,25 @@ def main() -> int:
     E_eng = raster(frames[-1]["elev"]).astype(float)
     cmp_ = compare(design, grid, b, ids, info, E_eng, E_fin, label_points(design))
 
+    # 体积账（U26）：写了 volume_balance 的碰撞，终图上它垫出的高原与山系范围内，0 Ma 实际有多少超额地壳
+    from design_final_map import feature_mask
+    from design_initial_world import excess_thickness_km
+    T_r = raster(frames[-1]["T"]).astype(float)
+    C_r = raster(frames[-1]["ctype"])
+    have = np.where(C_r == CONT, np.clip(T_r - Params().T_cont, 0.0, None), 0.0)
+    need = excess_thickness_km(E_fin)
+    vbal = []
+    for col in hcfg.get("collisions", []):
+        if col.get("volume_balance"):
+            tm = feature_mask(design, grid, b["land"], col["volume_balance"]["builds"])
+            a = grid.cell_area_km2
+            vbal.append({"down": col["down"], "up": col["up"], "builds": col["volume_balance"]["builds"],
+                         "target_excess_1e6_km3": round(float((a[tm] * need[tm]).sum()) / 1e6, 1),
+                         "engine_0Ma_excess_1e6_km3": round(float((a[tm] * have[tm]).sum()) / 1e6, 1),
+                         "engine_0Ma_elev_m_median": round(float(np.median(E_eng[tm])))})
+            log(f"体积账 {col['down']} <- {col['up']}：终图需要超额地壳 {vbal[-1]['target_excess_1e6_km3']}×10⁶ km³，"
+                f"引擎 0 Ma 有 {vbal[-1]['engine_0Ma_excess_1e6_km3']}，该范围高程中位 {vbal[-1]['engine_0Ma_elev_m_median']} m")
+
     from mythic.metrics.compute import compute_all, load_config
     cfg = load_config()
     m_eng, f_eng = compute_all(E_eng, E_eng > 0, cfg=cfg, return_fields=True)
@@ -433,6 +452,7 @@ def main() -> int:
         "comparison": {k: v for k, v in cmp_.items() if k != "regions"},
         "deviation_regions": [{k: v for k, v in r.items() if not k.startswith("_")} for r in cmp_["regions"]],
         "A_engine_0Ma": A_eng, "A_final_map_1024": A_fin,
+        "volume_balance_0Ma": vbal,
         "crust_0Ma": {"continental_Mkm2": round(float(A7[cont].sum()) / 1e6, 1),
                       "arc_origin_continental_Mkm2": round(float(A7[cont & (c0["origin"] == 90)].sum()) / 1e6, 2),
                       "last_orogeny_area_Mkm2": oro_area,
