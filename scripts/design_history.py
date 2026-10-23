@@ -29,8 +29,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from design_final_map import apply_options, build  # noqa: E402
 from mythic.figures.world import code_version  # noqa: E402
 from mythic.metrics.grid import LatLonGrid  # noqa: E402
-from mythic.tectonics.geometry import R_KM, lonlat_to_xyz, unit, xyz_to_lonlat  # noqa: E402
-from mythic.tectonics.reverse import PlateHistory, pose_from_ops  # noqa: E402
+from scipy.spatial import cKDTree  # noqa: E402
+
+from mythic.tectonics.geometry import R_KM, km_from_chord, lonlat_to_xyz, unit, xyz_to_lonlat  # noqa: E402
+from mythic.tectonics.reverse import PlateHistory, consumed_margin, pose_from_ops  # noqa: E402
 
 PANEL_TIMES = [300, 250, 220, 180, 150, 120, 90, 60, 35, 0]
 
@@ -123,6 +125,56 @@ def build_history(hist_cfg: dict, centroids: dict) -> PlateHistory:
     return h
 
 
+def consumed_margins(hist_cfg: dict, grid: LatLonGrid, ids: np.ndarray, h: PlateHistory, log_fn=None, return_masks=False):
+    """各碰撞下行块要补回的陆缘（现今参照系栅格上的块编号，0 = 无）。范围按运动学算（reverse.consumed_margin），
+    陆壳部分只取离下行块 continental_km 以内（更远处是大印度式陆缘外侧的洋盆，按洋壳处理，不补陆壳）。"""
+    code_id = {b["code"]: b["id"] for b in hist_cfg["blocks"]}
+    ini = hist_cfg.get("initial", {})
+    ext = np.zeros(grid.shape, int)
+    infos, masks = [], []
+    for col in hist_cfg.get("collisions", []):
+        dn, up = code_id[col["down"]], code_id[col["up"]]
+        t_c = float(col["t"])
+        R = h.absolute(dn, t_c).T @ h.absolute(up, t_c)
+        m = consumed_margin(grid.xyz, ids == dn, ids == up, R, float(col["max_km"])) & (ext == 0)
+        full = float(grid.cell_area_km2[m].sum())
+        cap = float(col.get("continental_km", ini.get("ext_continental_km", 1e9)))
+        if m.any():
+            d, _ = cKDTree(grid.xyz[ids == dn]).query(grid.xyz[m])
+            keep = np.zeros_like(m)
+            keep[m] = km_from_chord(d) <= cap
+            m = keep
+        # 碰撞之前任何时刻会压到别的块上的陆缘格点不补（按洋壳处理）：否则正向演化会提前碰撞
+        trimmed = 0.0
+        if m.any():
+            Xe = grid.xyz[m]
+            bad = np.zeros(Xe.shape[0], bool)
+            for t in np.arange(t_c, float(hist_cfg["t0"]) + 0.1, 5.0):
+                P = Xe @ h.absolute(dn, t).T
+                for other in code_id.values():
+                    if other == dn:
+                        continue
+                    lo, la = xyz_to_lonlat(P @ h.absolute(other, t))
+                    i = np.clip(((90.0 - la) / 180.0 * grid.ny).astype(int), 0, grid.ny - 1)
+                    j = np.clip(((lo + 180.0) / 360.0 * grid.nx).astype(int), 0, grid.nx - 1)
+                    bad |= (ids[i, j] == other) | (ext[i, j] == other)
+            if bad.any():
+                trimmed = float(grid.cell_area_km2[m][bad].sum())
+                keep = np.zeros_like(m)
+                keep[m] = ~bad
+                m = keep
+        ext[m] = dn
+        masks.append(m.copy())
+        info = {**col, "swept_Mkm2": round(full / 1e6, 2), "continental_Mkm2": round(float(grid.cell_area_km2[m].sum()) / 1e6, 2),
+                "continental_km": cap, "trimmed_conflict_Mkm2": round(trimmed / 1e6, 2)}
+        infos.append(info)
+        if log_fn:
+            log_fn(f"  被挤掉的陆缘 {col['down']} <- {col['up']}（{t_c:g} Ma）：扫过 {info['swept_Mkm2']} 百万 km²，"
+                   f"补回陆壳 {info['continental_Mkm2']}（离下行块 {cap:g} km 以内；碰撞前会压到别的块而不补的 "
+                   f"{info['trimmed_conflict_Mkm2']}）")
+    return (ext, infos, masks) if return_masks else (ext, infos)
+
+
 def raster_at(h: PlateHistory, blocks: dict, ids: np.ndarray, grid: LatLonGrid, t: float, tgt: LatLonGrid):
     """t 时刻各块在目标格网上的覆盖（反向查找：目标格点转回现今位置，看落在哪块里，没有空洞）。
     返回 (块编号, 覆盖次数)。"""
@@ -191,7 +243,10 @@ def main() -> int:
         relv = (np.array([h.relative_velocity_cm_yr(pid, par, X, float(t)) for t in times]) if par else absv)
         speed[v["code"]] = {"abs_median": np.median(absv, axis=1), "abs_max": absv.max(axis=1),
                             "rel_median": np.median(relv, axis=1), "rel_max": relv.max(axis=1)}
-    log("审计：重叠（360x180，每 1 Myr）")
+    ext, ext_info = consumed_margins(hcfg, grid, ids, h, log)
+    # 被挤掉的陆缘与它的上盘在接触之后重叠是预期的（正在被消耗），不计
+    consumed_ok = [(code_id[c["down"]], code_id[c["up"]], float(c["t"])) for c in hcfg.get("collisions", [])]
+    log("审计：重叠（360x180，每 1 Myr；块本体 + 补回的陆缘）")
     tgt = LatLonGrid(360, 180)
     tarea = tgt.cell_area_km2
     overlap_t = []
@@ -199,13 +254,17 @@ def main() -> int:
     for t in range(0, t0 + 1):
         # 重叠：逐块覆盖相加；超过 1 的格点是重叠
         X = tgt.xyz.reshape(-1, 3)
-        hits = {}
+        hits, hits_ext = {}, {}
         for pid in blocks:
             Y = X @ h.absolute(pid, float(t))
             lon, lat = xyz_to_lonlat(Y)
             i = np.clip(((90.0 - lat) / 180.0 * grid.ny).astype(int), 0, grid.ny - 1)
             j = np.clip(((lon + 180.0) / 360.0 * grid.nx).astype(int), 0, grid.nx - 1)
-            hits[pid] = (ids[i, j] == pid).reshape(tgt.shape)
+            hits[pid] = ((ids[i, j] == pid) | (ext[i, j] == pid)).reshape(tgt.shape)
+            hits_ext[pid] = (ext[i, j] == pid).reshape(tgt.shape)
+        for dn, up, tc in consumed_ok:
+            if t < tc:
+                hits[dn] = hits[dn] & ~(hits_ext[dn] & hits[up])
         tot = sum(m.astype(int) for m in hits.values())
         overlap_t.append(float(tarea[tot > 1].sum()))
         keys = list(hits)
@@ -246,6 +305,7 @@ def main() -> int:
         "overlap_max_Mkm2_by_pair": {k: {"Mkm2": round(v[0] / 1e6, 2), "t": v[1]} for k, v in
                                      sorted(pair_max.items(), key=lambda kv: -kv[1][0])},
         "hotspot_checks": hs,
+        "consumed_margins": ext_info,
         "generated": time.strftime("%Y-%m-%d %H:%M:%S"),
     }
     (out_w / f"history_{args.history}.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1),

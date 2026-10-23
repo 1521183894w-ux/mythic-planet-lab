@@ -2,7 +2,7 @@
  "description": "终图倒推历史的审计（重建：scripts/design_history.py）",
  "design": "v2",
  "history": "v2",
- "code_version": "baf014e-dirty",
+ "code_version": "d29f635-dirty",
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
  "blocks": {
   "MD": {
@@ -70,33 +70,33 @@
  "speed_cm_yr": {
   "MD": {
    "abs_median_over_time": {
-    "median": 1.53,
-    "p95": 3.29,
-    "max": 3.72,
+    "median": 2.13,
+    "p95": 3.61,
+    "max": 4.05,
     "t_of_max": 120
    },
    "abs_max_point": {
-    "median": 1.71,
-    "p95": 4.4,
-    "max": 4.86,
+    "median": 2.2,
+    "p95": 4.67,
+    "max": 5.15,
     "t_of_max": 120
    },
    "rel_median_over_time": {
     "median": 0.0,
     "p95": 2.5,
     "max": 2.5,
-    "t_of_max": 106
+    "t_of_max": 95
    }
   },
   "ZL": {
    "abs_median_over_time": {
-    "median": 2.42,
+    "median": 2.48,
     "p95": 4.75,
     "max": 4.78,
     "t_of_max": 35
    },
    "abs_max_point": {
-    "median": 3.4,
+    "median": 3.21,
     "p95": 4.92,
     "max": 4.95,
     "t_of_max": 35
@@ -110,41 +110,41 @@
   },
   "IN": {
    "abs_median_over_time": {
-    "median": 1.16,
-    "p95": 9.78,
-    "max": 9.78,
-    "t_of_max": 56
+    "median": 1.15,
+    "p95": 9.99,
+    "max": 9.99,
+    "t_of_max": 58
    },
    "abs_max_point": {
-    "median": 1.74,
-    "p95": 9.92,
-    "max": 9.92,
-    "t_of_max": 55
+    "median": 1.86,
+    "p95": 10.41,
+    "max": 10.41,
+    "t_of_max": 72
    },
    "rel_median_over_time": {
-    "median": 1.16,
-    "p95": 9.78,
-    "max": 9.78,
-    "t_of_max": 56
+    "median": 1.15,
+    "p95": 9.99,
+    "max": 9.99,
+    "t_of_max": 58
    }
   },
   "BSE": {
    "abs_median_over_time": {
     "median": 1.23,
-    "p95": 3.11,
-    "max": 3.21,
+    "p95": 3.59,
+    "max": 3.67,
     "t_of_max": 280
    },
    "abs_max_point": {
     "median": 1.33,
-    "p95": 4.31,
-    "max": 4.4,
+    "p95": 4.44,
+    "max": 4.52,
     "t_of_max": 280
    },
    "rel_median_over_time": {
     "median": 0.87,
-    "p95": 2.82,
-    "max": 2.82,
+    "p95": 3.01,
+    "max": 3.01,
     "t_of_max": 249
    }
   },
@@ -190,53 +190,53 @@
   },
   "C": {
    "abs_median_over_time": {
-    "median": 2.34,
-    "p95": 3.21,
-    "max": 3.21,
-    "t_of_max": 111
-   },
-   "abs_max_point": {
-    "median": 2.42,
-    "p95": 3.29,
-    "max": 3.29,
+    "median": 2.35,
+    "p95": 3.18,
+    "max": 3.18,
     "t_of_max": 102
    },
+   "abs_max_point": {
+    "median": 2.45,
+    "p95": 3.23,
+    "max": 3.23,
+    "t_of_max": 103
+   },
    "rel_median_over_time": {
-    "median": 1.84,
-    "p95": 3.04,
-    "max": 3.04,
-    "t_of_max": 107
+    "median": 1.72,
+    "p95": 2.99,
+    "max": 2.99,
+    "t_of_max": 116
    }
   },
   "D": {
    "abs_median_over_time": {
-    "median": 1.68,
-    "p95": 2.41,
-    "max": 2.52,
+    "median": 1.97,
+    "p95": 2.86,
+    "max": 2.98,
     "t_of_max": 181
    },
    "abs_max_point": {
-    "median": 2.17,
-    "p95": 3.22,
-    "max": 3.34,
+    "median": 2.46,
+    "p95": 3.57,
+    "max": 3.65,
     "t_of_max": 181
    },
    "rel_median_over_time": {
     "median": 1.11,
     "p95": 1.84,
     "max": 1.84,
-    "t_of_max": 184
+    "t_of_max": 255
    }
   },
   "FAR": {
    "abs_median_over_time": {
-    "median": 2.88,
+    "median": 2.62,
     "p95": 3.43,
     "max": 3.48,
     "t_of_max": 100
    },
    "abs_max_point": {
-    "median": 3.45,
+    "median": 3.38,
     "p95": 4.57,
     "max": 4.57,
     "t_of_max": 100
@@ -245,20 +245,20 @@
     "median": 1.6,
     "p95": 3.2,
     "max": 3.2,
-    "t_of_max": 121
+    "t_of_max": 126
    }
   },
   "POL": {
    "abs_median_over_time": {
-    "median": 2.0,
-    "p95": 3.53,
-    "max": 3.61,
+    "median": 2.23,
+    "p95": 3.74,
+    "max": 3.8,
     "t_of_max": 181
    },
    "abs_max_point": {
-    "median": 2.68,
-    "p95": 3.8,
-    "max": 3.84,
+    "median": 2.75,
+    "p95": 3.87,
+    "max": 3.9,
     "t_of_max": 181
    },
    "rel_median_over_time": {
@@ -286,45 +286,49 @@
    "Mkm2": 0.27,
    "t": 91
   },
+  "IN-BSE": {
+   "Mkm2": 0.22,
+   "t": 259
+  },
   "D-POL": {
-   "Mkm2": 0.2,
-   "t": 297
+   "Mkm2": 0.19,
+   "t": 266
   },
   "IN-D": {
-   "Mkm2": 0.2,
+   "Mkm2": 0.18,
    "t": 51
   },
   "C-FAR": {
    "Mkm2": 0.14,
-   "t": 250
-  },
-  "BSE-POL": {
-   "Mkm2": 0.06,
-   "t": 276
-  },
-  "MD-D": {
-   "Mkm2": 0.06,
-   "t": 222
-  },
-  "ZL-BSE": {
-   "Mkm2": 0.05,
-   "t": 280
-  },
-  "ZL-POL": {
-   "Mkm2": 0.05,
    "t": 224
   },
-  "IN-POL": {
-   "Mkm2": 0.04,
-   "t": 133
+  "MD-D": {
+   "Mkm2": 0.07,
+   "t": 128
   },
-  "IN-BSE": {
-   "Mkm2": 0.02,
-   "t": 52
+  "ZL-POL": {
+   "Mkm2": 0.04,
+   "t": 210
+  },
+  "ZL-BSE": {
+   "Mkm2": 0.04,
+   "t": 299
+  },
+  "BSE-POL": {
+   "Mkm2": 0.04,
+   "t": 277
+  },
+  "B-D": {
+   "Mkm2": 0.01,
+   "t": 60
+  },
+  "A-B": {
+   "Mkm2": 0.01,
+   "t": 250
   },
   "C-POL": {
    "Mkm2": 0.01,
-   "t": 141
+   "t": 140
   }
  },
  "hotspot_checks": [
@@ -347,5 +351,51 @@
    "distance_km": 0
   }
  ],
- "generated": "2026-10-24 00:32:02"
+ "consumed_margins": [
+  {
+   "down": "IN",
+   "up": "B",
+   "t": 48,
+   "max_km": 2600,
+   "what": "南方地盾陆块撞上洲 B（大印度式陆缘）",
+   "swept_Mkm2": 7.55,
+   "continental_Mkm2": 2.53,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 1.39
+  },
+  {
+   "down": "A",
+   "up": "B",
+   "t": 250,
+   "max_km": 900,
+   "what": "洲 A、B 碰撞",
+   "swept_Mkm2": 0.13,
+   "continental_Mkm2": 0.13,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 0.0
+  },
+  {
+   "down": "D",
+   "up": "C",
+   "t": 180,
+   "max_km": 900,
+   "what": "洲 C、D 碰撞",
+   "swept_Mkm2": 1.25,
+   "continental_Mkm2": 1.25,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 0.0
+  },
+  {
+   "down": "D",
+   "up": "B",
+   "t": 60,
+   "max_km": 1600,
+   "what": "洲 D 东北角撞上洲 B（东方地峡）",
+   "swept_Mkm2": 0.26,
+   "continental_Mkm2": 0.26,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 0.0
+  }
+ ],
+ "generated": "2026-10-24 01:01:27"
 }

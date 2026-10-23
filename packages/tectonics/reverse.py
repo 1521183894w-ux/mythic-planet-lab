@@ -167,3 +167,116 @@ class PlateHistory:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
         return path
+
+
+# ---------------------------------------------------------------------------
+# U24：补回碰撞挤掉的地壳、构建初始世界
+# ---------------------------------------------------------------------------
+def _raster_index(lon, lat, ny: int, nx: int):
+    i = np.clip(((90.0 - lat) / 180.0 * ny).astype(int), 0, ny - 1)
+    j = np.clip(((lon + 180.0) / 360.0 * nx).astype(int), 0, nx - 1)
+    return i, j
+
+
+def consumed_margin(grid_xyz: np.ndarray, down_mask: np.ndarray, up_mask: np.ndarray, R_up_tc: np.ndarray,
+                    max_km: float, step_km: float = 40.0) -> np.ndarray:
+    """碰撞时被挤掉的下行块陆缘（下行块的现今参照系、经纬度栅格上的掩膜）。
+
+    R_up_tc：把上盘块的现今位置带到接触时刻 t_c 在下行块参照系里的位置（下行块绝对旋转的逆 · 上盘块绝对旋转）。
+    上盘块从 t_c 到现今推进时扫过的、现今被它覆盖的地方，原来是下行块的陆缘（后来被俯冲、拼贴进造山带）：
+    取上盘块现今覆盖、t_c 时还没覆盖的格点，沿该处上盘的推进方向往前走，只要一路都在上盘陆地上、max_km 内碰到下行块，
+    就算被挤掉的陆缘。中间隔着海（例如残留洋盆）的不算——那里挤掉的是洋壳。"""
+    ny, nx = down_mask.shape
+    X = grid_xyz.reshape(-1, 3)
+    up = up_mask.ravel()
+    q = np.flatnonzero(up)
+    # t_c 时上盘的覆盖：q 处的点转回上盘现今位置仍在上盘里
+    lo, la = xyz_to_lonlat(X[q] @ R_up_tc)
+    i, j = _raster_index(lo, la, ny, nx)
+    cand = q[~up_mask[i, j]]
+    if cand.size == 0:
+        return np.zeros_like(down_mask)
+    P = X[cand]
+    prev = P @ R_up_tc.T                                   # 现今在 q 的上盘点，t_c 时在哪
+    d = P - prev
+    d = d - np.sum(d * P, axis=1, keepdims=True) * P       # 推进方向（切平面）
+    n = np.linalg.norm(d, axis=1)
+    ok = n > 1e-9
+    P, cand, d = P[ok], cand[ok], d[ok] / n[ok, None]
+    hit = np.zeros(cand.size, bool)
+    alive = np.ones(cand.size, bool)
+    for s in np.arange(step_km, max_km + step_km, step_km):
+        a = s / R_KM
+        Y = np.cos(a) * P + np.sin(a) * d
+        lo, la = xyz_to_lonlat(Y)
+        i, j = _raster_index(lo, la, ny, nx)
+        newly = alive & down_mask[i, j]
+        hit |= newly
+        alive &= ~newly & up_mask[i, j]                   # 走出上盘陆地（到了海里）就停
+        if not alive.any():
+            break
+    out = np.zeros(ny * nx, bool)
+    out[cand[hit]] = True
+    return out.reshape(down_mask.shape)
+
+
+def initial_crust(mesh, history: PlateHistory, t0: float, block_ids: list, core: np.ndarray, ext: np.ndarray,
+                  fields_core: dict, fields_ext: dict):
+    """t0 时刻的地壳（固定网格视图）：网格节点转回各块现今位置，落在块里（或块被挤掉的陆缘里）就是该块的陆壳。
+
+    core / ext：现今经纬度栅格上的块编号（ext = 被挤掉的陆缘，可以与别的块的现今范围重叠）；
+    fields_core / fields_ext：{"T": 厚度 km, "t_form": 形成年龄 Ma, "prov": 省份编号} 栅格。
+    同一节点有几块认领时，现今本体优先于被挤掉的陆缘，再按 block_ids 的顺序。返回 (Crust, 板块编号数组)。"""
+    from .crust import CONT, Crust, ORO_NONE
+
+    ny, nx = core.shape
+    n = mesh.n
+    owner = np.zeros(n, np.int64)
+    kind = np.zeros(n, np.int8)                            # 1 = 本体，2 = 被挤掉的陆缘
+    src = np.zeros(n, np.int64)
+    for pid in block_ids:
+        Y = mesh.xyz @ history.absolute(pid, t0)          # R^T x：转回现今位置
+        lo, la = xyz_to_lonlat(Y)
+        i, j = _raster_index(lo, la, ny, nx)
+        flat = i * nx + j
+        c_hit = (core[i, j] == pid) & (kind != 1)
+        e_hit = (ext[i, j] == pid) & (kind == 0)
+        for hit, k in ((c_hit, 1), (e_hit, 2)):
+            owner[hit], kind[hit], src[hit] = pid, k, flat[hit]
+    c = Crust(n)
+    cont = kind > 0
+    c.ctype[cont] = CONT
+    c.plate[cont] = owner[cont]
+    c.origin[cont] = owner[cont]
+    for k, f in ((1, fields_core), (2, fields_ext)):
+        sel = kind == k
+        c.T[sel] = f["T"].ravel()[src[sel]]
+        c.t_form[sel] = f["t_form"].ravel()[src[sel]]
+        c.prov[sel] = f["prov"].ravel()[src[sel]]
+    c.oro[cont] = ORO_NONE
+    return c, owner, kind
+
+
+def fill_ocean(mesh, c, owner: np.ndarray, t0: float, half_rate_km_myr: float = 25.0, max_age: float = 180.0):
+    """洋壳：每个洋节点归离它最近的陆块所在的板块；洋底年龄按到板块边界的距离（半扩张速率 2.5 cm/yr），
+    边界附近年轻（洋脊）、远离边界的陆缘外侧古老，封顶 180 Myr。"""
+    from scipy.spatial import cKDTree
+
+    from .crust import OCEAN
+    from .geometry import km_from_chord
+
+    cont = owner > 0
+    oc = np.flatnonzero(~cont)
+    _, k = cKDTree(mesh.xyz[cont]).query(mesh.xyz[oc])
+    plate = owner.copy()
+    plate[oc] = owner[np.flatnonzero(cont)[k]]
+    e = mesh.edges
+    bnd = np.unique(e[plate[e[:, 0]] != plate[e[:, 1]]].ravel())
+    d, _ = cKDTree(mesh.xyz[bnd]).query(mesh.xyz[oc])
+    age = np.clip(km_from_chord(d) / half_rate_km_myr, 2.0, max_age)
+    c.plate = plate.astype(c.plate.dtype)
+    c.ctype[oc] = OCEAN
+    c.T[oc] = 7.0
+    c.age[oc] = age
+    c.t_form[oc] = t0 + age
+    return c

@@ -1,0 +1,159 @@
+{
+ "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
+ "design": "v2",
+ "history": "v2",
+ "code_version": "d29f635-dirty",
+ "t0": 300.0,
+ "mesh_level": 7,
+ "rotation_file": "data/worlds/design_v2/history_v2.rot",
+ "consumed_margins": [
+  {
+   "down": "IN",
+   "up": "B",
+   "t": 48,
+   "max_km": 2600,
+   "what": "南方地盾陆块撞上洲 B（大印度式陆缘）",
+   "swept_Mkm2": 7.55,
+   "continental_Mkm2": 2.53,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 1.39
+  },
+  {
+   "down": "A",
+   "up": "B",
+   "t": 250,
+   "max_km": 900,
+   "what": "洲 A、B 碰撞",
+   "swept_Mkm2": 0.13,
+   "continental_Mkm2": 0.13,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 0.0
+  },
+  {
+   "down": "D",
+   "up": "C",
+   "t": 180,
+   "max_km": 900,
+   "what": "洲 C、D 碰撞",
+   "swept_Mkm2": 1.25,
+   "continental_Mkm2": 1.25,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 0.0
+  },
+  {
+   "down": "D",
+   "up": "B",
+   "t": 60,
+   "max_km": 1600,
+   "what": "洲 D 东北角撞上洲 B（东方地峡）",
+   "swept_Mkm2": 0.26,
+   "continental_Mkm2": 0.26,
+   "continental_km": 1000.0,
+   "trimmed_conflict_Mkm2": 0.0
+  }
+ ],
+ "continental_crust_Mkm2": 147.9,
+ "of_which_consumed_margin_Mkm2": 4.2,
+ "present_rigid_blocks_Mkm2": 144.1,
+ "land_above_sea_level_Mkm2": 113.7,
+ "ocean_fraction": 0.777,
+ "elevation_m_percentiles_land": {
+  "5": 258,
+  "50": 400,
+  "95": 401,
+  "99": 850
+ },
+ "continental_thickness_km": {
+  "median": 35.0,
+  "min": 13.1,
+  "max": 42.0
+ },
+ "ocean_age_myr": {
+  "median": 35.5,
+  "max": 180.0
+ },
+ "n_provinces": 285,
+ "blocks": [
+  {
+   "id": 101,
+   "code": "B",
+   "name": "洲 B（北方地台与东方地块）",
+   "core_Mkm2": 35.53,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 133.9
+  },
+  {
+   "id": 103,
+   "code": "A",
+   "name": "洲 A",
+   "core_Mkm2": 7.63,
+   "consumed_margin_Mkm2": 0.13,
+   "plate_Mkm2": 55.5
+  },
+  {
+   "id": 102,
+   "code": "BSE",
+   "name": "东南增生地块",
+   "core_Mkm2": 2.43,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 10.9
+  },
+  {
+   "id": 301,
+   "code": "C",
+   "name": "洲 C",
+   "core_Mkm2": 35.83,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 70.7
+  },
+  {
+   "id": 401,
+   "code": "D",
+   "name": "洲 D",
+   "core_Mkm2": 23.01,
+   "consumed_margin_Mkm2": 1.52,
+   "plate_Mkm2": 49.8
+  },
+  {
+   "id": 501,
+   "code": "FAR",
+   "name": "远方大陆",
+   "core_Mkm2": 21.69,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 106.4
+  },
+  {
+   "id": 601,
+   "code": "POL",
+   "name": "极地大陆",
+   "core_Mkm2": 13.2,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 51.7
+  },
+  {
+   "id": 702,
+   "code": "IN",
+   "name": "南方地盾陆块（印度式）",
+   "core_Mkm2": 3.79,
+   "consumed_margin_Mkm2": 2.52,
+   "plate_Mkm2": 16.2
+  },
+  {
+   "id": 701,
+   "code": "MD",
+   "name": "裂离微大陆",
+   "core_Mkm2": 0.35,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 1.0
+  },
+  {
+   "id": 801,
+   "code": "ZL",
+   "name": "南洋陆块",
+   "core_Mkm2": 0.29,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 14.0
+  }
+ ],
+ "generated": "2026-10-24 01:00:43"
+}
