@@ -57,6 +57,7 @@ class Engine:
         self.next_uid = int(crust.uid.max()) + 1 if len(crust) else 0
         self.steps_since_commit = 0
         self.polarity: dict[int, int] = {}     # 板块对（小*1000+大）-> 俯冲（下行）板块
+        self.gap_prefer: dict[int, int] = {}   # 板块对 -> 两者之间张开的新洋壳全部归这块（U26；默认按最近单元归属）
         self.fronts: deque = deque()
         self.coll_area: dict[tuple[int, int], float] = {}
         self.events: list[dict] = []
@@ -500,6 +501,13 @@ class Engine:
             d2 = d[np.arange(gap.size), first]
             frac = np.where(has, (d2 - d1) / np.maximum(d1 + d2, 1e-12), 1.0)
             age = self.steps_since_commit * p.dt * np.clip(frac, 0.0, 1.0)
+            if self.gap_prefer and has.any():     # 指定的板块对之间张开的新洋壳全部归指定的一块（U26）
+                owner = owner.copy()
+                p2 = pl[np.arange(gap.size), first]
+                key = np.minimum(owner, p2).astype(np.int64) * 1000 + np.maximum(owner, p2)
+                for kk, q in self.gap_prefer.items():
+                    sel = has & (key == kk)
+                    owner[sel] = q
             bn = np.empty(gap.size, np.int64)
             for q in np.unique(owner):
                 s = owner == q
@@ -663,6 +671,39 @@ class Engine:
         self._event("rift", parent=parent, new_plate=new_id, n_parcels=int(keep.size), n_segments=n_seg,
                     **_lat_lon(xm))
         return keep
+
+    def transfer_units(self, src: int, dst: int, moved: np.ndarray, kind: str = "unit_transfer") -> int:
+        """把板块 src 的一批单元 moved 整体改属板块 dst（U26：上盘洋壳"围裙"转给下行板块，被动陆缘转为俯冲带）。
+        与 transfer_terrane 一样用"收集式"重采样：dst 参照格网上落在这批单元范围内、还没有 dst 单元的节点，
+        取覆盖它的 src 单元的属性；已有 dst 单元的节点保持不变。重采样后的小空洞在下一次提交时按新洋壳补上。
+        返回 dst 新增的单元数。"""
+        assert self.steps_since_commit == 0, "单元转移只在提交后进行"
+        moved = np.asarray(moved, np.int64)
+        if moved.size == 0 or src not in self.R or dst not in self.R:
+            return 0
+        m, c = self.m, self.c
+        pos = self.positions()
+        Rd = self.R[dst]
+        _, cand = m.tree.query(pos[moved] @ Rd, k=7, workers=KD_WORKERS)
+        cand = np.unique(cand.ravel())
+        s = self.covering(src, m.xyz[cand] @ Rd.T)
+        ok = np.isin(s, moved)
+        w, s = cand[ok], s[ok]
+        occ = self.owner[dst][w]
+        has = occ >= 0
+        has[has] = self.alive[occ[has]]
+        w, s = w[~has], s[~has]
+        add = c.gather(s)
+        add.uid = self._new_uids(len(add))
+        add.plate[:] = dst
+        add.node = w
+        self.alive[moved] = False
+        self.c = c.concat(add)
+        self.alive = np.concatenate([self.alive, np.ones(len(add), bool)])
+        self._rebuild()
+        self._event(kind, src=int(src), dst=int(dst), n_parcels=int(moved.size), n_new=int(len(add)),
+                    area_km2=round(float(m.area_km2[w].sum())))
+        return int(len(add))
 
     def transfer_terrane(self, down: int, over: int) -> int:
         """Cortial 式地体转移：下行板块上与上盘相接的连通陆壳整体改属上盘板块。

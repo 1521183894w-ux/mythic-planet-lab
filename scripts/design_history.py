@@ -31,7 +31,7 @@ from mythic.figures.world import code_version  # noqa: E402
 from mythic.metrics.grid import LatLonGrid  # noqa: E402
 from scipy.spatial import cKDTree  # noqa: E402
 
-from mythic.tectonics.geometry import R_KM, km_from_chord, lonlat_to_xyz, unit, xyz_to_lonlat  # noqa: E402
+from mythic.tectonics.geometry import R_KM, km_from_chord, lonlat_to_xyz, rotmat, unit, xyz_to_lonlat  # noqa: E402
 from mythic.tectonics.reverse import PlateHistory, consumed_margin, pose_from_ops  # noqa: E402
 
 PANEL_TIMES = [300, 250, 220, 180, 150, 120, 90, 60, 35, 0]
@@ -122,9 +122,18 @@ def build_history(hist_cfg: dict, centroids: dict) -> PlateHistory:
         if keys[-1][0] < hist_cfg["t0"]:
             keys.append((float(hist_cfg["t0"]), keys[-1][1]))
         h.add(blk["id"], par, blk["code"], keys)
-    bg = (hist_cfg.get("ocean") or {}).get("background")
-    if bg:                                  # 外大洋板块：固定在地幔（热点）参照系里（U25）
-        h.add(int(bg["id"]), 0, "OCEAN", [(0.0, np.eye(3)), (float(hist_cfg["t0"]), np.eye(3))])
+    oc = hist_cfg.get("ocean") or {}
+    t0 = float(hist_cfg["t0"])
+    if oc.get("background"):                # 外大洋板块：固定在地幔（热点）参照系里（U25）
+        h.add(int(oc["background"]["id"]), 0, "OCEAN", [(0.0, np.eye(3)), (t0, np.eye(3))])
+    for op in oc.get("plates", []):         # 单独运动的大洋板块：绕固定欧拉极匀速转动（U26）
+        axis = lonlat_to_xyz(*op["pole"])
+        w = float(op["speed_cm_yr"]) * 10.0 / R_KM                      # rad/Myr（欧拉极离范围质心 90°，质心处速度 = speed）
+        # 现今 -> t 时刻：倒转 w·t。关键帧每 60 Myr 一个（四元数插值的转角不超过 180°）
+        keys = [(float(t), rotmat(axis, -w * float(t))) for t in np.arange(0.0, t0 + 0.1, 60.0)]
+        if keys[-1][0] < t0:
+            keys.append((t0, rotmat(axis, -w * t0)))
+        h.add(int(op["id"]), 0, op["code"], keys)
     return h
 
 

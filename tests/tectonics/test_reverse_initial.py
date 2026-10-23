@@ -80,3 +80,24 @@ def test_ocean_between_converging_blocks_goes_with_the_downgoing_plate():
     assert at(0, 18.5) == 1         # 上盘陆缘外 250 km 内：弧前，归上盘
     assert at(0, 60) == 900         # 上盘背后（下行块在同一方向）：外大洋
     assert at(150, 0) == 900        # 远离两块：外大洋
+
+
+def test_ocean_plate_takes_the_outer_ocean_on_one_side_of_a_block():
+    """U26：外大洋里最近的大陆是某块、在它某一侧、纬度在范围内的洋壳另成一块大洋板块；其余仍归外大洋板块。"""
+    from mythic.tectonics.reverse import assign_ocean_plates
+
+    mesh = load_mesh(5)
+    lon, lat = mesh.lon, mesh.lat
+    plate = np.zeros(mesh.n, np.int64)
+    blk = (np.abs(lat) < 20) & (np.abs(lon) < 15)
+    plate[blk] = 1
+    out = assign_ocean_plates(mesh, plate, blk, [], forearc_km=500.0, corridor_km=6500.0, background=900,
+                              ocean_plates=[{"id": 910, "near": 1, "side": "west", "lat": [-30, 30]}])
+
+    def at(lo, la):
+        return out[int(np.argmax(mesh.xyz @ lonlat_to_xyz(lo, la)))]
+
+    assert at(-40, 0) == 910        # 西侧、纬度带内
+    assert at(40, 0) == 900         # 东侧
+    assert at(-40, 50) == 900       # 西侧但纬度带外
+    assert at(-17, 0) == 1          # 弧前（L5 网格约 220 km，弧前放宽到 500 km）

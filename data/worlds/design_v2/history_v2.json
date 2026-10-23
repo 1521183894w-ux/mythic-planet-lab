@@ -2,7 +2,7 @@
  "description": "终图倒推历史的审计（重建：scripts/design_history.py）",
  "design": "v2",
  "history": "v2",
- "code_version": "324f2f4-dirty",
+ "code_version": "e8fdcf8-dirty",
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
  "blocks": {
   "MD": {
@@ -397,5 +397,5 @@
    "trimmed_conflict_Mkm2": 0.0
   }
  ],
- "generated": "2026-10-24 02:33:32"
+ "generated": "2026-10-24 03:26:34"
 }

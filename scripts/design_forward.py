@@ -39,7 +39,7 @@ from mythic.figures.world import code_version  # noqa: E402
 from mythic.metrics.grid import LatLonGrid  # noqa: E402
 from mythic.tectonics.crust import CONT, ORO_ARC, ORO_COLL, ORO_RIFT, Params  # noqa: E402
 from mythic.tectonics.engine import Engine  # noqa: E402
-from mythic.tectonics.geometry import km_from_chord, unit, xyz_to_lonlat  # noqa: E402
+from mythic.tectonics.geometry import R_KM, km_from_chord, unit, xyz_to_lonlat  # noqa: E402
 from mythic.tectonics.kinematics import RotationFileKinematics  # noqa: E402
 from mythic.tectonics.mesh import CACHE, Raster, load_mesh  # noqa: E402
 from mythic.tectonics.prehistory import InitialWorld  # noqa: E402,F401  （反序列化要用）
@@ -68,14 +68,101 @@ def preset_polarity(hcfg: dict) -> dict:
             for o in r["over"]:
                 a, b = code_id[d], code_id[o]
                 out.setdefault(min(a, b) * 1000 + max(a, b), a)
-    if oc.get("background"):
-        bg = int(oc["background"]["id"])
+    oceans = ([int(oc["background"]["id"])] if oc.get("background") else []) + [int(p["id"]) for p in oc.get("plates", [])]
+    for bg in oceans:                       # 外大洋板块与单独运动的大洋板块（U26）遇到任何大陆都是它下行
         for q in code_id.values():
             out.setdefault(min(q, bg) * 1000 + max(q, bg), bg)
     return out
 
 
-def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict):
+def over_down_pairs(hcfg: dict) -> dict:
+    """{上盘板块: [下行板块, ...]}，来自 history yaml 的 ocean.subduction（不含外大洋板块）。"""
+    code_id = {b["code"]: int(b["id"]) for b in hcfg["blocks"]}
+    out: dict[int, list[int]] = {}
+    for r in (hcfg.get("ocean") or {}).get("subduction", []):
+        for o in r["over"]:
+            lst = out.setdefault(code_id[o], [])
+            lst += [code_id[d] for d in r["down"] if code_id[d] not in lst and code_id[d] != code_id[o]]
+    return out
+
+
+def strip_aprons(eng, pairs: dict, forearc_km: float, approach_km: float, between_cos: float = -0.5,
+                 min_conv_cm_yr: float = 0.5) -> float:
+    """上盘板块不留挡路的洋壳"围裙"（U26）：上盘板块离自己陆壳 forearc_km 以外、夹在它和某块设计中的下行板块的陆壳之间
+    （两个方向夹角的余弦小于 between_cos）、离那块陆壳 approach_km 以内的洋壳，转给那块下行板块，
+    下行陆块前进方向上的上盘陆缘成为俯冲带（海沟在弧前外缘）。
+    U25 第三次运行：南方板块早期离开时张开的新洋壳按"就近"归了洲 B（洲 A 同理），积成约 600 km 宽的古老洋壳围裙，
+    俯冲带在围裙外缘、围裙上长出洋内弧，南方地盾陆块与洲 C 北端先撞上弧地壳，提前碰撞被消耗。
+    地球上被动陆缘外的洋壳在汇聚开始后也会转成俯冲带的下行一侧（俯冲在被动陆缘起始）。
+    （U26 第一版只要求离下行板块的任何地壳 1200 km 以内，洲 B 北岸、洲 A 西岸等不在任何陆块前进路上的海岸也都变成俯冲带，
+    沿海岸长出一圈 1 km 高的弧地壳，陆壳体积 300 Myr 增加 15%。）返回转移的面积（km²）。"""
+    from scipy.spatial import cKDTree
+
+    from mythic.tectonics.crust import OCEAN
+    from mythic.tectonics.geometry import chord_from_km
+
+    def tangent(Q, X):
+        v = Q - X
+        v = v - np.sum(v * X, axis=1, keepdims=True) * X
+        return v / np.maximum(np.linalg.norm(v, axis=1, keepdims=True), 1e-12)
+
+    moved_km2 = 0.0
+    for o, downs in pairs.items():
+        if o not in eng.R:
+            continue
+        c, alive, pos = eng.c, eng.alive, eng.positions()
+        oc = np.flatnonzero(alive & (c.plate == o) & (c.ctype == OCEAN))
+        cont = np.flatnonzero(alive & (c.plate == o) & (c.ctype == CONT))
+        if oc.size == 0 or cont.size == 0:
+            continue
+        d_coast, k_coast = cKDTree(pos[cont]).query(pos[oc], workers=-1)
+        far = km_from_chord(d_coast) > forearc_km
+        cand, p_o = oc[far], pos[cont[k_coast[far]]]
+        if cand.size == 0:
+            continue
+        X = pos[cand]
+        t_o = tangent(p_o, X)
+        best = np.full(cand.size, np.inf)
+        to = np.zeros(cand.size, np.int64)
+        for d in downs:
+            if d not in eng.R:
+                continue
+            du = np.flatnonzero(alive & (c.plate == d) & (c.ctype == CONT))
+            if du.size == 0:
+                continue
+            dd, kd = cKDTree(pos[du]).query(X, distance_upper_bound=chord_from_km(approach_km), workers=-1)
+            hit = np.isfinite(dd)
+            dd = np.where(hit, km_from_chord(np.where(hit, dd, 0.0)), np.inf)
+            p_d = pos[du[np.where(hit, kd, 0)]]
+            between = np.sum(t_o * tangent(p_d, X), axis=1) < between_cos
+            # 下行板块正在朝上盘汇聚：相对速度（cm/yr）在朝向上盘陆缘方向上的分量超过 min_conv_cm_yr。
+            # 已经拼合、一起运动的板块不再接收围裙（第二版里洲 B 的围裙转给了 120 Ma 就拼上 B 的东南增生地块，
+            # 围裙原地不动，南方地盾陆块撞上它的弧地壳，东方大高原长到设计位置以南）
+            v_rel = np.cross(eng.omega[d] - eng.omega[o], X) * R_KM / 10.0
+            conv = np.sum(v_rel * t_o, axis=1) > min_conv_cm_yr
+            dd = np.where(between & conv, dd, np.inf)
+            better = dd < best
+            best[better], to[better] = dd[better], d
+        for d in np.unique(to[np.isfinite(best)]):
+            sel = cand[np.isfinite(best) & (to == d)]
+            moved_km2 += float(eng.area[sel].sum())
+            eng.transfer_units(int(o), int(d), sel, kind="apron_transfer")
+    return moved_km2
+
+
+def ocean_gap_prefer(hcfg: dict) -> dict:
+    """外大洋板块与单独运动的大洋板块之间张开的新洋壳全部归运动的那块（U26）：按最近单元归属时一半归了固定的外大洋板块，
+    运动的大洋板块前缘俯冲、后缘只长一半，几千万年后俯冲完消失（第一次试算两块分别在约 60、20 Ma 消失，
+    之后远方大陆西岸、洲 B 东岸又只剩大陆自己的慢速俯冲）。"""
+    oc = hcfg.get("ocean") or {}
+    if not oc.get("background"):
+        return {}
+    bg = int(oc["background"]["id"])
+    return {min(bg, int(p["id"])) * 1000 + max(bg, int(p["id"])): int(p["id"]) for p in oc.get("plates", [])}
+
+
+def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict, aprons: dict | None = None,
+             gap_prefer: dict | None = None):
     kin = RotationFileKinematics(rot)
     c = world.crust.gather(np.arange(len(world.crust)))
     c.uid = np.arange(len(c), dtype=np.int64)
@@ -85,6 +172,10 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
     _, om = kin.step_rotations(plates0, t0)
     eng = Engine(mesh, c, params, float(t0), om)
     eng.polarity.update(polarity)
+    eng.gap_prefer.update(gap_prefer or {})
+    if aprons:
+        aprons["pairs"] = over_down_pairs(aprons["hcfg"])
+    moved = 0.0
     frames = [eng.snapshot()]
     t = t0
     tw = time.perf_counter()
@@ -92,12 +183,16 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         dR, om = kin.step_rotations(eng.plates, t)
         committed = eng.step(dR, om)
         t -= 1
+        if committed and aprons:
+            moved += strip_aprons(eng, aprons["pairs"], aprons["forearc_km"], aprons["approach_km"], aprons["between_cos"],
+                                  aprons["min_conv_cm_yr"])
         if committed and t % snap_every == 0:
             frames.append(eng.snapshot())
             cl = eng.commit_log[-1]
             log(f"  {t:3d} Ma：陆壳 {cl['cont_area_km2'] / 1e6:6.1f}、海平面以上 {cl['land_area_km2'] / 1e6:6.1f} 百万 km²，"
                 f"陆壳体积 {cl['cont_volume_km3'] / 1e9:6.3f}×10⁹ km³，单元 {cl['n_parcels']}，"
-                f"板块 {len(eng.plates)}（{time.perf_counter() - tw:.0f} s）")
+                f"板块 {len(eng.plates)}" + (f"，累计转给下行板块的洋壳围裙 {moved / 1e6:.1f} 百万 km²" if aprons else "")
+                + f"（{time.perf_counter() - tw:.0f} s）")
     return eng, frames
 
 
@@ -285,13 +380,20 @@ def main() -> int:
         log(f"正向演化：{world.t:g} -> 0 Ma，L{mesh.level}（{mesh.n} 个节点），旋转文件 {rot.relative_to(ROOT).as_posix()}")
         tw = time.perf_counter()
         log(f"引擎参数（history yaml forward.engine_params）：{fcfg.get('engine_params', {})}；预设俯冲方向 {len(polarity)} 对")
-        eng, frames = simulate(world, mesh, rot, args.snap_every, params, polarity)
+        ap = fcfg.get("aprons")
+        oc = hcfg.get("ocean") or {}
+        aprons = ({"hcfg": hcfg, "forearc_km": float(oc.get("forearc_km", 120.0)),
+                   "between_cos": float(oc.get("between_cos", -0.5)),
+                   "approach_km": float(ap["approach_km"]), "min_conv_cm_yr": float(ap.get("min_conv_cm_yr", 0.5))}
+                  if ap and ap.get("strip", True) else None)
+        eng, frames = simulate(world, mesh, rot, args.snap_every, params, polarity, aprons, ocean_gap_prefer(hcfg))
         wall = time.perf_counter() - tw
         log(f"模拟完成，用时 {wall:.0f} s")
         save_run(run_path, eng, frames, {"design": args.design, "history": args.history, "level": mesh.level,
                                          "code_version": code_version(), "wall_s": round(wall, 1),
                                          "rotation_file": rot.relative_to(ROOT).as_posix(),
                                          "engine_params": fcfg.get("engine_params", {}),
+                                         "aprons": fcfg.get("aprons"),
                                          "preset_polarity": {str(k): v for k, v in polarity.items()}})
     frames, run_js = load_run(run_path)
 

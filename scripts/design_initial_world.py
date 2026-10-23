@@ -197,10 +197,12 @@ def main() -> int:
         rules = [{"down": [code_id[x] for x in r["down"]], "over": [code_id[x] for x in r["over"]]}
                  for r in oc_cfg.get("subduction", [])]
         bg = int(oc_cfg["background"]["id"])
+        ops = [{**op, "near": code_id[op["near"]]} for op in oc_cfg.get("plates", [])]
         c.plate = assign_ocean_plates(mesh, c.plate.astype(np.int64), c.ctype == CONT, rules,
                                       float(oc_cfg["forearc_km"]), float(oc_cfg["corridor_km"]), bg,
-                                      float(oc_cfg.get("between_cos", -0.5))).astype(c.plate.dtype)
+                                      float(oc_cfg.get("between_cos", -0.5)), ops).astype(c.plate.dtype)
         log(f"  洋壳归属：外大洋板块 {mesh.area_km2[c.plate == bg].sum() / 1e6:.0f} 百万 km²；"
+            + "".join(f"{op['name']} {mesh.area_km2[c.plate == int(op['id'])].sum() / 1e6:.0f}；" for op in ops)
             + "，".join(f"{id_code[q]} {mesh.area_km2[(c.plate == q) & (c.ctype != CONT)].sum() / 1e6:.0f}"
                        for q in order))
     kin = RotationFileKinematics(rot)

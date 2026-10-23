@@ -84,3 +84,51 @@ def test_gdh1_and_isostasy():
     assert e[0] == pytest.approx(400.0)
     assert e[1] == pytest.approx(400.0 + 30 * 151.5)
     assert e[2] < -1000.0                       # 减薄陆缘在水下
+
+
+def test_transfer_units_keeps_positions_and_attributes(mesh):
+    """U26：一批洋壳单元从板块 2 改属板块 1（两块板块已转过不同角度）：位置与属性不变，原单元删除，板块 1 不重叠。"""
+    c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+    c.age[:] = np.arange(mesh.n) % 97          # 用年龄当标签核对属性随单元走
+    w = {1: pole_vector(0.0, 90.0, 0.4), 2: pole_vector(30.0, 0.0, 0.3)}
+    eng = Engine(mesh, c, Params(), 100.0, w)
+    for _ in range(10):
+        eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+    assert eng.steps_since_commit == 0
+    pos = eng.positions()
+    cen = lonlat_to_xyz(0.0, 0.0)
+    ring = np.flatnonzero(eng.alive & (eng.c.plate == 2) & (pos @ cen > np.cos(np.radians(45))))
+    assert ring.size > 50
+    added = eng.transfer_units(2, 1, ring)
+    assert added > 0.8 * ring.size
+    assert not eng.alive[ring].any()
+    new = np.arange(len(eng.c) - added, len(eng.c))        # 新单元接在单元表末尾
+    assert (eng.c.plate[new] == 1).all()
+    # 新单元在板块 1 参照格网上各占一个节点，且不与原有板块 1 单元重叠
+    nodes = eng.c.node[eng.alive & (eng.c.plate == 1)]
+    assert np.unique(nodes).size == nodes.size
+    # 每个新单元离原来某个被转移单元的位置不超过一个网格间距，年龄取自覆盖它的原单元
+    from scipy.spatial import cKDTree
+    d, _ = cKDTree(pos[ring]).query(eng.positions()[new])
+    assert (d * R_KM < mesh.h_km).all()
+    assert np.isin(eng.c.age[new], eng.c.age[ring]).all()
+    assert eng.events[-1]["kind"] == "unit_transfer"
+
+
+def test_gap_prefer_gives_new_ocean_to_one_plate(mesh):
+    """U26：指定板块对之间张开的新洋壳全部归指定的一块（默认按最近单元，两边各一半）。"""
+    def run(prefer):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+        w = {1: pole_vector(0.0, 90.0, 0.5), 2: np.zeros(3)}         # 板块 1 向东移动，板块 2 不动：西侧张开
+        eng = Engine(mesh, c, Params(), 100.0, w)
+        eng.gap_prefer.update(prefer)
+        n0 = {q: int((eng.c.plate == q).sum()) for q in (1, 2)}
+        for _ in range(10):
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        new = eng.c.uid >= len(c)
+        return {q: int((new & (eng.c.plate == q)).sum()) for q in (1, 2)}, n0
+
+    both, _ = run({})
+    assert both[1] > 0 and both[2] > 0
+    only2, _ = run({1 * 1000 + 2: 2})
+    assert only2[1] == 0 and only2[2] >= 0.9 * (both[1] + both[2])

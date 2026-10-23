@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "324f2f4-dirty",
+ "code_version": "e8fdcf8-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -112,7 +112,7 @@
    "name": "洲 D",
    "core_Mkm2": 23.01,
    "consumed_margin_Mkm2": 1.52,
-   "plate_Mkm2": 64.8
+   "plate_Mkm2": 63.8
   },
   {
    "id": 501,
@@ -136,7 +136,7 @@
    "name": "南方地盾陆块（印度式）",
    "core_Mkm2": 3.79,
    "consumed_margin_Mkm2": 2.52,
-   "plate_Mkm2": 13.7
+   "plate_Mkm2": 17.0
   },
   {
    "id": 701,
@@ -155,5 +155,5 @@
    "plate_Mkm2": 4.4
   }
  ],
- "generated": "2026-10-24 02:39:53"
+ "generated": "2026-10-24 03:28:40"
 }
