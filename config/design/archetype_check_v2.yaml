@@ -35,7 +35,7 @@ entries:
   - {archetype: 热点岛链与海山, status: placed, features: [H1, H2, H3, H4, H5, H6, H7], stage: "1",
      note: 七条热点岛链，越老越小，热带老段沉降成环礁}
   - {archetype: 溢流玄武岩台地, status: placed, features: [PL4, P7], stage: "1",
-     note: 东南火山高原（埃塞俄比亚式）、南方地盾半岛西北部（德干式）}
+     note: 东南火山高原（埃塞俄比亚式）、南方地盾半岛西北部（德干式，v2 起与东洋火山岛的热点轨迹相连）}
   - {archetype: 微大陆与大岛, status: placed, features: [I2, I6, I7, I8], stage: "1",
      note: 裂离微大陆（马达加斯加式）、南洋陆块（大部分沉没的微大陆，新西兰式）、东南大岛}
   - {archetype: 走滑断裂盆地与死海式洼地, status: added, features: [M30, B5, L3, M5], stage: "1–2",
@@ -78,8 +78,8 @@ entries:
      note: 南方地盾半岛与东南增生半岛之间的海岸，东方大高原加强季风（孟加拉式）}
 
   # ---- 4. 海洋类 ----
-  - {archetype: 珊瑚环礁群与堡礁, status: placed, features: [H2, R12a], stage: "3",
-     note: 南方珊瑚岛群（老热点岛沉降成环礁）；堡礁候选在东南群岛与洲 D 东岸的热带陆架}
+  - {archetype: 珊瑚环礁群与堡礁, status: placed, features: [H2, H5, K8, K9, R12a], stage: "3",
+     note: 南方珊瑚岛群（老热点岛沉降成环礁）；v2 把东洋火山岛的热点轨迹延到南方地盾半岛，老段成一长串环礁（查戈斯—马尔代夫式）；零星孤礁；堡礁候选在东南群岛与洲 D 东岸的热带陆架}
   - {archetype: '共振海湾与涌潮河口（"神怒"）', status: added, features: [G7, G23], stage: "3",
      note: v2 新增。神怒湾（内海里，全日潮共振，威尼斯式）、涌潮湾（外洋，半日潮共振 + 涌潮，芬迪—钱塘江式）；阶段 3 潮汐模型核算}
   - {archetype: 海峡急流与漩涡, status: placed, features: [T1, T2], stage: "3",
@@ -94,8 +94,8 @@ entries:
      note: 东南长岛的火山弧（多巴式）、火山隆起上的地幔柱火山（黄石式）}
   - {archetype: 大陆巨型孤峰火山, status: candidate, features: [M10, PL4, M7b], stage: "1",
      note: 南方裂谷两侧（乞力马扎罗式）、东南火山高原、东北半岛火山脊}
-  - {archetype: 洋中脊出露岛, status: placed, features: [I9], stage: "1",
-     note: 北方火山岛：西大洋洋中脊与热点叠加（冰岛式）}
+  - {archetype: 洋中脊出露岛, status: placed, features: [I9, K1, K5, K13], stage: "1",
+     note: 北方火山岛：西大洋洋中脊与热点叠加（冰岛式）；另有洋中脊上的零星孤岛（阿森松、扬马延、圣保罗式）}
   - {archetype: 地热间歇泉区, status: candidate, features: [I9, M10, H1], stage: "2",
      note: 北方火山岛、南方裂谷、热点活动端}
   - {archetype: 熔岩原, status: candidate, features: [I9, H1], stage: "2",
@@ -184,8 +184,8 @@ entries:
      note: 阶段 1 记录沉积环境与年代后定；候选是被峡谷切开的沉积盆地（红层盆地、远方大陆高原边缘）}
   - {archetype: 太古宙古陆核与绿岩带, status: added, features: [LT7, LT8, LT9], stage: "1",
      note: v2 新增。三处古陆核（南方、北方、西北）}
-  - {archetype: 蛇绿岩与出露的洋壳地幔, status: added, features: [LT12, I5], stage: "1",
-     note: v2 新增。洲 D 东北角（阿曼式）、内海长岛（特罗多斯式）}
+  - {archetype: 蛇绿岩与出露的洋壳地幔, status: added, features: [LT12, I5, K10, I24], stage: "1",
+     note: v2 新增。洲 D 东北角（阿曼式）、内海长岛（特罗多斯式）、南洋孤岛（麦夸里式）、南洋陆块北延岛（新喀里多尼亚式）}
   - {archetype: 逆冲推覆构造出露, status: placed, features: [M1, M3], stage: "1–2",
      note: 内海北岸山系（阿尔卑斯式）、东方大高原南缘（喜马拉雅式）}
   - {archetype: 古老剥蚀山地, status: placed, features: [M4, M13b, M14, M16, M8b], stage: "1–2",
@@ -202,8 +202,8 @@ entries:
      note: 岛弧上（C 级，所在岛弧段为 B）}
   - {archetype: 熔岩湖与持续喷发, status: candidate, features: [M10, H1], stage: C,
      note: 裂谷（尼拉贡戈式）、热点活动端（基拉韦厄式）}
-  - {archetype: 冰火交互地貌, status: placed, features: [I9], stage: "3",
-     note: 北方火山岛冰川与火山并存（瓦特纳式）}
+  - {archetype: 冰火交互地貌, status: placed, features: [I9, K14, K5, K4], stage: "3",
+     note: 北方火山岛冰川与火山并存（瓦特纳式）；冰川覆盖的火山孤岛（赫德、扬马延、布韦式）}
   - {archetype: 火山岛剧场谷与刀脊, status: placed, features: [H5, H1], stage: "2–3",
      note: 东洋火山岛（留尼汪式）、大洋长链的热带老岛}
 
@@ -234,8 +234,8 @@ entries:
      note: 洲 B 北部}
   - {archetype: 生物大聚集地, status: candidate, features: [L1, M10], stage: "3",
      note: 裂谷湖群（火烈鸟）、大河三角洲与内海沿岸的迁徙停歇地}
-  - {archetype: 孤岛生物演化与海鸟岛, status: placed, features: [H1, H3, H6, H7, I9], stage: "3",
-     note: 远离大陆的热点岛链与孤岛}
+  - {archetype: 孤岛生物演化与海鸟岛, status: placed, features: [H1, H3, H6, H7, I9, K6, K7, K3, K10, K11], stage: "3",
+     note: 远离大陆的热点岛链与孤岛；v2 补零星孤岛：赤道群岛（加拉帕戈斯式）、极远孤岛、西风双岛、南洋孤岛与南大洋孤岛群（海鸟、海豹）}
   - {archetype: 上升流富饶海域, status: candidate, features: [M8], at: [[-34.0, 20.0]], stage: "3",
      note: 大洋东边界寒流：远方大陆西岸（洪堡式）、洲 C 西北岸（加那利式），需海洋模型}
 

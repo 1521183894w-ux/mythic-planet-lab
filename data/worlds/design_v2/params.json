@@ -6,10 +6,10 @@
   "2048x1024": "data/worlds/design_v2/design_v2_2048x1024.nc",
   "1024x512": "data/worlds/design_v2/design_v2_1024x512.nc"
  },
- "code_version": "34df600-dirty",
- "ocean_fraction": 0.7151685432085706,
+ "code_version": "1ca65b2-dirty",
+ "ocean_fraction": 0.7151526233350933,
  "areas_km2": {
-  "land_km2": 145282406.59161615,
+  "land_km2": 145290526.75347418,
   "continents_km2": {
    "A": 7758823.852120381,
    "B": 39309516.235909484,
@@ -22,12 +22,12 @@
  },
  "A": {
   "ocean_fraction": {
-   "value": 0.7151685432085706,
+   "value": 0.7151526233350933,
    "pass": true
   },
   "main_continent": {
    "area_km2": 106635324.87972404,
-   "share_of_land": 0.7339864983065174,
+   "share_of_land": 0.7339454764360552,
    "pass": true
   },
   "subcontinents": {
@@ -122,7 +122,7 @@
    "max": 1,
    "found": [
     {
-     "unit_id": 14,
+     "unit_id": 13,
      "area_km2": 21643753.605765108,
      "centroid_lat_deg": -7.225359513889548
     }
@@ -130,5 +130,5 @@
    "ok": true
   }
  },
- "generated": "2026-10-23 23:53:39"
+ "generated": "2026-10-24 00:02:20"
 }

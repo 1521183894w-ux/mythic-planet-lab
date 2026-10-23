@@ -352,6 +352,24 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
                 else:
                     symbols.append({"lon": float(lon_c), "lat": float(lat_c), "kind": "seamount", "id": isl["id"]})
                 t += (150.0 if t < young else 260.0) * rng.uniform(0.8, 1.2)
+    # 零星孤岛：大洋中的单个火山岛、环礁等。大于约半个格点的进海陆掩膜，更小的只画符号（大多数真实孤岛只有十几公里宽）
+    for li in design.get("lone_islands", []):
+        frng = feature_rng(li["id"])
+        pts = li["at"] if isinstance(li["at"][0], (list, tuple)) else [li["at"]]
+        sizes = li["size_km"] if isinstance(li["size_km"], (list, tuple)) else [li["size_km"]] * len(pts)
+        for (lon_c, lat_c), sz in zip(pts, sizes):
+            r = float(sz) / 2
+            if r >= MIN_ISLAND_RADIUS_KM and li["kind"] != "atoll":
+                c = unit(lon_c, lat_c)
+                ang = frng.uniform(0, 2 * np.pi)
+                along = np.cross(c, np.array([np.cos(ang), np.sin(ang), 0.3]))
+                m = ellipse_mask(grid, c, along, r, max(r * frng.uniform(0.55, 0.9), 8.0)) & ~land
+                land |= m
+                island_peak[m] = np.maximum(island_peak[m], 700.0 + 30.0 * float(sz))
+                cont[m] = "island"
+                if li["kind"] == "ice":
+                    pol |= m
+            symbols.append({"lon": float(lon_c), "lat": float(lat_c), "kind": f"lone_{li['kind']}", "id": li["id"]})
     return {"land": land, "cont": cont, "polar": pol & land, "island_peak": island_peak,
             "symbols": symbols, "sea_masks": sea_masks, "lake": lake, "salt": salt, "shelf": shelf & ~land}
 
@@ -527,10 +545,14 @@ def label_points(design: dict):
     for i in design.get("islands", []):
         p = np.asarray(i.get("poly", i.get("line")), float)
         out.append((i["type"], i["id"], i["name"], *(p.mean(axis=0) if "poly" in i else p[len(p) // 2])))
+    for li in design.get("lone_islands", []):
+        p = np.atleast_2d(np.asarray(li["at"], float))
+        lo, la = p.mean(axis=0)
+        out.append(("lone", li["id"], li["name"], lo, la - 1.6))      # 名字写在符号下方
     # yaml 里写了 label_at 的要素用指定位置（避开拥挤处）
     at = {}
     for key in ("peninsulas", "gulfs", "lakes", "ice_shelves", "seas", "straits", "mountains", "plateaus",
-                "basins", "islands"):
+                "basins", "islands", "lone_islands"):
         for it in design.get(key, []):
             if "label_at" in it:
                 at[it["id"]] = it["label_at"]
@@ -563,6 +585,8 @@ def feature_points(design: dict) -> dict:
         pts[lt["id"]] = tuple(np.asarray(lt["poly"], float).mean(axis=0))
     for x in design.get("impacts", []):
         pts[x["id"]] = tuple(x["center"])
+    for li in design.get("lone_islands", []):
+        pts[li["id"]] = tuple(np.atleast_2d(np.asarray(li["at"], float)).mean(axis=0))
     return pts
 
 
@@ -618,12 +642,15 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
                    transform=PC)
     ax.gridlines(xlocs=range(-180, 181, 30), ylocs=range(-60, 61, 30), color="#777777", lw=0.3, alpha=0.6)
     sym = b["symbols"]
-    for kind, mk, col, ms in (("atoll", "o", "#1f8f8f", 4.5), ("seamount", ".", "#6c8fb3", 3.0)):
+    for kind, mk, col, ms in (("atoll", "o", "#1f8f8f", 4.5), ("seamount", ".", "#6c8fb3", 3.0),
+                              ("lone_atoll", "o", "#1f8f8f", 5.5), ("lone_volcanic", "^", "#922b21", 5.5),
+                              ("lone_ice", "^", "#5d6d7e", 5.5), ("lone_ophiolite", "D", "#196f3d", 4.5)):
         pts = [(s["lon"], s["lat"]) for s in sym if s["kind"] == kind]
         if pts:
             x, y = zip(*pts)
-            ax.plot(x, y, mk, mfc="none" if kind == "atoll" else col, mec=col, ms=ms, mew=1.0, transform=PC,
-                    linestyle="none")
+            hollow = kind in ("atoll", "lone_atoll")
+            ax.plot(x, y, mk, mfc="none" if hollow else col, mec=col if hollow else "white", ms=ms,
+                    mew=1.0 if hollow else 0.6, transform=PC, linestyle="none", zorder=5)
     big = {"A": "洲 A", "B": "洲 B", "C": "洲 C", "D": "洲 D", "far": "远方大陆"}
     cont_at = design.get("continent_label_at", {})
     for c, name in big.items():
@@ -634,6 +661,7 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
                 fontsize=15, weight="bold", ha="center", va="center", color="#3a2a10", path_effects=halo)
     style = {"sea": ("#0b3d6e", 9.5), "strait": ("#0b3d6e", 8.5), "plateau": ("#5a3d1e", 9),
              "lake": ("#0b3d6e", 8), "shelf": ("#2c4a6b", 8.5), "basin": ("#2f5a1e", 8.5),
+             "lone": ("#7b241c", 7.5),
              "mountain": ("#6b3a12", 8), "peninsula": ("#3d4a1e", 8), "continental": ("#2a4a2a", 8),
              "spine": ("#2a4a2a", 7.5), "arc": ("#5b2a6e", 7.5), "hotspot": ("#8a3b12", 7.5)}
     heights = {m["id"]: m["height_m"] for m in design.get("mountains", [])}
@@ -652,7 +680,7 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
              fontsize=16, ha="center", va="top")
     fig.text(0.5, 0.945, f"海洋 {A['ocean_fraction']['value'] * 100:.1f}% · 主大陆 {A['main_continent']['area_km2'] / 1e6:.0f} 百万 km²"
              f"（占陆地 {A['main_continent']['share_of_land'] * 100:.0f}%；亚非欧约 85）· 亚大陆 {A['subcontinents']['count']} 个 · "
-             f"等面积投影，中央经线 {lon0:g}°E · 示意高程为分层设色 + 阴影（垂直夸张 3×）· ○ 环礁 · 海山",
+             f"等面积投影，中央经线 {lon0:g}°E · 示意高程为分层设色 + 阴影（垂直夸张 3×）· ○ 环礁 · ▲ 孤立火山岛（多数小于格点，只画符号）· 海山",
              fontsize=11, ha="center", va="top", color="#333333")
     stamp(fig)
     fig.savefig(out / "01_final_map.png", dpi=150)
@@ -703,6 +731,12 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
             mid = p[len(p) // 2]
             ax.text(mid[0], mid[1], i["id"], transform=PC, fontsize=8.5, color=col, path_effects=halo)
             rows.append(f"{i['id']} {i['name']}：{i['cause']}")
+    for li in design.get("lone_islands", []):
+        p = np.atleast_2d(np.asarray(li["at"], float))
+        ax.plot(p[:, 0], p[:, 1], "^", ms=6, color="#922b21", mec="white", mew=0.5, transform=PC, ls="none")
+        ax.text(p[0, 0], p[0, 1] - 1.5, li["id"], transform=PC, fontsize=8, color="#922b21", path_effects=halo,
+                ha="center", va="top")
+        rows.append(f"{li['id']} {li['name']}：{li['cause']}")
     for s in design.get("seas", []) + design.get("straits", []):
         p = np.asarray(s.get("poly", s.get("line")), float)
         c = p.mean(axis=0) if "poly" in s else p[len(p) // 2]
