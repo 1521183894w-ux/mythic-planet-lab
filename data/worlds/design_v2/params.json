@@ -6,10 +6,10 @@
   "2048x1024": "data/worlds/design_v2/design_v2_2048x1024.nc",
   "1024x512": "data/worlds/design_v2/design_v2_1024x512.nc"
  },
- "code_version": "53c0cc6-dirty",
- "ocean_fraction": 0.7156913407600178,
+ "code_version": "34df600-dirty",
+ "ocean_fraction": 0.7151685432085706,
  "areas_km2": {
-  "land_km2": 145015746.1346215,
+  "land_km2": 145282406.59161615,
   "continents_km2": {
    "A": 7758823.852120381,
    "B": 39309516.235909484,
@@ -22,19 +22,19 @@
  },
  "A": {
   "ocean_fraction": {
-   "value": 0.7156913407600178,
+   "value": 0.7151685432085706,
    "pass": true
   },
   "main_continent": {
-   "area_km2": 106651052.91950491,
-   "share_of_land": 0.7354446379946785,
+   "area_km2": 106635324.87972404,
+   "share_of_land": 0.7339864983065174,
    "pass": true
   },
   "subcontinents": {
    "count": 4,
    "areas_km2": [
     58474295.38284165,
-    38913159.01660405,
+    38897430.97682285,
     6397642.236111841,
     1686473.1413287495
    ],
@@ -65,8 +65,8 @@
   "exists": true,
   "main": {
    "region_id": 4,
-   "area_km2": 4414844.365148421,
-   "main_continent_border_fraction": 0.887,
+   "area_km2": 4415132.438443168,
+   "main_continent_border_fraction": 0.888,
    "straits_to_world_ocean": 1,
    "straits_to_other_seas": 1,
    "lat_range": [
@@ -79,20 +79,20 @@
    ]
   },
   "geometry": {
-   "aspect_ratio": 3.2954097307030445,
-   "orientation_deg": 89.4956876256027,
+   "aspect_ratio": 3.296058636767436,
+   "orientation_deg": 89.4930914404359,
    "subcontinent_border_shares": [
     {
      "subcontinent_id": 5,
-     "border_share": 0.4609241472198767
+     "border_share": 0.4612066045406219
     },
     {
      "subcontinent_id": 4,
-     "border_share": 0.22817323199936385
+     "border_share": 0.22831305804268368
     },
     {
      "subcontinent_id": 1,
-     "border_share": 0.19830631894505246
+     "border_share": 0.19842784234944322
     },
     {
      "subcontinent_id": 6,
@@ -107,7 +107,7 @@
  "soft_limits": {
   "note": "软限制：只扣分、不淘汰（U17）",
   "north_arctic_area": {
-   "value": 0.024018566789917283,
+   "value": 0.024022109377463997,
    "max": 0.05,
    "arctic_circle_deg": 66.56,
    "ok": true
@@ -122,7 +122,7 @@
    "max": 1,
    "found": [
     {
-     "unit_id": 12,
+     "unit_id": 14,
      "area_km2": 21643753.605765108,
      "centroid_lat_deg": -7.225359513889548
     }
@@ -130,5 +130,5 @@
    "ok": true
   }
  },
- "generated": "2026-10-23 23:32:38"
+ "generated": "2026-10-23 23:53:39"
 }

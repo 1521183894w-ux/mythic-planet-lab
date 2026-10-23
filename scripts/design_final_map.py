@@ -310,20 +310,29 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
         p, s = densify(isl["line"])
         L = s[-1]
         if kind == "arc":
+            # 真实岛弧不是等距等大的虚线：岛的大小取对数正态（偶有大岛）、间距随机并偶有缺口（沉在水下的弧段）、
+            # 岛位与长轴方向稍偏离弧线。每条岛弧用自己的随机数，改一条不牵动别的。
+            frng = feature_rng(isl["id"])
             size = float(isl["size_km"])
             step = size * (1.0 + float(isl.get("gap", 0.3)))
-            t = rng.uniform(0, step * 0.3)
+            t = frng.uniform(0, step * 0.5)
             while t < L:
                 i = int(np.searchsorted(s, t).clip(1, len(s) - 1))
                 c, along = p[i], p[i] - p[i - 1]
-                a = size * rng.uniform(0.55, 1.1) / 2
-                b = max(size * rng.uniform(0.22, 0.42) / 2, 8.0)
+                nrm = np.cross(c, along)
+                nrm /= np.linalg.norm(nrm)
+                c = c + nrm * (frng.normal(0.0, 0.3) * size / R_KM)
+                c /= np.linalg.norm(c)
+                along = along + nrm * np.linalg.norm(along) * frng.normal(0.0, 0.3)
+                f = float(np.clip(np.exp(frng.normal(0.0, 0.5)), 0.35, 2.6))
+                a = size * f * frng.uniform(0.6, 1.0) / 2
+                b = max(a * frng.uniform(0.35, 0.7), 8.0)
                 if a >= MIN_ISLAND_RADIUS_KM:
                     m = ellipse_mask(grid, c, along, a, b) & ~land
                     land |= m
-                    island_peak[m] = np.maximum(island_peak[m], 1200.0 + 1400.0 * min(1.0, size / 100))
+                    island_peak[m] = np.maximum(island_peak[m], 1200.0 + 1400.0 * min(1.0, a / 50))
                     cont[m] = "island"
-                t += step * rng.uniform(0.8, 1.25)
+                t += step * frng.uniform(0.6, 1.4) * (frng.uniform(2.0, 3.5) if frng.random() < 0.12 else 1.0)
         elif kind == "hotspot":
             young = float(isl.get("young_km", 500))
             t = 0.0
