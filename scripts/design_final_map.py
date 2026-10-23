@@ -293,6 +293,7 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
         shelf |= spine_mask(grid, sh["line"], sh["width_km"], feature_rng(sh["id"]), flat_start=True) & ~land
 
     island_peak = np.zeros(shape)
+    fid = np.full(shape, "", dtype=object)     # 岛屿格点所属的要素编号（倒推时区分刚体块与新生地壳）
     symbols = []        # 不进掩膜的环礁、海山（只画符号）
     for isl in design.get("islands", []):
         kind = isl["type"]
@@ -304,6 +305,7 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
             land |= m
             island_peak[m] = np.maximum(island_peak[m], 900.0)
             cont[m] = "island"
+            fid[m] = isl["id"]
             if isl.get("ice"):          # 冰盖覆盖的岛：图上画成冰
                 pol |= m
             continue
@@ -332,6 +334,7 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
                     land |= m
                     island_peak[m] = np.maximum(island_peak[m], 1200.0 + 1400.0 * min(1.0, a / 50))
                     cont[m] = "island"
+                    fid[m] = isl["id"]
                 t += step * frng.uniform(0.6, 1.4) * (frng.uniform(2.0, 3.5) if frng.random() < 0.12 else 1.0)
         elif kind == "hotspot":
             young = float(isl.get("young_km", 500))
@@ -346,6 +349,7 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
                     land |= m
                     island_peak[m] = np.maximum(island_peak[m], 600.0 + 3600.0 * r / 55.0)
                     cont[m] = "island"
+                    fid[m] = isl["id"]
                     symbols.append({"lon": float(lon_c), "lat": float(lat_c), "kind": "volcanic", "id": isl["id"]})
                 elif abs(lat_c) <= ATOLL_MAX_ABS_LAT:
                     symbols.append({"lon": float(lon_c), "lat": float(lat_c), "kind": "atoll", "id": isl["id"]})
@@ -367,11 +371,13 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
                 land |= m
                 island_peak[m] = np.maximum(island_peak[m], 700.0 + 30.0 * float(sz))
                 cont[m] = "island"
+                fid[m] = li["id"]
                 if li["kind"] == "ice":
                     pol |= m
             symbols.append({"lon": float(lon_c), "lat": float(lat_c), "kind": f"lone_{li['kind']}", "id": li["id"]})
     return {"land": land, "cont": cont, "polar": pol & land, "island_peak": island_peak,
-            "symbols": symbols, "sea_masks": sea_masks, "lake": lake, "salt": salt, "shelf": shelf & ~land}
+            "symbols": symbols, "sea_masks": sea_masks, "lake": lake, "salt": salt, "shelf": shelf & ~land,
+            "fid": fid}
 
 
 def apply_options(design: dict, options: set[str]) -> dict:

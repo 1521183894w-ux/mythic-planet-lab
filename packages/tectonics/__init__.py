@@ -8,5 +8,6 @@
 - kinematics.py  板块运动剧本、PLATES4 旋转文件、pyGPlates 逐步阶段旋转；
 - synthetic.py   合成试验（裂谷 -> 洋盆扩张、碰撞 -> 造山）；
 - prehistory.py  前史：300 Ma 初始大陆（省份拼贴 -> 沿薄弱带裂解 -> 漂移）；
-- emergent.py    涌现型运动学（路线 A，只用于前史）。
+- emergent.py    涌现型运动学（路线 A，只用于前史）；
+- reverse.py     倒推板块运动：从终图出发的关键时刻有限旋转、插值、层级组合、速度（U22）。
 """

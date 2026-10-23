@@ -1,0 +1,351 @@
+{
+ "description": "终图倒推历史的审计（重建：scripts/design_history.py）",
+ "design": "v2",
+ "history": "v2",
+ "code_version": "baf014e-dirty",
+ "rotation_file": "data/worlds/design_v2/history_v2.rot",
+ "blocks": {
+  "MD": {
+   "id": 701,
+   "name": "裂离微大陆",
+   "area_Mkm2": 0.39,
+   "parent": "D"
+  },
+  "ZL": {
+   "id": 801,
+   "name": "南洋陆块",
+   "area_Mkm2": 0.35,
+   "parent": "POL"
+  },
+  "IN": {
+   "id": 702,
+   "name": "南方地盾陆块（印度式）",
+   "area_Mkm2": 3.78,
+   "parent": 0
+  },
+  "BSE": {
+   "id": 102,
+   "name": "东南增生地块",
+   "area_Mkm2": 2.44,
+   "parent": "B"
+  },
+  "A": {
+   "id": 103,
+   "name": "洲 A",
+   "area_Mkm2": 7.63,
+   "parent": "B"
+  },
+  "B": {
+   "id": 101,
+   "name": "洲 B（北方地台与东方地块）",
+   "area_Mkm2": 35.53,
+   "parent": 0
+  },
+  "C": {
+   "id": 301,
+   "name": "洲 C",
+   "area_Mkm2": 35.8,
+   "parent": "B"
+  },
+  "D": {
+   "id": 401,
+   "name": "洲 D",
+   "area_Mkm2": 23.01,
+   "parent": "C"
+  },
+  "FAR": {
+   "id": 501,
+   "name": "远方大陆",
+   "area_Mkm2": 21.78,
+   "parent": "C"
+  },
+  "POL": {
+   "id": 601,
+   "name": "极地大陆",
+   "area_Mkm2": 13.36,
+   "parent": "D"
+  }
+ },
+ "juvenile_Mkm2": 1.49,
+ "speed_cm_yr": {
+  "MD": {
+   "abs_median_over_time": {
+    "median": 1.53,
+    "p95": 3.29,
+    "max": 3.72,
+    "t_of_max": 120
+   },
+   "abs_max_point": {
+    "median": 1.71,
+    "p95": 4.4,
+    "max": 4.86,
+    "t_of_max": 120
+   },
+   "rel_median_over_time": {
+    "median": 0.0,
+    "p95": 2.5,
+    "max": 2.5,
+    "t_of_max": 106
+   }
+  },
+  "ZL": {
+   "abs_median_over_time": {
+    "median": 2.42,
+    "p95": 4.75,
+    "max": 4.78,
+    "t_of_max": 35
+   },
+   "abs_max_point": {
+    "median": 3.4,
+    "p95": 4.92,
+    "max": 4.95,
+    "t_of_max": 35
+   },
+   "rel_median_over_time": {
+    "median": 0.0,
+    "p95": 3.5,
+    "max": 3.5,
+    "t_of_max": 70
+   }
+  },
+  "IN": {
+   "abs_median_over_time": {
+    "median": 1.16,
+    "p95": 9.78,
+    "max": 9.78,
+    "t_of_max": 56
+   },
+   "abs_max_point": {
+    "median": 1.74,
+    "p95": 9.92,
+    "max": 9.92,
+    "t_of_max": 55
+   },
+   "rel_median_over_time": {
+    "median": 1.16,
+    "p95": 9.78,
+    "max": 9.78,
+    "t_of_max": 56
+   }
+  },
+  "BSE": {
+   "abs_median_over_time": {
+    "median": 1.23,
+    "p95": 3.11,
+    "max": 3.21,
+    "t_of_max": 280
+   },
+   "abs_max_point": {
+    "median": 1.33,
+    "p95": 4.31,
+    "max": 4.4,
+    "t_of_max": 280
+   },
+   "rel_median_over_time": {
+    "median": 0.87,
+    "p95": 2.82,
+    "max": 2.82,
+    "t_of_max": 249
+   }
+  },
+  "A": {
+   "abs_median_over_time": {
+    "median": 0.81,
+    "p95": 4.17,
+    "max": 4.28,
+    "t_of_max": 251
+   },
+   "abs_max_point": {
+    "median": 0.82,
+    "p95": 5.77,
+    "max": 5.83,
+    "t_of_max": 251
+   },
+   "rel_median_over_time": {
+    "median": 0.0,
+    "p95": 4.43,
+    "max": 4.43,
+    "t_of_max": 261
+   }
+  },
+  "B": {
+   "abs_median_over_time": {
+    "median": 0.63,
+    "p95": 0.85,
+    "max": 0.85,
+    "t_of_max": 179
+   },
+   "abs_max_point": {
+    "median": 0.82,
+    "p95": 1.1,
+    "max": 1.1,
+    "t_of_max": 167
+   },
+   "rel_median_over_time": {
+    "median": 0.63,
+    "p95": 0.85,
+    "max": 0.85,
+    "t_of_max": 179
+   }
+  },
+  "C": {
+   "abs_median_over_time": {
+    "median": 2.34,
+    "p95": 3.21,
+    "max": 3.21,
+    "t_of_max": 111
+   },
+   "abs_max_point": {
+    "median": 2.42,
+    "p95": 3.29,
+    "max": 3.29,
+    "t_of_max": 102
+   },
+   "rel_median_over_time": {
+    "median": 1.84,
+    "p95": 3.04,
+    "max": 3.04,
+    "t_of_max": 107
+   }
+  },
+  "D": {
+   "abs_median_over_time": {
+    "median": 1.68,
+    "p95": 2.41,
+    "max": 2.52,
+    "t_of_max": 181
+   },
+   "abs_max_point": {
+    "median": 2.17,
+    "p95": 3.22,
+    "max": 3.34,
+    "t_of_max": 181
+   },
+   "rel_median_over_time": {
+    "median": 1.11,
+    "p95": 1.84,
+    "max": 1.84,
+    "t_of_max": 184
+   }
+  },
+  "FAR": {
+   "abs_median_over_time": {
+    "median": 2.88,
+    "p95": 3.43,
+    "max": 3.48,
+    "t_of_max": 100
+   },
+   "abs_max_point": {
+    "median": 3.45,
+    "p95": 4.57,
+    "max": 4.57,
+    "t_of_max": 100
+   },
+   "rel_median_over_time": {
+    "median": 1.6,
+    "p95": 3.2,
+    "max": 3.2,
+    "t_of_max": 121
+   }
+  },
+  "POL": {
+   "abs_median_over_time": {
+    "median": 2.0,
+    "p95": 3.53,
+    "max": 3.61,
+    "t_of_max": 181
+   },
+   "abs_max_point": {
+    "median": 2.68,
+    "p95": 3.8,
+    "max": 3.84,
+    "t_of_max": 181
+   },
+   "rel_median_over_time": {
+    "median": 0.0,
+    "p95": 3.05,
+    "max": 3.05,
+    "t_of_max": 70
+   }
+  }
+ },
+ "speed_over_10cm_yr_myr": {
+  "MD": 0,
+  "ZL": 0,
+  "IN": 0,
+  "BSE": 0,
+  "A": 0,
+  "B": 0,
+  "C": 0,
+  "D": 0,
+  "FAR": 0,
+  "POL": 0
+ },
+ "overlap_max_Mkm2_by_pair": {
+  "C-D": {
+   "Mkm2": 0.27,
+   "t": 91
+  },
+  "D-POL": {
+   "Mkm2": 0.2,
+   "t": 297
+  },
+  "IN-D": {
+   "Mkm2": 0.2,
+   "t": 51
+  },
+  "C-FAR": {
+   "Mkm2": 0.14,
+   "t": 250
+  },
+  "BSE-POL": {
+   "Mkm2": 0.06,
+   "t": 276
+  },
+  "MD-D": {
+   "Mkm2": 0.06,
+   "t": 222
+  },
+  "ZL-BSE": {
+   "Mkm2": 0.05,
+   "t": 280
+  },
+  "ZL-POL": {
+   "Mkm2": 0.05,
+   "t": 224
+  },
+  "IN-POL": {
+   "Mkm2": 0.04,
+   "t": 133
+  },
+  "IN-BSE": {
+   "Mkm2": 0.02,
+   "t": 52
+  },
+  "C-POL": {
+   "Mkm2": 0.01,
+   "t": 141
+  }
+ },
+ "hotspot_checks": [
+  {
+   "plate": "IN",
+   "point": [
+    76.0,
+    18.0
+   ],
+   "t": 75,
+   "hotspot": [
+    63.0,
+    -21.0
+   ],
+   "note": "南方地盾半岛西北部的溢流玄武岩应在东洋热点上方（德干—留尼汪式）。终图写的是约 66 Ma，倒推时为把速度控制在 10 cm/yr 左右改为约 75 Ma",
+   "position_at_t": [
+    63.0,
+    -21.0
+   ],
+   "distance_km": 0
+  }
+ ],
+ "generated": "2026-10-24 00:32:02"
+}
