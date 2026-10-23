@@ -5,37 +5,37 @@
   "2048x1024": "data/worlds/design_v1/design_v1_2048x1024.nc",
   "1024x512": "data/worlds/design_v1/design_v1_1024x512.nc"
  },
- "code_version": "1854eee-dirty",
- "ocean_fraction": 0.7158266344512714,
+ "code_version": "472506b-dirty",
+ "ocean_fraction": 0.7171092440328146,
  "areas_km2": {
-  "land_km2": 144946737.6294395,
+  "land_km2": 144292524.05056325,
   "continents_km2": {
-   "A": 7684082.609825103,
-   "B": 39575433.144253485,
-   "C": 32992496.36235418,
-   "D": 25906078.673788317,
-   "polar": 13388946.179216413,
-   "far": 21006181.562071748
+   "A": 7758823.852120381,
+   "B": 39309516.235909484,
+   "C": 32951645.49321495,
+   "D": 25578194.677782685,
+   "polar": 13016306.154612895,
+   "far": 21200763.770196788
   },
-  "polar_km2": 13388946.179216413
+  "polar_km2": 13016306.154612895
  },
  "A": {
   "ocean_fraction": {
-   "value": 0.7158266344512714,
+   "value": 0.7171092440328146,
    "pass": true
   },
   "main_continent": {
-   "area_km2": 106941727.48097844,
-   "share_of_land": 0.737800168737692,
+   "area_km2": 106370820.67101227,
+   "share_of_land": 0.7371887169548549,
    "pass": true
   },
   "subcontinents": {
    "count": 4,
    "areas_km2": [
-    58553091.83708568,
-    38614384.30178747,
-    6405641.733528208,
-    1612944.7751458872
+    58194063.1343498,
+    38913159.01660405,
+    6397642.236111841,
+    1686473.1413287495
    ],
    "pass": true
   },
@@ -50,8 +50,8 @@
   "polar_continent": {
    "found": [
     {
-     "area_km2": 13388946.17921725,
-     "centroid_lat_deg": -87.06182874038393
+     "area_km2": 13016306.154611737,
+     "centroid_lat_deg": -87.08980814842423
     }
    ],
    "pass": true
@@ -64,8 +64,8 @@
   "exists": true,
   "main": {
    "region_id": 4,
-   "area_km2": 4164606.027675409,
-   "main_continent_border_fraction": 0.9,
+   "area_km2": 4414844.365148421,
+   "main_continent_border_fraction": 0.887,
    "straits_to_world_ocean": 1,
    "straits_to_other_seas": 1,
    "lat_range": [
@@ -73,28 +73,28 @@
     45.263671875
    ],
    "sample_lat_lon": [
-    37.001953125,
-    19.248046875
+    37.177734375,
+    18.369140625
    ]
   },
   "geometry": {
-   "aspect_ratio": 3.30224218154222,
-   "orientation_deg": 91.12416111442094,
+   "aspect_ratio": 3.2954097307030445,
+   "orientation_deg": 89.4956876256027,
    "subcontinent_border_shares": [
     {
-     "subcontinent_id": 6,
-     "border_share": 0.450449241190432
+     "subcontinent_id": 5,
+     "border_share": 0.4609241472198767
     },
     {
      "subcontinent_id": 4,
-     "border_share": 0.22539629161530325
+     "border_share": 0.22817323199936385
     },
     {
      "subcontinent_id": 1,
-     "border_share": 0.16286162580838576
+     "border_share": 0.19830631894505246
     },
     {
-     "subcontinent_id": 7,
+     "subcontinent_id": 6,
      "border_share": 0.0
     }
    ],
@@ -106,7 +106,7 @@
  "soft_limits": {
   "note": "软限制：只扣分、不淘汰（U17）",
   "north_arctic_area": {
-   "value": 0.02422073712036718,
+   "value": 0.02408184332510453,
    "max": 0.05,
    "arctic_circle_deg": 66.56,
    "ok": true
@@ -122,12 +122,12 @@
    "found": [
     {
      "unit_id": 12,
-     "area_km2": 21006181.562073585,
-     "centroid_lat_deg": -6.247362334816119
+     "area_km2": 21200763.77019855,
+     "centroid_lat_deg": -6.452845636093237
     }
    ],
    "ok": true
   }
  },
- "generated": "2026-10-23 16:52:11"
+ "generated": "2026-10-23 21:44:02"
 }

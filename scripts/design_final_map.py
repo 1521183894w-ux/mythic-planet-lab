@@ -123,12 +123,26 @@ def ellipse_mask(grid: LatLonGrid, center_v, along_v, a_km, b_km) -> np.ndarray:
     return m
 
 
-def polar_mask(grid: LatLonGrid, coast) -> np.ndarray:
-    """按经度给出海岸纬度的极地大陆（围绕南极一圈，周期插值）。"""
+def smooth_noise(n: int, step_km: float, amps, sigmas, rng: np.random.Generator) -> np.ndarray:
+    """环形的平滑随机起伏（白噪声做高斯平滑后按标准差归一，再乘幅度）。不用周期正弦：等距的波纹和直线一样假。"""
+    freq = np.fft.rfftfreq(n, d=step_km)
+    off = np.zeros(n)
+    for a, sigma in zip(amps, sigmas):
+        x = np.fft.irfft(np.fft.rfft(rng.normal(size=n)) * np.exp(-0.5 * (2 * np.pi * freq * sigma) ** 2), n)
+        off += a * x / (x.std() + 1e-12)
+    return off
+
+
+def polar_mask(grid: LatLonGrid, coast, rng: np.random.Generator | None = None, amps=(0.0, 0.0)) -> np.ndarray:
+    """按经度给出海岸纬度的极地大陆（围绕南极一圈，周期插值）。
+    rng 给出时海岸纬度加平滑随机起伏（amps 为 km，两档尺度约 220 与 80 km），去掉按 10° 插值的光滑弧线。"""
     c = np.asarray(sorted(coast), float)
     lon = np.concatenate([c[:, 0] - 360, c[:, 0], c[:, 0] + 360])
     lat = np.tile(c[:, 1], 3)
     coast_lat = np.interp(grid.lon, lon, lat)
+    if rng is not None and max(amps) > 0:
+        km_per_col = KM_PER_DEG * np.cos(np.radians(np.abs(coast_lat).mean())) * 360.0 / grid.nx
+        coast_lat = coast_lat + smooth_noise(grid.nx, km_per_col, amps, (220.0, 80.0), rng) / KM_PER_DEG
     return grid.lat[:, None] <= coast_lat[None, :]
 
 
@@ -162,9 +176,11 @@ def meander(line, amp_km: float, rng: np.random.Generator):
     return np.c_[lon, lat].tolist()
 
 
-def spine_mask(grid: LatLonGrid, line, widths, rng: np.random.Generator | None = None) -> np.ndarray:
+def spine_mask(grid: LatLonGrid, line, widths, rng: np.random.Generator | None = None,
+               flat_start: bool = False) -> np.ndarray:
     """沿中轴线、宽度沿轴分段线性渐变的形状（端部为圆头）。
-    rng 给出时宽度沿轴有两档缓慢起伏（波长 500–900 km 与 180–320 km，幅度约 11% 与 7%），避免完全光滑。"""
+    rng 给出时宽度沿轴有两档缓慢起伏（波长 500–900 km 与 180–320 km，幅度约 11% 与 7%），避免完全光滑。
+    flat_start：起点一端平切（不要圆头），用于冰架的前缘冰崖。"""
     p, s = densify(line, 8.0)
     L = max(s[-1], 1.0)
     half_max = float(np.max(widths)) * 0.6
@@ -185,6 +201,8 @@ def spine_mask(grid: LatLonGrid, line, widths, rng: np.random.Generator | None =
         w = w * (1 + 0.11 * np.sin(2 * np.pi * t / l1 + f1) + 0.07 * np.sin(2 * np.pi * t / l2 + f2))
     inside = np.zeros(xyz.shape[0], bool)
     inside[ok] = chord_km(d[ok]) <= w / 2
+    if flat_start:
+        inside[ok] &= idx[ok] > 0
     m[rows] = inside.reshape(rows.size, grid.nx)
     return m
 
@@ -195,14 +213,9 @@ def meander_polygon(poly, rng: np.random.Generator, amps=(70.0, 30.0), protect=(
     loop = list(poly) + [poly[0]]
     p, s = densify(loop, 25.0)
     p, s = p[:-1], s[:-1]
-    # 沿周长的平滑随机起伏（白噪声做环形高斯平滑，不是周期正弦：等距的波纹和直线一样假）
+    # 沿周长的平滑随机起伏
     n = len(p)
-    step = (s[-1] + 25.0) / n
-    freq = np.fft.rfftfreq(n, d=step)
-    off = np.zeros(n)
-    for a, sigma in zip(amps, (220.0, 80.0)):
-        x = np.fft.irfft(np.fft.rfft(rng.normal(size=n)) * np.exp(-0.5 * (2 * np.pi * freq * sigma) ** 2), n)
-        off += a * x / (x.std() + 1e-12)
+    off = smooth_noise(n, (s[-1] + 25.0) / n, amps, (220.0, 80.0), rng)
     for lon, lat, r in protect:
         d = np.arccos(np.clip(p @ unit(lon, lat), -1, 1)) * R_KM
         x = np.clip(d / r, 0, 1)
@@ -239,13 +252,16 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
         m = lonlat_mask(grid, poly)
         land |= m
         assign(m, b["continent"])
-    pol = polar_mask(grid, design["polar"]["coast"])
+    pol = polar_mask(grid, design["polar"]["coast"], feature_rng("polar"),
+                     design["polar"].get("meander_km", [0, 0]))
     land |= pol
     cont[pol] = "polar"
     for pn in design.get("peninsulas", []):
         m = spine_mask(grid, pn["line"], pn["width_km"], feature_rng(pn["id"])) & ~land
         land |= m
         assign(m, pn["continent"])
+        if pn["continent"] == "polar":     # 极地大陆的半岛同样盖着冰
+            pol |= m
 
     sea_masks = {}
     for g in design.get("gulfs", []):
@@ -263,6 +279,15 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
         land &= ~m
     cont[~land] = ""
 
+    # 湖：不从陆地掩膜里挖掉（与地球数据口径一致：Natural Earth 的陆地含坦噶尼喀湖这类湖），只在图上画成水面
+    lake = np.zeros(shape, bool)
+    for lk in design.get("lakes", []):
+        lake |= spine_mask(grid, lk["line"], lk["width_km"], feature_rng(lk["id"])) & land
+    # 冰架：海湾里浮在海上的冰（掩膜里是海，图上画成冰）
+    shelf = np.zeros(shape, bool)
+    for sh in design.get("ice_shelves", []):
+        shelf |= spine_mask(grid, sh["line"], sh["width_km"], feature_rng(sh["id"]), flat_start=True) & ~land
+
     island_peak = np.zeros(shape)
     symbols = []        # 不进掩膜的环礁、海山（只画符号）
     for isl in design.get("islands", []):
@@ -275,6 +300,8 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
             land |= m
             island_peak[m] = np.maximum(island_peak[m], 900.0)
             cont[m] = "island"
+            if isl.get("ice"):          # 冰盖覆盖的岛：图上画成冰
+                pol |= m
             continue
         p, s = densify(isl["line"])
         L = s[-1]
@@ -313,7 +340,7 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
                     symbols.append({"lon": float(lon_c), "lat": float(lat_c), "kind": "seamount", "id": isl["id"]})
                 t += (150.0 if t < young else 260.0) * rng.uniform(0.8, 1.2)
     return {"land": land, "cont": cont, "polar": pol & land, "island_peak": island_peak,
-            "symbols": symbols, "sea_masks": sea_masks}
+            "symbols": symbols, "sea_masks": sea_masks, "lake": lake, "shelf": shelf & ~land}
 
 
 def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
@@ -324,16 +351,30 @@ def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
     elev = np.zeros(grid.shape)
     base = 120.0 + 380.0 * (1 - np.exp(-d_land / 500.0))
     elev[land] = base[land]
-    # 高原（边缘 150 km 内渐变）
-    for p in design.get("plateaus", []):
-        m = lonlat_mask(grid, meander_polygon(p["poly"], feature_rng(p["id"]), (60.0, 25.0))) & land
+    def region(p, default_amps):
+        """高原、盆地的范围（轮廓加平滑起伏）与离边缘的平滑渐变（0 -> 1，ramp_km 内，smoothstep）。"""
+        amps = p.get("meander_km", default_amps)
+        m = lonlat_mask(grid, meander_polygon(p["poly"], feature_rng(p["id"]), amps)) & land
         if not m.any():
-            continue
+            return m, None
         d_in = np.nan_to_num(distance_to_set_km(grid, ~m, query=m))
-        ramp = np.clip(d_in / 150.0, 0, 1)
-        elev[m] = np.maximum(elev[m], base[m] + (p["height_m"] - base[m]) * ramp[m])
-    # 山脉（高斯形横剖面，取最大值叠加）
+        x = np.clip(d_in / float(p.get("ramp_km", 150.0)), 0, 1)
+        return m, x * x * (3 - 2 * x)
+
+    # 高原（ramp_km 小 = 陡崖围着的平顶，大 = 动力地形那样的宽缓穹隆）
+    for p in design.get("plateaus", []):
+        m, ramp = region(p, [120.0, 45.0])
+        if ramp is not None:
+            elev[m] = np.maximum(elev[m], base[m] + (p["height_m"] - base[m]) * ramp[m])
+    # 盆地（克拉通内部沉降、前陆盆地：比周围低平）
+    for p in design.get("basins", []):
+        m, ramp = region(p, [150.0, 50.0])
+        if ramp is not None:
+            low = np.minimum(elev[m], p["height_m"])
+            elev[m] = elev[m] + (low - elev[m]) * ramp[m]
+    # 山脉（高斯形横剖面，取最大值叠加）；profile: rift 的裂谷是两侧肩部隆起、中间谷底下陷
     ridge = np.zeros(grid.shape)
+    trough = np.zeros(grid.shape)
     for mt in design.get("mountains", []):
         rng = feature_rng(mt["id"])
         wmax = float(np.max(mt["width_km"]))
@@ -353,10 +394,22 @@ def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
                               + 0.08 * np.sin(2 * np.pi * t / (l2 * 0.8) + f[3]))
         h *= 0.55 + 0.45 * np.sin(np.pi * np.clip(t / L, 0, 1)) ** 0.35
         r = np.zeros(int(q.sum()))
-        r[ok] = h * np.exp(-(chord_km(dc[ok]) / (0.45 * w)) ** 2)
+        dk = chord_km(dc[ok])
+        if mt.get("profile") == "rift":
+            r[ok] = h * np.exp(-((dk - 0.30 * w) / (0.15 * w)) ** 2)
+            g = np.zeros(int(q.sum()))
+            g[ok] = np.exp(-(dk / (0.11 * w)) ** 2)
+            trough[q] = np.maximum(trough[q], g)
+        else:
+            r[ok] = h * np.exp(-(dk / (0.45 * w)) ** 2)
         cur = ridge[q]
         ridge[q] = np.maximum(cur, r)
     elev[land] = np.maximum(elev[land], base[land] + ridge[land])
+    elev[land] *= 1 - 0.5 * trough[land]          # 裂谷谷底约为两肩外侧地面的一半高
+    # 湖面比周围略低（示意），图上画成水面
+    lake = b.get("lake")
+    if lake is not None and lake.any():
+        elev[lake] = np.maximum(5.0, 0.8 * elev[lake])
     # 极地冰盖：冰面高程随离岸距离升高（冰下山脉略微抬升冰面）
     pol = b["polar"]
     ice = 3300.0 * (1 - np.exp(-d_land / 450.0)) + 0.3 * ridge
@@ -394,6 +447,12 @@ def label_points(design: dict):
     for g in design.get("gulfs", []):
         p = np.asarray(g["line"], float)
         out.append(("sea", g["id"], g["name"], *p[len(p) // 2]))
+    for g in design.get("lakes", []):
+        p = np.asarray(g["line"], float)
+        out.append(("lake", g["id"], g["name"], *p[len(p) // 2]))
+    for g in design.get("ice_shelves", []):
+        p = np.asarray(g["line"], float)
+        out.append(("shelf", g["id"], g["name"], *p[len(p) // 2]))
     for s in design.get("seas", []):
         p = np.asarray(s["poly"], float)
         out.append(("sea", s["id"], s["name"], *p.mean(axis=0)))
@@ -406,10 +465,20 @@ def label_points(design: dict):
     for p_ in design.get("plateaus", []):
         p = np.asarray(p_["poly"], float)
         out.append(("plateau", p_["id"], p_["name"], *p.mean(axis=0)))
+    for p_ in design.get("basins", []):
+        p = np.asarray(p_["poly"], float)
+        out.append(("basin", p_["id"], p_["name"], *p.mean(axis=0)))
     for i in design.get("islands", []):
         p = np.asarray(i.get("poly", i.get("line")), float)
         out.append((i["type"], i["id"], i["name"], *(p.mean(axis=0) if "poly" in i else p[len(p) // 2])))
-    return out
+    # yaml 里写了 label_at 的要素用指定位置（避开拥挤处）
+    at = {}
+    for key in ("peninsulas", "gulfs", "lakes", "ice_shelves", "seas", "straits", "mountains", "plateaus",
+                "basins", "islands"):
+        for it in design.get(key, []):
+            if "label_at" in it:
+                at[it["id"]] = it["label_at"]
+    return [(k, f, n, *at[f]) if f in at else (k, f, n, lo, la) for k, f, n, lo, la in out]
 
 
 def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: dict, fields: dict, out: Path,
@@ -443,6 +512,8 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
         pol = b["polar"]
         shade = rgb[pol].mean(axis=1, keepdims=True)
         rgb[pol] = 0.25 * rgb[pol] + 0.75 * np.clip(0.55 + 0.6 * shade, 0, 1)   # 冰盖：偏白
+        rgb[b["shelf"]] = np.array([0.88, 0.93, 0.97])                          # 冰架：浮在海上的冰
+        rgb[b["lake"]] = np.array([0.36, 0.60, 0.82])                           # 湖面
         return rgb
 
     rgb = base_rgb()
@@ -455,6 +526,9 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
               interpolation="nearest")
     ax.contour(grid.lon, grid.lat, land.astype(float), levels=[0.5], colors="#333333", linewidths=0.45,
                transform=PC)
+    if b["lake"].any():
+        ax.contour(grid.lon, grid.lat, b["lake"].astype(float), levels=[0.5], colors="#24507a", linewidths=0.4,
+                   transform=PC)
     ax.gridlines(xlocs=range(-180, 181, 30), ylocs=range(-60, 61, 30), color="#777777", lw=0.3, alpha=0.6)
     sym = b["symbols"]
     for kind, mk, col, ms in (("atoll", "o", "#1f8f8f", 4.5), ("seamount", ".", "#6c8fb3", 3.0)):
@@ -464,13 +538,15 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
             ax.plot(x, y, mk, mfc="none" if kind == "atoll" else col, mec=col, ms=ms, mew=1.0, transform=PC,
                     linestyle="none")
     big = {"A": "洲 A", "B": "洲 B", "C": "洲 C", "D": "洲 D", "far": "远方大陆"}
+    cont_at = design.get("continent_label_at", {})
     for c, name in big.items():
         m = b["cont"] == c
         v = (grid.xyz * (grid.cell_area_km2 * m)[..., None]).sum(axis=(0, 1))
-        lo, la = to_lonlat(v)
+        lo, la = cont_at[c] if c in cont_at else to_lonlat(v)
         ax.text(lo, la, f"{name}\n{areas['continents_km2'].get(c, 0) / 1e6:.0f} 百万 km²", transform=PC,
                 fontsize=15, weight="bold", ha="center", va="center", color="#3a2a10", path_effects=halo)
     style = {"sea": ("#0b3d6e", 9.5), "strait": ("#0b3d6e", 8.5), "plateau": ("#5a3d1e", 9),
+             "lake": ("#0b3d6e", 8), "shelf": ("#2c4a6b", 8.5), "basin": ("#2f5a1e", 8.5),
              "mountain": ("#6b3a12", 8), "peninsula": ("#3d4a1e", 8), "continental": ("#2a4a2a", 8),
              "spine": ("#2a4a2a", 7.5), "arc": ("#5b2a6e", 7.5), "hotspot": ("#8a3b12", 7.5)}
     heights = {m["id"]: m["height_m"] for m in design.get("mountains", [])}
@@ -507,6 +583,8 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
 
     def mt_kind(m):
         c = m["cause"]
+        if m.get("profile") == "rift":
+            return "rift"
         if "碰撞" in c and ("今" in c or "仍在" in c):
             return "collision"
         if "碰撞" in c or "缝合" in c or "古老" in c or "褶皱" in c:
@@ -596,6 +674,11 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
              interpolation="nearest")
     a.contour(grid.lon, grid.lat, land.astype(float), levels=[0.5], colors="#333333", linewidths=0.5, transform=PC)
     a.gridlines(xlocs=range(-180, 181, 30), ylocs=[-80, -70, -60, -50, -40], color="#777777", lw=0.3)
+    for kind, fid, name, lo, la in label_points(design):
+        if la < -45 and kind not in ("arc", "hotspot") and not (kind == "mountain" and heights.get(fid, 0) < 3000):
+            col, fs = style.get(kind, ("#333333", 8))
+            a.text(lo, la, name, transform=PC, fontsize=fs + 1.5, color=col, ha="center", va="center",
+                   path_effects=halo)
     pa = areas["polar_km2"]
     a.set_title(f"南极区：{design['polar']['name']} {pa / 1e6:.1f} 百万 km²（南极洲约 14）· 等面积方位投影", fontsize=13)
     stamp(fig)
