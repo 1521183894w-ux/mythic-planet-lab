@@ -281,8 +281,12 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
 
     # 湖：不从陆地掩膜里挖掉（与地球数据口径一致：Natural Earth 的陆地含坦噶尼喀湖这类湖），只在图上画成水面
     lake = np.zeros(shape, bool)
+    salt = np.zeros(shape, bool)
     for lk in design.get("lakes", []):
-        lake |= spine_mask(grid, lk["line"], lk["width_km"], feature_rng(lk["id"])) & land
+        m = spine_mask(grid, lk["line"], lk["width_km"], feature_rng(lk["id"])) & land
+        lake |= m
+        if lk.get("salt"):
+            salt |= m
     # 冰架：海湾里浮在海上的冰（掩膜里是海，图上画成冰）
     shelf = np.zeros(shape, bool)
     for sh in design.get("ice_shelves", []):
@@ -340,7 +344,32 @@ def build(design: dict, grid: LatLonGrid, seed: int = 1):
                     symbols.append({"lon": float(lon_c), "lat": float(lat_c), "kind": "seamount", "id": isl["id"]})
                 t += (150.0 if t < young else 260.0) * rng.uniform(0.8, 1.2)
     return {"land": land, "cont": cont, "polar": pol & land, "island_peak": island_peak,
-            "symbols": symbols, "sea_masks": sea_masks, "lake": lake, "shelf": shelf & ~land}
+            "symbols": symbols, "sea_masks": sea_masks, "lake": lake, "salt": salt, "shelf": shelf & ~land}
+
+
+def apply_options(design: dict, options: set[str]) -> dict:
+    """按选项过滤要素：写了 option: X 的只在 X 打开时保留；写了 unless: X 的在 X 打开时去掉（被替换）。"""
+    out = {}
+    for k, v in design.items():
+        if isinstance(v, list) and v and isinstance(v[0], dict):
+            v = [it for it in v if (it.get("option") is None or it["option"] in options)
+                 and (it.get("unless") is None or it["unless"] not in options)]
+        out[k] = v
+    return out
+
+
+def circle_lonlat(center, radius_km: float, n: int = 120) -> np.ndarray:
+    """球面上以 center 为中心、半径 radius_km 的小圆（经纬度，用于画撞击构造的环）。"""
+    c = unit(*center)
+    a = np.array([0.0, 0.0, 1.0]) if abs(c[2]) < 0.9 else np.array([1.0, 0.0, 0.0])
+    e1 = np.cross(c, a)
+    e1 /= np.linalg.norm(e1)
+    e2 = np.cross(c, e1)
+    t = np.linspace(0, 2 * np.pi, n)
+    ang = radius_km / R_KM
+    p = np.cos(ang) * c + np.sin(ang) * (np.cos(t)[:, None] * e1 + np.sin(t)[:, None] * e2)
+    lon, lat = to_lonlat(p)
+    return np.c_[lon, lat]
 
 
 def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
@@ -366,19 +395,23 @@ def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
         m, ramp = region(p, [120.0, 45.0])
         if ramp is not None:
             elev[m] = np.maximum(elev[m], base[m] + (p["height_m"] - base[m]) * ramp[m])
-    # 盆地（克拉通内部沉降、前陆盆地：比周围低平）
+    # 盆地（克拉通内部沉降、前陆盆地：比周围低平）；height_m < 0 的是低于海平面的陆地洼地（死海式）
+    depr = np.zeros(grid.shape, bool)
     for p in design.get("basins", []):
         m, ramp = region(p, [150.0, 50.0])
         if ramp is not None:
             low = np.minimum(elev[m], p["height_m"])
             elev[m] = elev[m] + (low - elev[m]) * ramp[m]
+            if p["height_m"] < 0:
+                depr |= m
     # 山脉（高斯形横剖面，取最大值叠加）；profile: rift 的裂谷是两侧肩部隆起、中间谷底下陷
     ridge = np.zeros(grid.shape)
     trough = np.zeros(grid.shape)
     for mt in design.get("mountains", []):
         rng = feature_rng(mt["id"])
         wmax = float(np.max(mt["width_km"]))
-        line = meander(mt["line"], 0.3 * wmax, rng)
+        # 裂谷、断层谷只轻微摆动：谷底要对准设计线上的湖与洼地（摆 0.3 倍宽时谷肩会压到洼地上）
+        line = meander(mt["line"], (0.06 if mt.get("profile") == "rift" else 0.3) * wmax, rng)
         p, s = densify(line, 8.0)
         L = max(s[-1], 1.0)
         q = land
@@ -404,12 +437,25 @@ def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
             r[ok] = h * np.exp(-(dk / (0.45 * w)) ** 2)
         cur = ridge[q]
         ridge[q] = np.maximum(cur, r)
-    elev[land] = np.maximum(elev[land], base[land] + ridge[land])
-    elev[land] *= 1 - 0.5 * trough[land]          # 裂谷谷底约为两肩外侧地面的一半高
-    # 湖面比周围略低（示意），图上画成水面
+    # 山脊从当前地面与基准面中较低者算起：高原上取两者最大（山不会叠在高原上翻倍），
+    # 盆地里从盆底升起（v1 用 max(地面, 基准面 + 山脊)，把盆地整片抬回了基准面）
+    surf = elev[land]
+    elev[land] = np.maximum(surf, np.minimum(base[land], surf) + ridge[land])
+    sub = land & (elev > 0)
+    elev[sub] *= 1 - 0.5 * trough[sub]            # 裂谷谷底约为两肩外侧地面的一半高（海平面以下的洼地不动）
+    # 撞击构造（示意）：环形山岭 + 中央峰（老的剥蚀得只剩低缓环岭）
+    for x in design.get("impacts", []):
+        c = unit(*x["center"])
+        D = float(x["diameter_km"])
+        d = chord_km(np.linalg.norm(grid.xyz - c, axis=-1))
+        old = x.get("age_ma", 0) > 500
+        rim, peak = (150.0, 120.0) if old else (300.0, 450.0)
+        bump = rim * np.exp(-((d - 0.45 * D) / (0.07 * D)) ** 2) + peak * np.exp(-(d / (0.08 * D)) ** 2)
+        elev[land] += bump[land]
+    # 湖面比周围略低（示意），图上画成水面；洼地里的湖面在海平面以下
     lake = b.get("lake")
     if lake is not None and lake.any():
-        elev[lake] = np.maximum(5.0, 0.8 * elev[lake])
+        elev[lake] = np.where(elev[lake] > 0, np.maximum(5.0, 0.8 * elev[lake]), elev[lake] - 20.0)
     # 极地冰盖：冰面高程随离岸距离升高（冰下山脉略微抬升冰面）
     pol = b["polar"]
     ice = 3300.0 * (1 - np.exp(-d_land / 450.0)) + 0.3 * ridge
@@ -421,7 +467,8 @@ def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
     shelf = -50.0 - 150.0 * np.clip(d_sea / 140.0, 0, 1)
     deep = -200.0 - 4300.0 * (1 - np.exp(-np.clip(d_sea - 140.0, 0, None) / 220.0))
     elev[~land] = np.where(d_sea <= 140.0, shelf, deep)[~land]
-    elev[land] = np.maximum(elev[land], 5.0)
+    keep = land & ~depr                             # 洼地可以低于海平面（海陆由掩膜决定，与地球数据同）
+    elev[keep] = np.maximum(elev[keep], 5.0)
     elev[~land] = np.minimum(elev[~land], -20.0)
     return elev
 
@@ -481,6 +528,35 @@ def label_points(design: dict):
     return [(k, f, n, *at[f]) if f in at else (k, f, n, lo, la) for k, f, n, lo, la in out]
 
 
+def draw_specials(ax, design: dict, halo, PC, GEO, labels: bool = True):
+    """"神怒"候选海湾（湾顶红色标记）与撞击构造（环）。"""
+    for g in design.get("gulfs", []):
+        if g.get("shenu"):
+            lo, la = g["line"][-1]
+            ax.plot(lo, la, marker="^", ms=11, color="#c0392b", mec="white", mew=1.2, transform=PC, zorder=6)
+            if labels:
+                ax.text(lo, la - 2.2, f"{g['name']}（神怒）", transform=PC, fontsize=9, weight="bold", color="#c0392b",
+                        ha="center", va="top", path_effects=halo, zorder=6)
+    for x in design.get("impacts", []):
+        ring = circle_lonlat(x["center"], x["diameter_km"] / 2)
+        ax.plot(ring[:, 0], ring[:, 1], color="#6c3483", lw=1.3, transform=GEO, zorder=6)
+        if labels:
+            ax.text(x["center"][0], x["center"][1] - x["diameter_km"] / 2 / KM_PER_DEG - 0.8, x["name"],
+                    transform=PC, fontsize=8, color="#6c3483", ha="center", va="top", path_effects=halo, zorder=6)
+
+
+def feature_points(design: dict) -> dict:
+    """要素编号 -> 代表位置（经, 纬），06 图标原型位置用。"""
+    pts = {fid: (lo, la) for _, fid, _, lo, la in label_points(design)}
+    for m in design.get("masses", []):
+        pts[m["id"]] = tuple(np.asarray(m["poly"], float).mean(axis=0))
+    for lt in design.get("lithology", []):
+        pts[lt["id"]] = tuple(np.asarray(lt["poly"], float).mean(axis=0))
+    for x in design.get("impacts", []):
+        pts[x["id"]] = tuple(x["center"])
+    return pts
+
+
 def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: dict, fields: dict, out: Path,
             ver: str, areas: dict):
     import cartopy.crs as ccrs
@@ -501,9 +577,10 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
     proj = ccrs.EqualEarth(central_longitude=lon0)
     land = b["land"]
     halo = [pe.withStroke(linewidth=2.6, foreground="white")]
+    opt = f"（选项 {design['_options']}）" if design.get("_options") else ""
 
     def stamp(fig, extra=""):
-        fig.text(0.01, 0.006, f"终图设计 {design['name']} · config/design/final_map_{design['_ver']}.yaml · "
+        fig.text(0.01, 0.006, f"终图设计 {design['name']}{opt} · config/design/final_map_{design['_ver']}.yaml · "
                  f"scripts/design_final_map.py · 代码版本 {ver} · method_class：海陆与要素 user_override（设计），"
                  f"示意高程 visual_only（不是模拟结果）{extra}", fontsize=7.5, color="#555555")
 
@@ -514,6 +591,7 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
         rgb[pol] = 0.25 * rgb[pol] + 0.75 * np.clip(0.55 + 0.6 * shade, 0, 1)   # 冰盖：偏白
         rgb[b["shelf"]] = np.array([0.88, 0.93, 0.97])                          # 冰架：浮在海上的冰
         rgb[b["lake"]] = np.array([0.36, 0.60, 0.82])                           # 湖面
+        rgb[b["salt"]] = np.array([0.55, 0.80, 0.78])                           # 咸湖
         return rgb
 
     rgb = base_rgb()
@@ -556,11 +634,12 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
             continue
         col, fs = style.get(kind, ("#333333", 8))
         ax.text(lo, la, name, transform=PC, fontsize=fs, color=col, ha="center", va="center", path_effects=halo)
+    draw_specials(ax, design, halo, PC, ccrs.Geodetic())
     pol_lab = (0, -80)
     ax.text(*pol_lab, f"{design['polar']['name']}（冰盖）", transform=PC, fontsize=12, weight="bold",
             ha="center", color="#2c4a6b", path_effects=halo)
     A = metrics["A"]
-    fig.text(0.5, 0.975, f"终图初稿 {design['name']}（设计图：只画几百公里以上的要素，海岸细节、河谷、峡湾等由之后的模拟产生）",
+    fig.text(0.5, 0.975, f"终图 {design['name']}{opt}（设计图：只画几百公里以上的要素，海岸细节、河谷、峡湾等由之后的模拟产生）",
              fontsize=16, ha="center", va="top")
     fig.text(0.5, 0.945, f"海洋 {A['ocean_fraction']['value'] * 100:.1f}% · 主大陆 {A['main_continent']['area_km2'] / 1e6:.0f} 百万 km²"
              f"（占陆地 {A['main_continent']['share_of_land'] * 100:.0f}%；亚非欧约 85）· 亚大陆 {A['subcontinents']['count']} 个 · "
@@ -665,6 +744,65 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
     fig.savefig(out / "04_vs_earth_same_detail.png", dpi=130)
     plt.close(fig)
 
+    # ---- 06 奇景舞台：原型库 × 终图核对（config/design/archetype_check_<版本>.yaml）----
+    chk_path = ROOT / "config" / "design" / f"archetype_check_{design['_ver']}.yaml"
+    if chk_path.exists():
+        chk = yaml.safe_load(chk_path.read_text(encoding="utf-8"))
+        entries = chk["entries"]
+        st_col = {"placed": "#1e8449", "added": "#c0392b", "candidate": "#2e86c1", "independent": "#909497"}
+        st_name = chk["statuses"]
+        lith_col = {"carbonate": "#5dade2", "sandstone": "#e59866", "redbed": "#cb4335", "evaporite": "#f4d03f",
+                    "craton": "#9a7d0a", "granite": "#c39bd3", "ophiolite": "#196f3d"}
+        lith_name = {"carbonate": "碳酸盐岩（喀斯特）", "sandstone": "古老砂岩（平顶山）", "redbed": "红层（丹霞）",
+                     "evaporite": "蒸发岩（盐丘）", "craton": "古陆核", "granite": "花岗岩基", "ophiolite": "蛇绿岩"}
+        fig = plt.figure(figsize=(20, 18))
+        ax = fig.add_axes([0.02, 0.37, 0.96, 0.57], projection=proj)
+        ax.set_global()
+        ax.imshow(0.35 * rgb + 0.65, extent=(-180, 180, -90, 90), transform=PC, origin="upper",
+                  regrid_shape=(3000, 1500), interpolation="nearest")
+        ax.contour(grid.lon, grid.lat, land.astype(float), levels=[0.5], colors="#666666", linewidths=0.4,
+                   transform=PC)
+        for lt in design.get("lithology", []):
+            p = np.asarray(lt["poly"], float)
+            c = lith_col.get(lt["kind"], "#888888")
+            ax.fill(p[:, 0], p[:, 1], facecolor=c, edgecolor=c, alpha=0.45, lw=1.0, transform=PC, zorder=3)
+        draw_specials(ax, design, halo, PC, ccrs.Geodetic(), labels=False)
+        pts = feature_points(design)
+        for i, e in enumerate(entries, 1):
+            if e["status"] == "independent":
+                continue
+            locs = [pts[f] for f in e.get("features", []) if f in pts] + [tuple(x) for x in e.get("at", [])]
+            for lo, la in locs:
+                ax.text(lo, la, str(i), transform=PC, fontsize=6.5, color="white", ha="center", va="center",
+                        zorder=7, bbox=dict(boxstyle="circle,pad=0.18", fc=st_col[e["status"]], ec="white", lw=0.6))
+        from matplotlib.lines import Line2D
+        from matplotlib.patches import Patch
+        cnt = {s: sum(e["status"] == s for e in entries) for s in st_col}
+        h1 = [Line2D([], [], marker="o", ls="none", ms=9, mfc=st_col[s], mec="white", label=f"{st_name[s]}（{cnt[s]}）")
+              for s in st_col]
+        h2 = [Patch(fc=lith_col[k], ec=lith_col[k], alpha=0.45, label=v) for k, v in lith_name.items()]
+        h3 = [Line2D([], [], marker="^", ls="none", ms=9, mfc="#c0392b", mec="white", label="“神怒”候选海湾"),
+              Line2D([], [], color="#6c3483", lw=1.3, label="撞击构造")]
+        leg = ax.legend(handles=h1, loc="lower left", fontsize=8.5, framealpha=0.92, title="原型状态（圆内为编号）",
+                        title_fontsize=9)
+        ax.add_artist(leg)
+        ax.legend(handles=h2 + h3, loc="lower right", fontsize=8.5, framealpha=0.92, title="岩性区与其他",
+                  title_fontsize=9)
+        ncol = 5
+        per = int(np.ceil(len(entries) / ncol))
+        for c in range(ncol):
+            for r, (i, e) in enumerate(list(enumerate(entries, 1))[c * per:(c + 1) * per]):
+                fig.text(0.02 + c * 0.196, 0.345 - r * 0.0148, f"{i:>3} {e['archetype']}", fontsize=7.6,
+                         color=st_col[e["status"]], va="top", ha="left")
+        fig.text(0.5, 0.975, f"终图 {design['name']} · 奇景舞台：原型库 {len(entries)} 个原型在终图上的位置"
+                 f"（核对表 docs/design_archetype_check_{design['_ver']}.md）", fontsize=16, ha="center", va="top")
+        fig.text(0.5, 0.95, "绿 = 终图已安排；红 = 本版新增；蓝 = 候选地点（终图给了条件，形态由后续阶段的过程确认）；"
+                 "灰 = 不依赖终图（尺度太小、随处可生、随机事件或行星级）", fontsize=11, ha="center", va="top",
+                 color="#333333")
+        stamp(fig)
+        fig.savefig(out / "06_archetype_stage.png", dpi=150)
+        plt.close(fig)
+
     # ---- 05 南极区 ----
     fig = plt.figure(figsize=(11, 12))
     pp = ccrs.LambertAzimuthalEqualArea(central_latitude=-90)
@@ -689,12 +827,16 @@ def figures(design: dict, grid: LatLonGrid, b: dict, elev: np.ndarray, metrics: 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--design", default="v1")
+    ap.add_argument("--options", default="", help="逗号分隔的设计选项，例如 bigA（洲 A 扩大）")
     ap.add_argument("--no-figures", action="store_true")
     args = ap.parse_args()
     t0 = time.perf_counter()
     path = ROOT / "config" / "design" / f"final_map_{args.design}.yaml"
-    design = yaml.safe_load(path.read_text(encoding="utf-8"))
+    options = {o.strip() for o in args.options.split(",") if o.strip()}
+    design = apply_options(yaml.safe_load(path.read_text(encoding="utf-8")), options)
     design["_ver"] = args.design
+    design["_options"] = ",".join(sorted(options))
+    tag = args.design + "".join(f"_{o}" for o in sorted(options))
     ver = code_version()
     grid = LatLonGrid(2048, 1024)
     log(f"栅格化 {path.name}")
@@ -710,7 +852,7 @@ def main() -> int:
     log("示意高程")
     elev = elevation(design, grid, b)
 
-    world_id = f"design_{args.design}"
+    world_id = f"design_{tag}"
     out_w = ROOT / "data" / "worlds" / world_id
     out_w.mkdir(parents=True, exist_ok=True)
     attrs = {"world_id": world_id, "display_name": f"终图设计 {design['name']}", "seed": "design",
@@ -739,7 +881,8 @@ def main() -> int:
     areas = {"land_km2": tot_land, "continents_km2": conts, "polar_km2": conts["polar"]}
     summary = {
         "description": "终图设计的面积与 A 层核对（重建：scripts/design_final_map.py）",
-        "design_file": path.relative_to(ROOT).as_posix(), "files": files, "code_version": ver,
+        "design_file": path.relative_to(ROOT).as_posix(), "options": sorted(options), "files": files,
+        "code_version": ver,
         "ocean_fraction": A["ocean_fraction"]["value"], "areas_km2": areas,
         "A": {k: {kk: vv for kk, vv in v.items() if kk in ("pass", "value", "share_of_land", "area_km2", "count",
                                                          "areas_km2", "north_deg", "south_deg", "found")}
@@ -752,7 +895,7 @@ def main() -> int:
     (out_w / "params.json").write_text(json.dumps(to_jsonable(summary), ensure_ascii=False, indent=1),
                                        encoding="utf-8", newline="\n")
     if not args.no_figures:
-        out_f = ROOT / "figures" / "design" / args.design
+        out_f = ROOT / "figures" / "design" / tag
         out_f.mkdir(parents=True, exist_ok=True)
         log("出图")
         figures(design, grid, b, elev, metrics, fields, out_f, ver, areas)

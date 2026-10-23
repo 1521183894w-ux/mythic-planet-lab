@@ -1,0 +1,270 @@
+# 原型库 × 终图 v2 核对表（PROGRESS U22；用户 2026-10-23 要求"先做原型库和终图的核对表，缺的按成因补进终图 v2"）
+#
+# 逐条核对 docs/archetype_library.md 的全部原型：终图有没有给它留出成因条件、在哪里。
+# 校验与生成文档：scripts/run.ps1 python scripts/design_archetype_check.py --design v2
+#   （每个原型必须出现且只出现一次；features 里的编号必须是终图里的要素；输出 docs/design_archetype_check_v2.md）
+# 图：scripts/design_final_map.py --design v2 的 06 图（编号 = 本文件中的顺序）
+#
+# features：终图里提供条件的要素编号（config/design/final_map_v2.yaml）；at：没有对应要素时的候选位置 [经, 纬]
+# stage：形态在哪个阶段确认（1 构造 / 1.2e 岩性 / 2 地形与水系 / 3 气候、冰川与海洋 / 4 筛选与局部编辑）
+
+version: 2
+design: v2
+statuses:
+  placed: 终图已安排
+  added: v2 新增
+  candidate: 候选地点
+  independent: 不依赖终图
+
+entries:
+  # ---- 1. 构造类 ----
+  - {archetype: 超长碰撞造山带, status: placed, features: [M3, M1, M3c], stage: "1",
+     note: 东方大高原南缘山系（约 4000 km，仍在汇聚）与内海北岸山系（约 6000 km，残留洋盆北缘）}
+  - {archetype: 大陆高原, status: placed, features: [PL1, PL5], stage: "1",
+     note: 东方大高原（碰撞增厚，青藏式）；远方大陆高原（俯冲增厚，阿尔蒂普拉诺式）}
+  - {archetype: 大陆裂谷与裂谷湖, status: placed, features: [M10, L1, L2], stage: "1",
+     note: 南方地盾裂谷，两肩隆起、谷底下陷，两个雁列深湖（东非裂谷、坦噶尼喀湖式）}
+  - {archetype: 裂谷海、狭长海湾, status: placed, features: [G8, G9], stage: "1",
+     note: 南裂谷海（v2 收窄并改正运动方式）、东南裂谷湾}
+  - {archetype: 火山岛弧与边缘海, status: placed, features: [I14, I15, G5, R4, R12, R2], stage: "1",
+     note: 东方岛弧与弧后边缘海（日本式）、东南群岛诸弧、北洋岛弧}
+  - {archetype: 弧后伸展多岛海、断块半岛, status: placed, features: [R5, R5b, P8], stage: "1–2",
+     note: 内海东部：俯冲后撤的火山弧、弧后群岛与多湾半岛（爱琴海—希腊式）}
+  - {archetype: 海沟陡岸, status: placed, features: [M8], stage: "1",
+     note: 远方大陆西岸山系紧邻海沟（安第斯式）}
+  - {archetype: 热点岛链与海山, status: placed, features: [H1, H2, H3, H4, H5, H6, H7], stage: "1",
+     note: 七条热点岛链，越老越小，热带老段沉降成环礁}
+  - {archetype: 溢流玄武岩台地, status: placed, features: [PL4, P7], stage: "1",
+     note: 东南火山高原（埃塞俄比亚式）、南方地盾半岛西北部（德干式）}
+  - {archetype: 微大陆与大岛, status: placed, features: [I2, I6, I7, I8], stage: "1",
+     note: 裂离微大陆（马达加斯加式）、南洋陆块（大部分沉没的微大陆，新西兰式）、东南大岛}
+  - {archetype: 走滑断裂盆地与死海式洼地, status: added, features: [M30, B5, L3, M5], stage: "1–2",
+     note: v2 新增。洲 D 北移使 C、D 老缝合带复活为左旋走滑断层，释放段拉分出低于海平面约 400 m 的洼地与咸湖（死海式）}
+
+  # ---- 2. 地貌与岩性类 ----
+  - {archetype: 喀斯特峰林、天坑, status: added, features: [LT1, PL8], stage: "1.2e、3",
+     note: v2 新增。南方碳酸盐岩区抬升成高原，季风湿热（桂林、武隆式）}
+  - {archetype: 溺谷喀斯特海岸（海上峰林）, status: added, features: [LT1], at: [[108.0, 21.0]], stage: "3",
+     note: v2 新增。碳酸盐岩区南缘入海处，冰后期海侵淹没（下龙湾式）}
+  - {archetype: 平顶山（tepui）, status: added, features: [LT3, PL7], stage: "1.2e、2",
+     note: v2 新增。赤道附近古陆核上的古老石英砂岩台地（罗赖马式）}
+  - {archetype: 深切大峡谷, status: candidate, features: [M3b, PL1], stage: "2",
+     note: 东方大高原东端构造结快速隆升 + 高原外流大河（雅鲁藏布式），阶段 2 河网确认}
+  - {archetype: 大断崖, status: placed, features: [M19, M17, PL7], stage: "2",
+     note: 南方地盾半岛西缘掀斜断崖（西高止式）、裂谷肩山地；内陆型：砂岩台地边缘}
+  - {archetype: 溺谷海岸, status: candidate, features: [G5, G18, G28], stage: "2–3",
+     note: 宽陆架、低起伏的海岸在冰后期海侵后由河谷形态决定}
+  - {archetype: 巨型三角洲与冲积平原, status: candidate, at: [[90.0, 22.4], [-76.0, -2.0]], stage: "2",
+     note: 东方大高原南坡大河入海处（恒河式）；远方大陆东部大盆地的大河口}
+  - {archetype: 沙丘海与风蚀地貌, status: candidate, at: [[36.0, 22.0], [-4.0, 24.0]], stage: "3",
+     note: 洲 C、D 北部副热带干旱带（撒哈拉式），阶段 3 气候确认}
+  - {archetype: 盐湖盆地、盐壳, status: placed, features: [PL5, G15, L3], stage: "3",
+     note: 远方大陆高原的内流盆地（乌尤尼式）、内陆咸海（里海式）、v2 死海式咸湖}
+  - {archetype: 巨型瀑布, status: candidate, features: [PL7, PL4], stage: "2",
+     note: 砂岩台地边缘（安赫尔式）、玄武岩高原上的大河（维多利亚式），阶段 2 河网确认}
+
+  # ---- 3. 冰川与气候类 ----
+  - {archetype: 峡湾海岸, status: placed, features: [P1, M6, P25, P26], stage: "3",
+     note: 冰川半岛（挪威式）、极地的冰原长半岛；v2 补远方大陆南端（巴塔哥尼亚式）}
+  - {archetype: U 形谷与冰碛湖群, status: candidate, features: [P1, LT9], stage: "3",
+     note: 冰川半岛与西北古地盾（阿尔卑斯、芬兰千湖式），阶段 3 冰期历史确认}
+  - {archetype: 冰盖与冰架, status: placed, features: [S1i, S2i, G25, G26], stage: "3",
+     note: 极地大陆冰盖与两个冰架湾}
+  - {archetype: 冰蚀大湖区, status: candidate, features: [LT9, LT8], stage: "3",
+     note: 西北古地盾、北方古陆核被冰盖反复刮蚀（加拿大地盾式）}
+  - {archetype: 热带雨林巨流域, status: candidate, features: [B1, B4], stage: "3",
+     note: 洲 C 中央盆地（赤道附近，刚果式）、远方大陆东部大盆地（亚马孙式）}
+  - {archetype: 季风三角洲, status: candidate, features: [P7], at: [[90.0, 22.4]], stage: "3",
+     note: 南方地盾半岛与东南增生半岛之间的海岸，东方大高原加强季风（孟加拉式）}
+
+  # ---- 4. 海洋类 ----
+  - {archetype: 珊瑚环礁群与堡礁, status: placed, features: [H2, R12], stage: "3",
+     note: 南方珊瑚岛群（老热点岛沉降成环礁）；堡礁候选在东南群岛与洲 D 东岸的热带陆架}
+  - {archetype: '共振海湾与涌潮河口（"神怒"）', status: added, features: [G7, G23], stage: "3",
+     note: v2 新增。神怒湾（内海里，全日潮共振，威尼斯式）、涌潮湾（外洋，半日潮共振 + 涌潮，芬迪—钱塘江式）；阶段 3 潮汐模型核算}
+  - {archetype: 海峡急流与漩涡, status: placed, features: [T1, T2], stage: "3",
+     note: 西海峡（主内海唯一出海口）、北方内海海峡（墨西拿、博斯普鲁斯式），需潮汐模型}
+  - {archetype: 海底峡谷与陡峭陆坡, status: candidate, features: [M8], stage: "2",
+     note: 远方大陆西岸窄陆架、各大河口外的陡陆坡}
+  - {archetype: 内陆巨湖, status: placed, features: [G15], stage: "1–2",
+     note: 内陆咸海（残留洋壳的封闭盆地，里海式）}
+
+  # ---- 5.1 火山与地热 ----
+  - {archetype: 破火山口湖、超级火山, status: candidate, features: [I16, PL6], stage: "1–2",
+     note: 东南长岛的火山弧（多巴式）、火山隆起上的地幔柱火山（黄石式）}
+  - {archetype: 大陆巨型孤峰火山, status: candidate, features: [M10, PL4, M7b], stage: "1",
+     note: 南方裂谷两侧（乞力马扎罗式）、东南火山高原、东北半岛火山脊}
+  - {archetype: 洋中脊出露岛, status: placed, features: [I9], stage: "1",
+     note: 北方火山岛：西大洋洋中脊与热点叠加（冰岛式）}
+  - {archetype: 地热间歇泉区, status: candidate, features: [I9, M10, H1], stage: "2",
+     note: 北方火山岛、南方裂谷、热点活动端}
+  - {archetype: 熔岩原, status: candidate, features: [I9, H1], stage: "2",
+     note: 年轻玄武岩：北方火山岛、热点岛链活动端}
+  - {archetype: 熔岩管洞, status: candidate, features: [I9, H1], stage: C,
+     note: C 级叙事标注：年轻玄武岩区都可能有}
+
+  # ---- 5.2 岩性与风化 ----
+  - {archetype: 砂岩峰林, status: added, features: [LT4], stage: "1.2e、3",
+     note: v2 新增。红层盆地南缘抬升的石英砂岩（张家界式）}
+  - {archetype: 丹霞, status: added, features: [LT4, B6], stage: "1.2e、3",
+     note: v2 新增。东方大高原东缘的红层盆地（四川盆地式），湿润}
+  - {archetype: 花岗岩峰丛与穹丘, status: added, features: [LT10, LT11], stage: "1.2e、2–3",
+     note: v2 新增。东南花岗岩基（黄山式）、远方大陆西岸花岗岩基（优胜美地式）}
+  - {archetype: 恶地, status: candidate, at: [[-93.0, -30.0], [40.0, 27.0]], stage: "1.2e、3",
+     note: 半干旱区的软弱沉积岩：远方大陆东部雨影区、洲 D 北部干旱带边缘}
+  - {archetype: 黄土高原, status: candidate, at: [[108.0, 38.0]], stage: "3",
+     note: 东方大高原以北荒漠的下风向（中国黄土高原式），需阶段 3 风场}
+  - {archetype: 彩色条带山, status: candidate, features: [PL5, LT4], stage: "3",
+     note: 多色沉积岩层被抬升剥露：远方大陆高原周边（彩虹山式）、红层盆地边缘（七彩丹霞式）}
+  - {archetype: 天然拱门、石柱（hoodoo）, status: independent, stage: C,
+     note: C 级：干旱区砂岩或凝灰岩的差异风化，尺度远小于终图}
+  - {archetype: 溶洞与地下河, status: added, features: [LT1, LT2], stage: C,
+     note: C 级（所在喀斯特区为 B）：v2 新增的两处碳酸盐岩区}
+  - {archetype: 柱状节理玄武岩, status: placed, features: [PL4, P7], stage: C,
+     note: C 级：溢流玄武岩区}
+
+  # ---- 5.3 海岸 ----
+  - {archetype: 海蚀崖与海蚀柱, status: independent, stage: "2",
+     note: 软硬岩相间、强浪的基岩海岸，几百公里以下的海岸细节，阶段 2 海岸过程产生}
+  - {archetype: 障壁岛与潟湖, status: independent, stage: "2",
+     note: 宽缓陆架、沉积充足、中小潮差的海岸，阶段 2 海岸过程产生}
+  - {archetype: 大型潮滩, status: candidate, features: [G1, G5], stage: "3",
+     note: 宽缓陆架 + 大潮差：西峡湾海、东岸陆架海；大月亮使潮滩更宽，需潮汐模型}
+  - {archetype: 红树林海岸, status: candidate, at: [[103.0, 2.0], [-78.0, 0.0]], stage: "3",
+     note: 热带泥质海岸：东南群岛一带、远方大陆东北岸}
+
+  # ---- 5.4 河湖与湿地 ----
+  - {archetype: 内陆三角洲, status: candidate, at: [[30.0, 15.0]], stage: "2–3",
+     note: 东南火山高原外流河进入北部干旱带的构造盆地（苏德、奥卡万戈式）}
+  - {archetype: 巨型湿地, status: candidate, features: [B4, B3], stage: "3",
+     note: 季节性泛滥的低平盆地：远方大陆东部大盆地、北方大低地（西西伯利亚沼泽式）}
+  - {archetype: 巨型冲积扇, status: candidate, features: [M3], stage: "2",
+     note: 东方大高原南缘山前，大河出山口（科西河式）}
+  - {archetype: 冰川洪水疤地, status: candidate, features: [LT8, B3], stage: "3",
+     note: 冰期冰盖南缘的冰坝湖溃决，需阶段 3 冰期历史}
+  - {archetype: 曲流与牛轭湖, status: independent, stage: C,
+     note: 低坡度冲积平原上普遍出现（C 级，区域细化时为 B）}
+
+  # ---- 5.5 干旱 ----
+  - {archetype: 雅丹, status: candidate, at: [[36.0, 22.0], [86.0, 41.0]], stage: "3",
+     note: 干旱 + 强定向风 + 湖相沉积：洲 D 北部干旱带、东方大高原北侧盆地（罗布泊式）}
+  - {archetype: 绿洲, status: candidate, at: [[36.0, 22.0]], stage: "3",
+     note: 荒漠中的地下水出露或外来河}
+  - {archetype: 盐丘与盐冰川, status: added, features: [LT5, M3d], stage: "1–2",
+     note: v2 新增。东湾前陆的埋藏蒸发岩被褶皱挤出（扎格罗斯式）}
+  - {archetype: 镜面盐沼, status: candidate, features: [PL5], stage: "3",
+     note: 远方大陆高原的盐壳雨季积水（乌尤尼式）}
+
+  # ---- 5.6 冰川与冻土 ----
+  - {archetype: 冰原岛峰, status: placed, features: [M9], stage: "3",
+     note: 极地横贯山脉在冰盖中露头}
+  - {archetype: 冻土与冰丘, status: candidate, features: [LT8, B3], stage: "3",
+     note: 洲 B 北部高纬内陆}
+  - {archetype: 鼓丘与冰碛垄, status: independent, stage: C,
+     note: 冰期冰盖覆盖过的平原普遍出现（C 级，区域细化时为 B）}
+
+  # ---- 5.7 海洋 ----
+  - {archetype: 海底平顶山（guyot）, status: placed, features: [H1, H4], stage: "1–2",
+     note: 热点岛链老段的海山}
+  - {archetype: 海底热泉, status: independent, stage: C,
+     note: 洋中脊沿线（C 级），洋中脊位置在倒推板块运动后确定}
+  - {archetype: 蓝洞, status: added, features: [LT2], stage: C,
+     note: v2 新增。北角碳酸盐台地近岸（伯利兹式）}
+
+  # ---- 5.8 生态与光学奇观 ----
+  - {archetype: 生物发光海湾, status: candidate, features: [G22], stage: "3",
+     note: 温暖、半封闭的浅湾：远方大陆北湾}
+  - {archetype: 云雾森林, status: candidate, features: [M8, M27, M10], stage: "3",
+     note: 热带山地常年云雾带}
+  - {archetype: 极光带, status: independent, stage: "3",
+     note: 行星磁场的产物，两极高纬普遍出现}
+
+  # ---- 5.9 地球历史与深部构造 ----
+  - {archetype: 化石产地与地层剖面, status: candidate, features: [B6, PL5], stage: "1–2",
+     note: 阶段 1 记录沉积环境与年代后定；候选是被峡谷切开的沉积盆地（红层盆地、远方大陆高原边缘）}
+  - {archetype: 太古宙古陆核与绿岩带, status: added, features: [LT7, LT8, LT9], stage: "1",
+     note: v2 新增。三处古陆核（南方、北方、西北）}
+  - {archetype: 蛇绿岩与出露的洋壳地幔, status: added, features: [LT12, I5], stage: "1",
+     note: v2 新增。洲 D 东北角（阿曼式）、内海长岛（特罗多斯式）}
+  - {archetype: 逆冲推覆构造出露, status: placed, features: [M1, M3], stage: "1–2",
+     note: 内海北岸山系（阿尔卑斯式）、东方大高原南缘（喜马拉雅式）}
+  - {archetype: 古老剥蚀山地, status: placed, features: [M4, M13b, M14, M16, M8b], stage: "1–2",
+     note: 北方缝合老山、西北地盾古山、南端褶皱山等}
+  - {archetype: 古礁与碳酸盐台地山, status: added, features: [LT6], stage: "1–3",
+     note: v2 新增。内海北岸山系里的古礁白云岩（多洛米蒂式）}
+  - {archetype: 抬升海岸与海蚀阶地, status: candidate, features: [G2, LT9, R8], stage: "2–3",
+     note: 冰后回弹：中部长海与西北古地盾（瑞典高海岸式）；构造抬升：远方大陆北面岛弧（古巴式）}
+
+  # ---- 5.10 火山 ----
+  - {archetype: 单成因火山群与低平火山口, status: candidate, features: [M10, PL6], stage: "2",
+     note: 裂谷与地幔柱隆起的外围}
+  - {archetype: 熔岩穹丘与火山尖峰, status: candidate, features: [R8, I14], stage: C,
+     note: 岛弧上（C 级，所在岛弧段为 B）}
+  - {archetype: 熔岩湖与持续喷发, status: candidate, features: [M10, H1], stage: C,
+     note: 裂谷（尼拉贡戈式）、热点活动端（基拉韦厄式）}
+  - {archetype: 冰火交互地貌, status: placed, features: [I9], stage: "3",
+     note: 北方火山岛冰川与火山并存（瓦特纳式）}
+  - {archetype: 火山岛剧场谷与刀脊, status: placed, features: [H5, H1], stage: "2–3",
+     note: 东洋火山岛（留尼汪式）、大洋长链的热带老岛}
+
+  # ---- 5.11 岩溶、风化、冰川与水体 ----
+  - {archetype: 钙华台地与钙华坝湖, status: added, features: [LT1, LT6], stage: "3",
+     note: v2 新增的碳酸盐岩区 × 泉水（黄龙、九寨沟式）}
+  - {archetype: 刀锋石林, status: added, features: [LT1], stage: C,
+     note: C 级（所在喀斯特区为 B）：厚层纯石灰岩 + 强降水}
+  - {archetype: 岛山与巨型孤岩, status: candidate, features: [LT7], stage: "2–3",
+     note: 南方古陆核半干旱部分，长期剥蚀残留的孤山（乌卢鲁式）}
+  - {archetype: 滑坡堰塞湖, status: candidate, features: [M3, M3b, M1], stage: "2–3",
+     note: 高陡山地 × 地震}
+  - {archetype: 沙丘间湖与海岸沙丘原, status: candidate, at: [[52.0, 1.0]], stage: "3",
+     note: 热带干湿季海岸 + 大量沙源 + 强信风（伦索伊斯式），阶段 3 气候确认}
+  - {archetype: 山地冰原与崩解冰川, status: added, features: [M8c, P26, P1], stage: "3",
+     note: v2 新增远方大陆南端（巴塔哥尼亚冰原式）；另有冰川半岛}
+  - {archetype: 高盐海湾与活叠层石, status: candidate, features: [G6, G8], stage: "3",
+     note: 炎热干旱的半封闭浅湾：东湾（波斯湾式）、南裂谷海北段（红海式）}
+
+  # ---- 5.12 生态 ----
+  - {archetype: 低纬雪峰与垂直自然带, status: candidate, features: [M27, M8, M10], stage: "3",
+     note: 东南群岛东大岛山脊（查亚峰式）、远方大陆西岸山系赤道段、南方裂谷火山（乞力马扎罗式）}
+  - {archetype: 草原与大迁徙, status: candidate, features: [PL2], stage: "3",
+     note: 洲 C 南部干湿季分明的稀树草原（塞伦盖蒂式）}
+  - {archetype: 温带雨林与巨树林, status: candidate, features: [P26, I14], at: [[-30.0, 50.0]], stage: "3",
+     note: 中高纬迎风海岸：洲 A 西岸、远方大陆南端西坡（瓦尔迪维亚式）、东方岛弧（屋久岛式）}
+  - {archetype: 北方原始针叶林, status: candidate, features: [LT8, B3], stage: "3",
+     note: 洲 B 北部}
+  - {archetype: 生物大聚集地, status: candidate, features: [L1, M10], stage: "3",
+     note: 裂谷湖群（火烈鸟）、大河三角洲与内海沿岸的迁徙停歇地}
+  - {archetype: 孤岛生物演化与海鸟岛, status: placed, features: [H1, H3, H6, H7, I9], stage: "3",
+     note: 远离大陆的热点岛链与孤岛}
+  - {archetype: 上升流富饶海域, status: candidate, features: [M8], at: [[-34.0, 20.0]], stage: "3",
+     note: 大洋东边界寒流：远方大陆西岸（洪堡式）、洲 C 西北岸（加那利式），需海洋模型}
+
+  # ---- 5.13 构造与岩浆的地表表现 ----
+  - {archetype: 前陆褶皱带与背斜山岭, status: placed, features: [M3d], stage: "1",
+     note: 东湾北岸褶皱山（扎格罗斯式）}
+  - {archetype: 活动断层崖与错断地貌, status: added, features: [M5, M30, M24], stage: "1–2",
+     note: v2 新增南方走滑断层；南洋陆块山脉（阿尔卑斯断层式）}
+  - {archetype: 变质核杂岩与深部地壳出露, status: candidate, features: [R5b, M1d], stage: "1–2",
+     note: 内海弧后伸展区（纳克索斯式）}
+  - {archetype: 环形侵入杂岩与岩盖穹隆, status: candidate, at: [[-2.0, 24.0]], stage: "1–2",
+     note: 洲 C 北部稳定地台的干旱区（理查特结构式）}
+  - {archetype: 泥火山与油气渗漏, status: added, features: [LT5, G15], stage: "1–2",
+     note: v2 新增东湾前陆油气盆地；内陆咸海沿岸（戈布斯坦式）}
+  - {archetype: 酸性热液区与彩色盐池, status: added, features: [L3, B5], stage: "2",
+     note: v2 新增。死海式洼地南端靠近裂谷北端，热液穿过蒸发岩（达洛尔式）}
+  - {archetype: 冰川喀斯特与石灰岩铺面, status: added, features: [LT6], stage: "3",
+     note: v2 新增。古礁白云岩区受冰川作用的部分（巴伦式）}
+
+  # ---- 6. 天外类 ----
+  - {archetype: 简单撞击坑, status: independent, stage: C,
+     note: 小撞击随机发生、数量多、尺度远小于终图}
+  - {archetype: 复杂撞击坑（中央峰）, status: added, features: [X2], stage: "1",
+     note: v2 新增。北方古陆核上约 3500 万年前的撞击坑}
+  - {archetype: 多环巨型撞击构造, status: added, features: [X1], stage: "1",
+     note: v2 新增。南方古陆核上约 20 亿年前的撞击，已深度剥蚀（弗里德堡式）}
+  - {archetype: 环形撞击湖, status: added, features: [X2], stage: "2–3",
+     note: v2 新增。同 X2（曼尼古根式环形湖）}
+  - {archetype: 撞击熔融矿床, status: added, features: [X1], stage: "1",
+     note: v2 新增。同 X1（萨德伯里式镍铜矿）}
+  - {archetype: 玻璃陨石散布区、陨铁地, status: independent, stage: C,
+     note: C 级：撞击溅射物，叙事标注}
