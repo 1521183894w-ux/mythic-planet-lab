@@ -7,10 +7,10 @@
 1. 分角色：极地大陆、次大陆（可选）、主大陆各块；锚定陆块不动。
 2. 依次拼合：每块从它所在一侧向已拼好的大陆滑过去，接触后再楔入 penetration_km 为目标位置；
    从 300 Ma 位置到目标位置用一个固定欧拉极匀速旋转，到 dock 时刻抵达，之后保留 residual 比例的汇聚 residual_myr，
-   然后锁定。检查途中不会提前撞上别的陆块、速度不超过 max_rate_deg。
-3. 主内海：锚定陆块就位后先规划第二大的主陆块（时间上它最后拼上），两段式拼合在两者之间圈出残留洋盆；先用网格上的
-   快速代理筛选，再用阶段 0 的 A 层主内海代码（mythic.metrics.hard）在 1024x512 上核对。其余陆块随后规划，不得填掉这片海、
-   不得靠近远端海峡；全部拼完再核对一次。完整模拟后按 0 Ma 的 A 层闭环修正远端海峡宽度（run_scenario_loop）。
+   然后锁定。检查途中不会提前撞上别的陆块、速度不超过 max_rate_deg；直接路线会碰撞时换成分段路线（背离邻居、绕行、接近，
+   终点不变）。
+3. 主内海：第二大的主陆块最后规划、最后拼上，两段式拼合圈出残留洋盆；先用网格上的快速代理筛选，再用阶段 0 的
+   A 层主内海代码（mythic.metrics.hard）在 1024x512 上核对。完整模拟后按 0 Ma 的 A 层闭环修正远端海峡宽度（run_scenario_loop）。
 4. 整体定位：把拼好的主大陆整体转到目标纬度（北端、南端、北极圈内面积、主内海纬度），锚定陆块在 300 Myr 内匀速完成这个旋转。
 5. 极地大陆、次大陆：相对锚定陆块分段匀速运动，0 Ma 抵达目标位置（整体定位时已让它们要走的路尽量短）；全程不碰撞。
 6. 局部裂解（按概率抽样）：沿拼合缝合带"剪刀式"张开（一端仍相连，形成狭长裂谷海），或从陆块边缘裂出微大陆。都避开主内海。
@@ -73,6 +73,10 @@ class Dock:
     segs: list = field(default_factory=list)
     t_contact: float | None = None         # 计划中的第一次接触时刻（途中检查到此为止）；None = t_dock + 15
     inner_sea: bool = False
+    res_seg: tuple | None = None           # 锁定后残余汇聚沿用的那一段；None = 最后一段（分段路线沿用原直接路线的，终点不变）
+
+    def residual_seg(self) -> tuple:
+        return self.res_seg if self.res_seg is not None else self.segs[-1]
 
     @property
     def angle(self) -> float:
@@ -90,7 +94,7 @@ def dock_pose(d: "Dock | None", t: float, residual: float, residual_myr: float) 
         f = min(1.0, (ta - t) / (ta - tb))
         R = rotmat(ax, ang * f) @ R
     if t < d.t_dock:
-        ta, tb, ax, ang = d.segs[-1]
+        ta, tb, ax, ang = d.residual_seg()
         R = rotmat(ax, residual * ang / (ta - tb) * min(d.t_dock - t, residual_myr)) @ R
     return R
 
@@ -499,9 +503,10 @@ class Planner:
         cb = self.blocks[b].centroid
         return u if (cb @ u) >= 0 else -u
 
-    def _plan_dock(self, b: int, t_dock: float, az_offsets, spins, pens, check_transit=True):
+    def _plan_dock(self, b: int, t_dock: float, az_offsets, spins, pens, check_transit=True, staged=True):
         """返回满足速度（与途中无碰撞，check_transit 时）的候选（Dock 列表），按接近方向偏离程度排序。
-        接近方向以拼合主轴为基准（偏离 az_offsets 度）。"""
+        接近方向以拼合主轴为基准（偏离 az_offsets 度）。直接路线都在途中碰撞时，按偏离程度试前几个终点的分段路线
+        （_staged_routes）。"""
         p, m = self.p, self.m
         docked = [k for k in self.docks]
         cl_pts = np.concatenate([self.posed(k, 0.0) for k in docked])
@@ -512,7 +517,7 @@ class Planner:
         cb = self.blocks[b].centroid
         rad_b = max(_ang(cb, x) for x in X[::7])
         t = self._axis_dir(b, C)
-        out = []
+        out, fails = [], []
         for az in az_offsets:
             dir_ = rotmat(C, np.radians(az)) @ t
             far = min(rad_cl + rad_b + np.radians(10), np.pi - 0.05)
@@ -534,6 +539,13 @@ class Planner:
                     d._t_stop = t_dock + self._margin_myr(ax, ang / (p.t0 - t_dock), cb, pen)
                     if not check_transit or self._transit_ok(b, d, docked):
                         out.append((abs(az) + 0.3 * abs(sp), d))
+                    else:
+                        fails.append((abs(az) + 0.3 * abs(sp), d))
+        if check_transit and staged and not out:
+            for sc, d in sorted(fails, key=lambda x: x[0])[:6]:
+                v = next((v for v in self._staged_routes(b, d, docked, n=8) if self._transit_ok(b, v, docked)), None)
+                if v is not None:
+                    out.append((sc, v))
         out.sort(key=lambda x: x[0])
         return [d for _, d in out]
 
@@ -605,63 +617,106 @@ class Planner:
             a0 = np.arctan2(uv[0, 1], uv[0, 0])
         a0 += np.radians(rng.uniform(-20, 20))
         self.axis_u = np.cos(a0) * e1 + np.sin(a0) * e2
-        # 主内海先规划：锚定陆块就位后，第二大的主陆块用两段式拼合在两者之间圈出残留洋盆（像特提斯洋夹在欧亚与非洲之间），
-        # 它在时间上仍最后拼上（dock_window 末端），但在规划上排第一，路线只需避开锚定陆块；其余陆块再规划，
-        # 避开它的路线，并且不得填掉这片海、不得靠近远端海峡（_sea_intact）。
-        # （1.2c 第二轮之前它在规划上排最后、最受约束：新前史 4 个世界里它的候选路线全部在开局就撞上先规划陆块的路线，
-        # 规划阶段选不出主内海。试过把它的 300 Ma 位置当作其他块头 40 Myr 的障碍，其他块拼合受限，整体变差。）
+        # 第二大的主陆块最后规划、最后拼上，圈出主内海：它的拼合按其余各块拼好后的真实轮廓选，闭环修正也只改它一块。
+        # （1.2c 第三步试过让它最先规划、其余陆块避开这片海：4 个世界主大陆占比 51/61/35/56%（0/4 达标，第二轮 3/4），
+        # 每个世界多出 1–2 块拼不上的孤岛；闭环里主内海一变，后面各块的拼合跟着变，修正不收敛。主内海那块选不出来的
+        # 真正原因是路线只有一段（一个欧拉极直接转到终点，会扫过锚定陆块或邻近陆块），改用分段路线解决，见 _staged_routes。
+        # 也试过把它的 300 Ma 位置当作其他块头 40 Myr 的障碍，其他块拼合受限，整体变差。）
         inner = rest[0]
         others = sorted(rest[1:], key=lambda b: _ang(self.blocks[b].centroid, self.blocks[self.anchor].centroid))
         times = np.linspace(p.dock_window[0], p.dock_window[1], len(rest) + 1)[:-1] if len(rest) > 1 else []
         times = [float(5 * round((tt + rng.uniform(-8, 8)) / 5)) for tt in times]
-        self._sea_guard = None
-        self.inner_sea = self._plan_inner_sea(inner, float(5 * round(p.dock_window[1] / 5)))
-        d_in = self.docks.get(inner)
-        if self.inner_sea.get("centroid") is not None and d_in is not None and self.inner_sea.get("_nodes") is not None:
-            self._sea_guard = {"tree": cKDTree(self.m.xyz[self.inner_sea["_nodes"]]), "n": len(self.inner_sea["_nodes"]),
-                               "c2": getattr(d_in, "_c2", None)}
         for b, tdock in zip(others, times):
             cands = self._plan_dock(b, tdock, [0, -20, 20, -40, 40], [0, -30, 30], [p.penetration_km])
-            cands = [d for d in cands if self._sea_intact(b, d)]
             if not cands:
                 cands = self._plan_dock(b, max(tdock - 30, p.dock_window[1]), [0, -30, 30, -60, 60, -90, 90],
                                         [0, -45, 45], [p.penetration_km])
-                cands = [d for d in cands if self._sea_intact(b, d)]
             if not cands:
                 # 第三轮：从主轴两侧甚至反方向接近、早一些拼上（陆块多了以后，只从主轴两端接近常常无路可走）
                 cands = self._plan_dock(b, min(tdock + 30, p.dock_window[0]), [-120, 120, -150, 150, 180, -90, 90],
                                         [0, -60, 60], [p.penetration_km])
-                cands = [d for d in cands if self._sea_intact(b, d)]
             if not cands:
-                self.notes.append(f"陆块 {b} 找不到无碰撞、不填主内海的拼合路线，改为留在原处")
+                self.notes.append(f"陆块 {b} 找不到无碰撞的拼合路线，改为留在原处")
                 self.roles[b] = "island"
                 continue
             self.docks[b] = cands[0]
-        # 全部拼完后用 A 层再核对一次主内海（其他陆块可能把两侧焊成一个亚大陆、或改变了最大的内部水体）
-        if self.inner_sea.get("found"):
-            raster = Raster(self.m, 512)
-            land_nodes, part = self._land_nodes_final()
-            fin = official_inland_sea(self.m, raster, land_nodes, part)
-            self.inner_sea["official_final"] = {k: v for k, v in fin.items() if k != "shares"}
-            if not fin["pass"]:
-                self.inner_sea["found"] = False
-                self.notes.append("主内海：其余陆块拼上后 A 层核对不通过："
-                                  + ",".join(k for k, v in fin.get("checks", {}).items() if not v) + str(fin.get("reason", "")))
+        self.inner_sea = self._plan_inner_sea(inner, float(5 * round(p.dock_window[1] / 5)))
 
-    def _sea_intact(self, b: int, d: Dock) -> bool:
-        """第 b 块按拼合 d 到位后，规划的主内海是否还在：它的陆地离远端海峡不近于 300 km（不封口），
-        占到的规划海域不超过 15%（没被填掉）。（第一版按代理水体重新识别"同一片海"，海的轮廓一变就认不出，
-        太严：4 个世界里多块陆块因此拼不上、成了孤岛。）"""
-        g = getattr(self, "_sea_guard", None)
-        if not g:
-            return True
-        p = self.p
-        Y = self.m.xyz[getattr(self.blocks[b], self._dock_which(b))] @ dock_pose(d, 0.0, p.residual, p.residual_myr).T
-        if g["c2"] is not None and km_from_chord(np.linalg.norm(Y - g["c2"], axis=1)).min() < 300.0:
-            return False
-        hit = g["tree"].query_ball_point(Y, chord_from_km(0.8 * self.m.h_km))
-        covered = len({j for lst in hit for j in lst})
-        return covered <= 0.15 * g["n"]
+    def _staged_routes(self, b: int, d: Dock, docked: list, n: int = 10) -> list:
+        """同一个终点（d 第一段转到的位置 R1，之后各段不变），换成分段路线：可选的原地等待 -> 背离 300 Ma 时最近的邻居
+        3–15° -> 可选的径向退到已拼部分外面、绕已拼部分的中心转到终点所在方位（短路或长路）-> 接近终点。
+        一个欧拉极直接转到终点的路线会扫过挡在中间的陆块（1.2c 第三步诊断：世界 4 主内海那块 163 个候选里 157 个途中
+        撞上锚定陆块本身——它在锚定陆块的另一侧；世界 2 的 91/94 撞上旁边 386 km 处极地陆块的出发位置）。
+        地球上陆块也不走单一欧拉极：印度先向北东、后向北，澳大利亚先南后北。终点不变，所以主内海的评分与 A 层核对仍然有效。
+        随机数按 (种子, 陆块, 抵达时刻) 单独取，不影响规划其他部分的随机抽样，闭环重做同一次抽样时路线相同。"""
+        p, m = self.p, self.m
+        ta0, t1, ax1, ang1 = d.segs[0]
+        R1 = rotmat(ax1, ang1)
+        X = m.xyz[self.blocks[b].cont]
+        cb = self.blocks[b].centroid
+        rad_b = max(_ang(cb, x) for x in X[::7])
+        cl = np.concatenate([self.posed(k, 0.0, sub=3) for k in docked]) if docked else m.xyz[self.blocks[self.anchor].cont]
+        C = _centroid(cl)
+        rad_cl = max(_ang(C, x) for x in cl[::5])
+        others = np.concatenate([m.xyz[B.cont[::2]] for k, B in self.blocks.items() if k != b])
+        dn, jn = cKDTree(others).query(X[::2])
+        nb = others[jn[np.argmin(dn)]]
+        away = np.cross(nb, cb)
+        away = unit(away) if np.linalg.norm(away) > 1e-6 else unit(np.cross(C, cb))
+        cf = R1 @ cb
+        rng = np.random.default_rng([int(self.seed), int(b), int(round(t1)), 5])
+        out = []
+        # 走法由轻到重：只先背离邻居（多数碰撞发生在出发后 10–20 Myr，与同样在移动的邻近陆块相撞）、原地等一阵再走、
+        # 背离后绕已拼部分中心转到终点方位、先退到已拼部分外面再绕（转角大，常超速，只占少数）
+        kinds = ["escape", "wait", "orbit", "around"]
+        for _ in range(n):
+            kind = kinds[int(rng.choice(4, p=[0.35, 0.25, 0.25, 0.15]))]
+            delay = float(rng.choice([10.0, 20.0, 30.0])) if kind == "wait" else 0.0
+            t_start = p.t0 - delay
+            # 背离方向：一半在"背离最近邻居" ±60° 内，一半任意（撞上的常是正在移动的另一块邻居，世界 1 诊断）
+            spread = 60.0 if rng.random() < 0.5 else 180.0
+            Rs = [rotmat(rotmat(cb, np.radians(rng.uniform(-spread, spread))) @ away, np.radians(rng.uniform(3, 15)))]
+            c1 = Rs[0] @ cb
+            if kind == "around":
+                need = rad_cl + rad_b + np.radians(3.0) - _ang(C, c1)       # 绕行前先退到已拼部分外面
+                if need > 0 and np.linalg.norm(np.cross(C, c1)) > 1e-6:
+                    Rs.append(rotmat(unit(np.cross(C, c1)), need))
+                    c1 = Rs[-1] @ c1
+            u1, uF = c1 - (c1 @ C) * C, cf - (cf @ C) * C
+            if kind in ("orbit", "around") and np.linalg.norm(u1) > 1e-6 and np.linalg.norm(uF) > 1e-6:
+                u1, uF = unit(u1), unit(uF)
+                dphi = float(np.arctan2(np.cross(u1, uF) @ C, u1 @ uF))
+                if rng.random() < 0.3:                                       # 走另一边绕过去
+                    dphi -= np.sign(dphi) * 2 * np.pi
+                if abs(dphi) > np.radians(5.0):
+                    Rs.append(rotmat(C, dphi))
+            Rcur = np.eye(3)
+            for R in Rs:
+                Rcur = R @ Rcur
+            Rs.append(R1 @ Rcur.T)                                           # 接近终点
+            angs = [axis_angle(R) for R in Rs]
+            wts = np.array([max(a, np.radians(3.0)) for _, a in angs])
+            cuts = t_start - np.concatenate([[0.0], np.cumsum(wts / wts.sum())]) * (t_start - t1)
+            cuts = [float(round(c)) for c in cuts]
+            cuts[-1] = float(t1)
+            if any(cuts[i] <= cuts[i + 1] for i in range(len(Rs))):
+                continue
+            segs = [(cuts[i], cuts[i + 1], ax, a) for i, (ax, a) in enumerate(angs)]
+            if any(np.degrees(a) / (ta - tb) > p.max_rate_deg for ta, tb, _, a in segs):
+                continue
+            if delay:
+                segs = [(float(p.t0), t_start, np.array([0.0, 0.0, 1.0]), 0.0)] + segs
+            # 残余汇聚沿用原路线的（一段式拼合是那一段；两段式是绕 P1 的那段，仍在最后、闭环会改它，不能存副本）
+            res = d.res_seg if d.res_seg is not None else (d.segs[-1] if len(d.segs) == 1 else None)
+            v = Dock(b, d.t_dock, segs + list(d.segs[1:]), t_contact=d.t_contact, inner_sea=d.inner_sea, res_seg=res)
+            for k, val in vars(d).items():
+                if k.startswith("_"):
+                    setattr(v, k, val)
+            ta, tb, axl, al = segs[-1]
+            v._t_stop = t1 + self._margin_myr(axl, al / (ta - tb), Rcur @ cb, p.penetration_km)
+            v._staged = {"kind": kind, "delay": delay, "n_legs": len(Rs)}
+            out.append(v)
+        return out
 
     def _pivot_candidates(self, b: int, t_dock: float) -> list:
         """两段式拼合候选：先接近到第一处接触 P1（并楔入），再绕 P1 转动，直到另一端几乎碰上，只留 gap 宽的海峡。
@@ -772,11 +827,20 @@ class Planner:
         scored.sort(key=lambda x: x[0])
         n_in_range = len(scored)
         docked_before = [k for k in self.docks if k != b]
-        scored = [x for x in scored[:10] if self._transit_ok(b, x[1], docked_before)] + \
-                 [x for x in scored[10:20] if self._transit_ok(b, x[1], docked_before)]
+        # 途中检查：直接路线碰撞就试分段路线（终点不变，评分不变）
+        kept, n_staged = [], 0
+        for sc, d, s in scored[:20]:
+            if not self._transit_ok(b, d, docked_before):
+                d = next((v for v in self._staged_routes(b, d, docked_before, n=10)
+                          if self._transit_ok(b, v, docked_before)), None)
+                if d is None:
+                    continue
+                n_staged += 1
+            kept.append((sc, d, s))
+        scored = kept
         raster = Raster(m, 512)
         info = {"n_candidates": len(cands), "n_pivot": n_pivot, "n_in_range": n_in_range, "n_scored": len(scored),
-                "official_fails": []}
+                "n_staged": n_staged, "official_fails": []}
         for score, d, s in scored[:10]:
             self.docks[b] = d
             land_nodes, part = self._land_nodes_final(incoming=b)
@@ -798,6 +862,14 @@ class Planner:
             return {"found": False, "proxy": {k: v for k, v in s.items() if k not in ("centroid", "nodes")}, "_nodes": s["nodes"], "centroid": s["centroid"],
                     **info}
         ok = [d for d in cands if self._transit_ok(b, d, docked_before)]
+        if not ok:
+            # 退而求其次时也先试分段路线，免得直接取一条途中碰撞的（世界 1、4 因此在 288 Ma 就有计划外接触）
+            for d in cands[:12]:
+                v = next((v for v in self._staged_routes(b, d, docked_before, n=8)
+                          if self._transit_ok(b, v, docked_before)), None)
+                if v is not None:
+                    ok = [v]
+                    break
         self.docks[b] = (ok or cands)[0]
         self.notes.append("主内海：没有候选能圈出大小合适、途中不碰撞的水体")
         return {"found": False, **info}
@@ -995,8 +1067,6 @@ class Planner:
                     Y = self.m.xyz[self.blocks[b].cont[::5]] @ dock_pose(d, 0.0, p.residual, p.residual_myr).T
                     if min(_ang(y, sea_c) for y in Y) * R_KM < 1200:
                         continue
-                if not self._sea_intact(b, d):
-                    continue
                 return d
         return None
 
@@ -1181,7 +1251,8 @@ class Planner:
                 segs = [(ta, tb, ax * ang / (ta - tb)) for ta, tb, ax, ang in d.segs]
                 tr = max(d.t_dock - p.residual_myr, 0)
                 if d.t_dock > tr:
-                    segs.append((d.t_dock, tr, segs[-1][2] * p.residual))
+                    ra, rb, rax, rang = d.residual_seg()
+                    segs.append((d.t_dock, tr, rax * rang / (ra - rb) * p.residual))
                 ev = [e for e in self.breakups if e["kind"] == "reopen" and e["block"] == q]
                 cur = tr
                 for e in sorted(ev, key=lambda e: -e["t"]):

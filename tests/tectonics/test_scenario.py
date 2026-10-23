@@ -126,8 +126,8 @@ def test_run_scenario_invariants(mesh, world, tmp_path):
 
 
 def test_inner_sea_gap_override(mesh, world, planned):
-    """主内海闭环：只重做同一次随机抽样，主内海那块（两段式拼合）第二段多转 dgap / L2，远端海峡收窄约 dgap km。
-    （主内海先规划，其余陆块要避开它，拼合可能随之略变，这里只比第一段——锚定陆块之外最先规划的就是主内海那块。）"""
+    """主内海闭环：只重做同一次随机抽样，主内海那块（两段式拼合）最后一段多转 dgap / L2，远端海峡收窄约 dgap km；
+    它前面各段（含分段路线）和其余陆块的拼合都不变。"""
     pl, plan = planned
     b = next((k for k, d in plan.docks.items() if d.inner_sea), None)
     if b is None or not getattr(plan.docks[b], "_L2", None):
@@ -137,8 +137,34 @@ def test_inner_sea_gap_override(mesh, world, planned):
     plan2 = pl2.plan(only_attempt=plan.attempt, inner_dgap_km=100.0)
     d2 = plan2.docks[b]
     assert abs(abs(d2.segs[-1][3]) - (abs(d0.segs[-1][3]) + 100.0 / d0._L2)) < 1e-9
-    assert np.allclose(np.asarray(d2.segs[0][2]), np.asarray(d0.segs[0][2]))     # 第一段（接近到第一处接触）不变
-    assert plan2.roles[b] == plan.roles[b]
+    assert len(d2.segs) == len(d0.segs)
+    for s0, s2 in zip(d0.segs[:-1], d2.segs[:-1]):
+        assert s0[:2] == s2[:2] and np.allclose(s0[2], s2[2]) and abs(s0[3] - s2[3]) < 1e-12
+    before = list(plan.docks)[:list(plan.docks).index(b)]       # 在它之前规划的各块（之后补拼进来的极地/次大陆陆块要避开它）
+    for k in before:
+        if plan.docks[k].segs:
+            assert np.allclose(np.asarray(plan.docks[k].segs[0][2]), np.asarray(plan2.docks[k].segs[0][2]))
+
+
+def test_staged_routes_keep_end_pose(planned):
+    """分段路线（背离邻居 -> 绕行 -> 接近）只换走法：300 Ma 时在原处、到达时刻与终点都与原拼合相同，各段首尾相接、不超速。"""
+    pl, plan = planned
+    p = pl.p
+    n = 0
+    for b, d in plan.docks.items():
+        if b == plan.anchor or not d.segs:
+            continue
+        vs = pl._staged_routes(b, d, [k for k in plan.docks if k != b], n=6)
+        for v in vs:
+            assert np.allclose(dock_pose(v, float(p.t0), p.residual, p.residual_myr), np.eye(3))
+            for t in (d.segs[0][1], 0.0):
+                assert np.allclose(dock_pose(v, t, p.residual, p.residual_myr),
+                                   dock_pose(d, t, p.residual, p.residual_myr), atol=1e-9)
+            assert v.segs[0][0] == p.t0 and all(a[1] == c[0] for a, c in zip(v.segs[:-1], v.segs[1:]))
+            new = v.segs[:len(v.segs) - (len(d.segs) - 1)]                   # 主内海那块之后的转动段原样保留
+            assert all(np.degrees(abs(a)) / (ta - tb) <= p.max_rate_deg + 1e-9 for ta, tb, _, a in new)
+            n += 1
+    assert n > 0
 
 
 def test_small_plates_follow_lead(planned):
