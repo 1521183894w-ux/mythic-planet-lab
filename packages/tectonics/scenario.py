@@ -58,6 +58,9 @@ class ScenarioParams:
     weld_pens: tuple = (60.0, 150.0, 250.0, 350.0, 450.0)
     # 拼合后两块陆地重叠（被碰撞吃掉、变成造山带增厚的陆壳）占较小一块的比例，超过就扣分
     weld_overlap_max: float = 0.06
+    # 焊合只认"粗壮"的部分：开运算半径（km），窄于约 2 倍的细条（岛弧带、窄弧状陆块、细长半岛）不算焊上。
+    # U21 第一版焊在细条上也算：世界 5 的两个大洲只靠一条窄弧卫星陆块相连
+    sturdy_km: float = 200.0
     # 途中与目标部分提前接触，离拼合终点的接触带不超过这个距离（km）算计划内（Planner._transit_ok）
     early_zone_km: float = 600.0
     # 极地大陆、次大陆离开主大陆的时刻（Ma）：之前随离它最近、又在它外侧的洲一起运动（U21 第二版，见 Planner.assign_continents）
@@ -75,8 +78,12 @@ class ScenarioParams:
     residual: float = 0.10                 # 锁定后保留的汇聚比例（青藏式持续楔入）
     residual_myr: float = 20.0             # （1.2c 初版 250 km + 15% × 25 Myr，碰撞带长出好几个青藏级高原）
     main_share_max: float = 0.85           # 主大陆占陆地比例上限（简报 §3）；超过就必须设次大陆
-    max_rate_deg: float = 0.75             # 相对运动最大角速度（°/Myr；赤道约 8.3 cm/yr）
-    polar_area_km2: tuple = (5.0e6, 1.6e7)
+    # 相对运动最大角速度（°/Myr；0.6 时欧拉极赤道上约 6.7 cm/yr）。U21 第一版 0.75（8.3 cm/yr），叠加上父陆块、锚定陆块的
+    # 运动后，陆块绝对速度 7.7% 的时段超过 10 cm/yr、最快 16.8 cm/yr（地球参照见 Planner.speed_audit）
+    max_rate_deg: float = 0.6
+    # 极地大陆的陆块面积（陆壳）：A 层要求 0 Ma 时 5–15 Mkm²，上限留出增生余量。U21 第一版取 5–16 Mkm²，
+    # 世界 2、5 的极地陆块 15.8–15.9 Mkm² 到 0 Ma 超过 A 层上限
+    polar_area_km2: tuple = (5.0e6, 1.4e7)
     secondary_area_km2: tuple = (8.0e6, 2.6e7)
     p_secondary: float = 0.6
     max_block_km2: float = 1.1e8           # 前史种子筛选：最大陆块（编组后）超过这个就不用（1.2b 局限）
@@ -881,8 +888,22 @@ class Planner:
         return T[km_from_chord(cKDTree(Y).query(T)[0]) < 1.5 * m.h_km]
 
     # ---- 闭合式拼合（U21） --------------------------------------------------------------------------------
+    def _sturdy_pts(self, P: np.ndarray) -> np.ndarray:
+        """陆地点集 P 里"粗壮"的部分：在网格上做开运算（先去掉离边缘不到 sturdy_km 的部分，再向外扩回），去掉窄于约
+        2·sturdy_km 的细条（岛弧带、窄弧状陆块、细长半岛）。返回网格节点坐标（与 P 同一参照系）。"""
+        m, r = self.m, self.p.sturdy_km
+        M = km_from_chord(cKDTree(P).query(m.xyz)[0]) < 0.6 * m.h_km
+        if not M.any() or M.all():
+            return m.xyz[M]
+        idx = np.flatnonzero(M)
+        core = idx[km_from_chord(cKDTree(m.xyz[~M]).query(m.xyz[idx])[0]) >= r]
+        if core.size == 0:
+            return np.zeros((0, 3))
+        return m.xyz[idx[km_from_chord(cKDTree(m.xyz[core]).query(m.xyz[idx])[0]) <= r + 0.5 * m.h_km]]
+
     def _weld_ctx(self, T: np.ndarray, reach_km: float = 700.0) -> dict:
-        """焊合评分的准备（每次拼合只算一次）：目标部分 T（陆地点）周围 reach_km 内的网格节点、它们到 T 的距离、其间的网格边。"""
+        """焊合评分的准备（每次拼合只算一次）：目标部分 T（陆地点）周围 reach_km 内的网格节点、它们到 T 的距离、其间的网格边，
+        以及其中属于 T 粗壮部分的节点（_sturdy_pts）。"""
         m = self.m
         d, i = cKDTree(T).query(m.xyz)
         dT = km_from_chord(d)
@@ -891,24 +912,36 @@ class Planner:
         loc[S] = np.arange(len(S))
         e = m.edges
         keep = (loc[e[:, 0]] >= 0) & (loc[e[:, 1]] >= 0)
-        return {"xyz": m.xyz[S], "dT": dT[S], "vT": T[i[S]] - m.xyz[S], "Tm": dT[S] < 0.6 * m.h_km, "e": loc[e[keep]],
+        Tm = dT[S] < 0.6 * m.h_km
+        Ts_pts = self._sturdy_pts(T)
+        Ts = (km_from_chord(cKDTree(Ts_pts).query(m.xyz[S])[0]) < 0.6 * m.h_km) & Tm if len(Ts_pts) else np.zeros(len(S), bool)
+        return {"xyz": m.xyz[S], "dT": dT[S], "vT": T[i[S]] - m.xyz[S], "Tm": Tm, "Ts": Ts, "e": loc[e[keep]],
                 "a": m.area_km2[S]}
 
     def _weld_eval(self, ctx: dict, Y: np.ndarray, U_area: float, T_area: float, two_sided: bool = True,
-                   face_km: float = 500.0) -> dict:
+                   face_km: float = 500.0, Ys: np.ndarray | None = None) -> dict:
         """拼上后两岸焊得怎么样（规划网格上）：
         - 焊上：一侧的陆地节点与另一侧的陆地节点相邻；
         - 隔海对望：海岸节点挨着"两岸之间的窄海"——海面节点到两侧陆地的距离之和不到 face_km，而且两侧最近的陆地在
           相反的方向上（夹角 > 120°；楔形窄海、两岸之间的海峡）。缝合带两端外侧的海（两侧陆地都在同一边）不算；
         weld_frac = 焊上 / (焊上 + 隔海对望)，按节点面积算。two_sided = False 时只算拼上来的这一侧（卫星陆块：
         它自己焊上就行，核心那一侧在它两旁留下海湾也无妨，像印度两侧的阿拉伯海与孟加拉湾）。
-        overlap_frac：两侧陆地重叠的面积（会被碰撞吃掉、变成造山带的增厚）占较小一侧的比例。
+        overlap_frac：两侧粗壮部分重叠的面积（会被碰撞吃掉、变成造山带的增厚）占较小一侧的比例。
+        只有两侧粗壮部分（_sturdy_pts；Ys 为拼上来这一支粗壮部分的点，已转到终点）相接才算焊上；只挨着对方细条（岛弧带、
+        窄弧状陆块）的算隔海对望——推过细条焊到后面的大陆上可以，细条夹进缝合带（像夹在印度与亚洲之间的科希斯坦弧）。
         （与诊断脚本 tectonics_main_continent_diag.py 的"隔窄海面对面"不同：那里把离对方 400 km 内的海岸都算上，
         直的缝合带两端外侧的海岸也算，数值偏低；这里用来挑拼法，两者只比较各自的前后变化。）"""
         h = self.m.h_km
         dist, iu = cKDTree(Y).query(ctx["xyz"], distance_upper_bound=chord_from_km(face_km + 100.0))
         dU = km_from_chord(dist)
         Um, Tm, e, a = dU < 0.6 * h, ctx["Tm"], ctx["e"], ctx["a"]
+        Ts = ctx.get("Ts", Tm)
+        if Ys is None:
+            Us = Um
+        elif len(Ys):
+            Us = Um & (km_from_chord(cKDTree(Ys).query(ctx["xyz"], distance_upper_bound=chord_from_km(h))[0]) < 0.6 * h)
+        else:
+            Us = np.zeros(len(Um), bool)
 
         def adj(mask):
             out = np.zeros(len(mask), bool)
@@ -925,14 +958,14 @@ class Planner:
             cos = (vU * vT).sum(1) / np.maximum(np.linalg.norm(vU, axis=1) * np.linalg.norm(vT, axis=1), 1e-12)
             between[np.flatnonzero(near)[cos < -0.5]] = True
         ab = adj(between)
-        Ucon = Um & ~Tm & adj(Tm)
-        Tcon = Tm & ~Um & adj(Um)
-        Ugap = Um & ~Tm & ab & ~Ucon
-        Tgap = Tm & ~Um & ab & ~Tcon
+        Ucon = Us & ~Tm & adj(Ts)
+        Tcon = Ts & ~Um & adj(Us)
+        Ugap = Um & ~Tm & (ab | adj(Tm)) & ~Ucon               # 隔窄海对望，或只挨着对方细条、自己的细条挨着对方
+        Tgap = Tm & ~Um & (ab | adj(Um)) & ~Tcon
         wu, gu, wt, gt = a[Ucon].sum(), a[Ugap].sum(), a[Tcon].sum(), a[Tgap].sum()
         f_u = wu / max(wu + gu, 1.0)
         f_b = (wu + wt) / max(wu + wt + gu + gt, 1.0)
-        ov = a[Tm & Um].sum()
+        ov = a[Ts & Us].sum()
         return {"weld_frac": float(f_b if two_sided else f_u), "weld_frac_moving": float(f_u), "weld_frac_both": float(f_b),
                 "weld_km": float(0.5 * (Ucon.sum() + Tcon.sum()) * h),
                 "overlap_frac": float(ov / max(min(U_area, T_area), 1.0)), "overlap_Mkm2": float(ov / 1e6)}
@@ -951,6 +984,7 @@ class Planner:
         U_area = self._unit_area(mine)
         T_area = self._unit_area([k for k in self._subtree(parent) if k not in mine])
         ctx = self._weld_ctx(T)
+        Xs = self._sturdy_pts(X)                               # 拼上来这一支的粗壮部分（b 参照系）
         scored, seen = [], set()
         # 焊缝长度：以较小一侧的尺度（√面积）的 0.8 倍为满分。两个洲（two_sided）要大段相接（欧—亚沿乌拉尔约 2500 km），
         # 权重大；只看 weld_frac 时，两块凸形大陆只碰一个点、两旁海岸迅速分开（不算窄海）也能得满分（世界 4 试算：842 km）
@@ -962,7 +996,7 @@ class Planner:
                 if d._approach in seen:
                     continue
                 seen.add(d._approach)
-                met = self._weld_eval(ctx, X @ d._R1.T, U_area, T_area, two_sided)
+                met = self._weld_eval(ctx, X @ d._R1.T, U_area, T_area, two_sided, Ys=Xs @ d._R1.T)
                 rot = float(np.degrees(d.segs[0][3]))
                 sc = (met["weld_frac"] + w_len * min(met["weld_km"] / L_ref, 1.0)
                       - 4.0 * max(0.0, met["overlap_frac"] - p.weld_overlap_max) - 0.004 * max(0.0, rot - 25.0))
@@ -1310,6 +1344,16 @@ class Planner:
             self.notes.append("主内海：没有候选通过 A 层核对，采用代理评分最好的")
             return {"found": False, "proxy": {k: v for k, v in s.items() if k not in ("centroid", "nodes")},
                     "_nodes": s["nodes"], "centroid": s["centroid"], **info}
+        # 选不出能圈出主内海的拼法：两组大段焊合（闭合式拼合），主内海交给前面各级拼合夹出的水体。
+        # U21 第一版退而求其次取"路线短、途中不碰撞"的接触，第二组只在一点碰上第一组，0 Ma 两组之间是宽阔的海（世界 5、7）
+        d = self._weld_dock(b, self.anchor, t_dock, two_sided=True)
+        if d is not None:
+            if not self._transit_ok(b, d):
+                d = next((v for v in self._staged_routes(b, d, n=10) if self._transit_ok(b, v)), d)
+            self._set_dock(b, d)
+            self.weld_log[b] = {"level": "groups", "parent": self.anchor, "t_dock": d.t_dock, **d._weld}
+            self.notes.append("主内海：没有候选能圈出大小合适、途中不碰撞的水体，两组改为大段焊合")
+            return {"found": False, "fallback": "weld", **info}
         cands = sorted(cands, key=lambda d: d.angle)                      # 退路：路线短的优先，少碰撞
         ok = [d for d in cands if self._transit_ok(b, d)]
         if not ok:
@@ -1454,9 +1498,9 @@ class Planner:
                 for _ in range(120):
                     T = near[int(rng.integers(len(near)))]
                     if info:
-                        # 抵达时刻按路程留够时间（平均不超过约 0.6°/Myr；离开后的路线都穿过开阔大洋）
+                        # 抵达时刻按路程留够时间（平均不超过约 0.5°/Myr；离开后的路线都穿过开阔大洋）
                         t_start = t_from
-                        latest = t_from - np.degrees(_ang(cb, T)) / 0.6 - 10.0
+                        latest = t_from - np.degrees(_ang(cb, T)) / 0.5 - 10.0
                         t_arr = float(5 * round(rng.uniform(0, max(0.0, latest)) / 5))
                     else:
                         t_start = float(rng.choice([p.t0, p.t0, p.t0 - 20, p.t0 - 40, p.t0 - 80]))
@@ -1728,7 +1772,9 @@ class Planner:
         used.add(b)
         scissor = bool(rng.random() < 0.5)
         axis = unit(np.cross(cb, c))
-        rate = float(rng.uniform(0.25, 0.5))
+        # 离开原陆缘 200–900 km（科西嘉—撒丁、斯里兰卡、马达加斯加北部一类的大陆岛；第一版按 0.25–0.5°/Myr 漂 25–50 Myr，
+        # 最远约 2800 km，成了远洋里的孤立陆块）
+        rate = float(rng.uniform(200.0, 900.0) / (R_KM * DEG) / dur)
         return {"kind": "micro", "block": b, "province": pid, "new_plate": new_id, "t": t_r, "dur": dur,
                 "axis": axis, "rate_deg": rate, "scissor": scissor}
 
@@ -1833,6 +1879,33 @@ class Planner:
         self.script = s
         return s
 
+    def speed_audit(self, step: int = 5) -> dict:
+        """各陆块的绝对运动速度（按写好的剧本，每 step Myr 一段，陆壳点上的均方根速度，cm/yr）。
+        地球参照（Zahirovic, Müller, Seton & Flament 2015, EPSL 418: 40–52）：过去 2 亿年板块均方根速度中位数约 4 cm/yr，
+        含克拉通的板块约 5.8 cm/yr，克拉通占 25% 以上的约 2.8 cm/yr；陆地占一半以上的板块不应超过约 10 cm/yr，
+        大陆、克拉通面积大的板块持续 15 cm/yr 以上超过约 10 Myr 可视为模型假象。
+        剧本是朝目标规划的（路线 B），陆块要在规定时刻到规定位置，速度可能被逼高，所以每次规划都量一遍、超的计入评分。"""
+        s, m = self.script, self.m
+        out = {}
+        for b, B in self.blocks.items():
+            if b not in s.stages:
+                continue
+            X0 = m.xyz[B.cont[::4]]
+            v = []
+            for t in range(int(self.p.t0), 0, -step):
+                Fa, Fb = s.forward_total(b, t), s.forward_total(b, t - step)
+                ax, ang = axis_angle(Fb @ Fa.T)
+                sp = ang * R_KM / step * np.linalg.norm(np.cross(ax, X0 @ Fa.T), axis=1) / 10.0
+                v.append(float(np.sqrt((sp ** 2).mean())))
+            v = np.asarray(v)
+            run = best = 0
+            for x in v > 15.0:
+                run = run + 1 if x else 0
+                best = max(best, run)
+            out[b] = {"median_cm_yr": round(float(np.median(v)), 2), "max_cm_yr": round(float(v.max()), 2),
+                      "myr_over_10": int((v > 10.0).sum() * step), "longest_over_15_myr": int(best * step)}
+        return out
+
     def plan(self, attempts: int = 4, only_attempt: int | None = None, inner_dgap_km: float = 0.0,
              inner_min_aspect: float = 0.0) -> Plan:
         """规划；有计划外接触、没找到主内海或极地大陆、圈出内洋时换一组随机抽样重来，取评分最好的一次。
@@ -1848,11 +1921,15 @@ class Planner:
             plan = self._plan_once()
             plan.attempt = k
             ocean = self.max_enclosed > self.p.inner_ocean_km2
-            score = (10 * len(self.conflicts) + (0 if self.inner_sea.get("found") else 3)
-                     + (0 if "polar" in self.roles.values() else 2) + round(self.placement["penalty"] / 5.0, 1)
-                     + (5 if ocean else 0))
+            # 速度：陆块绝对速度超过 10 cm/yr 的时段每 10 Myr +1，持续 15 cm/yr 以上达 10 Myr 的陆块各 +5（speed_audit）
+            sp = self.speeds
+            speed_pen = (sum(o["myr_over_10"] for o in sp.values()) / 10.0
+                         + 5.0 * sum(o["longest_over_15_myr"] >= 10 for o in sp.values()))
+            score = round(10 * len(self.conflicts) + (0 if self.inner_sea.get("found") else 3)
+                          + (0 if "polar" in self.roles.values() else 2) + round(self.placement["penalty"] / 5.0, 1)
+                          + (5 if ocean else 0) + speed_pen, 1)
             plan.notes.append(f"第 {k + 1} 次规划，评分 {score}（计划外接触 ×10、无主内海 +3、无极地大陆 +2、"
-                              f"纬度偏差每 5° +1、圈出内洋 +5）")
+                              f"纬度偏差每 5° +1、圈出内洋 +5、陆块速度超 10 cm/yr 每 10 Myr +1）")
             plan.score = score
             if best is None or score < best[0]:
                 best = (score, plan)
@@ -1874,6 +1951,13 @@ class Planner:
         if self.max_enclosed > self.p.inner_ocean_km2:
             self.notes.append(f"主大陆圈出内洋 {self.max_enclosed / 1e6:.1f} Mkm²（规划预测）")
         self.placement["max_enclosed_km2"] = float(self.max_enclosed)
+        self.speeds = self.speed_audit()
+        over = {b: o for b, o in self.speeds.items() if o["myr_over_10"]}
+        if over:
+            self.notes.append("陆块速度超过 10 cm/yr：" + "，".join(
+                f"陆块 {b} 共 {o['myr_over_10']} Myr（最快 {o['max_cm_yr']:.1f}）" for b, o in over.items()))
+        self.placement["speed_median_cm_yr"] = float(np.median([o["median_cm_yr"] for o in self.speeds.values()]))
+        self.placement["speed_max_cm_yr"] = float(max(o["max_cm_yr"] for o in self.speeds.values()))
         return Plan(self.seed, self.anchor, dict(self.roles), dict(self.docks), self.G_axis, self.G_angle,
                     dict(self.moves), list(self.breakups), dict(self.inner_sea), self.script, list(self.notes),
                     placement=dict(self.placement), conflicts=list(self.conflicts), parents=dict(self.parent),
@@ -2058,8 +2142,10 @@ def simulate_plan(mesh: Mesh, world: InitialWorld, planner: Planner, plan: Plan,
                     ax_abs = unit(om4 - om[e["block"]]) if np.linalg.norm(om4 - om[e["block"]]) > 0 else np.array([0, 0, 1.0])
                     # 沿省份边界（继承的薄弱带）裂开，不做洋脊—转换断层阶梯化：阶梯化把每一带 ±60° 内的单元按一条直线重新划分，
                     # 一个省份的裂离变成横切整块大陆的平行直线条带（1.2c 初版，见 docs/tectonics_method.md 1.2c"直线条带"）
+                    # 新板块只有一个省份（0.3–3 Mkm²），远小于父板块：min_frac 默认 5% 时裂解被悄悄拒绝（U21 第一版发现，
+                    # 世界 6 的三次微大陆裂离都没发生；更早阶梯化把裂开范围扩成横切大陆的条带，才过了 5% 这一关）
                     eng.split_plate(e["block"], None, None, ax_abs, e["new_plate"], rng, new_mask=mask, omega_new=om4,
-                                    margin_km=150.0, staircase=False)
+                                    margin_km=150.0, staircase=False, min_frac=0.002)
             if t % snap_every == 0:
                 snaps.append(eng.snapshot())
     return ScenarioRun(plan, eng, snaps, str(rot), time.perf_counter() - t_start, planner)

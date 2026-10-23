@@ -67,6 +67,7 @@ def plan_record(plan, planner) -> dict:
                   for b, d in plan.docks.items()},
         "continents": plan.continents, "pairs": plan.pairs, "welds": plan.welds, "routes": plan.routes,
         "departing": plan.departing, "movers": getattr(planner, "mover_log", {}),
+        "speeds": getattr(planner, "speeds", {}),
         "moves": {b: segs(ss) for b, ss in plan.moves.items()},
         "placement": {**plan.placement, "pole_lat_lon": _ll(plan.G_axis), "angle_deg": float(np.degrees(plan.G_angle))},
         "breakups": [{k: (_ll(v) if k in ("pole", "axis") else v) for k, v in e.items()} for e in plan.breakups],
