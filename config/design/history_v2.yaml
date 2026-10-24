@@ -126,7 +126,7 @@ collisions:
   # 补到运动学扫过的全部范围（2200 km，扣除碰撞前会压到别的块的部分）约 89×10⁶ km³，大陆碰撞从约 48 Ma 开始。
   # 补回陆缘大部分是 16–20 km 的超伸展陆缘、在海平面以下（大印度盆地式），厚度剖面不变。
   - {down: IN, up: B, t: 48, max_km: 2600, continental_km: 2200, what: 南方地盾陆块撞上洲 B（大印度式陆缘）,
-     volume_balance: {builds: [PL1, PL8, M3, M3b, M3c, M3d, M3e, M3f]}}
+     volume_balance: {builds: [PL1, PL8, M3, M3b, M3c, M3d, M3e, M3f], efficiency: 0.74}}   # U28：保留率按上一次正向运行实测（66.5 / 89.6）
   - {down: A, up: B, t: 250, max_km: 900, what: 洲 A、B 碰撞}
   - {down: D, up: C, t: 180, max_km: 900, what: 洲 C、D 碰撞}
   - {down: D, up: B, t: 60, max_km: 1600, what: 洲 D 东北角撞上洲 B（东方地峡）}
@@ -217,7 +217,16 @@ forward:
     strip: true                       # 上盘离自己陆壳 forearc_km 以外、夹在它和下行陆块之间（夹角同 between_cos）、
     approach_km: 1500                 # 离下行陆块 approach_km 以内、且下行板块正朝上盘汇聚（> min_conv_cm_yr）的洋壳转给下行板块
     min_conv_cm_yr: 0.5
+  ocean_plates_take_continent_gaps: true   # U28：东大洋由大洋板块主导（见 scripts/design_forward.py ocean_gap_prefer）
+  volcano_params:                          # packages/tectonics/volcanism.py VolcanoParams
+    arcs: true                             # U28：俯冲带上盘洋壳上的弧火山（岛弧火山岛）
   engine_params:
+    # U28 弧增厚标定：原来全部按俯冲相对速度（0.8 km/Myr @ 10 cm/yr），长期快速俯冲会顶到 65 km 上限
+    # （大洋板块主导东大洋后洲 B 东岸、远方大陆南段都到 4945 m）。分成两项：岩浆增生按相对速度，
+    # 构造缩短按上盘朝海沟前进的速度（远方大陆西漂约 2.5 cm/yr → 安第斯式高山；洲 B 几乎不动 → 只有岩浆增生的岛弧式山地）
+    arc_rate_km_myr: 0.2
+    arc_shortening_km_myr: 0.8
+    arc_accrete_T_km: 20.0                 # U28 弧—陆碰撞：厚的洋内弧地壳被大陆撞上时拼贴、抬升（台湾、新几内亚式）
     arc_ocean_T_max_km: 30.0          # 洋内弧增厚上限（成熟洋内弧 20–35 km，整体是水下脊）；第一次运行不限，长出 14 百万 km² 条带陆地
     arc_to_cont_T_km: 31.0            # U26：高于上限，弧前与洋内弧地壳一直按洋壳类型处理（水下脊），不再转成陆壳：转成陆壳后，
                                       # 设计中的下行陆块（洲 D、南方地盾陆块、洲 C 北端）先撞上上盘弧前的弧地壳，多被消耗 100–200 km；

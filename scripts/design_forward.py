@@ -442,6 +442,37 @@ def compare_hotspots(design: dict, hcfg: dict, v0: dict) -> list:
     return out
 
 
+def compare_arcs(design: dict, v0: dict) -> dict:
+    """0 Ma 岛弧火山（U28）与终图岛弧对照：每条终图岛弧沿线每 50 km 一个点，150 km 内有引擎弧火山的比例（覆盖率），
+    沿线的岛与海山数；离任何终图岛弧都超过 300 km 的引擎弧火山（多出的岛弧）。"""
+    from design_final_map import densify
+    from mythic.tectonics.volcanism import ISLAND
+
+    arc = v0["hotspot"] == "ARC"
+    X = np.stack([np.cos(np.radians(v0["lat"])) * np.cos(np.radians(v0["lon"])),
+                  np.cos(np.radians(v0["lat"])) * np.sin(np.radians(v0["lon"])), np.sin(np.radians(v0["lat"]))], axis=1)
+    Xa, kind = X[arc], v0["kind"][arc]
+    tree = cKDTree(Xa) if arc.any() else None
+    rows, near_any = [], np.zeros(int(arc.sum()), bool)
+    for isl in design.get("islands", []):
+        if isl["type"] != "arc":
+            continue
+        P, s = densify(isl["line"], 50.0)
+        if tree is None:
+            rows.append({"id": isl["id"], "name": isl["name"], "coverage": 0.0, "n_island": 0, "n_seamount": 0})
+            continue
+        d, _ = tree.query(P)
+        cov = float((km_from_chord(d) <= 150.0).mean())
+        dd, _ = cKDTree(P).query(Xa)
+        close = km_from_chord(dd) <= 150.0
+        near_any |= km_from_chord(dd) <= 300.0
+        rows.append({"id": isl["id"], "name": isl["name"], "length_km": round(float(s[-1])), "coverage": round(cov, 2),
+                     "n_island": int((close & (kind == ISLAND)).sum()), "n_seamount": int((close & (kind != ISLAND)).sum())})
+    extra = ~near_any
+    return {"arcs": rows, "engine_arc_volcanoes": int(arc.sum()), "engine_arc_islands": int((kind == ISLAND).sum()),
+            "far_from_design_arcs": int(extra.sum()), "far_from_design_arcs_islands": int((extra & (kind == ISLAND)).sum())}
+
+
 def a_summary(m: dict) -> dict:
     A = m["A"]
     isea = A["main_inland_sea"]
@@ -498,6 +529,7 @@ def main() -> int:
         if hcfg.get("hotspots"):
             from mythic.tectonics.volcanism import VolcanoField, VolcanoParams
             vp = VolcanoParams(**fcfg.get("volcano_params", {}))
+            log(f"火山参数（history yaml forward.volcano_params）：{fcfg.get('volcano_params', {})}")
             hs = build_hotspots(hcfg, RotationFileKinematics(rot), vp)
             volc = VolcanoField(hs, vp)
             log(f"热点 {len(hs)} 个（history yaml hotspots）")
@@ -525,7 +557,7 @@ def main() -> int:
     raster = Raster(mesh, 512)
     E_eng = raster(frames[-1]["elev"]).astype(float)
     v0 = vframes[-1] if vframes else None
-    hs_cmp = []
+    hs_cmp, arc_cmp = [], None
     if v0 is not None:
         # 火山岛：半径不小于约半个格点的画进海陆掩膜（与终图同一约定），高程至少 +100 m 以便出图着色
         from design_final_map import MIN_ISLAND_RADIUS_KM
@@ -533,6 +565,11 @@ def main() -> int:
         isl = island_mask(grid, v0, MIN_ISLAND_RADIUS_KM)
         E_eng = np.where(isl & (E_eng <= 0), 100.0, E_eng)
         hs_cmp = compare_hotspots(design, hcfg, v0)
+        arc_cmp = compare_arcs(design, v0)
+        log(f"  岛弧火山 {arc_cmp['engine_arc_volcanoes']} 座（其中岛 {arc_cmp['engine_arc_islands']}），"
+            f"离终图岛弧都超过 300 km 的 {arc_cmp['far_from_design_arcs']} 座（岛 {arc_cmp['far_from_design_arcs_islands']}）")
+        for r in arc_cmp["arcs"]:
+            log(f"  岛弧 {r['id']:4s} {r['name']}：覆盖率 {r['coverage']:.0%}，沿线岛 {r['n_island']}、海山 {r['n_seamount']}")
         for r in hs_cmp:
             log(f"  热点 {r['id']:4s} {r['name']}：岛 {r['n_island']}（最大半径 {r['max_island_radius_km']} km，终图 {r['design_size_km']}），"
                 f"环礁 {r['n_atoll']}，海山 {r['n_seamount']}；链的方向 {r['engine_bearing_deg']}°（终图 {r['design_bearing_deg']}°），"
@@ -584,6 +621,7 @@ def main() -> int:
         "A_engine_0Ma": A_eng, "A_final_map_1024": A_fin,
         "volume_balance_0Ma": vbal,
         "hotspots_0Ma": hs_cmp,
+        "arcs_0Ma": arc_cmp,
         "crust_0Ma": {"continental_Mkm2": round(float(A7[cont].sum()) / 1e6, 1),
                       "arc_origin_continental_Mkm2": round(float(A7[cont & (c0["origin"] == 90)].sum()) / 1e6, 2),
                       "last_orogeny_area_Mkm2": oro_area,
@@ -887,6 +925,46 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
                  fontsize=8, va="top")
         stamp(fig)
         fig.savefig(out / "06_hotspots.png", dpi=105)
+        plt.close(fig)
+
+    # ---- 07 岛弧：终图的岛弧（灰）vs 引擎 0 Ma 的弧火山（U28） ----
+    if v0 is not None and (v0["hotspot"] == "ARC").any():
+        from mythic.tectonics.volcanism import ISLAND
+        GEO = ccrs.Geodetic()
+        arc = v0["hotspot"] == "ARC"
+
+        def draw_arcs(ax, ms_scale=1.0, labels=False):
+            for isl in design.get("islands", []):
+                if isl["type"] == "arc":
+                    q = np.asarray(isl["line"], float)
+                    ax.plot(q[:, 0], q[:, 1], "-", color="#7f7f7f", lw=2.0, alpha=0.7, transform=GEO, zorder=3)
+                    if labels:
+                        m = q[len(q) // 2]
+                        ax.text(m[0], m[1], isl["id"], transform=PC, fontsize=8, color="#444444", path_effects=halo,
+                                zorder=8, clip_on=True)
+            s = arc & (v0["kind"] != ISLAND)
+            ax.scatter(v0["lon"][s], v0["lat"][s], s=5 * ms_scale, c="#253494", transform=PC, zorder=4, linewidths=0)
+            s = arc & (v0["kind"] == ISLAND)
+            ax.scatter(v0["lon"][s], v0["lat"][s], s=(8 + 2.0 * v0["radius_km"][s]) * ms_scale, marker="^", c="#fd8d3c",
+                       edgecolors="k", linewidths=0.4, transform=PC, zorder=6)
+
+        fig = plt.figure(figsize=(20, 19))
+        ax = fig.add_axes([0.02, 0.50, 0.96, 0.44], projection=proj)
+        show(ax, E_eng)
+        draw_arcs(ax, 0.8)
+        ax.set_title("全球：灰线 = 终图岛弧；橙三角 = 引擎 0 Ma 的弧火山岛（大小 ∝ 半径），深蓝点 = 水下的弧火山", fontsize=11)
+        regions = [("东亚—东南群岛", (95, 180, -50, 60)), ("主内海", (-25, 60, 25, 52)), ("远方大陆北缘", (-130, -60, 0, 40))]
+        for j, (nm, (x0, x1, y0, y1)) in enumerate(regions):
+            ax = fig.add_axes([0.02 + j * 0.33, 0.03, 0.30, 0.40], projection=PC)
+            ax.set_extent((x0, x1, y0, y1), crs=PC)
+            ax.imshow(shaded_elevation(E_eng, grid.pixel_km_equator, vert_exag=3.0, land=E_eng > 0)[..., :3],
+                      extent=(-180, 180, -90, 90), transform=PC, origin="upper", interpolation="nearest")
+            draw_arcs(ax, 1.3, labels=True)
+            ax.gridlines(draw_labels=True, color="#888888", lw=0.3)
+            ax.set_title(nm, fontsize=12)
+        fig.text(0.5, 0.985, "U28 岛弧火山岛：终图 vs 正向演化 0 Ma", fontsize=15, ha="center", va="top")
+        stamp(fig)
+        fig.savefig(out / "07_arcs.png", dpi=105)
         plt.close(fig)
 
 if __name__ == "__main__":

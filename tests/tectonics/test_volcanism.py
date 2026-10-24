@@ -86,3 +86,32 @@ def test_full_volcano_on_slow_plate_spawns_a_cluster_and_stays_high(mesh):
     assert (st["summit_m"] <= vp.summit_max_m["medium"] + 1.0).all()
     fed = field.feeding[0]
     assert field.summit_m(eng)[fed] > 0.5 * vp.summit_max_m["medium"]   # 正在喂的那座没有被剥蚀
+
+
+@pytest.mark.parametrize("own_continent, expect_arc", [(False, True), (True, False)])
+def test_arc_volcanoes_grow_on_intraoceanic_upper_plate(mesh, own_continent, expect_arc):
+    """U28 岛弧火山：板块 1 向东俯冲到板块 2 之下，板块 2 前缘后方约 120 km 的弧地壳上长出一列弧火山；
+    板块 2 自己的陆壳就在弧后（陆缘弧，安第斯式）时不长（只长洋内弧的火山岛）。"""
+    c = Crust(mesh.n)
+    cen = lonlat_to_xyz(0.0, 0.0)
+    c.plate[:] = np.where(mesh.xyz @ cen >= np.cos(np.radians(30.0)), 1, 2)
+    c.age[:] = 60.0
+    band = (c.plate == 2) & (np.abs(mesh.lat) < 25) & (mesh.lon > 29) & (mesh.lon < 40)
+    c.T[band] = 22.0                                                    # 已经增厚的弧地壳（洋壳类型）
+    if own_continent:
+        cont = band & (mesh.lon > 32.0)
+        c.ctype[cont], c.T[cont] = 1, 35.0
+    w = {1: pole_vector(90.0, 0.0, 0.5), 2: np.zeros(3)}                # 板块 1 向东约 5.6 cm/yr
+    p = Params(arc_ocean_T_max_km=30.0, arc_to_cont_T_km=31.0)
+    eng = Engine(mesh, c, p, 100.0, w)
+    eng.polarity[1 * 1000 + 2] = 1                                      # 板块 1 下行
+    field = VolcanoField([], VolcanoParams(arcs=True, arc_min_cont_km=400.0))   # L5 节点间距约 250 km，阈值放宽到 400 km
+    for _ in range(12):
+        eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        field.step(eng)
+    arc = field.alive & (field.src == 1)
+    if expect_arc:
+        assert arc.sum() >= 3
+        assert (field.plate[arc] == 2).all()
+    else:
+        assert arc.sum() == 0

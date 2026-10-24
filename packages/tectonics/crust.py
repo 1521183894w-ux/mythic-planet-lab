@@ -29,12 +29,20 @@ class Params:
     blend_T1: float = 28.0
     cont_lith_age: float = 100.0       # 减薄陆缘下方岩石圈按 100 Myr 洋壳的热沉降处理
     arc_rate_km_myr: float = 0.8       # 俯冲上盘最大增厚速率（相对速度 10 cm/yr 时）
+    arc_shortening_km_myr: float | None = None  # U28：上盘朝海沟前进造成的构造缩短增厚（上盘绝对速度在指向海沟方向上
+                                       # 10 cm/yr 时的最大增厚速率）；None = 不分（1.2c 及以前：全部按相对速度）。
+                                       # 设了它时 arc_rate_km_myr 只代表岩浆增生。依据：安第斯的缩短与南美西漂同步
+                                       # （Oncken 等 2006），上盘不动或后撤的岛弧（日本、马里亚纳）只有岩浆增生、山低
     v0_cm_yr: float = 10.0
     arc_peak_km: float = 150.0         # 陆缘弧（安第斯型）：增厚在距俯冲前缘 150 km 处最大（火山弧位置）
     arc_max_km: float = 600.0          # 600 km 外为 0（含弧后褶皱冲断带）
     arc_peak_ocean_km: float = 70.0    # 洋内弧：上盘是洋壳时增厚带窄得多（伊豆—小笠原、阿留申弧宽 100–200 km）
     arc_max_ocean_km: float = 200.0    # （1.1 原型中洋内弧也用 600 km，增生的陆壳偏多）
     arc_to_cont_T_km: float = 18.0     # 洋内弧增厚到 18 km 后视为浮力地壳，不再俯冲
+    arc_accrete_T_km: float | None = None  # U28 弧—陆碰撞：洋壳类型的弧地壳厚到这么多、被大陆撞上时转成陆壳拼贴，不被俯冲
+                                       # （台湾、新几内亚式）；None = 不拼贴（被俯冲掉）
+    arc_accrete_far_km: float = 300.0  # 只拼贴洋内弧：离所在板块自己的陆壳这么远以外（陆缘外的弧前地壳仍被俯冲掉，
+                                       # 否则设计中的下行陆块会先撞上它、被多消耗一截，见 U26）
     arc_ocean_T_max_km: float | None = None  # 洋内弧（洋壳与岛弧增生地壳）的俯冲增厚上限；None = 不限（1.2c 及以前）。
                                        # 成熟洋内弧地壳 20–35 km（伊豆—小笠原约 20 km，阿留申约 35 km），整体是水下脊、
                                        # 只有火山顶露出海面。不限时洋内弧一直增厚到 65 km、长成条带状平顶"陆地"

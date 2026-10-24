@@ -161,10 +161,23 @@ def main() -> int:
         T = np.where(body & (T > cT), cT + (T - cT) * s, T) if cT > 0 else np.where(body, T * f, T)
         T_ext = np.where(ext == pid, T_ext * f, T_ext)
     vb_rows = volume_balance(hcfg, design, grid, b, ext_masks, T_ext)
+    # 体积平衡（U28）：写了保留率 efficiency 的碰撞（补回陆缘的体积有多少留在终图要垫高的范围里，由上一次正向运行实测），
+    # 补回陆缘按"需要量 ÷ 保留率"统一放大厚度，上限是正常陆壳厚度
+    for col, m, r in zip(hcfg.get("collisions", []), ext_masks, vb_rows):
+        eff = (col.get("volume_balance") or {}).get("efficiency")
+        if not eff or "target_excess_1e6_km3" not in r or r["supply_1e6_km3"] <= 0:
+            continue
+        f = r["target_excess_1e6_km3"] / (float(eff) * r["supply_1e6_km3"])
+        T_ext[m] = np.minimum(T_ext[m] * f, float(ini["T_cont_km"]))
+        r.update({"efficiency": eff, "thickness_scale": round(f, 3),
+                  "supply_scaled_1e6_km3": round(float((area[m] * T_ext[m]).sum()) / 1e6, 1),
+                  "mean_T_km": round(float((area[m] * T_ext[m]).sum() / area[m].sum()), 1)})
     for r in vb_rows:
         log(f"  体积账 {r['down']} <- {r['up']}（{r['t']} Ma）：补回陆缘 {r['consumed_margin_Mkm2']} 百万 km²，"
             f"{r['supply_1e6_km3']}×10⁶ km³" + (f"；终图上要垫出的 {'、'.join(r['builds'])} 共 {r['target_area_Mkm2']} 百万 km²，"
-                                               f"需要超额地壳 {r['target_excess_1e6_km3']}×10⁶ km³" if "builds" in r else ""))
+                                               f"需要超额地壳 {r['target_excess_1e6_km3']}×10⁶ km³" if "builds" in r else "")
+            + (f"；按保留率 {r['efficiency']} 厚度放大 {r['thickness_scale']} 倍，补回 {r['supply_scaled_1e6_km3']}×10⁶ km³、"
+               f"平均 {r['mean_T_km']} km" if "thickness_scale" in r else ""))
     # 省份：每块（本体 + 被挤掉的陆缘）泊松撒点、就近划分；古陆核省份最老，往外变年轻，被挤掉的陆缘最年轻
     sep = float(ini["province_sep_km"])
     prov = np.zeros(grid.shape, int)

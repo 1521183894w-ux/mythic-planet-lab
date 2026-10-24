@@ -42,6 +42,18 @@ class VolcanoParams:
     flux_km3_myr: dict = field(default_factory=lambda: {"strong": 1.2e5, "medium": 2.0e4, "weak": 5.0e3})
     summit_max_m: dict = field(default_factory=lambda: {"strong": 4000.0, "medium": 2000.0, "weak": 800.0})
     satellite_frac: float = 0.5        # 火山长满后，卫星火山离它 satellite_frac × spacing_km
+    # U28 岛弧火山：俯冲带上盘洋壳上、离俯冲前缘 arc_offset_km 的一条带（岛弧—海沟间距一般 100–200 km）
+    arcs: bool = False
+    arc_offset_km: float = 120.0
+    arc_band_km: float = 50.0
+    arc_spacing_km: float = 70.0
+    arc_flux_per_cm_yr: float = 600.0  # 每座弧火山每 1 cm/yr 俯冲速度的岩浆通量（km³/Myr）；地球岛弧的岩浆增生约 30–90 km³/km/Myr
+    arc_summit_max_m: float = 1500.0   # 伊豆、马里亚纳、千岛、小安的列斯、瓦努阿图的弧火山岛大多高出海面 0.3–2 km
+    arc_min_T_km: float = 20.0         # 只在已增厚到这么厚的弧地壳上长火山（成熟洋内弧 20–35 km）。不限时大洋里所有
+                                       # 洋壳对洋壳的板块边界都长弧火山，第一次试算长出 1 万多座、多出 3.6 百万 km² 陆地
+    arc_min_v_cm_yr: float = 1.5       # 俯冲速度太慢不长弧火山
+    arc_min_cont_km: float = 250.0     # 只长洋内弧：离上盘自己的陆壳这么远以外。大陆边缘的火山弧（安第斯、喀斯喀特）长在
+                                       # 陆上，海岸外没有一串火山岛；不限时远方大陆西岸、洲 B 东岸、洲 C 西岸外都排出一条火山岛
 
 
 @dataclass
@@ -72,6 +84,9 @@ class VolcanoField:
         self.hs_idx = np.zeros(n0, np.int64)
         self.alive = np.zeros(n0, bool)
         self.depth0 = np.zeros(n0)         # 诞生时所在海底的深度（km，正值向下），决定高度上限
+        self.smax = np.zeros(n0)           # 顶部高出海面的上限（m）
+        self.src = np.zeros(n0, np.int8)   # 0 = 热点，1 = 岛弧
+        self.arc_active = np.zeros(n0, bool)  # 这一步正在被俯冲带喂的弧火山
         self.feeding = {}                  # 热点序号 -> 正在喂的火山序号
         self.events: list[dict] = []
         self.continental: list[dict] = []  # 热点在陆壳下方的时段（U29 用）
@@ -86,8 +101,7 @@ class VolcanoField:
         return out
 
     def cap_km(self) -> np.ndarray:
-        smax = np.array([self.hs[i].summit_max_m for i in self.hs_idx]) / 1000.0
-        return np.minimum(self.p.H_cap_km, np.maximum(self.depth0, 0.0) + smax)
+        return np.minimum(self.p.H_cap_km, np.maximum(self.depth0, 0.0) + self.smax / 1000.0)
 
     def height_km(self) -> np.ndarray:
         tan2 = np.tan(np.radians(self.p.slope_deg)) ** 2
@@ -142,7 +156,7 @@ class VolcanoField:
         if gone.size:
             self.alive[gone] = False
             for i in gone:
-                self.events.append({"t": round(eng.t, 2), "kind": "volcano_subducted", "hotspot": self.hs[self.hs_idx[i]].id})
+                self.events.append({"t": round(eng.t, 2), "kind": "volcano_subducted", "hotspot": self._label(i)})
 
     # ---- 一步 ---------------------------------------------------------------------------
     def step(self, eng, dt: float = 1.0):
@@ -180,15 +194,93 @@ class VolcanoField:
                 d = self.p.satellite_frac * self.p.spacing_km / R_KM
                 x = unit(np.cos(d) * h.xyz + np.sin(d) * (np.cos(ang) * e1 + np.sin(ang) * e2))
                 d0 = -float(self._base_elev(eng, x[None, :])[0]) / 1000.0
-                self._spawn(k, q, x @ eng.R[q], t, h.flux * dt, d0)
+                self._spawn(k, q, x @ eng.R[q], t, h.flux * dt, d0, h.summit_max_m)
                 pos = np.vstack([pos, x])
                 continue
             d0 = -float(self._base_elev(eng, h.xyz[None, :])[0]) / 1000.0
-            self._spawn(k, q, h.xyz @ eng.R[q], t, h.flux * dt, d0)
+            self._spawn(k, q, h.xyz @ eng.R[q], t, h.flux * dt, d0, h.summit_max_m)
             pos = np.vstack([pos, h.xyz])
+        if self.p.arcs:
+            self._arc_step(eng, dt)
         self._surface(eng, dt)
 
-    def _spawn(self, k: int, q: int, xref: np.ndarray, t: float, vol: float, depth0: float = 5.0):
+    def _label(self, i: int) -> str:
+        return "ARC" if self.src[i] == 1 else self.hs[self.hs_idx[i]].id
+
+    def _arc_step(self, eng, dt: float):
+        """岛弧火山（U28）：最近 3 Myr 的俯冲前缘后方 arc_offset_km 的上盘洋壳带上，按间距补火山；带内的火山按俯冲速度长。"""
+        from scipy.spatial import cKDTree
+
+        from .crust import OCEAN
+        from .geometry import chord_from_km
+
+        self.arc_active[:] = False
+        fr = eng.recent_fronts()
+        if fr is None:
+            return
+        X, S, O, V = fr
+        c = eng.c
+        pos_all = eng.positions()
+        lo_km, hi_km = self.p.arc_offset_km - 0.5 * self.p.arc_band_km, self.p.arc_offset_km + 0.5 * self.p.arc_band_km
+        t = eng.t
+        for o in np.unique(O):
+            o = int(o)
+            if o not in eng.R:
+                continue
+            sel = O == o
+            tree = cKDTree(X[sel])
+            # 带内的上盘洋壳单元
+            u = np.flatnonzero(eng.alive & (c.plate == o) & (c.ctype == OCEAN) & (c.T >= self.p.arc_min_T_km))
+            if u.size == 0:
+                continue
+            d, kk = tree.query(pos_all[u], distance_upper_bound=chord_from_km(hi_km), workers=-1)
+            ok = np.isfinite(d)
+            dk = np.where(ok, km_from_chord(np.where(ok, d, 0.0)), np.inf)
+            band = ok & (dk >= lo_km) & (dk <= hi_km)
+            band[ok] &= V[sel][kk[ok]] >= self.p.arc_min_v_cm_yr
+            cont_o = np.flatnonzero(eng.alive & (c.plate == o) & (c.ctype != OCEAN))
+            if cont_o.size and band.any():     # 只长洋内弧：离上盘自己的陆壳 arc_min_cont_km 以外
+                dc, _ = cKDTree(pos_all[cont_o]).query(pos_all[u[band]], workers=-1)
+                b_idx = np.flatnonzero(band)
+                band[b_idx[km_from_chord(dc) < self.p.arc_min_cont_km]] = False
+            if not band.any():
+                continue
+            cand, vcand = pos_all[u[band]], V[sel][kk[band]]
+            # 已有的、在这块板块上的活弧火山
+            mine = np.flatnonzero(self.alive & (self.src == 1) & (self.plate == o))
+            mpos = self.positions(eng)[mine] if mine.size else np.zeros((0, 3))
+            # 带内已有的火山：按俯冲速度长
+            if mine.size:
+                dm, km_ = tree.query(mpos, distance_upper_bound=chord_from_km(hi_km), workers=-1)
+                okm = np.isfinite(dm)
+                dmk = np.where(okm, km_from_chord(np.where(okm, dm, 0.0)), np.inf)
+                inb = okm & (dmk >= lo_km - 20.0) & (dmk <= hi_km + 20.0)
+                grow = mine[inb]
+                v = V[sel][km_[inb]]
+                full = self.cone_volume_km3(self.cap_km()[grow])
+                self.vol[grow] = np.minimum(self.vol[grow] + self.p.arc_flux_per_cm_yr * np.clip(v, 0, 15) * dt, full)
+                self.eroded[grow] = 0.0
+                self.arc_active[grow] = True
+            # 补新火山：离已有火山（及本步新补的）至少 arc_spacing_km
+            sp = chord_from_km(self.p.arc_spacing_km)
+            if mine.size:                      # 先剔掉已有火山附近的候选（向量化），剩下的才逐个放
+                dn, _ = cKDTree(mpos).query(cand, workers=-1)
+                keep = dn >= sp
+                cand, vcand = cand[keep], vcand[keep]
+            placed = []
+            order = np.argsort(-vcand)
+            for i in order:
+                x = cand[i]
+                if placed and np.min(np.linalg.norm(np.asarray(placed) - x, axis=1)) < sp:
+                    continue
+                d0 = -float(self._base_elev(eng, x[None, :])[0]) / 1000.0
+                self._spawn(-1, o, x @ eng.R[o], t, self.p.arc_flux_per_cm_yr * float(np.clip(vcand[i], 0, 15)) * dt,
+                            d0, self.p.arc_summit_max_m, src=1)
+                self.arc_active[-1] = True
+                placed.append(x)
+
+    def _spawn(self, k: int, q: int, xref: np.ndarray, t: float, vol: float, depth0: float = 5.0,
+               smax: float = 4000.0, src: int = 0):
         self.plate = np.append(self.plate, q)
         self.xref = np.vstack([self.xref, xref])
         self.t_birth = np.append(self.t_birth, t)
@@ -199,7 +291,12 @@ class VolcanoField:
         self.hs_idx = np.append(self.hs_idx, k)
         self.alive = np.append(self.alive, True)
         self.depth0 = np.append(self.depth0, depth0)
-        self.feeding[k] = len(self.plate) - 1
+        self.smax = np.append(self.smax, smax)
+        self.src = np.append(self.src, np.int8(src))
+        if len(self.arc_active) < len(self.plate):
+            self.arc_active = np.append(self.arc_active, False)
+        if k >= 0:
+            self.feeding[k] = len(self.plate) - 1
 
     def _base_elev(self, eng, pos: np.ndarray) -> np.ndarray:
         par, _ = self._cover(eng, pos)
@@ -225,7 +322,7 @@ class VolcanoField:
         above = z > 0
         self.was_island[a[above]] = True
         # 离开热点后，露出海面的部分剥蚀（只削海面以上，削到海面为止）；正在喂的不剥蚀
-        er = above & ~np.isin(a, list(self.feeding.values()))
+        er = above & ~np.isin(a, list(self.feeding.values())) & ~self.arc_active[a]
         self.eroded[a[er]] += (z[er] / 1000.0) * min(1.0, dt / self.p.tau_erosion_myr)
         lat = np.degrees(np.arcsin(np.clip(self.positions(eng)[a][:, 2], -1, 1)))
         tropic = np.abs(lat) < self.p.atoll_max_abs_lat
@@ -243,7 +340,7 @@ class VolcanoField:
         kind = np.where(z > 0, ISLAND, np.where(self.reef[a], ATOLL, SEAMOUNT))
         r = np.where(z > 0, z / 1000.0 / np.tan(np.radians(self.p.air_slope_deg)), 0.0)
         return {"lon": np.asarray(lon, float), "lat": np.asarray(lat, float), "plate": self.plate[a].copy(),
-                "hotspot": np.array([self.hs[i].id for i in self.hs_idx[a]], dtype=object),
+                "hotspot": np.array([self._label(i) for i in a], dtype=object),
                 "t_birth": self.t_birth[a].copy(), "height_km": self.height_km()[a], "summit_m": z,
                 "kind": kind.astype(np.int8), "radius_km": r}
 

@@ -119,7 +119,7 @@ def test_gap_prefer_gives_new_ocean_to_one_plate(mesh):
     """U26：指定板块对之间张开的新洋壳全部归指定的一块（默认按最近单元，两边各一半）。"""
     def run(prefer):
         c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
-        w = {1: pole_vector(0.0, 90.0, 0.5), 2: np.zeros(3)}         # 板块 1 向东移动，板块 2 不动：西侧张开
+        w = {1: pole_vector(0.0, 90.0, 0.5), 2: np.zeros(3)}         # 绕赤道上东经 90° 的极转：板块 1 向南移动，北侧张开
         eng = Engine(mesh, c, Params(), 100.0, w)
         eng.gap_prefer.update(prefer)
         n0 = {q: int((eng.c.plate == q).sum()) for q in (1, 2)}
@@ -132,3 +132,25 @@ def test_gap_prefer_gives_new_ocean_to_one_plate(mesh):
     assert both[1] > 0 and both[2] > 0
     only2, _ = run({1 * 1000 + 2: 2})
     assert only2[1] == 0 and only2[2] >= 0.9 * (both[1] + both[2])
+
+
+def test_thick_intraoceanic_arc_is_accreted_not_subducted(mesh):
+    """U28 弧—陆碰撞：板块 2 上一条厚的洋内弧（洋壳类型、25 km、离板块 2 的陆壳很远）被板块 1 的大陆撞上时转成陆壳拼贴，
+    不被俯冲；不开这一项时被俯冲掉。"""
+    def run(accrete):
+        c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)     # 板块 1：大陆（及其周围洋壳）；板块 2：其余洋壳
+        arc = (c.plate == 2) & (np.abs(mesh.lat) < 25) & (mesh.lon > 31) & (mesh.lon < 36)
+        c.T[arc] = 25.0
+        p = Params(arc_accrete_T_km=20.0 if accrete else None, arc_ocean_T_max_km=30.0, arc_to_cont_T_km=31.0)
+        w = {1: pole_vector(90.0, 0.0, 0.5), 2: np.zeros(3)}            # 绕北极转：板块 1 向东撞向弧
+        eng = Engine(mesh, c, p, 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 1                                  # 带大陆的板块 1 下行，弧在上盘（新几内亚、台湾式）
+        uid_arc = set(eng.c.uid[arc].tolist())
+        for _ in range(40):
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        alive_arc = [u for u in eng.c.uid[eng.alive].tolist() if u in uid_arc]
+        return len(alive_arc), int(((eng.c.origin == 90) & eng.alive).sum())
+
+    n_keep, n_acc = run(True)
+    n_lost, _ = run(False)
+    assert n_acc > 0 and n_keep > n_lost

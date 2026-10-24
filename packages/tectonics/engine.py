@@ -243,6 +243,30 @@ class Engine:
             self._event(kind, plates=[lo, hi], subducting=sub, **_lat_lon(xm))
         sub_plate = np.array([self.polarity[int(k)] for k in key])
 
+        if p.arc_accrete_T_km is not None:
+            # 弧—陆碰撞（U28）：厚的洋内弧地壳被大陆撞上时转成陆壳拼贴（浮力大，不俯冲），之后按陆—陆碰撞处理
+            cand = np.flatnonzero((cu == OCEAN) & (cb == CONT) & (c.T[U] >= p.arc_accrete_T_km))
+            if cand.size:
+                acc = np.zeros(len(U), bool)
+                for q in np.unique(P[cand]):
+                    sel = cand[P[cand] == q]
+                    cq = np.flatnonzero(self.alive & (c.plate == q) & (c.ctype == CONT))
+                    if cq.size:
+                        d, _ = cKDTree(pos[cq]).query(pos[U[sel]], workers=KD_WORKERS)
+                        acc[sel[km_from_chord(d) > p.arc_accrete_far_km]] = True
+                    else:
+                        acc[sel] = True
+                if acc.any():
+                    j = U[acc]
+                    c.ctype[j] = CONT
+                    c.origin[j] = ORIGIN_ARC
+                    c.t_form[j] = self.t
+                    c.oro[j] = ORO_ARC
+                    c.oro_t[j] = self.t
+                    cu = c.ctype[U]
+                    self.budget["arc_accreted"] = self.budget.get("arc_accreted", 0.0) + float(
+                        (c.T[j] * self.area[j]).sum())
+
         consume = ((cu == OCEAN) & (cb == CONT)) | ((cu == OCEAN) & (cb == OCEAN) & (sub_plate == P))
         coll = (cu == CONT) & (cb == CONT) & (sub_plate == P)
         # 只有符合既定极性的消耗才是俯冲、记录前缘（驱动上盘增厚）。与极性相反的"洋壳在陆壳下"是上盘自己的弧前洋壳
@@ -320,6 +344,15 @@ class Engine:
             f = np.where(oceanic, arc_profile(dk, p.arc_peak_ocean_km, p.arc_max_ocean_km),
                          arc_profile(dk, p.arc_peak_km, p.arc_max_km))
             dT = p.arc_rate_km_myr * f * np.clip(V[sel][k[ok]] / p.v0_cm_yr, 0.0, 1.5) * p.dt
+            if p.arc_shortening_km_myr is not None:
+                # 上盘朝海沟前进造成的构造缩短（见 Params.arc_shortening_km_myr）：上盘的绝对速度在指向最近前缘方向上的分量
+                Xk = X[sel][k[ok]]
+                xj = pos[j]
+                u = Xk - xj
+                u = u - np.sum(u * xj, axis=1, keepdims=True) * xj
+                u = u / np.maximum(np.linalg.norm(u, axis=1, keepdims=True), 1e-12)
+                v_adv = np.sum(np.cross(self.omega[int(o)], xj) * u, axis=1) * R_KM / 10.0
+                dT = dT + p.arc_shortening_km_myr * f * np.clip(v_adv / p.v0_cm_yr, 0.0, 1.5) * p.dt
             if p.arc_ocean_T_max_km is not None:    # 洋内弧增厚上限（见 Params.arc_ocean_T_max_km）
                 juv = (c.ctype[j] == OCEAN) | (c.origin[j] == ORIGIN_ARC)
                 dT = np.where(juv, np.minimum(dT, np.maximum(p.arc_ocean_T_max_km - c.T[j], 0.0)), dT)
