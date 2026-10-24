@@ -139,7 +139,8 @@ collisions:
   # 补到运动学扫过的全部范围（2200 km，扣除碰撞前会压到别的块的部分）约 89×10⁶ km³，大陆碰撞从约 48 Ma 开始。
   # 补回陆缘大部分是 16–20 km 的超伸展陆缘、在海平面以下（大印度盆地式），厚度剖面不变。
   - {down: IN, up: B, t: 48, max_km: 2600, continental_km: 2200, what: 南方地盾陆块撞上洲 B（大印度式陆缘）,
-     volume_balance: {builds: [PL1, PL8, M3, M3b, M3c, M3d, M3e, M3f], efficiency: 0.61}}   # U28：保留率按上一次正向运行实测（66.5 / 89.6 = 0.74）；
+     volume_balance: {builds: [PL1, PL8, M3, M3b, M3c, M3d, M3e, M3f], efficiency: 0.573}}   # U28：保留率按上一次正向运行实测（66.5 / 89.6 = 0.74）；
+                                   # U32：陆架、陆表海不接受弧增厚后（碰撞前沿被并入上盘的大印度式减薄陆缘也不再被弧增厚），实测 0.61 × 89.4 / 95.1 = 0.573；
                                    # U28 第二轮：大洋板块下行处的网格小洞改归下行板块后，洲 B 南缘弧前不再往海里长，印度式碰撞开始得晚些，
                                    # 实测 77.4 / 126.5 = 0.61
   - {down: A, up: B, t: 250, max_km: 900, what: 洲 A、B 碰撞}
@@ -409,14 +410,35 @@ forward:
   pull_apart:
     # since：洲 D 约 35 Ma 起相对洲 C 斜向北移；只在两块真正张开处填（引擎判断）。第一次运行不限时刻、不限张开，180 Ma 碰撞带上
     # 网格对不齐的小缝也被填成陆壳、再被碰撞增厚，缝合带山系 2650 -> 4668 m
-    - {pair: [C, D], since: 36, T_narrow_km: 33.0, w1_km: 80, T_wide_km: 20.0, w_max_km: 250,
+    # U32：holes——走滑带上两块板块的网格对不齐留下的小洞（不在张开）补成相邻陆壳。U31 的 0 Ma 上这一带有一串 0–20 Myr 的
+    # 洋壳深水坑（−2.5 ~ −4.3 km，四周 5–6 个邻居都是陆壳；评审 stage1_2026-10-25_1 第 4 条：有复杂度、无成因）
+    - {pair: [C, D], since: 36, T_narrow_km: 33.0, w1_km: 80, T_wide_km: 20.0, w_max_km: 250, holes: true,
        what: 洲 C、D 之间的左旋走滑断层（释放段拉分盆地）与南裂谷海两侧的拉伸陆缘}
+    # U32：裂开的被动陆缘（陆架—陆坡）。300 Ma 以来裂开的每一对陆块，张开时空隙按累计张开宽度 w（两侧原有陆壳之间的距离）填拉伸
+    # 减薄的陆壳：w ≤ 300 km 从 32.0 减到 31.4 km（每侧约 150 km 的陆架，水深约 50–150 m），300–460 km 减到 18 km（每侧约 80 km
+    # 的陆坡，到坡脚约 −3.7 km），更宽才长洋壳（大陆—洋壳过渡带以外）。地球上被动陆缘的陆架宽几十到几百公里（平均约 80 km，
+    # 坡折约 −130 m），地壳从约 35 km 减到 10 km 左右（Whitmarsh 等 2001 伊比利亚陆缘；凭已有知识，原文待核对）。
+    # U31 的 0 Ma 上大陆架只占海洋 0.8%（地球同分辨率 6.75%），海岸外直接是 3–5 km 深的洋壳（评审第 3 条）
+    - {pair: [C, FAR], since: 155, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 西大洋两岸（约 150 Ma 裂开）}
+    - {pair: [D, POL], since: 145, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 洲 D 南缘与极地大陆北缘（约 140 Ma）}
+    - {pair: [D, IN], since: 125, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 洲 D 东缘与南方地盾陆块（约 120 Ma）}
+    - {pair: [D, MD], since: 125, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 洲 D 东缘与裂离微大陆（约 120 Ma）}
+    - {pair: [IN, MD], since: 125, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 南方地盾陆块与裂离微大陆（约 120 Ma）}
+    - {pair: [POL, ZL], since: 90, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 极地大陆与南洋陆块（约 85 Ma）}
+    - {pair: [POL, NG], since: 115, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 极地大陆北缘与东大岛微陆块（约 110 Ma）}
+    - {pair: [POL, BSE], since: 285, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 东南增生地块裂离（约 280 Ma，基梅里式）}
   volcano_params:                          # packages/tectonics/volcanism.py VolcanoParams
     arcs: true                             # U28：俯冲带上盘洋壳上的弧火山（岛弧火山岛）
     arc_min_T_km: 10.0                     # U28 第二轮：弧地壳增厚到 10 km（俯冲十几 Myr）就长火山。第一轮要求 20 km，用来挡掉沿陆缘一圈的
                                            # 弧火山，现在由 arc_min_cont_km 挡；地球上弧火山在俯冲起始后几 Myr 就出现，弧地壳是它们堆起来的
     arc_min_cont_km: 150.0                 # U28 第二轮：离上盘自己的陆壳 150 km 以外（第一轮 250 km 切掉了千岛式东北岛链中段，它离两端的
                                            # 陆地 230–350 km）；陆缘弧的火山带离海岸只有几十公里，仍被排除
+  # U32：试过"陆壳上盘的弧增厚只用于设计的俯冲带"（Engine.arc_cont_pairs，按板块对）：设计的活动陆缘前方的洋壳有一部分属于固定的
+  # 外大洋板块，一刀切把设计的山系也压低了（远方大陆西岸 4150 -> 3297 m、洲 B 东岸 2058 -> 1208、极地两条山脊 1.7–2 km -> 约 0.4 km，
+  # 东方大高原范围中位 4524 -> 3249 m），而且同一板块对在别处的汇聚照样抬起陆架（45% 的自动陆架露出）。关掉，改为按厚度
+  # （engine_params.arc_cont_min_T_km：海平面以下的减薄陆缘不接受弧增厚）
+  arc_continental_designed_only: false
+  arc_continental_extra_pairs: [[EO, FAR]]   # 东大洋东侧板块向东俯冲到远方大陆之下（安第斯型 M8、M8c；U26 的大洋板块，不在 subduction 列表里）
   engine_params:
     # U31：剥蚀改按起伏非线性（packages/tectonics/crust.py Params.erosion_law）。U30 以前超出 35 km 的厚度一律按 120 Myr 指数衰减，
     # 低矮的老山与高山一样快：终图上约 20 条山系（老造山带、板内山地）0 Ma 只剩设计高度的 1/5–1/3，大陆大片是 400 m 的平原。
@@ -436,6 +458,8 @@ forward:
                                       # 设计中的下行陆块（洲 D、南方地盾陆块、洲 C 北端）先撞上上盘弧前的弧地壳，多被消耗 100–200 km；
                                       # 弧地壳还靠陆壳的侧向流动长成沿海岸一圈约 1 km 高的陆地。重力垮塌摊过来的厚地壳仍按 31 km 转成陆壳。
                                       # 岛弧上的火山岛、弧—陆碰撞抬起的大岛留给 1.2d
+    arc_cont_min_T_km: 32.5           # U32：比 32.5 km 薄的陆壳（海平面以下的陆架、陆表海、被淹的海湾，约 −20 m 以下）不接受弧增厚
+                                      # （岩浆弧长在离海沟一两百公里的大陆上，弧前陆架、弧后减薄地壳不因弧岩浆增厚）
     arc_compress_T_max_km: 38.0       # U28 第三轮：挤压型洋内弧。岩浆增生仍封顶 30 km，上盘朝海沟推进的构造缩短可增厚到 38 km
                                       # （只用于 arcs.subduction 里标了 compress 的俯冲带，scripts/design_forward.py）。地球上上盘后撤或不动的岛弧（马里亚纳、
                                       # 伊豆—小笠原）弧地壳约 20 km、整体在水下；吕宋地壳 20–46 km（Geoscience Letters 2025，接收函数
@@ -457,7 +481,15 @@ initial:
   # U24–U30 统一加 4 km（约 +0.6 km），在 120 Myr 线性衰减下 0 Ma 只剩约 +50 m
   old_orogens: {ids: [M6, M13b, M16, M8b], formed_ma: 400, h0_m: 4500, half_width_km: 150}
   tablelands: {ids: [PL7], add_km: 7.0, ramp_km: 70}
-  basins: {ids: [B1, B2, B3], sub_km: 0.8, ramp_km: 300}
+  # U32：盆地下沉量按终图高程由 Airy 均衡反算（from_design；B1、B2 300 m 约 0.66 km，B3 120 m 约 1.85 km，B4 150 m 约 1.65 km），
+  # 过渡宽度用终图的 ramp_km；补上 B4（远方大陆东部大盆地，U31 的 0 Ma 是 400 m）。U24–U31 统一下沉 0.8 km
+  basins: {ids: [B1, B2, B3, B4], from_design: true, sub_km: 0.8, ramp_km: 300}
+  # U32：陆壳按省份给厚度起伏（scripts/design_initial_world.py province_relief）。U31 的 0 Ma 上陆地高程 10、25、50 分位都正好是
+  # 400 m（陆壳除造山带、克拉通、盆地外都是 35 km），评审第 1 条。地球（除冰盖）同分辨率的陆地高程 5/10/25/50/75/90 分位是
+  # 31 / 62 / 158 / 373 / 812 / 1437 m。每个省份的高程偏移 ~ N(mean_m, sd_m)、截在 [min_m, max_m]，换成厚度；同一块内平滑
+  # smooth_iter 次（约 150 km）；离块边缘 ramp_km 以内渐弱（海岸不动）；降低后不低于 T_floor_km（约 +100 m）
+  province_relief: {mean_m: -40, sd_m: 380, min_m: -350, max_m: 1000, smooth_iter: 12, ramp_km: 150, T_floor_km: 32.8,
+                    min_base_T_km: 34.9}
   margin_km: 250                                        # 块边缘 250 km 内往海岸减薄
   margin_min: 0.72                                      # 被挤掉的陆缘按被动陆缘减薄到 72%（大部分在海平面以下）
   coast_T_km: 33.0                                      # 块本体（现今陆地）只减薄到 33 km（Airy 均衡下约 +100 m 的滨海平原），
@@ -499,3 +531,19 @@ initial:
        what: 浅的陆表海与陆架海（几十到一百多米；涌潮湾设计约 70 m）}
     - {gulfs: [G4, G10, G19], depth_m: -150, edge_thinning: false,
        what: 较深的陆架海、冰盖压沉的克拉通盆地与被淹的夭折裂谷}
+    # U32：神怒湾（G7，设计水深约 90 m）与东湾（G6，与东湾北岸褶皱山 M3d 成对的前陆海，波斯湾平均约 50 m）。U30 补过一次，被弧增厚
+    # 与碰撞抬成陆地、对撞截断主内海，撤回；U32 起海平面以下的减薄陆壳不接受弧增厚（engine_params.arc_cont_min_T_km），再试。
+    # 评审 stage1_2026-10-25_2 第 3 条：两湾仍是 4–5 km 深槽，神怒湾按 Merian 公式的固有周期约 4.4 h，共振不成立。
+    # 与上面两条一样，水深是按终图设定的初始条件（user_override），0 Ma 等于设计值不算过程的验证（评审第 9 条）
+    - {gulfs: [G7], depth_m: -90, edge_thinning: false, what: 神怒湾（两侧山系之间被淹没的前陆盆地）}
+    - {gulfs: [G6], depth_m: -80, edge_thinning: false, what: 东湾（碰撞前陆盆地被海水淹没，波斯湾式）}
+    # U32：老陆缘的陆架与陆坡（auto，scripts/design_initial_world.py shelf_margins）。300 Ma 以前就有的被动陆缘：现今海岸外
+    # 160 km 的陆架（32.0 -> 31.4 km，水深约 50–150 m）与 80 km 的陆坡（-> 18 km，约 −3.7 km）。只占到对岸距离的 40%
+    # （两岸陆架不相接，西海峡不被堵）；所属海岸离设计的活动陆缘要素 300 km 以内的不补（俯冲型山系与全部岛弧：活动陆缘的陆架窄、
+    # 在弧前；按所属海岸判断，整片陆架—陆坡一起去掉）；
+    # 残留洋盆、弧后盆地、裂谷海与 U30 查明会被碰撞抬起的海湾不补。300 Ma 以来裂开的共轭陆缘由正向演化填（forward.pull_apart）
+    - {auto: true, shelf_km: 160, slope_km: 80, T_coast_km: 32.0, T_break_km: 31.4, T_foot_km: 18.0,
+       gap_frac: 0.4, active_km: 300, active_arcs: true, active_points_file: config/design/shelf_active_v2.yaml,
+       active: [M1, M1b, M1d, M2, M13, M7, M7b, M8, M8c, M23, M25, M27, M24, M28, M29],
+       exclude_gulfs: [G1, G2, G3, G6, G7, G8, G9, G12, G15, G20, G22, G25, G26, G27, G28],
+       what: 老被动陆缘的陆架与陆坡}

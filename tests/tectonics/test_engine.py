@@ -316,3 +316,87 @@ def test_relief_sees_across_plate_boundaries(mesh):
     assert edge.any()
     r = eng.relief_km()
     assert np.allclose(r[edge], 2.0, atol=1e-6)
+
+
+def test_strike_slip_holes_filled_with_continental_crust_only_when_asked(mesh):
+    """U32：两块陆壳板块之间不在张开的小洞（走滑带上网格对不齐留下的）——holes 打开时补成相邻陆壳（厚度取较薄一侧但不超过
+    剖面的第一个厚度，属性抄过来），
+    不打开时（U30 及以前）补成洋壳。两块板块都不动，在交界上挖掉一个单元再提交。"""
+    def run(holes):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+        c.ctype[:] = CONT
+        c.T[:] = np.where(c.plate == 1, 36.0, 38.0)
+        w = {1: np.zeros(3), 2: np.zeros(3)}
+        eng = Engine(mesh, c, Params(), 100.0, w)
+        eng.cont_gap_pairs[1 * 1000 + 2] = {"knots": [(0.0, 32.0), (200.0, 31.4), (360.0, 18.0)], "holes": holes}
+        e = mesh.edges[(c.plate[mesh.edges[:, 0]] != c.plate[mesh.edges[:, 1]])]
+        hole = int(e[0, 0])
+        eng.alive[hole] = False
+        eng._v_before = eng.cont_volume()
+        eng.commit()
+        new = eng.alive & (eng.c.uid >= mesh.n)
+        return eng, new
+
+    eng0, new0 = run(False)
+    assert new0.sum() == 1 and eng0.c.ctype[new0][0] == 0
+    eng1, new1 = run(True)
+    assert new1.sum() == 1 and eng1.c.ctype[new1][0] == CONT
+    assert eng1.c.T[new1][0] == pytest.approx(32.0)                    # 两侧较薄的 36 km，封顶在剖面第一个厚度 32 km
+    assert eng1.cont_volume() == pytest.approx(eng1._v_before, rel=1e-9)  # 体积从两侧匀出来，陆壳体积守恒
+    assert eng1.budget.get("hole_fill", 0.0) > 0
+
+
+def test_arc_thickening_of_continents_only_on_designed_pairs(mesh):
+    """U32：Engine.arc_cont_pairs 不含的俯冲带，上盘陆壳不再弧增厚（洋壳照样被俯冲消耗）。"""
+    def run(pairs):
+        c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+        c.plate[:] = np.where(cont, 1, 2)                               # 板块 1 只有大陆，板块 2 是周围的洋壳
+        w = {1: np.zeros(3), 2: pole_vector(90.0, 0.0, 0.6)}            # 板块 2 在 0°E 附近向北推进，从南边俯冲到大陆之下
+        eng = Engine(mesh, c, Params(), 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 2
+        eng.arc_cont_pairs = pairs
+        for _ in range(20):
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        on = eng.alive & (eng.c.plate == 1) & (eng.c.ctype == CONT)
+        return eng, on
+
+    eng_a, on_a = run(None)
+    assert eng_a.c.T[on_a].max() > 35.5                                # 不限：陆缘弧增厚
+    eng_b, on_b = run(set())
+    assert eng_b.c.T[on_b].max() <= 35.0 + 1e-9                        # 不在设计里：不增厚
+    assert eng_b.budget.get("arc_suppressed", 0.0) > 0
+    assert sum(s["n_subducted"] for s in eng_b.step_log) > 0           # 洋壳照样被俯冲
+
+
+def test_submerged_thinned_margin_not_thickened_by_arc(mesh):
+    """U32：Params.arc_cont_min_T_km——比它薄的陆壳（海平面以下的陆架）不接受弧增厚，正常陆壳照旧。"""
+    c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+    c.plate[:] = np.where(cont, 1, 2)
+    ang = np.degrees(np.arccos(np.clip(mesh.xyz @ lonlat_to_xyz(0.0, 0.0), -1, 1)))
+    shelf = cont & (ang > 16.0)
+    c.T[shelf] = 31.5
+    w = {1: np.zeros(3), 2: pole_vector(90.0, 0.0, 0.6)}
+    eng = Engine(mesh, c, Params(arc_cont_min_T_km=32.5), 100.0, w)
+    eng.polarity[1 * 1000 + 2] = 2
+    uid_shelf = set(eng.c.uid[shelf].tolist())
+    for _ in range(20):
+        eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+    on = eng.alive & (eng.c.plate == 1) & (eng.c.ctype == CONT)
+    is_shelf = np.isin(eng.c.uid, list(uid_shelf))
+    assert eng.c.T[on & is_shelf].max() < 32.0                     # 仍在海平面以下（旁边增厚陆壳的侧向流动只带过来一点）
+    assert eng.c.T[on & ~is_shelf].max() > 35.5
+
+
+def test_hole_fill_borrows_only_from_thickened_crust(mesh):
+    """U32：补走滑小洞只从增厚的陆壳（> 34 km）匀体积，正常陆壳不被压薄；匀不出的部分记为 hole_created。"""
+    c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+    c.ctype[:] = CONT
+    c.T[:] = 34.5
+    eng = Engine(mesh, c, Params(), 100.0, {1: np.zeros(3), 2: np.zeros(3)})
+    eng.cont_gap_pairs[1 * 1000 + 2] = {"knots": [(0.0, 33.0), (80.0, 33.0), (250.0, 20.0)], "holes": True}
+    e = mesh.edges[(c.plate[mesh.edges[:, 0]] != c.plate[mesh.edges[:, 1]])]
+    eng.alive[int(e[0, 0])] = False
+    eng.commit()
+    old = eng.alive & (eng.c.uid < mesh.n)
+    assert eng.c.T[old].min() >= 34.0 - 1e-9
+    assert eng.budget.get("hole_created", 0.0) > 0

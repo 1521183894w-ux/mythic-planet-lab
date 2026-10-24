@@ -254,3 +254,140 @@ def test_design_rifts_and_pull_apart_pairs():
     assert r["anchor"] == 102 and r["pts0"].shape == (2, 3) and r["swell_amp_m"] == 0.0
     assert fwd.cont_gap_pairs(h) == {101 * 1000 + 102: (33.0, 80.0, 20.0, 250.0)}
     assert fwd.cont_gap_since(h) == {101 * 1000 + 102: 36.0}
+
+
+def test_pull_apart_knots_holes_and_designed_arc_pairs():
+    """U32：forward.pull_apart 的分段剖面（裂开的被动陆缘）与 holes；陆壳弧增厚只用于设计的俯冲带与按设计运动的大洋板块。"""
+    h = _hcfg_arcs()
+    h["forward"] = {"pull_apart": [{"pair": ["B", "BSE"], "since": 36, "T_narrow_km": 33, "w1_km": 80, "T_wide_km": 20,
+                                    "w_max_km": 250, "holes": True},
+                                   {"pair": ["BSE", "PA"], "knots": [[0, 32.0], [200, 31.4], [360, 18.0]]}]}
+    g = fwd.cont_gap_pairs(h)
+    assert g[101 * 1000 + 102] == {"knots": [(0.0, 33.0), (80.0, 33.0), (250.0, 20.0)], "holes": True}
+    assert g[102 * 1000 + 920] == {"knots": [(0.0, 32.0), (200.0, 31.4), (360.0, 18.0)], "holes": False}
+    from mythic.tectonics.engine import gap_profile
+    kw, kT, holes = gap_profile((33.0, 80.0, 20.0, 250.0))          # U30 的四元组照旧
+    assert kw.tolist() == [0.0, 80.0, 250.0] and kT.tolist() == [33.0, 33.0, 20.0] and holes is False
+    h["forward"]["arc_continental_extra_pairs"] = [["PA", "B"]]
+    pairs = fwd.arc_cont_pairs(h)
+    assert 102 * 1000 + 930 in pairs and 920 * 1000 + 930 in pairs  # 设计的俯冲带
+    assert 101 * 1000 + 920 in pairs                                # 显式列出的大洋板块俯冲带
+    assert 102 * 1000 + 920 not in pairs                            # 大洋板块与其他陆块的接触不算
+    assert 101 * 1000 + 900 not in pairs and 102 * 1000 + 900 not in pairs   # 固定的外大洋板块不算
+
+
+def test_province_relief_keeps_coasts_and_floor():
+    """U32：省份厚度起伏只加在块本体陆壳上，海岸处为 0、往内陆渐强，降低后不低于 T_floor_km，补回的陆缘不动。"""
+    init = _load("design_initial_world", "design_initial_world.py")
+    from mythic.tectonics.crust import CONT, Crust
+    from mythic.tectonics.geometry import lonlat_to_xyz
+    from mythic.tectonics.mesh import load_mesh
+
+    mesh = load_mesh(5)
+    c = Crust(mesh.n)
+    cosd = mesh.xyz @ lonlat_to_xyz(0.0, 0.0)
+    body = cosd >= np.cos(np.radians(40.0))
+    margin = (cosd >= np.cos(np.radians(45.0))) & ~body
+    c.ctype[body | margin] = CONT
+    c.T[body] = 35.0
+    c.T[margin] = 30.0
+    c.prov[body] = np.where(mesh.xyz[body, 0] > 0.9, 1, 2)      # 两个省份
+    c.prov[margin] = 3
+    owner = np.where(body | margin, 7, 0)
+    kind = np.where(body, 1, np.where(margin, 2, 0))
+    T0 = c.T.copy()
+    cfg = {"mean_m": -150, "sd_m": 400, "min_m": -600, "max_m": 900, "smooth_iter": 3, "ramp_km": 600, "T_floor_km": 33.0}
+    st = init.province_relief(mesh, c, owner, kind, cfg, seed=3)
+    assert st["provinces"] == 2
+    assert (c.T[margin] == T0[margin]).all() and (c.T[~(body | margin)] == T0[~(body | margin)]).all()
+    edge = body & np.isin(np.arange(mesh.n), mesh.edges[(body[mesh.edges[:, 0]] != body[mesh.edges[:, 1]])].ravel())
+    assert np.abs(c.T[edge] - 35.0).max() < 0.05                 # 海岸处几乎不变
+    assert c.T[body].min() >= 33.0 - 1e-9                         # 不低于下限
+    assert np.abs(c.T[body] - 35.0).max() > 0.3                   # 内陆有起伏
+    # 终图设计了要素的地方（keep_out）不叠加
+    c2 = Crust(mesh.n)
+    for f in ("ctype", "T", "prov"):
+        setattr(c2, f, getattr(c, f).copy())
+    c2.T[:] = T0
+    ko = body & (cosd > np.cos(np.radians(12.0)))
+    init.province_relief(mesh, c2, owner, kind, cfg, seed=3, keep_out=ko)
+    core = body & (cosd > np.cos(np.radians(6.0)))
+    assert np.abs(c2.T[core] - 35.0).max() < 0.1 * np.abs(c.T[core] - 35.0).max() + 1e-6
+
+
+def test_auto_shelf_stays_off_the_far_shore_and_active_margins():
+    """U32：老陆缘的自动陆架——只补到对岸距离的 gap_frac、离活动陆缘要素 active_km 以内与 active_points 附近不补，
+    厚度剖面按到本块海岸的距离（陆架 -> 陆坡）。"""
+    init = _load("design_initial_world", "design_initial_world.py")
+    from mythic.metrics.grid import LatLonGrid
+    from mythic.tectonics.reverse import PlateHistory
+
+    g = LatLonGrid(720, 360)
+    LO, LA = np.meshgrid(g.lon, g.lat)
+    ids = np.zeros(g.shape, int)
+    ids[(LO > -20) & (LO < 0) & (LA > -20) & (LA < 20)] = 7          # 块 X
+    ids[(LO > 3) & (LO < 20) & (LA > -20) & (LA < 20)] = 8           # 块 Y，东边隔着约 330 km 的海峡
+    h = PlateHistory()
+    for q, code in ((7, "X"), (8, "Y")):
+        h.add(q, 0, code, [(0, np.eye(3)), (100, np.eye(3))])
+    ext = np.zeros(g.shape, int)
+    b = {"land": ids > 0, "sea_masks": {}}
+    design = {"mountains": [{"id": "M9", "line": [[-19, 10], [-19, 20]]}], "islands": []}
+    ini = {"margins": [{"auto": True, "shelf_km": 120, "slope_km": 80, "T_coast_km": 32.0, "T_break_km": 31.4,
+                        "T_foot_km": 18.0, "gap_frac": 0.4, "active_km": 300, "active": ["M9"],
+                        "active_points": [[-10.0, -21.5, 200]]}]}
+    info, masks = init.shelf_margins(ini, g, ids, ext, {"X": 7, "Y": 8}, h, 100.0, b, design=design)
+    m = masks[0]
+    assert not (m & (ids > 0)).any()
+    strait = (LO > 0) & (LO < 3) & (np.abs(LA) < 5)
+    assert m[strait & (LO < 1.0)].any() and m[strait & (LO > 1.0) & (LO < 2.0)].sum() == 0   # 只占到对岸距离的 40%
+    west = (LO > -21.5) & (LO < -20) & (np.abs(LA) < 5)
+    assert (ext[west] == 7).all()                                      # 西岸外的陆架归 X
+    assert not m[(LO > -20.8) & (LO < -20) & (LA > 12) & (LA < 19)].any()   # 离活动陆缘要素 300 km 内不补
+    assert not m[(LO > -11) & (LO < -9) & (LA > -22) & (LA < -21)].any()    # 实测活动陆缘点附近不补
+    assert m[(LO > -16) & (LO < -14) & (LA > -22) & (LA < -21)].any()       # 别处的南岸照补
+
+
+def test_hypsometry_and_emerged_auto_shelf(tmp_path):
+    """U32：陆地高程分位、大陆架占海洋比例；自动陆架在 0 Ma 露出海面的片。"""
+    from mythic.metrics.grid import LatLonGrid
+
+    g = LatLonGrid(360, 180)
+    LO, LA = np.meshgrid(g.lon, g.lat)
+    E = np.full(g.shape, -4000.0)
+    E[(np.abs(LO) < 20) & (np.abs(LA) < 20)] = 300.0
+    E[(np.abs(LO) < 22) & (np.abs(LA) < 22) & (E < 0)] = -100.0          # 一圈陆架
+    hy = fwd.hypsometry(g, E)
+    assert hy["land_elev_m_percentiles"][3] == 300 and 0 < hy["shelf_fraction_of_ocean"] < 0.1
+    sm = (np.abs(LO) < 22) & (np.abs(LA) < 22) & ~((np.abs(LO) < 20) & (np.abs(LA) < 20))
+    E2 = E.copy()
+    E2[sm & (LO > 20)] = 200.0                                          # 东侧的陆架被抬出海面
+    p = tmp_path / "shelf.npy"
+    np.save(p, sm)
+    r = fwd.auto_shelf_emerged(g, E2, p)
+    assert r["emerged_fraction"] > 0.1 and len(r["clusters"]) == 1
+    c = r["clusters"][0]
+    assert 20 < c["lon"] < 22 and abs(c["lat"]) < 1
+
+
+def test_write_shelf_active_points_cover_the_emerged_shelf(tmp_path):
+    """U32：明显抬起（高出海面 300 m 以上、成片）的自动陆架写成点清单，每个这样的格点都落在某个点的半径内；只露出一点的不算。"""
+    import yaml
+    from mythic.metrics.grid import LatLonGrid
+    from mythic.tectonics.geometry import km_from_chord, lonlat_to_xyz
+
+    g = LatLonGrid(360, 180)
+    LO, LA = np.meshgrid(g.lon, g.lat)
+    sm = (LO > 0) & (LO < 8) & (np.abs(LA) < 10)
+    E = np.where((LO > 2) & (LO < 6) & sm, 800.0, -100.0)
+    E[(LO > 0) & (LO < 1) & sm] = 50.0                                 # 只露出一点的一条：不算
+    np.save(tmp_path / "s.npy", sm)
+    n = fwd.write_shelf_active(tmp_path / "a.yaml", g, E, tmp_path / "s.npy", "test")
+    pts = yaml.safe_load((tmp_path / "a.yaml").read_text(encoding="utf-8"))["points"]
+    assert n == len(pts) > 1
+    P = np.array([lonlat_to_xyz(lo, la) for lo, la, _ in pts])
+    em = g.xyz[sm & (E > 300)]
+    P_far = km_from_chord(np.min(np.linalg.norm(g.xyz[sm & (E > 0) & (E < 300)][:, None, :] - P[None], axis=2), axis=1))
+    assert P_far.min() > 0
+    d = km_from_chord(np.min(np.linalg.norm(em[:, None, :] - P[None], axis=2), axis=1))
+    assert d.max() <= pts[0][2]

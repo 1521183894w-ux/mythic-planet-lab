@@ -34,7 +34,8 @@ from design_history import assign_blocks, build_history, consumed_margins  # noq
 from mythic.figures.world import code_version  # noqa: E402
 from mythic.metrics.grid import LatLonGrid  # noqa: E402
 from mythic.tectonics.crust import CONT, Params, elevation  # noqa: E402
-from mythic.tectonics.geometry import R_KM, km_from_chord, smoothstep, unit, xyz_to_lonlat  # noqa: E402
+from mythic.tectonics.geometry import (R_KM, chord_from_km, km_from_chord, lonlat_to_xyz, smoothstep, unit,  # noqa: E402
+                                       xyz_to_lonlat)
 from mythic.tectonics.kinematics import RotationFileKinematics  # noqa: E402
 from mythic.tectonics.mesh import CACHE, load_mesh  # noqa: E402
 from mythic.tectonics.prehistory import InitialWorld  # noqa: E402
@@ -70,6 +71,62 @@ def old_orogen_add_km(oo: dict, hcfg: dict, t0: float) -> float:
     return float(h / iso)
 
 
+def province_relief(mesh, c, owner: np.ndarray, kind: np.ndarray, cfg: dict, seed: int,
+                    keep_out: np.ndarray | None = None) -> dict:
+    """U32：陆壳按省份给厚度起伏（原地修改 c.T，返回统计）。
+    每个古老地壳省份（前史式的泊松划分，约 700 km 一个）形成于不同的构造事件，继承了不同的地壳厚度与岩石圈状态；地球上稳定
+    大陆的高程因此有几百米的起伏（克拉通内的沉降盆地与隆起、台地与低地）。每个省份的高程偏移从正态分布里抽（mean_m、sd_m，
+    截在 [min_m, max_m]），按 Airy 换成厚度；在网格上同一块内的相邻节点之间平均 smooth_iter 次（约 150 km 的过渡，
+    省份多边形的直边不留下来，评审 stage1_2026-10-25_1 第 15 条）；离本块边缘 ramp_km 以内渐弱到 0（现今海岸不动）；
+    降低后的厚度不低于 T_floor_km（内陆不低于约 +65 m，不凭空出现海）。只加在块本体的陆壳上，补回的陆缘与陆架不加；
+    厚度低于 min_base_T_km 的（设计的盆地、海岸减薄带）也不加，免得设计盆地被再压一次、压到下限。
+    method_class：procedural_constrained（结构跟着继承的省份走，幅度按地球稳定大陆的高程分布定）。"""
+    rng = np.random.default_rng(seed)
+    p0 = Params()
+    body = (kind == 1) & (c.ctype == CONT) & (c.T >= float(cfg.get("min_base_T_km", 0.0)))   # 设计改低过的（盆地、海岸减薄带）不再叠加
+    provs = np.unique(c.prov[body])
+    off = np.clip(rng.normal(float(cfg["mean_m"]), float(cfg["sd_m"]), provs.size), float(cfg["min_m"]), float(cfg["max_m"]))
+    lut = np.zeros(int(c.prov.max()) + 1)
+    lut[provs] = off
+    d = np.where(body, lut[c.prov], 0.0)
+    i, j = mesh.edges[:, 0], mesh.edges[:, 1]
+    same = body[i] & body[j] & (owner[i] == owner[j])
+    i, j = i[same], j[same]
+    for _ in range(int(cfg["smooth_iter"])):
+        s, n = d.copy(), np.ones(mesh.n)
+        np.add.at(s, i, d[j])
+        np.add.at(s, j, d[i])
+        np.add.at(n, i, 1.0)
+        np.add.at(n, j, 1.0)
+        d = np.where(body, s / n, 0.0)
+    if keep_out is not None and keep_out.any():
+        # 终图设计了山系、高原、盆地的地方不叠加（它们的高度由各自的过程决定；第一版在北方高原抽到低值，73 m / 终图 1500）：
+        # 权重按同样的平滑过渡到 0
+        wk = keep_out.astype(float)
+        for _ in range(int(cfg["smooth_iter"])):
+            s_, n_ = wk.copy(), np.ones(mesh.n)
+            np.add.at(s_, i, wk[j])
+            np.add.at(s_, j, wk[i])
+            np.add.at(n_, i, 1.0)
+            np.add.at(n_, j, 1.0)
+            wk = np.where(body, s_ / n_, wk)
+        d = d * (1.0 - np.clip(wk, 0.0, 1.0))
+    dk, _ = cKDTree(mesh.xyz[~body]).query(mesh.xyz[body])
+    ramp = np.zeros(mesh.n)
+    ramp[body] = smoothstep(np.maximum(km_from_chord(dk) - mesh.h_km, 0.0) / float(cfg["ramp_km"]))   # 贴海岸的一圈为 0
+    dT = d * ramp / p0.iso_m_per_km
+    T_new = c.T + dT
+    low = dT < 0
+    T_new[low] = np.maximum(T_new[low], np.minimum(c.T[low], float(cfg["T_floor_km"])))
+    applied = T_new - c.T
+    c.T = T_new
+    A = mesh.area_km2
+    return {"provinces": int(provs.size), "offset_m_draw_sd": round(float(off.std()), 1),
+            "applied_m_percentiles": {str(q): round(float(np.percentile(applied[body] * p0.iso_m_per_km, q)))
+                                      for q in (5, 25, 50, 75, 95)},
+            "volume_change_1e6_km3": round(float((applied * A).sum()) / 1e6, 2)}
+
+
 def volume_balance(hcfg, design, grid, b, ext_masks, T_ext) -> list:
     """碰撞的体积账（U26）：补回的陆缘（下行块被挤掉的陆壳）有多少体积；写了 volume_balance 的碰撞，
     再算终图上它垫出的高原与山系需要多少超额地壳（Airy 均衡由终图高度反算，乘面积）。"""
@@ -91,7 +148,7 @@ def volume_balance(hcfg, design, grid, b, ext_masks, T_ext) -> list:
 
 
 def shelf_margins(ini: dict, grid: LatLonGrid, ids: np.ndarray, ext: np.ndarray, code_id: dict, h, t0: float,
-                  b: dict | None = None, step_myr: float = 5.0) -> tuple[list, list]:
+                  b: dict | None = None, step_myr: float = 5.0, design: dict | None = None) -> tuple[list, list]:
     """陆架下的减薄陆壳（U28 第三轮，history yaml 的 initial.margins）：现今在海平面以下、属于某块的被动陆缘，按该块的陆缘补进
     初始世界（写进 ext，与被挤掉的陆缘同一套省份与减薄）。范围二选一：poly + block（多边形里的海与没划块的新生地壳岛，归 block）；
     或 gulfs（U30：终图海湾的范围，每格归最近的陆块，要给 b = design_final_map.build 的结果）。300 Ma 以来任何时刻会压到
@@ -100,7 +157,64 @@ def shelf_margins(ini: dict, grid: LatLonGrid, ids: np.ndarray, ext: np.ndarray,
     others = list(code_id.values())
     id_code = {v: k for k, v in code_id.items()}
     for mg in ini.get("margins", []):
-        if "gulfs" in mg:
+        if mg.get("auto"):
+            # U32：300 Ma 以前就有的被动陆缘（老陆缘）的陆架与陆坡。现今海岸外 shelf_km + slope_km 以内的海，归最近的陆块；
+            # 只占到对岸（别的块或新生地壳岛）距离的 gap_frac（两岸的陆架不相接，海峡不被堵）；离设计的活动陆缘要素（俯冲型山系、
+            # 岛弧）active_km 以内的不补（活动陆缘的陆架窄，而且在弧前）；exclude_gulfs 的海湾不补（残留洋盆、弧后盆地、裂谷海，
+            # 以及 U30 查明会被碰撞抬起的海湾）。300 Ma 以来裂开的陆缘（共轭陆缘）在 300 Ma 时与对岸贴在一起，下面的冲突检查会去掉，
+            # 由正向演化在裂开时填（forward.pull_apart 的 knots）
+            cand = ~b["land"] & (ids <= 0) & (ext == 0)
+            for gid in mg.get("exclude_gulfs", []):
+                cand &= ~b["sea_masks"][gid]
+            Xc = grid.xyz[cand]
+            reach = float(mg["shelf_km"]) + float(mg["slope_km"])
+            bids = sorted(code_id.values())
+            D = np.full((Xc.shape[0], len(bids) + 1), np.inf)
+            near = np.zeros((Xc.shape[0], len(bids), 3))     # 每块离格点最近的海岸格点（判断这段海岸是不是活动陆缘）
+            for col, q in enumerate(bids):
+                Xq = grid.xyz[ids == q]
+                d, kq = cKDTree(Xq).query(Xc, distance_upper_bound=chord_from_km(4.0 * reach))
+                D[:, col] = km_from_chord(np.where(np.isfinite(d), d, 2.0))
+                near[:, col] = Xq[np.minimum(kq, Xq.shape[0] - 1)]
+            juv = b["land"] & (ids <= 0)                       # 新生地壳岛（岛弧、热点岛）也算对岸
+            if juv.any():
+                d, _ = cKDTree(grid.xyz[juv]).query(Xc, distance_upper_bound=chord_from_km(4.0 * reach))
+                D[:, -1] = km_from_chord(np.where(np.isfinite(d), d, 2.0))
+            o = np.argsort(D[:, :-1], axis=1)[:, 0]
+            d_own = D[np.arange(Xc.shape[0]), o]
+            D_other = D.copy()
+            D_other[np.arange(Xc.shape[0]), o] = np.inf
+            ok = (d_own <= reach) & (d_own < float(mg["gap_frac"]) * D_other.min(axis=1))
+            coast = near[np.arange(Xc.shape[0]), o]           # 这片陆架所属的海岸格点
+            act = []
+            mts = {m_["id"]: m_ for m_ in design.get("mountains", [])}
+            for fid in mg.get("active", []):
+                act.append(densify(mts[fid]["line"], 20.0)[0])
+            if mg.get("active_arcs", True):
+                for isl in design.get("islands", []):
+                    if isl.get("type") == "arc":
+                        act.append(densify(isl["line"], 20.0)[0])
+            if act:
+                # 按所属海岸离活动要素的距离判断（一段海岸是活动陆缘，它外面整片陆架、陆坡都不补）。第一次按格点自己的距离判断，
+                # 离岸较远的陆坡格点超出 active_km，在远方大陆西岸外 150–230 km 处留下一串孤立的陆壳碎片，海沟被推离海岸，
+                # 弧增厚的峰值落在不增厚的陆架上（远方大陆西岸山系 4150 -> 3431 m）
+                d, _ = cKDTree(np.concatenate(act)).query(coast)
+                ok &= km_from_chord(d) > float(mg["active_km"])
+            apts = list(mg.get("active_points", []))
+            if mg.get("active_points_file") and (ROOT / mg["active_points_file"]).exists():
+                apts += yaml.safe_load((ROOT / mg["active_points_file"]).read_text(encoding="utf-8")).get("points") or []
+            for lo_, la_, r_ in apts:
+                # 按上一次正向运行实测的活动陆缘：自动补的陆架在 0 Ma 被抬出海面的地方（俯冲上盘的弧前增厚、下行一侧撞进海沟），
+                # 见 scripts/design_forward.py 的 auto_shelf_emerged
+                # 实测点取在露出的陆架格点上：格点本身或它所属的海岸任一在半径内都不补
+                xp = lonlat_to_xyz(lo_, la_)
+                ok &= ((km_from_chord(np.linalg.norm(Xc - xp, axis=1)) > float(r_))
+                       & (km_from_chord(np.linalg.norm(coast - xp, axis=1)) > float(r_)))
+            own = np.zeros(grid.shape, int)
+            ci = np.flatnonzero(cand.ravel())
+            own.ravel()[ci[ok]] = np.array(bids)[o[ok]]
+            cand = own > 0
+        elif "gulfs" in mg:
             cand = np.zeros(grid.shape, bool)
             for gid in mg["gulfs"]:
                 cand |= b["sea_masks"][gid]
@@ -181,7 +295,13 @@ def main() -> int:
 
     # ---- 1. 被挤掉的陆缘（与 design_history.py 的重叠审计同一套计算） ----
     ext, ext_info, ext_masks = consumed_margins(hcfg, grid, ids, h, log, return_masks=True)
-    shelf_info, shelf_masks = shelf_margins(ini, grid, ids, ext, code_id, h, t0, b)
+    shelf_info, shelf_masks = shelf_margins(ini, grid, ids, ext, code_id, h, t0, b, design=design)
+    auto = np.zeros(grid.shape, bool)
+    for mg, m in zip(ini.get("margins", []), shelf_masks):
+        if mg.get("auto"):
+            auto |= m
+    (CACHE / "design").mkdir(parents=True, exist_ok=True)
+    np.save(CACHE / "design" / f"shelf_auto_{args.design}_{args.history}_{grid.name}.npy", auto)   # 正向演化对照用（不进 Git）
     for s in shelf_info:
         log(f"  陆架下的减薄陆壳 {s['owners_Mkm2']}：{s['area_Mkm2']} 百万 km²（会压到别的块而不补的 {s['trimmed_conflict_Mkm2']}）"
             f"——{s.get('what', '')}")
@@ -211,10 +331,17 @@ def main() -> int:
         dk = dist_to_mask_km(grid, ~m, m)
         T[m] += float(ini["tablelands"]["add_km"]) * smoothstep(dk[m] / float(ini["tablelands"]["ramp_km"]))
     bas = {p["id"]: p for p in design.get("basins", [])}
+    p_b = Params()
     for bid in ini["basins"]["ids"]:
         m = lonlat_mask(grid, bas[bid]["poly"]) & (ids > 0)
         dk = dist_to_mask_km(grid, ~m, m)
-        T[m] -= float(ini["basins"]["sub_km"]) * smoothstep(dk[m] / float(ini["basins"]["ramp_km"]))
+        if ini["basins"].get("from_design"):
+            # U32：下沉量按终图的盆地高程由 Airy 均衡反算（从 400 m 的正常陆面降到设计高程），过渡宽度用终图的 ramp_km
+            sub = (p_b.e_cont_ref_m - float(bas[bid]["height_m"])) / p_b.iso_m_per_km
+            ramp = float(bas[bid].get("ramp_km", ini["basins"]["ramp_km"]))
+        else:
+            sub, ramp = float(ini["basins"]["sub_km"]), float(ini["basins"]["ramp_km"])
+        T[m] -= sub * smoothstep(dk[m] / ramp)
     # 被挤掉的陆缘：贴着下行块处厚、往外减薄（超伸展陆缘）
     T_ext = np.zeros(grid.shape)
     for pid in id_code:
@@ -228,7 +355,15 @@ def main() -> int:
     for mg, m in zip(ini.get("margins", []), shelf_masks):     # 陆架下的减薄陆壳用自己的厚度剖面
         if not m.any():
             continue
-        if "depth_m" in mg:     # U30：被淹没的陆壳，厚度按设计水深由 Airy 均衡反算（与 crust.elevation 同一组常数）
+        if mg.get("auto"):      # U32：老陆缘的陆架—陆坡，厚度按到本块现今海岸的距离（自带减薄剖面，不再做陆缘减薄）
+            T_ext[m] = np.nan
+            for pid in np.unique(ext[m]):
+                mm = m & (ext == pid)
+                dk = dist_to_mask_km(grid, ids == pid, mm)[mm]
+                T_ext[mm] = np.interp(dk, [0.0, float(mg["shelf_km"]), float(mg["shelf_km"]) + float(mg["slope_km"])],
+                                      [float(mg["T_coast_km"]), float(mg["T_break_km"]), float(mg["T_foot_km"])])
+            no_thin |= m
+        elif "depth_m" in mg:   # U30：被淹没的陆壳，厚度按设计水深由 Airy 均衡反算（与 crust.elevation 同一组常数）
             T_ext[m] = p0.T_cont + (float(mg["depth_m"]) - p0.e_cont_ref_m) / p0.iso_m_per_km
         else:
             dk = dist_to_mask_km(grid, ids == code_id[mg["block"]], m)
@@ -326,6 +461,19 @@ def main() -> int:
     c, owner, kind = initial_crust(mesh, h, t0, order, ids, ext,
                                    {"T": T, "t_form": tf, "prov": prov}, {"T": T_ext, "t_form": tf_ext, "prov": prov_ext})
     c = fill_ocean(mesh, c, owner, t0, float(ini["half_spreading_km_myr"]))
+    prov_relief = None
+    if ini.get("province_relief"):          # U32：陆壳按省份给厚度起伏（克拉通内的盆地与隆起）
+        fids = [x["id"] for key in ("plateaus", "basins", "mountains") for x in design.get(key, [])]
+        feat = feature_mask(design, grid, b["land"], fids)      # 终图设计的山系、高原、盆地（现今参照系）
+        keep_out = np.zeros(mesh.n, bool)
+        for pid in np.unique(owner[owner > 0]):
+            lo, la = xyz_to_lonlat(mesh.xyz @ h.absolute(int(pid), t0))
+            i_ = np.clip(((90.0 - la) / 180.0 * grid.ny).astype(int), 0, grid.ny - 1)
+            j_ = np.clip(((lo + 180.0) / 360.0 * grid.nx).astype(int), 0, grid.nx - 1)
+            keep_out |= (owner == pid) & feat[i_, j_]
+        prov_relief = province_relief(mesh, c, owner, kind, ini["province_relief"], int(ini.get("seed", 1)) + 101,
+                                      keep_out=keep_out)
+        log(f"  省份厚度起伏：{prov_relief}")
     oc_cfg = hcfg.get("ocean")
     if oc_cfg:                              # 洋壳归属按俯冲设计（U25），见 history yaml 的 ocean 一节
         rules = [{"down": [code_id[x] for x in r["down"]], "over": [code_id[x] for x in r["over"]]}
@@ -383,6 +531,7 @@ def main() -> int:
                           for s, m in zip(shelf_info, shelf_masks)],
         "volume_balance": vb_rows,
         "old_orogen_add_km": round(oo_add, 2),
+        "province_relief": prov_relief,
         "continental_crust_Mkm2": round(float(A[cont].sum()) / 1e6, 1),
         "of_which_consumed_margin_Mkm2": round(float(A[kind == 2].sum()) / 1e6, 1),
         "present_rigid_blocks_Mkm2": round(float(area[ids > 0].sum()) / 1e6, 1),

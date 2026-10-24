@@ -351,13 +351,31 @@ def build_rifts(hcfg: dict) -> list:
 
 
 def cont_gap_pairs(hcfg: dict) -> dict:
-    """history yaml forward.pull_apart -> Engine.cont_gap_pairs（U30）：{板块对键: (T_narrow, w1, T_wide, w_max)}。"""
+    """history yaml forward.pull_apart -> Engine.cont_gap_pairs（U30）：{板块对键: (T_narrow, w1, T_wide, w_max)}；
+    写了 knots（U32 裂开的被动陆缘：[[累计张开宽度 km, 厚度 km], ...]）或 holes 的，给 {"knots": ..., "holes": ...}。"""
     code_id = plate_codes(hcfg)
     out = {}
     for r in (hcfg.get("forward") or {}).get("pull_apart", []):
         a, b = (code_id[x] for x in r["pair"])
-        out[min(a, b) * 1000 + max(a, b)] = (float(r["T_narrow_km"]), float(r["w1_km"]), float(r["T_wide_km"]),
-                                             float(r["w_max_km"]))
+        if "knots" in r:
+            spec = {"knots": [(float(w), float(t)) for w, t in r["knots"]], "holes": bool(r.get("holes", False))}
+        else:
+            spec = (float(r["T_narrow_km"]), float(r["w1_km"]), float(r["T_wide_km"]), float(r["w_max_km"]))
+            if r.get("holes"):
+                spec = {"knots": [(0.0, spec[0]), (spec[1], spec[0]), (spec[3], spec[2])], "holes": True}
+        out[min(a, b) * 1000 + max(a, b)] = spec
+    return out
+
+
+def arc_cont_pairs(hcfg: dict) -> set:
+    """U32：陆壳上盘的弧增厚只用于这些板块对（Engine.arc_cont_pairs）：设计的俯冲带（arcs.subduction、ocean.subduction），
+    加上 forward.arc_continental_extra_pairs 列出的大洋板块俯冲带（东大洋东侧板块 -> 远方大陆西岸，安第斯式）。
+    固定的外大洋板块不在内；大洋板块与其他陆块的接触也不在内（第一次运行把大洋板块 × 所有陆块都算进去，洲 C 南岸、
+    极地大陆、洲 B 北极海岸的陆架被增厚抬出海面）。"""
+    code_id = plate_codes(hcfg)
+    out = set(designed_pairs(hcfg))
+    for a, b in (hcfg.get("forward") or {}).get("arc_continental_extra_pairs", []):
+        out.add(min(code_id[a], code_id[b]) * 1000 + max(code_id[a], code_id[b]))
     return out
 
 
@@ -411,6 +429,8 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
     if gap_cont:                                    # U30：走滑拉分与裂谷陆缘
         eng.cont_gap_pairs.update(gap_cont[0])
         eng.cont_gap_since.update(gap_cont[1])
+    if arcs_hcfg and (arcs_hcfg.get("forward") or {}).get("arc_continental_designed_only"):
+        eng.arc_cont_pairs = arc_cont_pairs(arcs_hcfg)     # U32：陆壳上的弧增厚只用于设计的俯冲带（见 Engine.arc_cont_pairs）
     if aprons:
         aprons["pairs"] = over_down_pairs(aprons["hcfg"])
         aprons["ocean_downs"] = {}
@@ -599,6 +619,83 @@ def label_wrap(mask: np.ndarray):
     roots = np.array([find(a) for a in range(n + 1)])
     _, new = np.unique(roots, return_inverse=True)
     return new[lab], int(new.max())
+
+
+def auto_shelf_emerged(grid, E_eng: np.ndarray, path: Path, min_Mkm2: float = 0.03, buffer_km: float = 150.0) -> dict | None:
+    """U32：初始世界自动补的陆架（scripts/design_initial_world.py 存的现今参照系掩膜）在 0 Ma 有多少被抬出海面。
+    露出的地方是正向演化里实际在汇聚的陆缘（俯冲上盘的弧前增厚，或下行一侧撞进海沟），按"活动陆缘的陆架窄"不该补；
+    连通的片给出中心与半径（最远格点 + buffer_km），可写进 history yaml initial.margins 的 active_points。"""
+    if not path.exists():
+        return None
+    sm = np.load(path)
+    if sm.shape != E_eng.shape:
+        return None
+    a = grid.cell_area_km2
+    em = sm & (E_eng > 0)
+    lab, n = label_wrap(em)
+    clusters = []
+    for k in range(1, n + 1):
+        m = lab == k
+        ar = float(a[m].sum()) / 1e6
+        if ar < min_Mkm2:
+            continue
+        X = grid.xyz[m]
+        cen = X.sum(0)
+        cen /= np.linalg.norm(cen)
+        lo, la = xyz_to_lonlat(cen)
+        r = float(km_from_chord(np.linalg.norm(X - cen, axis=1)).max()) + buffer_km
+        clusters.append({"lon": round(float(lo), 1), "lat": round(float(la), 1), "radius_km": int(round(r, -1)),
+                         "area_Mkm2": round(ar, 3)})
+    clusters.sort(key=lambda c: -c["area_Mkm2"])
+    return {"area_Mkm2": round(float(a[sm].sum()) / 1e6, 2), "emerged_Mkm2": round(float(a[em].sum()) / 1e6, 2),
+            "emerged_fraction": round(float(a[em].sum()) / max(float(a[sm].sum()), 1.0), 3), "clusters": clusters}
+
+
+def write_shelf_active(path: Path, grid, E_eng: np.ndarray, shelf_path: Path, run_tag: str, spacing_km: float = 150.0,
+                       radius_km: float = 200.0, min_elev_m: float = 300.0, min_Mkm2: float = 0.03) -> int:
+    """U32：把 0 Ma 被明显抬起的自动陆架写成"实测活动陆缘"点清单（history yaml initial.margins 自动陆架的 active_points_file）。
+    只算高出海面 min_elev_m 以上、连成 min_Mkm2 以上的片（第一次把所有露出海面的都算进去：贴海岸的一格陆架被旁边的地壳流动
+    垫高几十米就露出，517 个点几乎罩住了所有海岸，自动陆架 18.5 -> 0.66 百万 km²）；按 spacing_km 间隔贪心取点，每点半径 radius_km。"""
+    sm = np.load(shelf_path)
+    em = sm & (E_eng > min_elev_m)
+    lab, n = label_wrap(em)
+    if n:
+        a = grid.cell_area_km2
+        big = np.bincount(lab.ravel(), weights=a.ravel(), minlength=n + 1) / 1e6 >= min_Mkm2
+        big[0] = False
+        em = big[lab]
+    X = grid.xyz[em]
+    order = np.argsort(-np.abs(X[:, 2]))        # 先高纬再低纬，结果与格点顺序无关地稳定
+    pts = []
+    cos_s = np.cos(spacing_km / R_KM)
+    for k in order:
+        if not pts or (X[pts] @ X[k]).max() < cos_s:
+            pts.append(int(k))
+    lo, la = xyz_to_lonlat(X[pts])
+    lines = ["# U32：实测活动陆缘——自动陆架（老被动陆缘的陆架与陆坡）在正向演化 0 Ma 被明显抬起的地方，下一次构建初始世界时不补陆架。",
+             "# 由 scripts/design_forward.py --write-shelf-active 生成，不要手改。露出的原因是那里在正向演化中实际在汇聚：",
+             "# 下行一侧的陆架撞进海沟、撞上岛弧（碰撞增厚），或贴着增厚的造山带被侧向流动的地壳垫高（陆架本身不接受弧增厚，",
+             "# engine_params.arc_cont_min_T_km）。地球上活动陆缘的陆架窄。",
+             f"# 来源运行：{run_tag}；高出海面 {min_elev_m:g} m 以上、成片 {min_Mkm2:g} 百万 km² 以上的 {float(grid.cell_area_km2[em].sum()) / 1e6:.2f} 百万 km²，"
+             f"按 {spacing_km:g} km 间隔取 {len(pts)} 个点，每点半径 {radius_km:g} km。",
+             "points:"]
+    lines += [f"  - [{float(a):.2f}, {float(b):.2f}, {radius_km:g}]" for a, b in zip(np.atleast_1d(lo), np.atleast_1d(la))]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    return len(pts)
+
+
+def hypsometry(grid, E: np.ndarray) -> dict:
+    """U32：陆地高程的面积加权分位与大陆架（0 ~ −200 m）占海洋面积的比例（评审 stage1_2026-10-25_1 第 1、3 条的客观证据）。"""
+    a = grid.cell_area_km2
+    land, oc = E > 0, E <= 0
+
+    def wpct(x, w, ps):
+        o = np.argsort(x)
+        c = np.cumsum(w[o]) / w[o].sum()
+        return [int(round(float(np.interp(q / 100.0, c, x[o])))) for q in ps]
+
+    return {"land_elev_m_percentiles": wpct(E[land], a[land], [5, 10, 25, 50, 75, 90]),
+            "shelf_fraction_of_ocean": round(float(a[oc & (E > -200)].sum() / a[oc].sum()), 4)}
 
 
 def coast_mask(land: np.ndarray) -> np.ndarray:
@@ -844,6 +941,8 @@ def main() -> int:
     ap.add_argument("--snap-every", type=int, default=10)
     ap.add_argument("--figures-only", action="store_true")
     ap.add_argument("--no-figures", action="store_true")
+    ap.add_argument("--write-shelf-active", action="store_true",
+                    help="U32：把 0 Ma 露出海面的自动陆架写进 config/design/shelf_active_<history>.yaml（实测活动陆缘）")
     args = ap.parse_args()
     t_start = time.perf_counter()
     tag = f"{args.design}_{args.history}_L{args.level}"
@@ -935,6 +1034,16 @@ def main() -> int:
                 f"环礁 {r['n_atoll']}，海山 {r['n_seamount']}；链的方向 {r['engine_bearing_deg']}°（终图 {r['design_bearing_deg']}°），"
                 f"最老的 {r['oldest_Ma']} Ma，离热点最远 {r['max_dist_km']} km（终图链长 {r['design_length_km']} km）")
     cmp_ = compare(design, grid, b, ids, info, E_eng, E_fin, label_points(design))
+    shelf_npy = CACHE / "design" / f"shelf_auto_{args.design}_{args.history}_{grid.name}.npy"
+    shelf_cmp = auto_shelf_emerged(grid, E_eng, shelf_npy)
+    if args.write_shelf_active and shelf_npy.exists():
+        out_sa = ROOT / "config" / "design" / f"shelf_active_{args.history}.yaml"
+        n_sa = write_shelf_active(out_sa, grid, E_eng, shelf_npy, f"{run_js['code_version']}，{time.strftime('%Y-%m-%d %H:%M')}")
+        log(f"写 {out_sa.relative_to(ROOT).as_posix()}：{n_sa} 个点")
+    if shelf_cmp:
+        log(f"  自动陆架：{shelf_cmp['area_Mkm2']} 百万 km²，0 Ma 露出海面 {shelf_cmp['emerged_Mkm2']}（{shelf_cmp['emerged_fraction']:.0%}）；"
+            f"露出的片（> 0.03 百万 km²，可写进 initial.margins 的 active_points）："
+            + "；".join(f"[{c['lon']}, {c['lat']}, {c['radius_km']}] {c['area_Mkm2']}" for c in shelf_cmp["clusters"]))
     gulf_cmp = compare_gulfs(hcfg, design, b, grid, E_eng, E_fin)
     for r in gulf_cmp:
         log(f"  浅海湾 {r['id']} {r['name']}：设计水深 {r['design_depth_m']} m，引擎中位 {r['engine_elev_m_p50']} m"
@@ -1000,6 +1109,8 @@ def main() -> int:
         "sea_level_m": [{"t": f["t"], "sea_level_m": round(f["sea_level"], 1), "flooded_continental_crust_Mkm2": a}
                         for f, a in zip(frames, cont_flooded)],
         "gulfs_0Ma": gulf_cmp,
+        "auto_shelf_0Ma": shelf_cmp,
+        "hypsometry_0Ma": hypsometry(grid, E_eng),
         "crust_0Ma": {"continental_Mkm2": round(float(A7[cont].sum()) / 1e6, 1),
                       "arc_origin_continental_Mkm2": round(float(A7[cont & (c0["origin"] == 90)].sum()) / 1e6, 2),
                       "last_orogeny_area_Mkm2": oro_area,
@@ -1027,7 +1138,9 @@ def main() -> int:
                            "source": "scripts/design_forward.py：300 Ma 初始世界 + 倒推的板块运动正向演化到 0 Ma（L7 地壳引擎，"
                                      "构造尺度高程：Airy + GDH1 + 按起伏的剥蚀，无河流侵蚀）；火山岛按半径进海陆掩膜。"
                                      "注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，"
-                                     "不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）",
+                                     "不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）。"
+                                     "浅海湾（陆表海、陆架海、神怒湾、东湾）的陆壳厚度按终图水深设定（user_override），"
+                                     "0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）",
                            "grid": grid.name})
     nc_path = out_w / f"{world_id}_{grid.name}.nc"
     ds.to_netcdf(nc_path)
@@ -1048,6 +1161,9 @@ def main() -> int:
     for p in cmp_["plateaus_basins"]:
         log(f"  {p['kind']} {p['id']} {p['name']}：设计 {p['design_height_m']} m，引擎中位 {p['engine_median_m']} m")
     log(f"A 层（引擎 0 Ma）：{A_eng}")
+    hyp = summary["hypsometry_0Ma"]
+    log(f"陆地高程 5/10/25/50/75/90 分位 {hyp['land_elev_m_percentiles']} m（地球除冰盖 31/62/158/373/812/1437）；"
+        f"大陆架（0 ~ −200 m）占海洋 {hyp['shelf_fraction_of_ocean']}（地球同分辨率 0.0675）")
     log(f"A 层（终图，1024x512）：{A_fin}")
     log(f"陆壳体积变化 {summary['volume_change'] * 100:.2f}%；引擎事件 {ev_counts}")
     if not args.no_figures:

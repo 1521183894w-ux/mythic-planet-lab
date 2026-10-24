@@ -3,11 +3,11 @@
  "display_name": "终图 v2 正向演化 0 Ma",
  "resolution": "1024x512",
  "seed": "design_v2_history_v2",
- "code_version": "aa5876a-dirty",
+ "code_version": "aa1e8e0-dirty",
  "method_class_elevation": "procedural_constrained",
- "source": "scripts/design_forward.py：300 Ma 初始世界 + 倒推的板块运动正向演化到 0 Ma（L7 地壳引擎，构造尺度高程：Airy + GDH1 + 按起伏的剥蚀，无河流侵蚀）；火山岛按半径进海陆掩膜。注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）",
+ "source": "scripts/design_forward.py：300 Ma 初始世界 + 倒推的板块运动正向演化到 0 Ma（L7 地壳引擎，构造尺度高程：Airy + GDH1 + 按起伏的剥蚀，无河流侵蚀）；火山岛按半径进海陆掩膜。注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）。浅海湾（陆表海、陆架海、神怒湾、东湾）的陆壳厚度按终图水深设定（user_override），0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）",
  "stage": 1,
- "generated": "2026-10-25 00:25:18",
+ "generated": "2026-10-25 04:40:15",
  "config_version": 4,
  "figures": [
   {
@@ -98,49 +98,49 @@
    "group": "regions",
    "file": "regions/r1_main_inland_sea.png",
    "title": "区域 1 · 主内海全貌",
-   "why": "海域面积 4.46 百万 km²，从中心到最远海域格点 3082 km；窗口边长取 max(内海所需 6500 km, 地中海对照 4000 km)，两边同比例尺",
+   "why": "海域面积 4.34 百万 km²，从中心到最远海域格点 3078 km；窗口边长取 max(内海所需 6500 km, 地中海对照 4000 km)，两边同比例尺",
    "method_class": "procedural_constrained（世界高程）"
   },
   {
    "group": "regions",
    "file": "regions/r2_inland_sea_complex_coast.png",
    "title": "区域 2 · 主内海中海岸最复杂的一段",
-   "why": "窗口内海岸线 3429 km，平滑后 979 km，海岸复杂度 3.43",
+   "why": "窗口内海岸线 2475 km，平滑后 1078 km，海岸复杂度 2.30",
    "method_class": "procedural_constrained（世界高程）"
   },
   {
    "group": "regions",
    "file": "regions/r3_north_coast.png",
    "title": "区域 3 · 主大陆北端高纬海岸",
-   "why": "主大陆最北的海岸点 80.5°；窗口内海岸线 9163 km，平滑后 5518 km，海岸复杂度 1.66",
+   "why": "主大陆最北的海岸点 79.1°；窗口内海岸线 7144 km，平滑后 4713 km，海岸复杂度 1.52",
    "method_class": "procedural_constrained（世界高程）"
   },
   {
    "group": "regions",
    "file": "regions/r4_polar_coast.png",
    "title": "区域 4 · 极地大陆的一段海岸",
-   "why": "极地大陆伸向低纬最远的海岸点 -57.0°；窗口内海岸线 3037 km，平滑后 2217 km，海岸复杂度 1.37",
+   "why": "极地大陆伸向低纬最远的海岸点 -57.0°；窗口内海岸线 3416 km，平滑后 2237 km，海岸复杂度 1.53",
    "method_class": "procedural_constrained（世界高程）"
   },
   {
    "group": "regions",
    "file": "regions/r5_isthmus.png",
    "title": "区域 5 · 亚大陆之间的陆桥或地峡",
-   "why": "亚大陆 4 与 2 的分界线，是所有亚大陆分界中最窄的；分界线上离海最远 78 km，颈部宽度约 156 km",
+   "why": "亚大陆 3 与 1 的分界线，是所有亚大陆分界中最窄的；分界线上离海最远 78 km，颈部宽度约 156 km",
    "method_class": "procedural_constrained（世界高程）"
   },
   {
    "group": "regions",
    "file": "regions/r6_smoothest_coast.png",
    "title": "区域 6 · 海岸复杂度最低的一段",
-   "why": "窗口内海岸线 2518 km，平滑后 2517 km，海岸复杂度 1.00",
+   "why": "窗口内海岸线 2518 km，平滑后 2458 km，海岸复杂度 1.02",
    "method_class": "procedural_constrained（世界高程）"
   },
   {
    "group": "regions",
    "file": "regions/r7_archipelago.png",
    "title": "区域 7 · 最大的群岛区",
-   "why": "窗口内岛屿 7 个（面积 6113 km² 至 5 百万 km² 的陆块，按质心计）；窗口内海岸线 6919 km，平滑后 1663 km，海岸复杂度 4.16",
+   "why": "窗口内岛屿 8 个（面积 6113 km² 至 5 百万 km² 的陆块，按质心计）；窗口内海岸线 9667 km，平滑后 3239 km，海岸复杂度 2.98",
    "method_class": "procedural_constrained（世界高程）"
   },
   {

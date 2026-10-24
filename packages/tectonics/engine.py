@@ -37,6 +37,19 @@ def arc_profile(d_km, peak_km, max_km):
     return np.where(d_km < peak_km, up, down)
 
 
+HOLE_BORROW_T_KM = 34.0    # U32：走滑带小洞补陆壳时，只从厚于这个的陆壳匀体积（见 Engine.commit）
+
+
+def gap_profile(spec) -> tuple[np.ndarray, np.ndarray, bool]:
+    """Engine.cont_gap_pairs 的一项 -> (宽度节点 km, 厚度节点 km, 是否补小洞)。
+    兼容 U30 的 (T_narrow, w1, T_wide, w_max) 四元组；U32 的写法是 {"knots": [(宽度, 厚度), ...], "holes": bool}。"""
+    if isinstance(spec, dict):
+        kn = np.asarray(spec["knots"], float)
+        return kn[:, 0], kn[:, 1], bool(spec.get("holes", False))
+    T_n, w1, T_w, w_max = spec
+    return np.array([0.0, w1, w_max], float), np.array([T_n, T_n, T_w], float), False
+
+
 def graph_components(n: int, edges: np.ndarray) -> np.ndarray:
     g = coo_matrix((np.ones(len(edges)), (edges[:, 0], edges[:, 1])), shape=(n, n))
     return connected_components(g, directed=False)[1]
@@ -62,13 +75,21 @@ class Engine:
         self.arc_flux_pairs: set | None = None   # U28 第二轮：Params.arc_ocean_flux_factor 只用于这些板块对的俯冲带；None = 所有
         self.arc_accrete_pairs: set | None = None  # U28 第二轮：弧—陆拼贴只在这些板块对之间；None = 所有
         self.arc_compress_pairs: set | None = None  # U28 第三轮：Params.arc_compress_T_max_km 只用于这些板块对的俯冲带；None = 所有
-        # U30：两块陆块之间张开（走滑拉分、裂谷）时，空隙填拉伸减薄的陆壳而不是洋壳：板块对键 -> (T_narrow, w1, T_wide, w_max)。
+        # U30：两块陆块之间张开（走滑拉分、裂谷）时，空隙填拉伸减薄的陆壳而不是洋壳：板块对键 -> (T_narrow, w1, T_wide, w_max)，
+        # 或（U32）{"knots": [(宽度 km, 厚度 km), ...], "holes": bool}。
         # 累计张开宽度（两侧原有陆壳——不含之前填的拉伸陆壳——之间的距离）不到 w1 时厚 T_narrow（沉积物充填的拉分盆地、走滑谷），
-        # w1 到 w_max 之间线性减薄到 T_wide（拉伸陆缘），超过 w_max 才长洋壳（大陆裂开、海底扩张）。
+        # w1 到 w_max 之间线性减薄到 T_wide（拉伸陆缘），超过 w_max 才长洋壳（大陆裂开、海底扩张）。knots 是同一件事的分段线性写法
+        # （U32 裂开的被动陆缘：陆架 -> 陆坡），最后一个节点的宽度就是 w_max。
         # 只用于两块真正张开处、且在 cont_gap_since 的时刻以后（第一次运行从 180 Ma 洲 C、D 碰撞起，碰撞带上网格对不齐的小缝也被填成陆壳、
-        # 再被碰撞增厚，缝合带上堆出 1.1 百万 km²、平均 49 km 的陆壳）
+        # 再被碰撞增厚，缝合带上堆出 1.1 百万 km²、平均 49 km 的陆壳）。
+        # holes（U32）：两块陆壳之间不在张开的小洞（走滑带上两块板块的网格对不齐留下的）补成相邻的陆壳（厚度取两侧较薄的一侧、
+        # 但不超过剖面的第一个厚度，即拉分盆地的厚度；属性抄最近的单元），不补成洋壳：U31 的 0 Ma 上洲 C、D 之间的走滑带有一串 0–20 Myr 的洋壳深水坑（评审 stage1_2026-10-25_1 第 4 条）
         self.cont_gap_pairs: dict = {}
         self.cont_gap_since: dict = {}             # 板块对键 -> 从哪个时刻（Ma）起才填陆壳；不写 = 一直
+        # U32：陆壳上盘的弧增厚（岩浆增生与构造缩短）只用于这些板块对的俯冲带；None = 所有。终图倒推时外大洋板块固定在地幔参照系里，
+        # 大陆一漂移，前方就与它慢速俯冲（U28 第二轮查明），终图在那里是被动陆缘；这种俯冲照旧消耗洋壳，但不再增厚陆壳
+        # （否则补在被动陆缘外的陆架、陆表海被抬出海面，U30 的浅海湾有 29–44% 的格点这样露出）
+        self.arc_cont_pairs: set | None = None
         self.fronts: deque = deque()
         self.coll_area: dict[tuple[int, int], float] = {}
         self.events: list[dict] = []
@@ -399,9 +420,21 @@ class Engine:
                     dT = dT_m + dT_s
             else:
                 dT = dT + dT_s
+            blocked = np.zeros(j.size, bool)
+            cont_j = (c.ctype[j] == CONT) & (c.origin[j] != ORIGIN_ARC)
+            if self.arc_cont_pairs is not None:     # U32：陆壳上的弧增厚只用于设计的俯冲带（见 arc_cont_pairs）
+                sub = S[sel][k[ok]]
+                key = np.minimum(sub, o) * 1000 + np.maximum(sub, o)
+                blocked |= cont_j & ~np.isin(key, list(self.arc_cont_pairs))
+            if p.arc_cont_min_T_km is not None:     # U32：海平面以下的减薄陆缘不接受弧增厚（见 Params.arc_cont_min_T_km）
+                blocked |= cont_j & (c.T[j] < p.arc_cont_min_T_km)
+            if blocked.any():
+                self.budget["arc_suppressed"] = (self.budget.get("arc_suppressed", 0.0)
+                                                 + float((dT * self.area[j])[blocked].sum()))
+                dT = np.where(blocked, 0.0, dT)
             c.T[j] += dT
             self.budget["arc_added"] += float((dT * self.area[j])[c.ctype[j] == CONT].sum())
-            strong = j[f > 0.3]
+            strong = j[(f > 0.3) & ~blocked]
             c.oro[strong] = np.where(c.oro[strong] == ORO_COLL, ORO_COLL, ORO_ARC)
             c.oro_t[strong] = self.t
             conv = j[(c.ctype[j] == OCEAN) & (c.T[j] >= p.arc_to_cont_T_km)]
@@ -643,6 +676,8 @@ class Engine:
                         r = conv[key[conv] == kk]
                         owner[r[(ct_o[r] == OCEAN) & (ct_2[r] == OCEAN)]] = sub
             cont_T = np.full(gap.size, np.nan)        # U30：两块陆块之间的窄缺口填拉伸减薄陆壳（见 cont_gap_pairs）
+            hole_src = np.full(gap.size, -1, np.int64)   # U32：补成相邻陆壳的小洞，抄哪个单元的属性（new 里的序号）
+            hole_T = np.full(gap.size, np.nan)           # 小洞的厚度：两侧较薄的一侧，但不超过剖面的第一个厚度（拉分盆地厚度）
             if self.cont_gap_pairs and has.any():
                 p2 = pl[np.arange(gap.size), first]
                 key2 = np.minimum(pl[:, 0], p2).astype(np.int64) * 1000 + np.maximum(pl[:, 0], p2)
@@ -652,9 +687,14 @@ class Engine:
                 for q, wv in self.omega.items():
                     om2[q] = wv
                 apart = np.sum(np.cross(om2[pl[:, 0]] - om2[p2], m.xyz[gap]) * (pos[keep[i1]] - pos[keep[i2]]), axis=1) > 0.0
-                for kk, (T_n, w1, T_w, w_max) in self.cont_gap_pairs.items():
+                for kk, spec in self.cont_gap_pairs.items():
                     if self.t > self.cont_gap_since.get(kk, np.inf) + 1e-9:
                         continue
+                    kw, kT, holes = gap_profile(spec)
+                    if holes:
+                        hs = np.flatnonzero(both & ~apart & (key2 == kk))
+                        hole_src[hs] = np.where(new.T[i1[hs]] <= new.T[i2[hs]], i1[hs], i2[hs])
+                        hole_T[hs] = np.minimum(new.T[hole_src[hs]], kT[0])
                     sel = np.flatnonzero(both & apart & (key2 == kk))
                     if sel.size == 0:
                         continue
@@ -666,8 +706,7 @@ class Engine:
                             continue
                         dq, _ = cKDTree(pos[keep[orig]]).query(m.xyz[gap[sel]], workers=KD_WORKERS)
                         width += km_from_chord(dq)
-                    T_sel = np.where(width <= w1, T_n, T_n + (T_w - T_n) * (width - w1) / max(w_max - w1, 1e-9))
-                    cont_T[sel] = np.where(width <= w_max, T_sel, np.nan)
+                    cont_T[sel] = np.where(width <= kw[-1], np.interp(width, kw, kT), np.nan)
             bn = np.empty(gap.size, np.int64)
             for q in np.unique(owner):
                 s = owner == q
@@ -689,6 +728,30 @@ class Engine:
                 g.oro_t[cg] = self.t
                 g.t_form[cg] = self.t
                 self.budget["rift_fill"] = self.budget.get("rift_fill", 0.0) + float((g.T[cg] * m.area_km2[g.node[cg]]).sum())
+            hg = hole_src[uniq] >= 0
+            if hg.any():                          # U32：走滑带上的小洞补成相邻陆壳（见 cont_gap_pairs 的 holes）
+                src = hole_src[uniq][hg]
+                for f in ("ctype", "origin", "prov", "t_form", "oro", "oro_t"):
+                    getattr(g, f)[hg] = getattr(new, f)[src]
+                # 厚度封顶在拉分盆地厚度；体积从最近的 12 个单元里增厚的陆壳匀出来。
+                # （只从两侧两个单元匀时每个一下子薄约 16 km，又成了深坑）
+                # 第一次运行抄邻居厚度、凭空加体积：走滑带受阻段一直在汇聚，小洞每次提交反复出现，补上的陆壳下一步又被碰撞并进山里，
+                # 累计多出 8.4×10⁶ km³，南方缝合带山系 3003 -> 3899 m；只封顶不守恒时仍多出 8.1×10⁶ km³、3909 m
+                g.T[hg] = hole_T[uniq][hg]
+                g.age[hg] = new.age[src]
+                V = g.T[hg] * m.area_km2[g.node[hg]]
+                nb = k[uniq][hg]                                   # 小洞最近的 12 个单元（两侧都有）
+                a_nb = m.area_km2[new.node[nb]]
+                # 只从增厚的陆壳（厚于 hole_borrow_T_km）匀体积：受阻挤压段由旁边的山脊供给（补上的陆壳下一步又被碰撞并回山里，
+                # 体积守恒）；纯走滑段两侧是正常陆壳，匀不出来的部分当作拉分盆地自己的填充（那里不汇聚，不会被并进山里）。
+                # 第一版从最近的 12 个陆壳单元一律匀，同一地带每次提交都匀，累计把走滑带东侧的平原压成一串低于海平面的洼地
+                avail = np.where(new.ctype[nb] == CONT, np.maximum(new.T[nb] - HOLE_BORROW_T_KM, 0.0), 0.0) * a_nb
+                tot = avail.sum(1)
+                take = np.minimum(V, tot)
+                share = np.where(tot[:, None] > 0, avail * (take / np.maximum(tot, 1e-12))[:, None], 0.0)
+                np.subtract.at(new.T, nb.ravel(), (share / a_nb).ravel())
+                self.budget["hole_created"] = self.budget.get("hole_created", 0.0) + float((V - take).sum())
+                self.budget["hole_fill"] = self.budget.get("hole_fill", 0.0) + float(V.sum())
             new = new.concat(g)
             n_new = int(uniq.size)
         self.c = new
