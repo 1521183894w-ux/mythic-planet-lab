@@ -171,3 +171,36 @@ def test_apply_basement_thickens_only_the_plates_ocean_inside_the_polygon():
     assert (eng.c.origin[sel] == ORIGIN_ARC).all()
     assert (eng.c.T[box & (eng.c.plate == 1)] == 7.0).all()          # 别的板块不动
     assert (eng.c.T[land] == 35.0).all()                              # 陆壳不动
+
+
+def test_build_plumes_reads_swells_and_anchored_lips():
+    """U29：地幔柱目录 -> 动力地形穹隆（地幔参照系）与大火成岩省（锚在板块上、按时间先后排）。"""
+    h = _hcfg_arcs()
+    h["plumes"] = [
+        {"id": "P1", "name": "甲", "at": [10.0, 5.0], "active": [30, 0], "swell": {"amp_m": 800, "radius_km": 1000},
+         "lips": [{"t": 20, "anchor": "BSE", "at": [10.0, 5.0], "radius_km": 300, "add_km": 5.0}]},
+        {"id": "P2", "name": "乙", "lips": [{"t": 60, "line": [[0.0, 0.0], [2.0, 1.0]], "radius_km": 200, "flat_km": 50,
+                                              "add_km": 8.0}]}]
+    pl = fwd.build_plumes(h)
+    assert [s["id"] for s in pl["swells"]] == ["P1"] and pl["swells"][0]["active"] == (30.0, 0.0)
+    assert [e["t"] for e in pl["lips"]] == [60.0, 20.0]                 # 先发生的在前
+    assert pl["lips"][0]["anchor"] == 0 and pl["lips"][0]["pts0"].shape == (2, 3)
+    assert pl["lips"][1]["anchor"] == 102 and pl["lips"][1]["flat_km"] == 0.0
+
+
+def test_build_plumes_lip_footprint_from_final_map_plateau():
+    """U29：大火成岩省的范围可以取终图高原的轮廓与从边缘往里的渐变（与终图示意高程同一画法）。"""
+    from mythic.metrics.grid import LatLonGrid
+
+    g = LatLonGrid(360, 180)
+    design = {"plateaus": [{"id": "PX", "poly": [[10, 0], [30, 0], [30, 20], [10, 20]], "ramp_km": 300, "meander_km": [0, 0]}]}
+    h = _hcfg_arcs()
+    h["plumes"] = [{"id": "P3", "name": "丙", "lips": [{"t": 30, "anchor": "BSE", "feature": "PX", "add_km": 10.0}]}]
+    e = fwd.build_plumes(h, design, g, np.ones(g.shape, bool))["lips"][0]
+    LO, LA = np.meshgrid(g.lon, g.lat)
+    W = e["W"]
+    assert e["pts0"] is None and e["anchor"] == 102
+    assert W[(np.abs(LO - 20) < 2) & (np.abs(LA - 10) < 2)].min() > 0.99      # 中间满额
+    assert (W[(LO < 8) | (LO > 32)] == 0).all()                                # 轮廓外为 0
+    edge = W[(np.abs(LO - 10.5) < 0.1) & (np.abs(LA - 10) < 0.6)]             # 紧贴西缘的一列格点
+    assert 0 < edge.max() < 0.5 and W[(np.abs(LO - 11.5) < 0.1) & (np.abs(LA - 10) < 0.6)].min() > edge.max()  # 往里渐升

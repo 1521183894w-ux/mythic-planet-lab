@@ -405,6 +405,21 @@ def circle_lonlat(center, radius_km: float, n: int = 120) -> np.ndarray:
     return np.c_[lon, lat]
 
 
+def region_ramp(p: dict, grid: LatLonGrid, land: np.ndarray, default_amps):
+    """高原、盆地的范围（轮廓加平滑起伏）与离边缘的平滑渐变（0 -> 1，ramp_km 内，smoothstep）。
+    U29 起也给大火成岩省当范围用（scripts/design_forward.py build_plumes 的 feature）。"""
+    amps = p.get("meander_km", default_amps)
+    m = lonlat_mask(grid, meander_polygon(p["poly"], feature_rng(p["id"]), amps)) & land
+    if not m.any():
+        return m, None
+    d_in = np.nan_to_num(distance_to_set_km(grid, ~m, query=m))
+    x = np.clip(d_in / float(p.get("ramp_km", 150.0)), 0, 1)
+    return m, x * x * (3 - 2 * x)
+
+
+PLATEAU_MEANDER, BASIN_MEANDER = [120.0, 45.0], [150.0, 50.0]
+
+
 def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
     """示意高程（visual_only）：只为看图和让指标代码能跑，不是模拟结果。"""
     land = b["land"]
@@ -413,25 +428,19 @@ def elevation(design: dict, grid: LatLonGrid, b: dict) -> np.ndarray:
     elev = np.zeros(grid.shape)
     base = 120.0 + 380.0 * (1 - np.exp(-d_land / 500.0))
     elev[land] = base[land]
+
     def region(p, default_amps):
-        """高原、盆地的范围（轮廓加平滑起伏）与离边缘的平滑渐变（0 -> 1，ramp_km 内，smoothstep）。"""
-        amps = p.get("meander_km", default_amps)
-        m = lonlat_mask(grid, meander_polygon(p["poly"], feature_rng(p["id"]), amps)) & land
-        if not m.any():
-            return m, None
-        d_in = np.nan_to_num(distance_to_set_km(grid, ~m, query=m))
-        x = np.clip(d_in / float(p.get("ramp_km", 150.0)), 0, 1)
-        return m, x * x * (3 - 2 * x)
+        return region_ramp(p, grid, land, default_amps)
 
     # 高原（ramp_km 小 = 陡崖围着的平顶，大 = 动力地形那样的宽缓穹隆）
     for p in design.get("plateaus", []):
-        m, ramp = region(p, [120.0, 45.0])
+        m, ramp = region(p, PLATEAU_MEANDER)
         if ramp is not None:
             elev[m] = np.maximum(elev[m], base[m] + (p["height_m"] - base[m]) * ramp[m])
     # 盆地（克拉通内部沉降、前陆盆地：比周围低平）；height_m < 0 的是低于海平面的陆地洼地（死海式）
     depr = np.zeros(grid.shape, bool)
     for p in design.get("basins", []):
-        m, ramp = region(p, [150.0, 50.0])
+        m, ramp = region(p, BASIN_MEANDER)
         if ramp is not None:
             low = np.minimum(elev[m], p["height_m"])
             elev[m] = elev[m] + (low - elev[m]) * ramp[m]

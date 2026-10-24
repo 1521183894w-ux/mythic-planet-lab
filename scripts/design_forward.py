@@ -45,7 +45,8 @@ from mythic.tectonics.mesh import CACHE, Raster, load_mesh  # noqa: E402
 from mythic.tectonics.prehistory import InitialWorld  # noqa: E402,F401  （反序列化要用）
 
 FIELDS = {"elev": np.float32, "T": np.float32, "age": np.float32, "t_form": np.float32, "oro_t": np.float32,
-          "plate": np.int16, "ctype": np.int8, "origin": np.int16, "oro": np.int8, "prov": np.int32}
+          "plate": np.int16, "ctype": np.int8, "origin": np.int16, "oro": np.int8, "prov": np.int32,
+          "dyn": np.float32}                # U29：动力地形（m，已加在 elev 里）
 MIN_REGION_KM2 = 50_000.0          # 偏差清单只列面积不小于约 220 km × 220 km 的差异区
 
 
@@ -299,8 +300,42 @@ def build_hotspots(hcfg: dict, kin, vp) -> list:
     return out
 
 
+def build_plumes(hcfg: dict, design: dict | None = None, grid=None, land: np.ndarray | None = None) -> dict:
+    """history yaml plumes -> {"swells": [...], "lips": [...]}（U29）。swell 的 at 在地幔参照系里固定；lip 的范围是现今坐标、
+    锚在 anchor 板块上（不写或 0 = 地幔参照系），t 时刻的范围 = 把它按 anchor 板块的运动从现今转回 t（与岛弧系统的区域同一约定）。
+    范围三选一：at（点）或 line（折线）加 radius_km / flat_km；或 feature = 终图高原编号，取终图同一轮廓（带平滑起伏）与
+    从边缘往里 ramp_km 的渐变（design_final_map.region_ramp），这时要给 design、grid、land（终图 1024x512 栅格）。"""
+    from design_final_map import PLATEAU_MEANDER, region_ramp
+    from mythic.tectonics.geometry import lonlat_to_xyz
+
+    plateaus = {q["id"]: q for q in (design or {}).get("plateaus", [])}
+    code_id = plate_codes(hcfg)
+    swells, lips = [], []
+    for pl in hcfg.get("plumes", []):
+        if pl.get("swell"):
+            sw = pl["swell"]
+            swells.append({"id": pl["id"], "name": pl["name"], "center": lonlat_to_xyz(*pl["at"]),
+                           "amp_m": float(sw["amp_m"]), "radius_km": float(sw["radius_km"]),
+                           "active": (float(pl["active"][0]), float(pl["active"][1]))})
+        for lp in pl.get("lips", []):
+            a = lp.get("anchor", 0)
+            e = {"id": pl["id"], "name": pl["name"], "what": lp.get("what", ""), "t": float(lp["t"]),
+                 "anchor": 0 if a in (0, "0", None) else code_id[a], "anchor_code": a, "add_km": float(lp["add_km"]),
+                 "pts0": None, "W": None, "radius_km": float(lp.get("radius_km", 0.0)), "flat_km": float(lp.get("flat_km", 0.0))}
+            if "feature" in lp:
+                if design is None:
+                    raise ValueError(f"地幔柱 {pl['id']} 的大火成岩省按终图要素 {lp['feature']} 取范围，要给 design、grid、land")
+                _, ramp = region_ramp(plateaus[lp["feature"]], grid, land, PLATEAU_MEANDER)
+                e.update({"W": ramp, "grid": grid, "feature": lp["feature"]})
+            else:
+                q = np.asarray(lp["line"] if "line" in lp else [lp["at"]], float)
+                e["pts0"] = np.atleast_2d(lonlat_to_xyz(q[:, 0], q[:, 1]))
+            lips.append(e)
+    return {"swells": swells, "lips": sorted(lips, key=lambda e: -e["t"])}
+
+
 def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict, aprons: dict | None = None,
-             gap_prefer: dict | None = None, volc=None, arcs_hcfg: dict | None = None):
+             gap_prefer: dict | None = None, volc=None, arcs_hcfg: dict | None = None, plumes: dict | None = None):
     kin = RotationFileKinematics(rot)
     regions = arc_regions(arcs_hcfg, kin) if arcs_hcfg else []     # U28 第二轮：岛弧系统的俯冲起始
     basement = arc_regions(arcs_hcfg, kin, "basement") if arcs_hcfg else []   # U28 第三轮：新洋板块继承的老岛弧基底
@@ -346,8 +381,20 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
     if arcs_hcfg and volc is not None:      # 岛弧火山只长在设计的俯冲带上（U28 第二轮，见 VolcanoField.arc_pairs）
         volc.arc_pairs = designed_pairs(arcs_hcfg)
         volc.arc_cont_plates = blocks_ids
+    from mythic.tectonics.plumes import apply_lip, apply_lip_weights, swell_m
+
+    plumes = plumes or {"swells": [], "lips": []}
+    li = 0
+
+    def snap():
+        """快照，叠加动力地形（U29：地幔参照系 = 固定网格，只改高程）。"""
+        f = eng.snapshot()
+        f["dyn"] = swell_m(mesh.xyz, float(f["t"]), plumes["swells"]).astype(np.float32)
+        f["elev"] = f["elev"] + f["dyn"]
+        return f
+
     moved = 0.0
-    frames = [eng.snapshot()]
+    frames = [snap()]
     vframes = [volc.state(eng)] if volc is not None else []
     t = t0
     tw = time.perf_counter()
@@ -378,10 +425,24 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
             bi += 1
             n = apply_basement(eng, e["plate"], e["poly_fn"](float(t)), float(e["T_km"]))
             log(f"  {t:3d} Ma 老岛弧基底：{e['code']} 的 {n} 个洋壳单元厚度至少 {e['T_km']} km")
+        while committed and li < len(plumes["lips"]) and plumes["lips"][li]["t"] >= t - 1e-9:
+            e = plumes["lips"][li]             # U29 大火成岩省：范围按 anchor 板块从现今转回此刻
+            li += 1
+            Rt = np.eye(3) if e["anchor"] == 0 else kin.total_from(e["anchor"], 0.0, float(t))   # 现今 -> t
+            if e["W"] is not None:          # 终图要素的范围：单元此刻的位置转回现今坐标，查栅格上的渐变
+                g = e["grid"]
+                lo, la = xyz_to_lonlat(eng.positions() @ Rt)
+                i = np.clip(((90.0 - la) / 180.0 * g.ny).astype(int), 0, g.ny - 1)
+                j = np.clip(((lo + 180.0) / 360.0 * g.nx).astype(int), 0, g.nx - 1)
+                r = apply_lip_weights(eng, np.where(eng.alive, e["W"][i, j], 0.0), e["add_km"])
+            else:
+                r = apply_lip(eng, unit(e["pts0"] @ Rt.T), e["radius_km"], e["add_km"], e["flat_km"])
+            log(f"  {t:3d} Ma 大火成岩省 {e['id']}（{e['what']}）：{r['n']} 个单元加厚至多 {e['add_km']} km，"
+                f"{r['volume_km3'] / 1e6:.2f}×10⁶ km³")
         if volc is not None:
             volc.step(eng)
         if committed and t % snap_every == 0:
-            frames.append(eng.snapshot())
+            frames.append(snap())
             if volc is not None:
                 vframes.append(volc.state(eng))
             cl = eng.commit_log[-1]
@@ -418,7 +479,8 @@ def save_run(path: Path, eng, frames, meta: dict, vframes=None, volc=None) -> No
 
 def load_run(path: Path):
     z = np.load(path.with_suffix(".npz"))
-    frames = [{name: z[f"{name}_{k}"] for name in FIELDS} | {"t": float(t)} for k, t in enumerate(z["times"])]
+    frames = [{name: (z[f"{name}_{k}"] if f"{name}_{k}" in z.files else np.zeros_like(z[f"elev_{k}"])) for name in FIELDS}
+              | {"t": float(t)} for k, t in enumerate(z["times"])]
     vframes = []
     if "v_frame" in z.files:
         for k in range(len(frames)):
@@ -631,6 +693,29 @@ def compare_arcs(design: dict, v0: dict) -> dict:
             "far_from_design_arcs": int(extra.sum()), "far_from_design_arcs_islands": int((extra & (kind == ISLAND)).sum())}
 
 
+def compare_plumes(hcfg: dict, design: dict, grid, E_eng: np.ndarray, E_fin: np.ndarray, Lf: np.ndarray,
+                   dyn: np.ndarray) -> list:
+    """0 Ma 地幔柱对照（U29）：每次大火成岩省的现今范围（剖面过半处）里引擎与终图的高程、陆地比例；动力地形穹隆中心的抬升量。"""
+    from mythic.tectonics.plumes import distance_km, taper
+
+    pl = build_plumes(hcfg, design, grid, Lf)
+    X = grid.xyz.reshape(-1, 3)
+    rows = []
+    for e in pl["lips"]:
+        w = e["W"] if e["W"] is not None else taper(distance_km(X, e["pts0"]), e["radius_km"], e["flat_km"]).reshape(grid.shape)
+        m = w > 0.5
+        rows.append({"id": e["id"], "kind": "lip", "what": e["what"], "t": e["t"], "add_km": e["add_km"],
+                     "area_Mkm2": round(float(grid.cell_area_km2[m].sum()) / 1e6, 3),
+                     "engine_elev_m_p50": round(float(np.median(E_eng[m]))), "engine_elev_m_p90": round(float(np.percentile(E_eng[m], 90))),
+                     "final_elev_m_p50": round(float(np.median(E_fin[m]))), "final_elev_m_p90": round(float(np.percentile(E_fin[m], 90))),
+                     "engine_land_fraction": round(float((E_eng[m] > 0).mean()), 2), "final_land_fraction": round(float(Lf[m].mean()), 2)})
+    for sw in pl["swells"]:
+        d = distance_km(X, sw["center"][None]).reshape(grid.shape)
+        rows.append({"id": sw["id"], "kind": "swell", "name": sw["name"], "amp_m": sw["amp_m"], "radius_km": sw["radius_km"],
+                     "dyn_m_at_center_0Ma": round(float(dyn[np.unravel_index(np.argmin(d), d.shape)]))})
+    return rows
+
+
 def a_summary(m: dict) -> dict:
     A = m["A"]
     isea = A["main_inland_sea"]
@@ -668,6 +753,11 @@ def main() -> int:
     fcfg = hcfg.get("forward") or {}
     params = Params(**fcfg.get("engine_params", {}))
     polarity = preset_polarity(hcfg)
+    design = apply_options(yaml.safe_load((ROOT / "config" / "design" / f"final_map_{args.design}.yaml")
+                                          .read_text(encoding="utf-8")), set())
+    design["_ver"] = args.design
+    grid = LatLonGrid(1024, 512)
+    b = build(design, grid)
     if not args.figures_only:
         pkl = CACHE / "design" / f"initial_{tag}.pkl"
         if not pkl.exists():
@@ -692,8 +782,12 @@ def main() -> int:
             hs = build_hotspots(hcfg, RotationFileKinematics(rot), vp)
             volc = VolcanoField(hs, vp)
             log(f"热点 {len(hs)} 个（history yaml hotspots）")
+        plumes = build_plumes(hcfg, design, grid, b["land"])
+        if hcfg.get("plumes"):
+            log(f"地幔柱 {len(hcfg['plumes'])} 个（history yaml plumes）：动力地形穹隆 {len(plumes['swells'])} 个，"
+                f"大火成岩省 {len(plumes['lips'])} 次")
         eng, frames, vframes = simulate(world, mesh, rot, args.snap_every, params, polarity, aprons,
-                                        ocean_gap_prefer(hcfg), volc, hcfg if hcfg.get("arcs") else None)
+                                        ocean_gap_prefer(hcfg), volc, hcfg if hcfg.get("arcs") else None, plumes)
         wall = time.perf_counter() - tw
         log(f"模拟完成，用时 {wall:.0f} s")
         save_run(run_path, eng, frames, {"design": args.design, "history": args.history, "level": mesh.level,
@@ -706,11 +800,6 @@ def main() -> int:
     frames, run_js, vframes = load_run(run_path)
 
     log("对照终图（1024x512）")
-    design = apply_options(yaml.safe_load((ROOT / "config" / "design" / f"final_map_{args.design}.yaml")
-                                          .read_text(encoding="utf-8")), set())
-    design["_ver"] = args.design
-    grid = LatLonGrid(1024, 512)
-    b = build(design, grid)
     ids, info = assign_blocks(hcfg, grid, b)
     E_fin = design_elevation(design, grid, b)
     raster = Raster(mesh, 512)
@@ -734,6 +823,16 @@ def main() -> int:
                 f"环礁 {r['n_atoll']}，海山 {r['n_seamount']}；链的方向 {r['engine_bearing_deg']}°（终图 {r['design_bearing_deg']}°），"
                 f"最老的 {r['oldest_Ma']} Ma，离热点最远 {r['max_dist_km']} km（终图链长 {r['design_length_km']} km）")
     cmp_ = compare(design, grid, b, ids, info, E_eng, E_fin, label_points(design))
+    plume_cmp = []
+    if hcfg.get("plumes"):
+        plume_cmp = compare_plumes(hcfg, design, grid, E_eng, E_fin, b["land"], raster(frames[-1]["dyn"]).astype(float))
+    for r in plume_cmp:
+        if r["kind"] == "lip":
+            log(f"  大火成岩省 {r['id']}（{r['what']}，{r['t']:g} Ma）：现今范围 {r['area_Mkm2']} 百万 km²，引擎高程中位 / 90 分位 "
+                f"{r['engine_elev_m_p50']} / {r['engine_elev_m_p90']} m（终图 {r['final_elev_m_p50']} / {r['final_elev_m_p90']}），"
+                f"陆地 {r['engine_land_fraction']:.0%}（终图 {r['final_land_fraction']:.0%}）")
+        else:
+            log(f"  动力地形 {r['id']} {r['name']}：中心抬升 {r['dyn_m_at_center_0Ma']} m（设定 {r['amp_m']:g} m、半径 {r['radius_km']:g} km）")
 
     # 体积账（U26）：写了 volume_balance 的碰撞，终图上它垫出的高原与山系范围内，0 Ma 实际有多少超额地壳
     from design_final_map import feature_mask
@@ -781,6 +880,7 @@ def main() -> int:
         "volume_balance_0Ma": vbal,
         "hotspots_0Ma": hs_cmp,
         "arcs_0Ma": arc_cmp,
+        "plumes_0Ma": plume_cmp,
         "crust_0Ma": {"continental_Mkm2": round(float(A7[cont].sum()) / 1e6, 1),
                       "arc_origin_continental_Mkm2": round(float(A7[cont & (c0["origin"] == 90)].sum()) / 1e6, 2),
                       "last_orogeny_area_Mkm2": oro_area,
@@ -1231,6 +1331,39 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
         fig.tight_layout(rect=(0, 0.02, 1, 0.965))
         stamp(fig, " · 陆架陆壳、老岛弧基底、挤压型俯冲带由设计设定（history yaml initial.margins、arcs.basement、arcs.subduction）")
         fig.savefig(out / "09_taiwan_luzon.png", dpi=100)
+        plt.close(fig)
+
+    # ---- 10 地幔柱：动力地形穹隆与大火成岩省近景（U29） ----
+    if hcfg.get("plumes"):
+        wins = [("南方高原 PL2、火山隆起 PL6 与南方火山高地 M22", (-22.0, 16.0, -36.0, 32.0)),
+                ("东南火山高原 PL4（埃塞俄比亚式）", (12.0, 40.0, -3.0, 21.0)),
+                ("北方火山岛 I9", (-64.0, -32.0, 56.0, 71.0)),
+                ("南大洋高原（凯尔盖朗式）", (58.0, 86.0, -56.0, -37.0))]
+        dyn = raster(frames[-1]["dyn"]).astype(float)
+        fig, axs = plt.subplots(2, 4, figsize=(24, 13))
+        for cidx, (title, (x0, x1, y0, y1)) in enumerate(wins):
+            sx, sy = (lon >= x0) & (lon <= x1), (lat >= y0) & (lat <= y1)
+            ext = [lon[sx][0], lon[sx][-1], lat[sy][-1], lat[sy][0]]
+            for r, (E, land, other, lab) in enumerate(((E_fin, Lf, E_eng > 0, "终图（示意高程）"),
+                                                       (E_eng, E_eng > 0, Lf, "引擎 0 Ma（构造尺度 + 动力地形）"))):
+                ax = axs[r, cidx]
+                rgb = shaded_elevation(E, grid.pixel_km_equator, vert_exag=3.0, land=land)[..., :3]
+                ax.imshow(rgb[np.ix_(sy, sx)], extent=ext, interpolation="nearest", aspect="auto")
+                ax.contour(lon[sx], lat[sy], other[np.ix_(sy, sx)].astype(float), levels=[0.5],
+                           colors="#d7301f" if r == 0 else "#1a9850", linewidths=0.9)
+                if r == 1 and np.nanmax(dyn[np.ix_(sy, sx)]) > 100:
+                    cs = ax.contour(lon[sx], lat[sy], dyn[np.ix_(sy, sx)], levels=[200, 500, 800], colors="#6a3d9a",
+                                    linewidths=0.8, linestyles="--")
+                    ax.clabel(cs, fmt="%d m", fontsize=7)
+                ax.set_xlim(x0, x1)
+                ax.set_ylim(y0, y1)
+                ax.grid(alpha=0.3)
+                ax.set_title(f"{lab}\n{title}", fontsize=10)
+        fig.text(0.5, 0.995, "U29 地幔柱：动力地形穹隆（紫虚线 = 引擎的动力地形等值线）与大火成岩省；"
+                 "上排终图（红线 = 引擎 0 Ma 海岸），下排引擎 0 Ma（绿线 = 终图海岸）", fontsize=13, ha="center", va="top")
+        fig.tight_layout(rect=(0, 0.02, 1, 0.97))
+        stamp(fig, " · 地幔柱位置、时间与规模由设计设定（history yaml plumes）")
+        fig.savefig(out / "10_plumes.png", dpi=95)
         plt.close(fig)
 
 if __name__ == "__main__":

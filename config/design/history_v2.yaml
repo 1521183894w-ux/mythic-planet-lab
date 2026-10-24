@@ -342,6 +342,45 @@ hotspots:
   - {id: K12, name: 西风小岛, at: [37.6, -46.8], active: [10, 0], flux: weak}
   - {id: K13, name: 中脊双岛, at: [78.0, -37.8], active: [10, 0], flux: weak}
   - {id: K14, name: 冰火孤岛, at: [74.6, -53.4], active: [20, 0], flux: medium}
+  # U29：南大洋高原岛的活动端（赫德式），长在约 35 Ma 的洋底高原上（高原见 plumes 的 KG）
+  - {id: H4, name: 南大洋高原岛, at: [76.0, -49.0], active: [35, 0], flux: medium}
+
+# U29：地幔柱（packages/tectonics/plumes.py；scripts/design_forward.py）。method_class：procedural_constrained。
+# - swell = 动力地形穹隆：地幔柱头部的热浮力把上方岩石圈整体顶起，只改高程、不改地壳。at 固定在地幔参照系里，active 期间叠加在
+#   上方的任何板块上（停了就消失）；升余弦剖面，中心 amp_m、半径 radius_km 处为 0（半高宽 = radius_km 的一半）。
+#   量级：夏威夷海隆宽约 1200 km、高约 1 km；南部非洲高原比一般克拉通（400–500 m）高出 1 km 以上（Lithgow-Bertelloni & Silver 1998）。
+# - lips = 大火成岩省：t 时刻按 anchor 板块把现今坐标的范围转回去，范围里的陆壳与洋壳加厚 add_km（溢流玄武岩加下地壳底侵），
+#   之后随板块漂移、按引擎规则剥蚀（35 km 以上按 120 Myr）与流动。范围：at 或 line 外 radius_km 内（flat_km 内满额、之外升余弦减到 0），
+#   或 feature = 终图高原编号（终图同一轮廓与从边缘往里 ramp_km 的渐变）。
+#   量级：埃塞俄比亚溢流玄武岩约 30 Ma 在 1 Myr 内喷出、最厚约 2 km、约 60 万 km²，下地壳底侵 8–12 km、高原下地壳约 40 km；
+#   凯尔盖朗洋底高原地壳 21–25 km；冰岛地壳平均约 29 km、中部 46 km。
+plumes:
+  - {id: PS, name: 南方地幔柱, at: [1.5, -22.0], active: [30, 0], swell: {amp_m: 900, radius_km: 1000},
+     what: 南方高原 PL2（地盾整体抬升的宽缓穹隆，终图 1300 m）；同源的南方地盾裂谷 M10（裂谷肩与谷底）是拉张，属 U30}
+  - {id: PV, name: 火山隆起地幔柱, at: [-5.0, 23.0], active: [40, 0], swell: {amp_m: 700, radius_km: 1000},
+     what: 火山隆起 PL6（终图 1100 m）与顶上的南方火山高地 M22（终图 2000 m，提贝斯提、霍加尔式火山群）,
+     lips: [{t: 20, anchor: C, line: [[-6.0, 22.0], [-2.0, 24.4]], radius_km: 220, flat_km: 60, add_km: 6.0,
+             what: 南方火山高地的火山群与底侵}]}
+  - {id: PE, name: 东南火山高原地幔柱（阿法尔式）, at: [26.5, 9.8], active: [32, 0], swell: {amp_m: 800, radius_km: 1000},
+     what: 东南火山高原 PL4（终图 2400 m，埃塞俄比亚式），与南裂谷海同源,
+     # 范围取终图 PL4 的轮廓（带平滑起伏）与从边缘往里 200 km 的渐变：第一次运行用圆形范围（半径 550 km），出来是一块正圆的台地，
+     # 真实的溢流玄武岩省轮廓不规则（熔岩流的范围、边缘被剥蚀成台阶陡崖）
+     lips: [{t: 30, anchor: D, feature: PL4, add_km: 10.0,
+             what: 东南火山高原的溢流玄武岩（约 2 km）与下地壳底侵（约 8 km）}]}
+  - {id: DE, name: 东洋热点的溢流玄武岩（德干式）,
+     what: 约 75 Ma 南方地盾陆块西北部经过东洋热点（hotspot_checks）时的大喷发，之后热点留下向南的火山岛与环礁链,
+     lips: [{t: 75, anchor: IN, at: [76.0, 18.0], radius_km: 500, flat_km: 200, add_km: 6.0,
+             what: 南方地盾半岛西北部的溢流玄武岩台地}]}
+  - {id: KG, name: 南大洋高原地幔柱（凯尔盖朗式）,
+     what: 约 35 Ma 地幔柱在洋中脊附近的年轻洋壳上堆出洋底高原（引擎 0 Ma 那里的洋壳 40–56 Myr），之后被板块带走、热点留在活动端（H4）,
+     lips: [{t: 35, anchor: PA, line: [[74.5, -47.6], [72.0, -46.0], [68.0, -44.0]], radius_km: 320, flat_km: 120, add_km: 15.0,
+             what: 洋底高原（洋壳加厚到约 22 km）}]}
+  - {id: IC, name: 北方火山岛地幔柱, at: [-48.0, 63.5], active: [60, 0], swell: {amp_m: 900, radius_km: 900},
+     what: 北方火山岛 I9。终图写的成因是洋中脊上的热点（冰岛式），但倒推的历史里这里不是洋中脊（引擎 0 Ma 是洲 A 名下约 380 Myr 的老洋壳、
+       水深约 5.5 km），洋中脊上的厚洋壳出不来；按强地幔柱在几乎不动的板块下长期堆出的火山台地处理（强热点 60 Myr 的岩浆量约 7×10⁶ km³，
+       足够在半径 200 km 内加厚 20 km 以上；冰岛地壳平均约 29 km）,
+     lips: [{t: 10, anchor: A, line: [[-50.6, 63.2], [-45.2, 63.8]], radius_km: 220, flat_km: 70, add_km: 24.0,
+             what: 北方火山岛的火山台地与底侵}]}
 
 # U25：正向演化（scripts/design_forward.py）的引擎参数，覆盖 packages/tectonics/crust.py Params 的默认值
 forward:

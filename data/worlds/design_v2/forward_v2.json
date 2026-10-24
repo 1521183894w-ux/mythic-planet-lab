@@ -3,17 +3,17 @@
  "design": "v2",
  "history": "v2",
  "mesh_level": 7,
- "run_code_version": "21172ca-dirty",
- "code_version": "21172ca-dirty",
- "wall_s": 525.7,
+ "run_code_version": "d12dfbe-dirty",
+ "code_version": "d12dfbe-dirty",
+ "wall_s": 310.4,
  "compare_grid": "1024x512",
  "comparison": {
   "final_land_Mkm2": 145.6,
-  "engine_land_Mkm2": 144.3,
-  "both_land_Mkm2": 141.6,
+  "engine_land_Mkm2": 144.4,
+  "both_land_Mkm2": 141.7,
   "missing_land_Mkm2": 3.9,
   "extra_land_Mkm2": 2.7,
-  "land_iou": 0.955,
+  "land_iou": 0.956,
   "coast_offset_km": {
    "engine_to_final": {
     "median": 0,
@@ -83,7 +83,7 @@
    "juvenile": {
     "name": "新生地壳（岛弧、热点岛、孤岛等）",
     "area_Mkm2": 0.78,
-    "land_fraction": 0.18
+    "land_fraction": 0.303
    }
   },
   "mountains": [
@@ -200,7 +200,7 @@
     "name": "南方缝合带山系",
     "design_height_m": 2600,
     "final_p90_m": 2468,
-    "engine_p90_m": 2650,
+    "engine_p90_m": 2680,
     "engine_land_fraction": 0.86,
     "cause": "洲 C、D 碰撞（约 180–150 Ma）的缝合带，约 35 Ma 起作为左旋走滑带复活（洲 D 相对洲 C 北移，累计走滑约 400 km 量级，与阿尔金、圣安德烈斯断层相当，倒推时核算）；0–15°N 段走向比运动方向偏东，走滑受阻、挤压抬升（黎巴嫩山式）"
    },
@@ -326,7 +326,7 @@
     "name": "南方地盾裂谷",
     "design_height_m": 2400,
     "final_p90_m": 2190,
-    "engine_p90_m": 400,
+    "engine_p90_m": 478,
     "engine_land_fraction": 1.0,
     "cause": "地幔柱上方的年轻裂谷（约 25 Ma–今），两肩隆起、谷底下陷，沿老省份边界弯折，谷中有火山与湖"
    },
@@ -335,7 +335,7 @@
     "name": "南方火山高地",
     "design_height_m": 2000,
     "final_p90_m": 1987,
-    "engine_p90_m": 400,
+    "engine_p90_m": 1799,
     "engine_land_fraction": 1.0,
     "cause": "地幔柱隆起上的火山群"
    },
@@ -425,7 +425,7 @@
     "name": "南方地盾半岛西缘山",
     "design_height_m": 1500,
     "final_p90_m": 1324,
-    "engine_p90_m": 370,
+    "engine_p90_m": 834,
     "engine_land_fraction": 0.92,
     "cause": "裂开陆缘的掀斜断崖"
    },
@@ -481,7 +481,7 @@
     "id": "PL2",
     "name": "南方高原",
     "design_height_m": 1300,
-    "engine_median_m": 412,
+    "engine_median_m": 758,
     "final_median_m": 708,
     "cause": "地盾整体抬升（地幔柱上方的动力地形，宽缓穹隆）；裂谷从东缘穿过"
    },
@@ -499,7 +499,7 @@
     "id": "PL4",
     "name": "东南火山高原",
     "design_height_m": 2400,
-    "engine_median_m": 400,
+    "engine_median_m": 1646,
     "final_median_m": 1123,
     "cause": "地幔柱溢流玄武岩高原（与南裂谷海、裂谷同源），边缘是玄武岩台阶陡崖"
    },
@@ -517,7 +517,7 @@
     "id": "PL6",
     "name": "火山隆起",
     "design_height_m": 1100,
-    "engine_median_m": 400,
+    "engine_median_m": 782,
     "final_median_m": 789,
     "cause": "地幔柱上方的宽缓隆起（动力地形），顶部是南方火山高地 M22"
    },
@@ -660,21 +660,6 @@
   },
   {
    "kind": "missing",
-   "area_Mkm2": 0.11,
-   "lon": -47.6,
-   "lat": 63.6,
-   "near_features": [
-    "北方火山岛",
-    "北洋冰火岛"
-   ],
-   "final_block_cells": {
-    "-1": 164
-   },
-   "engine_elev_m_median": -5547,
-   "no": 5
-  },
-  {
-   "kind": "missing",
    "area_Mkm2": 0.09,
    "lon": 98.4,
    "lat": 25.0,
@@ -687,7 +672,7 @@
     "702": 60
    },
    "engine_elev_m_median": -3623,
-   "no": 6
+   "no": 5
   },
   {
    "kind": "extra",
@@ -702,7 +687,7 @@
     "0": 59
    },
    "engine_elev_m_median": 531,
-   "no": 7
+   "no": 6
   },
   {
    "kind": "extra",
@@ -717,7 +702,7 @@
     "0": 51
    },
    "engine_elev_m_median": 3224,
-   "no": 8
+   "no": 7
   },
   {
    "kind": "missing",
@@ -732,7 +717,7 @@
     "803": 49
    },
    "engine_elev_m_median": -3711,
-   "no": 9
+   "no": 8
   },
   {
    "kind": "missing",
@@ -747,7 +732,7 @@
     "801": 59
    },
    "engine_elev_m_median": -449,
-   "no": 10
+   "no": 9
   },
   {
    "kind": "missing",
@@ -762,7 +747,7 @@
     "803": 34
    },
    "engine_elev_m_median": -5597,
-   "no": 11
+   "no": 10
   }
  ],
  "A_engine_0Ma": {
@@ -777,7 +762,7 @@
    "open_ocean": true
   },
   "ocean_fraction": 0.717,
-  "main_continent_share": 0.734,
+  "main_continent_share": 0.733,
   "subcontinents": 4,
   "subcontinent_areas_Mkm2": [
    38.3,
@@ -951,10 +936,10 @@
   {
    "id": "I9",
    "name": "北方火山岛",
-   "n_island": 34,
+   "n_island": 60,
    "n_atoll": 0,
-   "n_seamount": 27,
-   "max_island_radius_km": 38.1,
+   "n_seamount": 1,
+   "max_island_radius_km": 48.5,
    "oldest_Ma": 60.0,
    "max_dist_km": 342,
    "engine_bearing_deg": 260,
@@ -1160,6 +1145,20 @@
    "design_bearing_deg": null,
    "design_length_km": null,
    "design_size_km": 18
+  },
+  {
+   "id": "H4",
+   "name": "南大洋高原岛",
+   "n_island": 5,
+   "n_atoll": 0,
+   "n_seamount": 8,
+   "max_island_radius_km": 19.0,
+   "oldest_Ma": 35.0,
+   "max_dist_km": 892,
+   "engine_bearing_deg": 112,
+   "design_bearing_deg": 316,
+   "design_length_km": 834,
+   "design_size_km": null
   }
  ],
  "arcs_0Ma": {
@@ -1282,24 +1281,129 @@
   "far_from_design_arcs": 736,
   "far_from_design_arcs_islands": 235
  },
+ "plumes_0Ma": [
+  {
+   "id": "DE",
+   "kind": "lip",
+   "what": "南方地盾半岛西北部的溢流玄武岩台地",
+   "t": 75.0,
+   "add_km": 6.0,
+   "area_Mkm2": 0.385,
+   "engine_elev_m_p50": 773,
+   "engine_elev_m_p90": 849,
+   "final_elev_m_p50": 279,
+   "final_elev_m_p90": 868,
+   "engine_land_fraction": 0.74,
+   "final_land_fraction": 0.75
+  },
+  {
+   "id": "KG",
+   "kind": "lip",
+   "what": "洋底高原（洋壳加厚到约 22 km）",
+   "t": 35.0,
+   "add_km": 15.0,
+   "area_Mkm2": 0.436,
+   "engine_elev_m_p50": -2879,
+   "engine_elev_m_p90": -2259,
+   "final_elev_m_p50": -195,
+   "final_elev_m_p90": -92,
+   "engine_land_fraction": 0.0,
+   "final_land_fraction": 0.05
+  },
+  {
+   "id": "PE",
+   "kind": "lip",
+   "what": "东南火山高原的溢流玄武岩（约 2 km）与下地壳底侵（约 8 km）",
+   "t": 30.0,
+   "add_km": 10.0,
+   "area_Mkm2": 0.33,
+   "engine_elev_m_p50": 1867,
+   "engine_elev_m_p90": 2106,
+   "final_elev_m_p50": 2212,
+   "final_elev_m_p90": 2400,
+   "engine_land_fraction": 1.0,
+   "final_land_fraction": 1.0
+  },
+  {
+   "id": "PV",
+   "kind": "lip",
+   "what": "南方火山高地的火山群与底侵",
+   "t": 20.0,
+   "add_km": 6.0,
+   "area_Mkm2": 0.199,
+   "engine_elev_m_p50": 1701,
+   "engine_elev_m_p90": 1799,
+   "final_elev_m_p50": 1101,
+   "final_elev_m_p90": 1971,
+   "engine_land_fraction": 1.0,
+   "final_land_fraction": 1.0
+  },
+  {
+   "id": "IC",
+   "kind": "lip",
+   "what": "北方火山岛的火山台地与底侵",
+   "t": 10.0,
+   "add_km": 24.0,
+   "area_Mkm2": 0.146,
+   "engine_elev_m_p50": 661,
+   "engine_elev_m_p90": 1869,
+   "final_elev_m_p50": 739,
+   "final_elev_m_p90": 892,
+   "engine_land_fraction": 0.78,
+   "final_land_fraction": 0.83
+  },
+  {
+   "id": "PS",
+   "kind": "swell",
+   "name": "南方地幔柱",
+   "amp_m": 900.0,
+   "radius_km": 1000.0,
+   "dyn_m_at_center_0Ma": 899
+  },
+  {
+   "id": "PV",
+   "kind": "swell",
+   "name": "火山隆起地幔柱",
+   "amp_m": 700.0,
+   "radius_km": 1000.0,
+   "dyn_m_at_center_0Ma": 699
+  },
+  {
+   "id": "PE",
+   "kind": "swell",
+   "name": "东南火山高原地幔柱（阿法尔式）",
+   "amp_m": 800.0,
+   "radius_km": 1000.0,
+   "dyn_m_at_center_0Ma": 798
+  },
+  {
+   "id": "IC",
+   "kind": "swell",
+   "name": "北方火山岛地幔柱",
+   "amp_m": 900.0,
+   "radius_km": 900.0,
+   "dyn_m_at_center_0Ma": 899
+  }
+ ],
  "crust_0Ma": {
   "continental_Mkm2": 143.7,
-  "arc_origin_continental_Mkm2": 0.33,
+  "arc_origin_continental_Mkm2": 0.35,
   "last_orogeny_area_Mkm2": {
    "collision": 6.73,
-   "arc": 45.3,
+   "arc": 45.32,
    "rift": 0.0
   },
   "thickness_km_p99": 65.0,
   "elev_m_p99_land": 4945
  },
- "volume_change": 0.0288,
+ "volume_change": 0.0298,
  "budget_km3": {
   "arc_added": 518945100,
-  "eroded": 377611046,
+  "eroded": 379309814,
   "rift_thinning": 0,
-  "arc_converted": 11116602,
-  "arc_accreted": 1758358
+  "arc_converted": 11845901,
+  "arc_accreted": 1758358,
+  "lip_added": 17248929
  },
  "engine_event_counts": {
   "subduction_start": 16,
@@ -1446,5 +1550,5 @@
    "lon": 120.43
   }
  ],
- "generated": "2026-10-24 17:48:54"
+ "generated": "2026-10-24 18:40:09"
 }
