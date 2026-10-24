@@ -52,6 +52,24 @@ def excess_thickness_km(elev_m: np.ndarray, p: Params | None = None) -> np.ndarr
     return np.clip((np.clip(elev_m, p.e_cont_ref_m, e_max) - p.e_cont_ref_m) / p.iso_m_per_km, 0.0, None)
 
 
+def old_orogen_add_km(oo: dict, hcfg: dict, t0: float) -> float:
+    """300 Ma 以前的古老造山带在 t0 时刻比正常陆壳多出的厚度（km）。
+    写了 add_km 就直接用（U24–U30）；写了 formed_ma 与 h0_m（U31），就按正向演化用的剥蚀规律（erosion_law = "relief"）
+    从造山结束时的超高 h0 剥蚀到 t0：孤立山脉的起伏 ≈ 超高，dh/dt = −a·h − b·h²（a = iso·bg，b = iso·K），
+    h(t) = a·h0·e^(−at) / (a + b·h0·(1 − e^(−at)))。不论 h0 多高，几亿年后都收敛到约 1/(b·t)，即"老山的持久高度"。"""
+    if "add_km" in oo:
+        return float(oo["add_km"])
+    p = Params(**hcfg.get("forward", {}).get("engine_params", {}))
+    if p.erosion_law != "relief" or p.ero_n != 2.0:
+        raise ValueError("old_orogens.formed_ma 只用于 erosion_law = relief、ero_n = 2（解析解）")
+    iso = p.iso_m_per_km / 1000.0
+    a, b = iso * p.ero_bg_per_myr, iso * p.ero_K_km_myr
+    t = float(oo["formed_ma"]) - t0
+    h0 = float(oo["h0_m"]) / 1000.0
+    h = a * h0 * np.exp(-a * t) / (a + b * h0 * (1.0 - np.exp(-a * t)))
+    return float(h / iso)
+
+
 def volume_balance(hcfg, design, grid, b, ext_masks, T_ext) -> list:
     """碰撞的体积账（U26）：补回的陆缘（下行块被挤掉的陆壳）有多少体积；写了 volume_balance 的碰撞，
     再算终图上它垫出的高原与山系需要多少超额地壳（Airy 均衡由终图高度反算，乘面积）。"""
@@ -180,11 +198,12 @@ def main() -> int:
     T[craton] = float(ini["craton_T_km"])
     mts = {m["id"]: m for m in design.get("mountains", [])}
     oo = ini["old_orogens"]
+    oo_add = old_orogen_add_km(oo, hcfg, float(ini["t0"]))
     for mid in oo["ids"]:
         p, _ = densify(mts[mid]["line"], 20.0)
         dd, _ = cKDTree(p).query(grid.xyz.reshape(-1, 3))
         dk = km_from_chord(dd).reshape(grid.shape)
-        add = float(oo["add_km"]) * np.exp(-(dk / float(oo["half_width_km"])) ** 2)
+        add = oo_add * np.exp(-(dk / float(oo["half_width_km"])) ** 2)
         T = np.where(ids > 0, T + add, T)
     pls = {p["id"]: p for p in design.get("plateaus", [])}
     for pid in ini["tablelands"]["ids"]:
@@ -363,6 +382,7 @@ def main() -> int:
         "shelf_margins": [{**s, "volume_1e6_km3": round(float((area[m] * T_ext[m]).sum()) / 1e6, 2)}
                           for s, m in zip(shelf_info, shelf_masks)],
         "volume_balance": vb_rows,
+        "old_orogen_add_km": round(oo_add, 2),
         "continental_crust_Mkm2": round(float(A[cont].sum()) / 1e6, 1),
         "of_which_consumed_margin_Mkm2": round(float(A[kind == 2].sum()) / 1e6, 1),
         "present_rigid_blocks_Mkm2": round(float(area[ids > 0].sum()) / 1e6, 1),

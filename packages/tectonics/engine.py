@@ -171,7 +171,7 @@ class Engine:
         pos = self.positions()
         n_sub, n_coll, n_tested = self._interact(pos)
         self._arc(pos)
-        self._surface(p.dt)
+        self._surface(p.dt, pos)
         ocean = self.alive & (self.c.ctype == OCEAN)
         self.c.age[ocean] += p.dt
         self.steps_since_commit += 1
@@ -431,11 +431,16 @@ class Engine:
         return out
 
     # ---- 造山带衰减与地壳流动 -------------------------------------------------------------
-    def _surface(self, dt: float):
+    def _surface(self, dt: float, pos: np.ndarray | None = None):
         c, p = self.c, self.p
         cont = self.alive & (c.ctype == CONT)
         ex = np.where(cont, np.maximum(c.T - p.T_cont, 0.0), 0.0)
-        loss = ex * dt / p.tau_oro_myr
+        if p.erosion_law == "relief":
+            loss = np.minimum(self.erosion_rate(pos) * dt, ex)
+        elif p.erosion_law == "linear":
+            loss = ex * dt / p.tau_oro_myr
+        else:
+            raise ValueError(f"未知的 erosion_law：{p.erosion_law}")
         c.T -= loss
         self.budget["eroded"] += float((loss * self.area).sum())
         i, j = self.pedges[:, 0], self.pedges[:, 1]
@@ -447,6 +452,33 @@ class Engine:
             dv = np.bincount(i, flux, minlength=len(c)) - np.bincount(j, flux, minlength=len(c))
             c.T += dv / self.area
         self._collapse(cont)
+
+    def relief_km(self, pos: np.ndarray | None = None) -> np.ndarray:
+        """每个单元的起伏（km）：本单元高程 − ero_relief_km 半径内最低处的高程（海面以下按海平面算）。
+        各单元按当前位置落到固定网格的最近节点，在固定网格上一圈一圈取最小（L7 一圈约 60 km），所以跨板块边界的落差也算在内
+        （第一版只在同一板块内找，压在板块交界上的缝合带山脊看不到对面的低地，几乎不剥蚀）。"""
+        c, p = self.c, self.p
+        if pos is None:
+            pos = self.positions()
+        a = np.flatnonzero(self.alive)
+        z = np.maximum(elevation(c.gather(a), p), 0.0) / 1000.0
+        _, node = self.m.tree.query(pos[a], workers=KD_WORKERS)
+        zf = np.full(self.m.n, np.inf)
+        np.minimum.at(zf, node, z)
+        i, j = self.m.edges[:, 0], self.m.edges[:, 1]
+        for _ in range(max(1, int(round(p.ero_relief_km / self.m.h_km)))):
+            prev = zf.copy()
+            np.minimum.at(zf, i, prev[j])
+            np.minimum.at(zf, j, prev[i])
+        out = np.zeros(len(c))
+        out[a] = np.maximum(z - zf[node], 0.0)
+        return out
+
+    def erosion_rate(self, pos: np.ndarray | None = None) -> np.ndarray:
+        """erosion_law = "relief" 的岩石剥蚀速率（km/Myr），见 Params.erosion_law。"""
+        c, p = self.c, self.p
+        h_ex = np.maximum(c.T - p.T_cont, 0.0) * p.iso_m_per_km / 1000.0
+        return p.ero_K_km_myr * self.relief_km(pos) ** p.ero_n + p.ero_bg_per_myr * h_ex
 
     def _collapse(self, cont: np.ndarray):
         """超过 T_max 的地壳"摊平"：每个超厚连通区的多余体积，一圈一圈填到同板块外围陆壳上（每圈按剩余容量比例填），

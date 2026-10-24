@@ -259,3 +259,60 @@ def test_continental_gap_fills_stretched_crust_then_ocean(mesh):
     assert (new & (eng.c.ctype == 0)).any()               # 超过 w_max 后长洋壳
     eng0, new0 = run({})
     assert new0.any() and (eng0.c.ctype[new0] == 0).all()
+
+
+def test_relief_erosion_keeps_old_low_mountains_and_erodes_high_ones_fast(mesh):
+    """U31：按起伏的非线性剥蚀（erosion_law = "relief"）。静止的大陆上放一座低矮老山（超高 1 km）与一座高山（超高 4 km）：
+    低山 200 Myr 后仍保留大半（"linear" 120 Myr 衰减只剩 19%），高山开始时剥得比 "linear" 快；不剥到 35 km 以下。"""
+    iso = Params().iso_m_per_km / 1000.0
+
+    def run(law, n_myr=200):
+        c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=60.0)
+        low = cont & (mesh.xyz @ lonlat_to_xyz(-25.0, 0.0) >= np.cos(np.radians(3.0)))
+        high = cont & (mesh.xyz @ lonlat_to_xyz(25.0, 0.0) >= np.cos(np.radians(3.0)))
+        c.T[low] = 35.0 + 1.0 / iso
+        c.T[high] = 35.0 + 4.0 / iso
+        w = {1: np.zeros(3), 2: np.zeros(3)}
+        p = Params(erosion_law=law, kappa_km2_myr=0.0, ero_relief_km=1.5 * mesh.h_km)
+        eng = Engine(mesh, c, p, 300.0, w)
+        rate0 = eng.erosion_rate() if law == "relief" else None
+        T_hist = []
+        for _ in range(n_myr):
+            eng.step({q: np.eye(3) for q in eng.plates}, w)
+            T_hist.append(eng.c.T.copy())
+        return eng, low, high, rate0, T_hist
+
+    eng, low, high, rate0, Th = run("relief")
+    # 孤立隆起的起伏 = 超高：E = K·h² + bg·h
+    p = eng.p
+    assert rate0[low].max() == pytest.approx(p.ero_K_km_myr * 1.0 + p.ero_bg_per_myr * 1.0, rel=1e-6)
+    keep_low = (eng.c.T[low] - 35.0).mean() * iso
+    # 解析解：dh/dt = −a·h − b·h²（a = iso·bg，b = iso·K），h = a·h0·e^(−at) / (a + b·h0·(1 − e^(−at)))
+    a, b = iso * p.ero_bg_per_myr, iso * p.ero_K_km_myr
+    expect = a * np.exp(-a * 200) / (a + b * (1 - np.exp(-a * 200)))
+    assert keep_low == pytest.approx(expect, rel=0.05)
+    assert keep_low > 0.45                                     # 1 km 的老山 200 Myr 后仍有约一半
+    assert (eng.c.T[low] >= 35.0 - 1e-9).all() and (eng.c.T[high] >= 35.0 - 1e-9).all()
+    eng_l, low_l, high_l, _, Th_l = run("linear")
+    assert (eng_l.c.T[low_l] - 35.0).mean() * iso < 0.25       # 旧规则：e^(-200/120) ≈ 19%
+    # 头 10 Myr 高山剥得比旧规则快（起伏 4 km：0.4 + 0.02 km/Myr，旧规则 26.4/120 = 0.22 km/Myr）
+    assert (Th[9][high] < Th_l[9][high_l]).all()
+
+
+def test_relief_sees_across_plate_boundaries(mesh):
+    """U31：起伏在固定网格上找最低处，压在板块交界上的山脊也看得到对面板块的低地（第一版只在同一板块内找，缝合带山脊几乎不剥蚀）。"""
+    iso = Params().iso_m_per_km / 1000.0
+    c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+    c.ctype[:] = CONT
+    c.T[:] = 35.0
+    # 板块 1 最外一圈（贴着板块 2）抬高 2 km；它在板块 1 里面的邻居也抬高，板块内看不到低地
+    cen = lonlat_to_xyz(0.0, 0.0)
+    ang = np.degrees(np.arccos(np.clip(mesh.xyz @ cen, -1, 1)))
+    ridge = (c.plate == 1) & (ang > 20.0)
+    c.T[c.plate == 1] = 35.0 + 2.0 / iso
+    eng = Engine(mesh, c, Params(erosion_law="relief", ero_relief_km=1.5 * mesh.h_km), 100.0,
+                 {1: np.zeros(3), 2: np.zeros(3)})
+    edge = ridge & np.isin(np.arange(mesh.n), mesh.edges[(c.plate[mesh.edges[:, 0]] != c.plate[mesh.edges[:, 1]])].ravel())
+    assert edge.any()
+    r = eng.relief_km()
+    assert np.allclose(r[edge], 2.0, atol=1e-6)

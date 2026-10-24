@@ -418,6 +418,10 @@ forward:
     arc_min_cont_km: 150.0                 # U28 第二轮：离上盘自己的陆壳 150 km 以外（第一轮 250 km 切掉了千岛式东北岛链中段，它离两端的
                                            # 陆地 230–350 km）；陆缘弧的火山带离海岸只有几十公里，仍被排除
   engine_params:
+    # U31：剥蚀改按起伏非线性（packages/tectonics/crust.py Params.erosion_law）。U30 以前超出 35 km 的厚度一律按 120 Myr 指数衰减，
+    # 低矮的老山与高山一样快：终图上约 20 条山系（老造山带、板内山地）0 Ma 只剩设计高度的 1/5–1/3，大陆大片是 400 m 的平原。
+    # 地球上低起伏的老山剥得很慢（阿巴拉契亚 25–30 m/Myr，Matmon 等 2003），古生代造山带两三亿年后仍有 1–2 km
+    erosion_law: relief
     # U28 弧增厚标定：原来全部按俯冲相对速度（0.8 km/Myr @ 10 cm/yr），长期快速俯冲会顶到 65 km 上限
     # （大洋板块主导东大洋后洲 B 东岸、远方大陆南段都到 4945 m）。分成两项：岩浆增生按相对速度，
     # 构造缩短按上盘朝海沟前进的速度（远方大陆西漂约 2.5 cm/yr → 安第斯式高山；洲 B 几乎不动 → 只有岩浆增生的岛弧式山地）
@@ -448,7 +452,10 @@ initial:
   craton_T_km: 36.0
   craton_lithology: [LT7, LT8, LT9]                     # 终图岩性区里的古陆核
   craton_min_block_Mkm2: 3.0                            # 没有画古陆核的大块，取内部离边缘最远处做一个古陆核
-  old_orogens: {ids: [M6, M13b, M16, M8b], add_km: 4.0, half_width_km: 150}
+  # U31：古老造山带的初始厚度按造山年龄由正向演化的剥蚀规律算出（scripts/design_initial_world.py old_orogen_add_km）：
+  # 约 400 Ma（加里东—阿卡迪亚式）造山结束时超高 4.5 km，剥蚀 100 Myr 到 300 Ma 时约 1.4 km（加厚约 9 km），0 Ma 约 0.5 km（高程约 0.9 km）。
+  # U24–U30 统一加 4 km（约 +0.6 km），在 120 Myr 线性衰减下 0 Ma 只剩约 +50 m
+  old_orogens: {ids: [M6, M13b, M16, M8b], formed_ma: 400, h0_m: 4500, half_width_km: 150}
   tablelands: {ids: [PL7], add_km: 7.0, ramp_km: 70}
   basins: {ids: [B1, B2, B3], sub_km: 0.8, ramp_km: 300}
   margin_km: 250                                        # 块边缘 250 km 内往海岸减薄

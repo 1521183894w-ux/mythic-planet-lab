@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "db7a200-dirty",
+ "code_version": "aa5876a-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -162,21 +162,22 @@
    "supply_1e6_km3": 4.8
   }
  ],
+ "old_orogen_add_km": 10.42,
  "continental_crust_Mkm2": 154.6,
  "of_which_consumed_margin_Mkm2": 10.2,
  "present_rigid_blocks_Mkm2": 144.8,
  "land_above_sea_level_Mkm2": 146.5,
  "ocean_fraction": 0.713,
  "elevation_m_percentiles_land": {
-  "5": 123,
+  "5": 124,
   "50": 400,
   "95": 400,
-  "99": 782
+  "99": 1229
  },
  "continental_thickness_km": {
   "median": 35.0,
   "min": 10.7,
-  "max": 42.0
+  "max": 46.4
  },
  "ocean_age_myr": {
   "median": 35.9,
@@ -273,5 +274,5 @@
    "plate_Mkm2": 1.1
   }
  ],
- "generated": "2026-10-24 19:04:22"
+ "generated": "2026-10-24 23:42:49"
 }

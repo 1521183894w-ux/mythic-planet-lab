@@ -1015,6 +1015,23 @@ def main() -> int:
     from mythic.figures.world import to_jsonable
     (out_w / f"forward_{args.history}.json").write_text(json.dumps(to_jsonable(summary), ensure_ascii=False, indent=1),
                                                        encoding="utf-8", newline="\n")
+    # U31：0 Ma 世界导出为标准世界文件（packages/figures/world.py），供标准图组（scripts/make_figures.py --stage 1）与评审用
+    import xarray as xr
+    world_id = f"design_{args.design}_forward_{args.history}_0Ma"
+    ds = xr.Dataset({"elevation": (("lat", "lon"), E_eng.astype("float32"), {"units": "m"}),
+                     "land": (("lat", "lon"), (E_eng > 0).astype("float32"), {"description": "陆地（高程 > 0）"})},
+                    coords={"lat": grid.lat, "lon": grid.lon},
+                    attrs={"world_id": world_id, "display_name": f"终图 {args.design} 正向演化 0 Ma",
+                           "seed": f"design_{args.design}_history_{args.history}",
+                           "method_class_elevation": "procedural_constrained", "code_version": code_version(),
+                           "source": "scripts/design_forward.py：300 Ma 初始世界 + 倒推的板块运动正向演化到 0 Ma（L7 地壳引擎，"
+                                     "构造尺度高程：Airy + GDH1 + 按起伏的剥蚀，无河流侵蚀）；火山岛按半径进海陆掩膜。"
+                                     "注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，"
+                                     "不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）",
+                           "grid": grid.name})
+    nc_path = out_w / f"{world_id}_{grid.name}.nc"
+    ds.to_netcdf(nc_path)
+    log(f"写 {nc_path.relative_to(ROOT).as_posix()}（标准图组：scripts/make_figures.py --world 该文件 --stage 1）")
     c = summary["comparison"]
     log(f"终图陆地 {c['final_land_Mkm2']}，引擎 0 Ma 陆地 {c['engine_land_Mkm2']}，两者都是陆地 {c['both_land_Mkm2']}，"
         f"终图有而引擎没有 {c['missing_land_Mkm2']}，引擎多出 {c['extra_land_Mkm2']} 百万 km²；IoU {c['land_iou']}")

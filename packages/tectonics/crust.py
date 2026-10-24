@@ -58,7 +58,16 @@ class Params:
                                        # 阿留申中段 35–37 km，露出成大岛。None = 与岩浆增生同一上限（U28 第二轮及以前）
     front_memory_myr: float = 3.0      # 俯冲前缘取最近 3 Myr 内被消耗的单元位置
     collision_radius_km: float = 400.0 # 碰撞时被拼贴地壳的体积分配到上盘 400 km 半径内
-    tau_oro_myr: float = 120.0         # 超出 35 km 的地壳厚度按 120 Myr 时间尺度衰减（剥蚀 + 垮塌）
+    tau_oro_myr: float = 120.0         # 超出 35 km 的地壳厚度按 120 Myr 时间尺度衰减（剥蚀 + 垮塌）；erosion_law = "linear" 时用
+    erosion_law: str = "linear"        # U31："linear" = 超出 35 km 的厚度按 tau_oro_myr 指数衰减（1.2a–U30，高山与低矮老山一样快）；
+                                       # "relief" = 剥蚀速率随起伏非线性增长 E = ero_K·(H_r / 1 km)^ero_n + ero_bg·h_ex（km/Myr 岩石），
+                                       # 只剥超出 35 km 的部分。H_r = 本单元高程 − ero_relief_km 半径内（同板块）最低处（不低于海平面），
+                                       # h_ex = 高出 35 km 陆壳的高程。低矮的老山剥得很慢，几亿年后仍有约 1 km（古生代造山带的持久性）
+    ero_K_km_myr: float = 0.025        # 起伏 1 km 时 25 m/Myr：阿巴拉契亚（大烟山）流域 ¹⁰Be 剥蚀速率 25–30 m/Myr（Matmon 等 2003）
+    ero_n: float = 2.0                 # 剥蚀随起伏非线性增长（Montgomery & Brandon 2002：起伏 1 km 以下近线性、更高时急增）；
+                                       # n = 2 时起伏 4 km 约 0.4 mm/yr、5 km 约 0.6 mm/yr（造山带流域平均的量级）
+    ero_relief_km: float = 165.0       # 起伏按 165 km 半径算（L7 三圈邻居；约为山脊到山麓的距离）
+    ero_bg_per_myr: float = 0.005      # 背景剥蚀：高原内部起伏小，但仍以每 km 超高 5 m/Myr 剥蚀（青藏高原内部 10–20 m/Myr 量级）
     kappa_km2_myr: float = 300.0       # 增厚地壳的侧向流动（厚度扩散系数）
     flow_T_km: float = 40.0            # 只在相邻单元中至少一个厚于 40 km 时流动
     T_max_km: float = 65.0             # 地壳厚度上限：超出部分摊到同板块外围陆壳上（重力垮塌 / 下地壳流动的代理）。
