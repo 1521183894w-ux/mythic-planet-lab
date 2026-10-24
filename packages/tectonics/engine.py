@@ -61,6 +61,7 @@ class Engine:
         self.hole_down_pairs: set | None = None  # U28 第二轮：汇聚边界上的网格小洞归下行板块的板块对；None = 所有板块对（见 commit）
         self.arc_flux_pairs: set | None = None   # U28 第二轮：Params.arc_ocean_flux_factor 只用于这些板块对的俯冲带；None = 所有
         self.arc_accrete_pairs: set | None = None  # U28 第二轮：弧—陆拼贴只在这些板块对之间；None = 所有
+        self.arc_compress_pairs: set | None = None  # U28 第三轮：Params.arc_compress_T_max_km 只用于这些板块对的俯冲带；None = 所有
         self.fronts: deque = deque()
         self.coll_area: dict[tuple[int, int], float] = {}
         self.events: list[dict] = []
@@ -346,6 +347,10 @@ class Engine:
             j = tgt[ok]
             dk = km_from_chord(d[ok])
             oceanic = c.ctype[j] == OCEAN          # 洋壳上盘：窄的洋内弧；陆壳上盘：宽的安第斯型带
+            if p.arc_compress_T_max_km is not None:
+                # U28 第三轮：洋内弧来源的地壳厚过 arc_to_cont_T_km 转成陆壳类型后，仍按窄的洋内弧带增厚。否则一过 31 km 增厚形状
+                # 就换成安第斯式宽带（峰值离海沟 150 km），同一处的速率掉一半、也不再用洋内弧的通量系数，挤压型弧卡在 29–32 km
+                oceanic = oceanic | (c.origin[j] == ORIGIN_ARC)
             f = np.where(oceanic, arc_profile(dk, p.arc_peak_ocean_km, p.arc_max_ocean_km),
                          arc_profile(dk, p.arc_peak_km, p.arc_max_km))
             dT = p.arc_rate_km_myr * f * np.clip(V[sel][k[ok]] / p.v0_cm_yr, 0.0, 1.5) * p.dt
@@ -355,6 +360,7 @@ class Engine:
                     sub = S[sel][k[ok]]
                     fac = fac & np.isin(np.minimum(sub, o) * 1000 + np.maximum(sub, o), list(self.arc_flux_pairs))
                 dT = np.where(fac, dT * p.arc_ocean_flux_factor, dT)
+            dT_s = np.zeros_like(dT)
             if p.arc_shortening_km_myr is not None:
                 # 上盘朝海沟前进造成的构造缩短（见 Params.arc_shortening_km_myr）：上盘的绝对速度在指向最近前缘方向上的分量
                 Xk = X[sel][k[ok]]
@@ -363,10 +369,29 @@ class Engine:
                 u = u - np.sum(u * xj, axis=1, keepdims=True) * xj
                 u = u / np.maximum(np.linalg.norm(u, axis=1, keepdims=True), 1e-12)
                 v_adv = np.sum(np.cross(self.omega[int(o)], xj) * u, axis=1) * R_KM / 10.0
-                dT = dT + p.arc_shortening_km_myr * f * np.clip(v_adv / p.v0_cm_yr, 0.0, 1.5) * p.dt
+                dT_s = p.arc_shortening_km_myr * f * np.clip(v_adv / p.v0_cm_yr, 0.0, 1.5) * p.dt
             if p.arc_ocean_T_max_km is not None:    # 洋内弧增厚上限（见 Params.arc_ocean_T_max_km）
                 juv = (c.ctype[j] == OCEAN) | (c.origin[j] == ORIGIN_ARC)
-                dT = np.where(juv, np.minimum(dT, np.maximum(p.arc_ocean_T_max_km - c.T[j], 0.0)), dT)
+                if p.arc_compress_T_max_km is None:
+                    dT = dT + dT_s
+                    dT = np.where(juv, np.minimum(dT, np.maximum(p.arc_ocean_T_max_km - c.T[j], 0.0)), dT)
+                else:
+                    # 挤压型洋内弧（见 Params.arc_compress_T_max_km）：岩浆增生封顶于 arc_ocean_T_max_km，构造缩短可到更高的上限；
+                    # 不在 arc_compress_pairs 里的俯冲带两项合起来仍封顶于 arc_ocean_T_max_km（与不设时相同）
+                    comp = juv
+                    if self.arc_compress_pairs is not None:
+                        sub = S[sel][k[ok]]
+                        comp = comp & np.isin(np.minimum(sub, o) * 1000 + np.maximum(sub, o), list(self.arc_compress_pairs))
+                    if p.arc_ocean_flux_factor is not None:
+                        # 挤压型洋内弧的构造缩短与岩浆增生一样集中在窄的洋内弧带上：arc_shortening_km_myr 是按 600 km 宽的安第斯带
+                        # 标定的，同样的水平缩短摊在 200 km 宽的带上增厚快 arc_ocean_flux_factor 倍（见 Params.arc_ocean_flux_factor）
+                        dT_s = np.where(comp & oceanic, dT_s * p.arc_ocean_flux_factor, dT_s)
+                    dT_m = np.where(juv, np.minimum(dT, np.maximum(p.arc_ocean_T_max_km - c.T[j], 0.0)), dT)
+                    lim = np.where(comp, p.arc_compress_T_max_km, p.arc_ocean_T_max_km)
+                    dT_s = np.where(juv, np.minimum(dT_s, np.maximum(lim - c.T[j] - dT_m, 0.0)), dT_s)
+                    dT = dT_m + dT_s
+            else:
+                dT = dT + dT_s
             c.T[j] += dT
             self.budget["arc_added"] += float((dT * self.area[j])[c.ctype[j] == CONT].sum())
             strong = j[f > 0.3]

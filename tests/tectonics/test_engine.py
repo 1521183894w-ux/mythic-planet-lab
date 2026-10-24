@@ -189,6 +189,27 @@ def test_ocean_arc_flux_factor_thickens_intraoceanic_arc_faster(mesh):
     assert t3 - 7.0 > 2.5 * (t1 - 7.0) > 0
 
 
+def test_compressional_arc_thickens_past_magmatic_cap_only_where_allowed(mesh):
+    """U28 第三轮：上盘朝海沟推进的洋内弧，构造缩短可以把弧地壳增厚到 arc_compress_T_max_km（吕宋式），岩浆增生仍封顶于
+    arc_ocean_T_max_km；不设或不在 arc_compress_pairs 里时两项合起来封顶于 arc_ocean_T_max_km。"""
+    def run(compress, pairs=None):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)
+        c.ctype[:] = 0                                   # 两块都是洋壳：洋—洋俯冲
+        c.T[:] = 7.0
+        p = Params(arc_rate_km_myr=0.2, arc_shortening_km_myr=0.8, arc_ocean_flux_factor=3.0, arc_ocean_T_max_km=30.0,
+                   arc_to_cont_T_km=31.0, arc_compress_T_max_km=compress)
+        w = {1: np.zeros(3), 2: pole_vector(90.0, 0.0, -0.5)}   # 板块 2 绕北极向西转，在板块 1 东缘压上去（上盘推进）
+        eng = Engine(mesh, c, p, 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 1                   # 板块 1 下行
+        eng.arc_compress_pairs = pairs
+        for _ in range(90):                              # 约 60 Myr 到 30 km 上限，之后只有构造缩短一项
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        return float(eng.c.T[eng.alive & (eng.c.plate == 2)].max())
+    t_off, t_on, t_other = run(None), run(38.0), run(38.0, pairs={5 * 1000 + 6})
+    assert t_off <= 30.0 + 1e-9 and t_other <= 30.0 + 1e-9
+    assert 32.0 < t_on <= 38.0 + 1e-9
+
+
 def test_gap_prefer_does_not_grow_the_over_plate_at_a_convergent_boundary(mesh):
     """U28 第二轮：指定归属的新洋壳只给真正张开处；汇聚边界上网格对不齐的小洞归下行板块，上盘不会一次次往外长
     （否则菲律宾海式板块东缘 50 Myr 长出约 600 km，大陆弧前往海里长、海沟离岸越来越远）。"""

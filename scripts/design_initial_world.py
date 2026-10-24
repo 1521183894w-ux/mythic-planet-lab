@@ -72,6 +72,40 @@ def volume_balance(hcfg, design, grid, b, ext_masks, T_ext) -> list:
     return rows
 
 
+def shelf_margins(ini: dict, grid: LatLonGrid, ids: np.ndarray, ext: np.ndarray, code_id: dict, h, t0: float,
+                  step_myr: float = 5.0) -> tuple[list, list]:
+    """陆架下的减薄陆壳（U28 第三轮，history yaml 的 initial.margins）：现今在海平面以下、属于某块的被动陆缘，按该块的陆缘补进
+    初始世界（写进 ext，与被挤掉的陆缘同一套省份与减薄）。只补多边形里的海（与没划块的新生地壳岛）；300 Ma 以来任何时刻会压到
+    别的块（或别的块补回的陆缘）上的格点不补，免得提前碰撞。原地修改 ext，返回 (每条的统计, 每条的掩膜)。"""
+    infos, masks = [], []
+    others = list(code_id.values())
+    for mg in ini.get("margins", []):
+        pid = code_id[mg["block"]]
+        m = lonlat_mask(grid, mg["poly"]) & (ids <= 0) & (ext == 0)
+        trimmed = 0.0
+        if m.any():
+            Xe = grid.xyz[m]
+            bad = np.zeros(Xe.shape[0], bool)
+            for t in np.arange(0.0, t0 + 0.1, step_myr):
+                P = Xe @ h.absolute(pid, t).T
+                for other in others:
+                    if other == pid:
+                        continue
+                    lo, la = xyz_to_lonlat(P @ h.absolute(other, t))
+                    i = np.clip(((90.0 - la) / 180.0 * grid.ny).astype(int), 0, grid.ny - 1)
+                    j = np.clip(((lo + 180.0) / 360.0 * grid.nx).astype(int), 0, grid.nx - 1)
+                    bad |= (ids[i, j] == other) | (ext[i, j] == other)
+            trimmed = float(grid.cell_area_km2[m][bad].sum())
+            keep = np.zeros_like(m)
+            keep[m] = ~bad
+            m = keep
+        ext[m] = pid
+        masks.append(m)
+        infos.append({**{k: v for k, v in mg.items() if k != "poly"}, "area_Mkm2": round(float(grid.cell_area_km2[m].sum()) / 1e6, 3),
+                      "trimmed_conflict_Mkm2": round(trimmed / 1e6, 3)})
+    return infos, masks
+
+
 def dist_to_mask_km(grid: LatLonGrid, mask: np.ndarray, query: np.ndarray) -> np.ndarray:
     """query 格点到 mask 格点的大圆距离（km）。"""
     out = np.full(grid.shape, np.inf)
@@ -111,6 +145,10 @@ def main() -> int:
 
     # ---- 1. 被挤掉的陆缘（与 design_history.py 的重叠审计同一套计算） ----
     ext, ext_info, ext_masks = consumed_margins(hcfg, grid, ids, h, log, return_masks=True)
+    shelf_info, shelf_masks = shelf_margins(ini, grid, ids, ext, code_id, h, t0)
+    for s in shelf_info:
+        log(f"  陆架下的减薄陆壳 {s['block']}：{s['area_Mkm2']} 百万 km²（会压到别的块而不补的 {s['trimmed_conflict_Mkm2']}）"
+            f"——{s.get('what', '')}")
 
     # ---- 2. 厚度、省份与年龄（现今参照系栅格；本体与被挤掉的陆缘各一套） ----
     log("厚度、省份与年龄")
@@ -148,6 +186,11 @@ def main() -> int:
             dk = dist_to_mask_km(grid, ids == pid, m)
             far, near = float(ini["ext_T_far_km"]), float(ini["ext_T_near_km"])
             T_ext[m] = far + (near - far) * np.exp(-dk[m] / float(ini["ext_taper_km"]))
+    for mg, m in zip(ini.get("margins", []), shelf_masks):     # 陆架下的减薄陆壳用自己的厚度剖面
+        if m.any():
+            dk = dist_to_mask_km(grid, ids == code_id[mg["block"]], m)
+            far, near = float(mg["T_far_km"]), float(mg["T_near_km"])
+            T_ext[m] = far + (near - far) * np.exp(-dk[m] / float(mg["taper_km"]))
     # 块边缘（本体 + 被挤掉的陆缘合起来算边缘）往海岸减薄：本体是现今陆地，只减薄到 coast_T_km（约 +100 m 的滨海平原），
     # 现今海岸留在海平面附近；被挤掉的陆缘按被动陆缘减薄到 margin_min（大部分在海平面以下）。
     # （U24 曾把本体边缘也减薄到 72%，约 −1 km：U25 第一次正向运行时现今海岸带与窄小陆块整片沉到海下。）
@@ -244,9 +287,22 @@ def main() -> int:
                  for r in oc_cfg.get("subduction", [])]
         bg = int(oc_cfg["background"]["id"])
         ops = [{**op, "near": code_id[op["near"]]} if op.get("near") else dict(op) for op in oc_cfg.get("plates", [])]
-        c.plate = assign_ocean_plates(mesh, c.plate.astype(np.int64), c.ctype == CONT, rules,
+        # 陆架下的减薄陆壳（水下的被动陆缘）不参与洋壳划分：第三轮第一、二次运行把它当大陆，东南增生地块名下的洋壳由 10.1 变成
+        # 9.3 百万 km²（离谁近、夹在谁之间都变了），连带改了东南群岛一带的洋壳归属，东大岛山脊 1953 -> 1185 m
+        shelf_nodes = np.zeros(mesh.n, bool)
+        if any(m.any() for m in shelf_masks):
+            sr = np.zeros(grid.shape, int)
+            for mg, m in zip(ini.get("margins", []), shelf_masks):
+                sr[m] = code_id[mg["block"]]
+            for pid in np.unique(sr[sr > 0]):
+                lo, la = xyz_to_lonlat(mesh.xyz @ h.absolute(int(pid), t0))
+                i = np.clip(((90.0 - la) / 180.0 * grid.ny).astype(int), 0, grid.ny - 1)
+                j = np.clip(((lo + 180.0) / 360.0 * grid.nx).astype(int), 0, grid.nx - 1)
+                shelf_nodes |= (sr[i, j] == pid) & (owner == pid) & (kind == 2)
+        c.plate = assign_ocean_plates(mesh, c.plate.astype(np.int64), (c.ctype == CONT) & ~shelf_nodes, rules,
                                       float(oc_cfg["forearc_km"]), float(oc_cfg["corridor_km"]), bg,
                                       float(oc_cfg.get("between_cos", -0.5)), ops).astype(c.plate.dtype)
+        c.plate[shelf_nodes] = owner[shelf_nodes]
         log(f"  洋壳归属：外大洋板块 {mesh.area_km2[c.plate == bg].sum() / 1e6:.0f} 百万 km²；"
             + "".join(f"{op['name']} {mesh.area_km2[c.plate == int(op['id'])].sum() / 1e6:.0f}；" for op in ops)
             + "，".join(f"{id_code[q]} {mesh.area_km2[(c.plate == q) & (c.ctype != CONT)].sum() / 1e6:.0f}"
@@ -278,6 +334,8 @@ def main() -> int:
         "design": args.design, "history": args.history, "code_version": code_version(), "t0": t0,
         "mesh_level": mesh.level, "rotation_file": rot.relative_to(ROOT).as_posix(),
         "consumed_margins": ext_info,
+        "shelf_margins": [{**s, "volume_1e6_km3": round(float((area[m] * T_ext[m]).sum()) / 1e6, 2)}
+                          for s, m in zip(shelf_info, shelf_masks)],
         "volume_balance": vb_rows,
         "continental_crust_Mkm2": round(float(A[cont].sum()) / 1e6, 1),
         "of_which_consumed_margin_Mkm2": round(float(A[kind == 2].sum()) / 1e6, 1),
@@ -300,12 +358,13 @@ def main() -> int:
     log(f"写 {pkl.relative_to(ROOT).as_posix()}")
     if not args.no_figures:
         log("出图")
-        figures(args, design, grid, b, ids, ext, info, id_code, mesh, c, owner, kind, elev, ext_info, ext_masks)
+        figures(args, design, grid, b, ids, ext, info, id_code, mesh, c, owner, kind, elev, ext_info, ext_masks,
+                list(zip(shelf_info, shelf_masks)))
     log(f"完成，用时 {time.perf_counter() - t_start:.0f} s")
     return 0
 
 
-def figures(args, design, grid, b, ids, ext, info, id_code, mesh, c, owner, kind, elev, ext_info, ext_masks):
+def figures(args, design, grid, b, ids, ext, info, id_code, mesh, c, owner, kind, elev, ext_info, ext_masks, shelves=()):
     import cartopy.crs as ccrs
     import matplotlib
 
@@ -352,6 +411,13 @@ def figures(args, design, grid, b, ids, ext, info, id_code, mesh, c, owner, kind
         lo, la = xyz_to_lonlat(v)
         ax.text(float(lo), float(la), f"{e['down']} 补回的陆缘\n{e['continental_Mkm2']} 百万 km²\n（{e['t']} Ma 起被 {e['up']} 覆盖）",
                 transform=PC, fontsize=9, ha="center", va="center", path_effects=halo)
+    for s_, m in shelves:                          # 陆架下的减薄陆壳（U28 第三轮）
+        if not m.any():
+            continue
+        v = unit((grid.xyz[m] * grid.cell_area_km2[m][:, None]).sum(0))
+        lo, la = xyz_to_lonlat(v)
+        ax.text(float(lo) + 4, float(la), f"{s_['block']} 陆架下的减薄陆壳\n{s_['area_Mkm2']} 百万 km²", transform=PC,
+                fontsize=8, ha="left", va="center", path_effects=halo)
     hs = [Patch(fc=v["color"], label=f"{k} {v['name']}（深色 = 要补回的陆缘）") for k, v in info.items()]
     ax.legend(handles=hs, loc="lower left", fontsize=8, ncol=2, framealpha=0.92)
     fig.text(0.5, 0.97, "要补回的陆缘（画在现今位置）：碰撞后上盘块扫过、一路走在陆地上就碰到下行块的地方，"

@@ -108,3 +108,66 @@ def test_apply_region_moves_only_ocean_units_inside_the_polygon():
     on3 = eng.alive & (eng.c.plate == 3)
     assert on3.sum() > 0 and (eng.c.ctype[on3] == 0).all()
     assert (eng.alive & (eng.c.ctype == CONT) & (eng.c.plate != 3)).sum() == land.sum()
+
+
+def test_shelf_margin_fills_sea_in_polygon_and_skips_cells_another_block_crosses():
+    """U28 第三轮：陆架下的减薄陆壳（initial.margins）只补多边形里的海与新生地壳岛，归指定的块；
+    300 Ma 以来会压到别的块上的格点不补（否则正向演化会提前碰撞）。"""
+    init = _load("design_initial_world", "design_initial_world.py")
+    from mythic.metrics.grid import LatLonGrid
+    from mythic.tectonics.geometry import lonlat_to_xyz
+    from mythic.tectonics.reverse import PlateHistory, pose_from_ops
+
+    g = LatLonGrid(360, 180)
+    LO, LA = np.meshgrid(g.lon, g.lat)
+    ids = np.zeros(g.shape, int)
+    ids[(LO > -10) & (LO < 10) & (LA > -20) & (LA < 0)] = 7          # 有陆架的块（不动）
+    ids[(LO > 40) & (LO < 50) & (LA > -20) & (LA < 0)] = 8           # 另一块：100 Ma 时在西边 2000 km（约 18°）
+    ids[(LO > 12) & (LO < 14) & (LA > -6) & (LA < -4)] = -1          # 陆架上的新生地壳岛（台湾式）
+    h = PlateHistory()
+    h.add(7, 0, "X", [(0, np.eye(3)), (100, np.eye(3))])
+    h.add(8, 0, "Y", [(0, np.eye(3)), (100, pose_from_ops(lonlat_to_xyz(45, -10), [{"move": [2000.0, 270.0]}]))])
+    ext = np.zeros(g.shape, int)
+    ini = {"margins": [{"block": "X", "poly": [[8, -20], [26, -20], [26, 0], [8, 0]], "T_near_km": 30.0, "T_far_km": 22.0,
+                        "taper_km": 300}]}
+    info, masks = init.shelf_margins(ini, g, ids, ext, {"X": 7, "Y": 8}, h, 100.0)
+    m = masks[0]
+    assert (ext[m] == 7).all() and not (m & (ids > 0)).any()          # 只补海与新生地壳，块本体不动
+    assert m[(LO > 12) & (LO < 14) & (LA > -6) & (LA < -4)].all()     # 新生地壳岛下面也是陆架
+    assert m[(LO > 11) & (LO < 18) & (LA > -18) & (LA < -2)].all()     # 块 Y 走不到的地方补上
+    assert not m[(LO > 24) & (LO < 26) & (LA > -18) & (LA < -2)].any()  # 块 Y 100 Ma 时压过的地方不补
+    assert info[0]["trimmed_conflict_Mkm2"] > 0
+
+
+def test_compress_pairs_only_from_flagged_subduction_zones():
+    """U28 第三轮：挤压型岛弧只取设计里标了 compress 的俯冲带（马尼拉式），后撤型（伊豆—马里亚纳式）不算。"""
+    h = _hcfg_arcs()
+    assert fwd.compress_pairs(h) == set()
+    h["arcs"]["subduction"][0]["compress"] = True
+    assert fwd.compress_pairs(h) == {102 * 1000 + 930}
+
+
+def test_apply_basement_thickens_only_the_plates_ocean_inside_the_polygon():
+    """U28 第三轮：新洋板块继承的老岛弧基底：只加厚该板块多边形里的洋壳（厚度至少 T_km、记为岛弧来源），已经更厚的不变。"""
+    from mythic.tectonics.crust import CONT, ORIGIN_ARC, Crust, Params
+    from mythic.tectonics.engine import Engine
+    from mythic.tectonics.geometry import lonlat_to_xyz
+    from mythic.tectonics.mesh import load_mesh
+
+    mesh = load_mesh(5)
+    c = Crust(mesh.n)
+    c.plate[:] = np.where(mesh.lon < 20, 1, 2)
+    box = (np.abs(mesh.lat) < 15) & (mesh.lon > 5) & (mesh.lon < 35)
+    land = box & (mesh.lon > 28)
+    c.ctype[land], c.T[land] = CONT, 35.0
+    thick = box & (mesh.lon > 22) & (mesh.lon < 26)
+    c.T[thick] = 25.0
+    eng = Engine(mesh, c, Params(), 50.0, {1: np.zeros(3), 2: np.zeros(3)})
+    poly = lonlat_to_xyz(np.array([5.0, 35.0, 35.0, 5.0]), np.array([-15.0, -15.0, 15.0, 15.0]))
+    n = fwd.apply_basement(eng, 2, poly, 20.0)
+    sel = box & (eng.c.plate == 2) & (eng.c.ctype == 0)
+    assert n >= sel.sum() > 0                                          # 多边形边是大圆弧，比经纬度框略大
+    assert (eng.c.T[sel & ~thick] == 20.0).all() and (eng.c.T[sel & thick] == 25.0).all()
+    assert (eng.c.origin[sel] == ORIGIN_ARC).all()
+    assert (eng.c.T[box & (eng.c.plate == 1)] == 7.0).all()          # 别的板块不动
+    assert (eng.c.T[land] == 35.0).all()                              # 陆壳不动

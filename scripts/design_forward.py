@@ -209,14 +209,40 @@ def ocean_gap_prefer(hcfg: dict) -> dict:
     return out
 
 
-def arc_regions(hcfg: dict, kin) -> list:
-    """history yaml arcs.regions -> [{t, plate, omega_plate, poly_fn, what}]（U28 第二轮）。poly_fn(t) 给出 t 时刻的多边形顶点：
-    现今坐标的顶点按各自锚定的板块转回 t（默认锚在 plate 上；第三项为上盘代号；0 = 地幔参照系）。"""
+def compress_pairs(hcfg: dict) -> set:
+    """岛弧系统里标了 compress: true 的俯冲带（挤压型岛弧，U28 第三轮）的板块对键。"""
+    code_id = plate_codes(hcfg)
+    out = set()
+    for r in (hcfg.get("arcs") or {}).get("subduction", []):
+        if r.get("compress"):
+            for d in r["down"]:
+                for o in r["over"]:
+                    a, b = code_id[d], code_id[o]
+                    out.add(min(a, b) * 1000 + max(a, b))
+    return out
+
+
+def apply_basement(eng, q: int, poly_xyz: np.ndarray, T_km: float) -> int:
+    """新洋板块继承的老岛弧基底（U28 第三轮）：板块 q 落在多边形里的存活洋壳单元，厚度至少 T_km，记为岛弧来源。返回单元数。"""
+    from mythic.tectonics.crust import OCEAN, ORIGIN_ARC
+    from mythic.tectonics.reverse import in_sphere_polygon
+
+    c = eng.c
+    cand = np.flatnonzero(eng.alive & (c.plate == q) & (c.ctype == OCEAN))
+    cand = cand[in_sphere_polygon(eng.positions()[cand], poly_xyz)]
+    c.T[cand] = np.maximum(c.T[cand], float(T_km))
+    c.origin[cand] = ORIGIN_ARC
+    return int(cand.size)
+
+
+def arc_regions(hcfg: dict, kin, key: str = "regions") -> list:
+    """history yaml arcs.regions（或 arcs.basement）-> [{t, plate, omega_plate, poly_fn, what}]（U28 第二轮）。poly_fn(t) 给出
+    t 时刻的多边形顶点：现今坐标的顶点按各自锚定的板块转回 t（默认锚在 plate 上；第三项为上盘代号；0 = 地幔参照系）。"""
     from mythic.tectonics.geometry import lonlat_to_xyz
 
     code_id = plate_codes(hcfg)
     out = []
-    for r in (hcfg.get("arcs") or {}).get("regions", []):
+    for r in (hcfg.get("arcs") or {}).get(key, []):
         q = code_id[r["plate"]]
         verts = []
         for v in r["poly"]:
@@ -226,7 +252,8 @@ def arc_regions(hcfg: dict, kin) -> list:
         def poly_fn(t, verts=verts):
             return np.array([x if a == 0 else unit(kin.total_from(a, 0.0, t) @ x) for a, x in verts])
 
-        out.append({"t": float(r["t"]), "plate": q, "code": r["plate"], "poly_fn": poly_fn, "what": r.get("what", "")})
+        out.append({"t": float(r["t"]), "plate": q, "code": r["plate"], "poly_fn": poly_fn, "what": r.get("what", ""),
+                    "T_km": r.get("T_km")})
     return sorted(out, key=lambda e: -e["t"])
 
 
@@ -276,7 +303,8 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
              gap_prefer: dict | None = None, volc=None, arcs_hcfg: dict | None = None):
     kin = RotationFileKinematics(rot)
     regions = arc_regions(arcs_hcfg, kin) if arcs_hcfg else []     # U28 第二轮：岛弧系统的俯冲起始
-    ri = 0
+    basement = arc_regions(arcs_hcfg, kin, "basement") if arcs_hcfg else []   # U28 第三轮：新洋板块继承的老岛弧基底
+    ri = bi = 0
     c = world.crust.gather(np.arange(len(world.crust)))
     c.uid = np.arange(len(c), dtype=np.int64)
     c.node = np.arange(len(c), dtype=np.int64)
@@ -309,6 +337,10 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         # 弧—陆拼贴只在岛弧系统设计的俯冲带上（东南群岛东大岛、东岸大岛）：第二轮第十次运行，南方地盾陆块北上时擦过东南增生地块
         # 西侧的弧，弧被拼贴成陆、再被碰撞增厚，苏门答腊式长岛西边多出 0.29 百万 km²、约 3 km 高的陆地
         eng.arc_accrete_pairs = arc_pairs
+        # 挤压型洋内弧（构造缩短可越过岩浆增生的上限，吕宋式）只用于设计里标了 compress 的俯冲带（U28 第三轮）。第一次运行按
+        # "上盘朝海沟推进"自动判断、用于岛弧系统的全部俯冲带：南洋陆块板块随极地大陆运动，东缘一条约 3000 km 的弧增厚到 38 km、
+        # 多出 0.93 百万 km² 陆地（地球上汤加—克马德克是后撤型岛弧）；上盘的绝对运动是倒推设定的，不能代表上盘应变状态
+        eng.arc_compress_pairs = compress_pairs(arcs_hcfg)
     if arcs_hcfg:                           # 洋内弧增厚加快只用于设计的俯冲带（U28 第二轮，见 Engine.arc_flux_pairs）
         eng.arc_flux_pairs = designed_pairs(arcs_hcfg)
     if arcs_hcfg and volc is not None:      # 岛弧火山只长在设计的俯冲带上（U28 第二轮，见 VolcanoField.arc_pairs）
@@ -341,6 +373,11 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
                 if volc is not None:
                     volc.arc_protected_uids = protected
             log(f"  {t:3d} Ma 岛弧系统：{e['code']} 接收洋壳单元 {sum(mv.values())} 个（来自 {mv}）")
+        while committed and bi < len(basement) and basement[bi]["t"] >= t - 1e-9:
+            e = basement[bi]                 # 在同一时刻的区域划分（上面的循环）之后
+            bi += 1
+            n = apply_basement(eng, e["plate"], e["poly_fn"](float(t)), float(e["T_km"]))
+            log(f"  {t:3d} Ma 老岛弧基底：{e['code']} 的 {n} 个洋壳单元厚度至少 {e['T_km']} km")
         if volc is not None:
             volc.step(eng)
         if committed and t % snap_every == 0:
@@ -1146,11 +1183,54 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
                 ax.set_ylim(y0, y1)
                 ax.grid(alpha=0.3)
                 ax.set_title(f"{title if cidx == 0 else ''}{chr(10) if cidx == 0 else ''}{times[k]:g} Ma", fontsize=10)
-        fig.text(0.5, 0.995, "U28 第二轮 岛弧系统的形成：浅色块 = 板块；黑线 = 陆壳边界；红点 = 增厚的洋型弧地壳（≥ 12 km）；"
+        fig.text(0.5, 0.995, "U28 岛弧系统的形成（第二轮起）：浅色块 = 板块；黑线 = 陆壳边界；红点 = 增厚的洋型弧地壳（≥ 12 km）；"
                  "橙三角 = 弧火山岛；0 Ma 绿线 = 终图陆地、紫线 = 终图岛弧", fontsize=12, ha="center", va="top")
         fig.tight_layout(rect=(0, 0.015, 1, 0.975))
         stamp(fig, " · 板块边界与运动由设计设定（history yaml arcs）")
         fig.savefig(out / "08_arc_systems.png", dpi=95)
+        plt.close(fig)
+
+    # ---- 09 东岸大岛（台湾式）与吕宋式近景：终图、引擎 0 Ma 高程、引擎 0 Ma 地壳厚度（U28 第三轮） ----
+    if hcfg.get("arcs"):
+        x0, x1, y0, y1 = 110.0, 128.0, 6.0, 28.0
+        sx, sy = (lon >= x0) & (lon <= x1), (lat >= y0) & (lat <= y1)
+        ext = [lon[sx][0], lon[sx][-1], lat[sy][-1], lat[sy][0]]
+        T0 = raster(frames[-1]["T"]).astype(float)
+        P0 = raster(frames[-1]["plate"]).astype(int)
+        fig, axs = plt.subplots(1, 3, figsize=(21, 9.6))
+        panels = [("(a) 终图（设计，示意高程 visual_only）；红线 = 引擎 0 Ma 海岸", E_fin, Lf, E_eng > 0),
+                  ("(b) 引擎 0 Ma 高程（构造尺度）；绿线 = 终图海岸", E_eng, E_eng > 0, Lf)]
+        for ax, (title, E, land, other) in zip(axs[:2], panels):
+            rgb = shaded_elevation(E, grid.pixel_km_equator, vert_exag=3.0, land=land)[..., :3]
+            ax.imshow(rgb[np.ix_(sy, sx)], extent=ext, interpolation="nearest", aspect="auto")
+            ax.contour(lon[sx], lat[sy], other[np.ix_(sy, sx)].astype(float), levels=[0.5],
+                       colors="#d7301f" if other is not Lf else "#1a9850", linewidths=1.0)
+            ax.set_title(title, fontsize=11)
+        ax = axs[2]
+        im = ax.imshow(T0[np.ix_(sy, sx)], extent=ext, interpolation="nearest", aspect="auto", cmap="magma_r", vmin=5, vmax=65)
+        Ps = P0[np.ix_(sy, sx)]
+        bnd = np.zeros(Ps.shape, bool)
+        bnd[:, 1:] |= Ps[:, 1:] != Ps[:, :-1]
+        bnd[1:, :] |= Ps[1:, :] != Ps[:-1, :]
+        yy, xx = np.nonzero(bnd)
+        ax.scatter(lon[sx][xx], lat[sy][yy], s=0.6, c="#2c7fb8", linewidths=0)
+        ax.contour(lon[sx], lat[sy], Lf[np.ix_(sy, sx)].astype(float), levels=[0.5], colors="#1a9850", linewidths=1.0)
+        plt.colorbar(im, ax=ax, shrink=0.7, pad=0.01, label="地壳厚度 km（32.4 km 以上露出海面）")
+        ax.set_title("(c) 引擎 0 Ma 地壳厚度；蓝点 = 板块边界，绿线 = 终图海岸", fontsize=11)
+        for ax in axs:
+            ax.set_xlim(x0, x1)
+            ax.set_ylim(y0, y1)
+            ax.grid(alpha=0.3)
+            for isl in design.get("islands", []):
+                if isl["id"] in ("I3", "I18"):
+                    q = np.asarray(isl["line"], float)
+                    ax.plot(q[:, 0], q[:, 1], "--", color="#6a3d9a", lw=1.2)
+                    ax.text(q[0, 0] + 0.4, q[0, 1], isl["name"], fontsize=9, color="#4a1486", path_effects=halo)
+        fig.text(0.5, 0.995, "U28 第三轮 东岸大岛（台湾式弧—陆碰撞）与吕宋式东南弧北岛（挤压型岛弧 + 老岛弧基底）近景；"
+                 "紫虚线 = 终图岛屿脊线", fontsize=13, ha="center", va="top")
+        fig.tight_layout(rect=(0, 0.02, 1, 0.965))
+        stamp(fig, " · 陆架陆壳、老岛弧基底、挤压型俯冲带由设计设定（history yaml initial.margins、arcs.basement、arcs.subduction）")
+        fig.savefig(out / "09_taiwan_luzon.png", dpi=100)
         plt.close(fig)
 
 if __name__ == "__main__":

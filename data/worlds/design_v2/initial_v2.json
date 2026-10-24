@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "c0beb7b-dirty",
+ "code_version": "21172ca-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -65,6 +65,18 @@
    "trimmed_conflict_Mkm2": 0.0
   }
  ],
+ "shelf_margins": [
+  {
+   "block": "BSE",
+   "what": "台湾海峡式陆架与远端陆缘（东岸大岛的成因）",
+   "T_near_km": 18.0,
+   "T_far_km": 14.0,
+   "taper_km": 300,
+   "area_Mkm2": 0.263,
+   "trimmed_conflict_Mkm2": 0.0,
+   "volume_1e6_km3": 3.36
+  }
+ ],
  "volume_balance": [
   {
    "down": "IN",
@@ -111,8 +123,8 @@
    "supply_1e6_km3": 4.8
   }
  ],
- "continental_crust_Mkm2": 150.8,
- "of_which_consumed_margin_Mkm2": 6.4,
+ "continental_crust_Mkm2": 151.0,
+ "of_which_consumed_margin_Mkm2": 6.6,
  "present_rigid_blocks_Mkm2": 144.8,
  "land_above_sea_level_Mkm2": 146.5,
  "ocean_fraction": 0.713,
@@ -124,14 +136,14 @@
  },
  "continental_thickness_km": {
   "median": 35.0,
-  "min": 13.9,
+  "min": 10.7,
   "max": 42.0
  },
  "ocean_age_myr": {
   "median": 36.0,
   "max": 180.0
  },
- "n_provinces": 292,
+ "n_provinces": 285,
  "blocks": [
   {
    "id": 101,
@@ -154,8 +166,8 @@
    "code": "BSE",
    "name": "东南增生地块",
    "core_Mkm2": 2.45,
-   "consumed_margin_Mkm2": 0.0,
-   "plate_Mkm2": 10.1
+   "consumed_margin_Mkm2": 0.25,
+   "plate_Mkm2": 10.3
   },
   {
    "id": 301,
@@ -195,7 +207,7 @@
    "name": "南方地盾陆块（印度式）",
    "core_Mkm2": 3.77,
    "consumed_margin_Mkm2": 4.73,
-   "plate_Mkm2": 19.4
+   "plate_Mkm2": 19.3
   },
   {
    "id": 701,
@@ -222,5 +234,5 @@
    "plate_Mkm2": 1.1
   }
  ],
- "generated": "2026-10-24 14:29:07"
+ "generated": "2026-10-24 17:35:35"
 }
