@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -204,3 +205,52 @@ def test_build_plumes_lip_footprint_from_final_map_plateau():
     assert (W[(LO < 8) | (LO > 32)] == 0).all()                                # 轮廓外为 0
     edge = W[(np.abs(LO - 10.5) < 0.1) & (np.abs(LA - 10) < 0.6)]             # 紧贴西缘的一列格点
     assert 0 < edge.max() < 0.5 and W[(np.abs(LO - 11.5) < 0.1) & (np.abs(LA - 10) < 0.6)].min() > edge.max()  # 往里渐升
+
+
+def test_gulf_margins_belong_to_the_nearest_block():
+    """U30：浅海湾补的陆壳按终图海湾范围，每格归最近的陆块（不补陆地、不补别的块本体）。"""
+    init = _load("design_initial_world", "design_initial_world.py")
+    from mythic.metrics.grid import LatLonGrid
+    from mythic.tectonics.reverse import PlateHistory
+
+    g = LatLonGrid(360, 180)
+    LO, LA = np.meshgrid(g.lon, g.lat)
+    ids = np.zeros(g.shape, int)
+    ids[(LO > -20) & (LO < 0) & (np.abs(LA) < 20)] = 7
+    ids[(LO > 10) & (LO < 30) & (np.abs(LA) < 20)] = 8
+    land = ids > 0
+    gulf = (LO > -2) & (LO < 12) & (np.abs(LA) < 5)            # 夹在两块之间的海湾
+    b = {"sea_masks": {"G1": gulf}, "land": land & ~gulf}
+    ids[gulf] = 0
+    h = PlateHistory()
+    for pid, code in ((7, "X"), (8, "Y")):
+        h.add(pid, 0, code, [(0, np.eye(3)), (100, np.eye(3))])
+    ext = np.zeros(g.shape, int)
+    info, masks = init.shelf_margins({"margins": [{"gulfs": ["G1"], "depth_m": -80}]}, g, ids, ext, {"X": 7, "Y": 8}, h, 100.0, b)
+    m = masks[0]
+    assert m.sum() == (gulf & ~(ids > 0)).sum()
+    assert (ext[m & (LO < 4)] == 7).all() and (ext[m & (LO > 6)] == 8).all()
+    assert set(info[0]["owners_Mkm2"]) == {"X", "Y"}
+
+
+def test_eustatic_sea_level_rises_when_ocean_floor_is_shallower():
+    """U30：海水体积不变，洋底整体变浅时海平面上升（乘海水加载改正 0.69），0 Ma 为 0。"""
+    area = np.ones(1000)
+    e0 = np.r_[np.full(700, -4000.0), np.linspace(0, 1000, 300)]
+    e1 = np.r_[np.full(700, -3700.0), np.linspace(0, 1000, 300)]      # 洋底浅 300 m（年轻洋脊多）
+    sl = fwd.eustatic_sea_level([{"elev": e1}, {"elev": e0}], area)
+    assert sl[-1] == pytest.approx(0.0, abs=0.5)
+    assert 0.69 * 150 < sl[0] < 0.69 * 300                             # 一部分水漫上陆地，升得比 300 m 少
+
+
+def test_design_rifts_and_pull_apart_pairs():
+    """U30：history yaml 的陆内裂谷与走滑拉分板块对。"""
+    h = _hcfg_arcs()
+    h["rifts"] = [{"id": "R1", "name": "甲", "anchor": "BSE", "t_start": 25, "line": [[0, 0], [0, 5]], "graben_half_km": 40,
+                   "beta": 1.1, "flank_amp_m": 900, "flank_decay_km": 60}]
+    h["forward"] = {"pull_apart": [{"pair": ["B", "BSE"], "since": 36, "T_narrow_km": 33, "w1_km": 80, "T_wide_km": 20,
+                                    "w_max_km": 250}]}
+    r = fwd.build_rifts(h)[0]
+    assert r["anchor"] == 102 and r["pts0"].shape == (2, 3) and r["swell_amp_m"] == 0.0
+    assert fwd.cont_gap_pairs(h) == {101 * 1000 + 102: (33.0, 80.0, 20.0, 250.0)}
+    assert fwd.cont_gap_since(h) == {101 * 1000 + 102: 36.0}

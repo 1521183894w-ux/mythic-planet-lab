@@ -73,21 +73,37 @@ def volume_balance(hcfg, design, grid, b, ext_masks, T_ext) -> list:
 
 
 def shelf_margins(ini: dict, grid: LatLonGrid, ids: np.ndarray, ext: np.ndarray, code_id: dict, h, t0: float,
-                  step_myr: float = 5.0) -> tuple[list, list]:
+                  b: dict | None = None, step_myr: float = 5.0) -> tuple[list, list]:
     """陆架下的减薄陆壳（U28 第三轮，history yaml 的 initial.margins）：现今在海平面以下、属于某块的被动陆缘，按该块的陆缘补进
-    初始世界（写进 ext，与被挤掉的陆缘同一套省份与减薄）。只补多边形里的海（与没划块的新生地壳岛）；300 Ma 以来任何时刻会压到
+    初始世界（写进 ext，与被挤掉的陆缘同一套省份与减薄）。范围二选一：poly + block（多边形里的海与没划块的新生地壳岛，归 block）；
+    或 gulfs（U30：终图海湾的范围，每格归最近的陆块，要给 b = design_final_map.build 的结果）。300 Ma 以来任何时刻会压到
     别的块（或别的块补回的陆缘）上的格点不补，免得提前碰撞。原地修改 ext，返回 (每条的统计, 每条的掩膜)。"""
     infos, masks = [], []
     others = list(code_id.values())
+    id_code = {v: k for k, v in code_id.items()}
     for mg in ini.get("margins", []):
-        pid = code_id[mg["block"]]
-        m = lonlat_mask(grid, mg["poly"]) & (ids <= 0) & (ext == 0)
+        if "gulfs" in mg:
+            cand = np.zeros(grid.shape, bool)
+            for gid in mg["gulfs"]:
+                cand |= b["sea_masks"][gid]
+            cand &= ~b["land"] & (ids <= 0) & (ext == 0)
+            blk = ids > 0
+            own = np.zeros(grid.shape, int)
+            if cand.any():
+                _, kk = cKDTree(grid.xyz[blk]).query(grid.xyz[cand])
+                own[cand] = ids[blk][kk]
+        else:
+            cand = lonlat_mask(grid, mg["poly"]) & (ids <= 0) & (ext == 0)
+            own = np.where(cand, code_id[mg["block"]], 0)
+        keep_all = np.zeros(grid.shape, bool)
         trimmed = 0.0
-        if m.any():
+        owners = {}
+        for pid in np.unique(own[cand]):
+            m = cand & (own == pid)
             Xe = grid.xyz[m]
             bad = np.zeros(Xe.shape[0], bool)
             for t in np.arange(0.0, t0 + 0.1, step_myr):
-                P = Xe @ h.absolute(pid, t).T
+                P = Xe @ h.absolute(int(pid), t).T
                 for other in others:
                     if other == pid:
                         continue
@@ -95,13 +111,15 @@ def shelf_margins(ini: dict, grid: LatLonGrid, ids: np.ndarray, ext: np.ndarray,
                     i = np.clip(((90.0 - la) / 180.0 * grid.ny).astype(int), 0, grid.ny - 1)
                     j = np.clip(((lo + 180.0) / 360.0 * grid.nx).astype(int), 0, grid.nx - 1)
                     bad |= (ids[i, j] == other) | (ext[i, j] == other)
-            trimmed = float(grid.cell_area_km2[m][bad].sum())
+            trimmed += float(grid.cell_area_km2[m][bad].sum())
             keep = np.zeros_like(m)
             keep[m] = ~bad
-            m = keep
-        ext[m] = pid
-        masks.append(m)
-        infos.append({**{k: v for k, v in mg.items() if k != "poly"}, "area_Mkm2": round(float(grid.cell_area_km2[m].sum()) / 1e6, 3),
+            ext[keep] = pid
+            keep_all |= keep
+            owners[id_code[int(pid)]] = round(float(grid.cell_area_km2[keep].sum()) / 1e6, 3)
+        masks.append(keep_all)
+        infos.append({**{k: v for k, v in mg.items() if k not in ("poly", "names")}, "owners_Mkm2": owners,
+                      "area_Mkm2": round(float(grid.cell_area_km2[keep_all].sum()) / 1e6, 3),
                       "trimmed_conflict_Mkm2": round(trimmed / 1e6, 3)})
     return infos, masks
 
@@ -145,9 +163,9 @@ def main() -> int:
 
     # ---- 1. 被挤掉的陆缘（与 design_history.py 的重叠审计同一套计算） ----
     ext, ext_info, ext_masks = consumed_margins(hcfg, grid, ids, h, log, return_masks=True)
-    shelf_info, shelf_masks = shelf_margins(ini, grid, ids, ext, code_id, h, t0)
+    shelf_info, shelf_masks = shelf_margins(ini, grid, ids, ext, code_id, h, t0, b)
     for s in shelf_info:
-        log(f"  陆架下的减薄陆壳 {s['block']}：{s['area_Mkm2']} 百万 km²（会压到别的块而不补的 {s['trimmed_conflict_Mkm2']}）"
+        log(f"  陆架下的减薄陆壳 {s['owners_Mkm2']}：{s['area_Mkm2']} 百万 km²（会压到别的块而不补的 {s['trimmed_conflict_Mkm2']}）"
             f"——{s.get('what', '')}")
 
     # ---- 2. 厚度、省份与年龄（现今参照系栅格；本体与被挤掉的陆缘各一套） ----
@@ -186,11 +204,19 @@ def main() -> int:
             dk = dist_to_mask_km(grid, ids == pid, m)
             far, near = float(ini["ext_T_far_km"]), float(ini["ext_T_near_km"])
             T_ext[m] = far + (near - far) * np.exp(-dk[m] / float(ini["ext_taper_km"]))
+    no_thin = np.zeros(grid.shape, bool)
+    p0 = Params()
     for mg, m in zip(ini.get("margins", []), shelf_masks):     # 陆架下的减薄陆壳用自己的厚度剖面
-        if m.any():
+        if not m.any():
+            continue
+        if "depth_m" in mg:     # U30：被淹没的陆壳，厚度按设计水深由 Airy 均衡反算（与 crust.elevation 同一组常数）
+            T_ext[m] = p0.T_cont + (float(mg["depth_m"]) - p0.e_cont_ref_m) / p0.iso_m_per_km
+        else:
             dk = dist_to_mask_km(grid, ids == code_id[mg["block"]], m)
             far, near = float(mg["T_far_km"]), float(mg["T_near_km"])
             T_ext[m] = far + (near - far) * np.exp(-dk[m] / float(mg["taper_km"]))
+        if mg.get("edge_thinning", True) is False:
+            no_thin |= m
     # 块边缘（本体 + 被挤掉的陆缘合起来算边缘）往海岸减薄：本体是现今陆地，只减薄到 coast_T_km（约 +100 m 的滨海平原），
     # 现今海岸留在海平面附近；被挤掉的陆缘按被动陆缘减薄到 margin_min（大部分在海平面以下）。
     # （U24 曾把本体边缘也减薄到 72%，约 −1 km：U25 第一次正向运行时现今海岸带与窄小陆块整片沉到海下。）
@@ -202,7 +228,7 @@ def main() -> int:
         f = mmin + (1.0 - mmin) * s
         body = ids == pid
         T = np.where(body & (T > cT), cT + (T - cT) * s, T) if cT > 0 else np.where(body, T * f, T)
-        T_ext = np.where(ext == pid, T_ext * f, T_ext)
+        T_ext = np.where((ext == pid) & ~no_thin, T_ext * f, T_ext)    # 海湾里的陆表海不做陆缘减薄（U30，edge_thinning: false）
     vb_rows = volume_balance(hcfg, design, grid, b, ext_masks, T_ext)
     # 体积平衡（U28）：写了保留率 efficiency 的碰撞（补回陆缘的体积有多少留在终图要垫高的范围里，由上一次正向运行实测），
     # 补回陆缘按"需要量 ÷ 保留率"统一放大厚度，上限是正常陆壳厚度
@@ -292,8 +318,8 @@ def main() -> int:
         shelf_nodes = np.zeros(mesh.n, bool)
         if any(m.any() for m in shelf_masks):
             sr = np.zeros(grid.shape, int)
-            for mg, m in zip(ini.get("margins", []), shelf_masks):
-                sr[m] = code_id[mg["block"]]
+            for m in shelf_masks:
+                sr[m] = ext[m]
             for pid in np.unique(sr[sr > 0]):
                 lo, la = xyz_to_lonlat(mesh.xyz @ h.absolute(int(pid), t0))
                 i = np.clip(((90.0 - la) / 180.0 * grid.ny).astype(int), 0, grid.ny - 1)
@@ -416,7 +442,7 @@ def figures(args, design, grid, b, ids, ext, info, id_code, mesh, c, owner, kind
             continue
         v = unit((grid.xyz[m] * grid.cell_area_km2[m][:, None]).sum(0))
         lo, la = xyz_to_lonlat(v)
-        ax.text(float(lo) + 4, float(la), f"{s_['block']} 陆架下的减薄陆壳\n{s_['area_Mkm2']} 百万 km²", transform=PC,
+        ax.text(float(lo) + 4, float(la), f"{'、'.join(s_['owners_Mkm2'])} 陆架下的减薄陆壳\n{s_['area_Mkm2']} 百万 km²", transform=PC,
                 fontsize=8, ha="left", va="center", path_effects=halo)
     hs = [Patch(fc=v["color"], label=f"{k} {v['name']}（深色 = 要补回的陆缘）") for k, v in info.items()]
     ax.legend(handles=hs, loc="lower left", fontsize=8, ncol=2, framealpha=0.92)

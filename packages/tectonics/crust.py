@@ -13,7 +13,7 @@ from .geometry import smoothstep
 
 OCEAN, CONT = 0, 1
 ORO_NONE, ORO_ARC, ORO_COLL, ORO_RIFT = 0, 1, 2, 3
-ORIGIN_OCEAN, ORIGIN_ARC = 0, 90
+ORIGIN_OCEAN, ORIGIN_ARC, ORIGIN_RIFT = 0, 90, 91   # 91 = 两块陆块之间张开时填的拉伸减薄陆壳（U30 拉分盆地与裂谷陆缘）
 
 
 @dataclass

@@ -25,8 +25,8 @@ from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 from scipy.spatial import cKDTree
 
-from .crust import (CONT, OCEAN, ORIGIN_ARC, ORIGIN_OCEAN, ORO_ARC, ORO_COLL, ORO_NONE, ORO_RIFT, Crust, Params,
-                    elevation)
+from .crust import (CONT, OCEAN, ORIGIN_ARC, ORIGIN_OCEAN, ORIGIN_RIFT, ORO_ARC, ORO_COLL, ORO_NONE, ORO_RIFT, Crust,
+                    Params, elevation)
 from .geometry import R_KM, chord_from_km, km_from_chord, orthonormalize, smoothstep, unit, wrap
 from .mesh import KD_WORKERS, Mesh
 
@@ -62,6 +62,13 @@ class Engine:
         self.arc_flux_pairs: set | None = None   # U28 第二轮：Params.arc_ocean_flux_factor 只用于这些板块对的俯冲带；None = 所有
         self.arc_accrete_pairs: set | None = None  # U28 第二轮：弧—陆拼贴只在这些板块对之间；None = 所有
         self.arc_compress_pairs: set | None = None  # U28 第三轮：Params.arc_compress_T_max_km 只用于这些板块对的俯冲带；None = 所有
+        # U30：两块陆块之间张开（走滑拉分、裂谷）时，空隙填拉伸减薄的陆壳而不是洋壳：板块对键 -> (T_narrow, w1, T_wide, w_max)。
+        # 累计张开宽度（两侧原有陆壳——不含之前填的拉伸陆壳——之间的距离）不到 w1 时厚 T_narrow（沉积物充填的拉分盆地、走滑谷），
+        # w1 到 w_max 之间线性减薄到 T_wide（拉伸陆缘），超过 w_max 才长洋壳（大陆裂开、海底扩张）。
+        # 只用于两块真正张开处、且在 cont_gap_since 的时刻以后（第一次运行从 180 Ma 洲 C、D 碰撞起，碰撞带上网格对不齐的小缝也被填成陆壳、
+        # 再被碰撞增厚，缝合带上堆出 1.1 百万 km²、平均 49 km 的陆壳）
+        self.cont_gap_pairs: dict = {}
+        self.cont_gap_since: dict = {}             # 板块对键 -> 从哪个时刻（Ma）起才填陆壳；不写 = 一直
         self.fronts: deque = deque()
         self.coll_area: dict[tuple[int, int], float] = {}
         self.events: list[dict] = []
@@ -603,6 +610,32 @@ class Engine:
                             continue
                         r = conv[key[conv] == kk]
                         owner[r[(ct_o[r] == OCEAN) & (ct_2[r] == OCEAN)]] = sub
+            cont_T = np.full(gap.size, np.nan)        # U30：两块陆块之间的窄缺口填拉伸减薄陆壳（见 cont_gap_pairs）
+            if self.cont_gap_pairs and has.any():
+                p2 = pl[np.arange(gap.size), first]
+                key2 = np.minimum(pl[:, 0], p2).astype(np.int64) * 1000 + np.maximum(pl[:, 0], p2)
+                i1, i2 = k[:, 0], k[np.arange(gap.size), first]
+                both = has & (new.ctype[i1] == CONT) & (new.ctype[i2] == CONT)
+                om2 = np.zeros((max(self.R) + 1, 3))
+                for q, wv in self.omega.items():
+                    om2[q] = wv
+                apart = np.sum(np.cross(om2[pl[:, 0]] - om2[p2], m.xyz[gap]) * (pos[keep[i1]] - pos[keep[i2]]), axis=1) > 0.0
+                for kk, (T_n, w1, T_w, w_max) in self.cont_gap_pairs.items():
+                    if self.t > self.cont_gap_since.get(kk, np.inf) + 1e-9:
+                        continue
+                    sel = np.flatnonzero(both & apart & (key2 == kk))
+                    if sel.size == 0:
+                        continue
+                    width = np.zeros(sel.size)
+                    for q in (int(kk) // 1000, int(kk) % 1000):
+                        orig = np.flatnonzero((new.plate == q) & (new.ctype == CONT) & (new.origin != ORIGIN_RIFT))
+                        if orig.size == 0:
+                            width[:] = np.inf
+                            continue
+                        dq, _ = cKDTree(pos[keep[orig]]).query(m.xyz[gap[sel]], workers=KD_WORKERS)
+                        width += km_from_chord(dq)
+                    T_sel = np.where(width <= w1, T_n, T_n + (T_w - T_n) * (width - w1) / max(w_max - w1, 1e-9))
+                    cont_T[sel] = np.where(width <= w_max, T_sel, np.nan)
             bn = np.empty(gap.size, np.int64)
             for q in np.unique(owner):
                 s = owner == q
@@ -615,6 +648,15 @@ class Engine:
             g.T[:] = p.T_ocean
             g.age = age[uniq]
             g.t_form = self.t + g.age
+            cg = np.isfinite(cont_T[uniq])
+            if cg.any():
+                g.ctype[cg] = CONT
+                g.T[cg] = cont_T[uniq][cg]
+                g.origin[cg] = ORIGIN_RIFT
+                g.oro[cg] = ORO_RIFT
+                g.oro_t[cg] = self.t
+                g.t_form[cg] = self.t
+                self.budget["rift_fill"] = self.budget.get("rift_fill", 0.0) + float((g.T[cg] * m.area_km2[g.node[cg]]).sum())
             new = new.concat(g)
             n_new = int(uniq.size)
         self.c = new

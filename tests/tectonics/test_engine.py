@@ -232,3 +232,30 @@ def test_gap_prefer_does_not_grow_the_over_plate_at_a_convergent_boundary(mesh):
         return int((eng.alive & (eng.c.plate == 2) & inbox).sum()) - n0
     grow_old, grow_new = run(False), run(True)
     assert grow_new < grow_old
+
+
+def test_continental_gap_fills_stretched_crust_then_ocean(mesh):
+    """U30：指定的两块陆块之间张开时，累计宽度不到 w_max 的空隙填拉伸减薄陆壳（越宽越薄），超过才长洋壳；不指定时都是洋壳。"""
+    from mythic.tectonics.crust import ORIGIN_RIFT, ORO_RIFT
+
+    def run(pairs):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)
+        c.ctype[:] = CONT                                # 整个球面都是陆壳：两块陆块
+        c.T[:] = 35.0
+        w = {1: pole_vector(0.0, 90.0, 0.5), 2: np.zeros(3)}   # 板块 1 向南，北侧张开
+        eng = Engine(mesh, c, Params(), 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 1
+        eng.cont_gap_pairs.update(pairs)
+        for _ in range(30):
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        new = eng.alive & (eng.c.uid >= mesh.n)
+        return eng, new
+
+    eng, new = run({1 * 1000 + 2: (33.0, 300.0, 20.0, 800.0)})
+    rift = new & (eng.c.origin == ORIGIN_RIFT) & (eng.c.oro == ORO_RIFT)   # 后来被碰撞增厚的（开合交界处）不算
+    assert rift.any() and (eng.c.ctype[rift] == CONT).all()
+    assert eng.c.T[rift].min() >= 20.0 - 1e-9 and eng.c.T[rift].max() <= 33.0 + 1e-9
+    assert eng.c.T[rift].min() < 30.0                     # 张开越宽越薄
+    assert (new & (eng.c.ctype == 0)).any()               # 超过 w_max 后长洋壳
+    eng0, new0 = run({})
+    assert new0.any() and (eng0.c.ctype[new0] == 0).all()

@@ -334,8 +334,67 @@ def build_plumes(hcfg: dict, design: dict | None = None, grid=None, land: np.nda
     return {"swells": swells, "lips": sorted(lips, key=lambda e: -e["t"])}
 
 
+def build_rifts(hcfg: dict) -> list:
+    """history yaml rifts -> 陆内裂谷列表（U30）。line 是现今坐标、锚在 anchor 板块上；t_start 起地堑减薄、两肩抬升与轴部隆起。"""
+    from mythic.tectonics.geometry import lonlat_to_xyz
+
+    code_id = plate_codes(hcfg)
+    out = []
+    for r in hcfg.get("rifts", []):
+        q = np.asarray(r["line"], float)
+        out.append({"id": r["id"], "name": r["name"], "what": r.get("what", ""), "t_start": float(r["t_start"]),
+                    "anchor": code_id[r["anchor"]], "pts0": lonlat_to_xyz(q[:, 0], q[:, 1]),
+                    "half_km": float(r["graben_half_km"]), "beta": float(r["beta"]),
+                    "flank_amp_m": float(r["flank_amp_m"]), "flank_decay_km": float(r["flank_decay_km"]),
+                    "swell_amp_m": float(r.get("swell_amp_m", 0.0)), "swell_radius_km": float(r.get("swell_radius_km", 1.0))})
+    return out
+
+
+def cont_gap_pairs(hcfg: dict) -> dict:
+    """history yaml forward.pull_apart -> Engine.cont_gap_pairs（U30）：{板块对键: (T_narrow, w1, T_wide, w_max)}。"""
+    code_id = plate_codes(hcfg)
+    out = {}
+    for r in (hcfg.get("forward") or {}).get("pull_apart", []):
+        a, b = (code_id[x] for x in r["pair"])
+        out[min(a, b) * 1000 + max(a, b)] = (float(r["T_narrow_km"]), float(r["w1_km"]), float(r["T_wide_km"]),
+                                             float(r["w_max_km"]))
+    return out
+
+
+def cont_gap_since(hcfg: dict) -> dict:
+    """history yaml forward.pull_apart 的 since（Ma）-> Engine.cont_gap_since（U30）：从这个时刻起才填拉伸陆壳。"""
+    code_id = plate_codes(hcfg)
+    out = {}
+    for r in (hcfg.get("forward") or {}).get("pull_apart", []):
+        if "since" in r:
+            a, b = (code_id[x] for x in r["pair"])
+            out[min(a, b) * 1000 + max(a, b)] = float(r["since"])
+    return out
+
+
+def eustatic_sea_level(frames: list, area_km2: np.ndarray, factor: float = 0.69) -> np.ndarray:
+    """各帧的全球海平面（m，U30）：海水体积不变（取 0 Ma 海平面 0 时的体积），按每帧的高程分布（洋底随年龄的水深、陆地面积）
+    解出刚性洋盆下的海平面，再乘海水加载的均衡改正 factor = (ρm − ρw) / ρm ≈ (3300 − 1030) / 3300 ≈ 0.69：
+    海平面升 Δ 时海底在海水重压下下沉，相对大陆只升约 0.69Δ（Airy 均衡推得）。洋中脊年轻、洋底浅时海水被挤上大陆（陆表海）。"""
+    e0 = np.asarray(frames[-1]["elev"], float)
+    V0 = float((np.maximum(-e0, 0.0) * area_km2).sum())
+    out = []
+    for f in frames:
+        e = np.asarray(f["elev"], float)
+        lo, hi = -2000.0, 2000.0
+        for _ in range(60):              # 二分：体积随海平面单调增
+            mid = 0.5 * (lo + hi)
+            if float((np.maximum(mid - e, 0.0) * area_km2).sum()) < V0:
+                lo = mid
+            else:
+                hi = mid
+        out.append(factor * 0.5 * (lo + hi))
+    return np.asarray(out)
+
+
 def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict, aprons: dict | None = None,
-             gap_prefer: dict | None = None, volc=None, arcs_hcfg: dict | None = None, plumes: dict | None = None):
+             gap_prefer: dict | None = None, volc=None, arcs_hcfg: dict | None = None, plumes: dict | None = None,
+             rifts: list | None = None, gap_cont: dict | None = None):
     kin = RotationFileKinematics(rot)
     regions = arc_regions(arcs_hcfg, kin) if arcs_hcfg else []     # U28 第二轮：岛弧系统的俯冲起始
     basement = arc_regions(arcs_hcfg, kin, "basement") if arcs_hcfg else []   # U28 第三轮：新洋板块继承的老岛弧基底
@@ -349,6 +408,9 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
     eng = Engine(mesh, c, params, float(t0), om)
     eng.polarity.update(polarity)
     eng.gap_prefer.update(gap_prefer or {})
+    if gap_cont:                                    # U30：走滑拉分与裂谷陆缘
+        eng.cont_gap_pairs.update(gap_cont[0])
+        eng.cont_gap_since.update(gap_cont[1])
     if aprons:
         aprons["pairs"] = over_down_pairs(aprons["hcfg"])
         aprons["ocean_downs"] = {}
@@ -383,13 +445,25 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         volc.arc_cont_plates = blocks_ids
     from mythic.tectonics.plumes import apply_lip, apply_lip_weights, swell_m
 
+    from mythic.tectonics.rifts import apply_graben, rift_relief_m
+
     plumes = plumes or {"swells": [], "lips": []}
+    rifts = rifts or []
     li = 0
+    rift_done = set()
+
+    def rift_line(r, tt):
+        return unit(r["pts0"] @ kin.total_from(r["anchor"], 0.0, float(tt)).T)
 
     def snap():
-        """快照，叠加动力地形（U29：地幔参照系 = 固定网格，只改高程）。"""
+        """快照，叠加动力地形（U29：地幔参照系 = 固定网格，只改高程）与陆内裂谷两肩、轴部隆起（U30，随所在板块）。"""
         f = eng.snapshot()
-        f["dyn"] = swell_m(mesh.xyz, float(f["t"]), plumes["swells"]).astype(np.float32)
+        dyn = swell_m(mesh.xyz, float(f["t"]), plumes["swells"])
+        for r in rifts:
+            if float(f["t"]) <= r["t_start"] + 1e-9:
+                dyn = dyn + rift_relief_m(mesh.xyz, rift_line(r, f["t"]), r["half_km"], r["flank_amp_m"],
+                                          r["flank_decay_km"], r["swell_amp_m"], r["swell_radius_km"])
+        f["dyn"] = dyn.astype(np.float32)
         f["elev"] = f["elev"] + f["dyn"]
         return f
 
@@ -439,6 +513,12 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
                 r = apply_lip(eng, unit(e["pts0"] @ Rt.T), e["radius_km"], e["add_km"], e["flat_km"])
             log(f"  {t:3d} Ma 大火成岩省 {e['id']}（{e['what']}）：{r['n']} 个单元加厚至多 {e['add_km']} km，"
                 f"{r['volume_km3'] / 1e6:.2f}×10⁶ km³")
+        for rf in rifts:                           # U30 陆内裂谷：开始时地堑减薄（两肩与轴部隆起在快照里叠加）
+            if committed and rf["id"] not in rift_done and rf["t_start"] >= t - 1e-9:
+                rift_done.add(rf["id"])
+                r = apply_graben(eng, rift_line(rf, t), rf["half_km"], rf["beta"])
+                log(f"  {t:3d} Ma 陆内裂谷 {rf['id']}（{rf['name']}）：{r['n']} 个陆壳单元减薄（β ≤ {rf['beta']}），"
+                    f"{r['volume_km3'] / 1e6:.2f}×10⁶ km³")
         if volc is not None:
             volc.step(eng)
         if committed and t % snap_every == 0:
@@ -693,6 +773,27 @@ def compare_arcs(design: dict, v0: dict) -> dict:
             "far_from_design_arcs": int(extra.sum()), "far_from_design_arcs_islands": int((extra & (kind == ISLAND)).sum())}
 
 
+def compare_gulfs(hcfg: dict, design: dict, b: dict, grid, E_eng: np.ndarray, E_fin: np.ndarray) -> list:
+    """0 Ma 浅海湾对照（U30）：initial.margins 里按 gulfs 补了陆壳的海湾（终图的海湾范围），引擎的水深分布与设计水深。"""
+    rows = []
+    for mg in (hcfg.get("initial") or {}).get("margins", []):
+        for gid in mg.get("gulfs", []):
+            m = b["sea_masks"].get(gid)
+            if m is None:
+                continue
+            m = m & ~b["land"]
+            if not m.any():
+                continue
+            e = E_eng[m]
+            names = {g["id"]: g["name"] for g in design.get("gulfs", [])}
+            rows.append({"id": gid, "name": names.get(gid, gid), "design_depth_m": mg["depth_m"],
+                         "area_Mkm2": round(float(grid.cell_area_km2[m].sum()) / 1e6, 3),
+                         "engine_elev_m_p50": round(float(np.median(e))), "engine_elev_m_p10": round(float(np.percentile(e, 10))),
+                         "engine_shallower_200m": round(float((e > -200).mean()), 2),
+                         "engine_land_fraction": round(float((e > 0).mean()), 2)})
+    return rows
+
+
 def compare_plumes(hcfg: dict, design: dict, grid, E_eng: np.ndarray, E_fin: np.ndarray, Lf: np.ndarray,
                    dyn: np.ndarray) -> list:
     """0 Ma 地幔柱对照（U29）：每次大火成岩省的现今范围（剖面过半处）里引擎与终图的高程、陆地比例；动力地形穹隆中心的抬升量。"""
@@ -786,8 +887,13 @@ def main() -> int:
         if hcfg.get("plumes"):
             log(f"地幔柱 {len(hcfg['plumes'])} 个（history yaml plumes）：动力地形穹隆 {len(plumes['swells'])} 个，"
                 f"大火成岩省 {len(plumes['lips'])} 次")
+        rifts = build_rifts(hcfg)
+        gap_cont = (cont_gap_pairs(hcfg), cont_gap_since(hcfg))
+        if rifts or gap_cont[0]:
+            log(f"陆内裂谷 {len(rifts)} 条（history yaml rifts），走滑拉分与裂谷陆缘的板块对 {len(gap_cont[0])} 个（forward.pull_apart）")
         eng, frames, vframes = simulate(world, mesh, rot, args.snap_every, params, polarity, aprons,
-                                        ocean_gap_prefer(hcfg), volc, hcfg if hcfg.get("arcs") else None, plumes)
+                                        ocean_gap_prefer(hcfg), volc, hcfg if hcfg.get("arcs") else None, plumes,
+                                        rifts, gap_cont)
         wall = time.perf_counter() - tw
         log(f"模拟完成，用时 {wall:.0f} s")
         save_run(run_path, eng, frames, {"design": args.design, "history": args.history, "level": mesh.level,
@@ -798,6 +904,12 @@ def main() -> int:
                                          "preset_polarity": {str(k): v for k, v in polarity.items()}},
                  vframes, volc)
     frames, run_js, vframes = load_run(run_path)
+    sea_level = eustatic_sea_level(frames, mesh.area_km2)       # U30：全球海平面（0 Ma 为 0）
+    for f, sl in zip(frames, sea_level):
+        f["sea_level"] = float(sl)
+    cont_flooded = [round(float(mesh.area_km2[(f["ctype"] == CONT) & (f["elev"] < f["sea_level"])].sum()) / 1e6, 1)
+                    for f in frames]
+    log("全球海平面（m）：" + "，".join(f"{f['t']:g} Ma {f['sea_level']:+.0f}" for f in frames[::3]))
 
     log("对照终图（1024x512）")
     ids, info = assign_blocks(hcfg, grid, b)
@@ -823,6 +935,10 @@ def main() -> int:
                 f"环礁 {r['n_atoll']}，海山 {r['n_seamount']}；链的方向 {r['engine_bearing_deg']}°（终图 {r['design_bearing_deg']}°），"
                 f"最老的 {r['oldest_Ma']} Ma，离热点最远 {r['max_dist_km']} km（终图链长 {r['design_length_km']} km）")
     cmp_ = compare(design, grid, b, ids, info, E_eng, E_fin, label_points(design))
+    gulf_cmp = compare_gulfs(hcfg, design, b, grid, E_eng, E_fin)
+    for r in gulf_cmp:
+        log(f"  浅海湾 {r['id']} {r['name']}：设计水深 {r['design_depth_m']} m，引擎中位 {r['engine_elev_m_p50']} m"
+            f"（浅于 200 m 的占 {r['engine_shallower_200m']:.0%}、露出海面的占 {r['engine_land_fraction']:.0%}）")
     plume_cmp = []
     if hcfg.get("plumes"):
         plume_cmp = compare_plumes(hcfg, design, grid, E_eng, E_fin, b["land"], raster(frames[-1]["dyn"]).astype(float))
@@ -881,6 +997,9 @@ def main() -> int:
         "hotspots_0Ma": hs_cmp,
         "arcs_0Ma": arc_cmp,
         "plumes_0Ma": plume_cmp,
+        "sea_level_m": [{"t": f["t"], "sea_level_m": round(f["sea_level"], 1), "flooded_continental_crust_Mkm2": a}
+                        for f, a in zip(frames, cont_flooded)],
+        "gulfs_0Ma": gulf_cmp,
         "crust_0Ma": {"continental_Mkm2": round(float(A7[cont].sum()) / 1e6, 1),
                       "arc_origin_continental_Mkm2": round(float(A7[cont & (c0["origin"] == 90)].sum()) / 1e6, 2),
                       "last_orogeny_area_Mkm2": oro_area,
@@ -1032,13 +1151,13 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
     for k, t in enumerate(times):
         f = min(frames, key=lambda fr: abs(fr["t"] - t))
         ax = fig.add_subplot(nrow, 2, k + 1, projection=proj)
-        show(ax, raster(f["elev"]).astype(float))
+        show(ax, raster(f["elev"]).astype(float) - f.get("sea_level", 0.0))
         own, _ = raster_at(h, blocks, ids, grid, float(t), tgt)
         for pid, v in blocks.items():
             ax.contour(tgt.lon, tgt.lat, (own == pid).astype(float), levels=[0.5], colors=[v["color"]],
                        linewidths=0.8, transform=PC)
-        ax.set_title(f"{t} Ma", fontsize=11)
-    fig.suptitle("古地理序列：底图 = 引擎正向演化（构造尺度高程），彩色线 = U23 刚体块在同一时刻的轮廓（只倒推运动的设计位置）",
+        ax.set_title(f"{t} Ma（全球海平面 {f.get('sea_level', 0.0):+.0f} m）", fontsize=11)
+    fig.suptitle("古地理序列：底图 = 引擎正向演化（构造尺度高程，相对当时的海平面），彩色线 = U23 刚体块在同一时刻的轮廓（只倒推运动的设计位置）",
                  fontsize=13)
     stamp(fig)
     fig.savefig(out / "03_paleogeography.png", dpi=95, bbox_inches="tight")
@@ -1364,6 +1483,63 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
         fig.tight_layout(rect=(0, 0.02, 1, 0.97))
         stamp(fig, " · 地幔柱位置、时间与规模由设计设定（history yaml plumes）")
         fig.savefig(out / "10_plumes.png", dpi=95)
+        plt.close(fig)
+
+    # ---- 11 拉分盆地、裂谷与陆表海近景（U30） ----
+    if (hcfg.get("forward") or {}).get("pull_apart") or hcfg.get("rifts"):
+        wins = [("洲 C、D 之间的走滑断层谷、死海式洼地与南裂谷海", (8.0, 30.0, -37.0, 6.0)),
+                ("南方地盾裂谷 M10（地堑、两肩、轴部隆起）", (-9.0, 17.0, -29.0, 13.0)),
+                ("南方陆表海 G17 与中央盆地", (-37.0, -7.0, -12.0, 8.0)),
+                ("神怒湾 G7 与主内海北岸", (6.0, 28.0, 33.0, 49.0))]
+        dyn = raster(frames[-1]["dyn"]).astype(float)
+        fig, axs = plt.subplots(2, 4, figsize=(24, 13))
+        for cidx, (title, (x0, x1, y0, y1)) in enumerate(wins):
+            sx, sy = (lon >= x0) & (lon <= x1), (lat >= y0) & (lat <= y1)
+            ext = [lon[sx][0], lon[sx][-1], lat[sy][-1], lat[sy][0]]
+            for r, (E, land, other, lab) in enumerate(((E_fin, Lf, E_eng > 0, "终图（示意高程）"),
+                                                       (E_eng, E_eng > 0, Lf, "引擎 0 Ma"))):
+                ax = axs[r, cidx]
+                rgb = shaded_elevation(E, grid.pixel_km_equator, vert_exag=3.0, land=land)[..., :3]
+                ax.imshow(rgb[np.ix_(sy, sx)], extent=ext, interpolation="nearest", aspect="auto")
+                ax.contour(lon[sx], lat[sy], other[np.ix_(sy, sx)].astype(float), levels=[0.5],
+                           colors="#d7301f" if r == 0 else "#1a9850", linewidths=0.9)
+                if r == 1:
+                    cs = ax.contour(lon[sx], lat[sy], E[np.ix_(sy, sx)], levels=[-200], colors="#08519c",
+                                    linewidths=0.7, linestyles=":")
+                ax.set_xlim(x0, x1)
+                ax.set_ylim(y0, y1)
+                ax.grid(alpha=0.3)
+                ax.set_title(f"{lab}\n{title}", fontsize=10)
+        fig.text(0.5, 0.995, "U30 拉分盆地、裂谷与陆表海：上排终图（红线 = 引擎 0 Ma 海岸），下排引擎 0 Ma（绿线 = 终图海岸，"
+                 "蓝点线 = −200 m 等深线，陆架与陆表海在它内侧）", fontsize=13, ha="center", va="top")
+        fig.tight_layout(rect=(0, 0.02, 1, 0.97))
+        stamp(fig, " · 拉分陆壳、裂谷、浅海湾的陆壳由设计设定（history yaml forward.pull_apart、rifts、initial.margins）")
+        fig.savefig(out / "11_pullapart_rift_shelf_seas.png", dpi=95)
+        plt.close(fig)
+
+    # ---- 12 全球海平面与被淹没的陆壳（U30） ----
+    if all("sea_level" in f for f in frames):
+        tt = np.array([f["t"] for f in frames])
+        sl = np.array([f["sea_level"] for f in frames])
+        fl = np.array([float(mesh.area_km2[(f["ctype"] == CONT) & (f["elev"] < f["sea_level"])].sum()) / 1e6 for f in frames])
+        fig, ax = plt.subplots(figsize=(13, 5.6))
+        ax.plot(tt, sl, "-o", color="#08519c", ms=3.5, label="全球海平面（m，相对 0 Ma）")
+        ax.axhline(0, color="#888888", lw=0.6)
+        ax.set_xlim(tt.max(), 0)
+        ax.set_xlabel("Ma")
+        ax.set_ylabel("海平面 m", color="#08519c")
+        ax2 = ax.twinx()
+        ax2.plot(tt, fl, "-s", color="#b15928", ms=3, label="海平面以下的陆壳面积（百万 km²：陆架、陆表海、被淹的陆缘）")
+        ax2.set_ylabel("百万 km²", color="#b15928")
+        h1, l1 = ax.get_legend_handles_labels()
+        h2, l2 = ax2.get_legend_handles_labels()
+        ax.legend(h1 + h2, l1 + l2, loc="upper left", fontsize=9)
+        ax.grid(alpha=0.3)
+        ax.set_title("U30 全球海平面：海水体积不变，按每一帧的洋底水深（随洋底年龄）与陆地面积解出海平面，再乘海水加载的均衡改正 0.69",
+                     fontsize=11)
+        fig.tight_layout(rect=(0, 0.04, 1, 1))
+        stamp(fig, " · method_class：parameterized_physics（洋盆容积—海平面，Airy 均衡）")
+        fig.savefig(out / "12_sea_level.png", dpi=100)
         plt.close(fig)
 
 if __name__ == "__main__":
