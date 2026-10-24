@@ -38,6 +38,10 @@ class Params:
     arc_max_km: float = 600.0          # 600 km 外为 0（含弧后褶皱冲断带）
     arc_peak_ocean_km: float = 70.0    # 洋内弧：上盘是洋壳时增厚带窄得多（伊豆—小笠原、阿留申弧宽 100–200 km）
     arc_max_ocean_km: float = 200.0    # （1.1 原型中洋内弧也用 600 km，增生的陆壳偏多）
+    arc_ocean_flux_factor: float | None = None  # U28 第二轮：洋壳单元上岩浆增生速率的倍数。同样的岩浆通量（每公里弧长每 Myr
+                                       # 的体积）摊在 200 km 宽的洋内弧带上，比摊在 600 km 宽的陆缘弧带上增厚快 3 倍（两条形状函数的
+                                       # 积分之比 arc_max_km / arc_max_ocean_km）；None = 1（同一峰值速率，洋内弧的通量只有陆缘弧的 1/3）。
+                                       # 取 3 时伊豆—小笠原式（汇聚约 5 cm/yr、50 Myr）弧轴地壳约 22 km，与实测约 20 km 相当
     arc_to_cont_T_km: float = 18.0     # 洋内弧增厚到 18 km 后视为浮力地壳，不再俯冲
     arc_accrete_T_km: float | None = None  # U28 弧—陆碰撞：洋壳类型的弧地壳厚到这么多、被大陆撞上时转成陆壳拼贴，不被俯冲
                                        # （台湾、新几内亚式）；None = 不拼贴（被俯冲掉）
@@ -57,6 +61,9 @@ class Params:
     trench_depth_m: float = 2500.0     # 俯冲板块在前缘处的附加下沉（显示用）
     trench_width_km: float = 70.0
     near_continent_km: float = 400.0   # 洋—洋首次接触时，400 km 内有大陆的一方作上盘
+    gap_prefer_opening_only: bool = False  # U28 第二轮：Engine.gap_prefer 只用于两块真正张开的地方，汇聚边界上网格对不齐
+                                       # 留下的小洞归既定的下行板块（见 Engine.commit）；False = 指定板块对之间的所有空隙按指定、
+                                       # 其余按最近单元（U26–U28 第一轮）
 
 
 def gdh1_depth_m(age_myr):

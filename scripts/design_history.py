@@ -141,7 +141,34 @@ def build_history(hist_cfg: dict, centroids: dict) -> PlateHistory:
                 keys.append((float(t), rotmat(axis, -w * (t - a)) @ R))
             R = rotmat(axis, -w * (b - a)) @ R
         h.add(int(op["id"]), 0, op["code"], keys)
+    for ap in (hist_cfg.get("arcs") or {}).get("plates", []):   # U28 第二轮：俯冲起始时分出的新洋板块
+        # 运动：velocity（全程一段），或 motion: [{from, to, velocity}]（按时间往回排；每段绕固定欧拉极匀速转）
+        ti = float(ap["t_init"])
+        segs = ap.get("motion") or [{"from": 0.0, "to": ti, "velocity": ap.get("velocity")}]
+        R, keys = np.eye(3), [(0.0, np.eye(3))]
+        for sg in sorted(segs, key=lambda x: float(x["from"])):
+            a, b = float(sg["from"]), float(sg["to"])
+            axis, w = arc_plate_pole(sg)
+            for t in sorted(set(np.arange(a, b, 10.0).tolist()[1:] + [b])):
+                keys.append((float(t), rotmat(axis, -w * (t - a)) @ R))
+            R = rotmat(axis, -w * (b - a)) @ R
+        keys.append((t0, keys[-1][1]))                          # t_init 以前还不存在（没有单元），位置无关紧要，保持不动
+        h.add(int(ap["id"]), 0, ap["code"], keys)
     return h
+
+
+def arc_plate_pole(ap: dict) -> tuple[np.ndarray, float]:
+    """arcs.plates 一条的运动 -> (欧拉极单位矢量, 角速度 rad/Myr)。velocity: {at: [经, 纬], az: 方位 °, cm_yr}：
+    at 处朝 az 方向、速度 cm_yr 的大圆运动（欧拉极离 at 90°）；没写 velocity 时固定在地幔参照系里。"""
+    v = ap.get("velocity")
+    if not v:
+        return np.array([0.0, 0.0, 1.0]), 0.0
+    c = lonlat_to_xyz(*v["at"])
+    north = unit(np.array([0.0, 0.0, 1.0]) - c[2] * c)
+    east = np.cross(north, c)
+    az = np.radians(float(v["az"]))
+    u = np.cos(az) * north + np.sin(az) * east
+    return unit(np.cross(c, u)), float(v["cm_yr"]) * 10.0 / R_KM
 
 
 def consumed_margins(hist_cfg: dict, grid: LatLonGrid, ids: np.ndarray, h: PlateHistory, log_fn=None, return_masks=False):

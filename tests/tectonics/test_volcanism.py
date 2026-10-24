@@ -115,3 +115,29 @@ def test_arc_volcanoes_grow_on_intraoceanic_upper_plate(mesh, own_continent, exp
         assert (field.plate[arc] == 2).all()
     else:
         assert arc.sum() == 0
+
+
+@pytest.mark.parametrize("pairs, cont, protect, expect_arc", [
+    ({1002}, set(), False, True),          # 设计的俯冲带：长
+    (set(), set(), False, False),          # 不在设计里：不长
+    ({1002}, {2}, False, False),           # 上盘是陆块、弧所在洋壳没划给它：不长（固定外大洋在陆块围裙下的慢速俯冲）
+    ({1002}, {2}, True, True),             # 上盘是陆块、弧所在洋壳是岛弧系统划给它的（琉球式）：长
+])
+def test_arc_volcanoes_only_on_designed_subduction(mesh, pairs, cont, protect, expect_arc):
+    """U28 第二轮：终图倒推时，岛弧火山只长在设计的俯冲带上（VolcanoField.arc_pairs 等）。"""
+    c = Crust(mesh.n)
+    c.plate[:] = np.where(mesh.xyz @ lonlat_to_xyz(0.0, 0.0) >= np.cos(np.radians(30.0)), 1, 2)
+    c.age[:] = 60.0
+    band = (c.plate == 2) & (np.abs(mesh.lat) < 25) & (mesh.lon > 29) & (mesh.lon < 40)
+    c.T[band] = 22.0
+    w = {1: pole_vector(90.0, 0.0, 0.5), 2: np.zeros(3)}
+    eng = Engine(mesh, c, Params(arc_ocean_T_max_km=30.0, arc_to_cont_T_km=31.0), 100.0, w)
+    eng.polarity[1 * 1000 + 2] = 1
+    field = VolcanoField([], VolcanoParams(arcs=True))
+    field.arc_pairs, field.arc_cont_plates = pairs, cont
+    if protect:
+        field.arc_protected_uids = eng.c.uid[eng.c.plate == 2]
+    for _ in range(12):
+        eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        field.step(eng)
+    assert ((field.alive & (field.src == 1)).sum() >= 3) == expect_arc

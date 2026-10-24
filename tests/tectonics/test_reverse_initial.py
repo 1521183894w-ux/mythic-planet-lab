@@ -122,3 +122,12 @@ def test_ocean_plate_by_longitude_band_across_the_dateline():
     assert at(-40, 0) == 910
     assert at(-100, 0) == 920 and at(170, 40) == 920 and at(-175, -30) == 920   # 跨过 180° 经线
     assert at(100, 0) == 900 and at(-100, 70) == 900
+
+
+def test_sphere_polygon_inside_outside_and_across_the_dateline():
+    """U28 第二轮：岛弧系统的板块区域用球面多边形（大圆边）；跨 ±180° 经线也要对。"""
+    from mythic.tectonics.reverse import in_sphere_polygon
+
+    poly = lonlat_to_xyz(np.array([170.0, -170.0, -170.0, 170.0]), np.array([-10.0, -10.0, 10.0, 10.0]))
+    pts = lonlat_to_xyz(np.array([179.0, -175.0, 160.0, 0.0, 175.0]), np.array([0.0, 5.0, 0.0, 0.0, 12.0]))
+    assert in_sphere_polygon(pts, poly).tolist() == [True, True, False, False, False]

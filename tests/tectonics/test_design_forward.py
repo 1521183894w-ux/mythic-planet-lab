@@ -69,3 +69,42 @@ def test_feature_mask_unions_polygons_and_ridge_bands():
     assert m[(np.abs(LA) < 1) & (LO > -39) & (LO < -31)].all()
     assert not m[(np.abs(LA) > 3) & (LO > -39) & (LO < -31)].any()        # 山脊两侧各 200 km（约 1.8°）以外
     assert not fm.feature_mask(design, g, np.zeros(g.shape, bool), ["P", "M"]).any()
+
+
+def _hcfg_arcs():
+    return {"blocks": [{"code": "B", "id": 101}, {"code": "BSE", "id": 102}],
+            "ocean": {"background": {"id": 900}, "plates": [{"id": 920, "code": "PA"}]},
+            "arcs": {"plates": [{"id": 930, "code": "PS", "t_init": 50}],
+                     "subduction": [{"down": ["BSE"], "over": ["PS"]}, {"down": ["PA"], "over": ["PS"]}],
+                     "gaps": [{"pair": ["PS", "PA"], "to": "PS"}]}}
+
+
+def test_arc_polarity_overrides_the_ocean_plate_default():
+    """U28 第二轮：岛弧系统的俯冲方向优先于"大洋板块遇到大陆都下行"（马尼拉式：陆块的洋壳俯冲到新洋板块之下）。"""
+    pol = fwd.preset_polarity(_hcfg_arcs())
+    assert pol[102 * 1000 + 930] == 102          # 东南增生地块下行（设计）
+    assert pol[101 * 1000 + 930] == 930          # 洲 B 与新洋板块：默认新洋板块下行（琉球式）
+    assert pol[920 * 1000 + 930] == 920
+    gp = fwd.ocean_gap_prefer(_hcfg_arcs())
+    assert gp[920 * 1000 + 930] == 930
+
+
+def test_apply_region_moves_only_ocean_units_inside_the_polygon():
+    """U28 第二轮：俯冲起始时把多边形里的洋壳（不论原属哪块板块）划给新板块，陆壳不动。"""
+    from mythic.tectonics.crust import CONT, Crust, Params
+    from mythic.tectonics.engine import Engine
+    from mythic.tectonics.geometry import lonlat_to_xyz
+    from mythic.tectonics.mesh import load_mesh
+
+    mesh = load_mesh(5)
+    c = Crust(mesh.n)
+    c.plate[:] = np.where(mesh.lon < 20, 1, 2)
+    land = (np.abs(mesh.lat) < 5) & (np.abs(mesh.lon - 20) < 5)
+    c.ctype[land], c.T[land] = CONT, 35.0
+    eng = Engine(mesh, c, Params(), 50.0, {1: np.zeros(3), 2: np.zeros(3)})
+    poly = lonlat_to_xyz(np.array([5.0, 35.0, 35.0, 5.0]), np.array([-20.0, -20.0, 20.0, 20.0]))
+    moved = fwd.apply_region(eng, 3, poly, np.zeros(3))
+    assert set(moved) == {1, 2}
+    on3 = eng.alive & (eng.c.plate == 3)
+    assert on3.sum() > 0 and (eng.c.ctype[on3] == 0).all()
+    assert (eng.alive & (eng.c.ctype == CONT) & (eng.c.plate != 3)).sum() == land.sum()

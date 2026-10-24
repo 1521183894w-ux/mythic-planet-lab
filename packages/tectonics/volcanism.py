@@ -90,6 +90,12 @@ class VolcanoField:
         self.feeding = {}                  # 热点序号 -> 正在喂的火山序号
         self.events: list[dict] = []
         self.continental: list[dict] = []  # 热点在陆壳下方的时段（U29 用）
+        # 岛弧火山只长在设计的俯冲带上（U28 第二轮，终图倒推用；None = 不限）：
+        # arc_pairs = 允许的（下行, 上盘）板块对键；上盘是 arc_cont_plates 里的陆块时，还要求弧所在洋壳在 arc_protected_uids 里
+        # （岛弧系统划给陆块的那片洋壳），或下行板块也是陆块（主内海式）
+        self.arc_pairs: set | None = None
+        self.arc_cont_plates: set = set()
+        self.arc_protected_uids = np.zeros(0, np.int64)
 
     # ---- 几何 -------------------------------------------------------------------------
     def positions(self, eng) -> np.ndarray:
@@ -238,6 +244,13 @@ class VolcanoField:
             dk = np.where(ok, km_from_chord(np.where(ok, d, 0.0)), np.inf)
             band = ok & (dk >= lo_km) & (dk <= hi_km)
             band[ok] &= V[sel][kk[ok]] >= self.p.arc_min_v_cm_yr
+            if self.arc_pairs is not None and band.any():     # 只长设计的俯冲带上的弧（见 __init__）
+                b_idx = np.flatnonzero(band)
+                sub = S[sel][kk[b_idx]]
+                okp = np.isin(np.minimum(sub, o) * 1000 + np.maximum(sub, o), list(self.arc_pairs))
+                if o in self.arc_cont_plates:
+                    okp &= np.isin(c.uid[u[b_idx]], self.arc_protected_uids) | np.isin(sub, list(self.arc_cont_plates))
+                band[b_idx[~okp]] = False
             cont_o = np.flatnonzero(eng.alive & (c.plate == o) & (c.ctype != OCEAN))
             if cont_o.size and band.any():     # 只长洋内弧：离上盘自己的陆壳 arc_min_cont_km 以外
                 dc, _ = cKDTree(pos_all[cont_o]).query(pos_all[u[band]], workers=-1)

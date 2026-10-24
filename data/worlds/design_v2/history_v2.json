@@ -2,7 +2,7 @@
  "description": "终图倒推历史的审计（重建：scripts/design_history.py）",
  "design": "v2",
  "history": "v2",
- "code_version": "7a26906-dirty",
+ "code_version": "c0beb7b-dirty",
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
  "blocks": {
   "MD": {
@@ -26,8 +26,14 @@
   "BSE": {
    "id": 102,
    "name": "东南增生地块",
-   "area_Mkm2": 2.44,
+   "area_Mkm2": 2.46,
    "parent": "B"
+  },
+  "NG": {
+   "id": 803,
+   "name": "东南群岛东大岛微陆块",
+   "area_Mkm2": 0.72,
+   "parent": 0
   },
   "A": {
    "id": 103,
@@ -38,7 +44,7 @@
   "B": {
    "id": 101,
    "name": "洲 B（北方地台与东方地块）",
-   "area_Mkm2": 35.53,
+   "area_Mkm2": 35.51,
    "parent": 0
   },
   "C": {
@@ -66,7 +72,7 @@
    "parent": "D"
   }
  },
- "juvenile_Mkm2": 1.49,
+ "juvenile_Mkm2": 0.78,
  "speed_cm_yr": {
   "MD": {
    "abs_median_over_time": {
@@ -85,7 +91,7 @@
     "median": 0.0,
     "p95": 2.5,
     "max": 2.5,
-    "t_of_max": 95
+    "t_of_max": 92
    }
   },
   "ZL": {
@@ -105,167 +111,187 @@
     "median": 0.0,
     "p95": 3.5,
     "max": 3.5,
-    "t_of_max": 70
+    "t_of_max": 37
    }
   },
   "IN": {
    "abs_median_over_time": {
     "median": 1.15,
-    "p95": 9.99,
-    "max": 9.99,
-    "t_of_max": 58
+    "p95": 10.0,
+    "max": 10.0,
+    "t_of_max": 68
    },
    "abs_max_point": {
     "median": 1.86,
     "p95": 10.41,
     "max": 10.41,
-    "t_of_max": 72
+    "t_of_max": 68
    },
    "rel_median_over_time": {
     "median": 1.15,
-    "p95": 9.99,
-    "max": 9.99,
-    "t_of_max": 58
+    "p95": 10.0,
+    "max": 10.0,
+    "t_of_max": 68
    }
   },
   "BSE": {
    "abs_median_over_time": {
-    "median": 1.23,
-    "p95": 3.52,
-    "max": 4.08,
+    "median": 1.22,
+    "p95": 3.48,
+    "max": 4.12,
     "t_of_max": 280
    },
    "abs_max_point": {
     "median": 1.33,
-    "p95": 4.42,
-    "max": 5.51,
+    "p95": 4.33,
+    "max": 5.58,
     "t_of_max": 280
    },
    "rel_median_over_time": {
     "median": 0.87,
-    "p95": 2.93,
-    "max": 3.98,
+    "p95": 2.91,
+    "max": 4.0,
     "t_of_max": 266
+   }
+  },
+  "NG": {
+   "abs_median_over_time": {
+    "median": 2.15,
+    "p95": 8.12,
+    "max": 8.12,
+    "t_of_max": 84
+   },
+   "abs_max_point": {
+    "median": 2.34,
+    "p95": 8.25,
+    "max": 8.25,
+    "t_of_max": 84
+   },
+   "rel_median_over_time": {
+    "median": 2.15,
+    "p95": 8.12,
+    "max": 8.12,
+    "t_of_max": 84
    }
   },
   "A": {
    "abs_median_over_time": {
-    "median": 0.81,
-    "p95": 4.17,
-    "max": 4.28,
+    "median": 0.82,
+    "p95": 4.07,
+    "max": 4.18,
     "t_of_max": 251
    },
    "abs_max_point": {
     "median": 0.82,
-    "p95": 5.77,
-    "max": 5.83,
+    "p95": 5.7,
+    "max": 5.77,
     "t_of_max": 251
    },
    "rel_median_over_time": {
     "median": 0.0,
-    "p95": 4.43,
-    "max": 4.43,
-    "t_of_max": 261
+    "p95": 4.31,
+    "max": 4.31,
+    "t_of_max": 288
    }
   },
   "B": {
    "abs_median_over_time": {
     "median": 0.63,
-    "p95": 0.85,
-    "max": 0.85,
-    "t_of_max": 179
+    "p95": 0.86,
+    "max": 0.86,
+    "t_of_max": 157
    },
    "abs_max_point": {
     "median": 0.82,
     "p95": 1.1,
     "max": 1.1,
-    "t_of_max": 167
+    "t_of_max": 153
    },
    "rel_median_over_time": {
     "median": 0.63,
-    "p95": 0.85,
-    "max": 0.85,
-    "t_of_max": 179
+    "p95": 0.86,
+    "max": 0.86,
+    "t_of_max": 157
    }
   },
   "C": {
    "abs_median_over_time": {
-    "median": 2.35,
+    "median": 2.36,
     "p95": 3.18,
     "max": 3.18,
-    "t_of_max": 102
+    "t_of_max": 121
    },
    "abs_max_point": {
     "median": 2.45,
     "p95": 3.23,
     "max": 3.23,
-    "t_of_max": 103
+    "t_of_max": 106
    },
    "rel_median_over_time": {
-    "median": 1.72,
+    "median": 1.74,
     "p95": 2.99,
     "max": 2.99,
-    "t_of_max": 116
+    "t_of_max": 125
    }
   },
   "D": {
    "abs_median_over_time": {
     "median": 1.97,
-    "p95": 2.86,
-    "max": 2.98,
+    "p95": 2.91,
+    "max": 3.02,
     "t_of_max": 181
    },
    "abs_max_point": {
-    "median": 2.46,
-    "p95": 3.57,
-    "max": 3.65,
+    "median": 2.44,
+    "p95": 3.56,
+    "max": 3.64,
     "t_of_max": 181
    },
    "rel_median_over_time": {
     "median": 1.11,
-    "p95": 1.84,
-    "max": 1.84,
-    "t_of_max": 255
+    "p95": 1.81,
+    "max": 1.81,
+    "t_of_max": 239
    }
   },
   "FAR": {
    "abs_median_over_time": {
-    "median": 2.62,
-    "p95": 3.43,
-    "max": 3.48,
+    "median": 2.59,
+    "p95": 3.45,
+    "max": 3.52,
     "t_of_max": 100
    },
    "abs_max_point": {
-    "median": 3.38,
+    "median": 3.41,
     "p95": 4.57,
-    "max": 4.57,
+    "max": 4.58,
     "t_of_max": 100
    },
    "rel_median_over_time": {
     "median": 1.6,
     "p95": 3.2,
     "max": 3.2,
-    "t_of_max": 126
+    "t_of_max": 65
    }
   },
   "POL": {
    "abs_median_over_time": {
     "median": 2.23,
-    "p95": 3.74,
-    "max": 3.8,
+    "p95": 3.75,
+    "max": 3.81,
     "t_of_max": 181
    },
    "abs_max_point": {
-    "median": 2.75,
+    "median": 2.76,
     "p95": 3.87,
     "max": 3.9,
     "t_of_max": 181
    },
    "rel_median_over_time": {
     "median": 0.0,
-    "p95": 3.05,
-    "max": 3.05,
-    "t_of_max": 70
+    "p95": 3.02,
+    "max": 3.02,
+    "t_of_max": 37
    }
   }
  },
@@ -274,6 +300,7 @@
   "ZL": 0,
   "IN": 0,
   "BSE": 0,
+  "NG": 0,
   "A": 0,
   "B": 0,
   "C": 0,
@@ -295,8 +322,12 @@
    "t": 51
   },
   "C-FAR": {
-   "Mkm2": 0.14,
-   "t": 224
+   "Mkm2": 0.15,
+   "t": 225
+  },
+  "NG-POL": {
+   "Mkm2": 0.07,
+   "t": 237
   },
   "MD-D": {
    "Mkm2": 0.07,
@@ -325,6 +356,10 @@
   "A-B": {
    "Mkm2": 0.01,
    "t": 250
+  },
+  "BSE-NG": {
+   "Mkm2": 0.01,
+   "t": 299
   },
   "C-POL": {
    "Mkm2": 0.01,
@@ -369,7 +404,8 @@
      "M3d",
      "M3e",
      "M3f"
-    ]
+    ],
+    "efficiency": 0.74
    },
    "swept_Mkm2": 7.55,
    "continental_Mkm2": 4.73,
@@ -409,5 +445,5 @@
    "trimmed_conflict_Mkm2": 0.0
   }
  ],
- "generated": "2026-10-24 05:28:07"
+ "generated": "2026-10-24 13:31:46"
 }

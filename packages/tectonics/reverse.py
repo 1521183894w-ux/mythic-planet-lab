@@ -172,6 +172,30 @@ class PlateHistory:
 # ---------------------------------------------------------------------------
 # U24：补回碰撞挤掉的地壳、构建初始世界
 # ---------------------------------------------------------------------------
+def in_sphere_polygon(x: np.ndarray, poly: np.ndarray) -> np.ndarray:
+    """单位矢量 x（n×3）是否落在球面多边形 poly（m×3，顶点按顺序，边为大圆弧）里（U28 第二轮：岛弧系统的板块区域）。
+    用以顶点中心为切点的心射投影判断：大圆在心射投影下是直线，边界精确。只适用于顶点离中心不到约 85° 的多边形。"""
+    from matplotlib.path import Path as MPath
+
+    x = np.atleast_2d(np.asarray(x, float))
+    poly = np.asarray(poly, float)
+    c = unit(poly.sum(0))
+    e1 = np.cross([0.0, 0.0, 1.0], c)
+    e1 = unit(e1) if np.linalg.norm(e1) > 1e-6 else np.array([1.0, 0.0, 0.0])
+    e2 = np.cross(c, e1)
+    dp = poly @ c
+    if (dp <= 0.087).any():
+        raise ValueError("多边形太大：有顶点离中心超过约 85°")
+    P = np.stack([(poly @ e1) / dp, (poly @ e2) / dp], 1)
+    dq = x @ c
+    ok = dq > 0.087
+    out = np.zeros(len(x), bool)
+    if ok.any():
+        Q = np.stack([(x[ok] @ e1) / dq[ok], (x[ok] @ e2) / dq[ok]], 1)
+        out[ok] = MPath(P).contains_points(Q)
+    return out
+
+
 def _raster_index(lon, lat, ny: int, nx: int):
     i = np.clip(((90.0 - lat) / 180.0 * ny).astype(int), 0, ny - 1)
     j = np.clip(((lon + 180.0) / 360.0 * nx).astype(int), 0, nx - 1)

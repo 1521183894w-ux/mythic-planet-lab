@@ -154,3 +154,60 @@ def test_thick_intraoceanic_arc_is_accreted_not_subducted(mesh):
     n_keep, n_acc = run(True)
     n_lost, _ = run(False)
     assert n_acc > 0 and n_keep > n_lost
+
+
+def test_new_plate_takes_ocean_units_and_moves_on_its_own(mesh):
+    """U28 第二轮：俯冲起始时新增一块板块，把一片洋壳整批转给它，之后按自己的角速度运动（菲律宾海式）。"""
+    c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)
+    w = {1: np.zeros(3), 2: np.zeros(3)}
+    eng = Engine(mesh, c, Params(), 100.0, w)
+    patch = (eng.c.plate == 2) & (eng.c.ctype == 0) & (np.abs(mesh.lat) < 15) & (mesh.lon > 100) & (mesh.lon < 130)
+    w3 = pole_vector(90.0, 0.0, 0.5)                       # 新板块向东
+    assert eng.add_plate(3, w3) and not eng.add_plate(3, w3)
+    n = eng.transfer_units(2, 3, np.flatnonzero(patch))
+    assert n > 0.8 * patch.sum()
+    lon0 = np.degrees(np.arctan2(*eng.positions()[eng.alive & (eng.c.plate == 3)][:, [1, 0]].T)).mean()
+    w[3] = w3
+    for _ in range(10):
+        eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+    lon1 = np.degrees(np.arctan2(*eng.positions()[eng.alive & (eng.c.plate == 3)][:, [1, 0]].T)).mean()
+    assert 3.0 < lon1 - lon0 < 6.0                         # 10 Myr × 0.5°/Myr，前缘消耗、后缘新生会让质心略有偏移
+
+
+def test_ocean_arc_flux_factor_thickens_intraoceanic_arc_faster(mesh):
+    """U28 第二轮：同样的岩浆通量摊在窄的洋内弧带上增厚更快（arc_ocean_flux_factor）。"""
+    def run(factor):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)
+        p = Params(arc_ocean_flux_factor=factor, arc_ocean_T_max_km=30.0, arc_to_cont_T_km=31.0)
+        w = {1: pole_vector(90.0, 0.0, 0.5), 2: np.zeros(3)}
+        eng = Engine(mesh, c, p, 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 1
+        for _ in range(15):
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        return float(eng.c.T[eng.alive & (eng.c.plate == 2)].max())
+    t1, t3 = run(None), run(3.0)
+    assert t3 - 7.0 > 2.5 * (t1 - 7.0) > 0
+
+
+def test_gap_prefer_does_not_grow_the_over_plate_at_a_convergent_boundary(mesh):
+    """U28 第二轮：指定归属的新洋壳只给真正张开处；汇聚边界上网格对不齐的小洞归下行板块，上盘不会一次次往外长
+    （否则菲律宾海式板块东缘 50 Myr 长出约 600 km，大陆弧前往海里长、海沟离岸越来越远）。"""
+    def run(opening_only):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)
+        c.ctype[:] = 0
+        c.T[:] = 7.0
+        w = {1: pole_vector(90.0, 0.0, 0.5), 2: np.zeros(3)}
+        eng = Engine(mesh, c, Params(gap_prefer_opening_only=opening_only), 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 1                  # 板块 1 俯冲到板块 2 之下
+        eng.gap_prefer[1 * 1000 + 2] = 2                # 两块之间张开的新洋壳归板块 2（例如东大洋那样的设定）
+        east = (mesh.lon > 20) & (mesh.lon < 60) & (np.abs(mesh.lat) < 20)
+        n0 = int((eng.alive & (eng.c.plate == 2) & east[eng.c.node]).sum())
+        for _ in range(30):
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        pos = eng.positions()
+        lon = np.degrees(np.arctan2(pos[:, 1], pos[:, 0]))
+        lat = np.degrees(np.arcsin(np.clip(pos[:, 2], -1, 1)))
+        inbox = (lon > 20) & (lon < 60) & (np.abs(lat) < 20)
+        return int((eng.alive & (eng.c.plate == 2) & inbox).sum()) - n0
+    grow_old, grow_new = run(False), run(True)
+    assert grow_new < grow_old

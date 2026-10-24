@@ -58,6 +58,9 @@ class Engine:
         self.steps_since_commit = 0
         self.polarity: dict[int, int] = {}     # 板块对（小*1000+大）-> 俯冲（下行）板块
         self.gap_prefer: dict[int, int] = {}   # 板块对 -> 两者之间张开的新洋壳全部归这块（U26；默认按最近单元归属）
+        self.hole_down_pairs: set | None = None  # U28 第二轮：汇聚边界上的网格小洞归下行板块的板块对；None = 所有板块对（见 commit）
+        self.arc_flux_pairs: set | None = None   # U28 第二轮：Params.arc_ocean_flux_factor 只用于这些板块对的俯冲带；None = 所有
+        self.arc_accrete_pairs: set | None = None  # U28 第二轮：弧—陆拼贴只在这些板块对之间；None = 所有
         self.fronts: deque = deque()
         self.coll_area: dict[tuple[int, int], float] = {}
         self.events: list[dict] = []
@@ -246,6 +249,8 @@ class Engine:
         if p.arc_accrete_T_km is not None:
             # 弧—陆碰撞（U28）：厚的洋内弧地壳被大陆撞上时转成陆壳拼贴（浮力大，不俯冲），之后按陆—陆碰撞处理
             cand = np.flatnonzero((cu == OCEAN) & (cb == CONT) & (c.T[U] >= p.arc_accrete_T_km))
+            if self.arc_accrete_pairs is not None and cand.size:   # 终图倒推：只在设计的弧—陆碰撞处（U28 第二轮）
+                cand = cand[np.isin(key[cand], list(self.arc_accrete_pairs))]
             if cand.size:
                 acc = np.zeros(len(U), bool)
                 for q in np.unique(P[cand]):
@@ -344,6 +349,12 @@ class Engine:
             f = np.where(oceanic, arc_profile(dk, p.arc_peak_ocean_km, p.arc_max_ocean_km),
                          arc_profile(dk, p.arc_peak_km, p.arc_max_km))
             dT = p.arc_rate_km_myr * f * np.clip(V[sel][k[ok]] / p.v0_cm_yr, 0.0, 1.5) * p.dt
+            if p.arc_ocean_flux_factor is not None:   # 洋内弧带窄，同样的岩浆通量增厚更快（见 Params.arc_ocean_flux_factor）
+                fac = oceanic
+                if self.arc_flux_pairs is not None:   # 终图倒推：只用于设计的俯冲带（固定外大洋在大陆围裙下的慢速俯冲是简化带来的）
+                    sub = S[sel][k[ok]]
+                    fac = fac & np.isin(np.minimum(sub, o) * 1000 + np.maximum(sub, o), list(self.arc_flux_pairs))
+                dT = np.where(fac, dT * p.arc_ocean_flux_factor, dT)
             if p.arc_shortening_km_myr is not None:
                 # 上盘朝海沟前进造成的构造缩短（见 Params.arc_shortening_km_myr）：上盘的绝对速度在指向最近前缘方向上的分量
                 Xk = X[sel][k[ok]]
@@ -538,9 +549,35 @@ class Engine:
                 owner = owner.copy()
                 p2 = pl[np.arange(gap.size), first]
                 key = np.minimum(owner, p2).astype(np.int64) * 1000 + np.maximum(owner, p2)
+                opening = np.ones(gap.size, bool)
+                if p.gap_prefer_opening_only:
+                    # 只有两块在这里张开（相对速度朝两侧最近单元的连线方向分开）才按指定归属；汇聚边界上两块板块的网格
+                    # 对不齐留下的小洞不算（见下）（U28 第二轮：否则指定的一块每次提交都往汇聚的另一块里长一点，
+                    # 菲律宾海式板块的东缘 50 Myr 往外长了约 600 km）
+                    om = np.zeros((max(self.R) + 1, 3))
+                    for q, w in self.omega.items():
+                        om[q] = w
+                    u = pos[keep[k[:, 0]]] - pos[keep[k[np.arange(gap.size), first]]]
+                    v = np.cross(om[owner] - om[p2], m.xyz[gap])
+                    opening = np.sum(v * u, axis=1) > 0.0
                 for kk, q in self.gap_prefer.items():
-                    sel = has & (key == kk)
+                    sel = has & (key == kk) & opening
                     owner[sel] = q
+                if p.gap_prefer_opening_only:
+                    # 汇聚边界上的小洞归既定的下行板块（下一步就被俯冲掉）：按最近单元归属时一半补给上盘，上盘的弧前每次提交
+                    # 往海里长一点，海沟离海岸越来越远，岸上的弧增厚变弱（第二轮第三次运行：东岸山系 1864 -> 796 m）
+                    # 只限两侧挨着的都是洋壳的海沟处，且只限 hole_down_pairs 里的板块对（终图倒推：大洋板块下行的、岛弧系统设计的）；
+                    # 碰撞带、陆缘仍按最近单元（第二轮第四至七次运行对所有板块对都这样做：印度式碰撞开始得晚，补回陆缘留在高原范围里的
+                    # 少了，东方大高原 4945 -> 2394 m；按实测重定保留率后高原回来，北缘山系仍只有 1175 m）
+                    i2 = k[np.arange(gap.size), first]
+                    ct_o, ct_2 = new.ctype[k[:, 0]], new.ctype[i2]
+                    conv = np.flatnonzero(has & ~opening)
+                    for kk in np.unique(key[conv]):
+                        sub = self.polarity.get(int(kk))
+                        if sub is None or (self.hole_down_pairs is not None and int(kk) not in self.hole_down_pairs):
+                            continue
+                        r = conv[key[conv] == kk]
+                        owner[r[(ct_o[r] == OCEAN) & (ct_2[r] == OCEAN)]] = sub
             bn = np.empty(gap.size, np.int64)
             for q in np.unique(owner):
                 s = owner == q
@@ -704,6 +741,19 @@ class Engine:
         self._event("rift", parent=parent, new_plate=new_id, n_parcels=int(keep.size), n_segments=n_seg,
                     **_lat_lon(xm))
         return keep
+
+    def add_plate(self, q: int, omega) -> bool:
+        """新增一块还没有单元的板块（U28 第二轮：俯冲起始时从大洋里分出的新板块，例如菲律宾海式板块）。
+        参照系取当前的地幔参照系（R = 单位阵），之后按旋转文件运动；单元由 transfer_units 转进来。已存在时不动，返回 False。"""
+        assert self.steps_since_commit == 0, "新增板块只在提交后进行"
+        q = int(q)
+        if q in self.R:
+            return False
+        self.R[q] = np.eye(3)
+        self.omega[q] = np.asarray(omega, float)
+        self._rebuild()
+        self._event("plate_added", plate=q)
+        return True
 
     def transfer_units(self, src: int, dst: int, moved: np.ndarray, kind: str = "unit_transfer") -> int:
         """把板块 src 的一批单元 moved 整体改属板块 dst（U26：上盘洋壳"围裙"转给下行板块，被动陆缘转为俯冲带）。

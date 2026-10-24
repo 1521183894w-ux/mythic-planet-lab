@@ -56,22 +56,47 @@ def log(msg: str) -> None:
 # ---------------------------------------------------------------------------
 # 模拟
 # ---------------------------------------------------------------------------
+def plate_codes(hcfg: dict) -> dict:
+    """代号 -> 板块编号：陆块、外大洋板块（OCEAN）、单独运动的大洋板块（U26）、岛弧系统的新板块（U28 第二轮）。"""
+    oc = hcfg.get("ocean") or {}
+    out = {b["code"]: int(b["id"]) for b in hcfg["blocks"]}
+    if oc.get("background"):
+        out["OCEAN"] = int(oc["background"]["id"])
+    out.update({p["code"]: int(p["id"]) for p in oc.get("plates", [])})
+    out.update({p["code"]: int(p["id"]) for p in (hcfg.get("arcs") or {}).get("plates", [])})
+    return out
+
+
 def preset_polarity(hcfg: dict) -> dict:
     """按设计预设俯冲方向：{板块对键: 下行板块}。键与 Engine.polarity 相同（小编号 × 1000 + 大编号）。
-    history yaml 的 ocean.subduction 每条 down × over；先写的优先；外大洋板块与任何大陆相遇都是它下行。
+    先 history yaml 的 arcs.subduction（U28 第二轮岛弧系统），再 ocean.subduction，每条 down × over，先写的优先；
+    最后外大洋板块、大洋板块与岛弧系统的新洋板块遇到任何大陆都是它下行。
     （第一次运行按首次接触时的洋壳年龄决定，269 Ma 洲 B 被当成下行板块、陆壳被拼贴到洲 A 上。）"""
     oc = hcfg.get("ocean") or {}
-    code_id = {b["code"]: int(b["id"]) for b in hcfg["blocks"]}
+    code_id = plate_codes(hcfg)
     out = {}
-    for r in oc.get("subduction", []):
+    for r in (hcfg.get("arcs") or {}).get("subduction", []) + oc.get("subduction", []):
         for d in r["down"]:
             for o in r["over"]:
                 a, b = code_id[d], code_id[o]
                 out.setdefault(min(a, b) * 1000 + max(a, b), a)
-    oceans = ([int(oc["background"]["id"])] if oc.get("background") else []) + [int(p["id"]) for p in oc.get("plates", [])]
+    oceans = (([int(oc["background"]["id"])] if oc.get("background") else []) + [int(p["id"]) for p in oc.get("plates", [])]
+              + [int(p["id"]) for p in (hcfg.get("arcs") or {}).get("plates", [])])
     for bg in oceans:                       # 外大洋板块与单独运动的大洋板块（U26）遇到任何大陆都是它下行
-        for q in code_id.values():
+        for q in (int(b["id"]) for b in hcfg["blocks"]):
             out.setdefault(min(q, bg) * 1000 + max(q, bg), bg)
+    return out
+
+
+def designed_pairs(hcfg: dict) -> set:
+    """设计的俯冲带（arcs.subduction 与 ocean.subduction 的每个下行 × 上盘）的板块对键（U28 第二轮）。"""
+    code_id = plate_codes(hcfg)
+    out = set()
+    for r in (hcfg.get("arcs") or {}).get("subduction", []) + (hcfg.get("ocean") or {}).get("subduction", []):
+        for d in r["down"]:
+            for o in r["over"]:
+                a, b = code_id[d], code_id[o]
+                out.add(min(a, b) * 1000 + max(a, b))
     return out
 
 
@@ -87,7 +112,7 @@ def over_down_pairs(hcfg: dict) -> dict:
 
 
 def strip_aprons(eng, pairs: dict, forearc_km: float, approach_km: float, between_cos: float = -0.5,
-                 min_conv_cm_yr: float = 0.5) -> float:
+                 min_conv_cm_yr: float = 0.5, ocean_downs: dict | None = None, protected: np.ndarray | None = None) -> float:
     """上盘板块不留挡路的洋壳"围裙"（U26）：上盘板块离自己陆壳 forearc_km 以外、夹在它和某块设计中的下行板块的陆壳之间
     （两个方向夹角的余弦小于 between_cos）、离那块陆壳 approach_km 以内的洋壳，转给那块下行板块，
     下行陆块前进方向上的上盘陆缘成为俯冲带（海沟在弧前外缘）。
@@ -95,7 +120,12 @@ def strip_aprons(eng, pairs: dict, forearc_km: float, approach_km: float, betwee
     俯冲带在围裙外缘、围裙上长出洋内弧，南方地盾陆块与洲 C 北端先撞上弧地壳，提前碰撞被消耗。
     地球上被动陆缘外的洋壳在汇聚开始后也会转成俯冲带的下行一侧（俯冲在被动陆缘起始）。
     （U26 第一版只要求离下行板块的任何地壳 1200 km 以内，洲 B 北岸、洲 A 西岸等不在任何陆块前进路上的海岸也都变成俯冲带，
-    沿海岸长出一圈 1 km 高的弧地壳，陆壳体积 300 Myr 增加 15%。）返回转移的面积（km²）。"""
+    沿海岸长出一圈 1 km 高的弧地壳，陆壳体积 300 Myr 增加 15%。）
+    U28 第二轮 ocean_downs = {上盘陆块: [大洋板块, ...]}：大洋板块（外大洋、东大洋两块、岛弧系统的新洋板块）朝陆块汇聚、
+    按预设是它下行时，挡在前面的围裙也转给它（"离下行板块近"按它的任何单元算）。否则大陆漂移时前方自己名下的旧洋壳与
+    大洋板块相撞，海沟落在离岸几百公里外，长出终图没有的洋内弧（第二轮第一次运行：极地大陆一圈、洲 C 西岸外、洲 A 西北等，
+    1200 多座弧火山岛）。protected：岛弧系统划给陆块的洋壳（琉球、千岛、班达、汤加—克马德克式的洋内弧所在）单元编号，不转。
+    返回转移的面积（km²）。"""
     from scipy.spatial import cKDTree
 
     from mythic.tectonics.crust import OCEAN
@@ -107,11 +137,15 @@ def strip_aprons(eng, pairs: dict, forearc_km: float, approach_km: float, betwee
         return v / np.maximum(np.linalg.norm(v, axis=1, keepdims=True), 1e-12)
 
     moved_km2 = 0.0
-    for o, downs in pairs.items():
+    ocean_downs = ocean_downs or {}
+    for o in sorted(set(pairs) | set(ocean_downs)):
+        downs = list(pairs.get(o, [])) + [d for d in ocean_downs.get(o, []) if d not in pairs.get(o, [])]
         if o not in eng.R:
             continue
         c, alive, pos = eng.c, eng.alive, eng.positions()
         oc = np.flatnonzero(alive & (c.plate == o) & (c.ctype == OCEAN))
+        if protected is not None and protected.size and oc.size:
+            oc = oc[~np.isin(c.uid[oc], protected)]
         cont = np.flatnonzero(alive & (c.plate == o) & (c.ctype == CONT))
         if oc.size == 0 or cont.size == 0:
             continue
@@ -127,7 +161,7 @@ def strip_aprons(eng, pairs: dict, forearc_km: float, approach_km: float, betwee
         for d in downs:
             if d not in eng.R:
                 continue
-            du = np.flatnonzero(alive & (c.plate == d) & (c.ctype == CONT))
+            du = np.flatnonzero(alive & (c.plate == d) & ((c.ctype == CONT) | (d in ocean_downs.get(o, []))))
             if du.size == 0:
                 continue
             dd, kd = cKDTree(pos[du]).query(X, distance_upper_bound=chord_from_km(approach_km), workers=-1)
@@ -168,7 +202,51 @@ def ocean_gap_prefer(hcfg: dict) -> dict:
             for b in hcfg["blocks"]:
                 a, q = int(b["id"]), int(p["id"])
                 out[min(a, q) * 1000 + max(a, q)] = q
+    code_id = plate_codes(hcfg)
+    for g in (hcfg.get("arcs") or {}).get("gaps", []):     # U28 第二轮：岛弧系统各板块之间张开的新洋壳
+        a, b = (code_id[x] for x in g["pair"])
+        out[min(a, b) * 1000 + max(a, b)] = code_id[g["to"]]
     return out
+
+
+def arc_regions(hcfg: dict, kin) -> list:
+    """history yaml arcs.regions -> [{t, plate, omega_plate, poly_fn, what}]（U28 第二轮）。poly_fn(t) 给出 t 时刻的多边形顶点：
+    现今坐标的顶点按各自锚定的板块转回 t（默认锚在 plate 上；第三项为上盘代号；0 = 地幔参照系）。"""
+    from mythic.tectonics.geometry import lonlat_to_xyz
+
+    code_id = plate_codes(hcfg)
+    out = []
+    for r in (hcfg.get("arcs") or {}).get("regions", []):
+        q = code_id[r["plate"]]
+        verts = []
+        for v in r["poly"]:
+            a = q if len(v) < 3 else (0 if v[2] in (0, "0") else code_id[v[2]])
+            verts.append((a, lonlat_to_xyz(float(v[0]), float(v[1]))))
+
+        def poly_fn(t, verts=verts):
+            return np.array([x if a == 0 else unit(kin.total_from(a, 0.0, t) @ x) for a, x in verts])
+
+        out.append({"t": float(r["t"]), "plate": q, "code": r["plate"], "poly_fn": poly_fn, "what": r.get("what", "")})
+    return sorted(out, key=lambda e: -e["t"])
+
+
+def apply_region(eng, q: int, poly_xyz: np.ndarray, omega=None) -> dict:
+    """把当前落在多边形里的存活洋壳单元（不论原属哪块板块）整批转给板块 q（U28 第二轮：俯冲起始时划定新的板块边界）；
+    q 还不存在时先新增（参照系取当前地幔参照系）。陆壳不动。返回 {原板块: 转出的单元数}。"""
+    from mythic.tectonics.crust import OCEAN
+    from mythic.tectonics.reverse import in_sphere_polygon
+
+    if q not in eng.R:
+        eng.add_plate(q, np.zeros(3) if omega is None else omega)
+    c = eng.c
+    cand = np.flatnonzero(eng.alive & (c.ctype == OCEAN) & (c.plate != q))
+    cand = cand[in_sphere_polygon(eng.positions()[cand], poly_xyz)]
+    moved = {}
+    for s in np.unique(c.plate[cand]):
+        sel = cand[eng.c.plate[cand] == s]
+        eng.transfer_units(int(s), int(q), sel, kind="region_transfer")
+        moved[int(s)] = int(sel.size)
+    return moved
 
 
 def build_hotspots(hcfg: dict, kin, vp) -> list:
@@ -195,8 +273,10 @@ def build_hotspots(hcfg: dict, kin, vp) -> list:
 
 
 def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict, aprons: dict | None = None,
-             gap_prefer: dict | None = None, volc=None):
+             gap_prefer: dict | None = None, volc=None, arcs_hcfg: dict | None = None):
     kin = RotationFileKinematics(rot)
+    regions = arc_regions(arcs_hcfg, kin) if arcs_hcfg else []     # U28 第二轮：岛弧系统的俯冲起始
+    ri = 0
     c = world.crust.gather(np.arange(len(world.crust)))
     c.uid = np.arange(len(c), dtype=np.int64)
     c.node = np.arange(len(c), dtype=np.int64)
@@ -208,6 +288,32 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
     eng.gap_prefer.update(gap_prefer or {})
     if aprons:
         aprons["pairs"] = over_down_pairs(aprons["hcfg"])
+        aprons["ocean_downs"] = {}
+        if aprons.get("ocean_plates"):        # U28 第二轮：大洋板块朝陆块汇聚时也不留围裙（见 strip_aprons）
+            blocks = [int(b["id"]) for b in aprons["hcfg"]["blocks"]]
+            oceans = [q for q in plate_codes(aprons["hcfg"]).values() if q not in blocks]
+            for o in blocks:
+                aprons["ocean_downs"][o] = [d for d in oceans if polarity.get(min(o, d) * 1000 + max(o, d)) == d]
+    protected = np.zeros(0, np.int64)       # 岛弧系统划给陆块的洋壳（洋内弧所在），不当围裙转走
+    blocks_ids = {int(b["id"]) for b in arcs_hcfg["blocks"]} if arcs_hcfg else set()
+    if arcs_hcfg and params.gap_prefer_opening_only:
+        # 汇聚边界上的网格小洞归下行板块：只限大洋板块下行的板块对与岛弧系统设计的俯冲带（见 Engine.commit）
+        oceans = {q for q in plate_codes(arcs_hcfg).values() if q not in blocks_ids}
+        arc_pairs = set()
+        for r in arcs_hcfg["arcs"].get("subduction", []):
+            for d in r["down"]:
+                for o in r["over"]:
+                    a, bb = plate_codes(arcs_hcfg)[d], plate_codes(arcs_hcfg)[o]
+                    arc_pairs.add(min(a, bb) * 1000 + max(a, bb))
+        eng.hole_down_pairs = arc_pairs | {k for k, sub in polarity.items() if sub in oceans}
+        # 弧—陆拼贴只在岛弧系统设计的俯冲带上（东南群岛东大岛、东岸大岛）：第二轮第十次运行，南方地盾陆块北上时擦过东南增生地块
+        # 西侧的弧，弧被拼贴成陆、再被碰撞增厚，苏门答腊式长岛西边多出 0.29 百万 km²、约 3 km 高的陆地
+        eng.arc_accrete_pairs = arc_pairs
+    if arcs_hcfg:                           # 洋内弧增厚加快只用于设计的俯冲带（U28 第二轮，见 Engine.arc_flux_pairs）
+        eng.arc_flux_pairs = designed_pairs(arcs_hcfg)
+    if arcs_hcfg and volc is not None:      # 岛弧火山只长在设计的俯冲带上（U28 第二轮，见 VolcanoField.arc_pairs）
+        volc.arc_pairs = designed_pairs(arcs_hcfg)
+        volc.arc_cont_plates = blocks_ids
     moved = 0.0
     frames = [eng.snapshot()]
     vframes = [volc.state(eng)] if volc is not None else []
@@ -219,7 +325,22 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         t -= 1
         if committed and aprons:
             moved += strip_aprons(eng, aprons["pairs"], aprons["forearc_km"], aprons["approach_km"], aprons["between_cos"],
-                                  aprons["min_conv_cm_yr"])
+                                  aprons["min_conv_cm_yr"], aprons["ocean_downs"], protected)
+        while committed and ri < len(regions) and regions[ri]["t"] >= t - 1e-9:
+            e = regions[ri]
+            ri += 1
+            om_q = kin.step_rotations([e["plate"]], max(t, 1))[1][e["plate"]]
+            poly = e["poly_fn"](float(t))
+            mv = apply_region(eng, e["plate"], poly, om_q)
+            if e["plate"] in blocks_ids:     # 划给陆块的洋壳：设计中的洋内弧所在（不当围裙转走；弧火山只长在这里）
+                from mythic.tectonics.crust import OCEAN
+                from mythic.tectonics.reverse import in_sphere_polygon
+                mine = np.flatnonzero(eng.alive & (eng.c.plate == e["plate"]) & (eng.c.ctype == OCEAN))
+                mine = mine[in_sphere_polygon(eng.positions()[mine], poly)]
+                protected = np.union1d(protected, eng.c.uid[mine])
+                if volc is not None:
+                    volc.arc_protected_uids = protected
+            log(f"  {t:3d} Ma 岛弧系统：{e['code']} 接收洋壳单元 {sum(mv.values())} 个（来自 {mv}）")
         if volc is not None:
             volc.step(eng)
         if committed and t % snap_every == 0:
@@ -523,7 +644,8 @@ def main() -> int:
         oc = hcfg.get("ocean") or {}
         aprons = ({"hcfg": hcfg, "forearc_km": float(oc.get("forearc_km", 120.0)),
                    "between_cos": float(oc.get("between_cos", -0.5)),
-                   "approach_km": float(ap["approach_km"]), "min_conv_cm_yr": float(ap.get("min_conv_cm_yr", 0.5))}
+                   "approach_km": float(ap["approach_km"]), "min_conv_cm_yr": float(ap.get("min_conv_cm_yr", 0.5)),
+                   "ocean_plates": bool(ap.get("ocean_plates", False))}
                   if ap and ap.get("strip", True) else None)
         volc = None
         if hcfg.get("hotspots"):
@@ -534,7 +656,7 @@ def main() -> int:
             volc = VolcanoField(hs, vp)
             log(f"热点 {len(hs)} 个（history yaml hotspots）")
         eng, frames, vframes = simulate(world, mesh, rot, args.snap_every, params, polarity, aprons,
-                                        ocean_gap_prefer(hcfg), volc)
+                                        ocean_gap_prefer(hcfg), volc, hcfg if hcfg.get("arcs") else None)
         wall = time.perf_counter() - tw
         log(f"模拟完成，用时 {wall:.0f} s")
         save_run(run_path, eng, frames, {"design": args.design, "history": args.history, "level": mesh.level,
@@ -658,7 +780,7 @@ def main() -> int:
     if not args.no_figures:
         log("出图")
         figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng, E_fin, cmp_, m_eng, f_eng,
-                A_eng, A_fin, run_js, v0, hs_cmp)
+                A_eng, A_fin, run_js, v0, hs_cmp, vframes)
     log(f"完成，用时 {time.perf_counter() - t_start:.0f} s")
     return 0
 
@@ -667,7 +789,7 @@ def main() -> int:
 # 出图
 # ---------------------------------------------------------------------------
 def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng, E_fin, cmp_, m_eng, f_eng,
-            A_eng, A_fin, run_js, v0=None, hs_cmp=None):
+            A_eng, A_fin, run_js, v0=None, hs_cmp=None, vframes=None):
     import cartopy.crs as ccrs
     import matplotlib
 
@@ -965,6 +1087,70 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
         fig.text(0.5, 0.985, "U28 岛弧火山岛：终图 vs 正向演化 0 Ma", fontsize=15, ha="center", va="top")
         stamp(fig)
         fig.savefig(out / "07_arcs.png", dpi=105)
+        plt.close(fig)
+
+    # ---- 08 岛弧系统的形成：几个时刻的板块归属、弧地壳与弧火山岛（U28 第二轮） ----
+    if hcfg.get("arcs") and vframes:
+        from mythic.tectonics.crust import OCEAN
+        from mythic.tectonics.volcanism import ISLAND
+        names = {v: k for k, v in plate_codes(hcfg).items()}
+        label = {int(bk["id"]): bk["name"] for bk in hcfg["blocks"]}
+        label.update({int(p["id"]): p["name"] for p in (hcfg.get("ocean") or {}).get("plates", [])})
+        label.update({int(p["id"]): p["name"] for p in hcfg["arcs"].get("plates", [])})
+        if (hcfg.get("ocean") or {}).get("background"):
+            label[int(hcfg["ocean"]["background"]["id"])] = "外大洋板块"
+        times = np.array([f["t"] for f in frames])
+        rows = [("西太平洋：菲律宾海式板块（50 Ma 起）", (105, 170, -5, 40), [50, 30, 10, 0]),
+                ("东南群岛—南洋：微陆块所在板块与南洋陆块的洋壳（60 Ma 起）", (95, 185, -45, 8), [60, 30, 10, 0]),
+                ("加勒比式板块（50 Ma 起）", (-100, -45, -2, 30), [50, 30, 10, 0])]
+        pal = matplotlib.colormaps["tab20"]
+        allq = sorted(names)
+        pcol = {q: pal(i % 20) for i, q in enumerate(allq)}
+        fig, axs = plt.subplots(3, 4, figsize=(22, 15.5))
+        for r, (title, (x0, x1, y0, y1), ts) in enumerate(rows):
+            for cidx, tt in enumerate(ts):
+                ax = axs[r, cidx]
+                k = int(np.argmin(np.abs(times - tt)))
+                f = frames[k]
+                P = raster(f["plate"]).astype(int)
+                C = raster(f["ctype"])
+                T = raster(f["T"]).astype(float)
+                ny, nx = P.shape
+                lo = np.linspace(-180, 180, nx, endpoint=False) + 180 / nx
+                la = np.linspace(90, -90, ny, endpoint=False) - 90 / ny
+                sx, sy = (lo >= x0) & (lo <= x1), (la >= y0) & (la <= y1)
+                Ps = P[np.ix_(sy, sx)]
+                img = np.ones(Ps.shape + (3,))
+                for q in np.unique(Ps):
+                    img[Ps == q] = np.asarray(pcol.get(int(q), (0.6, 0.6, 0.6, 1)))[:3] * 0.55 + 0.45
+                ext = [lo[sx][0], lo[sx][-1], la[sy][-1], la[sy][0]]
+                ax.imshow(img, extent=ext, interpolation="nearest", aspect="auto")
+                ax.contour(lo[sx], la[sy], C[np.ix_(sy, sx)], levels=[0.5], colors="k", linewidths=0.9)
+                yy, xx = np.nonzero(((C == OCEAN) & (T >= 12.0))[np.ix_(sy, sx)])
+                ax.scatter(lo[sx][xx], la[sy][yy], s=1.2, c="#d7301f", linewidths=0, zorder=3)
+                v = vframes[k]
+                s = (v["hotspot"] == "ARC") & (v["kind"] == ISLAND)
+                ax.scatter(v["lon"][s], v["lat"][s], marker="^", s=16, c="#fd8d3c", edgecolors="k", linewidths=0.3, zorder=5)
+                for q in np.unique(Ps):
+                    yy, xx = np.nonzero(Ps == q)
+                    if yy.size > 120:
+                        ax.text(lo[sx][int(np.median(xx))], la[sy][int(np.median(yy))], label.get(int(q), names.get(int(q), str(q))),
+                                fontsize=8.5, ha="center", path_effects=halo, zorder=7)
+                if tt == 0:
+                    ax.contour(lon, lat, Lf.astype(float), levels=[0.5], colors="#1a9850", linewidths=0.9, zorder=4)
+                    for isl in design.get("islands", []):
+                        if isl["type"] == "arc":
+                            q = np.asarray(isl["line"], float)
+                            ax.plot(q[:, 0], q[:, 1], "-", color="#6a3d9a", lw=1.4, zorder=6)
+                ax.set_xlim(x0, x1)
+                ax.set_ylim(y0, y1)
+                ax.grid(alpha=0.3)
+                ax.set_title(f"{title if cidx == 0 else ''}{chr(10) if cidx == 0 else ''}{times[k]:g} Ma", fontsize=10)
+        fig.text(0.5, 0.995, "U28 第二轮 岛弧系统的形成：浅色块 = 板块；黑线 = 陆壳边界；红点 = 增厚的洋型弧地壳（≥ 12 km）；"
+                 "橙三角 = 弧火山岛；0 Ma 绿线 = 终图陆地、紫线 = 终图岛弧", fontsize=12, ha="center", va="top")
+        fig.tight_layout(rect=(0, 0.015, 1, 0.975))
+        stamp(fig, " · 板块边界与运动由设计设定（history yaml arcs）")
+        fig.savefig(out / "08_arc_systems.png", dpi=95)
         plt.close(fig)
 
 if __name__ == "__main__":
