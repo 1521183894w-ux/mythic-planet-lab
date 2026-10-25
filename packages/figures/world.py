@@ -114,6 +114,7 @@ class World:
     mountain_exclude: np.ndarray | None = None
     is_earth: bool = False
     method_label_override: str | None = None   # 只用于盲评时在图中隐去 method_class；真实值仍在 method_class
+    tectonics: dict | None = None              # U34：可选的构造图层（世界文件里的 tect_* 变量：名 -> (数组, 属性)）
 
     @property
     def method_label(self) -> str:
@@ -163,12 +164,14 @@ def load_world_nc(path: str | Path) -> World:
         elev = ds["elevation"].values.astype("float64")
         land = (ds["land"].values >= 0.5) if "land" in ds else elev > 0
         attrs = dict(ds.attrs)
+        tect = {k: (ds[k].values, dict(ds[k].attrs)) for k in ds.data_vars if str(k).startswith("tect_")} or None
     mc = attrs.get("method_class_elevation")
     if not mc:
         raise ValueError(f"{path} 缺少全局属性 method_class_elevation（CLAUDE.md 第 4 节：每个图层必须标注）")
     return World(world_id=str(attrs.get("world_id", path.stem)), display_name=str(attrs.get("display_name", path.stem)),
                  elevation=elev, land=land, method_class=mc, source=str(attrs.get("source", path.name)),
-                 seed=str(attrs.get("seed", "—")), code_version=str(attrs.get("code_version", code_version())))
+                 seed=str(attrs.get("seed", "—")), code_version=str(attrs.get("code_version", code_version())),
+                 tectonics=tect)
 
 
 BLIND_NOTE = "（盲评隐去，评审后在 reviews/stage0_calibration.md 公开）"
@@ -184,7 +187,7 @@ def mirrored(world: World, shift_deg: float) -> World:
         return None if a is None else np.roll(a[:, ::-1], k, axis=1)
 
     return replace(world, elevation=f(world.elevation), land=f(world.land), regions=f(world.regions),
-                   mountain_exclude=f(world.mountain_exclude),
+                   mountain_exclude=f(world.mountain_exclude), tectonics=None,
                    source=f"{world.source}；东西镜像后向东平移 {k * 360.0 / nx:.2f}°")
 
 

@@ -86,6 +86,7 @@ class Engine:
         # 但不超过剖面的第一个厚度，即拉分盆地的厚度；属性抄最近的单元），不补成洋壳：U31 的 0 Ma 上洲 C、D 之间的走滑带有一串 0–20 Myr 的洋壳深水坑（评审 stage1_2026-10-25_1 第 4 条）
         self.cont_gap_pairs: dict = {}
         self.cont_gap_since: dict = {}             # 板块对键 -> 从哪个时刻（Ma）起才填陆壳；不写 = 一直
+        self._opening_skipped = np.zeros(0, np.int64)   # U34：张开处没当成碰撞的单元（uid，收支只计一次）
         # U32：陆壳上盘的弧增厚（岩浆增生与构造缩短）只用于这些板块对的俯冲带；None = 所有。终图倒推时外大洋板块固定在地幔参照系里，
         # 大陆一漂移，前方就与它慢速俯冲（U28 第二轮查明），终图在那里是被动陆缘；这种俯冲照旧消耗洋壳，但不再增厚陆壳
         # （否则补在被动陆缘外的陆架、陆表海被抬出海面，U30 的浅海湾有 29–44% 的格点这样露出）
@@ -303,6 +304,24 @@ class Engine:
 
         consume = ((cu == OCEAN) & (cb == CONT)) | ((cu == OCEAN) & (cb == OCEAN) & (sub_plate == P))
         coll = (cu == CONT) & (cb == CONT) & (sub_plate == P)
+        if p.no_collision_when_opening and self.cont_gap_pairs and coll.any():
+            # U34：设计的裂开陆缘、走滑拉分板块对上，两侧正在分开处的陆—陆重叠是网格对不齐，不当碰撞（见 Params）
+            act = np.array([int(k) in self.cont_gap_pairs and self.t <= self.cont_gap_since.get(int(k), np.inf) + 1e-9
+                            for k in key])
+            cand = np.flatnonzero(coll & act)
+            if cand.size:
+                op = np.stack([self.omega[int(q)] for q in P[cand]])
+                oq = np.stack([self.omega[int(q)] for q in Q[cand]])
+                v = np.cross(op - oq, pos[U[cand]])
+                apart = np.sum(v * (pos[U[cand]] - pos[B[cand]]), axis=1) > 0.0
+                coll[cand[apart]] = False
+                # 收支：没被当成碰撞的单元体积（同一单元每步都会再被找到，只在第一次计）
+                sk = U[cand[apart]]
+                first = ~np.isin(c.uid[sk], self._opening_skipped)
+                if first.any():
+                    self._opening_skipped = np.union1d(self._opening_skipped, c.uid[sk[first]])
+                    self.budget["opening_overlap_skipped"] = self.budget.get("opening_overlap_skipped", 0.0) + float(
+                        (c.T[sk[first]] * self.area[sk[first]]).sum())
         # 只有符合既定极性的消耗才是俯冲、记录前缘（驱动上盘增厚）。与极性相反的"洋壳在陆壳下"是上盘自己的弧前洋壳
         # 被到达的下行大陆掩覆（碰撞初期），只删除。（1.2a 合成试验中曾因此给下行大陆加了岛弧增厚。）
         front = consume & (sub_plate == P)

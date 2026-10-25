@@ -8,6 +8,7 @@
 输出：figures/stage<N>/<world_id>/（不进 Git，可由"世界数据 + 代码版本"重建）
   01–08 全球图、极地图与指标分布图；09–12 与同分辨率地球的对比图；regions/r1–r8 区域放大图（世界 | 地球对照）；
   metrics.json（全部指标）、regions.json（8 个区域的选取依据）、manifest.json（图件清单）、index.html（画廊）。
+  世界文件带 tect_* 构造图层时（阶段 1 正向演化世界），另出 13 0 Ma 板块与边界类型、regions/r*_tectonics 同窗口构造图层（U34）。
 
 世界文件格式见 packages/figures/world.py。对比用的地球格网必须与世界同分辨率（512x256 / 1024x512 / 2048x1024）。
 """
@@ -24,6 +25,7 @@ import yaml
 from mythic.figures import charts, maps
 from mythic.figures.gallery import write_gallery
 from mythic.figures.region_panels import earth_reference, region_pair
+from mythic.figures.tectonic_panels import global_plates, region_tectonics
 from mythic.figures.select_regions import CoastAnalysis, select_regions
 from mythic.figures.style import setup_fonts
 from mythic.figures.world import EARTH_REF, ROOT, blinded, load, load_earth, mirrored, to_jsonable
@@ -125,6 +127,10 @@ def main() -> int:
     add("maps", "07_slope.png", "坡度")
     maps.mountain_systems(world, metrics, fields, out / "08_mountain_systems.png")
     add("maps", "08_mountain_systems.png", "山系（C 层，v1 定义）")
+    if world.tectonics:                  # U34：0 Ma 板块与边界类型（评审 stage1_2026-10-25_3 第 14 条）
+        global_plates(world, out / "13_plates_boundaries.png")
+        add("global", "13_plates_boundaries.png", "0 Ma 板块与边界类型", "构造图层：板块归属，边界按相对运动分汇聚、离散、走滑。",
+            world.tectonics["tect_plate"][1].get("method_class", ""))
     log(f"全球图与指标图 {time.perf_counter() - t0:.1f} s")
 
     t0 = time.perf_counter()
@@ -147,6 +153,11 @@ def main() -> int:
         region_pair(p, world, earth, ref, out / f, n)
         add("regions", f, f"区域 {n} · {p.title}", (p.missing and f"未找到：{p.missing}") or p.reason,
             f"{world.method_label}（世界高程）")
+        if world.tectonics:              # U34：同窗口构造叠合图（review_protocol §2.2b，评审第 14 条）
+            ft = f"regions/{p.key}_tectonics.png"
+            region_tectonics(p, world, out / ft, n)
+            add("regions", ft, f"区域 {n} · 同窗口构造图层", "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，"
+                "与左边的高程图同一窗口，供海岸成因抽查。", world.tectonics["tect_plate"][1].get("method_class", ""))
         region_records.append({**p.as_dict(), "earth_comparison": {**ref, "center": list(ref["center"])}})
     log(f"区域放大图 {time.perf_counter() - t0:.1f} s")
 

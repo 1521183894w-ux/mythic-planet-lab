@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "29f4734-dirty",
+ "code_version": "ce843ba-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -240,8 +240,8 @@
     "B": 2.609,
     "BSE": 1.41,
     "A": 1.868,
-    "C": 3.03,
-    "WT": 0.121,
+    "C": 3.024,
+    "WT": 0.125,
     "ADR": 0.001,
     "D": 0.887,
     "ET": 0.0,
@@ -252,9 +252,9 @@
     "ZL": 0.081,
     "NG": 0.102
    },
-   "area_Mkm2": 13.425,
-   "trimmed_conflict_Mkm2": 5.785,
-   "volume_1e6_km3": 399.31
+   "area_Mkm2": 13.423,
+   "trimmed_conflict_Mkm2": 5.787,
+   "volume_1e6_km3": 399.23
   }
  ],
  "volume_balance": [
@@ -333,30 +333,30 @@
  ],
  "old_orogen_add_km": 10.42,
  "province_relief": {
-  "provinces": 271,
-  "offset_m_draw_sd": 296.5,
+  "provinces": 272,
+  "offset_m_draw_sd": 296.1,
   "applied_m_percentiles": {
-   "5": -327,
-   "25": -167,
-   "50": -11,
-   "75": 59,
-   "95": 304
+   "5": -315,
+   "25": -146,
+   "50": -6,
+   "75": 70,
+   "95": 307
   },
-  "volume_change_1e6_km3": -22.27
+  "volume_change_1e6_km3": -13.07
  },
- "continental_crust_Mkm2": 169.3,
- "of_which_consumed_margin_Mkm2": 25.0,
+ "continental_crust_Mkm2": 169.4,
+ "of_which_consumed_margin_Mkm2": 25.1,
  "present_rigid_blocks_Mkm2": 144.8,
  "land_above_sea_level_Mkm2": 147.0,
  "ocean_fraction": 0.712,
  "elevation_m_percentiles_land": {
-  "5": 84,
-  "50": 349,
-  "95": 728,
-  "99": 1464
+  "5": 98,
+  "50": 358,
+  "95": 731,
+  "99": 1398
  },
  "continental_thickness_km": {
-  "median": 34.4,
+  "median": 34.5,
   "min": 10.7,
   "max": 47.5
  },
@@ -364,7 +364,7 @@
   "median": 32.8,
   "max": 180.0
  },
- "n_provinces": 317,
+ "n_provinces": 318,
  "blocks": [
   {
    "id": 101,
@@ -395,8 +395,8 @@
    "code": "C",
    "name": "洲 C",
    "core_Mkm2": 35.8,
-   "consumed_margin_Mkm2": 4.52,
-   "plate_Mkm2": 55.9
+   "consumed_margin_Mkm2": 4.51,
+   "plate_Mkm2": 55.8
   },
   {
    "id": 401,
@@ -458,8 +458,8 @@
    "id": 302,
    "code": "WT",
    "name": "内海北岸西段地体",
-   "core_Mkm2": 0.5,
-   "consumed_margin_Mkm2": 0.58,
+   "core_Mkm2": 0.51,
+   "consumed_margin_Mkm2": 0.59,
    "plate_Mkm2": 0.0
   },
   {
@@ -467,7 +467,7 @@
    "code": "ADR",
    "name": "亚得里亚式地体（长半岛与神怒湾）",
    "core_Mkm2": 0.43,
-   "consumed_margin_Mkm2": 0.29,
+   "consumed_margin_Mkm2": 0.31,
    "plate_Mkm2": 0.0
   },
   {
@@ -479,5 +479,5 @@
    "plate_Mkm2": 0.0
   }
  ],
- "generated": "2026-10-25 10:49:05"
+ "generated": "2026-10-25 11:59:23"
 }

@@ -763,6 +763,101 @@ def hypsometry(grid, E: np.ndarray) -> dict:
             "shelf_fraction_of_ocean": round(float(a[oc & (E > -200)].sum() / a[oc].sum()), 4)}
 
 
+BOUNDARY_CLASSES = {0: "无", 1: "汇聚", 2: "离散", 3: "走滑", 4: "缓慢（< 0.5 cm/yr）"}
+
+
+def boundary_classes(plate: np.ndarray, grid, omega: dict, min_cm_yr: float = 0.5,
+                     smooth_cells: int = 7) -> tuple[np.ndarray, np.ndarray]:
+    """U34：0 Ma 板块边界类型（评审 stage1_2026-10-25_3 第 14 条）。在经纬度格网上，相邻（右、下）两格属于不同板块处，
+    用旋转文件最后 1 Myr 的角速度算相对速度，按法向分量分类：|法向| ≥ 一半切向且 < −min 为汇聚、> min 为离散；
+    其余切向 > min 为走滑；都不到 min 为缓慢。返回 (类型 int8, 相对速度 cm/yr float32)，每个边界格点取最快的那条边。
+    法向取边界两侧各自在 smooth_cells × smooth_cells 窗口（1024x512 上 7 格约 270 km）里的质心连线：栅格边界一格一齿，
+    逐格的法向是锯齿状的，斜向运动的边界会逐格换类型（评审 stage1_2026-10-25_4 第 12 条）。smooth_cells ≤ 1 用逐格法向。"""
+    ny, nx = plate.shape
+    cls = np.zeros(plate.shape, np.int8)
+    rate = np.zeros(plate.shape, np.float32)
+    X = grid.xyz
+    cen = {}
+    if smooth_cells > 1:
+        def box(f):              # 经向环绕、纬向贴边的方窗求和
+            return ndimage.uniform_filter(f, size=smooth_cells, mode=("nearest", "wrap"))
+        for q in np.unique(plate):
+            mq = (plate == q).astype(np.float32)
+            nq = box(mq)
+            s = np.stack([box(mq * X[..., k].astype(np.float32)) for k in range(3)], axis=-1)
+            cen[int(q)] = s / np.maximum(nq, 1e-6)[..., None]
+    for di, dj in ((0, 1), (1, 0)):
+        a = plate[: ny - di, :]
+        b = np.roll(plate, -dj, axis=1)[di:, :] if dj else plate[di:, :]
+        xa = X[: ny - di, :]
+        xb = np.roll(X, -dj, axis=1)[di:, :] if dj else X[di:, :]
+        ii, jj = np.nonzero(a != b)
+        if ii.size == 0:
+            continue
+        pa, pb = a[ii, jj], b[ii, jj]
+        m = unit(xa[ii, jj] + xb[ii, jj])
+        wa = np.stack([omega.get(int(q), np.zeros(3)) for q in pa])
+        wb = np.stack([omega.get(int(q), np.zeros(3)) for q in pb])
+        v = np.cross(wb - wa, m) * R_KM / 10.0                     # b 相对 a，cm/yr
+        n = xb[ii, jj] - xa[ii, jj]
+        if cen:                                                    # 平滑法向：a 侧质心 -> b 侧质心（在 a 格点处的窗口里量）
+            ns = np.stack([cen[int(q)][i_, j_] for q, i_, j_ in zip(pb, ii, jj)]) - \
+                np.stack([cen[int(q)][i_, j_] for q, i_, j_ in zip(pa, ii, jj)])
+            ok = np.linalg.norm(ns, axis=1) > 1e-9
+            n = np.where(ok[:, None], ns, n)
+        n = n - (n * m).sum(1, keepdims=True) * m
+        n = n / np.maximum(np.linalg.norm(n, axis=1, keepdims=True), 1e-12)
+        vn = (v * n).sum(1)
+        vt = np.linalg.norm(v - vn[:, None] * n, axis=1)
+        c = np.full(ii.size, 4, np.int8)
+        normal = np.abs(vn) >= 0.5 * vt
+        c[normal & (vn < -min_cm_yr)] = 1
+        c[normal & (vn > min_cm_yr)] = 2
+        c[(c == 4) & (vt > min_cm_yr)] = 3
+        sp = np.hypot(vn, vt).astype(np.float32)
+        jb = (jj + dj) % nx
+        for (i_, j_) in ((ii, jj), (ii + di, jb)):
+            upd = sp >= rate[i_, j_]
+            rate[i_[upd], j_[upd]] = sp[upd]
+            cls[i_[upd], j_[upd]] = c[upd]
+    return cls, rate
+
+
+def tectonic_layers(f0: dict, raster, grid, rot: Path) -> dict:
+    """U34：0 Ma 构造图层，随标准世界文件导出（标准图组的区域窗口构造叠合图，评审第 14 条）。"""
+    kin = RotationFileKinematics(rot)
+    P = raster(f0["plate"]).astype(np.int32)
+    omega = {}
+    for q in np.unique(P):
+        try:
+            omega[int(q)] = kin.step_rotations([int(q)], 1)[1][int(q)]
+        except Exception:  # noqa: BLE001  旋转文件里没有的板块（不动）
+            omega[int(q)] = np.zeros(3)
+    cls, rate = boundary_classes(P, grid, omega)
+    C = raster(f0["ctype"]).astype(np.int8)
+    oro = np.where(C == CONT, raster(f0["oro"]), 0).astype(np.int8)
+    return {"tect_plate": P, "tect_crust_type": C, "tect_crust_km": raster(f0["T"]).astype(np.float32),
+            "tect_ocean_age_myr": np.where(C == CONT, np.nan, raster(f0["age"])).astype(np.float32),
+            "tect_last_event": oro,
+            "tect_last_event_ma": np.where(oro > 0, raster(f0["oro_t"]), np.nan).astype(np.float32),
+            "tect_boundary": cls, "tect_boundary_cm_yr": rate}
+
+
+TECT_ATTRS = {
+    "tect_plate": {"description": "0 Ma 板块编号（history yaml 的 blocks / ocean / arcs）", "method_class": "procedural_constrained"},
+    "tect_crust_type": {"description": "地壳类型：0 洋壳，1 陆壳", "method_class": "procedural_constrained"},
+    "tect_crust_km": {"units": "km", "description": "地壳厚度", "method_class": "procedural_constrained"},
+    "tect_ocean_age_myr": {"units": "Myr", "description": "洋底年龄（陆壳为 NaN）", "method_class": "procedural_constrained"},
+    "tect_last_event": {"description": "陆壳最近一次构造改造：0 无，1 俯冲弧，2 碰撞，3 裂谷，4 板内挤压复活（设计给出）",
+                        "method_class": "procedural_constrained"},
+    "tect_last_event_ma": {"units": "Ma", "description": "最近一次构造改造的时间", "method_class": "procedural_constrained"},
+    "tect_boundary": {"description": "板块边界类型：0 无，1 汇聚，2 离散，3 走滑，4 缓慢（< 0.5 cm/yr）；"
+                                     "相对速度取自倒推的旋转文件最后 1 Myr（设计的运动，不是动力学算出的）",
+                      "method_class": "procedural_constrained"},
+    "tect_boundary_cm_yr": {"units": "cm/yr", "description": "边界两侧板块的相对速度", "method_class": "procedural_constrained"},
+}
+
+
 def coast_mask(land: np.ndarray) -> np.ndarray:
     er = ndimage.binary_erosion(land, structure=np.ones((3, 3), bool), border_value=0)
     return land & ~er
@@ -1199,8 +1294,12 @@ def main() -> int:
     # U31：0 Ma 世界导出为标准世界文件（packages/figures/world.py），供标准图组（scripts/make_figures.py --stage 1）与评审用
     import xarray as xr
     world_id = f"design_{args.design}_forward_{args.history}_0Ma"
+    tect = tectonic_layers(frames[-1], raster, grid, rot)       # U34：构造图层（标准图组的区域窗口构造叠合图）
     ds = xr.Dataset({"elevation": (("lat", "lon"), E_eng.astype("float32"), {"units": "m"}),
-                     "land": (("lat", "lon"), (E_eng > 0).astype("float32"), {"description": "陆地（高程 > 0）"})},
+                     "land": (("lat", "lon"), (E_eng > 0).astype("float32"), {"description": "陆地（高程 > 0）"}),
+                     **{k: (("lat", "lon"), v, {**TECT_ATTRS[k], **({"plate_codes": ",".join(
+                         f"{c}={q}" for c, q in plate_codes(hcfg).items())} if k == "tect_plate" else {})})
+                        for k, v in tect.items()}},
                     coords={"lat": grid.lat, "lon": grid.lon},
                     attrs={"world_id": world_id, "display_name": f"终图 {args.design} 正向演化 0 Ma",
                            "seed": f"design_{args.design}_history_{args.history}",
@@ -1213,7 +1312,10 @@ def main() -> int:
                                      "0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）；"
                                      "老被动陆缘的陆架陆壳由初始条件设定（initial.margins）；主内海北岸三块微陆块的位置、裂开与碰撞时刻由设计给出；"
                                      "板内挤压复活（中央山系、北部断块山、北方高原、内海南岸山系）的范围、时间与增厚比由设计给出、"
-                                     "增厚比按终图高度估定（性质同 user_override），所以这几条山的高度接近终图不算过程的验证（评审 stage1_2026-10-25_3 第 2、10 条）",
+                                     "增厚比按终图高度估定（性质同 user_override），所以这几条山的高度接近终图不算过程的验证（评审 stage1_2026-10-25_3 第 2、10 条）；"
+                                     "U34 起，设计的裂开陆缘与走滑拉分板块对（history yaml forward.pull_apart）上，两侧正在分开处的陆—陆重叠"
+                                     "按网格对不齐处理、不当碰撞增厚（之前会把张开的陆缘一点点泵厚），300 Myr 里因此没被当成碰撞的陆壳单元共 "
+                                     f"约 {run_js['budget'].get('opening_overlap_skipped', 0.0) / 1e4:.0f} 万 km³（评审 stage1_2026-10-25_4 第 13 条）",
                            "grid": grid.name})
     nc_path = out_w / f"{world_id}_{grid.name}.nc"
     ds.to_netcdf(nc_path)

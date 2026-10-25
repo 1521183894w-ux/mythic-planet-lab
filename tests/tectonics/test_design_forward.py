@@ -401,3 +401,27 @@ def test_forward_polarity_overrides_designed_and_default_polarity():
     assert pol[102 * 1000 + 930] == 930          # arcs.subduction 写的是 BSE 下行，被 forward.polarity 改成 PS 下行
     assert pol[101 * 1000 + 102] == 101          # 两块陆块之间没有别的设定时按 forward.polarity
     assert pol[920 * 1000 + 930] == 920          # 其余照旧
+
+
+def test_boundary_classes_divergent_convergent_transform_slow():
+    """U34：0 Ma 边界类型。东半球板块绕地轴向东转：0° 经线处与西半球板块分开（离散），180° 经线处靠近（汇聚）；
+    南北两半球以赤道为界、南半球向东转是走滑；转得很慢是"缓慢"。"""
+    from mythic.metrics.grid import LatLonGrid
+
+    g = LatLonGrid(64, 32)
+    lon = np.broadcast_to(g.lon[None, :], g.shape)
+    lat = np.broadcast_to(g.lat[:, None], g.shape)
+    w = 5.0 * 10.0 / fwd.R_KM                        # 赤道上 5 cm/yr
+    P = np.where(lon > 0, 2, 1)
+    cls, rate = fwd.boundary_classes(P, g, {1: np.zeros(3), 2: np.array([0.0, 0.0, w])})
+    eq = np.argmin(np.abs(g.lat))
+    j0 = np.argmin(np.abs(g.lon))                    # 0° 经线两侧
+    assert set(cls[eq, j0 - 1:j0 + 2]) - {0} == {2}
+    assert cls[eq, 0] == 1 and cls[eq, -1] == 1      # 180° 经线（环绕）
+    assert 4.5 < rate[eq, 0] < 5.1
+    assert cls[eq, 10] == 0                          # 板块内部
+    P2 = np.where(lat > 0, 1, 2)
+    cls2, _ = fwd.boundary_classes(P2, g, {1: np.zeros(3), 2: np.array([0.0, 0.0, w])})
+    assert set(np.unique(cls2[cls2 > 0])) == {3}
+    cls3, _ = fwd.boundary_classes(P, g, {1: np.zeros(3), 2: np.array([0.0, 0.0, w / 50])})
+    assert set(np.unique(cls3[cls3 > 0])) == {4}

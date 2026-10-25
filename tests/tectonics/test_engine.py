@@ -441,3 +441,38 @@ def test_thin_submerged_crust_does_not_take_lateral_flow(mesh):
         run[lim] = eng.c.T.copy()
     assert run[None][shelf].max() > 31.6                               # 不限：薄陆壳被旁边的厚地壳垫高
     assert np.allclose(run[32.5][shelf], 31.5)                          # 限：不动
+
+
+def test_opening_overlap_on_designed_rift_pair_is_not_a_collision(mesh):
+    """U34：设计的裂开陆缘 / 走滑拉分板块对（cont_gap_pairs）上，两侧正在分开处的陆—陆重叠是网格对不齐，不当碰撞（下行单元
+    不删、对方不增厚）；同一处在汇聚时照常碰撞；不在 cont_gap_pairs 里的板块对、或不打开 no_collision_when_opening 时照旧。"""
+    from mythic.tectonics.crust import ORO_COLL
+
+    def run(flag, pairs, sign):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)
+        c.ctype[:] = CONT
+        c.T[:] = 35.0
+        # 板块 1 绕 (90°E, 0°) 转：向南走。北缘（30°N 附近）sign=+1 时与板块 2 分开，sign=−1 时靠近
+        w = {1: pole_vector(0.0, 90.0, sign * 0.3), 2: np.zeros(3)}
+        eng = Engine(mesh, c, Params(no_collision_when_opening=flag), 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 1
+        eng.cont_gap_pairs.update(pairs)
+        pos = eng.positions()
+        lon, lat = np.degrees(np.arctan2(pos[:, 1], pos[:, 0])), np.degrees(np.arcsin(pos[:, 2]))
+        north = np.flatnonzero((c.plate == 1) & (np.abs(lon) < 3))
+        u = north[np.argmax(lat[north])]                           # 板块 1 北缘的一个单元
+        two = np.flatnonzero(c.plate == 2)
+        b = two[np.argmin(np.linalg.norm(pos[two] - pos[u], axis=1))]   # 板块 2 离它最近的单元（北侧）
+        T0 = c.T.copy()
+        s, k = eng._resolve(pos, np.array([u]), np.array([2], np.int32), np.array([b]))
+        return eng, u, k, float((eng.c.T - T0).clip(0).sum())
+
+    pair = {1 * 1000 + 2: (33.0, 300.0, 20.0, 800.0)}
+    eng, u, k, add = run(True, pair, +1.0)                   # 分开：不碰撞
+    assert k == 0 and eng.alive[u] and add == 0.0
+    assert eng.budget.get("opening_overlap_skipped", 0.0) > 0
+    eng, u, k, add = run(True, pair, -1.0)                   # 靠近：照常碰撞
+    assert k == 1 and not eng.alive[u] and add > 0 and (eng.c.oro == ORO_COLL).any()
+    for flag, pairs in ((False, pair), (True, {})):          # 不打开、或不是设计的板块对：照旧当碰撞
+        eng, u, k, add = run(flag, pairs, +1.0)
+        assert k == 1 and not eng.alive[u] and add > 0

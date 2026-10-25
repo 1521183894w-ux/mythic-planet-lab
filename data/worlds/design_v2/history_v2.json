@@ -2,7 +2,7 @@
  "description": "终图倒推历史的审计（重建：scripts/design_history.py）",
  "design": "v2",
  "history": "v2",
- "code_version": "29f4734-dirty",
+ "code_version": "ce843ba-dirty",
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
  "blocks": {
   "MD": {
@@ -194,28 +194,28 @@
   },
   "WT": {
    "abs_median_over_time": {
-    "median": 2.11,
-    "p95": 3.25,
-    "max": 3.25,
-    "t_of_max": 100
+    "median": 2.03,
+    "p95": 3.22,
+    "max": 3.22,
+    "t_of_max": 144
    },
    "abs_max_point": {
-    "median": 2.16,
-    "p95": 3.31,
-    "max": 3.32,
-    "t_of_max": 100
+    "median": 2.19,
+    "p95": 3.23,
+    "max": 3.23,
+    "t_of_max": 150
    },
    "rel_median_over_time": {
     "median": 0.0,
-    "p95": 0.45,
-    "max": 0.45,
+    "p95": 0.37,
+    "max": 0.37,
     "t_of_max": 76
    }
   },
   "ADR": {
    "abs_median_over_time": {
-    "median": 2.21,
-    "p95": 3.18,
+    "median": 2.22,
+    "p95": 3.19,
     "max": 3.19,
     "t_of_max": 150
    },
@@ -227,9 +227,9 @@
    },
    "rel_median_over_time": {
     "median": 0.0,
-    "p95": 0.45,
-    "max": 0.45,
-    "t_of_max": 47
+    "p95": 0.54,
+    "max": 0.54,
+    "t_of_max": 55
    }
   },
   "ET": {
@@ -434,13 +434,17 @@
    "Mkm2": 0.04,
    "t": 289
   },
-  "WT-C": {
-   "Mkm2": 0.04,
-   "t": 169
-  },
   "WT-A": {
    "Mkm2": 0.02,
    "t": 10
+  },
+  "WT-C": {
+   "Mkm2": 0.01,
+   "t": 175
+  },
+  "ADR-C": {
+   "Mkm2": 0.01,
+   "t": 189
   },
   "B-D": {
    "Mkm2": 0.01,
@@ -586,5 +590,5 @@
    "trimmed_conflict_Mkm2": 0.01
   }
  ],
- "generated": "2026-10-25 10:48:21"
+ "generated": "2026-10-25 11:57:42"
 }
