@@ -87,6 +87,12 @@ class Engine:
         self.cont_gap_pairs: dict = {}
         self.cont_gap_since: dict = {}             # 板块对键 -> 从哪个时刻（Ma）起才填陆壳；不写 = 一直
         self._opening_skipped = np.zeros(0, np.int64)   # U34：张开处没当成碰撞的单元（uid，收支只计一次）
+        # U35：后撤型俯冲带（板块对键）：上盘不按"朝海沟前进"做构造缩短。后撤弧的海沟与上盘一起后退，上盘在伸展（阿尔沃兰、
+        # 第勒尼安式），引擎按上盘的绝对速度算缩短会把它当成安第斯式挤压
+        self.arc_rollback_pairs: set = set()
+        # U35：设计的走滑撕裂边界（板块对键 -> (从 t_from Ma, 到 t_to Ma)）：这段时间里两块陆壳的重叠不当碰撞。后撤弧的两侧是
+        # 撕裂—转换断层（STEP 断层，Govers & Wortel 2005），地体沿着它滑过去，不是撞上去
+        self.no_collision_pairs: dict = {}
         # U32：陆壳上盘的弧增厚（岩浆增生与构造缩短）只用于这些板块对的俯冲带；None = 所有。终图倒推时外大洋板块固定在地幔参照系里，
         # 大陆一漂移，前方就与它慢速俯冲（U28 第二轮查明），终图在那里是被动陆缘；这种俯冲照旧消耗洋壳，但不再增厚陆壳
         # （否则补在被动陆缘外的陆架、陆表海被抬出海面，U30 的浅海湾有 29–44% 的格点这样露出）
@@ -304,6 +310,10 @@ class Engine:
 
         consume = ((cu == OCEAN) & (cb == CONT)) | ((cu == OCEAN) & (cb == OCEAN) & (sub_plate == P))
         coll = (cu == CONT) & (cb == CONT) & (sub_plate == P)
+        if self.no_collision_pairs and coll.any():   # U35：设计的走滑撕裂边界，时段内不碰撞（见 __init__）
+            for kk, (t_from, t_to) in self.no_collision_pairs.items():
+                if t_to - 1e-9 <= self.t <= t_from + 1e-9:
+                    coll &= key != kk
         if p.no_collision_when_opening and self.cont_gap_pairs and coll.any():
             # U34：设计的裂开陆缘、走滑拉分板块对上，两侧正在分开处的陆—陆重叠是网格对不齐，不当碰撞（见 Params）
             act = np.array([int(k) in self.cont_gap_pairs and self.t <= self.cont_gap_since.get(int(k), np.inf) + 1e-9
@@ -417,6 +427,10 @@ class Engine:
                 u = u / np.maximum(np.linalg.norm(u, axis=1, keepdims=True), 1e-12)
                 v_adv = np.sum(np.cross(self.omega[int(o)], xj) * u, axis=1) * R_KM / 10.0
                 dT_s = p.arc_shortening_km_myr * f * np.clip(v_adv / p.v0_cm_yr, 0.0, 1.5) * p.dt
+                if self.arc_rollback_pairs:           # U35：后撤型俯冲带的上盘不缩短（见 __init__）
+                    sub = S[sel][k[ok]]
+                    dT_s = np.where(np.isin(np.minimum(sub, o) * 1000 + np.maximum(sub, o), list(self.arc_rollback_pairs)),
+                                    0.0, dT_s)
             if p.arc_ocean_T_max_km is not None:    # 洋内弧增厚上限（见 Params.arc_ocean_T_max_km）
                 juv = (c.ctype[j] == OCEAN) | (c.origin[j] == ORIGIN_ARC)
                 if p.arc_compress_T_max_km is None:

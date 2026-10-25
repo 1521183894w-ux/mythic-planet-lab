@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "ce843ba-dirty",
+ "code_version": "74cb0b1-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -27,9 +27,9 @@
     ],
     "efficiency": 0.573
    },
-   "swept_Mkm2": 7.55,
+   "swept_Mkm2": 7.56,
    "continental_Mkm2": 4.73,
-   "trimmed_conflict_Mkm2": 2.82
+   "trimmed_conflict_Mkm2": 2.83
   },
   {
    "down": "A",
@@ -71,8 +71,8 @@
    "max_km": 800,
    "continental_km": 600.0,
    "what": "西段地体撞上洲 A（内海北岸山系 M1 西段）",
-   "swept_Mkm2": 0.46,
-   "continental_Mkm2": 0.46,
+   "swept_Mkm2": 0.47,
+   "continental_Mkm2": 0.47,
    "trimmed_conflict_Mkm2": 0.0
   },
   {
@@ -104,8 +104,8 @@
    "max_km": 800,
    "continental_km": 600.0,
    "what": "东段地体撞上洲 B（M1 东段）",
-   "swept_Mkm2": 0.52,
-   "continental_Mkm2": 0.52,
+   "swept_Mkm2": 0.5,
+   "continental_Mkm2": 0.49,
    "trimmed_conflict_Mkm2": 0.01
   }
  ],
@@ -117,11 +117,11 @@
    "T_far_km": 14.0,
    "taper_km": 300,
    "owners_Mkm2": {
-    "BSE": 0.263
+    "BSE": 0.26
    },
-   "area_Mkm2": 0.263,
+   "area_Mkm2": 0.26,
    "trimmed_conflict_Mkm2": 0.0,
-   "volume_1e6_km3": 3.36
+   "volume_1e6_km3": 3.44
   },
   {
    "gulfs": [
@@ -151,13 +151,13 @@
    "what": "较深的陆架海、冰盖压沉的克拉通盆地与被淹的夭折裂谷",
    "owners_Mkm2": {
     "B": 0.864,
-    "D": 0.478,
+    "D": 0.473,
     "FAR": 0.307,
     "MD": 0.0
    },
-   "area_Mkm2": 1.648,
-   "trimmed_conflict_Mkm2": 0.17,
-   "volume_1e6_km3": 51.69
+   "area_Mkm2": 1.643,
+   "trimmed_conflict_Mkm2": 0.175,
+   "volume_1e6_km3": 51.55
   },
   {
    "gulfs": [
@@ -182,13 +182,13 @@
    "edge_thinning": false,
    "what": "东湾（碰撞前陆盆地被海水淹没，波斯湾式）",
    "owners_Mkm2": {
-    "B": 0.137,
-    "D": 0.158,
+    "B": 0.14,
+    "D": 0.154,
     "IN": 0.0
    },
-   "area_Mkm2": 0.295,
-   "trimmed_conflict_Mkm2": 0.085,
-   "volume_1e6_km3": 9.4
+   "area_Mkm2": 0.294,
+   "trimmed_conflict_Mkm2": 0.086,
+   "volume_1e6_km3": 9.35
   },
   {
    "auto": true,
@@ -237,24 +237,24 @@
    ],
    "what": "老被动陆缘的陆架与陆坡",
    "owners_Mkm2": {
-    "B": 2.609,
-    "BSE": 1.41,
-    "A": 1.868,
-    "C": 3.024,
-    "WT": 0.125,
+    "B": 2.607,
+    "BSE": 1.411,
+    "A": 1.904,
+    "C": 2.999,
+    "WT": 0.123,
     "ADR": 0.001,
-    "D": 0.887,
+    "D": 0.88,
     "ET": 0.0,
-    "FAR": 0.663,
-    "POL": 1.212,
-    "MD": 0.128,
-    "IN": 1.313,
-    "ZL": 0.081,
+    "FAR": 0.658,
+    "POL": 1.21,
+    "MD": 0.126,
+    "IN": 1.296,
+    "ZL": 0.079,
     "NG": 0.102
    },
-   "area_Mkm2": 13.423,
-   "trimmed_conflict_Mkm2": 5.787,
-   "volume_1e6_km3": 399.23
+   "area_Mkm2": 13.398,
+   "trimmed_conflict_Mkm2": 5.805,
+   "volume_1e6_km3": 398.55
   }
  ],
  "volume_balance": [
@@ -263,7 +263,7 @@
    "up": "B",
    "t": 48,
    "consumed_margin_Mkm2": 4.73,
-   "supply_1e6_km3": 89.6,
+   "supply_1e6_km3": 89.7,
    "builds": [
     "PL1",
     "PL8",
@@ -274,11 +274,11 @@
     "M3e",
     "M3f"
    ],
-   "target_area_Mkm2": 5.59,
-   "target_excess_1e6_km3": 95.1,
+   "target_area_Mkm2": 5.61,
+   "target_excess_1e6_km3": 95.3,
    "efficiency": 0.573,
-   "thickness_scale": 1.852,
-   "supply_scaled_1e6_km3": 151.5,
+   "thickness_scale": 1.854,
+   "supply_scaled_1e6_km3": 151.8,
    "mean_T_km": 32.1
   },
   {
@@ -306,8 +306,8 @@
    "down": "WT",
    "up": "A",
    "t": 45,
-   "consumed_margin_Mkm2": 0.46,
-   "supply_1e6_km3": 10.5
+   "consumed_margin_Mkm2": 0.47,
+   "supply_1e6_km3": 10.6
   },
   {
    "down": "ADR",
@@ -327,108 +327,108 @@
    "down": "ET",
    "up": "B",
    "t": 25,
-   "consumed_margin_Mkm2": 0.52,
-   "supply_1e6_km3": 11.3
+   "consumed_margin_Mkm2": 0.49,
+   "supply_1e6_km3": 10.6
   }
  ],
  "old_orogen_add_km": 10.42,
  "province_relief": {
-  "provinces": 272,
-  "offset_m_draw_sd": 296.1,
+  "provinces": 273,
+  "offset_m_draw_sd": 301.4,
   "applied_m_percentiles": {
-   "5": -315,
-   "25": -146,
-   "50": -6,
+   "5": -332,
+   "25": -163,
+   "50": -11,
    "75": 70,
-   "95": 307
+   "95": 317
   },
-  "volume_change_1e6_km3": -13.07
+  "volume_change_1e6_km3": -18.25
  },
  "continental_crust_Mkm2": 169.4,
- "of_which_consumed_margin_Mkm2": 25.1,
+ "of_which_consumed_margin_Mkm2": 25.0,
  "present_rigid_blocks_Mkm2": 144.8,
- "land_above_sea_level_Mkm2": 147.0,
+ "land_above_sea_level_Mkm2": 147.1,
  "ocean_fraction": 0.712,
  "elevation_m_percentiles_land": {
-  "5": 98,
-  "50": 358,
-  "95": 731,
-  "99": 1398
+  "5": 77,
+  "50": 349,
+  "95": 745,
+  "99": 1404
  },
  "continental_thickness_km": {
-  "median": 34.5,
-  "min": 10.7,
-  "max": 47.5
+  "median": 34.4,
+  "min": 10.8,
+  "max": 45.9
  },
  "ocean_age_myr": {
-  "median": 32.8,
+  "median": 32.7,
   "max": 180.0
  },
- "n_provinces": 318,
+ "n_provinces": 319,
  "blocks": [
   {
    "id": 101,
    "code": "B",
    "name": "洲 B（北方地台与东方地块）",
-   "core_Mkm2": 35.15,
-   "consumed_margin_Mkm2": 3.97,
+   "core_Mkm2": 35.18,
+   "consumed_margin_Mkm2": 3.98,
    "plate_Mkm2": 42.6
   },
   {
    "id": 103,
    "code": "A",
    "name": "洲 A",
-   "core_Mkm2": 6.71,
-   "consumed_margin_Mkm2": 1.96,
-   "plate_Mkm2": 24.7
+   "core_Mkm2": 6.6,
+   "consumed_margin_Mkm2": 2.0,
+   "plate_Mkm2": 24.5
   },
   {
    "id": 102,
    "code": "BSE",
    "name": "东南增生地块",
-   "core_Mkm2": 2.46,
-   "consumed_margin_Mkm2": 1.64,
-   "plate_Mkm2": 10.6
+   "core_Mkm2": 2.48,
+   "consumed_margin_Mkm2": 1.67,
+   "plate_Mkm2": 10.2
   },
   {
    "id": 301,
    "code": "C",
    "name": "洲 C",
-   "core_Mkm2": 35.8,
-   "consumed_margin_Mkm2": 4.51,
-   "plate_Mkm2": 55.8
+   "core_Mkm2": 35.78,
+   "consumed_margin_Mkm2": 4.52,
+   "plate_Mkm2": 56.2
   },
   {
    "id": 401,
    "code": "D",
    "name": "洲 D",
-   "core_Mkm2": 23.02,
-   "consumed_margin_Mkm2": 3.03,
-   "plate_Mkm2": 60.4
+   "core_Mkm2": 23.04,
+   "consumed_margin_Mkm2": 2.99,
+   "plate_Mkm2": 60.2
   },
   {
    "id": 501,
    "code": "FAR",
    "name": "远方大陆",
-   "core_Mkm2": 21.7,
-   "consumed_margin_Mkm2": 0.95,
+   "core_Mkm2": 21.72,
+   "consumed_margin_Mkm2": 0.94,
    "plate_Mkm2": 25.2
   },
   {
    "id": 601,
    "code": "POL",
    "name": "极地大陆",
-   "core_Mkm2": 13.16,
-   "consumed_margin_Mkm2": 1.23,
-   "plate_Mkm2": 15.8
+   "core_Mkm2": 13.17,
+   "consumed_margin_Mkm2": 1.22,
+   "plate_Mkm2": 15.7
   },
   {
    "id": 702,
    "code": "IN",
    "name": "南方地盾陆块（印度式）",
-   "core_Mkm2": 3.76,
-   "consumed_margin_Mkm2": 6.04,
-   "plate_Mkm2": 18.0
+   "core_Mkm2": 3.75,
+   "consumed_margin_Mkm2": 6.06,
+   "plate_Mkm2": 18.1
   },
   {
    "id": 701,
@@ -442,17 +442,25 @@
    "id": 801,
    "code": "ZL",
    "name": "南洋陆块",
-   "core_Mkm2": 0.28,
-   "consumed_margin_Mkm2": 0.08,
-   "plate_Mkm2": 4.1
+   "core_Mkm2": 0.29,
+   "consumed_margin_Mkm2": 0.07,
+   "plate_Mkm2": 4.4
   },
   {
    "id": 803,
    "code": "NG",
    "name": "东南群岛东大岛微陆块",
-   "core_Mkm2": 0.65,
-   "consumed_margin_Mkm2": 0.1,
+   "core_Mkm2": 0.66,
+   "consumed_margin_Mkm2": 0.11,
    "plate_Mkm2": 1.2
+  },
+  {
+   "id": 304,
+   "code": "ALB",
+   "name": "西口弧形地体（阿尔沃兰式）",
+   "core_Mkm2": 0.08,
+   "consumed_margin_Mkm2": 0.0,
+   "plate_Mkm2": 0.0
   },
   {
    "id": 302,
@@ -466,7 +474,7 @@
    "id": 303,
    "code": "ADR",
    "name": "亚得里亚式地体（长半岛与神怒湾）",
-   "core_Mkm2": 0.43,
+   "core_Mkm2": 0.42,
    "consumed_margin_Mkm2": 0.31,
    "plate_Mkm2": 0.0
   },
@@ -474,10 +482,10 @@
    "id": 402,
    "code": "ET",
    "name": "内海北岸东段地体",
-   "core_Mkm2": 0.32,
-   "consumed_margin_Mkm2": 0.52,
+   "core_Mkm2": 0.33,
+   "consumed_margin_Mkm2": 0.48,
    "plate_Mkm2": 0.0
   }
  ],
- "generated": "2026-10-25 11:59:23"
+ "generated": "2026-10-25 17:35:35"
 }

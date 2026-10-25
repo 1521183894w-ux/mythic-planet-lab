@@ -476,3 +476,48 @@ def test_opening_overlap_on_designed_rift_pair_is_not_a_collision(mesh):
     for flag, pairs in ((False, pair), (True, {})):          # 不打开、或不是设计的板块对：照旧当碰撞
         eng, u, k, add = run(flag, pairs, +1.0)
         assert k == 1 and not eng.alive[u] and add > 0
+
+
+def test_tear_boundary_pairs_do_not_collide_inside_their_time_window(mesh):
+    """U35：Engine.no_collision_pairs（设计的走滑撕裂边界）在给定时段里两块陆壳的重叠不当碰撞，时段外照常碰撞。"""
+    def run(window):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=15.0)
+        c.ctype[:] = CONT
+        c.T[:] = 35.0
+        w = {1: pole_vector(0.0, 90.0, -0.3), 2: np.zeros(3)}   # 板块 1 向北，北缘与板块 2 汇聚
+        eng = Engine(mesh, c, Params(), 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 1
+        if window:
+            eng.no_collision_pairs[1 * 1000 + 2] = window
+        pos = eng.positions()
+        lon, lat = np.degrees(np.arctan2(pos[:, 1], pos[:, 0])), np.degrees(np.arcsin(pos[:, 2]))
+        north = np.flatnonzero((c.plate == 1) & (np.abs(lon) < 3))
+        u = north[np.argmax(lat[north])]
+        two = np.flatnonzero(c.plate == 2)
+        b = two[np.argmin(np.linalg.norm(pos[two] - pos[u], axis=1))]
+        s, k = eng._resolve(pos, np.array([u]), np.array([2], np.int32), np.array([b]))
+        return k, bool(eng.alive[u])
+
+    assert run(None) == (1, False)                  # 不设：碰撞，下行单元并进对方
+    assert run((120.0, 80.0)) == (0, True)          # 100 Ma 在时段里：不碰撞
+    assert run((60.0, 10.0)) == (1, False)          # 时段外：照常碰撞
+
+
+def test_rollback_arcs_get_no_upper_plate_shortening(mesh):
+    """U35：Engine.arc_rollback_pairs 里的俯冲带，上盘不按"朝海沟前进"做构造缩短（只有岩浆增生），增厚比安第斯式少。"""
+    def run(rollback):
+        c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+        c.plate[:] = np.where(cont, 1, 2)
+        w = {1: pole_vector(0.0, 90.0, 0.4), 2: np.zeros(3)}    # 大陆向南推进，压在南边不动的洋壳上（上盘朝海沟前进）
+        eng = Engine(mesh, c, Params(arc_rate_km_myr=0.2, arc_shortening_km_myr=0.8), 100.0, w)
+        eng.polarity[1 * 1000 + 2] = 2
+        if rollback:
+            eng.arc_rollback_pairs.add(1 * 1000 + 2)
+        for _ in range(20):
+            eng.step({q: omega_rotmat(w[q], 1.0) for q in eng.plates}, w)
+        on = eng.alive & (eng.c.plate == 1) & (eng.c.ctype == CONT)
+        return float(((eng.c.T[on] - 35.0).clip(0) * eng.area[on]).sum())
+
+    andean, rollback = run(False), run(True)
+    assert andean > 0 and rollback > 0             # 两种都有岩浆增生
+    assert rollback < 0.6 * andean                 # 后撤型少了构造缩短那一项

@@ -2,7 +2,7 @@
  "description": "终图倒推历史的审计（重建：scripts/design_history.py）",
  "design": "v2",
  "history": "v2",
- "code_version": "ce843ba-dirty",
+ "code_version": "74cb0b1-dirty",
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
  "blocks": {
   "MD": {
@@ -20,13 +20,13 @@
   "IN": {
    "id": 702,
    "name": "南方地盾陆块（印度式）",
-   "area_Mkm2": 3.78,
+   "area_Mkm2": 3.8,
    "parent": 0
   },
   "BSE": {
    "id": 102,
    "name": "东南增生地块",
-   "area_Mkm2": 2.46,
+   "area_Mkm2": 2.47,
    "parent": "B"
   },
   "NG": {
@@ -34,6 +34,12 @@
    "name": "东南群岛东大岛微陆块",
    "area_Mkm2": 0.72,
    "parent": 0
+  },
+  "ALB": {
+   "id": 304,
+   "name": "西口弧形地体（阿尔沃兰式）",
+   "area_Mkm2": 0.08,
+   "parent": "WT"
   },
   "WT": {
    "id": 302,
@@ -56,7 +62,7 @@
   "A": {
    "id": 103,
    "name": "洲 A",
-   "area_Mkm2": 6.71,
+   "area_Mkm2": 6.59,
    "parent": "B"
   },
   "B": {
@@ -68,7 +74,7 @@
   "C": {
    "id": 301,
    "name": "洲 C",
-   "area_Mkm2": 35.8,
+   "area_Mkm2": 35.82,
    "parent": "B"
   },
   "D": {
@@ -100,7 +106,7 @@
     "t_of_max": 120
    },
    "abs_max_point": {
-    "median": 2.2,
+    "median": 2.19,
     "p95": 4.67,
     "max": 5.15,
     "t_of_max": 120
@@ -109,13 +115,13 @@
     "median": 0.0,
     "p95": 2.5,
     "max": 2.5,
-    "t_of_max": 92
+    "t_of_max": 96
    }
   },
   "ZL": {
    "abs_median_over_time": {
     "median": 2.47,
-    "p95": 4.75,
+    "p95": 4.76,
     "max": 4.78,
     "t_of_max": 35
    },
@@ -129,47 +135,47 @@
     "median": 0.0,
     "p95": 3.5,
     "max": 3.5,
-    "t_of_max": 66
+    "t_of_max": 55
    }
   },
   "IN": {
    "abs_median_over_time": {
-    "median": 1.15,
+    "median": 1.14,
     "p95": 9.99,
     "max": 9.99,
-    "t_of_max": 61
+    "t_of_max": 68
    },
    "abs_max_point": {
-    "median": 1.86,
-    "p95": 10.4,
-    "max": 10.4,
-    "t_of_max": 52
+    "median": 1.9,
+    "p95": 10.42,
+    "max": 10.42,
+    "t_of_max": 50
    },
    "rel_median_over_time": {
-    "median": 1.15,
+    "median": 1.14,
     "p95": 9.99,
     "max": 9.99,
-    "t_of_max": 61
+    "t_of_max": 68
    }
   },
   "BSE": {
    "abs_median_over_time": {
     "median": 1.23,
-    "p95": 3.49,
-    "max": 4.13,
+    "p95": 3.52,
+    "max": 4.23,
     "t_of_max": 280
    },
    "abs_max_point": {
     "median": 1.34,
-    "p95": 4.34,
-    "max": 5.58,
+    "p95": 4.44,
+    "max": 5.67,
     "t_of_max": 280
    },
    "rel_median_over_time": {
     "median": 0.87,
-    "p95": 2.91,
-    "max": 4.0,
-    "t_of_max": 273
+    "p95": 2.93,
+    "max": 4.06,
+    "t_of_max": 268
    }
   },
   "NG": {
@@ -177,19 +183,39 @@
     "median": 2.14,
     "p95": 8.13,
     "max": 8.13,
-    "t_of_max": 33
+    "t_of_max": 41
    },
    "abs_max_point": {
     "median": 2.34,
     "p95": 8.26,
     "max": 8.26,
-    "t_of_max": 67
+    "t_of_max": 36
    },
    "rel_median_over_time": {
     "median": 2.14,
     "p95": 8.13,
     "max": 8.13,
-    "t_of_max": 33
+    "t_of_max": 41
+   }
+  },
+  "ALB": {
+   "abs_median_over_time": {
+    "median": 2.99,
+    "p95": 3.83,
+    "max": 4.64,
+    "t_of_max": 35
+   },
+   "abs_max_point": {
+    "median": 3.01,
+    "p95": 4.07,
+    "max": 4.84,
+    "t_of_max": 35
+   },
+   "rel_median_over_time": {
+    "median": 0.0,
+    "p95": 3.36,
+    "max": 4.85,
+    "t_of_max": 35
    }
   },
   "WT": {
@@ -197,25 +223,25 @@
     "median": 2.03,
     "p95": 3.22,
     "max": 3.22,
-    "t_of_max": 144
+    "t_of_max": 149
    },
    "abs_max_point": {
     "median": 2.19,
     "p95": 3.23,
     "max": 3.23,
-    "t_of_max": 150
+    "t_of_max": 118
    },
    "rel_median_over_time": {
     "median": 0.0,
     "p95": 0.37,
     "max": 0.37,
-    "t_of_max": 76
+    "t_of_max": 96
    }
   },
   "ADR": {
    "abs_median_over_time": {
     "median": 2.22,
-    "p95": 3.19,
+    "p95": 3.18,
     "max": 3.19,
     "t_of_max": 150
    },
@@ -229,18 +255,18 @@
     "median": 0.0,
     "p95": 0.54,
     "max": 0.54,
-    "t_of_max": 55
+    "t_of_max": 96
    }
   },
   "ET": {
    "abs_median_over_time": {
-    "median": 2.39,
-    "p95": 3.04,
-    "max": 3.11,
+    "median": 2.45,
+    "p95": 3.11,
+    "max": 3.18,
     "t_of_max": 181
    },
    "abs_max_point": {
-    "median": 2.62,
+    "median": 2.63,
     "p95": 3.33,
     "max": 3.4,
     "t_of_max": 181
@@ -249,98 +275,98 @@
     "median": 0.0,
     "p95": 0.42,
     "max": 0.42,
-    "t_of_max": 76
+    "t_of_max": 96
    }
   },
   "A": {
    "abs_median_over_time": {
     "median": 0.82,
-    "p95": 4.2,
-    "max": 4.32,
+    "p95": 4.14,
+    "max": 4.25,
     "t_of_max": 251
    },
    "abs_max_point": {
     "median": 0.82,
-    "p95": 5.31,
-    "max": 5.39,
+    "p95": 5.38,
+    "max": 5.47,
     "t_of_max": 251
    },
    "rel_median_over_time": {
     "median": 0.0,
-    "p95": 4.46,
-    "max": 4.46,
-    "t_of_max": 279
+    "p95": 4.42,
+    "max": 4.42,
+    "t_of_max": 261
    }
   },
   "B": {
    "abs_median_over_time": {
-    "median": 0.63,
-    "p95": 0.85,
-    "max": 0.85,
-    "t_of_max": 164
+    "median": 0.62,
+    "p95": 0.84,
+    "max": 0.84,
+    "t_of_max": 179
    },
    "abs_max_point": {
     "median": 0.82,
     "p95": 1.1,
     "max": 1.1,
-    "t_of_max": 177
+    "t_of_max": 283
    },
    "rel_median_over_time": {
-    "median": 0.63,
-    "p95": 0.85,
-    "max": 0.85,
-    "t_of_max": 164
+    "median": 0.62,
+    "p95": 0.84,
+    "max": 0.84,
+    "t_of_max": 179
    }
   },
   "C": {
    "abs_median_over_time": {
-    "median": 2.35,
-    "p95": 3.18,
-    "max": 3.18,
-    "t_of_max": 121
+    "median": 2.36,
+    "p95": 3.17,
+    "max": 3.17,
+    "t_of_max": 145
    },
    "abs_max_point": {
     "median": 2.45,
     "p95": 3.23,
     "max": 3.23,
-    "t_of_max": 107
+    "t_of_max": 114
    },
    "rel_median_over_time": {
     "median": 1.73,
     "p95": 2.99,
     "max": 2.99,
-    "t_of_max": 115
+    "t_of_max": 116
    }
   },
   "D": {
    "abs_median_over_time": {
-    "median": 1.97,
-    "p95": 2.91,
-    "max": 3.02,
+    "median": 1.99,
+    "p95": 2.96,
+    "max": 3.06,
     "t_of_max": 181
    },
    "abs_max_point": {
-    "median": 2.45,
-    "p95": 3.55,
-    "max": 3.64,
+    "median": 2.44,
+    "p95": 3.54,
+    "max": 3.63,
     "t_of_max": 181
    },
    "rel_median_over_time": {
-    "median": 1.11,
-    "p95": 1.85,
-    "max": 1.85,
-    "t_of_max": 255
+    "median": 1.1,
+    "p95": 1.87,
+    "max": 1.87,
+    "t_of_max": 252
    }
   },
   "FAR": {
    "abs_median_over_time": {
-    "median": 2.61,
-    "p95": 3.41,
-    "max": 3.46,
+    "median": 2.64,
+    "p95": 3.42,
+    "max": 3.49,
     "t_of_max": 100
    },
    "abs_max_point": {
-    "median": 3.39,
+    "median": 3.4,
     "p95": 4.55,
     "max": 4.56,
     "t_of_max": 100
@@ -349,7 +375,7 @@
     "median": 1.6,
     "p95": 3.19,
     "max": 3.19,
-    "t_of_max": 116
+    "t_of_max": 75
    }
   },
   "POL": {
@@ -360,7 +386,7 @@
     "t_of_max": 181
    },
    "abs_max_point": {
-    "median": 2.75,
+    "median": 2.74,
     "p95": 3.86,
     "max": 3.89,
     "t_of_max": 181
@@ -369,7 +395,7 @@
     "median": 0.0,
     "p95": 3.02,
     "max": 3.02,
-    "t_of_max": 66
+    "t_of_max": 48
    }
   }
  },
@@ -379,6 +405,7 @@
   "IN": 0,
   "BSE": 0,
   "NG": 0,
+  "ALB": 0,
   "WT": 0,
   "ADR": 0,
   "ET": 0,
@@ -395,7 +422,7 @@
    "t": 91
   },
   "D-POL": {
-   "Mkm2": 0.2,
+   "Mkm2": 0.19,
    "t": 270
   },
   "IN-D": {
@@ -403,24 +430,24 @@
    "t": 51
   },
   "C-FAR": {
-   "Mkm2": 0.16,
+   "Mkm2": 0.15,
    "t": 225
+  },
+  "MD-D": {
+   "Mkm2": 0.09,
+   "t": 226
   },
   "NG-POL": {
    "Mkm2": 0.07,
-   "t": 260
-  },
-  "MD-D": {
-   "Mkm2": 0.07,
-   "t": 224
+   "t": 217
   },
   "BSE-POL": {
    "Mkm2": 0.06,
    "t": 274
   },
   "ET-D": {
-   "Mkm2": 0.06,
-   "t": 192
+   "Mkm2": 0.05,
+   "t": 191
   },
   "IN-BSE": {
    "Mkm2": 0.05,
@@ -432,15 +459,15 @@
   },
   "ZL-BSE": {
    "Mkm2": 0.04,
-   "t": 289
+   "t": 290
   },
-  "WT-A": {
+  "ET-B": {
    "Mkm2": 0.02,
-   "t": 10
+   "t": 4
   },
-  "WT-C": {
+  "ALB-WT": {
    "Mkm2": 0.01,
-   "t": 175
+   "t": 174
   },
   "ADR-C": {
    "Mkm2": 0.01,
@@ -450,17 +477,17 @@
    "Mkm2": 0.01,
    "t": 60
   },
-  "A-B": {
+  "ALB-C": {
    "Mkm2": 0.01,
-   "t": 250
+   "t": 12
   },
   "BSE-NG": {
    "Mkm2": 0.01,
    "t": 300
   },
-  "ET-B": {
+  "WT-A": {
    "Mkm2": 0.01,
-   "t": 4
+   "t": 9
   },
   "C-POL": {
    "Mkm2": 0.01,
@@ -508,9 +535,9 @@
     ],
     "efficiency": 0.573
    },
-   "swept_Mkm2": 7.55,
+   "swept_Mkm2": 7.56,
    "continental_Mkm2": 4.73,
-   "trimmed_conflict_Mkm2": 2.82
+   "trimmed_conflict_Mkm2": 2.83
   },
   {
    "down": "A",
@@ -552,8 +579,8 @@
    "max_km": 800,
    "continental_km": 600.0,
    "what": "西段地体撞上洲 A（内海北岸山系 M1 西段）",
-   "swept_Mkm2": 0.46,
-   "continental_Mkm2": 0.46,
+   "swept_Mkm2": 0.47,
+   "continental_Mkm2": 0.47,
    "trimmed_conflict_Mkm2": 0.0
   },
   {
@@ -585,10 +612,10 @@
    "max_km": 800,
    "continental_km": 600.0,
    "what": "东段地体撞上洲 B（M1 东段）",
-   "swept_Mkm2": 0.52,
-   "continental_Mkm2": 0.52,
+   "swept_Mkm2": 0.5,
+   "continental_Mkm2": 0.49,
    "trimmed_conflict_Mkm2": 0.01
   }
  ],
- "generated": "2026-10-25 11:57:42"
+ "generated": "2026-10-25 17:34:48"
 }

@@ -96,6 +96,9 @@ class VolcanoField:
         self.arc_pairs: set | None = None
         self.arc_cont_plates: set = set()
         self.arc_protected_uids = np.zeros(0, np.int64)
+        # U35：按俯冲带（板块对键）单独设定离上盘陆壳的最小距离（km），代替 arc_min_cont_km。后撤的弧形地体身后拖着的那片洋壳
+        # 离地体本身只有一两百公里（直布罗陀—阿尔沃兰式：火山岛长在弧形地体内侧的弧后海里），按全局的 150 km 一座都长不出来
+        self.arc_min_cont_by_pair: dict = {}
 
     # ---- 几何 -------------------------------------------------------------------------
     def positions(self, eng) -> np.ndarray:
@@ -252,10 +255,16 @@ class VolcanoField:
                     okp &= np.isin(c.uid[u[b_idx]], self.arc_protected_uids) | np.isin(sub, list(self.arc_cont_plates))
                 band[b_idx[~okp]] = False
             cont_o = np.flatnonzero(eng.alive & (c.plate == o) & (c.ctype != OCEAN))
-            if cont_o.size and band.any():     # 只长洋内弧：离上盘自己的陆壳 arc_min_cont_km 以外
+            if cont_o.size and band.any():     # 只长洋内弧：离上盘自己的陆壳 arc_min_cont_km 以外（U35：可按俯冲带单独设定）
                 dc, _ = cKDTree(pos_all[cont_o]).query(pos_all[u[band]], workers=-1)
                 b_idx = np.flatnonzero(band)
-                band[b_idx[km_from_chord(dc) < self.p.arc_min_cont_km]] = False
+                lim = np.full(b_idx.size, self.p.arc_min_cont_km)
+                if self.arc_min_cont_by_pair:
+                    sub = S[sel][kk[b_idx]]
+                    keys = np.minimum(sub, o).astype(np.int64) * 1000 + np.maximum(sub, o)
+                    for kk_, km_ in self.arc_min_cont_by_pair.items():
+                        lim[keys == kk_] = km_
+                band[b_idx[km_from_chord(dc) < lim]] = False
             if not band.any():
                 continue
             cand, vcand = pos_all[u[band]], V[sel][kk[band]]

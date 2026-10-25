@@ -499,11 +499,28 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         # "上盘朝海沟推进"自动判断、用于岛弧系统的全部俯冲带：南洋陆块板块随极地大陆运动，东缘一条约 3000 km 的弧增厚到 38 km、
         # 多出 0.93 百万 km² 陆地（地球上汤加—克马德克是后撤型岛弧）；上盘的绝对运动是倒推设定的，不能代表上盘应变状态
         eng.arc_compress_pairs = compress_pairs(arcs_hcfg)
+        # U35：后撤型俯冲带（arcs.subduction 的 rollback: true）上盘不做构造缩短；设计的走滑撕裂边界（forward.no_collision）时段内不碰撞
+        cid = plate_codes(arcs_hcfg)
+        for r in arcs_hcfg["arcs"].get("subduction", []):
+            if r.get("rollback"):
+                for d in r["down"]:
+                    for o in r["over"]:
+                        eng.arc_rollback_pairs.add(min(cid[d], cid[o]) * 1000 + max(cid[d], cid[o]))
+        for r in (arcs_hcfg.get("forward") or {}).get("no_collision", []):
+            a, bb = (cid[x] for x in r["pair"])
+            eng.no_collision_pairs[min(a, bb) * 1000 + max(a, bb)] = (float(r["from"]), float(r["to"]))
     if arcs_hcfg:                           # 洋内弧增厚加快只用于设计的俯冲带（U28 第二轮，见 Engine.arc_flux_pairs）
         eng.arc_flux_pairs = designed_pairs(arcs_hcfg)
     if arcs_hcfg and volc is not None:      # 岛弧火山只长在设计的俯冲带上（U28 第二轮，见 VolcanoField.arc_pairs）
         volc.arc_pairs = designed_pairs(arcs_hcfg)
         volc.arc_cont_plates = blocks_ids
+        cid = plate_codes(arcs_hcfg)               # U35：按俯冲带单独设定弧火山离上盘陆壳的最小距离（arcs.subduction 的 volcano_min_cont_km）
+        for r in (arcs_hcfg.get("arcs") or {}).get("subduction", []):
+            if r.get("volcano_min_cont_km") is not None:
+                for d in r["down"]:
+                    for o in r["over"]:
+                        a, bb = cid[d], cid[o]
+                        volc.arc_min_cont_by_pair[min(a, bb) * 1000 + max(a, bb)] = float(r["volcano_min_cont_km"])
     from mythic.tectonics.plumes import apply_lip, apply_lip_weights, swell_m
 
     from mythic.tectonics.reactivation import apply_shortening
@@ -517,6 +534,19 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
                           "parent": int(code_id_all[b["rift_from"]["plate"]]), "parent_code": b["rift_from"]["plate"]}
                          for b in (arcs_hcfg or {}).get("blocks", []) if b.get("rift_from")), key=lambda e: -e["t"])
     rift_done = set()
+    # U35：嵌套的裂开（西口弧形地体先是西段地体的一部分，西段地体又先是洲 C 的一部分）：母块裂开时连同它名下还没裂开的子地体一起转出
+    rift_parent = {int(b["id"]): int(code_id_all[b["rift_from"]["plate"]])
+                   for b in (arcs_hcfg or {}).get("blocks", []) if b.get("rift_from")}
+
+    def rift_family(q):
+        fam, todo = {q}, [q]
+        while todo:
+            x = todo.pop()
+            for ch, par in rift_parent.items():
+                if par == x and ch not in fam:
+                    fam.add(ch)
+                    todo.append(ch)
+        return np.array(sorted(fam), np.int64)
 
     def rift_line(r, tt):
         return unit(r["pts0"] @ kin.total_from(r["anchor"], 0.0, float(tt)).T)
@@ -589,7 +619,7 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
             e = rifts_from.pop(0)                  # U33：微陆块从母板块裂开（之前是母板块的一部分）
             om_q = kin.step_rotations([e["id"]], max(t, 1))[1][e["id"]]
             eng.add_plate(e["id"], om_q)
-            sel = np.flatnonzero(eng.alive & (eng.c.plate == e["parent"]) & (eng.c.origin == e["id"]))
+            sel = np.flatnonzero(eng.alive & (eng.c.plate == e["parent"]) & np.isin(eng.c.origin, rift_family(e["id"])))
             n = eng.transfer_units(e["parent"], e["id"], sel, kind="terrane_rift")
             log(f"  {t:3d} Ma 微陆块 {e['code']} 从 {e['parent_code']} 裂开：{sel.size} 个单元转出（新板块 {n} 个单元）")
         for ra in reacts or []:                    # U33 板内挤压复活：期间每 Myr 纯剪切增厚（范围按 anchor 板块从现今转回此刻）
@@ -1848,6 +1878,87 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
         fig.tight_layout(rect=(0, 0.04, 1, 1))
         stamp(fig, " · method_class：parameterized_physics（洋盆容积—海平面，Airy 均衡）")
         fig.savefig(out / "12_sea_level.png", dpi=100)
+        plt.close(fig)
+
+    # ---- 14 西口弧形地体（直布罗陀—阿尔沃兰式后撤弧，U35）：终图、引擎 0 Ma、地壳厚度与板块边界，地体沿走廊西移的古地理 ----
+    if "ALB" in info:
+        x0, x1, y0, y1 = -26.0, 6.0, 30.0, 44.0
+        sx, sy = (lon >= x0) & (lon <= x1), (lat >= y0) & (lat <= y1)
+        ext = [lon[sx][0], lon[sx][-1], lat[sy][-1], lat[sy][0]]
+        alb_id = int(info["ALB"]["id"])
+        fig = plt.figure(figsize=(24, 14))
+        top = [fig.add_axes((0.02 + k * 0.33, 0.53, 0.3, 0.4)) for k in range(3)]
+        bot = [fig.add_axes((0.02 + k * 0.245, 0.06, 0.23, 0.38)) for k in range(4)]
+        for ax, (title, E, land, other) in zip(top[:2], (
+                ("(a) 终图（设计，示意高程 visual_only）；红线 = 引擎 0 Ma 海岸", E_fin, Lf, E_eng > 0),
+                ("(b) 引擎 0 Ma 高程；绿线 = 终图海岸，橙三角 = 西口弧形地体上的弧火山（实心 = 露出海面）", E_eng, E_eng > 0, Lf))):
+            rgb = shaded_elevation(E, grid.pixel_km_equator, vert_exag=3.0, land=land)[..., :3]
+            ax.imshow(rgb[np.ix_(sy, sx)], extent=ext, interpolation="nearest", aspect="auto")
+            ax.contour(lon[sx], lat[sy], other[np.ix_(sy, sx)].astype(float), levels=[0.5],
+                       colors="#d7301f" if other is not Lf else "#1a9850", linewidths=1.0)
+            ax.set_title(title, fontsize=10)
+        v0 = vframes[-1] if vframes else None
+        if v0 is not None and len(v0["lon"]):
+            m = np.asarray(v0["plate"]) == alb_id
+            isl = m & (np.asarray(v0["summit_m"], float) > 0)
+            top[1].scatter(np.asarray(v0["lon"])[m & ~isl], np.asarray(v0["lat"])[m & ~isl], marker="^", s=28,
+                           facecolors="none", edgecolors="#e6550d", linewidths=1.0)
+            top[1].scatter(np.asarray(v0["lon"])[isl], np.asarray(v0["lat"])[isl], marker="^", s=36, color="#e6550d")
+        T0 = raster(frames[-1]["T"]).astype(float)
+        P0 = raster(frames[-1]["plate"]).astype(int)
+        ax = top[2]
+        im = ax.imshow(T0[np.ix_(sy, sx)], extent=ext, interpolation="nearest", aspect="auto", cmap="magma_r", vmin=5, vmax=65)
+        Ps = P0[np.ix_(sy, sx)]
+        bnd = np.zeros(Ps.shape, bool)
+        bnd[:, 1:] |= Ps[:, 1:] != Ps[:, :-1]
+        bnd[1:, :] |= Ps[1:, :] != Ps[:-1, :]
+        yy, xx = np.nonzero(bnd)
+        ax.scatter(lon[sx][xx], lat[sy][yy], s=0.8, c="#2c7fb8", linewidths=0)
+        ax.contour(lon[sx], lat[sy], (Ps == alb_id).astype(float), levels=[0.5], colors="#6a3d9a", linewidths=1.4)
+        ax.contour(lon[sx], lat[sy], Lf[np.ix_(sy, sx)].astype(float), levels=[0.5], colors="#1a9850", linewidths=0.9)
+        plt.colorbar(im, ax=ax, shrink=0.7, pad=0.01, label="地壳厚度 km")
+        ax.set_title("(c) 引擎 0 Ma 地壳厚度；蓝点 = 板块边界，紫线 = 西口弧形地体所在板块，绿线 = 终图海岸", fontsize=10)
+        for ax in top:
+            ax.set_xlim(x0, x1)
+            ax.set_ylim(y0, y1)
+            ax.grid(alpha=0.3)
+            for key in ("mountains", "arcs", "gulfs", "straits"):
+                for f in design.get(key, []) or []:
+                    if f["id"] in ("M31", "R17", "T1", "G28", "R13"):
+                        q = np.asarray(f["line"], float)
+                        ax.plot(q[:, 0], q[:, 1], "--", color="#6a3d9a", lw=1.1)
+                        ax.text(q[-1, 0] + 0.2, q[-1, 1], f["id"], fontsize=9, color="#4a1486", path_effects=halo)
+        # 下排：地体沿走廊西移（引擎高程 + 刚体块轮廓，地幔参照系）
+        area = grid.cell_area_km2
+        blocks = {}
+        for code, blk in info.items():
+            msk = ids == blk["id"]
+            blocks[blk["id"]] = {"code": code, "color": blk["color"],
+                                 "centroid": unit((grid.xyz[msk] * area[msk][:, None]).sum(0))}
+        h = build_history(hcfg, {k: v["centroid"] for k, v in blocks.items()})
+        tgt = LatLonGrid(1440, 720)
+        for ax, t in zip(bot, (38.0, 30.0, 20.0, 10.0)):
+            f = min(frames, key=lambda fr: abs(fr["t"] - t))
+            E = raster(f["elev"]).astype(float) - f.get("sea_level", 0.0)
+            rgb = shaded_elevation(E, grid.pixel_km_equator, vert_exag=3.0, land=E > 0)[..., :3]
+            ax.imshow(rgb[np.ix_(sy, sx)], extent=ext, interpolation="nearest", aspect="auto")
+            own, _ = raster_at(h, blocks, ids, grid, float(f["t"]), tgt)
+            tsx, tsy = (tgt.lon >= x0) & (tgt.lon <= x1), (tgt.lat >= y0) & (tgt.lat <= y1)
+            for code in ("ALB", "WT", "A", "C", "ADR"):
+                if code in info:
+                    pid = info[code]["id"]
+                    ax.contour(tgt.lon[tsx], tgt.lat[tsy], (own[np.ix_(tsy, tsx)] == pid).astype(float), levels=[0.5],
+                               colors=[info[code]["color"]], linewidths=1.6 if code == "ALB" else 0.8)
+            ax.set_xlim(x0, x1)
+            ax.set_ylim(y0, y1)
+            ax.grid(alpha=0.3)
+            ax.set_title(f"{f['t']:g} Ma：引擎高程，彩线 = 刚体块（粗紫 = 西口弧形地体）", fontsize=10)
+        fig.text(0.5, 0.995, "U35 西口弧形地体（直布罗陀—阿尔沃兰式后撤弧）：38 Ma 起从西段地体南缘（西北湾 G28 一带）被拖出，沿走廊西移约 1250 km，"
+                 "楔进洲 A 与洲 C 之间；紫虚线 = 终图的西海峡 T1、弧形山系 M31、火山岛群 R17、西北湾 G28、西部群岛 R13",
+                 fontsize=12, ha="center", va="top")
+        stamp(fig, " · 地体的位置与运动由设计设定（history yaml blocks 的 ALB、keys、arcs.regions、arcs.subduction）；"
+                   "火山与地壳增厚由引擎按俯冲带规则产生")
+        fig.savefig(out / "14_west_arc.png", dpi=90)
         plt.close(fig)
 
 if __name__ == "__main__":

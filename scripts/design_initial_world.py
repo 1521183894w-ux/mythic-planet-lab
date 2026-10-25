@@ -508,10 +508,15 @@ def main() -> int:
                                       float(oc_cfg["forearc_km"]), float(oc_cfg["corridor_km"]), bg,
                                       float(oc_cfg.get("between_cos", -0.5)), ops).astype(c.plate.dtype)
         c.plate[shelf_nodes] = owner[shelf_nodes]
+    rift_of = {b["code"]: b["rift_from"]["plate"] for b in hcfg["blocks"] if b.get("rift_from")}
     for blk in hcfg["blocks"]:
         if blk.get("rift_from"):
-            # U33：裂开之前是母板块的一部分（地体来源 origin 保留块编号，正向演化到 rift_from.t 时按它分出来）
-            c.plate[c.plate == int(blk["id"])] = int(code_id[blk["rift_from"]["plate"]])
+            # U33：裂开之前是母板块的一部分（地体来源 origin 保留块编号，正向演化到 rift_from.t 时按它分出来）。
+            # U35：嵌套时（西口弧形地体 -> 西段地体 -> 洲 C）记在最上一级的母板块名下
+            root = blk["rift_from"]["plate"]
+            while root in rift_of:
+                root = rift_of[root]
+            c.plate[c.plate == int(blk["id"])] = int(code_id[root])
         log(f"  洋壳归属：外大洋板块 {mesh.area_km2[c.plate == bg].sum() / 1e6:.0f} 百万 km²；"
             + "".join(f"{op['name']} {mesh.area_km2[c.plate == int(op['id'])].sum() / 1e6:.0f}；" for op in ops)
             + "，".join(f"{id_code[q]} {mesh.area_km2[(c.plate == q) & (c.ctype != CONT)].sum() / 1e6:.0f}"
