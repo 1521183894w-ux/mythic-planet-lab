@@ -73,7 +73,11 @@ def stamp(fig, world, method_note: str, extra: list[str] | None = None, fontsize
     lines.append(f"世界：{world.display_name}（{world.world_id}） · 格网 {world.resolution} · 种子 {world.seed} · "
                  f"代码 {world.code_version} · 生成 {time.strftime('%Y-%m-%d %H:%M')}")
     lines.append(f"method_class：{method_note} · 数据：{world.source}")
-    fig.text(0.01, 0.005, "\n".join(lines), fontsize=fontsize, va="bottom", ha="left", color="0.2")
+    # 按图宽折行（中文字宽约等于字号；之前一行写完，长的来源说明在右边被截断，评审 stage1_2026-10-25_2 第 9 条）
+    import textwrap
+    width = max(40, int(fig.get_figwidth() * 72.0 / fontsize) - 6)
+    wrapped = [w for ln in lines for w in (textwrap.wrap(ln, width=width) or [""])]
+    fig.text(0.01, 0.005, "\n".join(wrapped), fontsize=fontsize, va="bottom", ha="left", color="0.2")
 
 
 def add_scalebar(ax, extent_km, length_km: float = 500.0, color: str = "k") -> None:

@@ -25,7 +25,7 @@ from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 from scipy.spatial import cKDTree
 
-from .crust import (CONT, OCEAN, ORIGIN_ARC, ORIGIN_OCEAN, ORIGIN_RIFT, ORO_ARC, ORO_COLL, ORO_NONE, ORO_RIFT, Crust,
+from .crust import (CONT, OCEAN, ORIGIN_ARC, ORIGIN_OCEAN, ORIGIN_RIFT, ORO_ARC, ORO_COLL, ORO_NONE, ORO_REACT, ORO_RIFT, Crust,
                     Params, elevation)
 from .geometry import R_KM, chord_from_km, km_from_chord, orthonormalize, smoothstep, unit, wrap
 from .mesh import KD_WORKERS, Mesh
@@ -435,7 +435,8 @@ class Engine:
             c.T[j] += dT
             self.budget["arc_added"] += float((dT * self.area[j])[c.ctype[j] == CONT].sum())
             strong = j[(f > 0.3) & ~blocked]
-            c.oro[strong] = np.where(c.oro[strong] == ORO_COLL, ORO_COLL, ORO_ARC)
+            # 标记的优先级：碰撞 > 板内挤压复活 > 弧（U33：同时在复活的内海南岸山系被弧覆盖成冷色，评审 stage1_2026-10-25_3 复查 #2）
+            c.oro[strong] = np.where(np.isin(c.oro[strong], (ORO_COLL, ORO_REACT)), c.oro[strong], ORO_ARC)
             c.oro_t[strong] = self.t
             conv = j[(c.ctype[j] == OCEAN) & (c.T[j] >= p.arc_to_cont_T_km)]
             if conv.size:
@@ -478,6 +479,8 @@ class Engine:
         self.budget["eroded"] += float((loss * self.area).sum())
         i, j = self.pedges[:, 0], self.pedges[:, 1]
         ok = cont[i] & cont[j] & (np.maximum(c.T[i], c.T[j]) > p.flow_T_km)
+        if p.flow_min_T_km is not None:       # U33：海平面以下的减薄陆壳不参与侧向流动（见 Params.flow_min_T_km）
+            ok &= np.minimum(c.T[i], c.T[j]) >= p.flow_min_T_km
         if ok.any():
             i, j = i[ok], j[ok]
             coef = p.kappa_km2_myr * dt * 2.0 / (3.0 * self.m.h_km**2)
@@ -584,7 +587,7 @@ class Engine:
                 c.ctype[conv] = CONT
                 c.origin[conv] = ORIGIN_ARC
                 c.t_form[conv] = self.t
-                c.oro[conv] = np.where(c.oro[conv] == ORO_COLL, ORO_COLL, ORO_ARC)
+                c.oro[conv] = np.where(np.isin(c.oro[conv], (ORO_COLL, ORO_REACT)), c.oro[conv], ORO_ARC)
                 c.oro_t[conv] = self.t
                 self.budget["arc_converted"] += float((c.T[conv] * self.area[conv]).sum())
 
@@ -806,8 +809,62 @@ class Engine:
             return v, np.where(gap, 0.0, tr[np.maximum(best, 0)])
         return v
 
+    def _fill_view_holes(self, v, tr) -> int:
+        """出帧时把四周全是陆地（高出海面的陆壳）的瞬时小洞按相邻陆壳显示（见 Params.view_hole_max_cells）：抄相邻节点里厚度居中的
+        那个的属性，海沟深度置 0。只改这一帧的视图，不改引擎状态。返回处理的节点数。
+        （第一版抄最薄的一个：碰撞前缘上最薄的邻居常是下行地体 25–29 km 的陆架陆壳，水坑变成 −0.5 ~ −1.3 km 的陆壳洼地，还是水坑。
+        第二版只要求四周是陆壳：主内海西口的海峡里是走滑拉分补的水下薄陆壳（约 −110 m），夹着几个刚生成的洋壳小洞，被当成水坑
+        用旁边 41 km 的厚陆壳填成了陆地。第三版要求四周全是陆地：缝合带里挨着一两个水下陆架薄陆壳的小洞又不补了，r2 的水坑回到 −3 km。
+        现在：四周全是陆地，或者小洞所在的整片水体（洋壳与水下陆壳）不超过 view_hole_pond_cells 个单元；抄的是相邻陆地里厚度居中的一个）"""
+        p, m = self.p, self.m
+        young = (v.ctype == OCEAN) & ((v.plate < 0) | (v.age <= p.view_hole_age_myr))
+        if not young.any():
+            return 0
+        e = m.edges
+        lab = graph_components(m.n, e[young[e[:, 0]] & young[e[:, 1]]])
+        b1 = young[e[:, 0]] & ~young[e[:, 1]]
+        b2 = ~young[e[:, 0]] & young[e[:, 1]]
+        inner = np.concatenate([e[b1, 0], e[b2, 1]])
+        outer = np.concatenate([e[b1, 1], e[b2, 0]])
+        nl = int(lab.max()) + 1
+        size = np.bincount(lab[young], minlength=nl)
+        dry = (v.ctype == CONT) & (elevation(v, p, tr) > 0.0)
+        bad = np.zeros(nl, bool)
+        np.logical_or.at(bad, lab[inner], ~dry[outer])
+        has_b = np.zeros(nl, bool)
+        has_b[lab[inner]] = True
+        # 小洞所在的整片水体（洋壳与水下陆壳连成的一片）只有几个单元：封闭的小水塘，不是海峡
+        wet = ~dry
+        wl = graph_components(m.n, e[wet[e[:, 0]] & wet[e[:, 1]]])
+        wsize = np.bincount(wl[wet], minlength=int(wl.max()) + 1)
+        pond = np.zeros(nl, bool)
+        yi = np.flatnonzero(young)
+        big = np.zeros(nl, bool)
+        np.logical_or.at(big, lab[yi], wsize[wl[yi]] > p.view_hole_pond_cells)
+        pond[np.unique(lab[yi])] = True
+        pond &= ~big
+        ok = (size > 0) & (size <= p.view_hole_max_cells) & (~bad | pond) & has_b
+        fill = np.flatnonzero(young & ok[lab])
+        if fill.size == 0:
+            return 0
+        keep = dry[outer] | ~np.isin(lab[inner], lab[inner][dry[outer]])   # 有相邻陆地的小洞只从陆地里挑
+        inner, outer = inner[keep], outer[keep]
+        order = np.lexsort((v.T[outer], lab[inner]))          # 按小洞、再按厚度排：每个小洞取厚度居中的相邻陆壳
+        comps, start, cnt = np.unique(lab[inner][order], return_index=True, return_counts=True)
+        src_of = np.full(nl, -1, np.int64)
+        src_of[comps] = outer[order[start + (cnt - 1) // 2]]
+        src = src_of[lab[fill]]
+        for f in ("plate", "ctype", "T", "age", "origin", "prov", "t_form", "oro", "oro_t"):
+            getattr(v, f)[fill] = getattr(v, f)[src]
+        v.uid[fill] = -1
+        tr[fill] = 0.0
+        return int(fill.size)
+
     def snapshot(self) -> dict:
         v, tr = self.view(with_trench=True)
+        if self.p.view_hole_max_cells is not None:
+            tr = np.array(tr, float)
+            self._fill_view_holes(v, tr)
         return {"t": self.t, "plate": v.plate.copy(), "ctype": v.ctype.copy(), "T": v.T.copy(), "age": v.age.copy(),
                 "origin": v.origin.copy(), "prov": v.prov.copy(), "t_form": v.t_form.copy(),
                 "oro": v.oro.copy(), "oro_t": v.oro_t.copy(),

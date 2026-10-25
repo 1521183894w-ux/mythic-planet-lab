@@ -72,7 +72,7 @@ def old_orogen_add_km(oo: dict, hcfg: dict, t0: float) -> float:
 
 
 def province_relief(mesh, c, owner: np.ndarray, kind: np.ndarray, cfg: dict, seed: int,
-                    keep_out: np.ndarray | None = None) -> dict:
+                    keep_out: np.ndarray | None = None, prov_keys: dict | None = None) -> dict:
     """U32：陆壳按省份给厚度起伏（原地修改 c.T，返回统计）。
     每个古老地壳省份（前史式的泊松划分，约 700 km 一个）形成于不同的构造事件，继承了不同的地壳厚度与岩石圈状态；地球上稳定
     大陆的高程因此有几百米的起伏（克拉通内的沉降盆地与隆起、台地与低地）。每个省份的高程偏移从正态分布里抽（mean_m、sd_m，
@@ -85,7 +85,12 @@ def province_relief(mesh, c, owner: np.ndarray, kind: np.ndarray, cfg: dict, see
     p0 = Params()
     body = (kind == 1) & (c.ctype == CONT) & (c.T >= float(cfg.get("min_base_T_km", 0.0)))   # 设计改低过的（盆地、海岸减薄带）不再叠加
     provs = np.unique(c.prov[body])
-    off = np.clip(rng.normal(float(cfg["mean_m"]), float(cfg["sd_m"]), provs.size), float(cfg["min_m"]), float(cfg["max_m"]))
+    if prov_keys:     # U33：每个省份按 (种子, 块编号, 块内序号) 单独抽，加减别的块不影响它
+        draw = np.array([np.random.default_rng([seed, *prov_keys[int(q)]]).normal(float(cfg["mean_m"]), float(cfg["sd_m"]))
+                         for q in provs])
+    else:
+        draw = rng.normal(float(cfg["mean_m"]), float(cfg["sd_m"]), provs.size)
+    off = np.clip(draw, float(cfg["min_m"]), float(cfg["max_m"]))
     lut = np.zeros(int(c.prov.max()) + 1)
     lut[provs] = off
     d = np.where(body, lut[c.prov], 0.0)
@@ -221,7 +226,9 @@ def shelf_margins(ini: dict, grid: LatLonGrid, ids: np.ndarray, ext: np.ndarray,
             cand &= ~b["land"] & (ids <= 0) & (ext == 0)
             blk = ids > 0
             own = np.zeros(grid.shape, int)
-            if cand.any():
+            if mg.get("block"):          # U33：指定归属（神怒湾整片是亚得里亚式地体的前陆海，不按最近的块分给上盘）
+                own[cand] = code_id[mg["block"]]
+            elif cand.any():
                 _, kk = cKDTree(grid.xyz[blk]).query(grid.xyz[cand])
                 own[cand] = ids[blk][kk]
         else:
@@ -409,6 +416,9 @@ def main() -> int:
     tf_ext = np.zeros(grid.shape)
     provinces = []
     for pid in id_code:
+        # U33：每块用自己的随机数（种子 + 块编号）。之前整个世界共用一串随机数，加一块微陆块就让排在后面的所有块的省份划分、
+        # 年龄与省份起伏都重抽一遍（东南增生半岛与苏门答腊式长岛因此连成一片，多出一个亚大陆）
+        rng = np.random.default_rng([int(ini.get("seed", 1)), int(pid)])
         whole = (ids == pid) | (ext == pid)
         idx = np.flatnonzero(whole.ravel())
         if idx.size == 0:
@@ -444,7 +454,8 @@ def main() -> int:
                 age, kind = float(np.clip(2400 - 0.45 * dcr[k] + rng.normal(0, 150), 700, 2400)), "belt"
             else:
                 age, kind = float(rng.uniform(900, 1800)), "belt"
-            provinces.append({"id": base + k + 1, "block": id_code[pid], "age_ma": round(age), "kind": kind})
+            provinces.append({"id": base + k + 1, "block": id_code[pid], "block_id": int(pid), "local": k,
+                              "age_ma": round(age), "kind": kind})
         pv = base + own + 1
         ages = np.array([provinces[i - 1]["age_ma"] for i in pv], float)
         for arr_p, arr_t, sel in ((prov, tf, ids.ravel()[idx] == pid), (prov_ext, tf_ext, ext.ravel()[idx] == pid)):
@@ -472,7 +483,8 @@ def main() -> int:
             j_ = np.clip(((lo + 180.0) / 360.0 * grid.nx).astype(int), 0, grid.nx - 1)
             keep_out |= (owner == pid) & feat[i_, j_]
         prov_relief = province_relief(mesh, c, owner, kind, ini["province_relief"], int(ini.get("seed", 1)) + 101,
-                                      keep_out=keep_out)
+                                      keep_out=keep_out,
+                                      prov_keys={pv["id"]: (pv["block_id"], pv["local"]) for pv in provinces})
         log(f"  省份厚度起伏：{prov_relief}")
     oc_cfg = hcfg.get("ocean")
     if oc_cfg:                              # 洋壳归属按俯冲设计（U25），见 history yaml 的 ocean 一节
@@ -496,6 +508,10 @@ def main() -> int:
                                       float(oc_cfg["forearc_km"]), float(oc_cfg["corridor_km"]), bg,
                                       float(oc_cfg.get("between_cos", -0.5)), ops).astype(c.plate.dtype)
         c.plate[shelf_nodes] = owner[shelf_nodes]
+    for blk in hcfg["blocks"]:
+        if blk.get("rift_from"):
+            # U33：裂开之前是母板块的一部分（地体来源 origin 保留块编号，正向演化到 rift_from.t 时按它分出来）
+            c.plate[c.plate == int(blk["id"])] = int(code_id[blk["rift_from"]["plate"]])
         log(f"  洋壳归属：外大洋板块 {mesh.area_km2[c.plate == bg].sum() / 1e6:.0f} 百万 km²；"
             + "".join(f"{op['name']} {mesh.area_km2[c.plate == int(op['id'])].sum() / 1e6:.0f}；" for op in ops)
             + "，".join(f"{id_code[q]} {mesh.area_km2[(c.plate == q) & (c.ctype != CONT)].sum() / 1e6:.0f}"

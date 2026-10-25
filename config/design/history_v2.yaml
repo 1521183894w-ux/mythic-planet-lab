@@ -34,7 +34,24 @@ blocks:
      # U28 第二轮（用户 2026-10-24 定）：东南群岛东大岛由微陆块撞上洋内弧抬起（新几内亚式）。约 110 Ma 从极地大陆北缘裂开，
      # 北上约 6000 km，约 8 Ma 撞上西侧大洋板块南缘的洋内弧，弧地壳拼贴、碰撞增厚出中央山脊（M27）
      follow: {frame: POL, from: 110}}
-  - {code: A, id: 103, name: 洲 A, parent: B, color: "#c0392b", labels: [A, B], islands: [I1, I1b, I4],
+  # U33（用户 2026-10-25 定）：主内海北岸的亚得里亚式微陆块。U32 量了两岸汇聚：100 Ma 以来 1200–1570 km，35 Ma 以来西段只有约 140 km，
+  # 内海至今仍宽 700–1500 km，北岸从没有大陆碰撞，内海北岸山系 M1 只有约 0.9 km（终图 4200）。地球上地中海北岸那一圈山（阿尔卑斯、
+  # 迪纳拉、亚平宁、喀尔巴阡）来自亚得里亚等微陆块撞上欧洲；亚得里亚是非洲板块向北伸出的部分，和非洲之间隔着爱奥尼亚海的老洋壳。
+  # 这里照此安排：北岸 M1 以南的一条陆地（终图上的长半岛、多湾半岛与沿岸地带）是三块微陆块，一直跟着南方的洲 C、洲 D 走
+  # （parent 是它们、没有关键帧 = 相对位置不变），与洲 C、D 之间隔着主内海的老洋壳；前方的古洋向北俯冲到洲 A、B 之下（弧），
+  # 微陆块撞上来以后碰撞增厚出 M1（缝合带在 M1 以南约 0.7°，山长在上盘）。碰撞时刻：西段与亚得里亚式 45 Ma（阿尔卑斯碰撞约 50–35 Ma），
+  # 东段 25 Ma（洲 D 相对洲 B 汇聚快，35 Ma 以来 430–500 km）。被挤掉的陆缘按运动学补回（collisions）
+  # U33 第十一次运行：内海微大陆岛 I4 改归西段地体（之前记在洲 A 名下、钉在洲 A 上，正好挡在西段地体北漂的路上：
+  # 地体东端 57 Ma 撞上它被消耗、岛被碰撞增厚成 1.5–2 km 的方块，岛北面洲 A 的旧洋壳留成 6–9°E 一条 −4 ~ −5 km 的南北向窄湾，
+  # 评审 stage1_2026-10-25_3 第 1 条）。现在岛是西段地体南缘的一块，随地体北漂；岛与地体之间的海是继承的，没有单独的裂开过程
+  - {code: WT, id: 302, name: 内海北岸西段地体, parent: C, color: "#f1948a", labels: [A], rift_from: {plate: C, t: 100}, islands: [I4],
+     poly: [[-13, 38.9], [-10, 39.5], [-5, 41.1], [0, 42.7], [5, 44.1], [9, 45.0], [9, 33], [-13, 33]]}
+  - {code: ADR, id: 303, name: 亚得里亚式地体（长半岛与神怒湾）, parent: C, color: "#e59866", labels: [A], rift_from: {plate: C, t: 100},
+     poly: [[9, 45.0], [13.5, 44.9], [15.5, 44.6], [17.6, 44.0], [17.6, 33], [9, 33]]}
+  - {code: ET, id: 402, name: 内海北岸东段地体, parent: D, color: "#85c1e9", labels: [B], rift_from: {plate: D, t: 100},
+     poly: [[18.4, 43.9], [23, 42.5], [27.5, 41.9], [31, 41.3], [36, 41.2], [41, 41.1], [46, 39.9], [50, 37.9], [50, 33],
+            [18.4, 33]]}
+  - {code: A, id: 103, name: 洲 A, parent: B, color: "#c0392b", labels: [A, B], islands: [I1, I1b],
      # 洲 A、B 之间的老缝合带（中部长海 G2）以西，经神怒湾湾顶接到内海
      poly: [[-50, 34], [-50, 82], [6, 82], [4.5, 64], [6, 59.5], [10, 55.5], [14, 51.6], [15.6, 49.2], [16.2, 44.6],
             [18.8, 41.4], [17.4, 38.0], [17.4, 34]]}
@@ -52,6 +69,25 @@ blocks:
 # 拼合位置（贴合、少重叠）由搜索得出：在固定块的现今参照系里调移动距离、方位与自转，使海岸接触最多、重叠最少；
 # 洲 D 相对洲 C 的欧拉极同时要求合上南裂谷海、缝合带两侧不张不压（见 docs/tectonics_method.md U23）。
 keys:
+  # U33：主内海北岸的微陆块。第一次运行让它们 300 Myr 都钉在洲 C、D 北面 400–700 km 处，早期插进洲 D、南方地盾陆块、东南增生地块周围的
+  # 洋壳，297–264 Ma 引出一串计划外的俯冲，亚得里亚式 83 Ma 就撞上洲 A，还连带改了东南亚（东大岛微陆块 57 Ma 撞东南增生地块、
+  # 东南增生半岛与苏门答腊式长岛连成一片）。改为地中海西部式：约 100 Ma 前贴在洲 C、D 北缘（向洲 C、D 一侧挪 250–320 km，按倒推审计不与洲 C、D 重叠），
+  # 100 Ma 起裂开北漂（相对洲 C、D 约 0.45 cm/yr，共 250–320 km），身后张开一条同样宽的年轻洋盆（内海其余是老洋壳，两岸的汇聚
+  # 主要靠洲 C、D 整体北移；第三次评审复查 #12 指出"身后张开主内海南半部"说过头），前方的古洋俯冲到洲 A、B 之下，
+  # 45 Ma（东段 25 Ma）撞上北岸后与洲 C、D 一起运动。100 Ma 以前它们就是洲 C、D 板块的一部分（blocks 的 rift_from）：
+  # 第二次运行让它们从 300 Ma 起就是独立板块，名下有自己的洋壳，294–279 Ma 与洲 C、南方地盾陆块、东南增生地块之间出现计划外的俯冲
+  WT:     # 与亚得里亚式同样的位移（两块一起北漂，之间没有相对运动；位移不同时西段的洋壳俯冲到亚得里亚式之下，弧把神怒湾抬起）
+    45:  []
+    100: [{move: [250, 180]}]
+    300: [{move: [250, 180]}]
+  ADR:
+    45:  []
+    100: [{move: [250, 180]}]
+    300: [{move: [250, 180]}]
+  ET:
+    25:  []
+    100: [{move: [320, 180]}]
+    300: [{move: [320, 180]}]
   B:      # 绝对运动缓慢（欧亚式），300 Ma 时偏南约 1800 km
     150: [{move: [600, 180]}, {spin: 5}]
     300: [{move: [1800, 190]}, {spin: 15}]
@@ -122,10 +158,16 @@ events:
   - {t: [100, 0], kind: subduction, what: 残留洋盆（主内海）北缘俯冲转碰撞，内海北岸山系（M1）}
   - {t: [90, 48], kind: drift, what: 南方地盾陆块快速北移，约 75 Ma 经过东洋热点（溢流玄武岩）}
   - {t: [85, 0], kind: rift, what: 南洋陆块从极地大陆裂离}
-  - {t: [60, 0], kind: collision, what: 洲 D 东北角撞上洲 B（东方地峡）；南岸挤压反转（M2）}
+  - {t: [60, 0], kind: collision, what: 洲 D 东北角撞上洲 B（东方地峡）；内海南岸开始受挤压}
   - {t: [48, 0], kind: collision, what: 南方地盾陆块撞上洲 B，东方大高原隆起（仍在汇聚）}
   - {t: [35, 0], kind: rift, what: 洲 D 相对洲 C 斜向北移：南裂谷海张开，缝合带复活为走滑断层}
   - {t: [25, 0], kind: rift, what: 南方地盾裂谷（地幔柱）}
+  # U33
+  - {t: [100, 45], kind: rift, what: 主内海北岸三块亚得里亚式地体从洲 C、D 北缘裂开、北漂 250–320 km，身后张开一条窄的年轻洋盆}
+  - {t: [45, 0], kind: collision, what: 西段与亚得里亚式地体撞上洲 A（内海北岸山系 M1 西段与阿尔卑斯式段）}
+  - {t: [25, 0], kind: collision, what: 东段地体撞上洲 B（内海北岸山系 M1 东段）}
+  - {t: [40, 0], kind: reactivation, what: 内海南岸陆缘挤压反转（M2，阿特拉斯式；引擎按设计 40 Ma 起增厚）}
+  - {t: [30, 0], kind: reactivation, what: 板内挤压复活：北方高原（30 Ma 起）、中央山系（25 Ma）、北部断块山（20 Ma）}
 
 # ---------------------------------------------------------------------------------------------------------
 # U24：300 Ma 初始世界（scripts/design_initial_world.py）
@@ -146,6 +188,11 @@ collisions:
   - {down: A, up: B, t: 250, max_km: 900, what: 洲 A、B 碰撞}
   - {down: D, up: C, t: 180, max_km: 900, what: 洲 C、D 碰撞}
   - {down: D, up: B, t: 60, max_km: 1600, what: 洲 D 东北角撞上洲 B（东方地峡）}
+  # U33：主内海北岸的微陆块碰撞（见 blocks 的 WT、ADR、ET）
+  - {down: WT, up: A, t: 45, max_km: 800, continental_km: 600, what: 西段地体撞上洲 A（内海北岸山系 M1 西段）}
+  - {down: ADR, up: A, t: 45, max_km: 800, continental_km: 600, what: 亚得里亚式地体撞上洲 A（阿尔卑斯式，神怒湾湾顶以北）}
+  - {down: ADR, up: B, t: 45, max_km: 800, continental_km: 600, what: 亚得里亚式地体东北角撞上洲 B}
+  - {down: ET, up: B, t: 25, max_km: 800, continental_km: 600, what: 东段地体撞上洲 B（M1 东段）}
 
 # U25：洋壳归属与俯冲方向（packages/tectonics/reverse.py assign_ocean_plates；scripts/design_forward.py 预设俯冲方向）。
 # 第一次正向运行按"离哪块大陆近就归谁"分洋壳，板块边界在大洋正中，海沟与岛弧长在大洋中间、长成条带状陆地，
@@ -356,6 +403,20 @@ rifts:
      graben_half_km: 40, beta: 1.08, flank_amp_m: 1000, flank_decay_km: 60, swell_amp_m: 600, swell_radius_km: 400,
      what: 南方地幔柱上方的年轻裂谷（约 25 Ma–今），两肩隆起、谷底下陷，谷中有裂谷深湖}
 
+# U33：板内挤压复活（packages/tectonics/reactivation.py；scripts/design_forward.py build_reactivations）。南方地盾陆块约 48 Ma 撞上洲 B
+# 以后，碰撞应力传到 1500–2500 km 外的内陆，沿老缝合带与老裂谷挤压缩短（地球上印度—欧亚碰撞约 50 Ma 起，天山约 25–20 Ma 复活、
+# 现今吸收汇聚的约一半；阿尔泰约 10–5 Ma；蒙古高原的抬升更早、更缓）。U32 以前这三处都是 400 m 左右的平原（没有过程）。
+# feature = 终图要素（山脊线两侧或高原轮廓），锚在 anchor 板块上；[t_start, t_end] 期间匀速纯剪切增厚到 (1 + strain) 倍，剥蚀照常，
+# 最后的高度是增厚与剥蚀相抵的结果（strain 按终图高度与 U31 的剥蚀律估：中央山系 4200 m 约要 60 km、北部断块山 3000 m 约 52 km、
+# 北方高原 1500 m 约 42 km）。method_class：procedural_constrained（位置、时间、幅度由设计给出）
+reactivations:
+  - {id: M15, feature: M15, anchor: B, t_start: 25, strain: 0.9, what: 中央山系（天山式：老缝合带复活）}
+  - {id: M15b, feature: M15b, anchor: B, t_start: 20, strain: 0.6, what: 北部断块山（阿尔泰式）}
+  - {id: PL3, feature: PL3, anchor: B, t_start: 30, strain: 0.45, what: 北方高原（蒙古高原式的板内隆升）}   # 0.25 时中位 657 m：
+                                    # 轮廓从边缘往里 300 km 渐变，大半面积只加了一部分
+  # 内海南岸山系：南岸陆缘被挤压反转（阿特拉斯式：中生代裂谷盆地在非洲—欧亚汇聚下反转，约 40 Ma 起）。U33 第一次运行 786 m
+  - {id: M2, feature: M2, anchor: C, t_start: 40, strain: 0.6, what: 内海南岸山系（阿特拉斯式陆缘反转）}
+
 # U29：地幔柱（packages/tectonics/plumes.py；scripts/design_forward.py）。method_class：procedural_constrained。
 # - swell = 动力地形穹隆：地幔柱头部的热浮力把上方岩石圈整体顶起，只改高程、不改地壳。at 固定在地幔参照系里，active 期间叠加在
 #   上方的任何板块上（停了就消失）；升余弦剖面，中心 amp_m、半径 radius_km 处为 0（半高宽 = radius_km 的一半）。
@@ -403,6 +464,20 @@ forward:
                                       # 陆缘一圈弧增厚、长满弧火山，弧火山 5400 座、陆壳体积 +8.9%（固定的外大洋板块与任何漂移的
                                       # 大陆都汇聚），撤回；改为弧火山只长在设计的俯冲带上（scripts/design_forward.py designed_pairs）
   ocean_plates_take_continent_gaps: true   # U28：东大洋由大洋板块主导（见 scripts/design_forward.py ocean_gap_prefer）
+  # U33：只定俯冲方向（scripts/design_forward.py preset_polarity，优先于 arcs.subduction 与 ocean.subduction；不参与 300 Ma 的洋壳划分，
+  # 也不算设计的岛弧系统）。没有预设方向的板块对，碰上时由当时的地壳状态临时决定，对初始条件的小改动很敏感：U33 第一次运行在洲 A 之前
+  # 插了三块微陆块，省份随机数随之重抽，279 Ma 东南增生地块刚从极地大陆裂开时的一次擦碰方向翻了（U32 是东南增生地块下行），之后
+  # 东南亚整个走上另一条路（东大岛微陆块 57 Ma 就撞上东南增生地块，U32 是 22 Ma；东南增生半岛与苏门答腊式长岛连成一片）
+  polarity:
+    - {down: [BSE], over: [POL], what: 东南增生地块裂离时的擦碰（按 U32 的结果固定）}
+    - {down: [C], over: [A], hole_down: true, what: 洲 C 名下挡在西段地体前方的古洋（方向同 ocean.subduction；hole_down：汇聚边界上的小洞归下行一方）}
+    - {down: [WT, ADR, ET], over: [A, B], aprons: true, hole_down: true,
+       what: 主内海北岸微陆块前方的古洋向北俯冲到洲 A、B 之下，微陆块随后撞上来（aprons：洲 A、B 挡在前面的洋壳围裙转给微陆块，
+       见 forward.aprons；hole_down：汇聚边界上的小洞归微陆块。两项是第九、十次运行为 6–9°E 的深水窄湾加的，窄湾没变，
+       真正的原因是 I4 记在洲 A 名下，见 blocks 的 WT；两项与其他俯冲带的做法一致，保留）}
+    - {down: [WT, ADR], over: [C, ET, D], what: 西段、亚得里亚式地体对洲 C、D 是下行一方：洲 C、D 的洋壳碰上它们只删除、不长弧
+       （否则神怒湾上长弧、湾面抬到 +1 km）}
+    - {down: [D], over: [ET], what: 主内海东部的洋壳向北俯冲到东段地体之下（希腊—爱琴式），多湾半岛在上盘}
   # U30：走滑拉分与裂谷陆缘（Engine.cont_gap_pairs）。两块陆块之间张开的空隙，按累计张开宽度（两侧原有陆壳之间的距离）填拉伸减薄
   # 的陆壳：不到 w1 厚 T_narrow（沉积物充填的拉分盆地、走滑谷，谷底在海平面附近；死海—约旦谷、苏伊士湾式），w1 到 w_max 线性减薄到
   # T_wide（拉伸陆缘），超过 w_max 才长洋壳（红海式：宽过约 250 km 的部分是海底扩张）。之前引擎里洲 C、D 之间 35 Ma 起张开的走滑
@@ -427,6 +502,9 @@ forward:
     - {pair: [POL, ZL], since: 90, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 极地大陆与南洋陆块（约 85 Ma）}
     - {pair: [POL, NG], since: 115, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 极地大陆北缘与东大岛微陆块（约 110 Ma）}
     - {pair: [POL, BSE], since: 285, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: 东南增生地块裂离（约 280 Ma，基梅里式）}
+    - {pair: [C, WT], since: 105, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: U33：西段地体从洲 C 北缘裂开（约 100 Ma）}
+    - {pair: [C, ADR], since: 105, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: U33：亚得里亚式地体从洲 C 北缘裂开}
+    - {pair: [D, ET], since: 105, knots: [[0, 32.0], [300, 31.4], [460, 18.0]], what: U33：东段地体从洲 D 北缘裂开}
   volcano_params:                          # packages/tectonics/volcanism.py VolcanoParams
     arcs: true                             # U28：俯冲带上盘洋壳上的弧火山（岛弧火山岛）
     arc_min_T_km: 10.0                     # U28 第二轮：弧地壳增厚到 10 km（俯冲十几 Myr）就长火山。第一轮要求 20 km，用来挡掉沿陆缘一圈的
@@ -458,6 +536,10 @@ forward:
                                       # 设计中的下行陆块（洲 D、南方地盾陆块、洲 C 北端）先撞上上盘弧前的弧地壳，多被消耗 100–200 km；
                                       # 弧地壳还靠陆壳的侧向流动长成沿海岸一圈约 1 km 高的陆地。重力垮塌摊过来的厚地壳仍按 31 km 转成陆壳。
                                       # 岛弧上的火山岛、弧—陆碰撞抬起的大岛留给 1.2d
+    flow_min_T_km: 32.5               # U33：同一门槛下的陆壳也不参与厚地壳的侧向流动（前陆海、陆架不被旁边的山垫高；神怒湾）
+    view_hole_max_cells: 4            # U33：出帧时，四周全是陆地（或所在整片水体不超过 8 个单元）的瞬时小洞（汇聚边界上网格对不齐、刚补成的新洋壳，≤ 4 个单元）按相邻
+                                      # 陆壳显示，不进入演化（packages/tectonics/crust.py Params.view_hole_max_cells；之前 0 Ma 上留成二十多处
+                                      # 1–9 像元、−2.5 ~ −3 km 的封闭水坑，评审 stage1_2026-10-25_3 第 1 条）
     arc_cont_min_T_km: 32.5           # U32：比 32.5 km 薄的陆壳（海平面以下的陆架、陆表海、被淹的海湾，约 −20 m 以下）不接受弧增厚
                                       # （岩浆弧长在离海沟一两百公里的大陆上，弧前陆架、弧后减薄地壳不因弧岩浆增厚）
     arc_compress_T_max_km: 38.0       # U28 第三轮：挤压型洋内弧。岩浆增生仍封顶 30 km，上盘朝海沟推进的构造缩短可增厚到 38 km
@@ -471,7 +553,7 @@ forward:
 initial:
   t0: 300
   mesh_level: 7
-  block_order: [B, A, BSE, C, D, FAR, POL, IN, MD, ZL, NG]   # 同一节点几块认领时的先后
+  block_order: [B, A, BSE, C, D, FAR, POL, IN, MD, ZL, NG, WT, ADR, ET]   # 同一节点几块认领时的先后
   T_cont_km: 35.0
   craton_T_km: 36.0
   craton_lithology: [LT7, LT8, LT9]                     # 终图岩性区里的古陆核
@@ -535,7 +617,9 @@ initial:
     # 与碰撞抬成陆地、对撞截断主内海，撤回；U32 起海平面以下的减薄陆壳不接受弧增厚（engine_params.arc_cont_min_T_km），再试。
     # 评审 stage1_2026-10-25_2 第 3 条：两湾仍是 4–5 km 深槽，神怒湾按 Merian 公式的固有周期约 4.4 h，共振不成立。
     # 与上面两条一样，水深是按终图设定的初始条件（user_override），0 Ma 等于设计值不算过程的验证（评审第 9 条）
-    - {gulfs: [G7], depth_m: -90, edge_thinning: false, what: 神怒湾（两侧山系之间被淹没的前陆盆地）}
+    # U33：神怒湾整片归亚得里亚式地体（它的前陆海，亚得里亚海式）。按最近的块分时约三分之一分给了洲 B，洲 B 是碰撞上盘，
+    # 湾面被增厚抬起（中位 +980 m，80% 露出）
+    - {gulfs: [G7], depth_m: -90, edge_thinning: false, block: ADR, what: 神怒湾（两侧山系之间被淹没的前陆盆地）}
     - {gulfs: [G6], depth_m: -80, edge_thinning: false, what: 东湾（碰撞前陆盆地被海水淹没，波斯湾式）}
     # U32：老陆缘的陆架与陆坡（auto，scripts/design_initial_world.py shelf_margins）。300 Ma 以前就有的被动陆缘：现今海岸外
     # 160 km 的陆架（32.0 -> 31.4 km，水深约 50–150 m）与 80 km 的陆坡（-> 18 km，约 −3.7 km）。只占到对岸距离的 40%

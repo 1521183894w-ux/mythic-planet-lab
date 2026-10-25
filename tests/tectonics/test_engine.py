@@ -387,6 +387,29 @@ def test_submerged_thinned_margin_not_thickened_by_arc(mesh):
     assert eng.c.T[on & ~is_shelf].max() > 35.5
 
 
+def test_snapshot_shows_transient_holes_as_neighbouring_crust(mesh):
+    """U33：Params.view_hole_max_cells——出帧时四周全是陆地的瞬时小洞按相邻陆壳（厚度居中的一个）显示，引擎状态不变；
+    不设时、或四周是水下的薄陆壳时显示成洋壳。"""
+    def run(lim, thin=None):
+        c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+        c.ctype[:] = CONT
+        c.T[:] = np.where(c.plate == 1, 45.0, 50.0) if thin is None else thin
+        eng = Engine(mesh, c, Params(view_hole_max_cells=lim), 100.0, {1: np.zeros(3), 2: np.zeros(3)})
+        e = mesh.edges[(c.plate[mesh.edges[:, 0]] != c.plate[mesh.edges[:, 1]])]
+        hole = int(e[0, 0])
+        eng.alive[hole] = False
+        eng.commit()
+        return eng, eng.snapshot(), hole
+
+    eng0, f0, h = run(None)
+    assert f0["ctype"][h] == 0
+    eng1, f1, h = run(4)
+    assert f1["ctype"][h] == CONT and f1["T"][h] in (pytest.approx(45.0), pytest.approx(50.0))
+    assert (eng1.c.ctype[eng1.c.uid >= mesh.n] == 0).all()             # 引擎里仍是补上的新洋壳
+    eng2, f2, h = run(4, thin=30.0)
+    assert f2["ctype"][h] == 0                                          # 四周是水下的薄陆壳（海峡、陆架）：不算水坑，不补
+
+
 def test_hole_fill_borrows_only_from_thickened_crust(mesh):
     """U32：补走滑小洞只从增厚的陆壳（> 34 km）匀体积，正常陆壳不被压薄；匀不出的部分记为 hole_created。"""
     c, _ = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
@@ -400,3 +423,21 @@ def test_hole_fill_borrows_only_from_thickened_crust(mesh):
     old = eng.alive & (eng.c.uid < mesh.n)
     assert eng.c.T[old].min() >= 34.0 - 1e-9
     assert eng.budget.get("hole_created", 0.0) > 0
+
+
+def test_thin_submerged_crust_does_not_take_lateral_flow(mesh):
+    """U33：Params.flow_min_T_km——比它薄的陆壳不参与厚地壳的侧向流动，正常厚度的陆壳照旧。"""
+    c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=25.0)
+    ang = np.degrees(np.arccos(np.clip(mesh.xyz @ lonlat_to_xyz(0.0, 0.0), -1, 1)))
+    c.T[cont & (ang < 8.0)] = 60.0
+    shelf = cont & (ang > 8.0) & (lonlat_to_xyz(0.0, 0.0) @ mesh.xyz.T >= 0)[:] & (mesh.xyz[:, 1] > 0)
+    c.T[shelf] = 31.5
+    run = {}
+    for lim in (None, 32.5):
+        cc = c.gather(np.arange(len(c)))
+        eng = Engine(mesh, cc, Params(flow_min_T_km=lim, tau_oro_myr=1e9), 100.0, {1: np.zeros(3), 2: np.zeros(3)})
+        for _ in range(20):
+            eng.step({q: np.eye(3) for q in eng.plates}, {1: np.zeros(3), 2: np.zeros(3)})
+        run[lim] = eng.c.T.copy()
+    assert run[None][shelf].max() > 31.6                               # 不限：薄陆壳被旁边的厚地壳垫高
+    assert np.allclose(run[32.5][shelf], 31.5)                          # 限：不动

@@ -484,7 +484,7 @@ def figures(design, hcfg, grid, b, ids, blocks, h, speed, times, overlap_t, args
 
     # ---- 04 事件时间表 ----
     ev = hcfg.get("events", [])
-    kc = {"collision": "#c0392b", "rift": "#e67e22", "drift": "#2e86c1", "subduction": "#7d3c98"}
+    kc = {"collision": "#c0392b", "rift": "#e67e22", "drift": "#2e86c1", "subduction": "#7d3c98", "reactivation": "#bb8fce"}
     fig, ax = plt.subplots(figsize=(14, 0.45 * len(ev) + 1.5))
     for k, e in enumerate(ev):
         a, bb = e["t"]
@@ -497,7 +497,7 @@ def figures(design, hcfg, grid, b, ids, blocks, h, speed, times, overlap_t, args
     ax.invert_yaxis()
     ax.grid(axis="x", alpha=0.3)
     ax.legend(handles=[Patch(fc=c, label=n) for n, c in
-                       zip(("碰撞", "裂谷 / 裂离", "漂移", "俯冲"), kc.values())], loc="upper right", fontsize=9)
+                       zip(("碰撞", "裂谷 / 裂离", "漂移", "俯冲", "板内挤压复活"), kc.values())], loc="upper right", fontsize=9)
     ax.set_title(f"倒推历史 {args.history} 的事件时间表（右侧为现今）", fontsize=13)
     fig.tight_layout()
     fig.savefig(out / "04_timeline.png", dpi=120)

@@ -3,21 +3,21 @@
  "design": "v2",
  "history": "v2",
  "mesh_level": 7,
- "run_code_version": "aa1e8e0-dirty",
- "code_version": "aa1e8e0-dirty",
- "wall_s": 255.4,
+ "run_code_version": "29f4734-dirty",
+ "code_version": "29f4734-dirty",
+ "wall_s": 199.7,
  "compare_grid": "1024x512",
  "comparison": {
   "final_land_Mkm2": 145.6,
-  "engine_land_Mkm2": 146.4,
+  "engine_land_Mkm2": 145.3,
   "both_land_Mkm2": 142.0,
   "missing_land_Mkm2": 3.6,
-  "extra_land_Mkm2": 4.4,
-  "land_iou": 0.947,
+  "extra_land_Mkm2": 3.3,
+  "land_iou": 0.953,
   "coast_offset_km": {
    "engine_to_final": {
-    "median": 6,
-    "p90": 80
+    "median": 0,
+    "p90": 55
    },
    "final_to_engine": {
     "median": 0,
@@ -28,42 +28,57 @@
    "MD": {
     "name": "裂离微大陆",
     "area_Mkm2": 0.39,
-    "land_fraction": 0.846
+    "land_fraction": 0.842
    },
    "ZL": {
     "name": "南洋陆块",
     "area_Mkm2": 0.35,
-    "land_fraction": 0.628
+    "land_fraction": 0.642
    },
    "IN": {
     "name": "南方地盾陆块（印度式）",
     "area_Mkm2": 3.78,
-    "land_fraction": 0.869
+    "land_fraction": 0.876
    },
    "BSE": {
     "name": "东南增生地块",
     "area_Mkm2": 2.46,
-    "land_fraction": 0.922
+    "land_fraction": 0.919
    },
    "NG": {
     "name": "东南群岛东大岛微陆块",
     "area_Mkm2": 0.72,
-    "land_fraction": 0.561
+    "land_fraction": 0.766
+   },
+   "WT": {
+    "name": "内海北岸西段地体",
+    "area_Mkm2": 0.51,
+    "land_fraction": 0.907
+   },
+   "ADR": {
+    "name": "亚得里亚式地体（长半岛与神怒湾）",
+    "area_Mkm2": 0.42,
+    "land_fraction": 0.921
+   },
+   "ET": {
+    "name": "内海北岸东段地体",
+    "area_Mkm2": 0.36,
+    "land_fraction": 0.868
    },
    "A": {
     "name": "洲 A",
-    "area_Mkm2": 7.63,
-    "land_fraction": 0.975
+    "area_Mkm2": 6.71,
+    "land_fraction": 0.98
    },
    "B": {
     "name": "洲 B（北方地台与东方地块）",
-    "area_Mkm2": 35.51,
-    "land_fraction": 0.988
+    "area_Mkm2": 35.15,
+    "land_fraction": 0.989
    },
    "C": {
     "name": "洲 C",
     "area_Mkm2": 35.8,
-    "land_fraction": 0.994
+    "land_fraction": 0.992
    },
    "D": {
     "name": "洲 D",
@@ -73,17 +88,17 @@
    "FAR": {
     "name": "远方大陆",
     "area_Mkm2": 21.78,
-    "land_fraction": 0.983
+    "land_fraction": 0.982
    },
    "POL": {
     "name": "极地大陆",
     "area_Mkm2": 13.36,
-    "land_fraction": 0.977
+    "land_fraction": 0.973
    },
    "juvenile": {
     "name": "新生地壳（岛弧、热点岛、孤岛等）",
     "area_Mkm2": 0.78,
-    "land_fraction": 0.307
+    "land_fraction": 0.31
    }
   },
   "mountains": [
@@ -92,8 +107,8 @@
     "name": "内海北岸山系",
     "design_height_m": 4200,
     "final_p90_m": 3414,
-    "engine_p90_m": 983,
-    "engine_land_fraction": 0.98,
+    "engine_p90_m": 4004,
+    "engine_land_fraction": 0.97,
     "cause": "残留洋盆北缘俯冲转碰撞（约 100 Ma–今）"
    },
    {
@@ -101,8 +116,8 @@
     "name": "长半岛山脊",
     "design_height_m": 2200,
     "final_p90_m": 1840,
-    "engine_p90_m": 800,
-    "engine_land_fraction": 0.98,
+    "engine_p90_m": 1165,
+    "engine_land_fraction": 0.99,
     "cause": "弧前地体的褶皱山"
    },
    {
@@ -110,8 +125,8 @@
     "name": "多湾半岛山地",
     "design_height_m": 2400,
     "final_p90_m": 2471,
-    "engine_p90_m": 1086,
-    "engine_land_fraction": 1.0,
+    "engine_p90_m": 1413,
+    "engine_land_fraction": 0.96,
     "cause": "断块山"
    },
    {
@@ -119,7 +134,7 @@
     "name": "北岸外弧山系",
     "design_height_m": 2200,
     "final_p90_m": 2006,
-    "engine_p90_m": 1078,
+    "engine_p90_m": 1269,
     "engine_land_fraction": 1.0,
     "cause": "俯冲后撤拖出的弧形褶皱山"
    },
@@ -128,7 +143,7 @@
     "name": "内海南岸山系",
     "design_height_m": 3400,
     "final_p90_m": 2888,
-    "engine_p90_m": 1124,
+    "engine_p90_m": 3340,
     "engine_land_fraction": 0.98,
     "cause": "南岸陆缘被挤压反转（约 60 Ma–今）"
    },
@@ -138,7 +153,7 @@
     "design_height_m": 6600,
     "final_p90_m": 5481,
     "engine_p90_m": 4945,
-    "engine_land_fraction": 0.93,
+    "engine_land_fraction": 0.96,
     "cause": "洲 D 一侧的陆块撞上洲 B（约 60 Ma–今，仍在汇聚）"
    },
    {
@@ -147,7 +162,7 @@
     "design_height_m": 3600,
     "final_p90_m": 3899,
     "engine_p90_m": 4945,
-    "engine_land_fraction": 0.99,
+    "engine_land_fraction": 0.98,
     "cause": "碰撞带东端的构造结，山脉转向南"
    },
    {
@@ -173,7 +188,7 @@
     "name": "高原中北部山脉",
     "design_height_m": 5600,
     "final_p90_m": 4700,
-    "engine_p90_m": 451,
+    "engine_p90_m": 398,
     "engine_land_fraction": 1.0,
     "cause": "同上"
    },
@@ -182,8 +197,8 @@
     "name": "东湾北岸褶皱山",
     "design_height_m": 3200,
     "final_p90_m": 2611,
-    "engine_p90_m": 3647,
-    "engine_land_fraction": 1.0,
+    "engine_p90_m": 4945,
+    "engine_land_fraction": 0.97,
     "cause": "碰撞前陆褶皱带（与东湾成对）"
    },
    {
@@ -191,8 +206,8 @@
     "name": "北方缝合老山",
     "design_height_m": 1500,
     "final_p90_m": 1470,
-    "engine_p90_m": 817,
-    "engine_land_fraction": 0.99,
+    "engine_p90_m": 1085,
+    "engine_land_fraction": 1.0,
     "cause": "洲 A、B 碰撞（约 250–220 Ma），长期剥蚀；中部长海西侧是它被拉开的另一半"
    },
    {
@@ -200,8 +215,8 @@
     "name": "南方缝合带山系",
     "design_height_m": 2600,
     "final_p90_m": 2468,
-    "engine_p90_m": 2911,
-    "engine_land_fraction": 0.93,
+    "engine_p90_m": 2881,
+    "engine_land_fraction": 0.92,
     "cause": "洲 C、D 碰撞（约 180–150 Ma）的缝合带，约 35 Ma 起作为左旋走滑带复活（洲 D 相对洲 C 北移，累计走滑约 400 km 量级，与阿尔金、圣安德烈斯断层相当，倒推时核算）；0–15°N 段走向比运动方向偏东，走滑受阻、挤压抬升（黎巴嫩山式）"
    },
    {
@@ -209,8 +224,8 @@
     "name": "南方走滑断层谷",
     "design_height_m": 1500,
     "final_p90_m": 1543,
-    "engine_p90_m": 2370,
-    "engine_land_fraction": 0.88,
+    "engine_p90_m": 2155,
+    "engine_land_fraction": 0.87,
     "cause": "同一走滑断层的释放段（走向比运动方向偏西，边走滑边拉开）：断层谷两侧翘起，谷底是死海式洼地；南端与南裂谷海北端相接"
    },
    {
@@ -218,7 +233,7 @@
     "name": "冰川半岛山脉",
     "design_height_m": 2100,
     "final_p90_m": 1884,
-    "engine_p90_m": 1147,
+    "engine_p90_m": 1077,
     "engine_land_fraction": 1.0,
     "cause": "古老造山带，冰川切割"
    },
@@ -227,7 +242,7 @@
     "name": "东南沿海山地",
     "design_height_m": 1800,
     "final_p90_m": 1615,
-    "engine_p90_m": 403,
+    "engine_p90_m": 472,
     "engine_land_fraction": 0.99,
     "cause": "古老活动陆缘的花岗岩山地"
    },
@@ -236,8 +251,8 @@
     "name": "东岸山系",
     "design_height_m": 2300,
     "final_p90_m": 1963,
-    "engine_p90_m": 2032,
-    "engine_land_fraction": 0.97,
+    "engine_p90_m": 1974,
+    "engine_land_fraction": 0.98,
     "cause": "东缘长期俯冲的活动陆缘"
    },
    {
@@ -245,8 +260,8 @@
     "name": "东北半岛火山脊",
     "design_height_m": 2800,
     "final_p90_m": 2378,
-    "engine_p90_m": 1956,
-    "engine_land_fraction": 0.98,
+    "engine_p90_m": 1958,
+    "engine_land_fraction": 0.97,
     "cause": "俯冲带火山弧"
    },
    {
@@ -254,7 +269,7 @@
     "name": "东岸半岛山脊",
     "design_height_m": 1500,
     "final_p90_m": 1328,
-    "engine_p90_m": 1227,
+    "engine_p90_m": 1160,
     "engine_land_fraction": 1.0,
     "cause": "断块山"
    },
@@ -263,7 +278,7 @@
     "name": "远方大陆西岸山系",
     "design_height_m": 5600,
     "final_p90_m": 4540,
-    "engine_p90_m": 4088,
+    "engine_p90_m": 4146,
     "engine_land_fraction": 0.98,
     "cause": "大洋板块向东俯冲到远方大陆之下（安第斯型）"
    },
@@ -272,7 +287,7 @@
     "name": "远方大陆南段冰原山系",
     "design_height_m": 3000,
     "final_p90_m": 2807,
-    "engine_p90_m": 2907,
+    "engine_p90_m": 2892,
     "engine_land_fraction": 1.0,
     "cause": "同一俯冲带的南段；高纬多雪，山顶是山地冰原"
    },
@@ -281,8 +296,8 @@
     "name": "远方大陆东部古老高地",
     "design_height_m": 1300,
     "final_p90_m": 1244,
-    "engine_p90_m": 862,
-    "engine_land_fraction": 1.0,
+    "engine_p90_m": 815,
+    "engine_land_fraction": 0.99,
     "cause": "古老地盾的剥蚀高地"
    },
    {
@@ -290,8 +305,8 @@
     "name": "远方大陆北缘山地",
     "design_height_m": 2500,
     "final_p90_m": 2158,
-    "engine_p90_m": 591,
-    "engine_land_fraction": 1.0,
+    "engine_p90_m": 415,
+    "engine_land_fraction": 0.99,
     "cause": "北缘小俯冲带的火山弧"
    },
    {
@@ -299,7 +314,7 @@
     "name": "极地横贯山脉",
     "design_height_m": 3400,
     "final_p90_m": 3237,
-    "engine_p90_m": 934,
+    "engine_p90_m": 850,
     "engine_land_fraction": 0.99,
     "cause": "西冰架湾裂谷盆地的裂谷肩抬升，冰盖下的古老山系"
    },
@@ -308,8 +323,8 @@
     "name": "冰原长半岛山脊",
     "design_height_m": 2600,
     "final_p90_m": 2123,
-    "engine_p90_m": 1645,
-    "engine_land_fraction": 0.98,
+    "engine_p90_m": 1672,
+    "engine_land_fraction": 0.97,
     "cause": "古老岩浆弧"
    },
    {
@@ -317,7 +332,7 @@
     "name": "极地半岛山脊",
     "design_height_m": 2400,
     "final_p90_m": 2176,
-    "engine_p90_m": 2002,
+    "engine_p90_m": 2070,
     "engine_land_fraction": 1.0,
     "cause": "岛弧地体"
    },
@@ -326,7 +341,7 @@
     "name": "南方地盾裂谷",
     "design_height_m": 2400,
     "final_p90_m": 2190,
-    "engine_p90_m": 1620,
+    "engine_p90_m": 1608,
     "engine_land_fraction": 1.0,
     "cause": "地幔柱上方的年轻裂谷（约 25 Ma–今），两肩隆起、谷底下陷，沿老省份边界弯折，谷中有火山与湖"
    },
@@ -335,7 +350,7 @@
     "name": "南方火山高地",
     "design_height_m": 2000,
     "final_p90_m": 1987,
-    "engine_p90_m": 1847,
+    "engine_p90_m": 1840,
     "engine_land_fraction": 1.0,
     "cause": "地幔柱隆起上的火山群"
    },
@@ -344,7 +359,7 @@
     "name": "东北山地",
     "design_height_m": 2000,
     "final_p90_m": 1890,
-    "engine_p90_m": 1156,
+    "engine_p90_m": 1338,
     "engine_land_fraction": 1.0,
     "cause": "增生地体褶皱"
    },
@@ -353,7 +368,7 @@
     "name": "东南半岛山脊",
     "design_height_m": 2400,
     "final_p90_m": 2088,
-    "engine_p90_m": 1579,
+    "engine_p90_m": 1520,
     "engine_land_fraction": 0.99,
     "cause": "增生地体缝合带"
    },
@@ -362,7 +377,7 @@
     "name": "海峡北岸山地",
     "design_height_m": 2600,
     "final_p90_m": 2259,
-    "engine_p90_m": 717,
+    "engine_p90_m": 1168,
     "engine_land_fraction": 0.99,
     "cause": "海峡两岸的年轻褶皱山（与 M2 隔海峡相对）"
    },
@@ -371,8 +386,8 @@
     "name": "西北地盾古山",
     "design_height_m": 1000,
     "final_p90_m": 957,
-    "engine_p90_m": 973,
-    "engine_land_fraction": 0.99,
+    "engine_p90_m": 764,
+    "engine_land_fraction": 0.95,
     "cause": "古老造山带残山"
    },
    {
@@ -380,8 +395,8 @@
     "name": "南端褶皱山",
     "design_height_m": 1800,
     "final_p90_m": 1601,
-    "engine_p90_m": 608,
-    "engine_land_fraction": 0.98,
+    "engine_p90_m": 533,
+    "engine_land_fraction": 0.97,
     "cause": "南缘褶皱带（约 260 Ma）"
    },
    {
@@ -389,7 +404,7 @@
     "name": "中央山系",
     "design_height_m": 4200,
     "final_p90_m": 3686,
-    "engine_p90_m": 445,
+    "engine_p90_m": 4219,
     "engine_land_fraction": 1.0,
     "cause": "远离碰撞带的板内山系，碰撞应力传入内陆使老缝合带复活"
    },
@@ -398,7 +413,7 @@
     "name": "北部断块山",
     "design_height_m": 3000,
     "final_p90_m": 2797,
-    "engine_p90_m": 371,
+    "engine_p90_m": 2874,
     "engine_land_fraction": 1.0,
     "cause": "同上"
    },
@@ -407,7 +422,7 @@
     "name": "北方长角古山",
     "design_height_m": 1000,
     "final_p90_m": 988,
-    "engine_p90_m": 865,
+    "engine_p90_m": 886,
     "engine_land_fraction": 1.0,
     "cause": "古老褶皱带"
    },
@@ -416,7 +431,7 @@
     "name": "裂谷肩山地",
     "design_height_m": 2200,
     "final_p90_m": 1826,
-    "engine_p90_m": 3162,
+    "engine_p90_m": 3067,
     "engine_land_fraction": 1.0,
     "cause": "裂谷肩抬升"
    },
@@ -425,8 +440,8 @@
     "name": "南方地盾半岛西缘山",
     "design_height_m": 1500,
     "final_p90_m": 1324,
-    "engine_p90_m": 941,
-    "engine_land_fraction": 0.92,
+    "engine_p90_m": 898,
+    "engine_land_fraction": 0.91,
     "cause": "裂开陆缘的掀斜断崖"
    },
    {
@@ -434,8 +449,8 @@
     "name": "南洋陆块山脉",
     "design_height_m": 2800,
     "final_p90_m": 880,
-    "engine_p90_m": 1911,
-    "engine_land_fraction": 1.0,
+    "engine_p90_m": 2058,
+    "engine_land_fraction": 0.93,
     "cause": "沿板块边界的走滑挤压"
    },
    {
@@ -443,8 +458,8 @@
     "name": "东方岛弧山地",
     "design_height_m": 2400,
     "final_p90_m": 884,
-    "engine_p90_m": 1994,
-    "engine_land_fraction": 1.0,
+    "engine_p90_m": 1975,
+    "engine_land_fraction": 0.99,
     "cause": "岛弧火山与增生楔"
    },
    {
@@ -452,7 +467,7 @@
     "name": "东南大岛山地",
     "design_height_m": 2400,
     "final_p90_m": 900,
-    "engine_p90_m": 957,
+    "engine_p90_m": 848,
     "engine_land_fraction": 1.0,
     "cause": "岛上的增生地体"
    },
@@ -461,8 +476,8 @@
     "name": "东南群岛东大岛山脊",
     "design_height_m": 4200,
     "final_p90_m": 899,
-    "engine_p90_m": 2344,
-    "engine_land_fraction": 0.74,
+    "engine_p90_m": 4945,
+    "engine_land_fraction": 0.85,
     "cause": "岛弧与陆缘碰撞"
    }
   ],
@@ -481,7 +496,7 @@
     "id": "PL2",
     "name": "南方高原",
     "design_height_m": 1300,
-    "engine_median_m": 950,
+    "engine_median_m": 937,
     "final_median_m": 708,
     "cause": "地盾整体抬升（地幔柱上方的动力地形，宽缓穹隆）；裂谷从东缘穿过"
    },
@@ -490,7 +505,7 @@
     "id": "PL3",
     "name": "北方高原",
     "design_height_m": 1500,
-    "engine_median_m": 378,
+    "engine_median_m": 1155,
     "final_median_m": 736,
     "cause": "碰撞应力传入内陆的板内隆升"
    },
@@ -499,7 +514,7 @@
     "id": "PL4",
     "name": "东南火山高原",
     "design_height_m": 2400,
-    "engine_median_m": 1682,
+    "engine_median_m": 1633,
     "final_median_m": 1123,
     "cause": "地幔柱溢流玄武岩高原（与南裂谷海、裂谷同源），边缘是玄武岩台阶陡崖"
    },
@@ -508,7 +523,7 @@
     "id": "PL5",
     "name": "远方大陆高原",
     "design_height_m": 3900,
-    "engine_median_m": 3386,
+    "engine_median_m": 3502,
     "final_median_m": 3894,
     "cause": "安第斯型陆缘后方的高原"
    },
@@ -517,7 +532,7 @@
     "id": "PL6",
     "name": "火山隆起",
     "design_height_m": 1100,
-    "engine_median_m": 781,
+    "engine_median_m": 784,
     "final_median_m": 789,
     "cause": "地幔柱上方的宽缓隆起（动力地形），顶部是南方火山高地 M22"
    },
@@ -526,7 +541,7 @@
     "id": "PL7",
     "name": "砂岩台地群",
     "design_height_m": 1500,
-    "engine_median_m": 828,
+    "engine_median_m": 929,
     "final_median_m": 1500,
     "cause": "古陆核上平铺的古老石英砂岩盖层（岩性区 LT3）被长期剥蚀切成孤立平顶山，台地边缘是千米陡崖（罗赖马式）"
    },
@@ -535,7 +550,7 @@
     "id": "PL8",
     "name": "南方喀斯特高原",
     "design_height_m": 1400,
-    "engine_median_m": 4078,
+    "engine_median_m": 3264,
     "final_median_m": 759,
     "cause": "厚层碳酸盐台地（岩性区 LT1）随东方大高原碰撞整体抬升的高原（云贵式），季风湿热下溶蚀成峰林与天坑"
    },
@@ -553,7 +568,7 @@
     "id": "B2",
     "name": "洲 D 内陆盆地",
     "design_height_m": 300,
-    "engine_median_m": 346,
+    "engine_median_m": 350,
     "final_median_m": 324,
     "cause": "克拉通内部的沉降盆地"
    },
@@ -562,7 +577,7 @@
     "id": "B3",
     "name": "北方大低地",
     "design_height_m": 120,
-    "engine_median_m": 256,
+    "engine_median_m": 255,
     "final_median_m": 306,
     "cause": "古老裂谷系之上的大沉降盆地（厚沉积），地势极低平、多沼泽"
    },
@@ -571,7 +586,7 @@
     "id": "B4",
     "name": "远方大陆东部大盆地",
     "design_height_m": 150,
-    "engine_median_m": 232,
+    "engine_median_m": 234,
     "final_median_m": 351,
     "cause": "西岸山系后方的前陆—克拉通盆地，大河流域"
    },
@@ -580,7 +595,7 @@
     "id": "B5",
     "name": "死海式洼地",
     "design_height_m": -400,
-    "engine_median_m": 1752,
+    "engine_median_m": 1783,
     "final_median_m": -2,
     "cause": "南方走滑断层释放段的拉分盆地，谷底低于海平面约 400 m；盆地里有厚层蒸发岩，近裂谷北端，地热活跃"
    },
@@ -598,64 +613,34 @@
  "deviation_regions": [
   {
    "kind": "missing",
-   "area_Mkm2": 0.34,
-   "lon": 66.4,
-   "lat": 27.4,
+   "area_Mkm2": 0.32,
+   "lon": 66.3,
+   "lat": 27.5,
    "near_features": [
     "东湾北岸褶皱山",
     "裂谷肩山地"
    ],
    "final_block_cells": {
-    "101": 9,
-    "702": 244
+    "101": 8,
+    "702": 226
    },
-   "engine_elev_m_median": -4824,
+   "engine_elev_m_median": -4919,
    "no": 1
   },
   {
    "kind": "extra",
-   "area_Mkm2": 0.28,
-   "lon": -33.3,
-   "lat": 22.7,
+   "area_Mkm2": 0.21,
+   "lon": -33.5,
+   "lat": 20.3,
    "near_features": [
     "西北海岬",
     "西大洋火山群"
    ],
    "final_block_cells": {
-    "0": 202
+    "0": 147
    },
-   "engine_elev_m_median": 827,
+   "engine_elev_m_median": 494,
    "no": 2
-  },
-  {
-   "kind": "missing",
-   "area_Mkm2": 0.21,
-   "lon": 131.3,
-   "lat": -1.8,
-   "near_features": [
-    "东南弧东段",
-    "东南群岛东大岛"
-   ],
-   "final_block_cells": {
-    "803": 137
-   },
-   "engine_elev_m_median": -3024,
-   "no": 3
-  },
-  {
-   "kind": "extra",
-   "area_Mkm2": 0.14,
-   "lon": -45.2,
-   "lat": -71.0,
-   "near_features": [
-    "冰原长半岛山脊",
-    "冰原长半岛"
-   ],
-   "final_block_cells": {
-    "0": 278
-   },
-   "engine_elev_m_median": 1400,
-   "no": 4
   },
   {
    "kind": "missing",
@@ -670,212 +655,152 @@
     "-1": 85
    },
    "engine_elev_m_median": -5648,
-   "no": 5
+   "no": 3
   },
   {
-   "kind": "extra",
+   "kind": "missing",
    "area_Mkm2": 0.13,
-   "lon": 58.8,
-   "lat": 27.7,
-   "near_features": [
-    "东湾北岸褶皱山",
-    "东湾"
-   ],
-   "final_block_cells": {
-    "0": 97
-   },
-   "engine_elev_m_median": 80,
-   "no": 6
-  },
-  {
-   "kind": "extra",
-   "area_Mkm2": 0.12,
-   "lon": 130.1,
-   "lat": -7.0,
-   "near_features": [
-    "东南弧东段",
-    "东南群岛东大岛"
-   ],
-   "final_block_cells": {
-    "0": 77
-   },
-   "engine_elev_m_median": 3738,
-   "no": 7
-  },
-  {
-   "kind": "missing",
-   "area_Mkm2": 0.09,
-   "lon": 98.4,
-   "lat": 25.0,
-   "near_features": [
-    "构造结南向山系",
-    "南方喀斯特高原"
-   ],
-   "final_block_cells": {
-    "101": 2,
-    "702": 60
-   },
-   "engine_elev_m_median": -3508,
-   "no": 8
-  },
-  {
-   "kind": "missing",
-   "area_Mkm2": 0.09,
-   "lon": 96.3,
-   "lat": -65.8,
+   "lon": 96.4,
+   "lat": -65.7,
    "near_features": [
     "极地半岛山脊",
     "极地半岛"
    ],
    "final_block_cells": {
-    "601": 148
+    "601": 202
    },
-   "engine_elev_m_median": -5574,
-   "no": 9
-  },
-  {
-   "kind": "extra",
-   "area_Mkm2": 0.07,
-   "lon": 16.9,
-   "lat": 42.5,
-   "near_features": [
-    "神怒湾",
-    "内海北岸山系"
-   ],
-   "final_block_cells": {
-    "0": 63
-   },
-   "engine_elev_m_median": 635,
-   "no": 10
-  },
-  {
-   "kind": "extra",
-   "area_Mkm2": 0.07,
-   "lon": 52.5,
-   "lat": -0.6,
-   "near_features": [
-    "东方湾",
-    "洲 D 内陆盆地"
-   ],
-   "final_block_cells": {
-    "0": 44
-   },
-   "engine_elev_m_median": 226,
-   "no": 11
-  },
-  {
-   "kind": "extra",
-   "area_Mkm2": 0.07,
-   "lon": 154.3,
-   "lat": -46.4,
-   "near_features": [
-    "南洋陆块山脉",
-    "南洋陆块南岛"
-   ],
-   "final_block_cells": {
-    "0": 71
-   },
-   "engine_elev_m_median": 1269,
-   "no": 12
+   "engine_elev_m_median": -5563,
+   "no": 4
   },
   {
    "kind": "missing",
-   "area_Mkm2": 0.06,
-   "lon": 152.5,
-   "lat": -39.5,
+   "area_Mkm2": 0.08,
+   "lon": 98.3,
+   "lat": 24.8,
    "near_features": [
-    "南洋陆块北岛",
-    "南洋陆块山脉"
+    "构造结南向山系",
+    "南方喀斯特高原"
    ],
    "final_block_cells": {
-    "801": 55
+    "101": 3,
+    "702": 57
    },
-   "engine_elev_m_median": -2516,
-   "no": 13
+   "engine_elev_m_median": -4388,
+   "no": 5
   },
   {
    "kind": "extra",
-   "area_Mkm2": 0.06,
-   "lon": -32.1,
-   "lat": 6.5,
-   "near_features": [
-    "西方大湾",
-    "砂岩台地群"
-   ],
-   "final_block_cells": {
-    "0": 42
-   },
-   "engine_elev_m_median": 552,
-   "no": 14
-  },
-  {
-   "kind": "extra",
-   "area_Mkm2": 0.06,
-   "lon": 81.4,
-   "lat": 4.2,
+   "area_Mkm2": 0.07,
+   "lon": 81.3,
+   "lat": 4.0,
    "near_features": [
     "地盾半岛南岛",
     "南方地盾半岛"
    ],
    "final_block_cells": {
-    "0": 42
+    "0": 48
    },
-   "engine_elev_m_median": 852,
-   "no": 15
+   "engine_elev_m_median": 995,
+   "no": 6
   },
   {
    "kind": "extra",
+   "area_Mkm2": 0.07,
+   "lon": 52.4,
+   "lat": -1.1,
+   "near_features": [
+    "东方湾",
+    "洲 D 内陆盆地"
+   ],
+   "final_block_cells": {
+    "0": 43
+   },
+   "engine_elev_m_median": 267,
+   "no": 7
+  },
+  {
+   "kind": "extra",
+   "area_Mkm2": 0.07,
+   "lon": 43.6,
+   "lat": -22.3,
+   "near_features": [
+    "裂离微大陆",
+    "东南长岬"
+   ],
+   "final_block_cells": {
+    "0": 50
+   },
+   "engine_elev_m_median": 421,
+   "no": 8
+  },
+  {
+   "kind": "missing",
+   "area_Mkm2": 0.06,
+   "lon": 135.9,
+   "lat": -2.4,
+   "near_features": [
+    "东南群岛东大岛",
+    "东南群岛东大岛山脊"
+   ],
+   "final_block_cells": {
+    "803": 39
+   },
+   "engine_elev_m_median": -2935,
+   "no": 9
+  },
+  {
+   "kind": "missing",
    "area_Mkm2": 0.05,
-   "lon": 156.5,
-   "lat": -40.5,
+   "lon": 152.4,
+   "lat": -39.4,
    "near_features": [
     "南洋陆块北岛",
     "南洋陆块山脉"
    ],
    "final_block_cells": {
-    "0": 46
+    "801": 45
    },
-   "engine_elev_m_median": 1163,
-   "no": 16
+   "engine_elev_m_median": -819,
+   "no": 10
   }
  ],
  "A_engine_0Ma": {
-  "all_pass": true,
+  "all_pass": false,
   "pass": {
    "ocean_fraction": true,
    "main_continent": true,
    "subcontinents": true,
-   "main_inland_sea": true,
+   "main_inland_sea": false,
    "main_continent_latitude": true,
    "polar_continent": true,
    "open_ocean": true
   },
-  "ocean_fraction": 0.713,
-  "main_continent_share": 0.733,
+  "ocean_fraction": 0.715,
+  "main_continent_share": 0.735,
   "subcontinents": 3,
   "subcontinent_areas_Mkm2": [
-   58.9,
+   59.2,
    38.7,
    6.4
   ],
   "main_inland_sea": {
-   "area_Mkm2": 4.34,
-   "straits": 2,
-   "aspect": 3.1956478785123505,
+   "area_Mkm2": 4.38,
+   "straits": 0,
+   "aspect": 2.9932609912286323,
    "checks": {
     "area_in_range": true,
     "ratio_to_second_ok": true,
-    "straits_ok": true,
+    "straits_ok": false,
     "bordering_subcontinents_ok": true,
     "elongation_ok": true
    }
   },
   "latitude": [
-   78.92578125,
-   -43.41796875
+   79.27734375,
+   -43.76953125
   ],
   "polar_Mkm2": [
-   13.3
+   13.1
   ]
  },
  "A_final_map_1024": {
@@ -932,7 +857,7 @@
     "M3f"
    ],
    "target_excess_1e6_km3": 95.1,
-   "engine_0Ma_excess_1e6_km3": 93.6,
+   "engine_0Ma_excess_1e6_km3": 95.8,
    "engine_0Ma_elev_m_median": 4945
   }
  ],
@@ -954,10 +879,10 @@
   {
    "id": "H2",
    "name": "南方珊瑚岛群",
-   "n_island": 5,
-   "n_atoll": 19,
+   "n_island": 6,
+   "n_atoll": 18,
    "n_seamount": 0,
-   "max_island_radius_km": 10.5,
+   "max_island_radius_km": 10.3,
    "oldest_Ma": 70.0,
    "max_dist_km": 35,
    "engine_bearing_deg": 50,
@@ -982,13 +907,13 @@
   {
    "id": "H3",
    "name": "西大洋火山群",
-   "n_island": 5,
-   "n_atoll": 15,
+   "n_island": 7,
+   "n_atoll": 11,
    "n_seamount": 0,
-   "max_island_radius_km": 12.5,
+   "max_island_radius_km": 19.0,
    "oldest_Ma": 40.0,
    "max_dist_km": 1516,
-   "engine_bearing_deg": 282,
+   "engine_bearing_deg": 280,
    "design_bearing_deg": 150,
    "design_length_km": 665,
    "design_size_km": null
@@ -996,13 +921,13 @@
   {
    "id": "H5",
    "name": "东洋火山岛",
-   "n_island": 12,
-   "n_atoll": 54,
+   "n_island": 13,
+   "n_atoll": 56,
    "n_seamount": 0,
    "max_island_radius_km": 38.1,
    "oldest_Ma": 72.0,
    "max_dist_km": 4274,
-   "engine_bearing_deg": 357,
+   "engine_bearing_deg": 358,
    "design_bearing_deg": 316,
    "design_length_km": 4023,
    "design_size_km": null
@@ -1010,13 +935,13 @@
   {
    "id": "H6",
    "name": "洋中脊群岛",
-   "n_island": 3,
+   "n_island": 10,
    "n_atoll": 0,
-   "n_seamount": 2,
-   "max_island_radius_km": 2.0,
+   "n_seamount": 1,
+   "max_island_radius_km": 1.4,
    "oldest_Ma": 30.0,
-   "max_dist_km": 154,
-   "engine_bearing_deg": 267,
+   "max_dist_km": 174,
+   "engine_bearing_deg": 263,
    "design_bearing_deg": 76,
    "design_length_km": 705,
    "design_size_km": null
@@ -1024,13 +949,13 @@
   {
    "id": "I9",
    "name": "北方火山岛",
-   "n_island": 60,
+   "n_island": 51,
    "n_atoll": 0,
-   "n_seamount": 1,
-   "max_island_radius_km": 48.5,
+   "n_seamount": 0,
+   "max_island_radius_km": 0.8,
    "oldest_Ma": 60.0,
    "max_dist_km": 342,
-   "engine_bearing_deg": 260,
+   "engine_bearing_deg": 259,
    "design_bearing_deg": 74,
    "design_length_km": 276,
    "design_size_km": 270
@@ -1040,10 +965,10 @@
    "name": "中脊孤岛",
    "n_island": 2,
    "n_atoll": 0,
-   "n_seamount": 1,
-   "max_island_radius_km": 4.7,
+   "n_seamount": 0,
+   "max_island_radius_km": 7.6,
    "oldest_Ma": 10.0,
-   "max_dist_km": 39,
+   "max_dist_km": 40,
    "engine_bearing_deg": 316,
    "design_bearing_deg": null,
    "design_length_km": null,
@@ -1057,7 +982,7 @@
    "n_seamount": 0,
    "max_island_radius_km": 7.6,
    "oldest_Ma": 20.0,
-   "max_dist_km": 60,
+   "max_dist_km": 59,
    "engine_bearing_deg": 356,
    "design_bearing_deg": null,
    "design_length_km": null,
@@ -1071,7 +996,7 @@
    "n_seamount": 11,
    "max_island_radius_km": 12.5,
    "oldest_Ma": 30.0,
-   "max_dist_km": 482,
+   "max_dist_km": 483,
    "engine_bearing_deg": 259,
    "design_bearing_deg": null,
    "design_length_km": null,
@@ -1122,10 +1047,10 @@
   {
    "id": "K7",
    "name": "极远孤岛",
-   "n_island": 2,
+   "n_island": 1,
    "n_atoll": 0,
-   "n_seamount": 4,
-   "max_island_radius_km": 2.0,
+   "n_seamount": 5,
+   "max_island_radius_km": 2.1,
    "oldest_Ma": 10.0,
    "max_dist_km": 541,
    "engine_bearing_deg": 130,
@@ -1184,7 +1109,7 @@
    "n_island": 5,
    "n_atoll": 0,
    "n_seamount": 6,
-   "max_island_radius_km": 12.4,
+   "max_island_radius_km": 13.0,
    "oldest_Ma": 20.0,
    "max_dist_km": 378,
    "engine_bearing_deg": 3,
@@ -1198,7 +1123,7 @@
    "n_island": 2,
    "n_atoll": 0,
    "n_seamount": 1,
-   "max_island_radius_km": 1.4,
+   "max_island_radius_km": 1.5,
    "oldest_Ma": 10.0,
    "max_dist_km": 186,
    "engine_bearing_deg": 13,
@@ -1211,11 +1136,11 @@
    "name": "中脊双岛",
    "n_island": 0,
    "n_atoll": 0,
-   "n_seamount": 1,
+   "n_seamount": 6,
    "max_island_radius_km": 0.0,
-   "oldest_Ma": 5.0,
-   "max_dist_km": 138,
-   "engine_bearing_deg": 109,
+   "oldest_Ma": 10.0,
+   "max_dist_km": 373,
+   "engine_bearing_deg": 241,
    "design_bearing_deg": null,
    "design_length_km": null,
    "design_size_km": 10
@@ -1242,8 +1167,8 @@
    "n_seamount": 8,
    "max_island_radius_km": 19.0,
    "oldest_Ma": 35.0,
-   "max_dist_km": 892,
-   "engine_bearing_deg": 112,
+   "max_dist_km": 893,
+   "engine_bearing_deg": 111,
    "design_bearing_deg": 316,
    "design_length_km": 834,
    "design_size_km": null
@@ -1264,63 +1189,63 @@
     "name": "南向长岛弧",
     "length_km": 2760,
     "coverage": 1.0,
-    "n_island": 32,
-    "n_seamount": 10
+    "n_island": 33,
+    "n_seamount": 12
    },
    {
     "id": "R3",
     "name": "东南弧东段",
     "length_km": 2165,
-    "coverage": 0.81,
+    "coverage": 0.57,
     "n_island": 12,
-    "n_seamount": 4
+    "n_seamount": 3
    },
    {
     "id": "R15",
     "name": "东岸大岛南岛链",
     "length_km": 297,
     "coverage": 1.0,
-    "n_island": 6,
+    "n_island": 8,
     "n_seamount": 0
    },
    {
     "id": "R14",
     "name": "东南弧中部群岛",
     "length_km": 405,
-    "coverage": 0.25,
-    "n_island": 1,
+    "coverage": 0.38,
+    "n_island": 4,
     "n_seamount": 0
    },
    {
     "id": "R16",
     "name": "东南弧南岛链",
     "length_km": 482,
-    "coverage": 0.8,
+    "coverage": 0.6,
     "n_island": 3,
-    "n_seamount": 2
+    "n_seamount": 0
    },
    {
     "id": "R5",
     "name": "内海火山弧",
     "length_km": 907,
-    "coverage": 0.47,
-    "n_island": 7,
+    "coverage": 0.0,
+    "n_island": 0,
     "n_seamount": 0
    },
    {
     "id": "R13",
     "name": "内海西部群岛",
     "length_km": 636,
-    "coverage": 0.85,
-    "n_island": 3,
-    "n_seamount": 4
+    "coverage": 0.0,
+    "n_island": 0,
+    "n_seamount": 0
    },
    {
     "id": "R5b",
     "name": "内海弧后群岛",
     "length_km": 348,
-    "coverage": 0.43,
-    "n_island": 3,
+    "coverage": 0.0,
+    "n_island": 0,
     "n_seamount": 0
    },
    {
@@ -1328,46 +1253,46 @@
     "name": "南洋岛弧",
     "length_km": 3060,
     "coverage": 1.0,
-    "n_island": 33,
-    "n_seamount": 26
+    "n_island": 34,
+    "n_seamount": 29
    },
    {
     "id": "R8",
     "name": "远方大陆北岛弧",
     "length_km": 1542,
-    "coverage": 0.5,
+    "coverage": 0.53,
     "n_island": 7,
-    "n_seamount": 0
+    "n_seamount": 1
    },
    {
     "id": "R11",
     "name": "东方岛弧南链",
     "length_km": 980,
     "coverage": 1.0,
-    "n_island": 10,
-    "n_seamount": 5
+    "n_island": 8,
+    "n_seamount": 4
    },
    {
     "id": "R12a",
     "name": "东南群岛外弧",
     "length_km": 1377,
     "coverage": 1.0,
-    "n_island": 24,
-    "n_seamount": 1
+    "n_island": 26,
+    "n_seamount": 2
    },
    {
     "id": "R12b",
     "name": "东南群岛外弧南段",
     "length_km": 774,
     "coverage": 1.0,
-    "n_island": 14,
-    "n_seamount": 1
+    "n_island": 13,
+    "n_seamount": 4
    }
   ],
-  "engine_arc_volcanoes": 851,
-  "engine_arc_islands": 464,
-  "far_from_design_arcs": 551,
-  "far_from_design_arcs_islands": 245
+  "engine_arc_volcanoes": 811,
+  "engine_arc_islands": 457,
+  "far_from_design_arcs": 527,
+  "far_from_design_arcs_islands": 255
  },
  "plumes_0Ma": [
   {
@@ -1377,11 +1302,11 @@
    "t": 75.0,
    "add_km": 6.0,
    "area_Mkm2": 0.385,
-   "engine_elev_m_p50": 835,
-   "engine_elev_m_p90": 1121,
+   "engine_elev_m_p50": 829,
+   "engine_elev_m_p90": 1029,
    "final_elev_m_p50": 279,
    "final_elev_m_p90": 868,
-   "engine_land_fraction": 0.74,
+   "engine_land_fraction": 0.71,
    "final_land_fraction": 0.75
   },
   {
@@ -1391,8 +1316,8 @@
    "t": 35.0,
    "add_km": 15.0,
    "area_Mkm2": 0.436,
-   "engine_elev_m_p50": -4014,
-   "engine_elev_m_p90": -3063,
+   "engine_elev_m_p50": -3427,
+   "engine_elev_m_p90": -2272,
    "final_elev_m_p50": -195,
    "final_elev_m_p90": -92,
    "engine_land_fraction": 0.0,
@@ -1405,8 +1330,8 @@
    "t": 30.0,
    "add_km": 10.0,
    "area_Mkm2": 0.33,
-   "engine_elev_m_p50": 1969,
-   "engine_elev_m_p90": 2280,
+   "engine_elev_m_p50": 1941,
+   "engine_elev_m_p90": 2247,
    "final_elev_m_p50": 2212,
    "final_elev_m_p90": 2400,
    "engine_land_fraction": 1.0,
@@ -1419,8 +1344,8 @@
    "t": 20.0,
    "add_km": 6.0,
    "area_Mkm2": 0.199,
-   "engine_elev_m_p50": 1767,
-   "engine_elev_m_p90": 1846,
+   "engine_elev_m_p50": 1766,
+   "engine_elev_m_p90": 1840,
    "final_elev_m_p50": 1101,
    "final_elev_m_p90": 1971,
    "engine_land_fraction": 1.0,
@@ -1433,11 +1358,11 @@
    "t": 10.0,
    "add_km": 24.0,
    "area_Mkm2": 0.146,
-   "engine_elev_m_p50": 661,
-   "engine_elev_m_p90": 1869,
+   "engine_elev_m_p50": 797,
+   "engine_elev_m_p90": 1853,
    "final_elev_m_p50": 739,
    "final_elev_m_p90": 892,
-   "engine_land_fraction": 0.78,
+   "engine_land_fraction": 0.83,
    "final_land_fraction": 0.83
   },
   {
@@ -1476,158 +1401,158 @@
  "sea_level_m": [
   {
    "t": 300.0,
-   "sea_level_m": 220.3,
-   "flooded_continental_crust_Mkm2": 59.2
+   "sea_level_m": 253.3,
+   "flooded_continental_crust_Mkm2": 71.8
   },
   {
    "t": 290.0,
-   "sea_level_m": 115.9,
-   "flooded_continental_crust_Mkm2": 32.2
+   "sea_level_m": 142.0,
+   "flooded_continental_crust_Mkm2": 39.4
   },
   {
    "t": 280.0,
-   "sea_level_m": 56.0,
-   "flooded_continental_crust_Mkm2": 21.4
+   "sea_level_m": 79.0,
+   "flooded_continental_crust_Mkm2": 28.7
   },
   {
    "t": 270.0,
-   "sea_level_m": 22.6,
-   "flooded_continental_crust_Mkm2": 21.5
+   "sea_level_m": 43.4,
+   "flooded_continental_crust_Mkm2": 22.6
   },
   {
    "t": 260.0,
-   "sea_level_m": -6.3,
-   "flooded_continental_crust_Mkm2": 21.3
+   "sea_level_m": 12.0,
+   "flooded_continental_crust_Mkm2": 22.3
   },
   {
    "t": 250.0,
-   "sea_level_m": -29.8,
-   "flooded_continental_crust_Mkm2": 21.1
+   "sea_level_m": -11.0,
+   "flooded_continental_crust_Mkm2": 22.4
   },
   {
    "t": 240.0,
-   "sea_level_m": -53.2,
-   "flooded_continental_crust_Mkm2": 20.9
+   "sea_level_m": -33.6,
+   "flooded_continental_crust_Mkm2": 22.1
   },
   {
    "t": 230.0,
-   "sea_level_m": -67.4,
-   "flooded_continental_crust_Mkm2": 20.6
+   "sea_level_m": -45.6,
+   "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 220.0,
-   "sea_level_m": -74.3,
-   "flooded_continental_crust_Mkm2": 20.1
+   "sea_level_m": -52.1,
+   "flooded_continental_crust_Mkm2": 22.1
   },
   {
    "t": 210.0,
-   "sea_level_m": -79.8,
-   "flooded_continental_crust_Mkm2": 18.3
+   "sea_level_m": -57.3,
+   "flooded_continental_crust_Mkm2": 22.1
   },
   {
    "t": 200.0,
-   "sea_level_m": -83.8,
-   "flooded_continental_crust_Mkm2": 15.7
+   "sea_level_m": -61.7,
+   "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 190.0,
-   "sea_level_m": -89.7,
-   "flooded_continental_crust_Mkm2": 15.1
+   "sea_level_m": -64.0,
+   "flooded_continental_crust_Mkm2": 21.9
   },
   {
    "t": 180.0,
-   "sea_level_m": -90.4,
-   "flooded_continental_crust_Mkm2": 14.8
+   "sea_level_m": -64.8,
+   "flooded_continental_crust_Mkm2": 21.8
   },
   {
    "t": 170.0,
-   "sea_level_m": -98.5,
-   "flooded_continental_crust_Mkm2": 13.8
+   "sea_level_m": -71.0,
+   "flooded_continental_crust_Mkm2": 21.2
   },
   {
    "t": 160.0,
-   "sea_level_m": -104.0,
-   "flooded_continental_crust_Mkm2": 12.2
+   "sea_level_m": -77.5,
+   "flooded_continental_crust_Mkm2": 18.8
   },
   {
    "t": 150.0,
-   "sea_level_m": -109.5,
-   "flooded_continental_crust_Mkm2": 11.4
+   "sea_level_m": -83.9,
+   "flooded_continental_crust_Mkm2": 15.7
   },
   {
    "t": 140.0,
-   "sea_level_m": -88.8,
-   "flooded_continental_crust_Mkm2": 14.3
+   "sea_level_m": -61.4,
+   "flooded_continental_crust_Mkm2": 21.2
   },
   {
    "t": 130.0,
-   "sea_level_m": -63.4,
-   "flooded_continental_crust_Mkm2": 20.0
+   "sea_level_m": -39.5,
+   "flooded_continental_crust_Mkm2": 22.1
   },
   {
    "t": 120.0,
-   "sea_level_m": -43.8,
-   "flooded_continental_crust_Mkm2": 20.2
+   "sea_level_m": -24.6,
+   "flooded_continental_crust_Mkm2": 22.1
   },
   {
    "t": 110.0,
-   "sea_level_m": -17.8,
-   "flooded_continental_crust_Mkm2": 20.6
+   "sea_level_m": 0.2,
+   "flooded_continental_crust_Mkm2": 22.6
   },
   {
    "t": 100.0,
-   "sea_level_m": 3.7,
-   "flooded_continental_crust_Mkm2": 20.8
+   "sea_level_m": 21.6,
+   "flooded_continental_crust_Mkm2": 22.6
   },
   {
    "t": 90.0,
-   "sea_level_m": 23.1,
-   "flooded_continental_crust_Mkm2": 20.7
+   "sea_level_m": 38.9,
+   "flooded_continental_crust_Mkm2": 22.7
   },
   {
    "t": 80.0,
-   "sea_level_m": 37.7,
-   "flooded_continental_crust_Mkm2": 20.8
+   "sea_level_m": 49.7,
+   "flooded_continental_crust_Mkm2": 22.9
   },
   {
    "t": 70.0,
-   "sea_level_m": 48.5,
-   "flooded_continental_crust_Mkm2": 20.7
+   "sea_level_m": 60.8,
+   "flooded_continental_crust_Mkm2": 22.7
   },
   {
    "t": 60.0,
-   "sea_level_m": 74.8,
-   "flooded_continental_crust_Mkm2": 25.8
+   "sea_level_m": 89.3,
+   "flooded_continental_crust_Mkm2": 29.9
   },
   {
    "t": 50.0,
-   "sea_level_m": 57.7,
-   "flooded_continental_crust_Mkm2": 20.5
+   "sea_level_m": 72.3,
+   "flooded_continental_crust_Mkm2": 27.7
   },
   {
    "t": 40.0,
-   "sea_level_m": 34.7,
-   "flooded_continental_crust_Mkm2": 19.8
+   "sea_level_m": 53.0,
+   "flooded_continental_crust_Mkm2": 21.7
   },
   {
    "t": 30.0,
-   "sea_level_m": 20.4,
-   "flooded_continental_crust_Mkm2": 18.9
+   "sea_level_m": 34.9,
+   "flooded_continental_crust_Mkm2": 20.7
   },
   {
    "t": 20.0,
-   "sea_level_m": 17.0,
-   "flooded_continental_crust_Mkm2": 18.4
+   "sea_level_m": 26.1,
+   "flooded_continental_crust_Mkm2": 20.2
   },
   {
    "t": 10.0,
-   "sea_level_m": 15.5,
-   "flooded_continental_crust_Mkm2": 18.3
+   "sea_level_m": 18.9,
+   "flooded_continental_crust_Mkm2": 19.8
   },
   {
    "t": 0.0,
    "sea_level_m": -0.0,
-   "flooded_continental_crust_Mkm2": 18.0
+   "flooded_continental_crust_Mkm2": 19.3
   }
  ],
  "gulfs_0Ma": [
@@ -1638,8 +1563,8 @@
    "area_Mkm2": 0.394,
    "engine_elev_m_p50": -80,
    "engine_elev_m_p10": -80,
-   "engine_shallower_200m": 0.98,
-   "engine_land_fraction": 0.03
+   "engine_shallower_200m": 0.99,
+   "engine_land_fraction": 0.04
   },
   {
    "id": "G17",
@@ -1649,7 +1574,7 @@
    "engine_elev_m_p50": -80,
    "engine_elev_m_p10": -80,
    "engine_shallower_200m": 0.97,
-   "engine_land_fraction": 0.04
+   "engine_land_fraction": 0.03
   },
   {
    "id": "G23",
@@ -1658,8 +1583,8 @@
    "area_Mkm2": 0.142,
    "engine_elev_m_p50": -80,
    "engine_elev_m_p10": -80,
-   "engine_shallower_200m": 0.98,
-   "engine_land_fraction": 0.02
+   "engine_shallower_200m": 0.97,
+   "engine_land_fraction": 0.03
   },
   {
    "id": "G4",
@@ -1677,9 +1602,9 @@
    "design_depth_m": -150,
    "area_Mkm2": 0.409,
    "engine_elev_m_p50": -150,
-   "engine_elev_m_p10": -5588,
-   "engine_shallower_200m": 0.79,
-   "engine_land_fraction": 0.14
+   "engine_elev_m_p10": -5586,
+   "engine_shallower_200m": 0.8,
+   "engine_land_fraction": 0.03
   },
   {
    "id": "G19",
@@ -1687,9 +1612,9 @@
    "design_depth_m": -150,
    "area_Mkm2": 0.546,
    "engine_elev_m_p50": -150,
-   "engine_elev_m_p10": -5531,
-   "engine_shallower_200m": 0.86,
-   "engine_land_fraction": 0.03
+   "engine_elev_m_p10": -5275,
+   "engine_shallower_200m": 0.87,
+   "engine_land_fraction": 0.02
   },
   {
    "id": "G7",
@@ -1697,9 +1622,9 @@
    "design_depth_m": -90,
    "area_Mkm2": 0.185,
    "engine_elev_m_p50": -90,
-   "engine_elev_m_p10": -2793,
-   "engine_shallower_200m": 0.85,
-   "engine_land_fraction": 0.38
+   "engine_elev_m_p10": -90,
+   "engine_shallower_200m": 0.9,
+   "engine_land_fraction": 0.04
   },
   {
    "id": "G6",
@@ -1707,119 +1632,80 @@
    "design_depth_m": -80,
    "area_Mkm2": 0.38,
    "engine_elev_m_p50": -80,
-   "engine_elev_m_p10": -3373,
-   "engine_shallower_200m": 0.79,
-   "engine_land_fraction": 0.39
+   "engine_elev_m_p10": -3995,
+   "engine_shallower_200m": 0.74,
+   "engine_land_fraction": 0.12
   }
  ],
  "auto_shelf_0Ma": {
-  "area_Mkm2": 13.49,
-  "emerged_Mkm2": 1.78,
-  "emerged_fraction": 0.132,
+  "area_Mkm2": 13.43,
+  "emerged_Mkm2": 1.09,
+  "emerged_fraction": 0.081,
   "clusters": [
    {
-    "lon": -32.9,
-    "lat": 23.1,
-    "radius_km": 630,
-    "area_Mkm2": 0.242
+    "lon": -33.6,
+    "lat": 21.3,
+    "radius_km": 520,
+    "area_Mkm2": 0.12
    },
    {
-    "lon": -45.2,
-    "lat": -71.1,
-    "radius_km": 540,
-    "area_Mkm2": 0.132
+    "lon": 81.3,
+    "lat": 4.0,
+    "radius_km": 340,
+    "area_Mkm2": 0.073
    },
    {
-    "lon": 81.4,
-    "lat": 4.2,
-    "radius_km": 350,
-    "area_Mkm2": 0.064
-   },
-   {
-    "lon": 52.5,
-    "lat": -0.7,
+    "lon": 52.4,
+    "lat": -1.1,
     "radius_km": 460,
-    "area_Mkm2": 0.061
-   },
-   {
-    "lon": 156.5,
-    "lat": -40.5,
-    "radius_km": 310,
-    "area_Mkm2": 0.051
-   },
-   {
-    "lon": 101.8,
-    "lat": 12.6,
-    "radius_km": 330,
-    "area_Mkm2": 0.045
-   },
-   {
-    "lon": 100.7,
-    "lat": 8.0,
-    "radius_km": 370,
-    "area_Mkm2": 0.045
-   },
-   {
-    "lon": 60.1,
-    "lat": 22.2,
-    "radius_km": 310,
-    "area_Mkm2": 0.038
-   },
-   {
-    "lon": -18.7,
-    "lat": -26.2,
-    "radius_km": 400,
-    "area_Mkm2": 0.033
-   },
-   {
-    "lon": 102.1,
-    "lat": -0.4,
-    "radius_km": 450,
-    "area_Mkm2": 0.031
+    "area_Mkm2": 0.064
    }
   ]
  },
  "hypsometry_0Ma": {
   "land_elev_m_percentiles": [
-   92,
-   150,
-   311,
-   437,
-   776,
-   1657
+   90,
+   145,
+   304,
+   454,
+   851,
+   2000
   ],
-  "shelf_fraction_of_ocean": 0.037
+  "shelf_fraction_of_ocean": 0.0401
  },
  "crust_0Ma": {
-  "continental_Mkm2": 163.6,
-  "arc_origin_continental_Mkm2": 0.34,
+  "continental_Mkm2": 163.9,
+  "arc_origin_continental_Mkm2": 0.26,
   "last_orogeny_area_Mkm2": {
-   "collision": 10.0,
-   "arc": 35.25,
-   "rift": 2.5
+   "collision": 13.0,
+   "arc": 32.53,
+   "rift": 2.71,
+   "reactivation": 2.49
   },
   "thickness_km_p99": 65.0,
   "elev_m_p99_land": 4945
  },
- "volume_change": 0.0382,
+ "volume_change": 0.0484,
  "budget_km3": {
-  "arc_added": 474805220,
-  "eroded": 355726405,
-  "rift_thinning": 1356465,
-  "arc_converted": 11367102,
-  "arc_suppressed": 82881538,
-  "rift_fill": 88546760,
-  "arc_accreted": 1795292,
-  "lip_added": 17256421,
-  "hole_created": 249326,
-  "hole_fill": 8067637
+  "arc_added": 490979543,
+  "eroded": 376125262,
+  "rift_thinning": 1342714,
+  "arc_converted": 7776116,
+  "arc_suppressed": 114640430,
+  "rift_fill": 103680283,
+  "arc_accreted": 1454896,
+  "lip_added": 17255574,
+  "reactivation_added": 48619747,
+  "hole_created": 267586,
+  "hole_fill": 8692752
  },
  "engine_event_counts": {
   "subduction_start": 17,
-  "apron_transfer": 295,
-  "collision_onset": 21,
-  "region_transfer": 24,
-  "plate_added": 2
+  "apron_transfer": 308,
+  "collision_onset": 27,
+  "plate_added": 5,
+  "terrane_rift": 3,
+  "region_transfer": 24
  },
  "collision_onsets": [
   {
@@ -1827,136 +1713,168 @@
    "kind": "collision_onset",
    "downgoing": 801,
    "overriding": 102,
-   "lat": -31.72,
-   "lon": 128.17
+   "lat": -31.12,
+   "lon": 128.59
   },
   {
    "t": 279.0,
    "kind": "collision_onset",
    "downgoing": 102,
    "overriding": 601,
-   "lat": -34.0,
-   "lon": 124.17
+   "lat": -34.06,
+   "lon": 124.59
   },
   {
    "t": 270.0,
    "kind": "collision_onset",
    "downgoing": 702,
    "overriding": 102,
-   "lat": -14.37,
-   "lon": 102.59
+   "lat": -15.52,
+   "lon": 101.56
   },
   {
-   "t": 250.0,
+   "t": 249.0,
    "kind": "collision_onset",
    "downgoing": 103,
    "overriding": 101,
-   "lat": 31.87,
-   "lon": 28.41
+   "lat": 31.55,
+   "lon": 28.55
   },
   {
-   "t": 182.0,
+   "t": 181.0,
    "kind": "collision_onset",
    "downgoing": 401,
    "overriding": 301,
-   "lat": -28.05,
-   "lon": 16.96
+   "lat": -27.85,
+   "lon": 16.04
   },
   {
-   "t": 154.0,
+   "t": 177.0,
    "kind": "collision_onset",
    "downgoing": 301,
    "overriding": 601,
-   "lat": -74.32,
-   "lon": 11.3
+   "lat": -81.35,
+   "lon": 2.01
   },
   {
    "t": 149.0,
    "kind": "collision_onset",
    "downgoing": 501,
    "overriding": 301,
-   "lat": -6.82,
-   "lon": -33.64
+   "lat": -13.77,
+   "lon": -34.48
   },
   {
    "t": 139.0,
    "kind": "collision_onset",
    "downgoing": 401,
    "overriding": 601,
-   "lat": -48.92,
-   "lon": 60.51
+   "lat": -49.43,
+   "lon": 62.25
   },
   {
-   "t": 122.0,
+   "t": 128.0,
+   "kind": "collision_onset",
+   "downgoing": 803,
+   "overriding": 702,
+   "lat": -30.72,
+   "lon": 60.25
+  },
+  {
+   "t": 125.0,
    "kind": "collision_onset",
    "downgoing": 102,
    "overriding": 101,
-   "lat": 20.88,
-   "lon": 115.0
+   "lat": 21.14,
+   "lon": 115.9
   },
   {
    "t": 119.0,
    "kind": "collision_onset",
    "downgoing": 702,
    "overriding": 401,
-   "lat": 0.69,
-   "lon": 66.83
+   "lat": 0.38,
+   "lon": 66.52
   },
   {
-   "t": 114.0,
+   "t": 111.0,
    "kind": "collision_onset",
-   "downgoing": 701,
-   "overriding": 401,
-   "lat": -30.95,
-   "lon": 47.65
+   "downgoing": 803,
+   "overriding": 920,
+   "lat": -44.36,
+   "lon": 80.35
   },
   {
    "t": 109.0,
    "kind": "collision_onset",
-   "downgoing": 803,
-   "overriding": 702,
-   "lat": -31.98,
-   "lon": 62.32
+   "downgoing": 701,
+   "overriding": 401,
+   "lat": -30.4,
+   "lon": 47.43
   },
   {
    "t": 109.0,
    "kind": "collision_onset",
    "downgoing": 601,
    "overriding": 803,
-   "lat": -41.58,
-   "lon": 72.86
+   "lat": -41.15,
+   "lon": 73.41
   },
   {
-   "t": 109.0,
-   "kind": "collision_onset",
-   "downgoing": 803,
-   "overriding": 920,
-   "lat": -45.31,
-   "lon": 81.68
-  },
-  {
-   "t": 95.0,
+   "t": 98.0,
    "kind": "collision_onset",
    "downgoing": 920,
    "overriding": 601,
-   "lat": -46.84,
-   "lon": 76.81
+   "lat": -46.32,
+   "lon": 76.16
+  },
+  {
+   "t": 94.0,
+   "kind": "collision_onset",
+   "downgoing": 401,
+   "overriding": 402,
+   "lat": 21.78,
+   "lon": 43.4
   },
   {
    "t": 82.0,
    "kind": "collision_onset",
    "downgoing": 601,
    "overriding": 801,
-   "lat": -64.26,
-   "lon": 112.02
+   "lat": -66.46,
+   "lon": 114.49
+  },
+  {
+   "t": 74.0,
+   "kind": "collision_onset",
+   "downgoing": 302,
+   "overriding": 301,
+   "lat": 26.54,
+   "lon": -7.03
+  },
+  {
+   "t": 65.0,
+   "kind": "collision_onset",
+   "downgoing": 302,
+   "overriding": 303,
+   "lat": 36.07,
+   "lon": 9.83
   },
   {
    "t": 61.0,
    "kind": "collision_onset",
    "downgoing": 401,
    "overriding": 101,
-   "lat": 30.0,
-   "lon": 52.4
+   "lat": 30.39,
+   "lon": 51.64
+  },
+  {
+   "t": 56.0,
+   "kind": "collision_onset",
+   "downgoing": 803,
+   "overriding": 102,
+   "lat": -5.38,
+   "lon": 100.33
   },
   {
    "t": 48.0,
@@ -1964,32 +1882,48 @@
    "downgoing": 702,
    "overriding": 101,
    "lat": 27.05,
-   "lon": 83.93
+   "lon": 84.16
   },
   {
-   "t": 22.0,
+   "t": 47.0,
    "kind": "collision_onset",
-   "downgoing": 803,
-   "overriding": 102,
-   "lat": -9.14,
-   "lon": 130.41
+   "downgoing": 302,
+   "overriding": 103,
+   "lat": 43.11,
+   "lon": 9.71
   },
   {
-   "t": 14.0,
+   "t": 45.0,
    "kind": "collision_onset",
-   "downgoing": 920,
-   "overriding": 102,
-   "lat": -5.09,
-   "lon": 131.15
+   "downgoing": 303,
+   "overriding": 103,
+   "lat": 43.52,
+   "lon": 13.41
   },
   {
-   "t": 8.0,
+   "t": 35.0,
+   "kind": "collision_onset",
+   "downgoing": 402,
+   "overriding": 101,
+   "lat": 34.1,
+   "lon": 50.62
+  },
+  {
+   "t": 9.0,
    "kind": "collision_onset",
    "downgoing": 102,
    "overriding": 930,
-   "lat": 23.78,
-   "lon": 120.43
+   "lat": 22.9,
+   "lon": 120.63
+  },
+  {
+   "t": 6.0,
+   "kind": "collision_onset",
+   "downgoing": 303,
+   "overriding": 101,
+   "lat": 43.1,
+   "lon": 18.62
   }
  ],
- "generated": "2026-10-25 04:38:48"
+ "generated": "2026-10-25 11:01:05"
 }

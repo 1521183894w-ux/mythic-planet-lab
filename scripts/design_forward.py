@@ -37,7 +37,7 @@ from design_final_map import apply_options, build, elevation as design_elevation
 from design_history import PANEL_TIMES, assign_blocks, build_history, raster_at  # noqa: E402
 from mythic.figures.world import code_version  # noqa: E402
 from mythic.metrics.grid import LatLonGrid  # noqa: E402
-from mythic.tectonics.crust import CONT, ORO_ARC, ORO_COLL, ORO_RIFT, Params  # noqa: E402
+from mythic.tectonics.crust import CONT, ORO_ARC, ORO_COLL, ORO_REACT, ORO_RIFT, Params  # noqa: E402
 from mythic.tectonics.engine import Engine  # noqa: E402
 from mythic.tectonics.geometry import R_KM, km_from_chord, unit, xyz_to_lonlat  # noqa: E402
 from mythic.tectonics.kinematics import RotationFileKinematics  # noqa: E402
@@ -76,7 +76,8 @@ def preset_polarity(hcfg: dict) -> dict:
     oc = hcfg.get("ocean") or {}
     code_id = plate_codes(hcfg)
     out = {}
-    for r in (hcfg.get("arcs") or {}).get("subduction", []) + oc.get("subduction", []):
+    for r in ((hcfg.get("forward") or {}).get("polarity", []) + (hcfg.get("arcs") or {}).get("subduction", [])
+              + oc.get("subduction", [])):          # U33：forward.polarity 只定方向，优先
         for d in r["down"]:
             for o in r["over"]:
                 a, b = code_id[d], code_id[o]
@@ -102,10 +103,15 @@ def designed_pairs(hcfg: dict) -> set:
 
 
 def over_down_pairs(hcfg: dict) -> dict:
-    """{上盘板块: [下行板块, ...]}，来自 history yaml 的 ocean.subduction（不含外大洋板块）。"""
+    """{上盘板块: [下行板块, ...]}，来自 history yaml 的 ocean.subduction 与 forward.polarity 里标了 aprons 的条目（不含外大洋板块）。"""
     code_id = {b["code"]: int(b["id"]) for b in hcfg["blocks"]}
     out: dict[int, list[int]] = {}
-    for r in (hcfg.get("ocean") or {}).get("subduction", []):
+    # U33：forward.polarity 里标了 aprons: true 的条目也参加（主内海北岸微陆块对洲 A、B，与 ocean.subduction 的规则同一做法：
+    # 挡在逼近的微陆块前方的上盘洋壳转给微陆块）。第九次运行加它是为了 6–9°E 的深水窄湾（评审 stage1_2026-10-25_3 第 1 条），
+    # 窄湾没变；真正的原因是内海微大陆岛 I4 记在洲 A 名下、挡在西段地体的路上（见 history yaml 的 blocks）
+    rules = list((hcfg.get("ocean") or {}).get("subduction", []))
+    rules += [r for r in (hcfg.get("forward") or {}).get("polarity", []) if r.get("aprons")]
+    for r in rules:
         for o in r["over"]:
             lst = out.setdefault(code_id[o], [])
             lst += [code_id[d] for d in r["down"] if code_id[d] not in lst and code_id[d] != code_id[o]]
@@ -334,6 +340,33 @@ def build_plumes(hcfg: dict, design: dict | None = None, grid=None, land: np.nda
     return {"swells": swells, "lips": sorted(lips, key=lambda e: -e["t"])}
 
 
+def build_reactivations(hcfg: dict, design: dict, grid, land: np.ndarray) -> list:
+    """history yaml reactivations -> 板内挤压复活列表（U33，packages/tectonics/reactivation.py）。范围是终图要素：山脊线（mountains，
+    两侧 width_km/2 内权重 1、到 width_km 升余弦减到 0）或高原（plateaus，同一轮廓与从边缘往里 ramp_km 的渐变），现今坐标、
+    锚在 anchor 板块上；[t_start, t_end] 期间按 strain（总增厚比 − 1）匀速纯剪切增厚。"""
+    from design_final_map import PLATEAU_MEANDER, region_ramp
+    from mythic.tectonics.reactivation import line_weight
+
+    code_id = plate_codes(hcfg)
+    mts = {m["id"]: m for m in design.get("mountains", [])}
+    pls = {q["id"]: q for q in design.get("plateaus", [])}
+    out = []
+    for r in hcfg.get("reactivations", []):
+        fid = r["feature"]
+        if fid in mts:
+            w_km = float(mts[fid].get("width_km", 150))
+            d = line_distance_km(grid, mts[fid]["line"], np.ones(grid.shape, bool), w_km)
+            W = line_weight(np.where(np.isfinite(d), d, 1e9), 0.5 * w_km)
+        else:
+            _, W = region_ramp(pls[fid], grid, land, PLATEAU_MEANDER)
+            W = np.zeros(grid.shape) if W is None else W
+        t0, t1 = float(r["t_start"]), float(r.get("t_end", 0.0))
+        out.append({"id": r["id"], "name": r.get("name", fid), "what": r.get("what", ""), "anchor": code_id[r["anchor"]],
+                    "t_start": t0, "t_end": t1, "strain": float(r["strain"]),
+                    "rate": float(np.log1p(float(r["strain"])) / max(t0 - t1, 1e-9)), "W": W, "grid": grid})
+    return out
+
+
 def build_rifts(hcfg: dict) -> list:
     """history yaml rifts -> 陆内裂谷列表（U30）。line 是现今坐标、锚在 anchor 板块上；t_start 起地堑减薄、两肩抬升与轴部隆起。"""
     from mythic.tectonics.geometry import lonlat_to_xyz
@@ -412,7 +445,7 @@ def eustatic_sea_level(frames: list, area_km2: np.ndarray, factor: float = 0.69)
 
 def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: dict, aprons: dict | None = None,
              gap_prefer: dict | None = None, volc=None, arcs_hcfg: dict | None = None, plumes: dict | None = None,
-             rifts: list | None = None, gap_cont: dict | None = None):
+             rifts: list | None = None, gap_cont: dict | None = None, reacts: list | None = None):
     kin = RotationFileKinematics(rot)
     regions = arc_regions(arcs_hcfg, kin) if arcs_hcfg else []     # U28 第二轮：岛弧系统的俯冲起始
     basement = arc_regions(arcs_hcfg, kin, "basement") if arcs_hcfg else []   # U28 第三轮：新洋板块继承的老岛弧基底
@@ -451,6 +484,14 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
                     a, bb = plate_codes(arcs_hcfg)[d], plate_codes(arcs_hcfg)[o]
                     arc_pairs.add(min(a, bb) * 1000 + max(a, bb))
         eng.hole_down_pairs = arc_pairs | {k for k, sub in polarity.items() if sub in oceans}
+        # U33：forward.polarity 里标了 hole_down 的板块对也按此处理（主内海北岸：洲 A、B 与逼近的微陆块之间、汇聚边界上的小洞归下行的
+        # 微陆块，不按最近单元一半补给上盘的弧前）。第十次运行为 6–9°E 的深水窄湾加的，窄湾没变；真正的原因见 history yaml 的 blocks（I4）
+        for r in (arcs_hcfg.get("forward") or {}).get("polarity", []):
+            if r.get("hole_down"):
+                for d in r["down"]:
+                    for o in r["over"]:
+                        a, bb = plate_codes(arcs_hcfg)[d], plate_codes(arcs_hcfg)[o]
+                        eng.hole_down_pairs.add(min(a, bb) * 1000 + max(a, bb))
         # 弧—陆拼贴只在岛弧系统设计的俯冲带上（东南群岛东大岛、东岸大岛）：第二轮第十次运行，南方地盾陆块北上时擦过东南增生地块
         # 西侧的弧，弧被拼贴成陆、再被碰撞增厚，苏门答腊式长岛西边多出 0.29 百万 km²、约 3 km 高的陆地
         eng.arc_accrete_pairs = arc_pairs
@@ -465,11 +506,16 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
         volc.arc_cont_plates = blocks_ids
     from mythic.tectonics.plumes import apply_lip, apply_lip_weights, swell_m
 
+    from mythic.tectonics.reactivation import apply_shortening
     from mythic.tectonics.rifts import apply_graben, rift_relief_m
 
     plumes = plumes or {"swells": [], "lips": []}
     rifts = rifts or []
     li = 0
+    code_id_all = plate_codes(arcs_hcfg) if arcs_hcfg else {}
+    rifts_from = sorted(({"id": int(b["id"]), "code": b["code"], "t": float(b["rift_from"]["t"]),
+                          "parent": int(code_id_all[b["rift_from"]["plate"]]), "parent_code": b["rift_from"]["plate"]}
+                         for b in (arcs_hcfg or {}).get("blocks", []) if b.get("rift_from")), key=lambda e: -e["t"])
     rift_done = set()
 
     def rift_line(r, tt):
@@ -539,6 +585,25 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
                 r = apply_graben(eng, rift_line(rf, t), rf["half_km"], rf["beta"])
                 log(f"  {t:3d} Ma 陆内裂谷 {rf['id']}（{rf['name']}）：{r['n']} 个陆壳单元减薄（β ≤ {rf['beta']}），"
                     f"{r['volume_km3'] / 1e6:.2f}×10⁶ km³")
+        while committed and arcs_hcfg is not None and rifts_from and rifts_from[0]["t"] >= t - 1e-9:
+            e = rifts_from.pop(0)                  # U33：微陆块从母板块裂开（之前是母板块的一部分）
+            om_q = kin.step_rotations([e["id"]], max(t, 1))[1][e["id"]]
+            eng.add_plate(e["id"], om_q)
+            sel = np.flatnonzero(eng.alive & (eng.c.plate == e["parent"]) & (eng.c.origin == e["id"]))
+            n = eng.transfer_units(e["parent"], e["id"], sel, kind="terrane_rift")
+            log(f"  {t:3d} Ma 微陆块 {e['code']} 从 {e['parent_code']} 裂开：{sel.size} 个单元转出（新板块 {n} 个单元）")
+        for ra in reacts or []:                    # U33 板内挤压复活：期间每 Myr 纯剪切增厚（范围按 anchor 板块从现今转回此刻）
+            if ra["t_end"] <= t < ra["t_start"]:
+                Rt = kin.total_from(ra["anchor"], 0.0, float(t))
+                lo, la = xyz_to_lonlat(eng.positions() @ Rt)
+                g = ra["grid"]
+                i = np.clip(((90.0 - la) / 180.0 * g.ny).astype(int), 0, g.ny - 1)
+                j = np.clip(((lo + 180.0) / 360.0 * g.nx).astype(int), 0, g.nx - 1)
+                r = apply_shortening(eng, np.where(eng.alive, ra["W"][i, j], 0.0), ra["rate"], 1.0, plate=ra["anchor"])
+                ra["vol"] = ra.get("vol", 0.0) + r["volume_km3"]
+                if t == ra["t_end"]:
+                    log(f"  {t:3d} Ma 板内挤压复活 {ra['id']}（{ra['name']}）：{ra['t_start']:g}–{ra['t_end']:g} Ma 共加厚 "
+                        f"{ra['vol'] / 1e6:.2f}×10⁶ km³（总增厚比 {1 + ra['strain']:.2f}）")
         if volc is not None:
             volc.step(eng)
         if committed and t % snap_every == 0:
@@ -990,9 +1055,13 @@ def main() -> int:
         gap_cont = (cont_gap_pairs(hcfg), cont_gap_since(hcfg))
         if rifts or gap_cont[0]:
             log(f"陆内裂谷 {len(rifts)} 条（history yaml rifts），走滑拉分与裂谷陆缘的板块对 {len(gap_cont[0])} 个（forward.pull_apart）")
+        reacts = build_reactivations(hcfg, design, grid, b["land"])
+        if reacts:
+            log(f"板内挤压复活 {len(reacts)} 处（history yaml reactivations）：" + "，".join(
+                f"{r['id']} {r['t_start']:g}–{r['t_end']:g} Ma 增厚比 {1 + r['strain']:.2f}" for r in reacts))
         eng, frames, vframes = simulate(world, mesh, rot, args.snap_every, params, polarity, aprons,
                                         ocean_gap_prefer(hcfg), volc, hcfg if hcfg.get("arcs") else None, plumes,
-                                        rifts, gap_cont)
+                                        rifts, gap_cont, reacts)
         wall = time.perf_counter() - tw
         log(f"模拟完成，用时 {wall:.0f} s")
         save_run(run_path, eng, frames, {"design": args.design, "history": args.history, "level": mesh.level,
@@ -1088,7 +1157,8 @@ def main() -> int:
     A7 = mesh.area_km2
     cont = c0["ctype"] == CONT
     oro_area = {name: round(float(A7[cont & (c0["oro"] == k)].sum()) / 1e6, 2)
-                for name, k in (("collision", ORO_COLL), ("arc", ORO_ARC), ("rift", ORO_RIFT))}
+                for name, k in (("collision", ORO_COLL), ("arc", ORO_ARC), ("rift", ORO_RIFT),
+                                ("reactivation", ORO_REACT))}
     ev_counts = {}
     for e in run_js["events"]:
         ev_counts[e["kind"]] = ev_counts.get(e["kind"], 0) + 1
@@ -1140,7 +1210,10 @@ def main() -> int:
                                      "注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，"
                                      "不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）。"
                                      "浅海湾（陆表海、陆架海、神怒湾、东湾）的陆壳厚度按终图水深设定（user_override），"
-                                     "0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）",
+                                     "0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）；"
+                                     "老被动陆缘的陆架陆壳由初始条件设定（initial.margins）；主内海北岸三块微陆块的位置、裂开与碰撞时刻由设计给出；"
+                                     "板内挤压复活（中央山系、北部断块山、北方高原、内海南岸山系）的范围、时间与增厚比由设计给出、"
+                                     "增厚比按终图高度估定（性质同 user_override），所以这几条山的高度接近终图不算过程的验证（评审 stage1_2026-10-25_3 第 2、10 条）",
                            "grid": grid.name})
     nc_path = out_w / f"{world_id}_{grid.name}.nc"
     ds.to_netcdf(nc_path)
@@ -1338,7 +1411,7 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
     c0 = frames[-1]
     fig = plt.figure(figsize=(20, 11))
     cont = raster(c0["ctype"]) == CONT
-    panels = [("a", "陆壳厚度（km）"), ("b", "最近一次构造改造的时间（Ma；碰撞 = 暖色，俯冲弧 = 冷色）"),
+    panels = [("a", "陆壳厚度（km）"), ("b", "最近一次构造改造的时间（Ma；碰撞 = 暖色，俯冲弧 = 冷色，板内挤压复活 = 紫色）"),
               ("c", "地壳来源（初始陆块 / 岛弧增生）"), ("d", "洋底年龄（Myr）")]
     for k, (tg, title) in enumerate(panels):
         r, cc_ = divmod(k, 2)
@@ -1353,7 +1426,7 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
             ot = raster(c0["oro_t"]).astype(float)
             ax.imshow(np.ma.masked_where(~cont, np.zeros(grid.shape)), extent=(-180, 180, -90, 90), transform=PC,
                       origin="upper", cmap=ListedColormap(["#eeeeee"]), regrid_shape=(1600, 800), interpolation="nearest")
-            for code, cm in ((ORO_COLL, "autumn"), (ORO_ARC, "winter")):
+            for code, cm in ((ORO_COLL, "autumn"), (ORO_ARC, "winter"), (ORO_REACT, "Purples_r")):
                 im = ax.imshow(np.ma.masked_where(~cont | (oro != code), ot), extent=(-180, 180, -90, 90), transform=PC,
                                origin="upper", cmap=cm, vmin=0, vmax=300, regrid_shape=(1600, 800),
                                interpolation="nearest")

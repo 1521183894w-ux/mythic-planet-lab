@@ -391,3 +391,13 @@ def test_write_shelf_active_points_cover_the_emerged_shelf(tmp_path):
     assert P_far.min() > 0
     d = km_from_chord(np.min(np.linalg.norm(em[:, None, :] - P[None], axis=2), axis=1))
     assert d.max() <= pts[0][2]
+
+
+def test_forward_polarity_overrides_designed_and_default_polarity():
+    """U33：forward.polarity 只定俯冲方向，优先于 arcs.subduction、ocean.subduction 与"大洋板块遇到大陆都下行"。"""
+    h = _hcfg_arcs()
+    h["forward"] = {"polarity": [{"down": ["PS"], "over": ["BSE"]}, {"down": ["B"], "over": ["BSE"]}]}
+    pol = fwd.preset_polarity(h)
+    assert pol[102 * 1000 + 930] == 930          # arcs.subduction 写的是 BSE 下行，被 forward.polarity 改成 PS 下行
+    assert pol[101 * 1000 + 102] == 101          # 两块陆块之间没有别的设定时按 forward.polarity
+    assert pol[920 * 1000 + 930] == 920          # 其余照旧

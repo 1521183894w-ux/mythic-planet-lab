@@ -12,7 +12,7 @@ import numpy as np
 from .geometry import smoothstep
 
 OCEAN, CONT = 0, 1
-ORO_NONE, ORO_ARC, ORO_COLL, ORO_RIFT = 0, 1, 2, 3
+ORO_NONE, ORO_ARC, ORO_COLL, ORO_RIFT, ORO_REACT = 0, 1, 2, 3, 4   # ORO_REACT：板内挤压复活（U33）
 ORIGIN_OCEAN, ORIGIN_ARC, ORIGIN_RIFT = 0, 90, 91   # 91 = 两块陆块之间张开时填的拉伸减薄陆壳（U30 拉分盆地与裂谷陆缘）
 
 
@@ -73,6 +73,17 @@ class Params:
     ero_bg_per_myr: float = 0.005      # 背景剥蚀：高原内部起伏小，但仍以每 km 超高 5 m/Myr 剥蚀（青藏高原内部 10–20 m/Myr 量级）
     kappa_km2_myr: float = 300.0       # 增厚地壳的侧向流动（厚度扩散系数）
     flow_T_km: float = 40.0            # 只在相邻单元中至少一个厚于 40 km 时流动
+    flow_min_T_km: float | None = None  # U33：比这薄的陆壳（海平面以下的陆架、陆表海、前陆海）不参与侧向流动（不被旁边的厚地壳垫高）。
+                                       # 地球上前陆盆地、陆表海靠挠曲沉降保持低位，下面是冷而硬的减薄岩石圈；引擎没有挠曲。
+                                       # 不设时神怒湾被旁边增厚的陆缘一点点垫高、过了弧增厚的门槛后被弧抬到 +0.8 km。None = 不限
+    view_hole_max_cells: int | None = None  # U33：出帧（Engine.snapshot）时，四周全是陆地（高出海面的陆壳）的瞬时小洞按相邻陆壳（厚度居中的一个）显示，不进入演化。
+                                       # 小洞 = 年龄不超过 view_hole_age_myr 的洋壳或没有板块覆盖的节点，连成一片不超过这么多个单元。
+                                       # 它们是两块陆壳汇聚时网格对不齐、提交时补成的新洋壳，下一步就被消耗，但每一帧上都留成
+                                       # 1–9 像元、−2.5 ~ −3 km 的封闭水坑。试过在引擎里直接补成陆壳（与 cont_gap_pairs 的 holes 同法，
+                                       # 推广到所有板块对）：每次提交都补、补上的又被碰撞并进山里，300 Myr 补洞 8×10⁷ km³、其中 1.1×10⁷ km³
+                                       # 凭空加出，内海北岸山系、走滑带都变了样，撤回。None = 不处理
+    view_hole_age_myr: float = 10.0
+    view_hole_pond_cells: int = 8      # 小洞所在的整片水体不超过这么多个单元时，即使挨着水下陆壳也按封闭小水塘处理（见 Engine._fill_view_holes）
     T_max_km: float = 65.0             # 地壳厚度上限：超出部分摊到同板块外围陆壳上（重力垮塌 / 下地壳流动的代理）。
                                        # 地球上最厚的陆壳约 70 km（青藏高原），高原面约 5 km；65 km 对应高程约 4.9 km
     trench_depth_m: float = 2500.0     # 俯冲板块在前缘处的附加下沉（显示用）
