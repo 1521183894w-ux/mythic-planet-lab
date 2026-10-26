@@ -1,0 +1,72 @@
+{
+  "checkpoint": "U35-C5",
+  "baseline_commit": "db02e151a15a30d17679c14655acdcab88182e53",
+  "kind": "read_only_diagnosis_and_unicode_io_fix",
+  "candidate_adopted": false,
+  "inputs_and_code_sha256": {
+    "environment.win-64.lock.txt": "25130977fadec7dd0de00d49bca9113dc87d8715f4f783bf50497e9a5ee58830",
+    "config/design/history_v2_u35_c4_strain.yaml": "760862cef2bba754dbdc800f7787c7829b5edd41283142b3af5d82c537789252",
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    ".cache/tectonics/design/initial_v2_v2_L7.pkl": "7d61793b6c9dbe30627339e78b6ad9fb528d1a5ff75ed2c2d6ee94008f51de92",
+    "packages/tectonics/engine.py": "54f47bb128ecdea5d1930ff7c5819df5c46db1248ddbe7f9e47fabf0401119c2",
+    "packages/tectonics/reactivation.py": "e91d504b1a7d2119930533d956fe1406e80367220872eb4cc65fb4af6619c99c",
+    "packages/figures/netcdf.py": "49f7e86eaef9be59f1a9006474bc9f5eb3beb92aac51d3186715050040e9df88",
+    "packages/figures/world.py": "d86ebb35352d92191adb5cde1387d4580c08bc81a467a2edad722d10076add02",
+    "scripts/design_forward.py": "6e38975229695504aefd7c9af63a08f04fc67c043b79485bc8733da33954cb10",
+    "scripts/design_west_arc_diagnostic.py": "3e50a86a9a0391200602cc3fab033f56380458210229da1f9bbb5f8f5dcd20ae",
+    "scripts/design_west_arc_c5_report.py": "5cbf73a3ecfe3f15d4794b3ba90009741808c4558f290d44e0f0f8f1f59d718d"
+  },
+  "outputs_sha256": {
+    "data/worlds/design_v2/u35_c5_diagnostic.json": "8b48168fc8caf8eb9944c034824de5ba3365af0308d7c9946175a475276f5954",
+    "reviews/stage1_2026-10-26_5.md": "a572ba9ebdce171eb6bbc9647643314604544277b94138dccb1ade5dd4e7cb7a",
+    "figures/design/v2/forward/u35_c5/35_m31_material_coverage.png": "77ba8b35c17316bbd7b035afe767bd13ecd99ba9e56600af56c4aab89c5dc40d",
+    "figures/design/v2/forward/u35_c5/36_m31_sampling_profile.png": "a56b05e28e083a9732a7a193140bf4ffc6e64fbce06f6dbff06c2e9cce51f338",
+    "figures/design/v2/forward/u35_c5/37_m31_weights_and_survival.png": "c36368f3d9ffcb41cde96cc2551d03c9234ef03f670ead0f2e217ce85a8c616b",
+    "figures/design/v2/forward/u35_c5/38_m31_native_cells.png": "03dc4aa847db63de9e3f5df1ffbfab20a9c65d81c0e33503e3c34951893e4117",
+    "figures/design/v2/forward/u35_c5/index.html": "48afd6eab93c7d9ae1a8324b1c1e3fa1cdff6263cda9d5c3a219abdb6233fa65",
+    ".cache/u35_c5/reproduced_c4/latest/forward.npz": "7b6ec3a9ffdc27a3b55c5e13132f596dc156a187daf9d8a18e17f56e1856fe4d",
+    ".cache/u35_c5/reproduced_c4/latest/forward.json": "e743956ea5b3b505cf16e9361d4a6875ca7053ac14458cecacacbdab540fae37",
+    ".cache/u35_c5/reproduced_c4/latest/world.nc": "abff66157eff379ed3204adb7e28e9d290ae4334b1662aefdea112b103c728a7",
+    ".cache/u35_c5/reproduced_c4/latest/summary.json": "46f29e1626ee3ce95e1b7a81f886c962616bd1289eea75f3afbe0fb4ca81ddbb",
+    ".cache/u35_c5/reproduced_c4/latest/observations.json": "104b57a2de8769f8a43a969894b5dc8754802120fc5d85b6b622637975559046",
+    ".cache/u35_c5/reproduced_c4/latest/parcels_000.npz": "02eefc83debb81c779f47534b545311fdda666b4308fed0b2df6ec597e23bf17"
+  },
+  "runtime": {
+    "python": "3.12.15",
+    "reused_existing_environment": true,
+    "project_import_verified_from_current_checkout": true,
+    "new_dependencies_installed": false
+  },
+  "commands": [
+    ".cache/local_run.ps1 -u scripts/design_initial_world.py --design v2 --history v2 --no-figures",
+    ".cache/local_run.ps1 -u scripts/design_west_arc_diagnostic.py --case latest --output-root .cache/u35_c5/reproduced_c4 --history-config config/design/history_v2_u35_c4_strain.yaml --candidate u35_c5_reproduced_c4 --no-figures",
+    ".cache/local_run.ps1 -u scripts/design_forward.py --design v2 --history v2 --history-config config/design/history_v2_u35_c4_strain.yaml --candidate u35_c5_reproduced_c4 --figures-only --no-figures",
+    "design_west_arc_diagnostic.archive_run('latest', 'u35_c5_reproduced_c4') with OUT=.cache/u35_c5/reproduced_c4",
+    ".cache/local_run.ps1 -u scripts/design_west_arc_c5_report.py",
+    ".cache/local_run.ps1 -m pytest tests/figures tests/tectonics/test_reactivation.py tests/tectonics/test_design_forward.py tests/tectonics/test_west_arc_coverage.py",
+    ".cache/local_run.ps1 -m pytest tests/tectonics/test_west_arc_coverage.py tests/figures/test_netcdf.py"
+  ],
+  "results": {
+    "full_simulation_wall_s_observed": 293,
+    "initial_export_failed_unicode_path": true,
+    "reexport_wall_s": 26,
+    "reexport_exit_code": 0,
+    "diagnostic_report_exit_code": 0,
+    "related_tests": {
+      "passed": 43,
+      "wall_s": 21.32
+    },
+    "full_suite_run": false,
+    "notes": "第一次出图测试41通过1失败，旧测试直接建nc档触发同一Unicode路径故障；测试建档接入统一入口后43通过。内存峰值本轮未测。"
+  },
+  "logs_sha256": {
+    ".cache/u35_c5/reproduce_c4.log": "daaa4bbdbc231fbf657e6b2fccd7492c7d5441ab0df9aa2543014605ef9b6e73",
+    ".cache/u35_c5/reexport.log": "30532627bb7f8ac073afc03a43949fa0e19dfd54387afd9e25c1b462e375ab9c",
+    ".cache/u35_c5/report.log": "87083649589feb5f42d176ee31c012552b65ebff07f3c28f48ebb5571be4afc7",
+    ".cache/u35_c5/final_tests.log": "c08af17683880eecf5013d76db08b6d75fb2a7b0b9944a079e4e6d18c5103c4d",
+    ".cache/u35_c5/focused_final.log": "23570c93cbed7b7c034870a03ce9caa5a6b2c2d9b62d841bac077ee066bd0b6d"
+  }
+}

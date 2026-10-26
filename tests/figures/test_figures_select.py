@@ -157,17 +157,18 @@ def test_mirrored_world_keeps_metrics():
 
 
 def test_load_world_nc(tmp_path):
+    from mythic.figures.netcdf import write_netcdf
     g = LatLonGrid(64, 32)
     elev = np.where(_ang(g, 0, 0) < 30, 800.0, -3000.0)
     ds = xr.Dataset({"elevation": (("lat", "lon"), elev)}, coords={"lat": g.lat, "lon": g.lon},
                     attrs={"world_id": "w1", "seed": "42", "method_class_elevation": "procedural_constrained"})
     p = tmp_path / "w1.nc"
-    ds.to_netcdf(p)
+    write_netcdf(ds, p)
     w = load_world_nc(p)
     assert w.world_id == "w1" and w.seed == "42" and w.method_class == "procedural_constrained"
     assert w.land.sum() == (elev > 0).sum()
     ds.attrs.pop("method_class_elevation")
     p2 = tmp_path / "w2.nc"
-    ds.to_netcdf(p2)
+    write_netcdf(ds, p2)
     with pytest.raises(ValueError, match="method_class"):
         load_world_nc(p2)

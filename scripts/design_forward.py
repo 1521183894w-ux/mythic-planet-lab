@@ -1371,7 +1371,8 @@ def main() -> int:
                                      f"约 {run_js['budget'].get('opening_overlap_skipped', 0.0) / 1e4:.0f} 万 km³（评审 stage1_2026-10-25_4 第 13 条）",
                            "grid": grid.name})
     nc_path = out_w / f"{world_id}_{grid.name}.nc"
-    ds.to_netcdf(nc_path)
+    from mythic.figures.netcdf import write_netcdf
+    write_netcdf(ds, nc_path)
     log(f"写 {nc_path.relative_to(ROOT).as_posix()}（标准图组：scripts/make_figures.py --world 该文件 --stage 1）")
     c = summary["comparison"]
     log(f"终图陆地 {c['final_land_Mkm2']}，引擎 0 Ma 陆地 {c['engine_land_Mkm2']}，两者都是陆地 {c['both_land_Mkm2']}，"

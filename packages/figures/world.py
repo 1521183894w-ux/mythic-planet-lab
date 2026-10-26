@@ -14,9 +14,9 @@ from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
-import xarray as xr
 
 from mythic.metrics.grid import LatLonGrid
+from .netcdf import open_netcdf
 
 ROOT = Path(__file__).resolve().parents[2]
 EARTH_REF = ROOT / "data" / "earth_reference"
@@ -145,7 +145,7 @@ def load_earth(resolution: str = "2048x1024") -> World:
     path = EARTH_REF / f"earth_grid_{resolution}.nc"
     if not path.exists():
         raise FileNotFoundError(f"缺少 {path}，请先运行 scripts/download_earth_data.py 与 scripts/build_earth_reference.py")
-    with xr.open_dataset(path) as ds:
+    with open_netcdf(path) as ds:
         elev = ds.elevation.values.astype("float64")
         land = ds.land_fraction.values >= 0.5
         cont = ds.continent_id.values.astype(int)
@@ -160,7 +160,7 @@ def load_earth(resolution: str = "2048x1024") -> World:
 
 def load_world_nc(path: str | Path) -> World:
     path = Path(path)
-    with xr.open_dataset(path) as ds:
+    with open_netcdf(path) as ds:
         elev = ds["elevation"].values.astype("float64")
         land = (ds["land"].values >= 0.5) if "land" in ds else elev > 0
         attrs = dict(ds.attrs)
