@@ -1,0 +1,740 @@
+{
+  "checkpoint": "U35-C9",
+  "code_base": "705239f",
+  "method_class": "procedural_constrained",
+  "physical_change": false,
+  "cases": {
+    "baseline": {
+      "neutrality_vs_C8": {
+        "saved_arrays": {
+          "identical": true,
+          "arrays_checked": 352,
+          "different_arrays": []
+        },
+        "budget_identical": true,
+        "events_identical": true,
+        "native_fields_identical": true,
+        "alive_identical": true,
+        "rotations_identical": true,
+        "world_arrays_identical": true
+      },
+      "attribution_closure": {
+        "flow_sum_vs_stock_error_km3": 1.5006662579253316e-11,
+        "borrow_sum_vs_stock_error_km3": 7.275957614183426e-12
+      },
+      "flow_reconstruction_max_error_km3": 2.6545876607997343e-11,
+      "flow_global_balance_max_km3": 4.729372449219227e-11,
+      "borrow_reconstruction_max_error_km3": 2.546585164964199e-11,
+      "center_flow_in_km": 13.146532895053548,
+      "center_flow_out_km": -12.250118752462065,
+      "center_net_flow_km": 0.8964141425914826,
+      "center_neighbor_sources": {
+        "108753": {
+          "origin": 301,
+          "plate": 301,
+          "in_km3": 19191.255132278944,
+          "out_km3": 3.373388880721839,
+          "C_frame_neighbor_lon_lat": [
+            17.93119015237592,
+            -2.4262407541962827
+          ]
+        },
+        "108766": {
+          "origin": 301,
+          "plate": 301,
+          "in_km3": 17461.509555275923,
+          "out_km3": 0.0,
+          "C_frame_neighbor_lon_lat": [
+            18.201252357570297,
+            -2.9468255589860926
+          ]
+        },
+        "21226": {
+          "origin": 301,
+          "plate": 301,
+          "in_km3": 11955.29482399283,
+          "out_km3": 305.381263553919,
+          "C_frame_neighbor_lon_lat": [
+            18.252607202567695,
+            -1.936292345096996
+          ]
+        },
+        "448283": {
+          "origin": 401,
+          "plate": 301,
+          "in_km3": 60.31703674001016,
+          "out_km3": 16857.64117858338,
+          "C_frame_neighbor_lon_lat": [
+            18.8440004270982,
+            -1.9666194409048599
+          ]
+        },
+        "458851": {
+          "origin": 401,
+          "plate": 301,
+          "in_km3": 0.0,
+          "out_km3": 17616.913354363995,
+          "C_frame_neighbor_lon_lat": [
+            19.114325456440532,
+            -2.4870198808875235
+          ]
+        },
+        "458680": {
+          "origin": 91,
+          "plate": 301,
+          "in_km3": 0.0,
+          "out_km3": 10566.548223059517,
+          "C_frame_neighbor_lon_lat": [
+            18.792997087373276,
+            -2.9772245212581914
+          ]
+        }
+      },
+      "center_borrow_equivalent_km": -17.133405342602707,
+      "center_borrow_events": [
+        {
+          "t_Ma": 35.0,
+          "donor_T_before_km": 46.37335557017857,
+          "donor_T_after_all_holes_km": 41.6329101712095,
+          "donor_available_km3": 45806.079280559316,
+          "donor_total_taken_km3": 17549.097052838184
+        },
+        {
+          "t_Ma": 25.0,
+          "donor_T_before_km": 43.384670252800504,
+          "donor_T_after_all_holes_km": 38.09373257586143,
+          "donor_available_km3": 34741.98629333358,
+          "donor_total_taken_km3": 19587.01577141146
+        },
+        {
+          "t_Ma": 10.0,
+          "donor_T_before_km": 45.003481349561554,
+          "donor_T_after_all_holes_km": 37.901459082866985,
+          "donor_available_km3": 40734.81410935469,
+          "donor_total_taken_km3": 26291.638768109387
+        }
+      ],
+      "center_max_overdraft_equivalent_km": 0.0,
+      "global_borrow_checks": [
+        {
+          "t_Ma": 35.0,
+          "holes": 15,
+          "borrowed_km3": 1496036.548744019,
+          "created_km3": 2.9103830456733704e-11,
+          "oversubscribed_donors": 18,
+          "overdraft_km3": 161078.5256785785,
+          "max_overdraft_equivalent_km": 8.462619721925526,
+          "minimum_post_donor_T_km": 25.537380278074473
+        },
+        {
+          "t_Ma": 30.0,
+          "holes": 7,
+          "borrowed_km3": 656574.5188612988,
+          "created_km3": 0.0,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.02523469111158
+        },
+        {
+          "t_Ma": 25.0,
+          "holes": 13,
+          "borrowed_km3": 1351791.8268210622,
+          "created_km3": 13233.291065406695,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.0
+        },
+        {
+          "t_Ma": 20.0,
+          "holes": 4,
+          "borrowed_km3": 407320.09941171936,
+          "created_km3": -4.3655745685100555e-11,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.00213195283042
+        },
+        {
+          "t_Ma": 15.0,
+          "holes": 5,
+          "borrowed_km3": 531272.1865989377,
+          "created_km3": 1.4551915228366852e-11,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.018430450674636
+        },
+        {
+          "t_Ma": 10.0,
+          "holes": 10,
+          "borrowed_km3": 1083429.2301410825,
+          "created_km3": -5.820766091346741e-11,
+          "oversubscribed_donors": 6,
+          "overdraft_km3": 69553.40957751051,
+          "max_overdraft_equivalent_km": 5.24699909931607,
+          "minimum_post_donor_T_km": 28.75300090068393
+        },
+        {
+          "t_Ma": 5.0,
+          "holes": 13,
+          "borrowed_km3": 1244418.4069272422,
+          "created_km3": 155953.1019200068,
+          "oversubscribed_donors": 2,
+          "overdraft_km3": 12424.31134267359,
+          "max_overdraft_equivalent_km": 2.7702114794933683,
+          "minimum_post_donor_T_km": 31.22978852050663
+        },
+        {
+          "t_Ma": 0.0,
+          "holes": 7,
+          "borrowed_km3": 569295.2243984112,
+          "created_km3": 90098.11318292248,
+          "oversubscribed_donors": 4,
+          "overdraft_km3": 4145.826412096529,
+          "max_overdraft_equivalent_km": 1.0845159168086924,
+          "minimum_post_donor_T_km": 32.91548408319131
+        }
+      ],
+      "global_overdraft_km3_sum": 247202.07301085914,
+      "global_overdraft_max_equivalent_km": 8.462619721925526,
+      "standard_figures_reused": "基准与C8基准相同，全球形态参考C8已有对照；基准没有独立标准图组",
+      "A": {
+        "all_pass": true,
+        "pass": {
+          "ocean_fraction": true,
+          "main_continent": true,
+          "subcontinents": true,
+          "main_inland_sea": true,
+          "main_continent_latitude": true,
+          "polar_continent": true,
+          "open_ocean": true
+        },
+        "ocean_fraction": 0.715,
+        "main_continent_share": 0.735,
+        "subcontinents": 3,
+        "subcontinent_areas_Mkm2": [
+          59.2,
+          38.8,
+          6.0
+        ],
+        "main_inland_sea": {
+          "area_Mkm2": 4.46,
+          "straits": 1,
+          "aspect": 3.2552886144676694,
+          "checks": {
+            "area_in_range": true,
+            "ratio_to_second_ok": true,
+            "straits_ok": true,
+            "bordering_subcontinents_ok": true,
+            "elongation_ok": true
+          }
+        },
+        "latitude": [
+          79.27734375,
+          -43.76953125
+        ],
+        "polar_Mkm2": [
+          13.2
+        ]
+      },
+      "b_verdict": null
+    },
+    "progressive": {
+      "neutrality_vs_C8": {
+        "saved_arrays": {
+          "identical": true,
+          "arrays_checked": 352,
+          "different_arrays": []
+        },
+        "budget_identical": true,
+        "events_identical": true,
+        "native_fields_identical": true,
+        "alive_identical": true,
+        "rotations_identical": true,
+        "world_arrays_identical": true
+      },
+      "attribution_closure": {
+        "flow_sum_vs_stock_error_km3": 9.458744898438454e-11,
+        "borrow_sum_vs_stock_error_km3": 1.4551915228366852e-11
+      },
+      "flow_reconstruction_max_error_km3": 2.6545876607997343e-11,
+      "flow_global_balance_max_km3": 4.729372449219227e-11,
+      "borrow_reconstruction_max_error_km3": 2.546585164964199e-11,
+      "center_flow_in_km": 14.67858731342416,
+      "center_flow_out_km": -3.2328153811803695,
+      "center_net_flow_km": 11.44577193224379,
+      "center_neighbor_sources": {
+        "108753": {
+          "origin": 301,
+          "plate": 301,
+          "in_km3": 27991.02625509941,
+          "out_km3": 3.373388880721839,
+          "C_frame_neighbor_lon_lat": [
+            17.93119015237592,
+            -2.4262407541962827
+          ]
+        },
+        "108766": {
+          "origin": 301,
+          "plate": 301,
+          "in_km3": 17852.71593579825,
+          "out_km3": 0.0,
+          "C_frame_neighbor_lon_lat": [
+            18.201252357570297,
+            -2.9468255589860926
+          ]
+        },
+        "21226": {
+          "origin": 301,
+          "plate": 301,
+          "in_km3": 8496.28953225243,
+          "out_km3": 211.66647575915198,
+          "C_frame_neighbor_lon_lat": [
+            18.252607202567695,
+            -1.936292345096996
+          ]
+        },
+        "448283": {
+          "origin": 401,
+          "plate": 301,
+          "in_km3": 0.0,
+          "out_km3": 9119.124612873284,
+          "C_frame_neighbor_lon_lat": [
+            18.8440004270982,
+            -1.9666194409048599
+          ]
+        },
+        "458851": {
+          "origin": 401,
+          "plate": 301,
+          "in_km3": 0.0,
+          "out_km3": 2228.5925523575606,
+          "C_frame_neighbor_lon_lat": [
+            19.114325456440543,
+            -2.4870198808875523
+          ]
+        },
+        "458680": {
+          "origin": 91,
+          "plate": 301,
+          "in_km3": 0.0,
+          "out_km3": 405.10381514195814,
+          "C_frame_neighbor_lon_lat": [
+            18.792997087373294,
+            -2.9772245212582207
+          ]
+        }
+      },
+      "center_borrow_equivalent_km": -15.233026408860411,
+      "center_borrow_events": [
+        {
+          "t_Ma": 35.0,
+          "donor_T_before_km": 46.37335557017857,
+          "donor_T_after_all_holes_km": 41.6329101712095,
+          "donor_available_km3": 45806.079280559316,
+          "donor_total_taken_km3": 17549.097052838184
+        },
+        {
+          "t_Ma": 25.0,
+          "donor_T_before_km": 40.36383885815447,
+          "donor_T_after_all_holes_km": 35.60888798219459,
+          "donor_available_km3": 23558.88874380105,
+          "donor_total_taken_km3": 17602.79623130883
+        },
+        {
+          "t_Ma": 10.0,
+          "donor_T_before_km": 39.73763013393146,
+          "donor_T_after_all_holes_km": 34.0,
+          "donor_available_km3": 21240.668249348448,
+          "donor_total_taken_km3": 21240.668249348448
+        }
+      ],
+      "center_max_overdraft_equivalent_km": 0.0,
+      "global_borrow_checks": [
+        {
+          "t_Ma": 35.0,
+          "holes": 15,
+          "borrowed_km3": 1496036.548744019,
+          "created_km3": 2.9103830456733704e-11,
+          "oversubscribed_donors": 18,
+          "overdraft_km3": 161078.5256785785,
+          "max_overdraft_equivalent_km": 8.462619721925526,
+          "minimum_post_donor_T_km": 25.537380278074473
+        },
+        {
+          "t_Ma": 30.0,
+          "holes": 7,
+          "borrowed_km3": 656574.5188612988,
+          "created_km3": 0.0,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.02523469111158
+        },
+        {
+          "t_Ma": 25.0,
+          "holes": 13,
+          "borrowed_km3": 1345112.5701894665,
+          "created_km3": 13233.291065406695,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.0
+        },
+        {
+          "t_Ma": 20.0,
+          "holes": 4,
+          "borrowed_km3": 402559.3448494899,
+          "created_km3": 4760.754562229369,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.0
+        },
+        {
+          "t_Ma": 15.0,
+          "holes": 5,
+          "borrowed_km3": 531272.1865989377,
+          "created_km3": 1.4551915228366852e-11,
+          "oversubscribed_donors": 0,
+          "overdraft_km3": 0.0,
+          "max_overdraft_equivalent_km": 0.0,
+          "minimum_post_donor_T_km": 34.018430450674636
+        },
+        {
+          "t_Ma": 10.0,
+          "holes": 10,
+          "borrowed_km3": 932320.1648943664,
+          "created_km3": 136761.3392612246,
+          "oversubscribed_donors": 5,
+          "overdraft_km3": 39082.390009042625,
+          "max_overdraft_equivalent_km": 4.442633446597405,
+          "minimum_post_donor_T_km": 29.557366553402595
+        },
+        {
+          "t_Ma": 5.0,
+          "holes": 13,
+          "borrowed_km3": 1223800.502627697,
+          "created_km3": 176571.00592936884,
+          "oversubscribed_donors": 2,
+          "overdraft_km3": 9099.544100511886,
+          "max_overdraft_equivalent_km": 1.5363782886467863,
+          "minimum_post_donor_T_km": 32.46362171135321
+        },
+        {
+          "t_Ma": 0.0,
+          "holes": 7,
+          "borrowed_km3": 569295.2243984111,
+          "created_km3": 90098.11318292246,
+          "oversubscribed_donors": 4,
+          "overdraft_km3": 4147.858054899712,
+          "max_overdraft_equivalent_km": 1.0850471246661002,
+          "minimum_post_donor_T_km": 32.914952875333896
+        }
+      ],
+      "global_overdraft_km3_sum": 213408.31784303274,
+      "global_overdraft_max_equivalent_km": 8.462619721925526,
+      "standard_figures_reused": "figures/stage1/design_v2_forward_v2_0Ma_u35_c8_progressive/index.html",
+      "A": {
+        "all_pass": true,
+        "pass": {
+          "ocean_fraction": true,
+          "main_continent": true,
+          "subcontinents": true,
+          "main_inland_sea": true,
+          "main_continent_latitude": true,
+          "polar_continent": true,
+          "open_ocean": true
+        },
+        "ocean_fraction": 0.715,
+        "main_continent_share": 0.735,
+        "subcontinents": 3,
+        "subcontinent_areas_Mkm2": [
+          59.1,
+          38.8,
+          6.0
+        ],
+        "main_inland_sea": {
+          "area_Mkm2": 4.46,
+          "straits": 1,
+          "aspect": 3.2552886144676694,
+          "checks": {
+            "area_in_range": true,
+            "ratio_to_second_ok": true,
+            "straits_ok": true,
+            "bordering_subcontinents_ok": true,
+            "elongation_ok": true
+          }
+        },
+        "latitude": [
+          79.27734375,
+          -43.76953125
+        ],
+        "polar_Mkm2": [
+          13.2
+        ]
+      },
+      "b_verdict": {
+        "method": "landmass_unit_floor",
+        "units": {
+          "main_continent": {
+            "area_km2": 106779442.15439501,
+            "name": "main_continent",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.1620956597719618,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 5.73695781063436,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.008775763394614486,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.02248370404601492,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.05941770984366323,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.009478346001338907,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.023298238064534755,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@200": {
+                "value": 0.055544621935964426,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.2430407883459576,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 537.8918168160627,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 9,
+            "all_pass": true
+          },
+          "unit_29": {
+            "area_km2": 21619648.682741776,
+            "name": "unit_29",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.076412529401808,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 2.3608893940902833,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.005972735408203457,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.014929903716409685,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.06896867218711406,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.005315081953359128,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.012851250400141024,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": false
+              },
+              "bay_index@200": {
+                "value": 0.03828795384500619,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.1887147627296773,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 469.93429624663855,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 8,
+            "all_pass": false
+          },
+          "unit_152": {
+            "area_km2": 13154264.51653495,
+            "name": "unit_152",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.1435743938897611,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 2.796424914125573,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.01581756651903957,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.03149457926939755,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.0647677284287691,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.016466435299516927,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.02588440434362136,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@200": {
+                "value": 0.056757146948594524,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.01858479530124279,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 352.83746022521586,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 9,
+            "all_pass": true
+          }
+        },
+        "main_continent_all_pass": true,
+        "all_units_pass": false
+      }
+    }
+  },
+  "protected_sha256": {
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/history_v2_u35_c4_strain.yaml": "760862cef2bba754dbdc800f7787c7829b5edd41283142b3af5d82c537789252",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    "data/worlds/design_v2/forward_v2.json": "d58f0447abc80820c88cbc1bee5053314d9a2512c9e21568706f12261a88588b"
+  },
+  "protected_unchanged_from_C8": true,
+  "limitations": [
+    "未改变物理结果，不能称为新谷地改善",
+    "累计超额分配是跨提交重复统计，不能当作现存体积或新增体积",
+    "名义34km下限不是地球所有岩石圈的物理边界",
+    "本轮没有解释全部碰撞输入的现实成因"
+  ]
+}

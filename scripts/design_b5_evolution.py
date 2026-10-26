@@ -28,11 +28,11 @@ from mythic.tectonics.volcanism import VolcanoField
 
 
 class Observer:
-    def __init__(self, case):
+    def __init__(self, case, checkpoint="u35_c8"):
         data = json.loads((ROOT / "data/worlds/design_v2/u35_c7_diagnostic.json").read_text(encoding="utf-8"))
         self.uids = np.array(sorted(set(sum((r["native_uids"] for r in data["B5"]["polygons"].values()), []))), np.int64)
         self.center = int(np.flatnonzero(self.uids == 52985)[0])
-        self.dest = ROOT / ".cache/u35_c8" / case
+        self.dest = ROOT / ".cache" / checkpoint / case
         self.dest.mkdir(parents=True, exist_ok=True)
         self.process = {}
         self.timeline = []
@@ -145,14 +145,14 @@ class Observer:
         (self.dest / "ledger.json").write_text(json.dumps(sections.clean(output), ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
-def main():
+def main(observer_class=Observer, checkpoint="u35_c8"):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--case", required=True)
     ap.add_argument("--history-config", default="config/design/history_v2_u35_c4_strain.yaml")
     args = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9_]+", args.case):
         ap.error("case须为小写字母、数字和下划线")
-    observer = Observer(args.case)
+    observer = observer_class(args.case, checkpoint=checkpoint)
     originals = {name: getattr(fwd.Engine, name) for name in ("step", "_resolve", "_arc", "_surface", "_collapse", "commit", "erosion_rate")}
     original_simulate = fwd.simulate
     original_volcano = VolcanoField.step
@@ -216,7 +216,7 @@ def main():
     VolcanoField.step = volcano
     fwd.simulate = simulate
     old_argv = sys.argv
-    candidate = "u35_c8_" + args.case
+    candidate = checkpoint + "_" + args.case
     sys.argv = ["design_forward.py", "--design", "v2", "--history", "v2", "--history-config", args.history_config,
                 "--candidate", candidate, "--no-figures"]
     started = time.perf_counter()
@@ -227,7 +227,7 @@ def main():
         world_dir = ROOT / "data/worlds/design_v2/candidates" / candidate
         shutil.copy2(world_dir / "forward_v2.json", observer.dest / "summary.json")
         shutil.copy2(world_dir / f"design_v2_forward_v2_0Ma_{candidate}_1024x512.nc", observer.dest / "world.nc")
-        print(f"[C8] {args.case} 完整运行结束，{time.perf_counter() - started:.2f} s；UID数{len(observer.uids)}；碰撞归因最大残差{observer.resolve_max_error:.3g} km³", flush=True)
+        print(f"[{checkpoint}] {args.case} 完整运行结束，{time.perf_counter() - started:.2f} s；UID数{len(observer.uids)}；碰撞归因最大残差{observer.resolve_max_error:.3g} km³", flush=True)
         return rc
     finally:
         for name, original in originals.items():
