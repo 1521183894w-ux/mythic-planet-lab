@@ -425,3 +425,44 @@ def test_boundary_classes_divergent_convergent_transform_slow():
     assert set(np.unique(cls2[cls2 > 0])) == {3}
     cls3, _ = fwd.boundary_classes(P, g, {1: np.zeros(3), 2: np.array([0.0, 0.0, w / 50])})
     assert set(np.unique(cls3[cls3 > 0])) == {4}
+
+
+@pytest.mark.parametrize("preserve,expected_t", [(False, 35.), (True, 38.)])
+def test_terrane_rift_timing_and_nested_family_without_extra_commits(monkeypatch, preserve, expected_t):
+    """U35-C2：新方式准时分离并携带未裂子地体；旧配置仍保留原提交节奏和行为。"""
+    from types import SimpleNamespace
+    from mythic.tectonics.crust import CONT, Crust, Params
+    from mythic.tectonics.mesh import load_mesh
+
+    class StationaryKinematics:
+        def step_rotations(self, plates, t):
+            return ({q: np.eye(3) for q in plates}, {q: np.zeros(3) for q in plates})
+
+    monkeypatch.setattr(fwd, "RotationFileKinematics", lambda _: StationaryKinematics())
+    mesh = load_mesh(4)
+    c = Crust(mesh.n)
+    c.plate[:] = 1
+    c.ctype[:] = CONT
+    c.T[:] = 35.
+    c.origin[:] = 1
+    child = (abs(mesh.lon) < 15) & (abs(mesh.lat) < 15)
+    grandchild = child & (mesh.lon > 0)
+    c.origin[child] = 2
+    c.origin[grandchild] = 3
+    original_ids = c.uid[child].copy()
+    hcfg = {"blocks": [
+        {"code": "WT", "id": 1},
+        {"code": "ALB", "id": 2, "rift_from": {"plate": "WT", "t": 38, "preserve_frame": preserve}},
+        {"code": "CHILD", "id": 3, "rift_from": {"plate": "ALB", "t": 10, "preserve_frame": True}}],
+        "arcs": {"subduction": []}}
+    eng, frames, _ = fwd.simulate(SimpleNamespace(crust=c, t=40), mesh, Path("unused.rot"), 10,
+                                  Params(), {}, arcs_hcfg=hcfg)
+    rifts = [e for e in eng.events if e["kind"] == "terrane_rift"]
+    assert [(e["t"], e["src"], e["dst"]) for e in rifts] == [(expected_t, 1, 2), (10., 2, 3)]
+    assert len(eng.commit_log) == 9
+    assert [f["t"] for f in frames] == [40., 30., 20., 10., 0.]
+    assert np.all(eng.c.plate[eng.alive & (eng.c.origin == 2)] == 2)
+    assert np.all(eng.c.plate[eng.alive & (eng.c.origin == 3)] == 3)
+    if preserve:
+        np.testing.assert_array_equal(np.sort(eng.c.uid[eng.alive & np.isin(eng.c.origin, [2, 3])]),
+                                      np.sort(original_ids))

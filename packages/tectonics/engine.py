@@ -1007,6 +1007,31 @@ class Engine:
         self._event("plate_added", plate=q)
         return True
 
+    def rift_units(self, src: int, dst: int, moved: np.ndarray, omega, kind: str = "terrane_rift") -> int:
+        """地体裂离时继承母块参照系，保留位置、单元面积、厚度与永久编号（U35-C2）。
+
+        可在任一积分步末调用，不填全局空隙，也不改变五步提交节奏。新板块下一步开始采用
+        自己的运动。与围裙转移不同，裂离无需换格网；约 30 个单元的小地体不应因此丢失弧顶。
+        """
+        moved = np.asarray(moved, np.int64)
+        if moved.ndim != 1 or np.unique(moved).size != moved.size:
+            raise ValueError("裂离单元须为不重复的一维索引")
+        if src not in self.R or dst in self.R:
+            raise ValueError("裂离须有现存母块和全新的子板块编号")
+        if moved.size == 0:
+            return 0
+        if np.any(moved < 0) or np.any(moved >= len(self.c)):
+            raise ValueError("裂离单元索引越界")
+        if not np.all(self.alive[moved] & (self.c.plate[moved] == src)):
+            raise ValueError("裂离只能选择母块仍存活的单元")
+        self.R[dst] = self.R[src].copy()
+        self.omega[dst] = np.asarray(omega, float).copy()
+        self.c.plate[moved] = int(dst)
+        self._rebuild()
+        self._event(kind, src=int(src), dst=int(dst), n_parcels=int(moved.size), n_new=0,
+                    area_km2=round(float(self.area[moved].sum())), remeshed=False)
+        return int(moved.size)
+
     def transfer_units(self, src: int, dst: int, moved: np.ndarray, kind: str = "unit_transfer") -> int:
         """把板块 src 的一批单元 moved 整体改属板块 dst（U26：上盘洋壳"围裙"转给下行板块，被动陆缘转为俯冲带）。
         与 transfer_terrane 一样用"收集式"重采样：dst 参照格网上落在这批单元范围内、还没有 dst 单元的节点，

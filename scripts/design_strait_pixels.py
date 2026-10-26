@@ -113,7 +113,7 @@ def main() -> int:
     fig.text(0.04, 0.115, "主内海 -> 外洋 " + txt, fontsize=9)
     fig.text(0.04, 0.095, f"洲 C、D、B 的陆地按 4 连通是否同一片：{'是' if len(set(cont.values())) == 1 else '否'}（A 层的连通与海峡判定都用 8 连通，"
                           "这里只核对，不改指标定义）", fontsize=9)
-    fig.suptitle("U34 西口与 20°E 的逐格海陆（评审 stage1_2026-10-25_4 第 2、3 条）", fontsize=13)
+    fig.suptitle("主内海西口与 20°E 的逐格海陆（当前 0 Ma 世界）", fontsize=13)
     fig.savefig(OUT, dpi=110)
     print(f"写 {OUT.relative_to(ROOT).as_posix()}")
     return 0

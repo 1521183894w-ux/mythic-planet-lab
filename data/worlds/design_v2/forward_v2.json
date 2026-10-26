@@ -3,9 +3,9 @@
  "design": "v2",
  "history": "v2",
  "mesh_level": 7,
- "run_code_version": "5d7a5a0-dirty",
- "code_version": "5d7a5a0-dirty",
- "wall_s": 187.2,
+ "run_code_version": "87b0ed4-dirty",
+ "code_version": "87b0ed4-dirty",
+ "wall_s": 206.5,
  "compare_grid": "1024x512",
  "comparison": {
   "final_land_Mkm2": 145.6,
@@ -17,7 +17,7 @@
   "coast_offset_km": {
    "engine_to_final": {
     "median": 0,
-    "p90": 59
+    "p90": 58
    },
    "final_to_engine": {
     "median": 0,
@@ -53,12 +53,12 @@
    "ALB": {
     "name": "西口弧形地体（阿尔沃兰式）",
     "area_Mkm2": 0.08,
-    "land_fraction": 0.62
+    "land_fraction": 0.893
    },
    "WT": {
     "name": "内海北岸西段地体",
     "area_Mkm2": 0.51,
-    "land_fraction": 0.907
+    "land_fraction": 0.899
    },
    "ADR": {
     "name": "亚得里亚式地体（长半岛与神怒湾）",
@@ -73,7 +73,7 @@
    "A": {
     "name": "洲 A",
     "area_Mkm2": 6.59,
-    "land_fraction": 0.979
+    "land_fraction": 0.978
    },
    "B": {
     "name": "洲 B（北方地台与东方地块）",
@@ -148,7 +148,7 @@
     "name": "内海南岸山系",
     "design_height_m": 3400,
     "final_p90_m": 2895,
-    "engine_p90_m": 3239,
+    "engine_p90_m": 3246,
     "engine_land_fraction": 0.98,
     "cause": "南岸陆缘被挤压反转（约 60 Ma–今）"
    },
@@ -382,8 +382,8 @@
     "name": "海峡北岸山地",
     "design_height_m": 2600,
     "final_p90_m": 2269,
-    "engine_p90_m": 893,
-    "engine_land_fraction": 0.82,
+    "engine_p90_m": 1056,
+    "engine_land_fraction": 0.98,
     "cause": "海峡两岸的年轻褶皱山（与 M2 隔海峡相对）；东端接西口弧形山系（U35 随喇叭湾北岸后移）"
    },
    {
@@ -391,8 +391,8 @@
     "name": "西口弧形山系",
     "design_height_m": 2800,
     "final_p90_m": 2073,
-    "engine_p90_m": 1838,
-    "engine_land_fraction": 0.69,
+    "engine_p90_m": 982,
+    "engine_land_fraction": 0.78,
     "cause": "西口弧形地体（阿尔沃兰—贝蒂克式）随俯冲后撤西移、楔进洲 A 南缘时挤起的弧形山系（约 25 Ma–今），弧顶在西海峡北岸（U35）"
    },
    {
@@ -810,12 +810,12 @@
   "subcontinent_areas_Mkm2": [
    59.2,
    38.8,
-   5.9
+   6.0
   ],
   "main_inland_sea": {
    "area_Mkm2": 4.46,
    "straits": 1,
-   "aspect": 3.2582332051150527,
+   "aspect": 3.2552886144676694,
    "checks": {
     "area_in_range": true,
     "ratio_to_second_ok": true,
@@ -1275,7 +1275,7 @@
     "length_km": 253,
     "coverage": 1.0,
     "n_island": 3,
-    "n_seamount": 2
+    "n_seamount": 3
    },
    {
     "id": "R5b",
@@ -1326,9 +1326,9 @@
     "n_seamount": 0
    }
   ],
-  "engine_arc_volcanoes": 772,
+  "engine_arc_volcanoes": 773,
   "engine_arc_islands": 414,
-  "far_from_design_arcs": 502,
+  "far_from_design_arcs": 501,
   "far_from_design_arcs_islands": 218
  },
  "plumes_0Ma": [
@@ -1438,147 +1438,147 @@
  "sea_level_m": [
   {
    "t": 300.0,
-   "sea_level_m": 254.3,
-   "flooded_continental_crust_Mkm2": 71.6
+   "sea_level_m": 254.1,
+   "flooded_continental_crust_Mkm2": 71.5
   },
   {
    "t": 290.0,
-   "sea_level_m": 143.4,
+   "sea_level_m": 143.1,
    "flooded_continental_crust_Mkm2": 40.1
   },
   {
    "t": 280.0,
-   "sea_level_m": 79.8,
+   "sea_level_m": 79.5,
    "flooded_continental_crust_Mkm2": 29.9
   },
   {
    "t": 270.0,
-   "sea_level_m": 41.9,
+   "sea_level_m": 41.6,
    "flooded_continental_crust_Mkm2": 22.4
   },
   {
    "t": 260.0,
-   "sea_level_m": 10.8,
+   "sea_level_m": 10.5,
    "flooded_continental_crust_Mkm2": 22.3
   },
   {
    "t": 250.0,
-   "sea_level_m": -13.4,
+   "sea_level_m": -13.7,
    "flooded_continental_crust_Mkm2": 22.3
   },
   {
    "t": 240.0,
-   "sea_level_m": -35.1,
+   "sea_level_m": -35.4,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 230.0,
-   "sea_level_m": -45.0,
+   "sea_level_m": -45.3,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 220.0,
-   "sea_level_m": -53.8,
+   "sea_level_m": -54.1,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 210.0,
-   "sea_level_m": -57.5,
+   "sea_level_m": -57.8,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 200.0,
-   "sea_level_m": -61.1,
+   "sea_level_m": -61.5,
    "flooded_continental_crust_Mkm2": 21.9
   },
   {
    "t": 190.0,
-   "sea_level_m": -62.2,
-   "flooded_continental_crust_Mkm2": 22.0
+   "sea_level_m": -62.5,
+   "flooded_continental_crust_Mkm2": 21.9
   },
   {
    "t": 180.0,
-   "sea_level_m": -62.7,
+   "sea_level_m": -63.0,
    "flooded_continental_crust_Mkm2": 21.7
   },
   {
    "t": 170.0,
-   "sea_level_m": -68.6,
-   "flooded_continental_crust_Mkm2": 21.3
+   "sea_level_m": -68.9,
+   "flooded_continental_crust_Mkm2": 21.2
   },
   {
    "t": 160.0,
-   "sea_level_m": -75.0,
-   "flooded_continental_crust_Mkm2": 20.2
+   "sea_level_m": -75.3,
+   "flooded_continental_crust_Mkm2": 20.1
   },
   {
    "t": 150.0,
-   "sea_level_m": -80.5,
+   "sea_level_m": -80.8,
    "flooded_continental_crust_Mkm2": 16.0
   },
   {
    "t": 140.0,
-   "sea_level_m": -59.6,
+   "sea_level_m": -59.9,
    "flooded_continental_crust_Mkm2": 21.1
   },
   {
    "t": 130.0,
-   "sea_level_m": -38.0,
+   "sea_level_m": -38.3,
    "flooded_continental_crust_Mkm2": 21.9
   },
   {
    "t": 120.0,
-   "sea_level_m": -22.4,
+   "sea_level_m": -22.7,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 110.0,
-   "sea_level_m": 0.0,
+   "sea_level_m": -0.3,
    "flooded_continental_crust_Mkm2": 22.4
   },
   {
    "t": 100.0,
-   "sea_level_m": 21.0,
+   "sea_level_m": 20.7,
    "flooded_continental_crust_Mkm2": 22.6
   },
   {
    "t": 90.0,
-   "sea_level_m": 37.5,
+   "sea_level_m": 37.2,
    "flooded_continental_crust_Mkm2": 22.7
   },
   {
    "t": 80.0,
-   "sea_level_m": 49.1,
+   "sea_level_m": 48.8,
    "flooded_continental_crust_Mkm2": 22.8
   },
   {
    "t": 70.0,
-   "sea_level_m": 56.1,
+   "sea_level_m": 55.8,
    "flooded_continental_crust_Mkm2": 22.7
   },
   {
    "t": 60.0,
-   "sea_level_m": 86.7,
+   "sea_level_m": 86.4,
    "flooded_continental_crust_Mkm2": 31.0
   },
   {
    "t": 50.0,
-   "sea_level_m": 68.8,
-   "flooded_continental_crust_Mkm2": 28.0
+   "sea_level_m": 68.5,
+   "flooded_continental_crust_Mkm2": 27.9
   },
   {
    "t": 40.0,
-   "sea_level_m": 50.9,
+   "sea_level_m": 50.6,
    "flooded_continental_crust_Mkm2": 21.8
   },
   {
    "t": 30.0,
-   "sea_level_m": 34.0,
+   "sea_level_m": 33.9,
    "flooded_continental_crust_Mkm2": 20.8
   },
   {
    "t": 20.0,
-   "sea_level_m": 28.4,
+   "sea_level_m": 28.5,
    "flooded_continental_crust_Mkm2": 20.2
   },
   {
@@ -1717,8 +1717,8 @@
    138,
    301,
    453,
-   890,
-   2020
+   889,
+   2018
   ],
   "shelf_fraction_of_ocean": 0.0397
  },
@@ -1727,7 +1727,7 @@
   "arc_origin_continental_Mkm2": 0.21,
   "last_orogeny_area_Mkm2": {
    "collision": 12.49,
-   "arc": 32.9,
+   "arc": 32.93,
    "rift": 2.95,
    "reactivation": 2.46
   },
@@ -1736,16 +1736,16 @@
  },
  "volume_change": 0.0478,
  "budget_km3": {
-  "arc_added": 495680376,
-  "eroded": 381281928,
+  "arc_added": 495667622,
+  "eroded": 381257193,
   "rift_thinning": 1338437,
   "arc_converted": 5040090,
-  "arc_suppressed": 116874273,
+  "arc_suppressed": 116876806,
   "opening_overlap_skipped": 17092883,
-  "rift_fill": 102025229,
+  "rift_fill": 102024122,
   "arc_accreted": 2128627,
   "lip_added": 17225262,
-  "reactivation_added": 48466739,
+  "reactivation_added": 48467962,
   "hole_created": 259285,
   "hole_fill": 7599423
  },
@@ -1753,7 +1753,7 @@
   "subduction_start": 17,
   "apron_transfer": 303,
   "collision_onset": 27,
-  "plate_added": 6,
+  "plate_added": 5,
   "terrane_rift": 4,
   "region_transfer": 26
  },
@@ -1967,13 +1967,13 @@
    "lon": 19.88
   },
   {
-   "t": 2.0,
+   "t": 1.0,
    "kind": "collision_onset",
    "downgoing": 103,
    "overriding": 304,
-   "lat": 38.44,
-   "lon": -14.45
+   "lat": 38.35,
+   "lon": -16.95
   }
  ],
- "generated": "2026-10-26 09:54:55"
+ "generated": "2026-10-26 11:04:36"
 }

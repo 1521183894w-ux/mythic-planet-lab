@@ -1,0 +1,667 @@
+{
+  "input": "data\\worlds\\design_v2\\u35_c2_rift_input.json",
+  "source_n": 29,
+  "source_area_km2": 84044.3056238809,
+  "source_volume_km3": 2900700.4110783394,
+  "method_class": "procedural_constrained",
+  "motion": "user_override",
+  "resolution": "L7",
+  "assumptions": "仅运动学；关闭所有物理改造与填隙，以隔离转属的误差",
+  "reference": "沿用 docs/tectonics_method.md 的有限旋转和既有重采样；新增方案继承母块参照系",
+  "cases": [
+    {
+      "event_t_Ma": 38,
+      "preserve_frame": true,
+      "n": 29,
+      "area_km2": 84044.3056238809,
+      "volume_km3": 2900700.4110783394,
+      "centroid_error_km": 2.7549530012727197e-08,
+      "symmetric_max_nearest_km": 2.959508992574578e-08
+    },
+    {
+      "event_t_Ma": 38,
+      "preserve_frame": false,
+      "n": 30,
+      "area_km2": 87043.59329983348,
+      "volume_km3": 2998682.5544264344,
+      "centroid_error_km": 1.5354730604435471,
+      "symmetric_max_nearest_km": 32.64054374095845
+    },
+    {
+      "event_t_Ma": 35,
+      "preserve_frame": true,
+      "n": 29,
+      "area_km2": 84044.3056238809,
+      "volume_km3": 2900700.4110783394,
+      "centroid_error_km": 145.06182031419013,
+      "symmetric_max_nearest_km": 154.44057399742434
+    },
+    {
+      "event_t_Ma": 35,
+      "preserve_frame": false,
+      "n": 28,
+      "area_km2": 81217.42988401501,
+      "volume_km3": 2803454.0448949393,
+      "centroid_error_km": 149.53153593760857,
+      "symmetric_max_nearest_km": 160.9305284072345
+    }
+  ],
+  "traces": [
+    [
+      {
+        "t_Ma": 37,
+        "centroid_error_km": 6.18774130695257e-10
+      },
+      {
+        "t_Ma": 36,
+        "centroid_error_km": 7.004782942339859e-10
+      },
+      {
+        "t_Ma": 35,
+        "centroid_error_km": 7.86928666056083e-10
+      },
+      {
+        "t_Ma": 34,
+        "centroid_error_km": 1.4777562171643523e-09
+      },
+      {
+        "t_Ma": 33,
+        "centroid_error_km": 4.312582897474372e-09
+      },
+      {
+        "t_Ma": 32,
+        "centroid_error_km": 4.304070775212229e-09
+      },
+      {
+        "t_Ma": 31,
+        "centroid_error_km": 4.3107278601132e-09
+      },
+      {
+        "t_Ma": 30,
+        "centroid_error_km": 4.347389656845212e-09
+      },
+      {
+        "t_Ma": 29,
+        "centroid_error_km": 4.372522019985801e-09
+      },
+      {
+        "t_Ma": 28,
+        "centroid_error_km": 7.272153245521167e-09
+      },
+      {
+        "t_Ma": 27,
+        "centroid_error_km": 7.662446907650919e-09
+      },
+      {
+        "t_Ma": 26,
+        "centroid_error_km": 7.324098852104496e-09
+      },
+      {
+        "t_Ma": 25,
+        "centroid_error_km": 6.97437658801068e-09
+      },
+      {
+        "t_Ma": 24,
+        "centroid_error_km": 6.595144024056588e-09
+      },
+      {
+        "t_Ma": 23,
+        "centroid_error_km": 6.240071541811737e-09
+      },
+      {
+        "t_Ma": 22,
+        "centroid_error_km": 6.715588580426365e-09
+      },
+      {
+        "t_Ma": 21,
+        "centroid_error_km": 8.917348454614822e-09
+      },
+      {
+        "t_Ma": 20,
+        "centroid_error_km": 1.2011060019197008e-08
+      },
+      {
+        "t_Ma": 19,
+        "centroid_error_km": 1.517335212162559e-08
+      },
+      {
+        "t_Ma": 18,
+        "centroid_error_km": 1.8392008608519927e-08
+      },
+      {
+        "t_Ma": 17,
+        "centroid_error_km": 2.1631921646122684e-08
+      },
+      {
+        "t_Ma": 16,
+        "centroid_error_km": 2.3710863259338628e-08
+      },
+      {
+        "t_Ma": 15,
+        "centroid_error_km": 2.3463932337635015e-08
+      },
+      {
+        "t_Ma": 14,
+        "centroid_error_km": 2.2053258986496057e-08
+      },
+      {
+        "t_Ma": 13,
+        "centroid_error_km": 2.050360976455455e-08
+      },
+      {
+        "t_Ma": 12,
+        "centroid_error_km": 1.8950140067128475e-08
+      },
+      {
+        "t_Ma": 11,
+        "centroid_error_km": 1.7451483583780362e-08
+      },
+      {
+        "t_Ma": 10,
+        "centroid_error_km": 1.7412369004256346e-08
+      },
+      {
+        "t_Ma": 9,
+        "centroid_error_km": 1.9689488822137053e-08
+      },
+      {
+        "t_Ma": 8,
+        "centroid_error_km": 2.2876414785953665e-08
+      },
+      {
+        "t_Ma": 7,
+        "centroid_error_km": 2.6278756190321992e-08
+      },
+      {
+        "t_Ma": 6,
+        "centroid_error_km": 2.959709425374836e-08
+      },
+      {
+        "t_Ma": 5,
+        "centroid_error_km": 3.171039387876392e-08
+      },
+      {
+        "t_Ma": 4,
+        "centroid_error_km": 2.9182636734100397e-08
+      },
+      {
+        "t_Ma": 3,
+        "centroid_error_km": 2.9019147582547522e-08
+      },
+      {
+        "t_Ma": 2,
+        "centroid_error_km": 2.869442453562086e-08
+      },
+      {
+        "t_Ma": 1,
+        "centroid_error_km": 2.7549855256084598e-08
+      },
+      {
+        "t_Ma": 0,
+        "centroid_error_km": 2.7549530012727197e-08
+      }
+    ],
+    [
+      {
+        "t_Ma": 37,
+        "centroid_error_km": 1.5354730723887346
+      },
+      {
+        "t_Ma": 36,
+        "centroid_error_km": 1.5354730723254104
+      },
+      {
+        "t_Ma": 35,
+        "centroid_error_km": 1.5354730722589978
+      },
+      {
+        "t_Ma": 34,
+        "centroid_error_km": 1.5354730716581566
+      },
+      {
+        "t_Ma": 33,
+        "centroid_error_km": 1.5354730702591493
+      },
+      {
+        "t_Ma": 32,
+        "centroid_error_km": 1.5354730702631683
+      },
+      {
+        "t_Ma": 31,
+        "centroid_error_km": 1.535473070261109
+      },
+      {
+        "t_Ma": 30,
+        "centroid_error_km": 1.535473070243368
+      },
+      {
+        "t_Ma": 29,
+        "centroid_error_km": 1.5354730702304666
+      },
+      {
+        "t_Ma": 28,
+        "centroid_error_km": 1.5354730688120621
+      },
+      {
+        "t_Ma": 27,
+        "centroid_error_km": 1.5354730686201619
+      },
+      {
+        "t_Ma": 26,
+        "centroid_error_km": 1.5354730687857778
+      },
+      {
+        "t_Ma": 25,
+        "centroid_error_km": 1.5354730689579772
+      },
+      {
+        "t_Ma": 24,
+        "centroid_error_km": 1.5354730691464247
+      },
+      {
+        "t_Ma": 23,
+        "centroid_error_km": 1.5354730693229506
+      },
+      {
+        "t_Ma": 22,
+        "centroid_error_km": 1.5354730690867056
+      },
+      {
+        "t_Ma": 21,
+        "centroid_error_km": 1.5354730679852098
+      },
+      {
+        "t_Ma": 20,
+        "centroid_error_km": 1.5354730664217817
+      },
+      {
+        "t_Ma": 19,
+        "centroid_error_km": 1.5354730648199701
+      },
+      {
+        "t_Ma": 18,
+        "centroid_error_km": 1.535473063179808
+      },
+      {
+        "t_Ma": 17,
+        "centroid_error_km": 1.535473061521537
+      },
+      {
+        "t_Ma": 16,
+        "centroid_error_km": 1.535473060445251
+      },
+      {
+        "t_Ma": 15,
+        "centroid_error_km": 1.5354730605640312
+      },
+      {
+        "t_Ma": 14,
+        "centroid_error_km": 1.5354730612975012
+      },
+      {
+        "t_Ma": 13,
+        "centroid_error_km": 1.5354730621051071
+      },
+      {
+        "t_Ma": 12,
+        "centroid_error_km": 1.5354730629219393
+      },
+      {
+        "t_Ma": 11,
+        "centroid_error_km": 1.5354730637102434
+      },
+      {
+        "t_Ma": 10,
+        "centroid_error_km": 1.535473063755482
+      },
+      {
+        "t_Ma": 9,
+        "centroid_error_km": 1.5354730629967197
+      },
+      {
+        "t_Ma": 8,
+        "centroid_error_km": 1.5354730619344894
+      },
+      {
+        "t_Ma": 7,
+        "centroid_error_km": 1.5354730607927902
+      },
+      {
+        "t_Ma": 6,
+        "centroid_error_km": 1.5354730596719575
+      },
+      {
+        "t_Ma": 5,
+        "centroid_error_km": 1.5354730589544487
+      },
+      {
+        "t_Ma": 4,
+        "centroid_error_km": 1.5354730598456252
+      },
+      {
+        "t_Ma": 3,
+        "centroid_error_km": 1.5354730599058992
+      },
+      {
+        "t_Ma": 2,
+        "centroid_error_km": 1.5354730600250535
+      },
+      {
+        "t_Ma": 1,
+        "centroid_error_km": 1.5354730604432392
+      },
+      {
+        "t_Ma": 0,
+        "centroid_error_km": 1.5354730604435471
+      }
+    ],
+    [
+      {
+        "t_Ma": 37,
+        "centroid_error_km": 48.36076207304312
+      },
+      {
+        "t_Ma": 36,
+        "centroid_error_km": 96.71640767747151
+      },
+      {
+        "t_Ma": 35,
+        "centroid_error_km": 145.06182029522668
+      },
+      {
+        "t_Ma": 34,
+        "centroid_error_km": 145.06182029590872
+      },
+      {
+        "t_Ma": 33,
+        "centroid_error_km": 145.06182029806928
+      },
+      {
+        "t_Ma": 32,
+        "centroid_error_km": 145.06182029806263
+      },
+      {
+        "t_Ma": 31,
+        "centroid_error_km": 145.06182029806712
+      },
+      {
+        "t_Ma": 30,
+        "centroid_error_km": 145.06182029809483
+      },
+      {
+        "t_Ma": 29,
+        "centroid_error_km": 145.061820298114
+      },
+      {
+        "t_Ma": 28,
+        "centroid_error_km": 145.06182030027966
+      },
+      {
+        "t_Ma": 27,
+        "centroid_error_km": 145.0618203005715
+      },
+      {
+        "t_Ma": 26,
+        "centroid_error_km": 145.06182030031792
+      },
+      {
+        "t_Ma": 25,
+        "centroid_error_km": 145.06182030005584
+      },
+      {
+        "t_Ma": 24,
+        "centroid_error_km": 145.06182029977083
+      },
+      {
+        "t_Ma": 23,
+        "centroid_error_km": 145.06182029950398
+      },
+      {
+        "t_Ma": 22,
+        "centroid_error_km": 145.06182029986098
+      },
+      {
+        "t_Ma": 21,
+        "centroid_error_km": 145.06182030152107
+      },
+      {
+        "t_Ma": 20,
+        "centroid_error_km": 145.06182030386435
+      },
+      {
+        "t_Ma": 19,
+        "centroid_error_km": 145.061820306262
+      },
+      {
+        "t_Ma": 18,
+        "centroid_error_km": 145.06182030870926
+      },
+      {
+        "t_Ma": 17,
+        "centroid_error_km": 145.0618203111766
+      },
+      {
+        "t_Ma": 16,
+        "centroid_error_km": 145.06182031277004
+      },
+      {
+        "t_Ma": 15,
+        "centroid_error_km": 145.06182031258885
+      },
+      {
+        "t_Ma": 14,
+        "centroid_error_km": 145.0618203115046
+      },
+      {
+        "t_Ma": 13,
+        "centroid_error_km": 145.0618203103135
+      },
+      {
+        "t_Ma": 12,
+        "centroid_error_km": 145.06182030911387
+      },
+      {
+        "t_Ma": 11,
+        "centroid_error_km": 145.06182030795543
+      },
+      {
+        "t_Ma": 10,
+        "centroid_error_km": 145.06182030790737
+      },
+      {
+        "t_Ma": 9,
+        "centroid_error_km": 145.06182030933428
+      },
+      {
+        "t_Ma": 8,
+        "centroid_error_km": 145.0618203113273
+      },
+      {
+        "t_Ma": 7,
+        "centroid_error_km": 145.06182031345637
+      },
+      {
+        "t_Ma": 6,
+        "centroid_error_km": 145.06182031553573
+      },
+      {
+        "t_Ma": 5,
+        "centroid_error_km": 145.06182031686126
+      },
+      {
+        "t_Ma": 4,
+        "centroid_error_km": 145.06182031524907
+      },
+      {
+        "t_Ma": 3,
+        "centroid_error_km": 145.0618203151433
+      },
+      {
+        "t_Ma": 2,
+        "centroid_error_km": 145.0618203149312
+      },
+      {
+        "t_Ma": 1,
+        "centroid_error_km": 145.0618203141902
+      },
+      {
+        "t_Ma": 0,
+        "centroid_error_km": 145.06182031419013
+      }
+    ],
+    [
+      {
+        "t_Ma": 37,
+        "centroid_error_km": 48.36076207304312
+      },
+      {
+        "t_Ma": 36,
+        "centroid_error_km": 96.71640767747151
+      },
+      {
+        "t_Ma": 35,
+        "centroid_error_km": 149.53153591794097
+      },
+      {
+        "t_Ma": 34,
+        "centroid_error_km": 149.5315359186273
+      },
+      {
+        "t_Ma": 33,
+        "centroid_error_km": 149.53153592086247
+      },
+      {
+        "t_Ma": 32,
+        "centroid_error_km": 149.5315359208551
+      },
+      {
+        "t_Ma": 31,
+        "centroid_error_km": 149.53153592085985
+      },
+      {
+        "t_Ma": 30,
+        "centroid_error_km": 149.53153592088762
+      },
+      {
+        "t_Ma": 29,
+        "centroid_error_km": 149.53153592090712
+      },
+      {
+        "t_Ma": 28,
+        "centroid_error_km": 149.53153592314573
+      },
+      {
+        "t_Ma": 27,
+        "centroid_error_km": 149.53153592344685
+      },
+      {
+        "t_Ma": 26,
+        "centroid_error_km": 149.53153592318532
+      },
+      {
+        "t_Ma": 25,
+        "centroid_error_km": 149.53153592291432
+      },
+      {
+        "t_Ma": 24,
+        "centroid_error_km": 149.53153592262038
+      },
+      {
+        "t_Ma": 23,
+        "centroid_error_km": 149.5315359223444
+      },
+      {
+        "t_Ma": 22,
+        "centroid_error_km": 149.5315359227131
+      },
+      {
+        "t_Ma": 21,
+        "centroid_error_km": 149.531535924427
+      },
+      {
+        "t_Ma": 20,
+        "centroid_error_km": 149.53153592684507
+      },
+      {
+        "t_Ma": 19,
+        "centroid_error_km": 149.53153592931935
+      },
+      {
+        "t_Ma": 18,
+        "centroid_error_km": 149.53153593184322
+      },
+      {
+        "t_Ma": 17,
+        "centroid_error_km": 149.53153593438807
+      },
+      {
+        "t_Ma": 16,
+        "centroid_error_km": 149.53153593603113
+      },
+      {
+        "t_Ma": 15,
+        "centroid_error_km": 149.53153593584338
+      },
+      {
+        "t_Ma": 14,
+        "centroid_error_km": 149.53153593472678
+      },
+      {
+        "t_Ma": 13,
+        "centroid_error_km": 149.53153593349825
+      },
+      {
+        "t_Ma": 12,
+        "centroid_error_km": 149.5315359322622
+      },
+      {
+        "t_Ma": 11,
+        "centroid_error_km": 149.53153593106936
+      },
+      {
+        "t_Ma": 10,
+        "centroid_error_km": 149.53153593102098
+      },
+      {
+        "t_Ma": 9,
+        "centroid_error_km": 149.5315359325166
+      },
+      {
+        "t_Ma": 8,
+        "centroid_error_km": 149.531535934605
+      },
+      {
+        "t_Ma": 7,
+        "centroid_error_km": 149.53153593683462
+      },
+      {
+        "t_Ma": 6,
+        "centroid_error_km": 149.53153593901078
+      },
+      {
+        "t_Ma": 5,
+        "centroid_error_km": 149.53153594039853
+      },
+      {
+        "t_Ma": 4,
+        "centroid_error_km": 149.53153593871366
+      },
+      {
+        "t_Ma": 3,
+        "centroid_error_km": 149.5315359386032
+      },
+      {
+        "t_Ma": 2,
+        "centroid_error_km": 149.53153593838178
+      },
+      {
+        "t_Ma": 1,
+        "centroid_error_km": 149.5315359376083
+      },
+      {
+        "t_Ma": 0,
+        "centroid_error_km": 149.53153593760857
+      }
+    ]
+  ]
+}

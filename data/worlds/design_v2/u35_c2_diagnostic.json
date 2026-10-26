@@ -1,0 +1,1055 @@
+{
+  "checkpoint": "U35-C2",
+  "baseline_commit": "87b0ed4",
+  "method_class": "interpolated",
+  "units": {
+    "elevation": "m",
+    "area": "km2",
+    "volume": "km3",
+    "time": "Ma"
+  },
+  "assumptions": "终图、运动与指标保持既有定义；新增诊断不是质量阈值；参考 docs/tectonics_method.md",
+  "pre_event_frames": {
+    "arrays_checked": 297,
+    "identical": true,
+    "different_arrays": []
+  },
+  "strait_section": {
+    "longitude": -14.94140625,
+    "center_lat": 36.03515625,
+    "definition": "与 C1 相同经线、包含设计中点的连续水道跨度；不是最窄海峡宽度，也不改变 A 层判定。",
+    "design": {
+      "width_km": 78.18393279695536,
+      "center_is_land": false,
+      "north_water_cell_lat": 36.38671875,
+      "south_water_cell_lat": 36.03515625
+    },
+    "C1": {
+      "width_km": 156.36786559391072,
+      "center_is_land": false,
+      "north_water_cell_lat": 36.73828125,
+      "south_water_cell_lat": 35.68359375
+    },
+    "C2": {
+      "width_km": 117.27589919543304,
+      "center_is_land": false,
+      "north_water_cell_lat": 36.38671875,
+      "south_water_cell_lat": 35.68359375
+    }
+  },
+  "neck_sources": {
+    "method_class": "interpolated",
+    "records": [
+      {
+        "lon": -14.94140625,
+        "lat": 36.38671875,
+        "fixed_mesh_node": 100961,
+        "plate": 304,
+        "source_node": 58590,
+        "uid": 486742,
+        "assigned_ocean_age_Myr": 1.1491195412149577,
+        "assigned_t_form_Ma": 1.1491195412149577,
+        "observed_uid_at_times_Ma": [
+          0
+        ],
+        "elevation_m": -2991.26904296875
+      },
+      {
+        "lon": -14.94140625,
+        "lat": 36.03515625,
+        "fixed_mesh_node": 100961,
+        "plate": 304,
+        "source_node": 58590,
+        "uid": 486742,
+        "assigned_ocean_age_Myr": 1.1491195412149577,
+        "assigned_t_form_Ma": 1.1491195412149577,
+        "observed_uid_at_times_Ma": [
+          0
+        ],
+        "elevation_m": -2991.26904296875
+      },
+      {
+        "lon": -14.94140625,
+        "lat": 35.68359375,
+        "fixed_mesh_node": 68047,
+        "plate": 301,
+        "source_node": 59681,
+        "uid": 486547,
+        "assigned_ocean_age_Myr": 2.6988222426169557,
+        "assigned_t_form_Ma": 2.6988222426169557,
+        "observed_uid_at_times_Ma": [
+          0
+        ],
+        "elevation_m": -3854.6044921875
+      }
+    ],
+    "note": "输出像元并非独立物质单元；UID 首次入表时刻与提交时估算的地质年龄分开记录。该表不证明填隙来自真实张开。"
+  },
+  "connectivity_sensitivity": {
+    "C1": {
+      "8_connected": true,
+      "4_connected": true,
+      "4_connected_remove_young_ocean": true,
+      "8_connected_block_west": false
+    },
+    "C2": {
+      "8_connected": true,
+      "4_connected": true,
+      "4_connected_remove_young_ocean": false,
+      "8_connected_block_west": false
+    }
+  },
+  "global_change": {
+    "max_abs_elevation_change_m": 6566.9512939453125,
+    "changed_area_km2": 1992495.2734399708,
+    "area_abs_change_over_150m_km2": 444363.5236125591,
+    "land_mask_changed_area_km2": 49863.6671897173,
+    "outside_west_window_max_abs_m": 0.0001220703125,
+    "outside_west_window_area_abs_change_over_1m_km2": 0.0,
+    "outside_west_window_land_mask_changed_area_km2": 0.0
+  },
+  "mountain_changes": [
+    {
+      "id": "M1",
+      "name": "内海北岸山系",
+      "C1_p90_m": 4003,
+      "C2_p90_m": 4003,
+      "delta_m": 0
+    },
+    {
+      "id": "M1b",
+      "name": "长半岛山脊",
+      "C1_p90_m": 961,
+      "C2_p90_m": 961,
+      "delta_m": 0
+    },
+    {
+      "id": "M1c",
+      "name": "多湾半岛山地",
+      "C1_p90_m": 1466,
+      "C2_p90_m": 1466,
+      "delta_m": 0
+    },
+    {
+      "id": "M1d",
+      "name": "北岸外弧山系",
+      "C1_p90_m": 1358,
+      "C2_p90_m": 1358,
+      "delta_m": 0
+    },
+    {
+      "id": "M2",
+      "name": "内海南岸山系",
+      "C1_p90_m": 3239,
+      "C2_p90_m": 3246,
+      "delta_m": 7
+    },
+    {
+      "id": "M3",
+      "name": "东方大高原南缘山系",
+      "C1_p90_m": 4945,
+      "C2_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3b",
+      "name": "构造结南向山系",
+      "C1_p90_m": 4945,
+      "C2_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3c",
+      "name": "高原北缘山系",
+      "C1_p90_m": 4945,
+      "C2_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3e",
+      "name": "高原内部山脉",
+      "C1_p90_m": 4945,
+      "C2_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3f",
+      "name": "高原中北部山脉",
+      "C1_p90_m": 509,
+      "C2_p90_m": 509,
+      "delta_m": 0
+    },
+    {
+      "id": "M3d",
+      "name": "东湾北岸褶皱山",
+      "C1_p90_m": 4894,
+      "C2_p90_m": 4894,
+      "delta_m": 0
+    },
+    {
+      "id": "M4",
+      "name": "北方缝合老山",
+      "C1_p90_m": 869,
+      "C2_p90_m": 869,
+      "delta_m": 0
+    },
+    {
+      "id": "M5",
+      "name": "南方缝合带山系",
+      "C1_p90_m": 2753,
+      "C2_p90_m": 2753,
+      "delta_m": 0
+    },
+    {
+      "id": "M30",
+      "name": "南方走滑断层谷",
+      "C1_p90_m": 2114,
+      "C2_p90_m": 2114,
+      "delta_m": 0
+    },
+    {
+      "id": "M6",
+      "name": "冰川半岛山脉",
+      "C1_p90_m": 1078,
+      "C2_p90_m": 1078,
+      "delta_m": 0
+    },
+    {
+      "id": "M7a",
+      "name": "东南沿海山地",
+      "C1_p90_m": 578,
+      "C2_p90_m": 578,
+      "delta_m": 0
+    },
+    {
+      "id": "M7",
+      "name": "东岸山系",
+      "C1_p90_m": 1917,
+      "C2_p90_m": 1917,
+      "delta_m": 0
+    },
+    {
+      "id": "M7b",
+      "name": "东北半岛火山脊",
+      "C1_p90_m": 1959,
+      "C2_p90_m": 1959,
+      "delta_m": 0
+    },
+    {
+      "id": "M7c",
+      "name": "东岸半岛山脊",
+      "C1_p90_m": 1268,
+      "C2_p90_m": 1268,
+      "delta_m": 0
+    },
+    {
+      "id": "M8",
+      "name": "远方大陆西岸山系",
+      "C1_p90_m": 4094,
+      "C2_p90_m": 4094,
+      "delta_m": 0
+    },
+    {
+      "id": "M8c",
+      "name": "远方大陆南段冰原山系",
+      "C1_p90_m": 2886,
+      "C2_p90_m": 2886,
+      "delta_m": 0
+    },
+    {
+      "id": "M8b",
+      "name": "远方大陆东部古老高地",
+      "C1_p90_m": 883,
+      "C2_p90_m": 883,
+      "delta_m": 0
+    },
+    {
+      "id": "M23",
+      "name": "远方大陆北缘山地",
+      "C1_p90_m": 422,
+      "C2_p90_m": 422,
+      "delta_m": 0
+    },
+    {
+      "id": "M9",
+      "name": "极地横贯山脉",
+      "C1_p90_m": 979,
+      "C2_p90_m": 979,
+      "delta_m": 0
+    },
+    {
+      "id": "M29",
+      "name": "冰原长半岛山脊",
+      "C1_p90_m": 1723,
+      "C2_p90_m": 1723,
+      "delta_m": 0
+    },
+    {
+      "id": "M28",
+      "name": "极地半岛山脊",
+      "C1_p90_m": 2062,
+      "C2_p90_m": 2062,
+      "delta_m": 0
+    },
+    {
+      "id": "M10",
+      "name": "南方地盾裂谷",
+      "C1_p90_m": 1580,
+      "C2_p90_m": 1580,
+      "delta_m": 0
+    },
+    {
+      "id": "M22",
+      "name": "南方火山高地",
+      "C1_p90_m": 1842,
+      "C2_p90_m": 1842,
+      "delta_m": 0
+    },
+    {
+      "id": "M11",
+      "name": "东北山地",
+      "C1_p90_m": 1338,
+      "C2_p90_m": 1338,
+      "delta_m": 0
+    },
+    {
+      "id": "M12",
+      "name": "东南半岛山脊",
+      "C1_p90_m": 1599,
+      "C2_p90_m": 1599,
+      "delta_m": 0
+    },
+    {
+      "id": "M13",
+      "name": "海峡北岸山地",
+      "C1_p90_m": 893,
+      "C2_p90_m": 1056,
+      "delta_m": 163
+    },
+    {
+      "id": "M31",
+      "name": "西口弧形山系",
+      "C1_p90_m": 1838,
+      "C2_p90_m": 982,
+      "delta_m": -856
+    },
+    {
+      "id": "M13b",
+      "name": "西北地盾古山",
+      "C1_p90_m": 927,
+      "C2_p90_m": 927,
+      "delta_m": 0
+    },
+    {
+      "id": "M14",
+      "name": "南端褶皱山",
+      "C1_p90_m": 560,
+      "C2_p90_m": 560,
+      "delta_m": 0
+    },
+    {
+      "id": "M15",
+      "name": "中央山系",
+      "C1_p90_m": 4401,
+      "C2_p90_m": 4401,
+      "delta_m": 0
+    },
+    {
+      "id": "M15b",
+      "name": "北部断块山",
+      "C1_p90_m": 3237,
+      "C2_p90_m": 3237,
+      "delta_m": 0
+    },
+    {
+      "id": "M16",
+      "name": "北方长角古山",
+      "C1_p90_m": 800,
+      "C2_p90_m": 800,
+      "delta_m": 0
+    },
+    {
+      "id": "M17",
+      "name": "裂谷肩山地",
+      "C1_p90_m": 3262,
+      "C2_p90_m": 3262,
+      "delta_m": 0
+    },
+    {
+      "id": "M19",
+      "name": "南方地盾半岛西缘山",
+      "C1_p90_m": 893,
+      "C2_p90_m": 893,
+      "delta_m": 0
+    },
+    {
+      "id": "M24",
+      "name": "南洋陆块山脉",
+      "C1_p90_m": 2116,
+      "C2_p90_m": 2116,
+      "delta_m": 0
+    },
+    {
+      "id": "M25",
+      "name": "东方岛弧山地",
+      "C1_p90_m": 1934,
+      "C2_p90_m": 1934,
+      "delta_m": 0
+    },
+    {
+      "id": "M26",
+      "name": "东南大岛山地",
+      "C1_p90_m": 1155,
+      "C2_p90_m": 1155,
+      "delta_m": 0
+    },
+    {
+      "id": "M27",
+      "name": "东南群岛东大岛山脊",
+      "C1_p90_m": 4549,
+      "C2_p90_m": 4549,
+      "delta_m": 0
+    }
+  ],
+  "trajectories": {
+    "C1": [
+      {
+        "t_Ma": 40,
+        "n": 29,
+        "centroid_error_km": 6.922707534365053e-08,
+        "present_lat_min": 36.64441163463591
+      },
+      {
+        "t_Ma": 39,
+        "n": 29,
+        "centroid_error_km": 3.5146483860304346e-08,
+        "present_lat_min": 36.644411634363436
+      },
+      {
+        "t_Ma": 38,
+        "n": 29,
+        "centroid_error_km": 0.0,
+        "present_lat_min": 36.644411634082424
+      },
+      {
+        "t_Ma": 37,
+        "n": 29,
+        "centroid_error_km": 48.36076207304332,
+        "present_lat_min": 36.77112718960278
+      },
+      {
+        "t_Ma": 36,
+        "n": 29,
+        "centroid_error_km": 96.71640767747218,
+        "present_lat_min": 36.90427384831044
+      },
+      {
+        "t_Ma": 35,
+        "n": 28,
+        "centroid_error_km": 149.5315359179408,
+        "present_lat_min": 37.027129950136946
+      },
+      {
+        "t_Ma": 34,
+        "n": 28,
+        "centroid_error_km": 149.53153591862807,
+        "present_lat_min": 37.027129950137954
+      },
+      {
+        "t_Ma": 33,
+        "n": 28,
+        "centroid_error_km": 149.53153592086264,
+        "present_lat_min": 37.02712995012871
+      },
+      {
+        "t_Ma": 32,
+        "n": 28,
+        "centroid_error_km": 149.5315359208554,
+        "present_lat_min": 37.02712995012874
+      },
+      {
+        "t_Ma": 31,
+        "n": 28,
+        "centroid_error_km": 149.53153592085962,
+        "present_lat_min": 37.02712995012872
+      },
+      {
+        "t_Ma": 30,
+        "n": 28,
+        "centroid_error_km": 149.5315359208879,
+        "present_lat_min": 37.0271299501286
+      },
+      {
+        "t_Ma": 29,
+        "n": 28,
+        "centroid_error_km": 149.5315359209074,
+        "present_lat_min": 37.02712995012851
+      },
+      {
+        "t_Ma": 28,
+        "n": 28,
+        "centroid_error_km": 149.53153592314604,
+        "present_lat_min": 37.02712995011959
+      },
+      {
+        "t_Ma": 27,
+        "n": 28,
+        "centroid_error_km": 149.5315359234465,
+        "present_lat_min": 37.02712995011843
+      },
+      {
+        "t_Ma": 26,
+        "n": 28,
+        "centroid_error_km": 149.5315359231855,
+        "present_lat_min": 37.02712995011944
+      },
+      {
+        "t_Ma": 25,
+        "n": 28,
+        "centroid_error_km": 149.53153592291557,
+        "present_lat_min": 37.02712995012051
+      },
+      {
+        "t_Ma": 24,
+        "n": 28,
+        "centroid_error_km": 149.5315359226214,
+        "present_lat_min": 37.02712995012165
+      },
+      {
+        "t_Ma": 23,
+        "n": 28,
+        "centroid_error_km": 149.53153592234537,
+        "present_lat_min": 37.02712995012271
+      },
+      {
+        "t_Ma": 22,
+        "n": 28,
+        "centroid_error_km": 149.53153592271397,
+        "present_lat_min": 37.02712995012128
+      },
+      {
+        "t_Ma": 21,
+        "n": 28,
+        "centroid_error_km": 149.53153592442897,
+        "present_lat_min": 37.02712995011477
+      },
+      {
+        "t_Ma": 20,
+        "n": 28,
+        "centroid_error_km": 149.53153592684617,
+        "present_lat_min": 37.02712995010574
+      },
+      {
+        "t_Ma": 19,
+        "n": 28,
+        "centroid_error_km": 149.53153592932017,
+        "present_lat_min": 37.027129950096565
+      },
+      {
+        "t_Ma": 18,
+        "n": 28,
+        "centroid_error_km": 149.5315359318448,
+        "present_lat_min": 37.027129950087314
+      },
+      {
+        "t_Ma": 17,
+        "n": 28,
+        "centroid_error_km": 149.53153593438932,
+        "present_lat_min": 37.02712995007806
+      },
+      {
+        "t_Ma": 16,
+        "n": 28,
+        "centroid_error_km": 149.5315359360322,
+        "present_lat_min": 37.02712995007224
+      },
+      {
+        "t_Ma": 15,
+        "n": 28,
+        "centroid_error_km": 149.53153593584506,
+        "present_lat_min": 37.02712995007303
+      },
+      {
+        "t_Ma": 14,
+        "n": 28,
+        "centroid_error_km": 149.53153593472814,
+        "present_lat_min": 37.027129950076954
+      },
+      {
+        "t_Ma": 13,
+        "n": 28,
+        "centroid_error_km": 149.5315359335001,
+        "present_lat_min": 37.027129950081246
+      },
+      {
+        "t_Ma": 12,
+        "n": 28,
+        "centroid_error_km": 149.53153593226403,
+        "present_lat_min": 37.0271299500855
+      },
+      {
+        "t_Ma": 11,
+        "n": 28,
+        "centroid_error_km": 149.53153593107098,
+        "present_lat_min": 37.02712995008959
+      },
+      {
+        "t_Ma": 10,
+        "n": 28,
+        "centroid_error_km": 149.53153593102263,
+        "present_lat_min": 37.02712995008944
+      },
+      {
+        "t_Ma": 9,
+        "n": 28,
+        "centroid_error_km": 149.53153593251835,
+        "present_lat_min": 37.027129950078894
+      },
+      {
+        "t_Ma": 8,
+        "n": 28,
+        "centroid_error_km": 149.53153593460672,
+        "present_lat_min": 37.02712995006427
+      },
+      {
+        "t_Ma": 7,
+        "n": 28,
+        "centroid_error_km": 149.5315359368361,
+        "present_lat_min": 37.02712995004879
+      },
+      {
+        "t_Ma": 6,
+        "n": 28,
+        "centroid_error_km": 149.53153593901266,
+        "present_lat_min": 37.02712995003385
+      },
+      {
+        "t_Ma": 5,
+        "n": 28,
+        "centroid_error_km": 149.5315359404007,
+        "present_lat_min": 37.027129950024396
+      },
+      {
+        "t_Ma": 4,
+        "n": 28,
+        "centroid_error_km": 149.531535938716,
+        "present_lat_min": 37.02712995003546
+      },
+      {
+        "t_Ma": 3,
+        "n": 28,
+        "centroid_error_km": 149.53153593860537,
+        "present_lat_min": 37.02712995003615
+      },
+      {
+        "t_Ma": 2,
+        "n": 28,
+        "centroid_error_km": 149.5315359383833,
+        "present_lat_min": 37.02712995003754
+      },
+      {
+        "t_Ma": 1,
+        "n": 28,
+        "centroid_error_km": 149.53153593761027,
+        "present_lat_min": 37.02712995004241
+      },
+      {
+        "t_Ma": 0,
+        "n": 28,
+        "centroid_error_km": 149.53153593760993,
+        "present_lat_min": 37.027129950042415
+      }
+    ],
+    "C2": [
+      {
+        "t_Ma": 40,
+        "n": 29,
+        "centroid_error_km": 6.922707534365053e-08,
+        "present_lat_min": 36.64441163463591
+      },
+      {
+        "t_Ma": 39,
+        "n": 29,
+        "centroid_error_km": 3.5146483860304346e-08,
+        "present_lat_min": 36.644411634363436
+      },
+      {
+        "t_Ma": 38,
+        "n": 29,
+        "centroid_error_km": 0.0,
+        "present_lat_min": 36.644411634082424
+      },
+      {
+        "t_Ma": 37,
+        "n": 29,
+        "centroid_error_km": 6.187443907309877e-10,
+        "present_lat_min": 36.644411634082296
+      },
+      {
+        "t_Ma": 36,
+        "n": 29,
+        "centroid_error_km": 7.011327632170269e-10,
+        "present_lat_min": 36.64441163408227
+      },
+      {
+        "t_Ma": 35,
+        "n": 29,
+        "centroid_error_km": 7.870424607298514e-10,
+        "present_lat_min": 36.64441163408225
+      },
+      {
+        "t_Ma": 34,
+        "n": 29,
+        "centroid_error_km": 1.47897215522826e-09,
+        "present_lat_min": 36.644411634083006
+      },
+      {
+        "t_Ma": 33,
+        "n": 29,
+        "centroid_error_km": 4.313029193092559e-09,
+        "present_lat_min": 36.6444116340722
+      },
+      {
+        "t_Ma": 32,
+        "n": 29,
+        "centroid_error_km": 4.304400118258041e-09,
+        "present_lat_min": 36.644411634072235
+      },
+      {
+        "t_Ma": 31,
+        "n": 29,
+        "centroid_error_km": 4.310726325935981e-09,
+        "present_lat_min": 36.64441163407221
+      },
+      {
+        "t_Ma": 30,
+        "n": 29,
+        "centroid_error_km": 4.3463474759224495e-09,
+        "present_lat_min": 36.64441163407207
+      },
+      {
+        "t_Ma": 29,
+        "n": 29,
+        "centroid_error_km": 4.371931059194482e-09,
+        "present_lat_min": 36.64441163407198
+      },
+      {
+        "t_Ma": 28,
+        "n": 29,
+        "centroid_error_km": 7.272105394553588e-09,
+        "present_lat_min": 36.64441163406156
+      },
+      {
+        "t_Ma": 27,
+        "n": 29,
+        "centroid_error_km": 7.662104940980873e-09,
+        "present_lat_min": 36.64441163406019
+      },
+      {
+        "t_Ma": 26,
+        "n": 29,
+        "centroid_error_km": 7.323936723979159e-09,
+        "present_lat_min": 36.644411634061385
+      },
+      {
+        "t_Ma": 25,
+        "n": 29,
+        "centroid_error_km": 6.974180641478577e-09,
+        "present_lat_min": 36.64441163406261
+      },
+      {
+        "t_Ma": 24,
+        "n": 29,
+        "centroid_error_km": 6.595567345784742e-09,
+        "present_lat_min": 36.64441163406395
+      },
+      {
+        "t_Ma": 23,
+        "n": 29,
+        "centroid_error_km": 6.240194130195838e-09,
+        "present_lat_min": 36.644411634065186
+      },
+      {
+        "t_Ma": 22,
+        "n": 29,
+        "centroid_error_km": 6.715403112115974e-09,
+        "present_lat_min": 36.64441163406352
+      },
+      {
+        "t_Ma": 21,
+        "n": 29,
+        "centroid_error_km": 8.91484738193855e-09,
+        "present_lat_min": 36.644411634055935
+      },
+      {
+        "t_Ma": 20,
+        "n": 29,
+        "centroid_error_km": 1.2010559486633259e-08,
+        "present_lat_min": 36.64441163404537
+      },
+      {
+        "t_Ma": 19,
+        "n": 29,
+        "centroid_error_km": 1.5172673476323192e-08,
+        "present_lat_min": 36.64441163403464
+      },
+      {
+        "t_Ma": 18,
+        "n": 29,
+        "centroid_error_km": 1.8390290318685546e-08,
+        "present_lat_min": 36.64441163402382
+      },
+      {
+        "t_Ma": 17,
+        "n": 29,
+        "centroid_error_km": 2.163001765156334e-08,
+        "present_lat_min": 36.64441163401299
+      },
+      {
+        "t_Ma": 16,
+        "n": 29,
+        "centroid_error_km": 2.3710295694465148e-08,
+        "present_lat_min": 36.64441163400615
+      },
+      {
+        "t_Ma": 15,
+        "n": 29,
+        "centroid_error_km": 2.3463481909532075e-08,
+        "present_lat_min": 36.64441163400706
+      },
+      {
+        "t_Ma": 14,
+        "n": 29,
+        "centroid_error_km": 2.2052069656347752e-08,
+        "present_lat_min": 36.64441163401166
+      },
+      {
+        "t_Ma": 13,
+        "n": 29,
+        "centroid_error_km": 2.0503431569551535e-08,
+        "present_lat_min": 36.6444116340167
+      },
+      {
+        "t_Ma": 12,
+        "n": 29,
+        "centroid_error_km": 1.894939478692245e-08,
+        "present_lat_min": 36.644411634021694
+      },
+      {
+        "t_Ma": 11,
+        "n": 29,
+        "centroid_error_km": 1.745139141913986e-08,
+        "present_lat_min": 36.64441163402649
+      },
+      {
+        "t_Ma": 10,
+        "n": 29,
+        "centroid_error_km": 1.741145132657497e-08,
+        "present_lat_min": 36.64441163402636
+      },
+      {
+        "t_Ma": 9,
+        "n": 29,
+        "centroid_error_km": 1.9687935657588718e-08,
+        "present_lat_min": 36.64441163401482
+      },
+      {
+        "t_Ma": 8,
+        "n": 29,
+        "centroid_error_km": 2.287545405528164e-08,
+        "present_lat_min": 36.644411633998764
+      },
+      {
+        "t_Ma": 7,
+        "n": 29,
+        "centroid_error_km": 2.6277280402548313e-08,
+        "present_lat_min": 36.64441163398182
+      },
+      {
+        "t_Ma": 6,
+        "n": 29,
+        "centroid_error_km": 2.9595063241140207e-08,
+        "present_lat_min": 36.64441163396542
+      },
+      {
+        "t_Ma": 5,
+        "n": 29,
+        "centroid_error_km": 3.170916293765555e-08,
+        "present_lat_min": 36.64441163395504
+      },
+      {
+        "t_Ma": 4,
+        "n": 29,
+        "centroid_error_km": 2.9182817366588238e-08,
+        "present_lat_min": 36.64441163396717
+      },
+      {
+        "t_Ma": 3,
+        "n": 29,
+        "centroid_error_km": 2.9019384762465045e-08,
+        "present_lat_min": 36.64441163396794
+      },
+      {
+        "t_Ma": 2,
+        "n": 29,
+        "centroid_error_km": 2.8693881886738484e-08,
+        "present_lat_min": 36.64441163396944
+      },
+      {
+        "t_Ma": 1,
+        "n": 29,
+        "centroid_error_km": 2.7549431075586685e-08,
+        "present_lat_min": 36.644411633974805
+      },
+      {
+        "t_Ma": 0,
+        "n": 29,
+        "centroid_error_km": 2.7549457698574635e-08,
+        "present_lat_min": 36.64441163397481
+      }
+    ]
+  },
+  "A": {
+    "C1": {
+      "all_pass": true,
+      "pass": {
+        "ocean_fraction": true,
+        "main_continent": true,
+        "subcontinents": true,
+        "main_inland_sea": true,
+        "main_continent_latitude": true,
+        "polar_continent": true,
+        "open_ocean": true
+      },
+      "ocean_fraction": 0.715,
+      "main_continent_share": 0.735,
+      "subcontinents": 3,
+      "subcontinent_areas_Mkm2": [
+        59.2,
+        38.8,
+        5.9
+      ],
+      "main_inland_sea": {
+        "area_Mkm2": 4.46,
+        "straits": 1,
+        "aspect": 3.2582332051150527,
+        "checks": {
+          "area_in_range": true,
+          "ratio_to_second_ok": true,
+          "straits_ok": true,
+          "bordering_subcontinents_ok": true,
+          "elongation_ok": true
+        }
+      },
+      "latitude": [
+        79.27734375,
+        -43.76953125
+      ],
+      "polar_Mkm2": [
+        13.2
+      ]
+    },
+    "C2": {
+      "all_pass": true,
+      "pass": {
+        "ocean_fraction": true,
+        "main_continent": true,
+        "subcontinents": true,
+        "main_inland_sea": true,
+        "main_continent_latitude": true,
+        "polar_continent": true,
+        "open_ocean": true
+      },
+      "ocean_fraction": 0.715,
+      "main_continent_share": 0.735,
+      "subcontinents": 3,
+      "subcontinent_areas_Mkm2": [
+        59.2,
+        38.8,
+        6.0
+      ],
+      "main_inland_sea": {
+        "area_Mkm2": 4.46,
+        "straits": 1,
+        "aspect": 3.2552886144676694,
+        "checks": {
+          "area_in_range": true,
+          "ratio_to_second_ok": true,
+          "straits_ok": true,
+          "bordering_subcontinents_ok": true,
+          "elongation_ok": true
+        }
+      },
+      "latitude": [
+        79.27734375,
+        -43.76953125
+      ],
+      "polar_Mkm2": [
+        13.2
+      ]
+    }
+  },
+  "last_step": {
+    "C1": {
+      "t_Ma": 0,
+      "committed": true,
+      "collision_deposited_cumulative_km3": 663669.9186467516,
+      "source_n": 28,
+      "source_area_km2": 81217.42988401501,
+      "source_volume_km3": 3515823.839232938,
+      "source_T_p90_km": 45.9506233173794,
+      "alb_cont_n": 30,
+      "alb_cont_volume_km3": 3739430.132786197,
+      "alb_original_volume_km3": 3515823.839232938,
+      "alb_other_volume_km3": 223606.29355325917,
+      "alb_T_p90_km": 45.90041015580418,
+      "alb_at_cap_area_km2": 0.0,
+      "source_by_plate_km2": {
+        "304": 81217.42988401501
+      }
+    },
+    "C2": {
+      "t_Ma": 0,
+      "committed": true,
+      "collision_deposited_cumulative_km3": 223039.65760263786,
+      "source_n": 29,
+      "source_area_km2": 84044.3056238809,
+      "source_volume_km3": 3204702.138563383,
+      "source_T_p90_km": 39.55900479782833,
+      "alb_cont_n": 31,
+      "alb_cont_volume_km3": 3389871.9076015553,
+      "alb_original_volume_km3": 3204702.138563383,
+      "alb_other_volume_km3": 185169.76903817232,
+      "alb_T_p90_km": 39.55628705208301,
+      "alb_at_cap_area_km2": 0.0,
+      "source_by_plate_km2": {
+        "304": 84044.3056238809
+      }
+    }
+  },
+  "rift_events": {
+    "C1": [
+      {
+        "t": 35.0,
+        "kind": "terrane_rift",
+        "src": 302,
+        "dst": 304,
+        "n_parcels": 29,
+        "n_new": 28,
+        "area_km2": 81217
+      }
+    ],
+    "C2": [
+      {
+        "t": 38.0,
+        "kind": "terrane_rift",
+        "src": 302,
+        "dst": 304,
+        "n_parcels": 29,
+        "n_new": 0,
+        "area_km2": 84044,
+        "remeshed": false
+      }
+    ]
+  }
+}

@@ -531,7 +531,8 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
     li = 0
     code_id_all = plate_codes(arcs_hcfg) if arcs_hcfg else {}
     rifts_from = sorted(({"id": int(b["id"]), "code": b["code"], "t": float(b["rift_from"]["t"]),
-                          "parent": int(code_id_all[b["rift_from"]["plate"]]), "parent_code": b["rift_from"]["plate"]}
+                          "parent": int(code_id_all[b["rift_from"]["plate"]]), "parent_code": b["rift_from"]["plate"],
+                          "preserve_frame": bool(b["rift_from"].get("preserve_frame", False))}
                          for b in (arcs_hcfg or {}).get("blocks", []) if b.get("rift_from")), key=lambda e: -e["t"])
     rift_done = set()
     # U35：嵌套的裂开（西口弧形地体先是西段地体的一部分，西段地体又先是洲 C 的一部分）：母块裂开时连同它名下还没裂开的子地体一起转出
@@ -615,12 +616,17 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
                 r = apply_graben(eng, rift_line(rf, t), rf["half_km"], rf["beta"])
                 log(f"  {t:3d} Ma 陆内裂谷 {rf['id']}（{rf['name']}）：{r['n']} 个陆壳单元减薄（β ≤ {rf['beta']}），"
                     f"{r['volume_km3'] / 1e6:.2f}×10⁶ km³")
-        while committed and arcs_hcfg is not None and rifts_from and rifts_from[0]["t"] >= t - 1e-9:
+        while (arcs_hcfg is not None and rifts_from and rifts_from[0]["t"] >= t - 1e-9
+               and (committed or rifts_from[0]["preserve_frame"])):
             e = rifts_from.pop(0)                  # U33：微陆块从母板块裂开（之前是母板块的一部分）
             om_q = kin.step_rotations([e["id"]], max(t, 1))[1][e["id"]]
-            eng.add_plate(e["id"], om_q)
             sel = np.flatnonzero(eng.alive & (eng.c.plate == e["parent"]) & np.isin(eng.c.origin, rift_family(e["id"])))
-            n = eng.transfer_units(e["parent"], e["id"], sel, kind="terrane_rift")
+            if e["preserve_frame"]:
+                # U35-C2：逐 Myr 准时裂离，继承母块参照系，不做重采样或额外全局提交。
+                n = eng.rift_units(e["parent"], e["id"], sel, om_q)
+            else:
+                eng.add_plate(e["id"], om_q)
+                n = eng.transfer_units(e["parent"], e["id"], sel, kind="terrane_rift")
             log(f"  {t:3d} Ma 微陆块 {e['code']} 从 {e['parent_code']} 裂开：{sel.size} 个单元转出（新板块 {n} 个单元）")
         for ra in reacts or []:                    # U33 板内挤压复活：期间每 Myr 纯剪切增厚（范围按 anchor 板块从现今转回此刻）
             if ra["t_end"] <= t < ra["t_start"]:

@@ -149,12 +149,19 @@ def archive_run(case):
 
 
 def main():
+    global OUT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", choices=("previous", "latest"), required=True)
     parser.add_argument("--no-figures", action="store_true")
     parser.add_argument("--no-collision-ledger", action="store_true",
                         help="仅采样逐步状态，不包裹碰撞函数；用于复现额外体积账本的无干扰对照")
+    parser.add_argument("--output-root", type=Path, help="另存观测缓存（相对项目根目录），避免覆盖既有检查点")
     args = parser.parse_args()
+    if args.output_root is not None:
+        dest = (ROOT / args.output_root).resolve()
+        if not dest.is_relative_to(ROOT):
+            parser.error("观测缓存必须放在项目工作区内")
+        OUT = dest
     original_yaml = fwd.yaml
     original_simulate = fwd.simulate
     original_step = VolcanoField.step

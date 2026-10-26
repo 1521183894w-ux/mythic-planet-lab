@@ -1,0 +1,116 @@
+{
+  "checkpoint": "U35-C2",
+  "baseline_commit": "87b0ed4",
+  "date": "2026-10-26",
+  "method_class": "procedural_constrained",
+  "input_and_code_sha256": {
+    "AGENTS.md": "b1398e82d4bafb923dfb4387bc707263f87058f358903afccc0a9dd4dcb2676b",
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    "packages/tectonics/engine.py": "54f47bb128ecdea5d1930ff7c5819df5c46db1248ddbe7f9e47fabf0401119c2",
+    "scripts/design_forward.py": "07fef9e697e770bf785da888cf9bcfa398165c160f9a6d8d2efd6264cc4728e2",
+    "scripts/design_west_arc_diagnostic.py": "b53963a49c9b468a139a13c90e00fc6bd3e00c15158f0c7be4f9a49d64c054b3",
+    "scripts/design_west_arc_rift_spike.py": "edb27df3b0eecc9b2c2b7c0f11163208ab7f2062e048df774a5b0cce554b92d2",
+    "scripts/design_west_arc_c2_report.py": "a2308a7d4478f5a117203983804a6220ab495f3b4cc0a0a4596155e163414b49",
+    "data/worlds/design_v2/u35_c2_rift_input.json": "1686e04f457ec8c09e9a8c5d9246cb4d69dbfcbc2d9007a8ad5fc4fb1c5ef8fd",
+    "scripts/design_strait_pixels.py": "1446f9590cd7850842668779318862c2ae336d6d1862a91ae2b9f52f7da6a624"
+  },
+  "tests": {
+    "tests_targeted.xml": {
+      "tests": "54",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "20.714"
+    },
+    "tests_all.xml": {
+      "tests": "174",
+      "failures": "1",
+      "errors": "0",
+      "skipped": "1",
+      "time": "407.685"
+    },
+    "tests_baseline_prehistory.xml": {
+      "tests": "1",
+      "failures": "1",
+      "errors": "0",
+      "skipped": "0",
+      "time": "87.783"
+    },
+    "baseline_retest_method": "独立 Python 进程用 git show 87b0ed4:packages/tectonics/engine.py 加载未改引擎，再运行同一前史失败项；工作区代码未替换。",
+    "baseline_retest_command": "python .cache/u35_c2/check_baseline_test.py"
+  },
+  "resources": {
+    "latest_c2": {
+      "command": [
+        "environment/env/python.exe",
+        "-u",
+        ".cache/u35_c2/run_observed.py",
+        "--case",
+        "latest"
+      ],
+      "exit_code": 0,
+      "wall_s": 336.48,
+      "peak_rss_GB": 2.744
+    },
+    "standard_c2": {
+      "command": [
+        "environment/env/python.exe",
+        "scripts/make_figures.py",
+        "--world",
+        "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc",
+        "--stage",
+        "1"
+      ],
+      "exit_code": 0,
+      "wall_s": 32.52,
+      "peak_rss_GB": 0.694
+    }
+  },
+  "canonical_commands": [
+    "python scripts/design_west_arc_rift_spike.py",
+    "python scripts/design_west_arc_diagnostic.py --case latest --output-root .cache/u35_c2",
+    "python scripts/design_west_arc_c2_report.py",
+    "python scripts/make_figures.py --world data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc --stage 1",
+    "python scripts/design_strait_pixels.py"
+  ],
+  "actual_observed_run_note": "本轮运行时用忽略目录中的包装器把已有 Observer.OUT 指向 .cache/u35_c2；随后增加 --output-root 参数表达同一目录选择，未改模拟或采样。",
+  "unchanged_scientific_inputs": {
+    "config/design/final_map_v2.yaml": true,
+    "config/metrics.yaml": true,
+    "data/worlds/design_v2/history_v2.rot": true
+  },
+  "artifact_validation": {
+    "png_files_decoded": 54,
+    "gallery_local_links_checked": 8,
+    "pre_event_arrays_identical": true,
+    "neck_source_node_and_age_mapping_verified": true,
+    "small_input_spike_cases_and_traces_identical": true,
+    "post_review_figures_same_diagnostic_data": true
+  },
+  "environment_versions": {
+    "python": "3.12.15",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pygplates": "1.0.0",
+    "xarray": "2026.9.0",
+    "matplotlib": "3.11.2"
+  },
+  "initial_world_sha256": "2826b19b0338d3869027ed9fd325822efa190be3570e33223b2fd0fabd4c2cd7",
+  "initial_world_unchanged_from_C1": true,
+  "independent_review": {
+    "report": "reviews/stage1_2026-10-26_2.md",
+    "sha256": "b291d82b5753ef38d1157bcd7b7262ddf7d19c89b85b6ca8de432e766adb6943",
+    "severe_unresolved": 5,
+    "severe_worsened_this_checkpoint": 1,
+    "severe_existing": 4,
+    "closed": [
+      "旧定位偏差",
+      "旧r5陆桥误选"
+    ],
+    "verdict": "进度审看可提交；U35收尾不通过；阶段1验收不建议",
+    "developer_response": "docs/u35_c2_west_arc.md"
+  }
+}

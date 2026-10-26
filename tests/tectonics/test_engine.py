@@ -521,3 +521,32 @@ def test_rollback_arcs_get_no_upper_plate_shortening(mesh):
     andean, rollback = run(False), run(True)
     assert andean > 0 and rollback > 0             # 两种都有岩浆增生
     assert rollback < 0.6 * andean                 # 后撤型少了构造缩短那一项
+
+
+def test_rift_units_preserves_geometry_and_volume_between_commits(mesh):
+    """U35-C2：任意步裂离不重采样、不改 UID、面积、体积或全局提交计数。"""
+    c, cont = _two_plates(mesh, cap_center=(0.0, 0.0), r=20.0)
+    w = pole_vector(10.0, 70.0, 0.2)
+    eng = Engine(mesh, c, Params(), 40.0, {1: w, 2: w})
+    for _ in range(2):
+        eng.step({q: omega_rotmat(w, 1.0) for q in eng.plates}, {q: w for q in eng.plates})
+    moved = np.flatnonzero(eng.alive & (eng.c.plate == 1) & (eng.c.ctype == CONT))
+    old = eng.c.gather(np.arange(len(eng.c)))
+    positions, area = eng.positions().copy(), eng.area.copy()
+    volume, steps, commits = eng.cont_volume(), eng.steps_since_commit, len(eng.commit_log)
+    n = eng.rift_units(1, 3, moved, -w)
+    assert n == moved.size > 0 and steps == 2
+    for field in eng.c.FIELDS:
+        if field != "plate":
+            np.testing.assert_array_equal(getattr(eng.c, field), getattr(old, field))
+    np.testing.assert_array_equal(eng.positions(), positions)
+    np.testing.assert_array_equal(eng.area, area)
+    assert eng.cont_volume() == volume
+    assert eng.steps_since_commit == steps and len(eng.commit_log) == commits
+    assert (eng.c.plate[moved] == 3).all()
+    assert np.array_equal(eng.R[3], eng.R[1]) and not np.shares_memory(eng.R[3], eng.R[1])
+    assert eng.events[-1]["remeshed"] is False and eng.events[-1]["t"] == 38.
+    with pytest.raises(ValueError):
+        eng.rift_units(1, 3, moved, w)
+    with pytest.raises(ValueError):
+        eng.rift_units(1, 4, moved, w)

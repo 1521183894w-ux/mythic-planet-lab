@@ -56,7 +56,7 @@
 | 陆壳的省份起伏（U32） | 初始世界里每个古老地壳省份一个高程偏移（正态分布，按 Airy 换成厚度），网格上平滑约 150 km，海岸处为 0，内陆不低于约 +65 m | procedural_constrained（结构跟继承的省份走，幅度按地球稳定大陆的高程分布） |
 | 海平面以下的减薄陆壳不接受弧增厚（U32） | 比 32.5 km 薄的陆壳（陆架、陆表海、被淹的海湾）不因弧岩浆与构造缩短增厚：岩浆弧长在离海沟一两百公里的大陆上（按板块对限制的开关试过，压低了设计的山系，关掉） | procedural_constrained |
 | 走滑带的网格小洞（U32） | 两块陆壳板块之间不在张开的小洞补成相邻陆壳（厚度封顶在拉分盆地厚度，体积从最近的 12 个陆壳单元匀出，属性抄最近的单元），不补洋壳 | 数值处理 |
-| 微陆块从母板块裂开（U33，终图倒推） | 设计指定的地体在 rift_from.t 以前是母板块的一部分（初始世界记在母板块名下、保留地体来源编号）；到那一刻新增板块、把来源对得上的单元收集式转过去，之后按旋转文件运动；裂开处按裂开陆缘长陆架 | procedural_constrained（运动由设计设定） |
+| 微陆块从母板块裂开（U33，终图倒推） | 设计指定的地体在 rift_from.t 以前是母板块的一部分（初始世界记在母板块名下、保留地体来源编号）；默认在提交步新增板块、把来源对得上的单元收集式转过去；U35-C2 的 ALB 启用 preserve_frame，在逐 Myr 到达 38 Ma 时继承母块参照格网裂离，不重采样，保留位置、面积、体积和 UID；之后按旋转文件运动；裂开处按裂开陆缘长陆架 | procedural_constrained（运动由设计设定） |
 | 板内挤压复活（U33） | 碰撞应力传到内陆，沿老缝合带挤压缩短：设计给出的范围（终图山脊线两侧或高原轮廓，锚在所在板块上）在 [t_start, t_end] 期间按总增厚比匀速纯剪切增厚，剥蚀照常 | procedural_constrained（位置、时间、幅度由设计给出） |
 | 张开处的陆—陆重叠（U34） | 设计的裂开陆缘、走滑拉分板块对（forward.pull_apart）上，两侧正在分开处的陆—陆重叠是网格对不齐，不当碰撞（下行单元不删、对方不增厚），分开后重叠自己消失；汇聚处照常碰撞 | 数值处理（引擎原来把任何陆—陆重叠都当碰撞，张开只有每 Myr 几公里的边界上陆壳被一点点泵厚） |
 | 全球海平面（U30） | 海水体积不变，按每一帧的洋底水深与陆地面积解出海平面，乘海水加载的均衡改正 0.69；0 Ma 为 0 | parameterized_physics |
@@ -828,3 +828,8 @@
 - Matmon, A. 等 (2003). Temporally and spatially uniform rates of erosion in the southern Appalachian Great Smoky Mountains. *Geology* 31, 155–158（U31 低起伏老山的 ¹⁰Be 剥蚀速率 25–30 m/Myr；凭已有知识引用，原文待核对）。
 - Montgomery, D. R., Brandon, M. T. (2002). Topographic controls on erosion rates in tectonically active mountain ranges. *Earth and Planetary Science Letters* 201, 481–489（U31 剥蚀速率随起伏非线性增长；凭已有知识引用，原文待核对）。
 - pyGPlates 1.0、stripy：见 `docs/tool_evaluation.md`。
+
+
+### U35-C2 西口裂离的时序与格网修正（2026-10-26）
+
+按 C1 的真实来源单元做四组运动学隔离重放后，仅为 ALB 启用准时、保参照系裂离（Engine.rift_units；rift_from.preserve_frame）。消除 38→35 Ma 的调度延迟与 29→28 单元重采样；其他地体、运动路线、五步提交和地形公式保持原有处理。完整结果、未解决的山弧偏低与年轻洋壳窄口敏感性，以及测试的既有失败，见 [U35-C2 交接](u35_c2_west_arc.md)。这是数值表示与事件时序修正，method_class 仍为 procedural_constrained，不是新物理求解器。
