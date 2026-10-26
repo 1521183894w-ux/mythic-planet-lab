@@ -1,0 +1,735 @@
+{
+  "baseline_commit": "5d7a5a0ae15f55f8186443ce4fa9b82690b21da9",
+  "neutrality": {
+    "identical": true,
+    "arrays_checked": 352,
+    "different_arrays": [],
+    "previous_extra_ledger": {
+      "identical": true,
+      "arrays_checked": 352,
+      "different_arrays": []
+    },
+    "events_identical": true,
+    "budget_identical": true
+  },
+  "previous_summary_reproduction": {
+    "comparison": true,
+    "A_engine_0Ma": true,
+    "hypsometry_0Ma": true,
+    "volume_change": true,
+    "budget_km3": true
+  },
+  "global_change": {
+    "max_abs_elevation_change_m": 5211.66796875,
+    "changed_area_km2": 310811.1459631849,
+    "land_mask_changed_area_km2": 19229.06273420922,
+    "area_abs_change_over_1m_km2": 235638.78901533794,
+    "area_abs_change_over_150m_km2": 126534.01922956931,
+    "outside_west_window_max_abs_m": 0.0
+  },
+  "mountain_changes": [
+    {
+      "id": "M1",
+      "name": "内海北岸山系",
+      "previous_p90_m": 4003,
+      "latest_p90_m": 4003,
+      "change_m": 0
+    },
+    {
+      "id": "M1b",
+      "name": "长半岛山脊",
+      "previous_p90_m": 961,
+      "latest_p90_m": 961,
+      "change_m": 0
+    },
+    {
+      "id": "M1c",
+      "name": "多湾半岛山地",
+      "previous_p90_m": 1466,
+      "latest_p90_m": 1466,
+      "change_m": 0
+    },
+    {
+      "id": "M1d",
+      "name": "北岸外弧山系",
+      "previous_p90_m": 1358,
+      "latest_p90_m": 1358,
+      "change_m": 0
+    },
+    {
+      "id": "M2",
+      "name": "内海南岸山系",
+      "previous_p90_m": 3239,
+      "latest_p90_m": 3239,
+      "change_m": 0
+    },
+    {
+      "id": "M3",
+      "name": "东方大高原南缘山系",
+      "previous_p90_m": 4945,
+      "latest_p90_m": 4945,
+      "change_m": 0
+    },
+    {
+      "id": "M3b",
+      "name": "构造结南向山系",
+      "previous_p90_m": 4945,
+      "latest_p90_m": 4945,
+      "change_m": 0
+    },
+    {
+      "id": "M3c",
+      "name": "高原北缘山系",
+      "previous_p90_m": 4945,
+      "latest_p90_m": 4945,
+      "change_m": 0
+    },
+    {
+      "id": "M3e",
+      "name": "高原内部山脉",
+      "previous_p90_m": 4945,
+      "latest_p90_m": 4945,
+      "change_m": 0
+    },
+    {
+      "id": "M3f",
+      "name": "高原中北部山脉",
+      "previous_p90_m": 509,
+      "latest_p90_m": 509,
+      "change_m": 0
+    },
+    {
+      "id": "M3d",
+      "name": "东湾北岸褶皱山",
+      "previous_p90_m": 4894,
+      "latest_p90_m": 4894,
+      "change_m": 0
+    },
+    {
+      "id": "M4",
+      "name": "北方缝合老山",
+      "previous_p90_m": 869,
+      "latest_p90_m": 869,
+      "change_m": 0
+    },
+    {
+      "id": "M5",
+      "name": "南方缝合带山系",
+      "previous_p90_m": 2753,
+      "latest_p90_m": 2753,
+      "change_m": 0
+    },
+    {
+      "id": "M30",
+      "name": "南方走滑断层谷",
+      "previous_p90_m": 2114,
+      "latest_p90_m": 2114,
+      "change_m": 0
+    },
+    {
+      "id": "M6",
+      "name": "冰川半岛山脉",
+      "previous_p90_m": 1078,
+      "latest_p90_m": 1078,
+      "change_m": 0
+    },
+    {
+      "id": "M7a",
+      "name": "东南沿海山地",
+      "previous_p90_m": 578,
+      "latest_p90_m": 578,
+      "change_m": 0
+    },
+    {
+      "id": "M7",
+      "name": "东岸山系",
+      "previous_p90_m": 1917,
+      "latest_p90_m": 1917,
+      "change_m": 0
+    },
+    {
+      "id": "M7b",
+      "name": "东北半岛火山脊",
+      "previous_p90_m": 1959,
+      "latest_p90_m": 1959,
+      "change_m": 0
+    },
+    {
+      "id": "M7c",
+      "name": "东岸半岛山脊",
+      "previous_p90_m": 1268,
+      "latest_p90_m": 1268,
+      "change_m": 0
+    },
+    {
+      "id": "M8",
+      "name": "远方大陆西岸山系",
+      "previous_p90_m": 4094,
+      "latest_p90_m": 4094,
+      "change_m": 0
+    },
+    {
+      "id": "M8c",
+      "name": "远方大陆南段冰原山系",
+      "previous_p90_m": 2886,
+      "latest_p90_m": 2886,
+      "change_m": 0
+    },
+    {
+      "id": "M8b",
+      "name": "远方大陆东部古老高地",
+      "previous_p90_m": 883,
+      "latest_p90_m": 883,
+      "change_m": 0
+    },
+    {
+      "id": "M23",
+      "name": "远方大陆北缘山地",
+      "previous_p90_m": 422,
+      "latest_p90_m": 422,
+      "change_m": 0
+    },
+    {
+      "id": "M9",
+      "name": "极地横贯山脉",
+      "previous_p90_m": 979,
+      "latest_p90_m": 979,
+      "change_m": 0
+    },
+    {
+      "id": "M29",
+      "name": "冰原长半岛山脊",
+      "previous_p90_m": 1723,
+      "latest_p90_m": 1723,
+      "change_m": 0
+    },
+    {
+      "id": "M28",
+      "name": "极地半岛山脊",
+      "previous_p90_m": 2062,
+      "latest_p90_m": 2062,
+      "change_m": 0
+    },
+    {
+      "id": "M10",
+      "name": "南方地盾裂谷",
+      "previous_p90_m": 1580,
+      "latest_p90_m": 1580,
+      "change_m": 0
+    },
+    {
+      "id": "M22",
+      "name": "南方火山高地",
+      "previous_p90_m": 1842,
+      "latest_p90_m": 1842,
+      "change_m": 0
+    },
+    {
+      "id": "M11",
+      "name": "东北山地",
+      "previous_p90_m": 1338,
+      "latest_p90_m": 1338,
+      "change_m": 0
+    },
+    {
+      "id": "M12",
+      "name": "东南半岛山脊",
+      "previous_p90_m": 1599,
+      "latest_p90_m": 1599,
+      "change_m": 0
+    },
+    {
+      "id": "M13",
+      "name": "海峡北岸山地",
+      "previous_p90_m": 893,
+      "latest_p90_m": 893,
+      "change_m": 0
+    },
+    {
+      "id": "M31",
+      "name": "西口弧形山系",
+      "previous_p90_m": 4945,
+      "latest_p90_m": 1838,
+      "change_m": -3107
+    },
+    {
+      "id": "M13b",
+      "name": "西北地盾古山",
+      "previous_p90_m": 927,
+      "latest_p90_m": 927,
+      "change_m": 0
+    },
+    {
+      "id": "M14",
+      "name": "南端褶皱山",
+      "previous_p90_m": 560,
+      "latest_p90_m": 560,
+      "change_m": 0
+    },
+    {
+      "id": "M15",
+      "name": "中央山系",
+      "previous_p90_m": 4401,
+      "latest_p90_m": 4401,
+      "change_m": 0
+    },
+    {
+      "id": "M15b",
+      "name": "北部断块山",
+      "previous_p90_m": 3237,
+      "latest_p90_m": 3237,
+      "change_m": 0
+    },
+    {
+      "id": "M16",
+      "name": "北方长角古山",
+      "previous_p90_m": 800,
+      "latest_p90_m": 800,
+      "change_m": 0
+    },
+    {
+      "id": "M17",
+      "name": "裂谷肩山地",
+      "previous_p90_m": 3262,
+      "latest_p90_m": 3262,
+      "change_m": 0
+    },
+    {
+      "id": "M19",
+      "name": "南方地盾半岛西缘山",
+      "previous_p90_m": 893,
+      "latest_p90_m": 893,
+      "change_m": 0
+    },
+    {
+      "id": "M24",
+      "name": "南洋陆块山脉",
+      "previous_p90_m": 2116,
+      "latest_p90_m": 2116,
+      "change_m": 0
+    },
+    {
+      "id": "M25",
+      "name": "东方岛弧山地",
+      "previous_p90_m": 1934,
+      "latest_p90_m": 1934,
+      "change_m": 0
+    },
+    {
+      "id": "M26",
+      "name": "东南大岛山地",
+      "previous_p90_m": 1155,
+      "latest_p90_m": 1155,
+      "change_m": 0
+    },
+    {
+      "id": "M27",
+      "name": "东南群岛东大岛山脊",
+      "previous_p90_m": 4549,
+      "latest_p90_m": 4549,
+      "change_m": 0
+    }
+  ],
+  "trajectory": [
+    {
+      "t_Ma": 38,
+      "source_parcels": 29,
+      "source_lat_min": 34.59836916453381,
+      "source_T_p90_km": 35.0,
+      "source_min_raw_elevation_m": 202.87505699543058,
+      "source_min_raw_relative_to_sea_m": 152.6413272328598
+    },
+    {
+      "t_Ma": 30,
+      "source_parcels": 28,
+      "source_lat_min": 34.78643969412524,
+      "source_T_p90_km": 35.307883962058135,
+      "source_min_raw_elevation_m": 209.93453131203796,
+      "source_min_raw_relative_to_sea_m": 175.94079844817497
+    },
+    {
+      "t_Ma": 10,
+      "source_parcels": 28,
+      "source_lat_min": 35.36321777792748,
+      "source_T_p90_km": 36.40274491491924,
+      "source_min_raw_elevation_m": 222.56314911846732,
+      "source_min_raw_relative_to_sea_m": 202.83581531696916
+    },
+    {
+      "t_Ma": 6,
+      "source_parcels": 28,
+      "source_lat_min": 36.00378177174534,
+      "source_T_p90_km": 36.594981304900585,
+      "source_min_raw_elevation_m": 224.90627660032703,
+      "source_min_raw_relative_to_sea_m": 199.89565163132318
+    },
+    {
+      "t_Ma": 5,
+      "source_parcels": 28,
+      "source_lat_min": 36.16328292412306,
+      "source_T_p90_km": 36.63946700488205,
+      "source_min_raw_elevation_m": 225.735884794512,
+      "source_min_raw_relative_to_sea_m": 213.9143234493124
+    },
+    {
+      "t_Ma": 0,
+      "source_parcels": 28,
+      "source_lat_min": 37.027129950042415,
+      "source_T_p90_km": 45.9506233173794,
+      "source_min_raw_elevation_m": 790.3693192297069,
+      "source_min_raw_relative_to_sea_m": 790.3693192297072
+    }
+  ],
+  "initial_sampling": {
+    "initial_source_n": 26,
+    "initial_source_area_km2": 79910.85715926811,
+    "template_area_km2": 79980.66148806197,
+    "tip_template_area_km2": 25638.732515005693,
+    "tip_nearest_initial_source_distance_km": [
+      19.886604682040655,
+      14.475207423330694,
+      33.32471002887755,
+      20.93970692436698,
+      15.982267225738441,
+      16.67428545188771,
+      26.785426577958788,
+      27.880936367003823,
+      9.121836283346878,
+      22.08345167100924,
+      41.041260414526604,
+      17.517968470604846,
+      25.529327264528856,
+      11.222380072995753,
+      33.16300491134431,
+      15.032324676118769,
+      26.230161423321054,
+      29.617274176898587,
+      1.7544601252641383,
+      33.04074752214432,
+      45.39498783891643
+    ],
+    "source_projected_to_present_lon": [
+      -14.361881408867587,
+      -15.316633528409778,
+      -16.499080445816578,
+      -14.135621315244446,
+      -13.174533604637908,
+      -15.787186026530664,
+      -13.657326724804477,
+      -14.841557953064191,
+      -16.968194526260877,
+      -12.58632187624127,
+      -17.0970009741974,
+      -14.724396648126643,
+      -15.906164418013635,
+      -15.66407477537416,
+      -16.84141473348873,
+      -16.37525156422714,
+      -12.687345896546855,
+      -16.026952458508564,
+      -17.564494789515738,
+      -15.432462380361576,
+      -13.766385307330422,
+      -14.609055141766595,
+      -13.07026095215457,
+      -15.19648868589825,
+      -12.486849691288441,
+      -14.247874637555059
+    ],
+    "source_projected_to_present_lat": [
+      38.24495645553128,
+      37.53537424647242,
+      37.95908917043115,
+      37.09474265305163,
+      37.79511449493485,
+      37.17773427954427,
+      37.44590132170078,
+      37.891129226668646,
+      37.59592914244128,
+      37.565758564325584,
+      38.16572639277248,
+      37.31652553721951,
+      37.74870829351554,
+      36.604004176270195,
+      37.02604991277089,
+      37.38873377426417,
+      38.14205618972768,
+      38.31963118143996,
+      37.80019724686139,
+      38.106875746585565,
+      38.02152792429832,
+      36.74173675103667,
+      37.21892013178326,
+      36.961183124655506,
+      36.98904706761864,
+      37.669903576602216
+    ]
+  },
+  "onset_38_to_35Ma": [
+    {
+      "t_Ma": 38,
+      "source_n": 29,
+      "present_centroid_lon": -15.068008962186326,
+      "present_centroid_lat": 37.551109061555024,
+      "present_lon_min": -17.645841953459893,
+      "present_lon_max": -12.266511251294686,
+      "present_lat_min": 36.644411634082424,
+      "present_lat_max": 38.41159355481745,
+      "shift_from_38Ma_km": 0.0
+    },
+    {
+      "t_Ma": 37,
+      "source_n": 29,
+      "present_centroid_lon": -14.540753458269698,
+      "present_centroid_lat": 37.672369624577826,
+      "present_lon_min": -17.125370926525008,
+      "present_lon_max": -11.720693453888039,
+      "present_lat_min": 36.77112718960278,
+      "present_lat_max": 38.50855018047723,
+      "shift_from_38Ma_km": 48.360762073043375
+    },
+    {
+      "t_Ma": 36,
+      "source_n": 29,
+      "present_centroid_lon": -14.014965498573838,
+      "present_centroid_lat": 37.79986280561218,
+      "present_lon_min": -16.606029907237524,
+      "present_lon_max": -11.176639938856107,
+      "present_lat_min": 36.90427384831044,
+      "present_lat_max": 38.61154799417325,
+      "shift_from_38Ma_km": 96.71640767747233
+    },
+    {
+      "t_Ma": 35,
+      "source_n": 28,
+      "present_centroid_lon": -13.4247241498176,
+      "present_centroid_lat": 37.89607854782827,
+      "present_lon_min": -15.920503736477785,
+      "present_lon_max": -10.652843204030551,
+      "present_lat_min": 37.027129950136946,
+      "present_lat_max": 38.81198161915919,
+      "shift_from_38Ma_km": 149.531535917941
+    }
+  ],
+  "strait_section": {
+    "longitude": -14.94140625,
+    "center_lat": 36.03515625,
+    "definition": "T1 设计中点所在经线、包含中点的连续水道南北跨度；不是最窄宽度或 A 层海峡指标。",
+    "resolution_lat_km": 39.09196639847768,
+    "design": {
+      "width_km": 78.18393279695536,
+      "center_is_land": false,
+      "north_water_cell_lat": 36.38671875,
+      "south_water_cell_lat": 36.03515625
+    },
+    "previous": {
+      "width_km": 156.36786559391072,
+      "center_is_land": false,
+      "north_water_cell_lat": 36.73828125,
+      "south_water_cell_lat": 35.68359375
+    },
+    "latest": {
+      "width_km": 156.36786559391072,
+      "center_is_land": false,
+      "north_water_cell_lat": 36.73828125,
+      "south_water_cell_lat": 35.68359375
+    }
+  },
+  "collision_transfers": {
+    "previous": [
+      {
+        "t_Ma": 5.0,
+        "donor_n": 6,
+        "donor_volume_km3": 655601.8821889899,
+        "deposited_on_ALB_km3": 655601.88218899,
+        "donor_volume_by_plate_km3": {
+          "302": 655601.8821889899
+        },
+        "donor_volume_by_origin_km3": {
+          "302": 655601.8821889899
+        }
+      },
+      {
+        "t_Ma": 5.0,
+        "donor_n": 2,
+        "donor_volume_km3": 220375.60977143218,
+        "deposited_on_ALB_km3": 220375.60977143215,
+        "donor_volume_by_plate_km3": {
+          "302": 220375.60977143218
+        },
+        "donor_volume_by_origin_km3": {
+          "302": 220375.60977143218
+        }
+      },
+      {
+        "t_Ma": 3.0,
+        "donor_n": 3,
+        "donor_volume_km3": 329695.6554593659,
+        "deposited_on_ALB_km3": 329695.6554593659,
+        "donor_volume_by_plate_km3": {
+          "302": 329695.6554593659
+        },
+        "donor_volume_by_origin_km3": {
+          "302": 329695.6554593659
+        }
+      },
+      {
+        "t_Ma": 2.0,
+        "donor_n": 1,
+        "donor_volume_km3": 129895.18777899414,
+        "deposited_on_ALB_km3": 129895.1877789941,
+        "donor_volume_by_plate_km3": {
+          "103": 129895.18777899414
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 129895.18777899414
+        }
+      },
+      {
+        "t_Ma": 1.0,
+        "donor_n": 1,
+        "donor_volume_km3": 127601.3761784209,
+        "deposited_on_ALB_km3": 127601.37617842093,
+        "donor_volume_by_plate_km3": {
+          "103": 127601.3761784209
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 127601.3761784209
+        }
+      },
+      {
+        "t_Ma": 0.0,
+        "donor_n": 7,
+        "donor_volume_km3": 800424.6905780407,
+        "deposited_on_ALB_km3": 800424.6905780408,
+        "donor_volume_by_plate_km3": {
+          "103": 406180.9789920956,
+          "302": 394243.71158594504
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 406180.9789920956,
+          "302": 394243.71158594504
+        }
+      }
+    ],
+    "latest": [
+      {
+        "t_Ma": 2.0,
+        "donor_n": 1,
+        "donor_volume_km3": 129895.18777899414,
+        "deposited_on_ALB_km3": 129895.18777899412,
+        "donor_volume_by_plate_km3": {
+          "103": 129895.18777899414
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 129895.18777899414
+        }
+      },
+      {
+        "t_Ma": 1.0,
+        "donor_n": 1,
+        "donor_volume_km3": 127601.3761784209,
+        "deposited_on_ALB_km3": 127601.37617842093,
+        "donor_volume_by_plate_km3": {
+          "103": 127601.3761784209
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 127601.3761784209
+        }
+      },
+      {
+        "t_Ma": 0.0,
+        "donor_n": 3,
+        "donor_volume_km3": 406173.3546893365,
+        "deposited_on_ALB_km3": 406173.3546893365,
+        "donor_volume_by_plate_km3": {
+          "103": 406173.3546893365
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 406173.3546893365
+        }
+      }
+    ]
+  },
+  "material_note": "origin 是宿主单元来源，不是混合岩石成分；碰撞转入体积单独记录，累计值未扣后续剥蚀。",
+  "A_previous": {
+    "all_pass": true,
+    "pass": {
+      "ocean_fraction": true,
+      "main_continent": true,
+      "subcontinents": true,
+      "main_inland_sea": true,
+      "main_continent_latitude": true,
+      "polar_continent": true,
+      "open_ocean": true
+    },
+    "ocean_fraction": 0.715,
+    "main_continent_share": 0.735,
+    "subcontinents": 3,
+    "subcontinent_areas_Mkm2": [
+      59.2,
+      38.8,
+      5.9
+    ],
+    "main_inland_sea": {
+      "area_Mkm2": 4.47,
+      "straits": 1,
+      "aspect": 3.26834440731936,
+      "checks": {
+        "area_in_range": true,
+        "ratio_to_second_ok": true,
+        "straits_ok": true,
+        "bordering_subcontinents_ok": true,
+        "elongation_ok": true
+      }
+    },
+    "latitude": [
+      79.27734375,
+      -43.76953125
+    ],
+    "polar_Mkm2": [
+      13.2
+    ]
+  },
+  "A_latest": {
+    "all_pass": true,
+    "pass": {
+      "ocean_fraction": true,
+      "main_continent": true,
+      "subcontinents": true,
+      "main_inland_sea": true,
+      "main_continent_latitude": true,
+      "polar_continent": true,
+      "open_ocean": true
+    },
+    "ocean_fraction": 0.715,
+    "main_continent_share": 0.735,
+    "subcontinents": 3,
+    "subcontinent_areas_Mkm2": [
+      59.2,
+      38.8,
+      5.9
+    ],
+    "main_inland_sea": {
+      "area_Mkm2": 4.46,
+      "straits": 1,
+      "aspect": 3.2582332051150527,
+      "checks": {
+        "area_in_range": true,
+        "ratio_to_second_ok": true,
+        "straits_ok": true,
+        "bordering_subcontinents_ok": true,
+        "elongation_ok": true
+      }
+    },
+    "latitude": [
+      79.27734375,
+      -43.76953125
+    ],
+    "polar_Mkm2": [
+      13.2
+    ]
+  },
+  "method_class": "interpolated",
+  "note": "诊断统计不新增或修改任何质量指标阈值；旧设定在内存中仅将 WT—ALB 的 to 改回 6。"
+}

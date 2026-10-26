@@ -3,14 +3,14 @@
  "design": "v2",
  "history": "v2",
  "mesh_level": 7,
- "run_code_version": "74cb0b1-dirty",
- "code_version": "74cb0b1-dirty",
- "wall_s": 199.6,
+ "run_code_version": "5d7a5a0-dirty",
+ "code_version": "5d7a5a0-dirty",
+ "wall_s": 187.2,
  "compare_grid": "1024x512",
  "comparison": {
   "final_land_Mkm2": 145.6,
   "engine_land_Mkm2": 145.3,
-  "both_land_Mkm2": 141.8,
+  "both_land_Mkm2": 141.9,
   "missing_land_Mkm2": 3.7,
   "extra_land_Mkm2": 3.4,
   "land_iou": 0.952,
@@ -58,7 +58,7 @@
    "WT": {
     "name": "内海北岸西段地体",
     "area_Mkm2": 0.51,
-    "land_fraction": 0.876
+    "land_fraction": 0.907
    },
    "ADR": {
     "name": "亚得里亚式地体（长半岛与神怒湾）",
@@ -391,7 +391,7 @@
     "name": "西口弧形山系",
     "design_height_m": 2800,
     "final_p90_m": 2073,
-    "engine_p90_m": 4945,
+    "engine_p90_m": 1838,
     "engine_land_fraction": 0.69,
     "cause": "西口弧形地体（阿尔沃兰—贝蒂克式）随俯冲后撤西移、楔进洲 A 南缘时挤起的弧形山系（约 25 Ma–今），弧顶在西海峡北岸（U35）"
    },
@@ -813,9 +813,9 @@
    5.9
   ],
   "main_inland_sea": {
-   "area_Mkm2": 4.47,
+   "area_Mkm2": 4.46,
    "straits": 1,
-   "aspect": 3.26834440731936,
+   "aspect": 3.2582332051150527,
    "checks": {
     "area_in_range": true,
     "ratio_to_second_ok": true,
@@ -1438,152 +1438,152 @@
  "sea_level_m": [
   {
    "t": 300.0,
-   "sea_level_m": 254.4,
+   "sea_level_m": 254.3,
    "flooded_continental_crust_Mkm2": 71.6
   },
   {
    "t": 290.0,
-   "sea_level_m": 143.5,
+   "sea_level_m": 143.4,
    "flooded_continental_crust_Mkm2": 40.1
   },
   {
    "t": 280.0,
-   "sea_level_m": 79.9,
+   "sea_level_m": 79.8,
    "flooded_continental_crust_Mkm2": 29.9
   },
   {
    "t": 270.0,
-   "sea_level_m": 42.0,
+   "sea_level_m": 41.9,
    "flooded_continental_crust_Mkm2": 22.4
   },
   {
    "t": 260.0,
-   "sea_level_m": 11.0,
+   "sea_level_m": 10.8,
    "flooded_continental_crust_Mkm2": 22.3
   },
   {
    "t": 250.0,
-   "sea_level_m": -13.3,
+   "sea_level_m": -13.4,
    "flooded_continental_crust_Mkm2": 22.3
   },
   {
    "t": 240.0,
-   "sea_level_m": -35.0,
+   "sea_level_m": -35.1,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 230.0,
-   "sea_level_m": -44.9,
+   "sea_level_m": -45.0,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 220.0,
-   "sea_level_m": -53.7,
+   "sea_level_m": -53.8,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 210.0,
-   "sea_level_m": -57.3,
+   "sea_level_m": -57.5,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 200.0,
-   "sea_level_m": -61.0,
+   "sea_level_m": -61.1,
    "flooded_continental_crust_Mkm2": 21.9
   },
   {
    "t": 190.0,
-   "sea_level_m": -62.0,
+   "sea_level_m": -62.2,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 180.0,
-   "sea_level_m": -62.6,
-   "flooded_continental_crust_Mkm2": 21.8
+   "sea_level_m": -62.7,
+   "flooded_continental_crust_Mkm2": 21.7
   },
   {
    "t": 170.0,
-   "sea_level_m": -68.4,
+   "sea_level_m": -68.6,
    "flooded_continental_crust_Mkm2": 21.3
   },
   {
    "t": 160.0,
-   "sea_level_m": -74.9,
+   "sea_level_m": -75.0,
    "flooded_continental_crust_Mkm2": 20.2
   },
   {
    "t": 150.0,
-   "sea_level_m": -80.4,
+   "sea_level_m": -80.5,
    "flooded_continental_crust_Mkm2": 16.0
   },
   {
    "t": 140.0,
-   "sea_level_m": -59.5,
+   "sea_level_m": -59.6,
    "flooded_continental_crust_Mkm2": 21.1
   },
   {
    "t": 130.0,
-   "sea_level_m": -37.9,
+   "sea_level_m": -38.0,
    "flooded_continental_crust_Mkm2": 21.9
   },
   {
    "t": 120.0,
-   "sea_level_m": -22.3,
+   "sea_level_m": -22.4,
    "flooded_continental_crust_Mkm2": 22.0
   },
   {
    "t": 110.0,
-   "sea_level_m": 0.2,
+   "sea_level_m": 0.0,
    "flooded_continental_crust_Mkm2": 22.4
   },
   {
    "t": 100.0,
-   "sea_level_m": 21.1,
+   "sea_level_m": 21.0,
    "flooded_continental_crust_Mkm2": 22.6
   },
   {
    "t": 90.0,
-   "sea_level_m": 37.6,
+   "sea_level_m": 37.5,
    "flooded_continental_crust_Mkm2": 22.7
   },
   {
    "t": 80.0,
-   "sea_level_m": 49.2,
+   "sea_level_m": 49.1,
    "flooded_continental_crust_Mkm2": 22.8
   },
   {
    "t": 70.0,
-   "sea_level_m": 56.2,
+   "sea_level_m": 56.1,
    "flooded_continental_crust_Mkm2": 22.7
   },
   {
    "t": 60.0,
-   "sea_level_m": 86.8,
+   "sea_level_m": 86.7,
    "flooded_continental_crust_Mkm2": 31.0
   },
   {
    "t": 50.0,
-   "sea_level_m": 68.9,
+   "sea_level_m": 68.8,
    "flooded_continental_crust_Mkm2": 28.0
   },
   {
    "t": 40.0,
-   "sea_level_m": 51.0,
+   "sea_level_m": 50.9,
    "flooded_continental_crust_Mkm2": 21.8
   },
   {
    "t": 30.0,
-   "sea_level_m": 34.1,
+   "sea_level_m": 34.0,
    "flooded_continental_crust_Mkm2": 20.8
   },
   {
    "t": 20.0,
-   "sea_level_m": 28.5,
+   "sea_level_m": 28.4,
    "flooded_continental_crust_Mkm2": 20.2
   },
   {
    "t": 10.0,
-   "sea_level_m": 19.8,
+   "sea_level_m": 19.7,
    "flooded_continental_crust_Mkm2": 19.8
   },
   {
@@ -1717,8 +1717,8 @@
    138,
    301,
    453,
-   891,
-   2032
+   890,
+   2020
   ],
   "shelf_fraction_of_ocean": 0.0397
  },
@@ -1726,9 +1726,9 @@
   "continental_Mkm2": 164.0,
   "arc_origin_continental_Mkm2": 0.21,
   "last_orogeny_area_Mkm2": {
-   "collision": 12.5,
-   "arc": 32.88,
-   "rift": 2.94,
+   "collision": 12.49,
+   "arc": 32.9,
+   "rift": 2.95,
    "reactivation": 2.46
   },
   "thickness_km_p99": 65.0,
@@ -1736,13 +1736,13 @@
  },
  "volume_change": 0.0478,
  "budget_km3": {
-  "arc_added": 495680707,
-  "eroded": 381383343,
+  "arc_added": 495680376,
+  "eroded": 381281928,
   "rift_thinning": 1338437,
   "arc_converted": 5040090,
-  "arc_suppressed": 116873477,
-  "opening_overlap_skipped": 17314444,
-  "rift_fill": 101932635,
+  "arc_suppressed": 116874273,
+  "opening_overlap_skipped": 17092883,
+  "rift_fill": 102025229,
   "arc_accreted": 2128627,
   "lip_added": 17225262,
   "reactivation_added": 48466739,
@@ -1752,7 +1752,7 @@
  "engine_event_counts": {
   "subduction_start": 17,
   "apron_transfer": 303,
-  "collision_onset": 28,
+  "collision_onset": 27,
   "plate_added": 6,
   "terrane_rift": 4,
   "region_transfer": 26
@@ -1959,14 +1959,6 @@
    "lon": 120.54
   },
   {
-   "t": 5.0,
-   "kind": "collision_onset",
-   "downgoing": 302,
-   "overriding": 304,
-   "lat": 37.41,
-   "lon": -10.39
-  },
-  {
    "t": 4.0,
    "kind": "collision_onset",
    "downgoing": 303,
@@ -1983,5 +1975,5 @@
    "lon": -14.45
   }
  ],
- "generated": "2026-10-25 17:47:31"
+ "generated": "2026-10-26 09:54:55"
 }

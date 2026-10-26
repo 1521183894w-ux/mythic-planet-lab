@@ -2,7 +2,7 @@
  "description": "终图倒推历史的 300 Ma 初始世界（重建：scripts/design_initial_world.py；InitialWorld 缓存在 .cache/tectonics/design/，不进 Git）",
  "design": "v2",
  "history": "v2",
- "code_version": "74cb0b1-dirty",
+ "code_version": "5d7a5a0-dirty",
  "t0": 300.0,
  "mesh_level": 7,
  "rotation_file": "data/worlds/design_v2/history_v2.rot",
@@ -487,5 +487,5 @@
    "plate_Mkm2": 0.0
   }
  ],
- "generated": "2026-10-25 17:35:35"
+ "generated": "2026-10-26 09:27:33"
 }

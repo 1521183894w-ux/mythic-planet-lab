@@ -1,0 +1,161 @@
+{
+  "baseline_commit": "5d7a5a0ae15f55f8186443ce4fa9b82690b21da9",
+  "baseline_result_note": "U35 run 2, WT-ALB no_collision ends at 6 Ma; committed config ends at 0 Ma",
+  "inputs_sha256": {
+    "config/design/history_v2.yaml": "454585743a02db2889ae450c22e898e9395461c81f047ebe453d46edae96cf5c",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/design/shelf_active_v2.yaml": "aa20b8af959cb708731da8891acc16caea9a52185dc4dde36e91c6b4d0265368",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    "scripts/design_forward.py": "e6124ede8823c2869f813374c02cf4bc57b4723647f61767d8d281f79a781a18",
+    "packages/tectonics/engine.py": "b7b15a701cf43459b4ef5e17330114fed6b166e8a4ae2ef777b812cf8101da5c",
+    "packages/tectonics/crust.py": "7e51845187bc642fe899a74e0b423f4677b485eca613a7d715548ee849c7e6cd",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603"
+  },
+  "checkpoint": "U35-C1",
+  "date": "2026-10-26",
+  "inputs_unchanged": {
+    "config/design/history_v2.yaml": true,
+    "config/design/final_map_v2.yaml": true,
+    "config/design/shelf_active_v2.yaml": true,
+    "data/worlds/design_v2/history_v2.rot": true,
+    "scripts/design_forward.py": true,
+    "packages/tectonics/engine.py": true,
+    "packages/tectonics/crust.py": true,
+    "config/metrics.yaml": true
+  },
+  "environment_versions": {
+    "python": "3.12.15",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pygplates": "1.0.0",
+    "xarray": "2026.9.0",
+    "matplotlib": "3.11.2"
+  },
+  "initial_world_sha256": "2826b19b0338d3869027ed9fd325822efa190be3570e33223b2fd0fabd4c2cd7",
+  "resources": {
+    "latest_plain": {
+      "command": [
+        "environment/env/python.exe",
+        "-u",
+        "scripts/design_forward.py",
+        "--design",
+        "v2",
+        "--history",
+        "v2",
+        "--no-figures"
+      ],
+      "exit_code": 0,
+      "wall_s": 316.92,
+      "peak_rss_GB": 0.866
+    },
+    "previous": {
+      "command": [
+        "environment/env/python.exe",
+        "-u",
+        "scripts/design_west_arc_diagnostic.py",
+        "--case",
+        "previous",
+        "--no-figures"
+      ],
+      "exit_code": 0,
+      "wall_s": 325.43,
+      "peak_rss_GB": 0.881
+    },
+    "previous_ledger": {
+      "command": [
+        "environment/env/python.exe",
+        "-u",
+        "scripts/design_west_arc_diagnostic.py",
+        "--case",
+        "previous",
+        "--no-figures"
+      ],
+      "exit_code": 0,
+      "wall_s": 211.06,
+      "peak_rss_GB": 0.876
+    },
+    "latest_observed": {
+      "command": [
+        "environment/env/python.exe",
+        "-u",
+        "scripts/design_west_arc_diagnostic.py",
+        "--case",
+        "latest"
+      ],
+      "exit_code": 0,
+      "wall_s": 270.28,
+      "peak_rss_GB": 2.762
+    },
+    "standard_figures": {
+      "command": [
+        "environment/env/python.exe",
+        "-u",
+        "scripts/make_figures.py",
+        "--world",
+        "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc",
+        "--stage",
+        "1"
+      ],
+      "exit_code": 0,
+      "wall_s": 26.83,
+      "peak_rss_GB": 0.657
+    },
+    "diagnostic_figures": {
+      "command": [
+        "environment/env/python.exe",
+        "-u",
+        "scripts/design_west_arc_report.py"
+      ],
+      "exit_code": 0,
+      "wall_s": 14.67,
+      "peak_rss_GB": 0.503
+    }
+  },
+  "tests": {
+    "passed": 51,
+    "command": "python -m pytest tests/tectonics/test_engine.py tests/tectonics/test_design_forward.py tests/tectonics/test_reverse_initial.py",
+    "seconds": 22.04
+  },
+  "neutrality": {
+    "identical": true,
+    "arrays_checked": 352,
+    "different_arrays": [],
+    "previous_extra_ledger": {
+      "identical": true,
+      "arrays_checked": 352,
+      "different_arrays": []
+    },
+    "events_identical": true,
+    "budget_identical": true
+  },
+  "reproduction_note": "旧设定重算与原摘要五个区块一致；原二进制世界文件未同步，未声称与原世界逐像元一致。",
+  "runtime_note": "本机 PowerShell 启动失败，使用 cmd 与项目内 Python；仅对工作区内子进程设置原 env_vars.ps1 对应的缓存环境变量，没有修改系统设置。",
+  "scientific_references": "沿用 docs/tectonics_method.md、docs/physical_baseline.md 及既有图层来源；没有选择新求解器。",
+  "artifact_validation": {
+    "png_files_decoded": 48,
+    "gallery_local_links_checked": 7,
+    "test_counts": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "51",
+      "time": "22.030",
+      "timestamp": "2026-10-26T09:27:23.652887+08:00"
+    },
+    "source_and_collision_volume_checks": true,
+    "neutrality_all_pass": true
+  },
+  "diagnostic_scripts_sha256": {
+    "scripts/design_west_arc_diagnostic.py": "c7f00912f5aa1fcc48b86acaf0bb446808cb4151cdf0c060dd65a7f056048959",
+    "scripts/design_west_arc_report.py": "859f0dfc1868af84349b7630e96c1e957393a80a4f8b53130183b30d4939b708"
+  },
+  "independent_review": {
+    "report": "reviews/stage1_2026-10-26_1.md",
+    "sha256": "16be77c319f74469d181d9d3c26cd5109a0abe8d3af4a8a2f8058ef7510941a1",
+    "severe_unresolved": 6,
+    "submission": "诊断进度审看可提交；不建议阶段验收",
+    "developer_response": "docs/u35_c1_diagnosis.md"
+  },
+  "observer_revision_note": "previous 首次运行时尚无碰撞账本，因此真实命令没有关闭账本的参数；现版脚本重现该次控制运行时须加 --no-collision-ledger。此后新增账本前后 352 个数组一致。"
+}
