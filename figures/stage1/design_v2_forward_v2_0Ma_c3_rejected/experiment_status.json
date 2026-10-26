@@ -1,0 +1,6 @@
+{
+  "checkpoint": "U35-C3",
+  "status": "rejected",
+  "production_result": "C2",
+  "reason": "普通4/8连通均断开；A层仍全过，不能据此采用候选。"
+}

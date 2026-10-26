@@ -1,0 +1,6476 @@
+{
+  "checkpoint": "U35-C3",
+  "baseline_commit": "a2d5369",
+  "method_class": "procedural_constrained",
+  "units": {
+    "time": "Ma",
+    "volume": "km3",
+    "thickness": "km",
+    "velocity": "cm/yr"
+  },
+  "ledger": [
+    {
+      "t_Ma": 10.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {}
+    },
+    {
+      "t_Ma": 10.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 3029.4754706835374,
+        "source_volume_km3": 3029.4754706835374,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1467021.4161254764,
+        "arc_converted": 96214.50067488197,
+        "arc_suppressed": 130595.59421542287
+      }
+    },
+    {
+      "t_Ma": 10.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -460.59263135679066,
+        "source_volume_km3": -460.59263135679066,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 2962380.913326323
+      }
+    },
+    {
+      "t_Ma": 9.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "opening_overlap_skipped": 997027.2252884116,
+        "arc_accreted": 131024.51105430117
+      }
+    },
+    {
+      "t_Ma": 9.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 2978.7019533719867,
+        "source_volume_km3": 2978.7019533719867,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1572404.0361462235,
+        "arc_converted": 538060.2653204012,
+        "arc_suppressed": 156571.2424902618
+      }
+    },
+    {
+      "t_Ma": 9.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -472.5172823956236,
+        "source_volume_km3": -472.5172823956236,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3029624.371756077
+      }
+    },
+    {
+      "t_Ma": 8.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {}
+    },
+    {
+      "t_Ma": 8.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 2795.2226665420458,
+        "source_volume_km3": 2795.2226665420458,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1545331.4773807526,
+        "arc_converted": 186479.91008377448,
+        "arc_suppressed": 152384.20610386133
+      }
+    },
+    {
+      "t_Ma": 8.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -482.5203836923465,
+        "source_volume_km3": -482.5203836923465,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3060433.7227450013
+      }
+    },
+    {
+      "t_Ma": 7.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {}
+    },
+    {
+      "t_Ma": 7.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 2219.6500392989255,
+        "source_volume_km3": 2219.6500392989255,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1561776.5421187282,
+        "arc_converted": 188701.43360585533,
+        "arc_suppressed": 152727.94271788
+      }
+    },
+    {
+      "t_Ma": 7.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -490.1857563741505,
+        "source_volume_km3": -490.1857563741505,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3082233.438869655
+      }
+    },
+    {
+      "t_Ma": 6.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "opening_overlap_skipped": 101505.13736935705,
+        "arc_accreted": 139028.5400215881
+      }
+    },
+    {
+      "t_Ma": 6.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 1949.1685893428512,
+        "source_volume_km3": 1949.1685893428512,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1573528.2338020802,
+        "arc_converted": 325304.64183653705,
+        "arc_suppressed": 152556.59588871896
+      }
+    },
+    {
+      "t_Ma": 6.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -496.01553809503093,
+        "source_volume_km3": -496.01553809503093,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3154208.750567138
+      }
+    },
+    {
+      "t_Ma": 5.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_accreted": 64700.82619177061
+      }
+    },
+    {
+      "t_Ma": 5.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 1552.3471329654567,
+        "source_volume_km3": 1552.3471329654567,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1424486.599645257,
+        "arc_suppressed": 126125.02929402888
+      }
+    },
+    {
+      "t_Ma": 5.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -499.947913445998,
+        "source_volume_km3": -499.947913445998,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3215534.329339862
+      }
+    },
+    {
+      "t_Ma": 4.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "opening_overlap_skipped": 288224.4226467684,
+        "arc_accreted": 264213.7635626544
+      }
+    },
+    {
+      "t_Ma": 4.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 1548.609140029177,
+        "source_volume_km3": 1548.609140029177,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1493722.8291845918,
+        "arc_converted": 186585.61872114055,
+        "arc_suppressed": 139085.5929389298
+      }
+    },
+    {
+      "t_Ma": 4.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -504.00383756076917,
+        "source_volume_km3": -504.00383756076917,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3257536.7377625704
+      }
+    },
+    {
+      "t_Ma": 3.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_accreted": 63124.72491120687
+      }
+    },
+    {
+      "t_Ma": 3.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 1399.773709132336,
+        "source_volume_km3": 1399.773709132336,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1483325.9354708195,
+        "arc_converted": 91548.7381965043,
+        "arc_suppressed": 142309.35856930912
+      }
+    },
+    {
+      "t_Ma": 3.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -506.9760746737011,
+        "source_volume_km3": -506.9760746737011,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3315096.5458452106
+      }
+    },
+    {
+      "t_Ma": 2.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 0.0,
+        "source_volume_km3": 0.0,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {}
+    },
+    {
+      "t_Ma": 2.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 1762.2013719840907,
+        "source_volume_km3": 1762.2013719840907,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1480850.9113209248,
+        "arc_suppressed": 142109.96698987484
+      }
+    },
+    {
+      "t_Ma": 2.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -512.6010070862249,
+        "source_volume_km3": -512.6010070862249,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3392764.3561385274
+      }
+    },
+    {
+      "t_Ma": 1.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 111603.64457863849,
+        "source_volume_km3": 110806.38321662741,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_accreted": 88031.9008925003
+      }
+    },
+    {
+      "t_Ma": 1.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 1447.0012693931349,
+        "source_volume_km3": 1447.0012693931349,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1493029.0877891183,
+        "arc_converted": 92501.55500754062,
+        "arc_suppressed": 142031.80484361947
+      }
+    },
+    {
+      "t_Ma": 1.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -1086.9814059883356,
+        "source_volume_km3": -1086.9814059883356,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3459361.936347544
+      }
+    },
+    {
+      "t_Ma": 0.0,
+      "process": "_interact",
+      "delta": {
+        "own_volume_km3": 111436.01302399905,
+        "source_volume_km3": 111290.80890453933,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "opening_overlap_skipped": 89164.6765040718
+      }
+    },
+    {
+      "t_Ma": 0.0,
+      "process": "_arc",
+      "delta": {
+        "own_volume_km3": 2048.756973184645,
+        "source_volume_km3": 2048.7569731841795,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "arc_added": 1375107.128621757,
+        "arc_suppressed": 107704.62030045688
+      }
+    },
+    {
+      "t_Ma": 0.0,
+      "process": "_surface",
+      "delta": {
+        "own_volume_km3": -1873.5832091225311,
+        "source_volume_km3": -1873.5832091225311,
+        "own_n": 0,
+        "source_n": 0
+      },
+      "budget_delta": {
+        "eroded": 3541057.803125322
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 3006,
+      "lon": 2.5124945123206945,
+      "lat": 41.072293836493344,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        395031,
+        464355
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.138811794805011
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        32.609907451394314,
+        34.337675572093794
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 3390,
+      "lon": -7.041676075495646,
+      "lat": 36.23497678921692,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.041072202488549814,
+      "source_uids": [
+        453695,
+        470193
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        8.372599058192488,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        51.782081347197185,
+        62.88939231997467
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 5172,
+      "lon": 0.0,
+      "lat": 36.47676193065955,
+      "plate_pair": [
+        301,
+        301
+      ],
+      "has_two_plates": false,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        469977,
+        469977
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        45.723215877378934,
+        45.723215877378934
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 5643,
+      "lon": -21.558694509587024,
+      "lat": 36.67711552402513,
+      "plate_pair": [
+        103,
+        103
+      ],
+      "has_two_plates": false,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        464262,
+        464262
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.18917136219285,
+        7.18917136219285
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        36.23435466987432,
+        36.23435466987432
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 8393,
+      "lon": -2.3728867942171235,
+      "lat": 37.102592748613816,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        470199,
+        470156
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0219075973059795
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        31.178951471284485,
+        117.35916259918403
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 19584,
+      "lon": -4.7235854411805365,
+      "lat": 36.69252952496999,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.39172591035684473,
+      "source_uids": [
+        356906,
+        464606
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        33.5880326975397,
+        7.841490818769
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        34.49373997367595,
+        37.303249467800384
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 19592,
+      "lon": -5.010156692750712,
+      "lat": 40.70354901297038,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.3906207087754799,
+      "source_uids": [
+        115830,
+        356812
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        53.223343994418755,
+        28.920509026931164
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        33.95608042008939,
+        42.10810087543991
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 26797,
+      "lon": -1.1522162393503106,
+      "lat": 34.81255954321663,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.551946307708433,
+      "source_uids": [
+        51895,
+        470223
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        9.491746249344919,
+        7.551231707934877
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        50.69341848348205,
+        93.38801351022784
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 26798,
+      "lon": -3.439151599080445,
+      "lat": 34.41433656977928,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.2676242318481794,
+      "source_uids": [
+        464611,
+        102301
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        8.936938192197745,
+        9.913632363143988
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.34528299112521,
+        74.65910764437035
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 26807,
+      "lon": -1.1664842793251795,
+      "lat": 35.80379734048197,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.3930818431374945,
+      "source_uids": [
+        470216,
+        470098
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.713914787323928,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        102.68182722332298,
+        124.3244940846142
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 35064,
+      "lon": -1.1815970815139316,
+      "lat": 36.795569343990394,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        470185,
+        469925
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0045102696328065
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        31.684514282812497,
+        52.43764001760911
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 41889,
+      "lon": -10.079230718018366,
+      "lat": 36.85151851024917,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -2.568967220289581,
+      "source_uids": [
+        356892,
+        356816
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        37.823142267137555,
+        37.9374050514163
+      ],
+      "source_origin": [
+        304,
+        302
+      ],
+      "nearest_distances_km": [
+        32.89532242481969,
+        38.083891907594904
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 45042,
+      "lon": -25.474306863095943,
+      "lat": 32.7234466345645,
+      "plate_pair": [
+        103,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.0974813643703948,
+      "source_uids": [
+        197065,
+        11724
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        22.164841041607936,
+        8.553866160461464
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        33.397031540472625,
+        43.987438817281095
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 53498,
+      "lon": -4.12429896025835,
+      "lat": 36.55125550187344,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.32357674373208,
+      "source_uids": [
+        464607,
+        453668
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.664745876009703,
+        31.813176308095574
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        31.813096777286372,
+        37.12463064756824
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 53502,
+      "lon": -7.641832636454266,
+      "lat": 36.361191356497606,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.11871867523659416,
+      "source_uids": [
+        458956,
+        356829
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.7655214076403585,
+        35.58379092558372
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        36.43419204622257,
+        59.123085038647886
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 58669,
+      "lon": -0.5784906353407394,
+      "lat": 35.15043862245027,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.6192193720686605,
+      "source_uids": [
+        51895,
+        470217
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        9.491746249344919,
+        7.994724423393036
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        78.28132891886021,
+        145.34364242193092
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 59753,
+      "lon": -2.35768203785407,
+      "lat": 36.606886253109714,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.5292404405901863,
+      "source_uids": [
+        470228,
+        470199
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.364004880147616,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        70.76236297438768,
+        82.8010191582695
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 63699,
+      "lon": 4.618033763445655,
+      "lat": 43.64881630661425,
+      "plate_pair": [
+        302,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.261584613432752,
+      "source_uids": [
+        356956,
+        45590
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        26.61830835912004,
+        52.073253155798234
+      ],
+      "source_origin": [
+        302,
+        103
+      ],
+      "nearest_distances_km": [
+        34.53401332393098,
+        36.945163586654466
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 65046,
+      "lon": -6.251447340727154,
+      "lat": 33.60778691890522,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.5551019690384564,
+      "source_uids": [
+        12239,
+        470221
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.00869303870835,
+        7.396929964059426
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        37.30857574131354,
+        38.693599384318986
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 65567,
+      "lon": -24.468123142152514,
+      "lat": 33.11805419100833,
+      "plate_pair": [
+        103,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.20513205191174247,
+      "source_uids": [
+        197029,
+        160853
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        20.223070800723924,
+        7.268631110365978
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        37.41230561714638,
+        38.86955691456712
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 65711,
+      "lon": 1.2598065695649565,
+      "lat": 41.259282322569376,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        356978,
+        437419
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        38.496689937810245,
+        7.096330227126779
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        34.66825589258253,
+        45.90655969428267
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 75057,
+      "lon": -20.944920255675193,
+      "lat": 36.6104448654188,
+      "plate_pair": [
+        103,
+        103
+      ],
+      "has_two_plates": false,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        1046,
+        1046
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        10.975198253427328,
+        10.975198253427328
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        54.9827500196325,
+        54.9827500196325
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 77652,
+      "lon": -19.720672442050326,
+      "lat": 36.46769121406589,
+      "plate_pair": [
+        301,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.142729610593327,
+      "source_uids": [
+        160720,
+        132956
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        12.434893312441657
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        31.764181012282865,
+        36.112813609015056
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 80363,
+      "lon": 2.589721632980902,
+      "lat": 42.62802385618925,
+      "plate_pair": [
+        302,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.41911569554144734,
+      "source_uids": [
+        358196,
+        80561
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.0,
+        52.330550267341884
+      ],
+      "source_origin": [
+        0,
+        103
+      ],
+      "nearest_distances_km": [
+        37.98998579957785,
+        51.639065833452605
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 82064,
+      "lon": -10.342057372981245,
+      "lat": 34.46683728967998,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.1921788738038259,
+      "source_uids": [
+        142568,
+        356769
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        44.3692848935244,
+        35.24836874322187
+      ],
+      "source_origin": [
+        301,
+        304
+      ],
+      "nearest_distances_km": [
+        29.85452608696119,
+        43.03392440827131
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 95935,
+      "lon": 3.2798656804125583,
+      "lat": 43.31786975238005,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.41957695705443737,
+      "source_uids": [
+        52055,
+        356683
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        51.855486792297555,
+        22.93665876220615
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        34.82620084421011,
+        36.48172014500741
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 100944,
+      "lon": -5.606901331246652,
+      "lat": 40.343650585482656,
+      "plate_pair": [
+        302,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.10936208675436254,
+      "source_uids": [
+        356812,
+        55758
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        28.920509026931164,
+        53.96666152150202
+      ],
+      "source_origin": [
+        302,
+        103
+      ],
+      "nearest_distances_km": [
+        36.17977014787397,
+        43.80231949360761
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 100989,
+      "lon": -12.254415626040814,
+      "lat": 38.75811812385608,
+      "plate_pair": [
+        302,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.18225480778894856,
+      "source_uids": [
+        356862,
+        138892
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        23.276564508453802,
+        45.05283903422334
+      ],
+      "source_origin": [
+        302,
+        103
+      ],
+      "nearest_distances_km": [
+        35.854799344049134,
+        45.265104431345684
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 102369,
+      "lon": -5.288017582079243,
+      "lat": 36.334384061328734,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.272461445333188,
+      "source_uids": [
+        458378,
+        356906
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.390713832440985,
+        33.5880326975397
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        42.61747261893446,
+        72.27351440413088
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 107430,
+      "lon": 4.631689820971352,
+      "lat": 35.20006680284826,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        402296,
+        470146
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.017089857619128
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        36.416713538757044,
+        39.605509296709954
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 127620,
+      "lon": -1.8942493975135115,
+      "lat": 41.415260508385295,
+      "plate_pair": [
+        302,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.4044733238105868,
+      "source_uids": [
+        356666,
+        71958
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        38.094540360796906,
+        52.019213919964415
+      ],
+      "source_origin": [
+        302,
+        103
+      ],
+      "nearest_distances_km": [
+        32.395574955757404,
+        47.83435109916708
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 127643,
+      "lon": -1.159306551503408,
+      "lat": 35.30817865132207,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.632332757214371,
+      "source_uids": [
+        470217,
+        51895
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.994724423393036,
+        9.491746249344919
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        98.02780305115337,
+        99.32729515633854
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 127644,
+      "lon": 0.0,
+      "lat": 34.99000531762231,
+      "plate_pair": [
+        301,
+        301
+      ],
+      "has_two_plates": false,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        48268,
+        48268
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        9.536309382183484,
+        9.536309382183484
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        53.42803258251829,
+        53.42803258251829
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 127674,
+      "lon": -0.5820806714576994,
+      "lat": 35.64609996321836,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.4314163519807237,
+      "source_uids": [
+        470098,
+        470216
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.713914787323928
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        69.02600047622546,
+        150.22020814639177
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 127675,
+      "lon": -1.753433500564893,
+      "lat": 35.9589221473394,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.8090073683180337,
+      "source_uids": [
+        470228,
+        470185
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.364004880147616,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        48.96815462571877,
+        116.25068315911501
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 127677,
+      "lon": -1.7316245685796927,
+      "lat": 34.96753864983901,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.7889245742066868,
+      "source_uids": [
+        470217,
+        48270
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.994724423393036,
+        9.480074053462854
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        39.338022199756935,
+        68.96844454078013
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 132673,
+      "lon": -19.892796205108038,
+      "lat": 35.04306242942843,
+      "plate_pair": [
+        103,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.028699105021421995,
+      "source_uids": [
+        175496,
+        160718
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        21.266794025348663,
+        31.810646231527823
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        39.50270173810597,
+        42.72263415964004
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 134381,
+      "lon": 4.12429896025835,
+      "lat": 36.55125550187344,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        356856,
+        363961
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        31.624959300447916,
+        8.268882834026813
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        39.72604418177631,
+        43.30940699755085
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 134400,
+      "lon": -1.7877972140767096,
+      "lat": 37.446149976166545,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        464587,
+        470156
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0219075973059795
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        44.538693834413394,
+        63.14715914069403
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 134483,
+      "lon": 0.0,
+      "lat": 35.981176392980466,
+      "plate_pair": [
+        301,
+        301
+      ],
+      "has_two_plates": false,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        469949,
+        469949
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        30.709566627363884,
+        30.709566627363884
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 150307,
+      "lon": -1.7646956459110479,
+      "lat": 36.45477918951587,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.7441669093246848,
+      "source_uids": [
+        470185,
+        470228
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.364004880147616
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        64.21290876111397,
+        71.83577250208627
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 150308,
+      "lon": -1.1739926390906108,
+      "lat": 36.29968357996733,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        470185,
+        469925
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0045102696328065
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        79.39685827743916,
+        84.46261228677479
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 150309,
+      "lon": -2.952671421618402,
+      "lat": 36.756186960532,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.9454301371961134,
+      "source_uids": [
+        470218,
+        356943
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.394207227146576,
+        33.67033506289876
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        56.701952146566185,
+        67.47943055862888
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 150310,
+      "lon": -1.7422849172412151,
+      "lat": 35.46313210304703,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.8378323182100251,
+      "source_uids": [
+        470216,
+        48270
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.713914787323928,
+        9.480074053462854
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        44.20093131631706,
+        121.38354223177689
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 150311,
+      "lon": -2.8785863944974466,
+      "lat": 34.76834167870493,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.5750852800491895,
+      "source_uids": [
+        464610,
+        102301
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        8.62313736948731,
+        9.913632363143988
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        37.15132125462673,
+        59.8269497434742
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 150316,
+      "lon": -0.585743658561328,
+      "lat": 36.14169350612969,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        469949,
+        470185
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        83.81622981444987,
+        121.12449032185087
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 10.0,
+      "fixed_node": 153992,
+      "lon": -16.193481005947337,
+      "lat": 36.957769062924015,
+      "plate_pair": [
+        103,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.2479891284876051,
+      "source_uids": [
+        66097,
+        69981
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        18.080166008540388,
+        30.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        40.09783621473641,
+        49.92188715379156
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 2883,
+      "lon": -6.874407640140465,
+      "lat": 34.23899332764566,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.0511093940811196,
+      "source_uids": [
+        470212,
+        12239
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        8.456849530900856,
+        7.00869303870835
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.90480864239806,
+        75.81953443661745
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 3006,
+      "lon": 2.5124945123206945,
+      "lat": 41.072293836493344,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        424872,
+        395031
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.54588622568669,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        30.40984435476322,
+        39.96254752128076
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 7818,
+      "lon": -2.313209551110674,
+      "lat": 35.119755555418436,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.404601719539952,
+      "source_uids": [
+        475555,
+        475866
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.916763896006727
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        79.0760053093964,
+        85.31454898022501
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 13004,
+      "lon": -3.8002291760423788,
+      "lat": 41.41268698860983,
+      "plate_pair": [
+        302,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.20517934295858797,
+      "source_uids": [
+        356937,
+        23191
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        37.859028257211236,
+        53.51534924519047
+      ],
+      "source_origin": [
+        302,
+        103
+      ],
+      "nearest_distances_km": [
+        32.785276672165395,
+        41.954114610325796
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 13497,
+      "lon": -20.03724199545359,
+      "lat": 35.54228559061319,
+      "plate_pair": [
+        103,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.22008705582865465,
+      "source_uids": [
+        453375,
+        160718
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.509082136001979,
+        31.810646231527823
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        42.25298642731406,
+        54.25161047595966
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 14258,
+      "lon": -12.82401175531547,
+      "lat": 35.420902713066056,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.18374102906325543,
+      "source_uids": [
+        109476,
+        356769
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        44.45102936747698,
+        35.49023991662183
+      ],
+      "source_origin": [
+        301,
+        304
+      ],
+      "nearest_distances_km": [
+        41.05783591572126,
+        45.44744239982187
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 14526,
+      "lon": -10.404278256510489,
+      "lat": 34.96444135315374,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -1.1467326801763924,
+      "source_uids": [
+        458395,
+        142568
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        12.479389084781852,
+        45.53735267205391
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        33.82928050914434,
+        54.95644370080705
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 17393,
+      "lon": -5.706568151574817,
+      "lat": 33.974364812483444,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.2664336100823749,
+      "source_uids": [
+        23751,
+        475869
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        47.94761486036535,
+        7.755352487183582
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        36.76722812268583,
+        73.46960027761749
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 19583,
+      "lon": -5.925514391325584,
+      "lat": 36.96508320861833,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.6902671172867917,
+      "source_uids": [
+        464607,
+        356640
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.079144320297756,
+        33.5880326975397
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        33.148206003455115,
+        41.262292486337806
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 19584,
+      "lon": -4.7235854411805365,
+      "lat": 36.69252952496999,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.9070792544743259,
+      "source_uids": [
+        470220,
+        453668
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.117877632533363,
+        31.813176308095574
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        33.48413919096362,
+        49.4063319453614
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 26795,
+      "lon": -3.527222443061424,
+      "lat": 36.40699369332725,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -1.8778449456293669,
+      "source_uids": [
+        475867,
+        453668
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.3672537360684975,
+        31.813176308095574
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        33.85733158387174,
+        122.39350589384155
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 26798,
+      "lon": -3.439151599080445,
+      "lat": 34.41433656977928,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.2807571116459445,
+      "source_uids": [
+        77467,
+        475863
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        9.944030928653927,
+        7.859418743191515
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        50.218222212088634,
+        85.59772264639695
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 26807,
+      "lon": -1.1664842793251795,
+      "lat": 35.80379734048197,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        475752,
+        475843
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        45.875876336077404,
+        83.56537922583453
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 35062,
+      "lon": -2.3426714787494887,
+      "lat": 36.111177850775,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.11439157045968,
+      "source_uids": [
+        475868,
+        475843
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.381619393003222,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        72.40804031212507,
+        76.56222731172653
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 36566,
+      "lon": -15.55769987114765,
+      "lat": 36.86058029811596,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -1.2988959321145501,
+      "source_uids": [
+        356669,
+        81789
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        33.94638731466846,
+        21.06159675511073
+      ],
+      "source_origin": [
+        304,
+        0
+      ],
+      "nearest_distances_km": [
+        30.700663646476855,
+        39.85280579854739
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 37042,
+      "lon": 3.8002291760423788,
+      "lat": 41.41268698860983,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        381418,
+        453399
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.081084145736125
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        29.816588733096463,
+        42.38775588223357
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 41888,
+      "lon": -8.906998746897418,
+      "lat": 37.099330185468354,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -1.377511075176023,
+      "source_uids": [
+        356827,
+        458961
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        36.550104273804436,
+        8.274528029408584
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        33.68433848065586,
+        70.39568571245394
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 45042,
+      "lon": -25.474306863095943,
+      "lat": 32.7234466345645,
+      "plate_pair": [
+        301,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.37012555859136814,
+      "source_uids": [
+        107688,
+        197065
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        8.375840303149849,
+        22.24970472041048
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        30.651072928544966,
+        43.30171675188289
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 48692,
+      "lon": -5.18919812600462,
+      "lat": 34.838612480091285,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.1524607305413976,
+      "source_uids": [
+        475869,
+        77465
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.755352487183582,
+        46.667652243040074
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        34.14099785447408,
+        118.1768132210169
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 49759,
+      "lon": -6.328401121017935,
+      "lat": 34.60810317670259,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.35325305107197136,
+      "source_uids": [
+        458963,
+        72214
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        9.648964734900792,
+        48.65978504035747
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        34.221503741117246,
+        108.67173278417854
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 49760,
+      "lon": -8.299000541782597,
+      "lat": 36.979434849246346,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -1.352050322366155,
+      "source_uids": [
+        356829,
+        458959
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        35.55204119284625,
+        7.925251629279738
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        36.60806898757118,
+        44.464567897874424
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 59753,
+      "lon": -2.35768203785407,
+      "lat": 36.606886253109714,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.4006928705368185,
+      "source_uids": [
+        475845,
+        475868
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.381619393003222
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        42.35621190649866,
+        96.94820522409726
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 65048,
+      "lon": -7.415631694478566,
+      "lat": 33.86748443931069,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.229869102082011,
+      "source_uids": [
+        72213,
+        470219
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.020275481182073,
+        8.660739713038678
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        43.28807868483014,
+        53.49251694459572
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 77652,
+      "lon": -19.720672442050326,
+      "lat": 36.46769121406589,
+      "plate_pair": [
+        301,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.3953419605506576,
+      "source_uids": [
+        160717,
+        132494
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        12.499720104095228
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        33.982872421074944,
+        50.54662153326678
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 80932,
+      "lon": -12.205063020960434,
+      "lat": 35.305461580462065,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.1947436415893122,
+      "source_uids": [
+        356769,
+        153717
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        35.49023991662183,
+        44.712807780026196
+      ],
+      "source_origin": [
+        304,
+        301
+      ],
+      "nearest_distances_km": [
+        48.136131125870754,
+        52.18456118682499
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 82114,
+      "lon": -6.486236085107995,
+      "lat": 36.60133097336307,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.7684871694238125,
+      "source_uids": [
+        458383,
+        470196
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        9.102704673575666,
+        31.826206469417837
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        33.48490726279649,
+        48.26455289049014
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 93808,
+      "lon": -4.574306299521253,
+      "lat": 34.19921194940837,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.38534430772186595,
+      "source_uids": [
+        13454,
+        470223
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        8.033453449002202,
+        8.16651467523521
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        46.764058107335536,
+        72.99333367687751
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 93809,
+      "lon": -7.999471408211821,
+      "lat": 33.9920378969983,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -2.3750752059595044,
+      "source_uids": [
+        122178,
+        470219
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        48.16340516059586,
+        8.660739713038678
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        32.53609118221765,
+        45.631817309809946
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 95903,
+      "lon": 1.9565302841061443,
+      "lat": 42.9714950258471,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.2445037097315154,
+      "source_uids": [
+        30715,
+        358196
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        53.558980437533826,
+        7.0
+      ],
+      "source_origin": [
+        103,
+        0
+      ],
+      "nearest_distances_km": [
+        35.64355163482861,
+        49.16293585643617
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 100950,
+      "lon": -7.088739668399707,
+      "lat": 36.73047102866218,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.5015335301588772,
+      "source_uids": [
+        458378,
+        470196
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.853237809343408,
+        31.826206469417837
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        33.31952763728187,
+        43.040165638830594
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 102367,
+      "lon": -5.3234794395683265,
+      "lat": 36.83031858332854,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.7981640677941851,
+      "source_uids": [
+        470227,
+        356906
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.119518014458265,
+        33.5880326975397
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        33.317554144084376,
+        45.33585480915414
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 102370,
+      "lon": -4.152318108218813,
+      "lat": 37.04750038766522,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -1.6596577629454377,
+      "source_uids": [
+        475862,
+        453668
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.4408477106430935,
+        31.813176308095574
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        33.16100577448086,
+        38.239331823747065
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 102394,
+      "lon": -9.27900323974964,
+      "lat": 39.67086568163329,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.41490119847145274,
+      "source_uids": [
+        138908,
+        356712
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        54.49145076157356,
+        28.85809971701348
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        36.393339059866534,
+        45.76992543691968
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 103041,
+      "lon": -8.063192741608482,
+      "lat": 39.907653524866376,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.3985561682595826,
+      "source_uids": [
+        4252,
+        356603
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        54.81382410105516,
+        37.647547957319304
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        33.28786020215987,
+        38.47357001596478
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127629,
+      "lon": 0.0,
+      "lat": 38.95468961905493,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        453626,
+        458946
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.580936673247518,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        36.608820483564884,
+        44.64931474218369
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127635,
+      "lon": -2.9338254749735904,
+      "lat": 36.26054572027817,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.386137619673414,
+      "source_uids": [
+        475868,
+        475845
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.381619393003222,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.047945137627984,
+        106.62371635781042
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127636,
+      "lon": -3.551305266555846,
+      "lat": 36.90335265979966,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.9034349960653565,
+      "source_uids": [
+        475862,
+        356943
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.4408477106430935,
+        33.67033506289876
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        70.74931834944984,
+        76.31673842193557
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127638,
+      "lon": -2.973109292766918,
+      "lat": 37.2526705568802,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.5133639105028043,
+      "source_uids": [
+        470199,
+        475862
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.4408477106430935
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        44.91706593095673,
+        131.37561995737255
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127645,
+      "lon": -2.2980404900196194,
+      "lat": 34.61865403094168,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.3604034291448528,
+      "source_uids": [
+        90548,
+        475866
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        9.463588377319374,
+        7.916763896006727
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        54.25553695342687,
+        124.09788517859785
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127647,
+      "lon": -4.019990288143532,
+      "lat": 34.558369758058234,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.125423934868638,
+      "source_uids": [
+        470223,
+        77467
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        8.16651467523521,
+        9.944030928653927
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.78828399458577,
+        74.6099488319161
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127648,
+      "lon": -2.8969519955012073,
+      "lat": 35.26918423600751,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.3938137973058984,
+      "source_uids": [
+        475866,
+        475555
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.916763896006727,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        33.48003932872658,
+        131.55649028847435
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127655,
+      "lon": -6.289574659177591,
+      "lat": 34.108060567558724,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.34176280440897394,
+      "source_uids": [
+        72214,
+        458963
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        48.65978504035747,
+        9.648964734900792
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        55.029443095030615,
+        73.59340997901006
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127656,
+      "lon": -5.157082472977074,
+      "lat": 34.33824169143071,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.2074891325933885,
+      "source_uids": [
+        475869,
+        77465
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.755352487183582,
+        46.667652243040074
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        35.08095335239002,
+        65.30831708389694
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127664,
+      "lon": -8.585092978153174,
+      "lat": 34.11381950046141,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.9302818817183676,
+      "source_uids": [
+        122178,
+        470221
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        48.16340516059586,
+        7.830949257171868
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        39.52761751831837,
+        40.41575809764294
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127673,
+      "lon": -2.327849215914779,
+      "lat": 35.61546759955869,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.2942443111372546,
+      "source_uids": [
+        475866,
+        475555
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.916763896006727,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        73.24291214008987,
+        91.46088171764353
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127675,
+      "lon": -1.753433500564893,
+      "lat": 35.9589221473394,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        475843,
+        475555
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        57.694868635282184,
+        87.7462389261394
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 127679,
+      "lon": -1.1894128442098957,
+      "lat": 37.29118320007224,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        469925,
+        470185
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0045102696328065,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.64815143750121,
+        41.7219483357518
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 134394,
+      "lon": 3.078697339892758,
+      "lat": 39.73485439855032,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        356656,
+        113942
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        31.632949878133054,
+        8.656809036150483
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        33.87305418016453,
+        37.009279677152705
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 134413,
+      "lon": 4.152318108218813,
+      "lat": 37.04750038766522,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        356858,
+        363961
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        35.0,
+        8.268882834026813
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        36.22559411360139,
+        55.125913052295914
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 150308,
+      "lon": -1.1739926390906108,
+      "lat": 36.29968357996733,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        475843,
+        475697
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        43.09414759748058,
+        60.8334946569443
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 150309,
+      "lon": -2.952671421618402,
+      "lat": 36.756186960532,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.3767481500203893,
+      "source_uids": [
+        475844,
+        475868
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.381619393003222
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        73.89848938803338,
+        85.47705853500395
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 150310,
+      "lon": -1.7422849172412151,
+      "lat": 35.46313210304703,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        475555,
+        475843
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        38.70895424304381,
+        112.000995913204
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 150311,
+      "lon": -2.8785863944974466,
+      "lat": 34.76834167870493,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.2381713866056067,
+      "source_uids": [
+        25135,
+        475866
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        10.246538778091276,
+        7.916763896006727
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        79.33431341650792,
+        84.98043807789564
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 150315,
+      "lon": -3.4608582879743057,
+      "lat": 34.91506967723609,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.718696238635027,
+      "source_uids": [
+        475863,
+        25135
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.859418743191515,
+        10.246538778091276
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.135909422372244,
+        104.41788685787073
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 5.0,
+      "fixed_node": 155157,
+      "lon": -20.493349787257795,
+      "lat": 35.1149835100322,
+      "plate_pair": [
+        301,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.3844007623003024,
+      "source_uids": [
+        153195,
+        453375
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        31.85340512600571,
+        7.509082136001979
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        36.204087821111074,
+        55.286968095472695
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 5171,
+      "lon": -9.227227240675006,
+      "lat": 34.730586881072306,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.3202670740791798,
+      "source_uids": [
+        470212,
+        122141
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        9.525521471937514,
+        48.51845375791539
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        42.94841114640295,
+        47.98269597836799
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 10753,
+      "lon": 1.2694730414337332,
+      "lat": 41.75488268473006,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        437419,
+        381416
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.124619488167128,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        33.56508349334786,
+        39.04702232498899
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 17394,
+      "lon": -8.047350365798925,
+      "lat": 34.49042701265595,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -1.7394416759314588,
+      "source_uids": [
+        122178,
+        475869
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        49.76343591344284,
+        8.179716911414246
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        59.338727861182235,
+        76.74426967632205
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 26795,
+      "lon": -3.527222443061424,
+      "lat": 36.40699369332725,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.1681164460686686,
+      "source_uids": [
+        481410,
+        481423
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        95.32761802680368,
+        101.18395789131428
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 26806,
+      "lon": -3.4828314355770917,
+      "lat": 35.41579887764924,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.451396982610606,
+      "source_uids": [
+        481277,
+        481417
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        72.11640401680656,
+        113.60146687612759
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 28451,
+      "lon": -17.841918836896706,
+      "lat": 36.22514046706432,
+      "plate_pair": [
+        301,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.21810494218217696,
+      "source_uids": [
+        59542,
+        65560
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.1363380793184685,
+        14.632901803586721
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        30.371812452778432,
+        49.15308079863482
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 28459,
+      "lon": -20.332231257387654,
+      "lat": 36.54063221173129,
+      "plate_pair": [
+        103,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.22151878623437246,
+      "source_uids": [
+        132956,
+        160717
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        12.562455456555853,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        35.77264291722116,
+        39.73824786736554
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 35064,
+      "lon": -1.1815970815139316,
+      "lat": 36.795569343990394,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        475697,
+        475840
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.100431955476251,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        49.67639933122697,
+        50.94102142856316
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 42062,
+      "lon": -13.444712472234556,
+      "lat": 35.533176875809005,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.0837140011888207,
+      "source_uids": [
+        109476,
+        458381
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        45.312276100643246,
+        12.621310208202255
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        49.35719905126345,
+        87.931730842408
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 45714,
+      "lon": -8.636435510758899,
+      "lat": 34.6119267649917,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.762813063785862,
+      "source_uids": [
+        481433,
+        122178
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.125428117751595,
+        49.76343591344284
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        38.506473643128125,
+        55.17839201003803
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 48692,
+      "lon": -5.18919812600462,
+      "lat": 34.838612480091285,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.7569877142081265,
+      "source_uids": [
+        481299,
+        481429
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        36.460775010717185,
+        59.58109249316627
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 48693,
+      "lon": -7.459999030786575,
+      "lat": 34.3661087285812,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.39867403714861716,
+      "source_uids": [
+        72213,
+        481425
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.020275481182073,
+        7.1568422969784695
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        63.21227891395131,
+        71.09353738865411
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 49588,
+      "lon": -10.159385956746442,
+      "lat": 37.36507117080872,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.2559572123427463,
+      "source_uids": [
+        458961,
+        356828
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.749255787181859,
+        37.61783833292913
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        30.98074880106382,
+        37.172899141096195
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 49591,
+      "lon": -11.701843197322672,
+      "lat": 39.15236828009635,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.12520609938042157,
+      "source_uids": [
+        55757,
+        356847
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        51.090441662485134,
+        37.83545997867771
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        31.2604413053183,
+        49.145693034423246
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 53498,
+      "lon": -4.12429896025835,
+      "lat": 36.55125550187344,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.7093175787001527,
+      "source_uids": [
+        481423,
+        453668
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.0,
+        31.813176308095574
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        45.44212852839865,
+        112.64546225512562
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 58667,
+      "lon": -4.631689820971352,
+      "lat": 35.20006680284826,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.36936134173244517,
+      "source_uids": [
+        481417,
+        481299
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        53.25739510084087,
+        69.10130144748852
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 59754,
+      "lon": -3.5048879023643043,
+      "lat": 35.911398327686754,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.2427192278181765,
+      "source_uids": [
+        481432,
+        481250
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        107.38275668725097,
+        123.08192358562525
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 65567,
+      "lon": -24.468123142152514,
+      "lat": 33.11805419100833,
+      "plate_pair": [
+        301,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.24740568764956383,
+      "source_uids": [
+        170577,
+        191597
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.195736371742999,
+        18.219836302350235
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        36.34594672344588,
+        59.799411470039956
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 67506,
+      "lon": -7.744602460721228,
+      "lat": 37.35175974084107,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -2.925574196950371,
+      "source_uids": [
+        470227,
+        356829
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        8.625558651900917,
+        35.520987697562624
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        35.96488706076305,
+        41.09759814893875
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 68047,
+      "lon": -14.69271973505389,
+      "lat": 35.74791736295825,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.4895341496964154,
+      "source_uids": [
+        14459,
+        356769
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        44.77314459055174,
+        36.70629069214143
+      ],
+      "source_origin": [
+        301,
+        304
+      ],
+      "nearest_distances_km": [
+        29.866671501677178,
+        99.92289398413985
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 68286,
+      "lon": -5.656503843637409,
+      "lat": 40.86101624223159,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.41963460645131734,
+      "source_uids": [
+        115830,
+        356815
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        54.9402200090269,
+        37.58802781988087
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        33.6616394813048,
+        48.84862250380492
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 68293,
+      "lon": -11.336496361521794,
+      "lat": 37.10131238761735,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.1154725608640375,
+      "source_uids": [
+        448398,
+        356816
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        9.519976741738288,
+        37.742923912565935
+      ],
+      "source_origin": [
+        0,
+        302
+      ],
+      "nearest_distances_km": [
+        33.508741039963105,
+        40.36012383195066
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 75536,
+      "lon": 4.238401752178872,
+      "lat": 38.53633842719722,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        356804,
+        424917
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        31.885829561970006,
+        7.1164104480195345
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        42.77827278516836,
+        46.516583534288856
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 75548,
+      "lon": 0.6331519432968872,
+      "lat": 41.59549555681594,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        443044,
+        437419
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.124619488167128
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.88758722402989,
+        36.6035131078893
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 80925,
+      "lon": -11.681138694962343,
+      "lat": 35.69557161199015,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.6895724006520912,
+      "source_uids": [
+        458393,
+        50653
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        12.25677231109674,
+        44.01870097413783
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        31.612376159787395,
+        37.43829655307277
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 82700,
+      "lon": 2.638214686650769,
+      "lat": 43.64219401457604,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.4240354231122018,
+      "source_uids": [
+        52055,
+        356952
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        52.519768212721694,
+        38.27056508131768
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        32.051606003839616,
+        63.47316758534249
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 93805,
+      "lon": -5.741838702640457,
+      "lat": 34.47456705347481,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.7503201434516605,
+      "source_uids": [
+        481357,
+        481418
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        35.254537801926595,
+        66.05392273651718
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 93809,
+      "lon": -7.999471408211821,
+      "lat": 33.9920378969983,
+      "plate_pair": [
+        301,
+        301
+      ],
+      "has_two_plates": false,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        13455,
+        13455
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        51.213932407863865,
+        51.213932407863865
+      ],
+      "source_origin": [
+        301,
+        301
+      ],
+      "nearest_distances_km": [
+        30.5221559928894,
+        30.5221559928894
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 93810,
+      "lon": -8.095718775589418,
+      "lat": 34.98907694081803,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.14651431617283076,
+      "source_uids": [
+        458963,
+        122178
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        10.302428628159998,
+        49.76343591344284
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        31.769103737527942,
+        103.5549982257141
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 100961,
+      "lon": -14.80652796854938,
+      "lat": 36.25366981142933,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.15922082475939825,
+      "source_uids": [
+        356769,
+        69978
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        36.70629069214143,
+        44.24594357590101
+      ],
+      "source_origin": [
+        304,
+        301
+      ],
+      "nearest_distances_km": [
+        46.670229576770744,
+        74.52368833988713
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 100963,
+      "lon": -13.550348985617651,
+      "lat": 36.04041568862806,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.7957947731312873,
+      "source_uids": [
+        458390,
+        50655
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        12.670991818430268,
+        43.34744935437553
+      ],
+      "source_origin": [
+        0,
+        301
+      ],
+      "nearest_distances_km": [
+        50.66274803724017,
+        56.61415059219218
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 100989,
+      "lon": -12.254415626040814,
+      "lat": 38.75811812385608,
+      "plate_pair": [
+        103,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.1326409118157254,
+      "source_uids": [
+        55757,
+        356846
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        51.090441662485134,
+        21.170133031271394
+      ],
+      "source_origin": [
+        103,
+        302
+      ],
+      "nearest_distances_km": [
+        35.64245801404054,
+        38.503558564943916
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 102370,
+      "lon": -4.152318108218813,
+      "lat": 37.04750038766522,
+      "plate_pair": [
+        304,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.6936290003156673,
+      "source_uids": [
+        481423,
+        453668
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        7.0,
+        31.813176308095574
+      ],
+      "source_origin": [
+        0,
+        91
+      ],
+      "nearest_distances_km": [
+        58.87703086255813,
+        69.63544977626547
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 102371,
+      "lon": -4.0966120180284955,
+      "lat": 36.05507300470376,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.8171003476516805,
+      "source_uids": [
+        481432,
+        481277
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        51.81022148857909,
+        146.7939358436658
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127633,
+      "lon": -4.180642113258987,
+      "lat": 37.54367296286023,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.19078635109411174,
+      "source_uids": [
+        356823,
+        481423
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        33.62647892243026,
+        7.0
+      ],
+      "source_origin": [
+        302,
+        0
+      ],
+      "nearest_distances_km": [
+        41.54032307117481,
+        104.73316609513085
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127635,
+      "lon": -2.9338254749735904,
+      "lat": 36.26054572027817,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        481401,
+        481278
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.020421087509429
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        63.27151072282849,
+        81.140282236588
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127636,
+      "lon": -3.551305266555846,
+      "lat": 36.90335265979966,
+      "plate_pair": [
+        302,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 3.0582191059859256,
+      "source_uids": [
+        481410,
+        481423
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        60.019725565648606,
+        98.09330380248669
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127637,
+      "lon": -4.0708261206578324,
+      "lat": 35.55957389208925,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.508734250427876,
+      "source_uids": [
+        481417,
+        481277
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        58.06844170090036,
+        93.99638824788322
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127647,
+      "lon": -4.019990288143532,
+      "lat": 34.558369758058234,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.8300130038010276,
+      "source_uids": [
+        77467,
+        481417
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        9.944030928653927,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        37.01493856726972,
+        138.69993644838615
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127648,
+      "lon": -2.8969519955012073,
+      "lat": 35.26918423600751,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        481276,
+        481407
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        47.13500552522475,
+        137.24083790782888
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127659,
+      "lon": -9.814916493835442,
+      "lat": 34.84893152930196,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -3.0812243360461644,
+      "source_uids": [
+        142565,
+        470212
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        46.074772784527525,
+        9.525521471937514
+      ],
+      "source_origin": [
+        301,
+        0
+      ],
+      "nearest_distances_km": [
+        28.33315147961215,
+        49.95015322689836
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127671,
+      "lon": -4.045283925006725,
+      "lat": 35.059007555880136,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.5840767284146318,
+      "source_uids": [
+        481277,
+        481417
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        46.5738770652437,
+        90.55476141223772
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 127672,
+      "lon": -2.915243240858943,
+      "lat": 35.76483334529501,
+      "plate_pair": [
+        301,
+        302
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        481250,
+        481407
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.0
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        68.45639569117628,
+        94.40816373805731
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 132617,
+      "lon": -15.438052884589908,
+      "lat": 36.35551175263108,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.7328997775137231,
+      "source_uids": [
+        356886,
+        2439
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        37.5487118869879,
+        7.842241215928141
+      ],
+      "source_origin": [
+        304,
+        0
+      ],
+      "nearest_distances_km": [
+        58.103136133986325,
+        61.15075989433967
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 132620,
+      "lon": -14.176748564699285,
+      "lat": 36.148580338256075,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 2.9906518380340894,
+      "source_uids": [
+        50655,
+        356769
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        43.34744935437553,
+        36.70629069214143
+      ],
+      "source_origin": [
+        301,
+        304
+      ],
+      "nearest_distances_km": [
+        44.306269375835306,
+        67.71664579142413
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 132670,
+      "lon": -24.044021293313158,
+      "lat": 33.55994289224631,
+      "plate_pair": [
+        103,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.3883036404444872,
+      "source_uids": [
+        191378,
+        170577
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        14.08201878379347,
+        7.195736371742999
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        34.530623048429554,
+        47.1264254636325
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 134470,
+      "lon": 5.22173096444314,
+      "lat": 35.338904956509005,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        443042,
+        394863
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.5927540765100465
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        37.19730255783684,
+        38.12217996100505
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 150309,
+      "lon": -2.952671421618402,
+      "lat": 36.756186960532,
+      "plate_pair": [
+        302,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.0,
+      "source_uids": [
+        481401,
+        481278
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.020421087509429
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        37.14549833393318,
+        117.09408077447375
+      ],
+      "gap_rule": "{'knots': [(0.0, 32.0), (300.0, 31.4), (460.0, 18.0)], 'holes': False}"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 153976,
+      "lon": -17.33910024473508,
+      "lat": 36.639418102609596,
+      "plate_pair": [
+        103,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -2.0656375924890047,
+      "source_uids": [
+        99101,
+        356905
+      ],
+      "source_types": [
+        0,
+        1
+      ],
+      "source_T_km": [
+        14.991518260949606,
+        38.50671411928444
+      ],
+      "source_origin": [
+        0,
+        304
+      ],
+      "nearest_distances_km": [
+        32.02215751855972,
+        43.8954189076703
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 155155,
+      "lon": -16.07111071779643,
+      "lat": 36.45403688359546,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.4630977850815561,
+      "source_uids": [
+        356886,
+        62145
+      ],
+      "source_types": [
+        1,
+        0
+      ],
+      "source_T_km": [
+        37.5487118869879,
+        10.283882990453552
+      ],
+      "source_origin": [
+        304,
+        0
+      ],
+      "nearest_distances_km": [
+        44.53131322110562,
+        46.10295252484469
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 155158,
+      "lon": -20.183801568271544,
+      "lat": 36.04154921683692,
+      "plate_pair": [
+        301,
+        103
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 0.1280210413878898,
+      "source_uids": [
+        160717,
+        469894
+      ],
+      "source_types": [
+        0,
+        0
+      ],
+      "source_T_km": [
+        7.0,
+        7.2585051346058815
+      ],
+      "source_origin": [
+        0,
+        0
+      ],
+      "nearest_distances_km": [
+        46.327185807748535,
+        48.85660536460059
+      ],
+      "gap_rule": "None"
+    }
+  ],
+  "contacts": [
+    {
+      "uid": 21410,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -10.561580728144403,
+      "lat": 34.33058309576199,
+      "T_km": 41.968850995329525,
+      "volume_km3": 121747.51570809634,
+      "nearest_normal_separation_cm_yr": -2.5764292144478445,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 15.0
+    },
+    {
+      "uid": 356829,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -7.508877439687524,
+      "lat": 36.60513799540163,
+      "T_km": 35.62284006384599,
+      "volume_km3": 103281.38406000241,
+      "nearest_normal_separation_cm_yr": 2.7881500442006724,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 15.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 21410,
+      "src": 304,
+      "dst": 301,
+      "lon": -10.458079384789448,
+      "lat": 34.40335980487518,
+      "T_km": 33.9280032953343,
+      "volume_km3": 99429.65261252517,
+      "nearest_normal_separation_cm_yr": -2.5764292144478436,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 15.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356829,
+      "src": 304,
+      "dst": 302,
+      "lon": -7.602941405725133,
+      "lat": 36.56284501591023,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": 2.7881500442006724,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 15.0
+    },
+    {
+      "uid": 21410,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -10.606105081751249,
+      "lat": 34.38495514135184,
+      "T_km": 42.13818707636499,
+      "volume_km3": 122238.74305163517,
+      "nearest_normal_separation_cm_yr": 3.4106796403323933,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 14.0
+    },
+    {
+      "uid": 50653,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -11.144822728892901,
+      "lat": 34.61717421175651,
+      "T_km": 41.66675178130985,
+      "volume_km3": 120879.03170520549,
+      "nearest_normal_separation_cm_yr": -3.1161962957135296,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 14.0
+    },
+    {
+      "uid": 356827,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -8.167390552654922,
+      "lat": 36.750857318935665,
+      "T_km": 36.66615418254746,
+      "volume_km3": 106307.70705883924,
+      "nearest_normal_separation_cm_yr": -1.9747260699878795,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 14.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 50653,
+      "src": 304,
+      "dst": 301,
+      "lon": -10.89210969096377,
+      "lat": 34.47908178700492,
+      "T_km": 33.93759288416591,
+      "volume_km3": 99457.7559311297,
+      "nearest_normal_separation_cm_yr": -3.1161962957135287,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 14.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356827,
+      "src": 304,
+      "dst": 302,
+      "lon": -7.99304921480666,
+      "lat": 36.60128148755462,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": -1.9747260699878795,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 14.0
+    },
+    {
+      "uid": 50653,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -11.190050415184887,
+      "lat": 34.6711195762839,
+      "T_km": 41.80294144047437,
+      "volume_km3": 121274.13027719098,
+      "nearest_normal_separation_cm_yr": 2.2903941987714105,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 13.0
+    },
+    {
+      "uid": 356827,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -8.212913312651065,
+      "lat": 36.806965315767734,
+      "T_km": 36.654250697402325,
+      "volume_km3": 106273.19478887256,
+      "nearest_normal_separation_cm_yr": 2.071560876430884,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 13.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 50653,
+      "src": 304,
+      "dst": 301,
+      "lon": -11.326426357662978,
+      "lat": 34.55951808517171,
+      "T_km": 33.95781743017604,
+      "volume_km3": 99517.02613240057,
+      "nearest_normal_separation_cm_yr": 2.290394198771411,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 13.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356827,
+      "src": 304,
+      "dst": 302,
+      "lon": -8.383991103605892,
+      "lat": 36.643932972482276,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": 2.0715608764308833,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 13.0
+    },
+    {
+      "uid": 21410,
+      "host_uid": 356886,
+      "src": 301,
+      "dst": 304,
+      "lon": -10.695446765745423,
+      "lat": 34.49362660271639,
+      "T_km": 42.48606998401744,
+      "volume_km3": 123247.91720721804,
+      "nearest_normal_separation_cm_yr": -1.2123178173481672,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 12.0
+    },
+    {
+      "uid": 50653,
+      "host_uid": 356611,
+      "src": 301,
+      "dst": 304,
+      "lon": -11.23537685180077,
+      "lat": 34.725039997394425,
+      "T_km": 41.943334390996206,
+      "volume_km3": 121681.42297920883,
+      "nearest_normal_separation_cm_yr": 0.4675215612391659,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 12.0
+    },
+    {
+      "uid": 356611,
+      "host_uid": 50653,
+      "src": 304,
+      "dst": 301,
+      "lon": -11.246125144766681,
+      "lat": 34.91380883942365,
+      "T_km": 34.30756805219554,
+      "volume_km3": 99885.77038379309,
+      "nearest_normal_separation_cm_yr": 0.4675215612391659,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 12.0
+    },
+    {
+      "uid": 356886,
+      "host_uid": 21410,
+      "src": 304,
+      "dst": 301,
+      "lon": -10.590847587741987,
+      "lat": 34.69359244941204,
+      "T_km": 34.287325315860784,
+      "volume_km3": 99801.2333880661,
+      "nearest_normal_separation_cm_yr": -1.212317817348167,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 12.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 153717,
+      "src": 304,
+      "dst": 301,
+      "lon": -11.760962451855432,
+      "lat": 34.64465414642854,
+      "T_km": 33.981308035919064,
+      "volume_km3": 99585.86787202065,
+      "nearest_normal_separation_cm_yr": -1.1248005301050845,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 12.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356707,
+      "src": 304,
+      "dst": 302,
+      "lon": -8.775701017507673,
+      "lat": 36.69079540162876,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": -0.8371556156165315,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 12.0
+    },
+    {
+      "uid": 153717,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -11.861282187769618,
+      "lat": 34.46311879026204,
+      "T_km": 43.39251959419125,
+      "volume_km3": 125885.74362626902,
+      "nearest_normal_separation_cm_yr": -1.1248005301050852,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 12.0
+    },
+    {
+      "uid": 50653,
+      "host_uid": 356886,
+      "src": 301,
+      "dst": 304,
+      "lon": -11.280802222713007,
+      "lat": 34.778935374059195,
+      "T_km": 42.08755638134173,
+      "volume_km3": 122099.82407356493,
+      "nearest_normal_separation_cm_yr": -3.5429728180330473,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 11.0
+    },
+    {
+      "uid": 109476,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -12.450279195217611,
+      "lat": 34.742390486752676,
+      "T_km": 43.283385895209356,
+      "volume_km3": 125612.33016275497,
+      "nearest_normal_separation_cm_yr": -3.5604319661854356,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 11.0
+    },
+    {
+      "uid": 356886,
+      "host_uid": 50653,
+      "src": 304,
+      "dst": 301,
+      "lon": -11.02358296212624,
+      "lat": 34.7683410067277,
+      "T_km": 34.336058263263666,
+      "volume_km3": 99943.08196367354,
+      "nearest_normal_separation_cm_yr": -3.5429728180330478,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 11.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 109476,
+      "src": 304,
+      "dst": 301,
+      "lon": -12.195651362004236,
+      "lat": 34.73447435091664,
+      "T_km": 33.99069317573002,
+      "volume_km3": 99613.37203084191,
+      "nearest_normal_separation_cm_yr": -3.5604319661854347,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 11.0
+    },
+    {
+      "uid": 50653,
+      "host_uid": 356886,
+      "src": 301,
+      "dst": 304,
+      "lon": -11.326326712324573,
+      "lat": 34.832805604951,
+      "T_km": 42.235256462442166,
+      "volume_km3": 122528.31542513243,
+      "nearest_normal_separation_cm_yr": 3.5397275579983214,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 10.0
+    },
+    {
+      "uid": 109476,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -12.496519692771404,
+      "lat": 34.79536938975677,
+      "T_km": 43.444240552859085,
+      "volume_km3": 126079.14503749312,
+      "nearest_normal_separation_cm_yr": 3.5290728801592968,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 10.0
+    },
+    {
+      "uid": 356886,
+      "host_uid": 50653,
+      "src": 304,
+      "dst": 301,
+      "lon": -11.456619837130711,
+      "lat": 34.84776362927205,
+      "T_km": 34.36891510313011,
+      "volume_km3": 100038.71943652091,
+      "nearest_normal_separation_cm_yr": 3.5397275579983214,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 10.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 109476,
+      "src": 304,
+      "dst": 301,
+      "lon": -12.630426791473969,
+      "lat": 34.82896202418553,
+      "T_km": 34.00530035684871,
+      "volume_km3": 99656.1799418067,
+      "nearest_normal_separation_cm_yr": 3.5290728801592985,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 10.0
+    },
+    {
+      "uid": 356816,
+      "host_uid": 356892,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.544487104303894,
+      "lat": 36.833001110220636,
+      "T_km": 37.9374050514163,
+      "volume_km3": 110064.48069111515,
+      "nearest_normal_separation_cm_yr": -1.9466046025720125,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 9.0
+    },
+    {
+      "uid": 356892,
+      "host_uid": 356816,
+      "src": 304,
+      "dst": 302,
+      "lon": -10.503153890875193,
+      "lat": 36.71240587282508,
+      "T_km": 37.823142267137555,
+      "volume_km3": 109485.10054210636,
+      "nearest_normal_separation_cm_yr": -1.946604602572012,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 9.0
+    },
+    {
+      "uid": 50655,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -13.68906265877095,
+      "lat": 35.34336245390322,
+      "T_km": 42.15345869661019,
+      "volume_km3": 122315.7467366783,
+      "nearest_normal_separation_cm_yr": -3.702277996267635,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 8.0
+    },
+    {
+      "uid": 356816,
+      "host_uid": 356892,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.591859198473127,
+      "lat": 36.88743774073458,
+      "T_km": 37.917328629524256,
+      "volume_km3": 110006.23472129491,
+      "nearest_normal_separation_cm_yr": 3.0368743113716006,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 8.0
+    },
+    {
+      "uid": 356883,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.302581608303342,
+      "lat": 37.32736943485529,
+      "T_km": 37.90565653045259,
+      "volume_km3": 109970.96268175216,
+      "nearest_normal_separation_cm_yr": -0.6256969270674297,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 8.0
+    },
+    {
+      "uid": 356892,
+      "host_uid": 356816,
+      "src": 304,
+      "dst": 302,
+      "lon": -10.902268143432215,
+      "lat": 36.8727491426963,
+      "T_km": 37.868622245399706,
+      "volume_km3": 109616.74957215034,
+      "nearest_normal_separation_cm_yr": 3.0368743113715997,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 8.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 50655,
+      "src": 304,
+      "dst": 301,
+      "lon": -13.506854642779738,
+      "lat": 35.21104066150756,
+      "T_km": 34.021373752055226,
+      "volume_km3": 99703.28475041497,
+      "nearest_normal_separation_cm_yr": -3.702277996267636,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 8.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356883,
+      "src": 304,
+      "dst": 302,
+      "lon": -10.348658872397266,
+      "lat": 37.099474349398704,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": -0.6256969270674295,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 8.0
+    },
+    {
+      "uid": 50655,
+      "host_uid": 356905,
+      "src": 301,
+      "dst": 304,
+      "lon": -13.736828960915817,
+      "lat": 35.39540232959374,
+      "T_km": 42.27991570013157,
+      "volume_km3": 122682.68419078202,
+      "nearest_normal_separation_cm_yr": 3.628189808371772,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 7.0
+    },
+    {
+      "uid": 356816,
+      "host_uid": 356984,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.639336242946579,
+      "lat": 36.94184803816745,
+      "T_km": 37.897395693473726,
+      "volume_km3": 109948.40503441787,
+      "nearest_normal_separation_cm_yr": -0.9100840399915906,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 7.0
+    },
+    {
+      "uid": 356848,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.97312041875874,
+      "lat": 37.455060827405966,
+      "T_km": 37.973134802898954,
+      "volume_km3": 110168.19419536728,
+      "nearest_normal_separation_cm_yr": -2.928004976753252,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 7.0
+    },
+    {
+      "uid": 356905,
+      "host_uid": 50655,
+      "src": 304,
+      "dst": 301,
+      "lon": -13.943203696431619,
+      "lat": 35.40900732553281,
+      "T_km": 34.035496761197926,
+      "volume_km3": 99744.67374347415,
+      "nearest_normal_separation_cm_yr": 3.6281898083717734,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 7.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356848,
+      "src": 304,
+      "dst": 302,
+      "lon": -10.741156972216947,
+      "lat": 37.256897448138425,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": -2.928004976753252,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 7.0
+    },
+    {
+      "uid": 356652,
+      "host_uid": 356816,
+      "src": 304,
+      "dst": 302,
+      "lon": -10.493624141378856,
+      "lat": 37.13471119221486,
+      "T_km": 36.55632207591883,
+      "volume_km3": 105992.82989584892,
+      "nearest_normal_separation_cm_yr": -1.5393921416925538,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 6.0
+    },
+    {
+      "uid": 356816,
+      "host_uid": 356652,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.686918450595954,
+      "lat": 36.99623189605306,
+      "T_km": 37.8776047601611,
+      "volume_km3": 109890.98732768504,
+      "nearest_normal_separation_cm_yr": -1.5393921416925538,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 6.0
+    },
+    {
+      "uid": 356848,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -11.021544545365604,
+      "lat": 37.50919629975742,
+      "T_km": 37.952801876952755,
+      "volume_km3": 110109.20402387292,
+      "nearest_normal_separation_cm_yr": 1.2263793191892964,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 6.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356848,
+      "src": 304,
+      "dst": 302,
+      "lon": -11.132733654377622,
+      "lat": 37.418447758919534,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": 1.2263793191892969,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 6.0
+    },
+    {
+      "uid": 356652,
+      "host_uid": 356816,
+      "src": 304,
+      "dst": 302,
+      "lon": -10.888664104009031,
+      "lat": 37.292217673642234,
+      "T_km": 36.57270460161789,
+      "volume_km3": 106040.33003155948,
+      "nearest_normal_separation_cm_yr": 2.4359378949833332,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 5.0
+    },
+    {
+      "uid": 356816,
+      "host_uid": 356802,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.734606034816187,
+      "lat": 37.05058920758779,
+      "T_km": 37.85795436684464,
+      "volume_km3": 109833.97735737154,
+      "nearest_normal_separation_cm_yr": -0.22173770545236157,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 5.0
+    },
+    {
+      "uid": 356849,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -11.695014517311135,
+      "lat": 37.632127802471175,
+      "T_km": 37.99760705850025,
+      "volume_km3": 110277.13184220433,
+      "nearest_normal_separation_cm_yr": -3.2520645761502833,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 5.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356849,
+      "src": 304,
+      "dst": 302,
+      "lon": -11.52332306390783,
+      "lat": 37.584093716304,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": -3.2520645761502833,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 5.0
+    },
+    {
+      "uid": 356652,
+      "host_uid": 356848,
+      "src": 304,
+      "dst": 302,
+      "lon": -11.290000246974811,
+      "lat": 37.45383872812394,
+      "T_km": 36.5766764038623,
+      "volume_km3": 106051.8460303188,
+      "nearest_normal_separation_cm_yr": 1.0365197211756232,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 4.0
+    },
+    {
+      "uid": 356816,
+      "host_uid": 470226,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.782399209497044,
+      "lat": 37.104919865597786,
+      "T_km": 37.83844307079591,
+      "volume_km3": 109777.37093781534,
+      "nearest_normal_separation_cm_yr": -2.3559171383086053,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 4.0
+    },
+    {
+      "uid": 356848,
+      "host_uid": 356652,
+      "src": 302,
+      "dst": 304,
+      "lon": -11.118714849667839,
+      "lat": 37.6173851629752,
+      "T_km": 37.91257295463224,
+      "volume_km3": 109992.49130711985,
+      "nearest_normal_separation_cm_yr": 1.036519721175623,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 4.0
+    },
+    {
+      "uid": 356849,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -11.744188529651575,
+      "lat": 37.68573834819896,
+      "T_km": 37.9770976007392,
+      "volume_km3": 110217.60903662225,
+      "nearest_normal_separation_cm_yr": 3.313144455479043,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 4.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356849,
+      "src": 304,
+      "dst": 302,
+      "lon": -11.920080521142266,
+      "lat": 37.75375764216109,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": 3.3131444554790432,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 4.0
+    },
+    {
+      "uid": 470226,
+      "host_uid": 356816,
+      "src": 304,
+      "dst": 302,
+      "lon": -10.66484416613555,
+      "lat": 37.15033950989207,
+      "T_km": 31.73765640592312,
+      "volume_km3": 92053.83409067489,
+      "nearest_normal_separation_cm_yr": -2.355917138308606,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 4.0
+    },
+    {
+      "uid": 356652,
+      "host_uid": 356849,
+      "src": 304,
+      "dst": 302,
+      "lon": -11.690384060136338,
+      "lat": 37.61964750618506,
+      "T_km": 36.579832731667956,
+      "volume_km3": 106060.9976105983,
+      "nearest_normal_separation_cm_yr": -2.7894710634932265,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 3.0
+    },
+    {
+      "uid": 356816,
+      "host_uid": 470226,
+      "src": 302,
+      "dst": 304,
+      "lon": -10.83029818916199,
+      "lat": 37.15922376269621,
+      "T_km": 37.81906944895837,
+      "volume_km3": 109721.16394042676,
+      "nearest_normal_separation_cm_yr": 3.2093437961821194,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 3.0
+    },
+    {
+      "uid": 356849,
+      "host_uid": 356652,
+      "src": 302,
+      "dst": 304,
+      "lon": -11.793470897040303,
+      "lat": 37.739320658735,
+      "T_km": 37.95673613559262,
+      "volume_km3": 110158.51573706228,
+      "nearest_normal_separation_cm_yr": -2.7894710634932265,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 3.0
+    },
+    {
+      "uid": 470226,
+      "host_uid": 356816,
+      "src": 304,
+      "dst": 302,
+      "lon": -11.070075676907324,
+      "lat": 37.30823005917958,
+      "T_km": 31.73765640592312,
+      "volume_km3": 92053.83409067489,
+      "nearest_normal_separation_cm_yr": 3.2093437961821194,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 3.0
+    },
+    {
+      "uid": 356652,
+      "host_uid": 356849,
+      "src": 304,
+      "dst": 302,
+      "lon": -12.08974951339768,
+      "lat": 37.78961133252812,
+      "T_km": 36.58130088394223,
+      "volume_km3": 106065.25442871978,
+      "nearest_normal_separation_cm_yr": 3.0378195694828145,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 2.0
+    },
+    {
+      "uid": 356849,
+      "host_uid": 356652,
+      "src": 302,
+      "dst": 304,
+      "lon": -11.842861837851634,
+      "lat": 37.79287462163517,
+      "T_km": 37.936521117655126,
+      "volume_km3": 110099.84745842953,
+      "nearest_normal_separation_cm_yr": 3.0378195694828145,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 2.0
+    },
+    {
+      "uid": 453694,
+      "host_uid": 356882,
+      "src": 304,
+      "dst": 302,
+      "lon": -12.7102541088062,
+      "lat": 38.10537123830159,
+      "T_km": 31.7980267030755,
+      "volume_km3": 92173.4694660265,
+      "nearest_normal_separation_cm_yr": -2.307094398167507,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 2.0
+    },
+    {
+      "uid": 66100,
+      "host_uid": 356880,
+      "src": 103,
+      "dst": 304,
+      "lon": -16.949703935460423,
+      "lat": 38.35468104119705,
+      "T_km": 37.9874122735242,
+      "volume_km3": 111603.64457863846,
+      "nearest_normal_separation_cm_yr": -3.8643369909490817,
+      "suppression_active": false,
+      "consumed": true,
+      "t_Ma": 1.0
+    },
+    {
+      "uid": 356849,
+      "host_uid": 470226,
+      "src": 302,
+      "dst": 304,
+      "lon": -11.892361571052366,
+      "lat": 37.846400124210454,
+      "T_km": 37.91645102295701,
+      "volume_km3": 110041.59977784002,
+      "nearest_normal_separation_cm_yr": -1.4507231498225945,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 1.0
+    },
+    {
+      "uid": 356880,
+      "host_uid": 66100,
+      "src": 304,
+      "dst": 103,
+      "lon": -16.699674682373853,
+      "lat": 38.18086708882947,
+      "T_km": 33.92698203055116,
+      "volume_km3": 98108.71344473203,
+      "nearest_normal_separation_cm_yr": -3.864336990949082,
+      "suppression_active": false,
+      "consumed": false,
+      "t_Ma": 1.0
+    },
+    {
+      "uid": 356882,
+      "host_uid": 453694,
+      "src": 302,
+      "dst": 304,
+      "lon": -12.873410759473018,
+      "lat": 38.416933259595154,
+      "T_km": 38.044798092228305,
+      "volume_km3": 110864.4264275022,
+      "nearest_normal_separation_cm_yr": 1.5577444992767884,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 1.0
+    },
+    {
+      "uid": 470226,
+      "host_uid": 356849,
+      "src": 304,
+      "dst": 302,
+      "lon": -11.877828757188627,
+      "lat": 37.63669626053839,
+      "T_km": 31.73765640592312,
+      "volume_km3": 92053.83409067489,
+      "nearest_normal_separation_cm_yr": -1.4507231498225948,
+      "suppression_active": true,
+      "consumed": false,
+      "t_Ma": 1.0
+    },
+    {
+      "uid": 132488,
+      "host_uid": 356669,
+      "src": 103,
+      "dst": 304,
+      "lon": -17.637756167140648,
+      "lat": 37.68619957013704,
+      "T_km": 37.975467664824535,
+      "volume_km3": 111436.01302399942,
+      "nearest_normal_separation_cm_yr": 2.962341271868135,
+      "suppression_active": false,
+      "consumed": true,
+      "t_Ma": 0.0
+    },
+    {
+      "uid": 356669,
+      "host_uid": 132488,
+      "src": 304,
+      "dst": 103,
+      "lon": -17.645841953179268,
+      "lat": 37.729557774617476,
+      "T_km": 36.72059727432061,
+      "volume_km3": 106889.08568053841,
+      "nearest_normal_separation_cm_yr": 2.962341271868136,
+      "suppression_active": false,
+      "consumed": false,
+      "t_Ma": 0.0
+    }
+  ],
+  "note": "最近单元连线法向仅是原算法实际判据；不等于已平滑的地质边界法向。原方法每次调用一次。"
+}

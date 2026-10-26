@@ -1,0 +1,1224 @@
+{
+  "checkpoint": "U35-C3",
+  "baseline_commit": "a2d5369",
+  "candidate_status": "rejected",
+  "production_result": "C2 保持不变",
+  "method_class": "procedural_constrained",
+  "units": {
+    "time": "Ma",
+    "volume": "km3",
+    "thickness": "km",
+    "elevation": "m",
+    "velocity": "cm/yr"
+  },
+  "reference": "沿用 U32 陆缘 profile 与 holes 体积借用规则；地球类比见 docs/u35_c3_west_arc.md，数值不作地球反演。",
+  "observer_neutrality": {
+    "identical": true,
+    "arrays_checked": 352,
+    "different_arrays": [],
+    "events_identical": true,
+    "budget_identical": true
+  },
+  "pre_event_arrays": {
+    "identical": true,
+    "arrays_checked": 297
+  },
+  "actual_precommit_critical_gaps": [
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 68047,
+      "lon": -14.69271973505389,
+      "lat": 35.74791736295825,
+      "plate_pair": [
+        301,
+        304
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": 1.4895341496964154,
+      "source_uids": [
+        14459,
+        356769
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        44.77314459055174,
+        36.70629069214143
+      ],
+      "source_origin": [
+        301,
+        304
+      ],
+      "nearest_distances_km": [
+        29.866671501677178,
+        99.92289398413985
+      ],
+      "gap_rule": "None"
+    },
+    {
+      "t_Ma": 0.0,
+      "fixed_node": 100961,
+      "lon": -14.80652796854938,
+      "lat": 36.25366981142933,
+      "plate_pair": [
+        304,
+        301
+      ],
+      "has_two_plates": true,
+      "separation_cm_yr": -0.15922082475939825,
+      "source_uids": [
+        356769,
+        69978
+      ],
+      "source_types": [
+        1,
+        1
+      ],
+      "source_T_km": [
+        36.70629069214143,
+        44.24594357590101
+      ],
+      "source_origin": [
+        304,
+        301
+      ],
+      "nearest_distances_km": [
+        46.670229576770744,
+        74.52368833988713
+      ],
+      "gap_rule": "None"
+    }
+  ],
+  "isolated_commit_spike": [
+    {
+      "case": "original",
+      "budget_delta": {
+        "rift_fill": 2553957.1808442026,
+        "hole_created": 90098.11318292242,
+        "hole_fill": 659393.3375813337
+      },
+      "critical": [
+        {
+          "node": 100961,
+          "uid": 486742,
+          "type": 0,
+          "T_km": 7.0,
+          "elevation_m": -2991.2690262189976
+        },
+        {
+          "node": 68047,
+          "uid": 486547,
+          "type": 0,
+          "T_km": 7.0,
+          "elevation_m": -3854.6044581913293
+        }
+      ]
+    },
+    {
+      "case": "continental_margin",
+      "budget_delta": {
+        "rift_fill": 2738263.618129909,
+        "hole_created": 90098.11318292242,
+        "hole_fill": 752536.8247090466
+      },
+      "critical": [
+        {
+          "node": 100961,
+          "uid": 486742,
+          "type": 1,
+          "T_km": 32.0,
+          "elevation_m": -54.5
+        },
+        {
+          "node": 68047,
+          "uid": 486547,
+          "type": 1,
+          "T_km": 31.740420869028366,
+          "elevation_m": -93.82623834220254
+        }
+      ]
+    }
+  ],
+  "baseline_last_10Myr_process_budget": {
+    "_interact": 223039.65760263754,
+    "_arc": 19701.43284524465,
+    "_surface": -6925.332408434711,
+    "commits_and_other_km3": 0.0,
+    "net_change_km3": 235815.75803944748
+  },
+  "critical_source_pair_tracks": {
+    "100961": {
+      "uids": [
+        356769,
+        69978
+      ],
+      "rows": [
+        {
+          "t_Ma": 10,
+          "pair_distance_km": 409.65145654869514
+        },
+        {
+          "t_Ma": 9,
+          "pair_distance_km": 373.2543981047446
+        },
+        {
+          "t_Ma": 8,
+          "pair_distance_km": 337.2465969134185
+        },
+        {
+          "t_Ma": 7,
+          "pair_distance_km": 301.7851221790583
+        },
+        {
+          "t_Ma": 6,
+          "pair_distance_km": 267.10537477594676
+        },
+        {
+          "t_Ma": 5,
+          "pair_distance_km": 233.57346205776784
+        },
+        {
+          "t_Ma": 4,
+          "pair_distance_km": 201.14819528535327
+        },
+        {
+          "t_Ma": 3,
+          "pair_distance_km": 171.48667548496593
+        },
+        {
+          "t_Ma": 2,
+          "pair_distance_km": 146.29572381175805
+        },
+        {
+          "t_Ma": 1,
+          "pair_distance_km": 128.2506282252211
+        },
+        {
+          "t_Ma": 0,
+          "pair_distance_km": 120.61139103649776
+        }
+      ]
+    },
+    "68047": {
+      "uids": [
+        14459,
+        356769
+      ],
+      "rows": [
+        {
+          "t_Ma": 10,
+          "pair_distance_km": 358.38972259157345
+        },
+        {
+          "t_Ma": 9,
+          "pair_distance_km": 322.5551061090319
+        },
+        {
+          "t_Ma": 8,
+          "pair_distance_km": 287.34232356650364
+        },
+        {
+          "t_Ma": 7,
+          "pair_distance_km": 253.02884911272847
+        },
+        {
+          "t_Ma": 6,
+          "pair_distance_km": 220.05339076650847
+        },
+        {
+          "t_Ma": 5,
+          "pair_distance_km": 189.13436152825162
+        },
+        {
+          "t_Ma": 4,
+          "pair_distance_km": 160.8825929158044
+        },
+        {
+          "t_Ma": 3,
+          "pair_distance_km": 137.9964414646761
+        },
+        {
+          "t_Ma": 2,
+          "pair_distance_km": 123.5074770792978
+        },
+        {
+          "t_Ma": 1,
+          "pair_distance_km": 120.49079397806698
+        },
+        {
+          "t_Ma": 0,
+          "pair_distance_km": 129.75025816339306
+        }
+      ]
+    }
+  },
+  "rejected_blocking_uid_history": [
+    {
+      "t_Ma": 5,
+      "uid": 481424,
+      "T": 31.799358615374608,
+      "raw_elevation_m": -84.89716977074687,
+      "lon": -12.37791427311316,
+      "lat": 35.19749892086159,
+      "origin": 91.0,
+      "t_form": 5.0,
+      "oro": 3.0,
+      "oro_t": 5.0
+    },
+    {
+      "t_Ma": 4,
+      "uid": 481424,
+      "T": 31.799358615374608,
+      "raw_elevation_m": -84.89716977074687,
+      "lon": -12.823371313184417,
+      "lat": 35.37830682275517,
+      "origin": 91.0,
+      "t_form": 5.0,
+      "oro": 3.0,
+      "oro_t": 5.0
+    },
+    {
+      "t_Ma": 3,
+      "uid": 481424,
+      "T": 31.799358615374608,
+      "raw_elevation_m": -84.89716977074687,
+      "lon": -13.267766567493924,
+      "lat": 35.56380467693798,
+      "origin": 91.0,
+      "t_form": 5.0,
+      "oro": 3.0,
+      "oro_t": 5.0
+    },
+    {
+      "t_Ma": 2,
+      "uid": 481424,
+      "T": 34.22626020188543,
+      "raw_elevation_m": 282.7784205856428,
+      "lon": -13.711034365412635,
+      "lat": 35.75395452441673,
+      "origin": 91.0,
+      "t_form": 5.0,
+      "oro": 2.0,
+      "oro_t": 2.0
+    },
+    {
+      "t_Ma": 1,
+      "uid": 481424,
+      "T": 34.387560499325566,
+      "raw_elevation_m": 307.2154156478233,
+      "lon": -14.1531091813383,
+      "lat": 35.94871752378856,
+      "origin": 91.0,
+      "t_form": 5.0,
+      "oro": 2.0,
+      "oro_t": 1.0
+    },
+    {
+      "t_Ma": 0,
+      "uid": 481424,
+      "T": 34.785031999617026,
+      "raw_elevation_m": 367.4323479419794,
+      "lon": -14.59392560630117,
+      "lat": 36.148053969025355,
+      "origin": 91.0,
+      "t_form": 5.0,
+      "oro": 2.0,
+      "oro_t": 0.0
+    }
+  ],
+  "baseline_collision_allocation": [
+    {
+      "t_Ma": 1,
+      "donor_uid": 66100,
+      "donor_volume_km3": 111603.64457863846,
+      "distributed_km3": 111603.64457863846,
+      "volume_inside_M31_node_centers_km3": 26764.78758632978,
+      "targets": [
+        {
+          "uid": 356599,
+          "lon_present": -14.072856118855139,
+          "lat_present": 37.808344256066505,
+          "added_volume_km3": 1759.4061271461699,
+          "added_T_km": 0.6076969685738398,
+          "inside_M31": true
+        },
+        {
+          "uid": 356611,
+          "lon_present": -16.40984452166635,
+          "lat_present": 37.10635797048418,
+          "added_volume_km3": 5664.512221604217,
+          "added_T_km": 1.945578812462279,
+          "inside_M31": false
+        },
+        {
+          "uid": 356618,
+          "lon_present": -14.035229859523808,
+          "lat_present": 36.81547611397912,
+          "added_volume_km3": 461.2455816512447,
+          "added_T_km": 0.15933772690781228,
+          "inside_M31": true
+        },
+        {
+          "uid": 356651,
+          "lon_present": -15.246835352625487,
+          "lat_present": 37.46310382761402,
+          "added_volume_km3": 4317.603248213789,
+          "added_T_km": 1.4926969985950136,
+          "inside_M31": true
+        },
+        {
+          "uid": 356652,
+          "lon_present": -12.885161273702334,
+          "lat_present": 38.141869120167634,
+          "added_volume_km3": 12.65096737267389,
+          "added_T_km": 0.004363246441309702,
+          "inside_M31": false
+        },
+        {
+          "uid": 356668,
+          "lon_present": -16.479668230496713,
+          "lat_present": 38.09867284583965,
+          "added_volume_km3": 8108.543407300954,
+          "added_T_km": 2.803315999802123,
+          "inside_M31": false
+        },
+        {
+          "uid": 356669,
+          "lon_present": -17.64584195317927,
+          "lat_present": 37.72955777461749,
+          "added_volume_km3": 8047.7520636223635,
+          "added_T_km": 2.764718779381095,
+          "inside_M31": false
+        },
+        {
+          "uid": 356697,
+          "lon_present": -14.638439415553016,
+          "lat_present": 37.14083140450949,
+          "added_volume_km3": 2122.5378379942235,
+          "added_T_km": 0.7339930723868912,
+          "inside_M31": true
+        },
+        {
+          "uid": 356741,
+          "lon_present": -15.27379393038254,
+          "lat_present": 37.95964091319041,
+          "added_volume_km3": 5296.985361209605,
+          "added_T_km": 1.8306238556672276,
+          "inside_M31": false
+        },
+        {
+          "uid": 356769,
+          "lon_present": -14.61602376084507,
+          "lat_present": 36.644411633974805,
+          "added_volume_km3": 1081.93006887618,
+          "added_T_km": 0.37413610125100877,
+          "inside_M31": true
+        },
+        {
+          "uid": 356770,
+          "lon_present": -14.661209455708992,
+          "lat_present": 37.63717808145854,
+          "added_volume_km3": 3094.1710600516394,
+          "added_T_km": 1.0697677817496376,
+          "inside_M31": true
+        },
+        {
+          "uid": 356803,
+          "lon_present": -14.053918756252052,
+          "lat_present": 37.311911674007554,
+          "added_volume_km3": 1123.8550650093675,
+          "added_T_km": 0.3882513547708485,
+          "inside_M31": true
+        },
+        {
+          "uid": 356851,
+          "lon_present": -15.22035744800943,
+          "lat_present": 36.966824995678294,
+          "added_volume_km3": 3026.8618385436116,
+          "added_T_km": 1.0467020537852492,
+          "inside_M31": true
+        },
+        {
+          "uid": 356879,
+          "lon_present": -16.444523529784075,
+          "lat_present": 37.60252054979581,
+          "added_volume_km3": 7114.619610414945,
+          "added_T_km": 2.459785511458135,
+          "inside_M31": false
+        },
+        {
+          "uid": 356880,
+          "lon_present": -17.103726629747946,
+          "lat_present": 38.41159355468722,
+          "added_volume_km3": 8974.395066567618,
+          "added_T_km": 3.103436274597844,
+          "inside_M31": false
+        },
+        {
+          "uid": 356885,
+          "lon_present": -15.860601530344596,
+          "lat_present": 37.78249391582576,
+          "added_volume_km3": 6461.338749955954,
+          "added_T_km": 2.2330523110130818,
+          "inside_M31": false
+        },
+        {
+          "uid": 356886,
+          "lon_present": -15.799511542161833,
+          "lat_present": 36.78999537318103,
+          "added_volume_km3": 3665.0599486616666,
+          "added_T_km": 1.2591538049761335,
+          "inside_M31": true
+        },
+        {
+          "uid": 356887,
+          "lon_present": -14.684262208103181,
+          "lat_present": 38.13385661867749,
+          "added_volume_km3": 3787.7142033644977,
+          "added_T_km": 1.3096431113964166,
+          "inside_M31": false
+        },
+        {
+          "uid": 356888,
+          "lon_present": -13.465417639076378,
+          "lat_present": 37.479726566229445,
+          "added_volume_km3": 299.0730809813633,
+          "added_T_km": 0.10315973912961535,
+          "inside_M31": true
+        },
+        {
+          "uid": 356892,
+          "lon_present": -14.092049834908357,
+          "lat_present": 38.30477376560125,
+          "added_volume_km3": 2183.5413055520944,
+          "added_T_km": 0.7543345444917947,
+          "inside_M31": false
+        },
+        {
+          "uid": 356904,
+          "lon_present": -17.025271801289023,
+          "lat_present": 37.41956631430154,
+          "added_volume_km3": 7220.8627455551505,
+          "added_T_km": 2.480776544947816,
+          "inside_M31": false
+        },
+        {
+          "uid": 356905,
+          "lon_present": -16.99273161305892,
+          "lat_present": 36.92026361697881,
+          "added_volume_km3": 5574.636426478328,
+          "added_T_km": 1.902212047193875,
+          "inside_M31": false
+        },
+        {
+          "uid": 356941,
+          "lon_present": -17.064218031396752,
+          "lat_present": 37.91555367429617,
+          "added_volume_km3": 8378.448871230014,
+          "added_T_km": 2.8973112975027386,
+          "inside_M31": false
+        },
+        {
+          "uid": 356942,
+          "lon_present": -15.891844638818776,
+          "lat_present": 38.27889594410798,
+          "added_volume_km3": 7215.5946300694,
+          "added_T_km": 2.4936896400189528,
+          "inside_M31": false
+        },
+        {
+          "uid": 356944,
+          "lon_present": -15.829718333956803,
+          "lat_present": 37.286153188015035,
+          "added_volume_km3": 5208.60934986238,
+          "added_T_km": 1.8008062433674368,
+          "inside_M31": true
+        },
+        {
+          "uid": 356984,
+          "lon_present": -13.480357932852645,
+          "lat_present": 37.97659943216179,
+          "added_volume_km3": 604.4343793381408,
+          "added_T_km": 0.20847380970649318,
+          "inside_M31": true
+        },
+        {
+          "uid": 453694,
+          "lon_present": -13.495531067955014,
+          "lat_present": 38.47313273497455,
+          "added_volume_km3": 797.2613620108574,
+          "added_T_km": 0.2750394253944801,
+          "inside_M31": false
+        }
+      ]
+    },
+    {
+      "t_Ma": 0,
+      "donor_uid": 132488,
+      "donor_volume_km3": 111436.01302399942,
+      "distributed_km3": 111436.01302399943,
+      "volume_inside_M31_node_centers_km3": 29802.183639149443,
+      "targets": [
+        {
+          "uid": 356599,
+          "lon_present": -14.072856118855139,
+          "lat_present": 37.808344256066505,
+          "added_volume_km3": 1256.503326305187,
+          "added_T_km": 0.43399488646612605,
+          "inside_M31": true
+        },
+        {
+          "uid": 356611,
+          "lon_present": -16.40984452166635,
+          "lat_present": 37.106357970484176,
+          "added_volume_km3": 6916.194767982734,
+          "added_T_km": 2.3754917417476897,
+          "inside_M31": false
+        },
+        {
+          "uid": 356618,
+          "lon_present": -14.035229859523806,
+          "lat_present": 36.81547611397912,
+          "added_volume_km3": 794.4347425260777,
+          "added_T_km": 0.2744382408987716,
+          "inside_M31": true
+        },
+        {
+          "uid": 356651,
+          "lon_present": -15.246835352625487,
+          "lat_present": 37.46310382761402,
+          "added_volume_km3": 4376.717299064303,
+          "added_T_km": 1.5131341164139935,
+          "inside_M31": true
+        },
+        {
+          "uid": 356668,
+          "lon_present": -16.479668230496692,
+          "lat_present": 38.09867284583965,
+          "added_volume_km3": 7208.204169897389,
+          "added_T_km": 2.4920473461509016,
+          "inside_M31": false
+        },
+        {
+          "uid": 356669,
+          "lon_present": -17.645841953179268,
+          "lat_present": 37.72955777461749,
+          "added_volume_km3": 8525.086673971195,
+          "added_T_km": 2.928701957645904,
+          "inside_M31": false
+        },
+        {
+          "uid": 356697,
+          "lon_present": -14.638439415553005,
+          "lat_present": 37.140831404509505,
+          "added_volume_km3": 2456.611952971273,
+          "added_T_km": 0.8495189686360035,
+          "inside_M31": true
+        },
+        {
+          "uid": 356741,
+          "lon_present": -15.273793930382533,
+          "lat_present": 37.95964091319041,
+          "added_volume_km3": 4452.969460735261,
+          "added_T_km": 1.5389342366462755,
+          "inside_M31": false
+        },
+        {
+          "uid": 356769,
+          "lon_present": -14.616023760845065,
+          "lat_present": 36.64441163397481,
+          "added_volume_km3": 1856.4015684000183,
+          "added_T_km": 0.6419516983005,
+          "inside_M31": true
+        },
+        {
+          "uid": 356770,
+          "lon_present": -14.661209455708985,
+          "lat_present": 37.637178081458565,
+          "added_volume_km3": 2760.614537624854,
+          "added_T_km": 0.954445126938604,
+          "inside_M31": true
+        },
+        {
+          "uid": 356803,
+          "lon_present": -14.053918756252047,
+          "lat_present": 37.31191167400757,
+          "added_volume_km3": 1126.8423570974824,
+          "added_T_km": 0.3892833563486473,
+          "inside_M31": true
+        },
+        {
+          "uid": 356851,
+          "lon_present": -15.220357448009429,
+          "lat_present": 36.96682499567829,
+          "added_volume_km3": 3853.987575023109,
+          "added_T_km": 1.3327257487181796,
+          "inside_M31": true
+        },
+        {
+          "uid": 356879,
+          "lon_present": -16.444523529784068,
+          "lat_present": 37.60252054979583,
+          "added_volume_km3": 7336.156053819183,
+          "added_T_km": 2.536378802960044,
+          "inside_M31": false
+        },
+        {
+          "uid": 356880,
+          "lon_present": -17.103726629747943,
+          "lat_present": 38.41159355468724,
+          "added_volume_km3": 7576.115208452805,
+          "added_T_km": 2.6198970052069845,
+          "inside_M31": false
+        },
+        {
+          "uid": 356885,
+          "lon_present": -15.860601530344592,
+          "lat_present": 37.78249391582576,
+          "added_volume_km3": 6076.08202398172,
+          "added_T_km": 2.0999067732905843,
+          "inside_M31": false
+        },
+        {
+          "uid": 356886,
+          "lon_present": -15.799511542161826,
+          "lat_present": 36.78999537318104,
+          "added_volume_km3": 5087.840080704228,
+          "added_T_km": 1.7479586381849386,
+          "inside_M31": true
+        },
+        {
+          "uid": 356887,
+          "lon_present": -14.68426220810318,
+          "lat_present": 38.13385661867749,
+          "added_volume_km3": 2704.1705016496785,
+          "added_T_km": 0.9349961690301505,
+          "inside_M31": false
+        },
+        {
+          "uid": 356888,
+          "lon_present": -13.465417639076373,
+          "lat_present": 37.479726566229466,
+          "added_volume_km3": 196.23817757248645,
+          "added_T_km": 0.06768873727859956,
+          "inside_M31": true
+        },
+        {
+          "uid": 356892,
+          "lon_present": -14.09204983490835,
+          "lat_present": 38.30477376560124,
+          "added_volume_km3": 1143.2070904984057,
+          "added_T_km": 0.39493670107278434,
+          "inside_M31": false
+        },
+        {
+          "uid": 356904,
+          "lon_present": -17.025271801289023,
+          "lat_present": 37.41956631430155,
+          "added_volume_km3": 8127.548954708874,
+          "added_T_km": 2.7922747634509677,
+          "inside_M31": false
+        },
+        {
+          "uid": 356905,
+          "lon_present": -16.992731613058922,
+          "lat_present": 36.920263616978794,
+          "added_volume_km3": 7494.722296857534,
+          "added_T_km": 2.5573956672294162,
+          "inside_M31": false
+        },
+        {
+          "uid": 356941,
+          "lon_present": -17.064218031396745,
+          "lat_present": 37.91555367429617,
+          "added_volume_km3": 8137.331948651121,
+          "added_T_km": 2.8139318087043113,
+          "inside_M31": false
+        },
+        {
+          "uid": 356942,
+          "lon_present": -15.891844638818764,
+          "lat_present": 38.27889594410799,
+          "added_volume_km3": 5790.836114183996,
+          "added_T_km": 2.00129701921037,
+          "inside_M31": false
+        },
+        {
+          "uid": 356944,
+          "lon_present": -15.829718333956798,
+          "lat_present": 37.28615318801503,
+          "added_volume_km3": 5817.387809501425,
+          "added_T_km": 2.0112831628881085,
+          "inside_M31": true
+        },
+        {
+          "uid": 356984,
+          "lon_present": -13.48035793285264,
+          "lat_present": 37.976599432161805,
+          "added_volume_km3": 218.60421235899634,
+          "added_T_km": 0.07539818138450398,
+          "inside_M31": true
+        },
+        {
+          "uid": 453694,
+          "lon_present": -13.495531067955012,
+          "lat_present": 38.473132734974556,
+          "added_volume_km3": 145.2041194600939,
+          "added_T_km": 0.05009255368965416,
+          "inside_M31": false
+        }
+      ]
+    }
+  ],
+  "allocation_note": "按同年代保存的存活目标位置重算既有各向同性400 km分配核，严格闭合供体体积；带内外按M31半宽和目标中心判定，不是逐单元实测应变。",
+  "strait_section": {
+    "longitude": -14.94140625,
+    "design_km": 78.18393279695536,
+    "C2": 117.27589919543304,
+    "C3": 0.0
+  },
+  "critical_final_samples": {
+    "C2": [
+      {
+        "fixed_node": 100961,
+        "sample_lon": -14.94140625,
+        "sample_lat": 36.38671875,
+        "type": 0,
+        "T_km": 7.0,
+        "elevation_m": -2991.26904296875,
+        "ocean_age_Myr": 1.14911949634552
+      },
+      {
+        "fixed_node": 68047,
+        "sample_lon": -14.58984375,
+        "sample_lat": 35.68359375,
+        "type": 0,
+        "T_km": 7.0,
+        "elevation_m": -3854.6044921875,
+        "ocean_age_Myr": 2.698822259902954
+      }
+    ],
+    "C3": [
+      {
+        "fixed_node": 100961,
+        "sample_lon": -14.94140625,
+        "sample_lat": 36.38671875,
+        "type": 1,
+        "T_km": 34.785030364990234,
+        "elevation_m": 367.4323425292969,
+        "ocean_age_Myr": null
+      },
+      {
+        "fixed_node": 68047,
+        "sample_lon": -14.58984375,
+        "sample_lat": 35.68359375,
+        "type": 1,
+        "T_km": 31.740421295166016,
+        "elevation_m": -93.82624053955078,
+        "ocean_age_Myr": null
+      }
+    ]
+  },
+  "connectivity_sensitivity": {
+    "C2": {
+      "4_connected": true,
+      "8_connected": true,
+      "4_connected_remove_young_ocean": false,
+      "8_connected_block_west": false
+    },
+    "C3": {
+      "4_connected": false,
+      "8_connected": false,
+      "4_connected_remove_young_ocean": false,
+      "8_connected_block_west": false
+    }
+  },
+  "global_change": {
+    "max_abs_elevation_change_m": 4895.2775955200195,
+    "area_abs_change_over_150m_km2": 74323.38791577256,
+    "land_mask_changed_area_km2": 12267.063206065191,
+    "outside_west_max_abs_m": 0.0,
+    "outside_west_area_over_1m_km2": 0.0,
+    "outside_west_land_mask_changed_area_km2": 0.0
+  },
+  "mountain_changes": [
+    {
+      "id": "M1",
+      "C2_p90_m": 4003,
+      "C3_p90_m": 4003,
+      "delta_m": 0
+    },
+    {
+      "id": "M1b",
+      "C2_p90_m": 961,
+      "C3_p90_m": 961,
+      "delta_m": 0
+    },
+    {
+      "id": "M1c",
+      "C2_p90_m": 1466,
+      "C3_p90_m": 1466,
+      "delta_m": 0
+    },
+    {
+      "id": "M1d",
+      "C2_p90_m": 1358,
+      "C3_p90_m": 1358,
+      "delta_m": 0
+    },
+    {
+      "id": "M2",
+      "C2_p90_m": 3246,
+      "C3_p90_m": 3243,
+      "delta_m": -3
+    },
+    {
+      "id": "M3",
+      "C2_p90_m": 4945,
+      "C3_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3b",
+      "C2_p90_m": 4945,
+      "C3_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3c",
+      "C2_p90_m": 4945,
+      "C3_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3e",
+      "C2_p90_m": 4945,
+      "C3_p90_m": 4945,
+      "delta_m": 0
+    },
+    {
+      "id": "M3f",
+      "C2_p90_m": 509,
+      "C3_p90_m": 509,
+      "delta_m": 0
+    },
+    {
+      "id": "M3d",
+      "C2_p90_m": 4894,
+      "C3_p90_m": 4894,
+      "delta_m": 0
+    },
+    {
+      "id": "M4",
+      "C2_p90_m": 869,
+      "C3_p90_m": 869,
+      "delta_m": 0
+    },
+    {
+      "id": "M5",
+      "C2_p90_m": 2753,
+      "C3_p90_m": 2753,
+      "delta_m": 0
+    },
+    {
+      "id": "M30",
+      "C2_p90_m": 2114,
+      "C3_p90_m": 2114,
+      "delta_m": 0
+    },
+    {
+      "id": "M6",
+      "C2_p90_m": 1078,
+      "C3_p90_m": 1078,
+      "delta_m": 0
+    },
+    {
+      "id": "M7a",
+      "C2_p90_m": 578,
+      "C3_p90_m": 578,
+      "delta_m": 0
+    },
+    {
+      "id": "M7",
+      "C2_p90_m": 1917,
+      "C3_p90_m": 1917,
+      "delta_m": 0
+    },
+    {
+      "id": "M7b",
+      "C2_p90_m": 1959,
+      "C3_p90_m": 1959,
+      "delta_m": 0
+    },
+    {
+      "id": "M7c",
+      "C2_p90_m": 1268,
+      "C3_p90_m": 1268,
+      "delta_m": 0
+    },
+    {
+      "id": "M8",
+      "C2_p90_m": 4094,
+      "C3_p90_m": 4094,
+      "delta_m": 0
+    },
+    {
+      "id": "M8c",
+      "C2_p90_m": 2886,
+      "C3_p90_m": 2886,
+      "delta_m": 0
+    },
+    {
+      "id": "M8b",
+      "C2_p90_m": 883,
+      "C3_p90_m": 883,
+      "delta_m": 0
+    },
+    {
+      "id": "M23",
+      "C2_p90_m": 422,
+      "C3_p90_m": 422,
+      "delta_m": 0
+    },
+    {
+      "id": "M9",
+      "C2_p90_m": 979,
+      "C3_p90_m": 979,
+      "delta_m": 0
+    },
+    {
+      "id": "M29",
+      "C2_p90_m": 1723,
+      "C3_p90_m": 1723,
+      "delta_m": 0
+    },
+    {
+      "id": "M28",
+      "C2_p90_m": 2062,
+      "C3_p90_m": 2062,
+      "delta_m": 0
+    },
+    {
+      "id": "M10",
+      "C2_p90_m": 1580,
+      "C3_p90_m": 1580,
+      "delta_m": 0
+    },
+    {
+      "id": "M22",
+      "C2_p90_m": 1842,
+      "C3_p90_m": 1842,
+      "delta_m": 0
+    },
+    {
+      "id": "M11",
+      "C2_p90_m": 1338,
+      "C3_p90_m": 1338,
+      "delta_m": 0
+    },
+    {
+      "id": "M12",
+      "C2_p90_m": 1599,
+      "C3_p90_m": 1599,
+      "delta_m": 0
+    },
+    {
+      "id": "M13",
+      "C2_p90_m": 1056,
+      "C3_p90_m": 1124,
+      "delta_m": 68
+    },
+    {
+      "id": "M31",
+      "C2_p90_m": 982,
+      "C3_p90_m": 1115,
+      "delta_m": 133
+    },
+    {
+      "id": "M13b",
+      "C2_p90_m": 927,
+      "C3_p90_m": 927,
+      "delta_m": 0
+    },
+    {
+      "id": "M14",
+      "C2_p90_m": 560,
+      "C3_p90_m": 560,
+      "delta_m": 0
+    },
+    {
+      "id": "M15",
+      "C2_p90_m": 4401,
+      "C3_p90_m": 4401,
+      "delta_m": 0
+    },
+    {
+      "id": "M15b",
+      "C2_p90_m": 3237,
+      "C3_p90_m": 3237,
+      "delta_m": 0
+    },
+    {
+      "id": "M16",
+      "C2_p90_m": 800,
+      "C3_p90_m": 800,
+      "delta_m": 0
+    },
+    {
+      "id": "M17",
+      "C2_p90_m": 3262,
+      "C3_p90_m": 3262,
+      "delta_m": 0
+    },
+    {
+      "id": "M19",
+      "C2_p90_m": 893,
+      "C3_p90_m": 893,
+      "delta_m": 0
+    },
+    {
+      "id": "M24",
+      "C2_p90_m": 2116,
+      "C3_p90_m": 2116,
+      "delta_m": 0
+    },
+    {
+      "id": "M25",
+      "C2_p90_m": 1934,
+      "C3_p90_m": 1934,
+      "delta_m": 0
+    },
+    {
+      "id": "M26",
+      "C2_p90_m": 1155,
+      "C3_p90_m": 1155,
+      "delta_m": 0
+    },
+    {
+      "id": "M27",
+      "C2_p90_m": 4549,
+      "C3_p90_m": 4549,
+      "delta_m": 0
+    }
+  ],
+  "A": {
+    "C2": {
+      "all_pass": true,
+      "pass": {
+        "ocean_fraction": true,
+        "main_continent": true,
+        "subcontinents": true,
+        "main_inland_sea": true,
+        "main_continent_latitude": true,
+        "polar_continent": true,
+        "open_ocean": true
+      },
+      "ocean_fraction": 0.715,
+      "main_continent_share": 0.735,
+      "subcontinents": 3,
+      "subcontinent_areas_Mkm2": [
+        59.2,
+        38.8,
+        6.0
+      ],
+      "main_inland_sea": {
+        "area_Mkm2": 4.46,
+        "straits": 1,
+        "aspect": 3.2552886144676694,
+        "checks": {
+          "area_in_range": true,
+          "ratio_to_second_ok": true,
+          "straits_ok": true,
+          "bordering_subcontinents_ok": true,
+          "elongation_ok": true
+        }
+      },
+      "latitude": [
+        79.27734375,
+        -43.76953125
+      ],
+      "polar_Mkm2": [
+        13.2
+      ]
+    },
+    "C3": {
+      "all_pass": true,
+      "pass": {
+        "ocean_fraction": true,
+        "main_continent": true,
+        "subcontinents": true,
+        "main_inland_sea": true,
+        "main_continent_latitude": true,
+        "polar_continent": true,
+        "open_ocean": true
+      },
+      "ocean_fraction": 0.715,
+      "main_continent_share": 0.735,
+      "subcontinents": 3,
+      "subcontinent_areas_Mkm2": [
+        59.2,
+        38.8,
+        6.0
+      ],
+      "main_inland_sea": {
+        "area_Mkm2": 4.46,
+        "straits": 1,
+        "aspect": 3.257387145883746,
+        "checks": {
+          "area_in_range": true,
+          "ratio_to_second_ok": true,
+          "straits_ok": true,
+          "bordering_subcontinents_ok": true,
+          "elongation_ok": true
+        }
+      },
+      "latitude": [
+        79.27734375,
+        -43.76953125
+      ],
+      "polar_Mkm2": [
+        13.2
+      ]
+    }
+  },
+  "last_step": {
+    "C2": {
+      "t_Ma": 0,
+      "committed": true,
+      "collision_deposited_cumulative_km3": 223039.65760263786,
+      "source_n": 29,
+      "source_area_km2": 84044.3056238809,
+      "source_volume_km3": 3204702.138563383,
+      "source_T_p90_km": 39.55900479782833,
+      "alb_cont_n": 31,
+      "alb_cont_volume_km3": 3389871.9076015553,
+      "alb_original_volume_km3": 3204702.138563383,
+      "alb_other_volume_km3": 185169.76903817232,
+      "alb_T_p90_km": 39.55628705208301,
+      "alb_at_cap_area_km2": 0.0,
+      "source_by_plate_km2": {
+        "304": 84044.3056238809
+      }
+    },
+    "C3": {
+      "t_Ma": 0,
+      "committed": true,
+      "collision_deposited_cumulative_km3": 347624.68903062074,
+      "source_n": 30,
+      "source_area_km2": 86974.32462480517,
+      "source_volume_km3": 3387451.190588021,
+      "source_T_p90_km": 39.81073053872425,
+      "alb_cont_n": 35,
+      "alb_cont_volume_km3": 3875861.4149769656,
+      "alb_original_volume_km3": 3387451.190588021,
+      "alb_other_volume_km3": 488410.2243889455,
+      "alb_T_p90_km": 39.79526657592402,
+      "alb_at_cap_area_km2": 0.0,
+      "source_by_plate_km2": {
+        "304": 86974.32462480517
+      }
+    }
+  }
+}

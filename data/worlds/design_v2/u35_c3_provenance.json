@@ -1,0 +1,204 @@
+{
+  "checkpoint": "U35-C3",
+  "baseline_commit": "a2d53698c18cec4f00700e02c0e4f0f4a12cba2c",
+  "production_result": "C2；本次仅保留诊断和已否决实验，不采用构造/地形改动",
+  "candidate_status": "rejected",
+  "method_class": {
+    "crust": "procedural_constrained",
+    "height": "parameterized_physics",
+    "motion": "user_override",
+    "raster": "interpolated"
+  },
+  "inputs_sha256": {
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    ".cache/tectonics/design/initial_v2_v2_L7.pkl": "2826b19b0338d3869027ed9fd325822efa190be3570e33223b2fd0fabd4c2cd7",
+    "packages/tectonics/engine.py": "54f47bb128ecdea5d1930ff7c5819df5c46db1248ddbe7f9e47fabf0401119c2",
+    "scripts/design_forward.py": "07fef9e697e770bf785da888cf9bcfa398165c160f9a6d8d2efd6264cc4728e2",
+    "scripts/design_west_arc_c3_diagnostic.py": "5fce275e735e60effa52766ce9111698c0e73c682d16845a070d9f02eb27a192",
+    "scripts/design_west_arc_c3_spike.py": "bb0c8b1b869789ff1b03ed6cc2f961c0ccff7c9a4cc8bb14d47cc700d3387fad",
+    "scripts/design_west_arc_c3_report.py": "e4046fc2d36009d1fcc14ee241bb6950138e66f978d0ceeeb2d9939831f1476f"
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct 13 2026, 16:44:09) [MSC v.1944 64 bit (AMD64)]",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "matplotlib": "3.11.2",
+    "pygplates": "1.0.0"
+  },
+  "commands_actually_run": [
+    "python scripts/design_west_arc_c3_diagnostic.py",
+    "python scripts/design_west_arc_c3_spike.py",
+    "临时在 history_v2.yaml 增补 candidate_patch.json 记录的一条规则后：python scripts/design_west_arc_diagnostic.py --case latest --output-root .cache/u35_c3；随后撤回配置",
+    "python -m pytest tests/tectonics/test_design_forward.py tests/tectonics/test_engine.py tests/tectonics/test_rifts.py tests/tectonics/test_kinematics.py tests/tectonics/test_reactivation.py -q",
+    "恢复本次与 C2 逐数组相同的观测复跑缓存后：python scripts/design_forward.py --design v2 --history v2 --figures-only",
+    "python scripts/design_west_arc_c3_report.py",
+    "python scripts/make_figures.py --world data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc --stage 1",
+    "python scripts/design_west_arc_c3_spike.py --full-candidate"
+  ],
+  "actual_resource_records": {
+    "c3_observed": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/design_west_arc_c3_diagnostic.py"
+      ],
+      "exit_code": 0,
+      "wall_s": 325.57,
+      "peak_rss_GB": 0.857
+    },
+    "c3_candidate": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/design_west_arc_diagnostic.py",
+        "--case",
+        "latest",
+        "--output-root",
+        ".cache/u35_c3"
+      ],
+      "exit_code": 0,
+      "wall_s": 427.91,
+      "peak_rss_GB": 2.742
+    },
+    "c3_tests": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-m",
+        "pytest",
+        "tests/tectonics/test_design_forward.py",
+        "tests/tectonics/test_engine.py",
+        "tests/tectonics/test_rifts.py",
+        "tests/tectonics/test_kinematics.py",
+        "tests/tectonics/test_reactivation.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "wall_s": 29.99,
+      "peak_rss_GB": 0.224
+    },
+    "c3_restore": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/design_forward.py",
+        "--design",
+        "v2",
+        "--history",
+        "v2",
+        "--figures-only"
+      ],
+      "exit_code": 0,
+      "wall_s": 129.11,
+      "peak_rss_GB": 2.714
+    },
+    "c3_standard": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/make_figures.py",
+        "--world",
+        "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc",
+        "--stage",
+        "1"
+      ],
+      "exit_code": 0,
+      "wall_s": 37.49,
+      "peak_rss_GB": 0.665
+    },
+    "c3_standard_restored": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/make_figures.py",
+        "--world",
+        "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc",
+        "--stage",
+        "1"
+      ],
+      "exit_code": 1,
+      "wall_s": 37.44,
+      "peak_rss_GB": 0.657
+    },
+    "c3_standard_restored_retry": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/make_figures.py",
+        "--world",
+        "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc",
+        "--stage",
+        "1"
+      ],
+      "exit_code": 0,
+      "wall_s": 37.49,
+      "peak_rss_GB": 0.656
+    },
+    "c3_reproduction": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/design_west_arc_c3_spike.py",
+        "--full-candidate"
+      ],
+      "exit_code": 0,
+      "wall_s": 404.9,
+      "peak_rss_GB": 2.756
+    }
+  },
+  "tests": {
+    "targeted_passed": 57,
+    "targeted_exit_code": 0,
+    "new_diagnostic_py_compile_exit_code": 0,
+    "full_suite_this_checkpoint": "未重跑；C2 已实跑的既有前史测试失败仍记录在交接，不声称本轮全套通过。"
+  },
+  "restored_world_array_check": {
+    "identical": true,
+    "variables_checked": 12,
+    "different_variables": []
+  },
+  "formal_metric_report_equal_to_C2_excluding_time_and_version": true,
+  "observer_neutrality": {
+    "identical": true,
+    "arrays_checked": 352,
+    "different_arrays": [],
+    "events_identical": true,
+    "budget_identical": true
+  },
+  "candidate_config_only_delta": [
+    {
+      "pair": [
+        "C",
+        "ALB"
+      ],
+      "since": 38,
+      "knots": [
+        [
+          0,
+          32.0
+        ],
+        [
+          300,
+          31.4
+        ],
+        [
+          460,
+          18.0
+        ]
+      ],
+      "holes": true,
+      "what": "西口弧形地体南侧的减薄大陆边缘与走滑小洞"
+    }
+  ],
+  "temporary_failure": "正式标准图组第一次恢复时写 index.html 出现 OSError 22；重试完整管线成功。",
+  "full_candidate_reproduction": {
+    "identical": true,
+    "arrays_checked": 352,
+    "different_arrays": [],
+    "formal_files_restored_byte_identical": true,
+    "formal_files_checked": 35
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "status": "rejected",
+  "baseline_commit": "a2d5369",
+  "path": "forward.pull_apart",
+  "append": [
+    {
+      "pair": [
+        "C",
+        "ALB"
+      ],
+      "since": 38,
+      "knots": [
+        [
+          0,
+          32.0
+        ],
+        [
+          300,
+          31.4
+        ],
+        [
+          460,
+          18.0
+        ]
+      ],
+      "holes": true,
+      "what": "西口弧形地体南侧的减薄大陆边缘与走滑小洞"
+    }
+  ],
+  "other_effective_config_identical": true,
+  "note": "实际完整运行采用过该增补，后因普通 4/8 连通均断开撤回；不是当前正式配置。"
+}

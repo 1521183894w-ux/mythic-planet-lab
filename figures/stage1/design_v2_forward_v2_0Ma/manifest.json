@@ -3,11 +3,11 @@
  "display_name": "终图 v2 正向演化 0 Ma",
  "resolution": "1024x512",
  "seed": "design_v2_history_v2",
- "code_version": "87b0ed4-dirty",
+ "code_version": "a2d5369-dirty",
  "method_class_elevation": "procedural_constrained",
  "source": "scripts/design_forward.py：300 Ma 初始世界 + 倒推的板块运动正向演化到 0 Ma（L7 地壳引擎，构造尺度高程：Airy + GDH1 + 按起伏的剥蚀，无河流侵蚀）；火山岛按半径进海陆掩膜。注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）。浅海湾（陆表海、陆架海、神怒湾、东湾）的陆壳厚度按终图水深设定（user_override），0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）；老被动陆缘的陆架陆壳由初始条件设定（initial.margins）；主内海北岸三块微陆块的位置、裂开与碰撞时刻由设计给出；板内挤压复活（中央山系、北部断块山、北方高原、内海南岸山系）的范围、时间与增厚比由设计给出、增厚比按终图高度估定（性质同 user_override），所以这几条山的高度接近终图不算过程的验证（评审 stage1_2026-10-25_3 第 2、10 条）；U34 起，设计的裂开陆缘与走滑拉分板块对（history yaml forward.pull_apart）上，两侧正在分开处的陆—陆重叠按网格对不齐处理、不当碰撞增厚（之前会把张开的陆缘一点点泵厚），300 Myr 里因此没被当成碰撞的陆壳单元共 约 1709 万 km³（评审 stage1_2026-10-25_4 第 13 条）",
  "stage": 1,
- "generated": "2026-10-26 11:07:44",
+ "generated": "2026-10-26 14:27:47",
  "config_version": 4,
  "figures": [
   {
