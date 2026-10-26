@@ -1,0 +1,177 @@
+{
+  "checkpoint": "U35-C4",
+  "baseline_commit": "209c5ff",
+  "candidate": "u35_c4_strain",
+  "status": "independent_candidate_not_adopted",
+  "method_class": {
+    "tectonics": "procedural_constrained",
+    "elevation": "parameterized_physics",
+    "motion_and_prescribed_shortening": "user_override",
+    "raster": "interpolated"
+  },
+  "resolution": {
+    "mesh": "L7",
+    "output": "1024x512"
+  },
+  "inputs_and_code_sha256": {
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/history_v2_u35_c4_strain.yaml": "760862cef2bba754dbdc800f7787c7829b5edd41283142b3af5d82c537789252",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    ".cache/tectonics/design/initial_v2_v2_L7.pkl": "2826b19b0338d3869027ed9fd325822efa190be3570e33223b2fd0fabd4c2cd7",
+    "packages/tectonics/engine.py": "54f47bb128ecdea5d1930ff7c5819df5c46db1248ddbe7f9e47fabf0401119c2",
+    "packages/tectonics/reactivation.py": "e91d504b1a7d2119930533d956fe1406e80367220872eb4cc65fb4af6619c99c",
+    "scripts/design_forward.py": "b86c7791892095e894d3360020468f04099f9a61e61134655059760e410ba0c0",
+    "scripts/design_west_arc_diagnostic.py": "3e50a86a9a0391200602cc3fab033f56380458210229da1f9bbb5f8f5dcd20ae",
+    "scripts/design_west_arc_c4_report.py": "cd3771c7831a4225e66f3b0e7fa25660f8b36514824e6c0f42966e92903ec6fa"
+  },
+  "source_budget": {
+    "prescribed_internal_shortening_km3": 478091.9978239909,
+    "actual_collision_input_km3": 223039.65760263786,
+    "fixed_area_source_term_not_mass_conserving": true
+  },
+  "final_unobserved_vs_observed": {
+    "saved_arrays_checked": 352,
+    "unequal": [],
+    "budget_identical": true
+  },
+  "world_array_checks": [
+    {
+      "left": ".cache/u35_c4_strain/latest/world.nc",
+      "right": "data/worlds/design_v2/candidates/u35_c4_strain/design_v2_forward_v2_0Ma_u35_c4_strain_1024x512.nc",
+      "arrays_checked": 10,
+      "unequal": []
+    },
+    {
+      "left": ".cache/u35_c3/observed/world.nc",
+      "right": "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc",
+      "arrays_checked": 10,
+      "unequal": []
+    }
+  ],
+  "default_output_hash_checks": {
+    "config/design/history_v2.yaml": {
+      "expected_sha256": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+      "actual_sha256": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+      "unchanged": true
+    },
+    "data/worlds/design_v2/forward_v2.json": {
+      "expected_sha256": "d58f0447abc80820c88cbc1bee5053314d9a2512c9e21568706f12261a88588b",
+      "actual_sha256": "d58f0447abc80820c88cbc1bee5053314d9a2512c9e21568706f12261a88588b",
+      "unchanged": true
+    },
+    "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc": {
+      "expected_sha256": "41fe0a46e8c2fdc46849f1faba6858303225422310970d9b908fd34d7b8f2b4e",
+      "actual_sha256": "41fe0a46e8c2fdc46849f1faba6858303225422310970d9b908fd34d7b8f2b4e",
+      "unchanged": true
+    },
+    ".cache/tectonics/design/forward_v2_v2_L7.npz": {
+      "expected_sha256": "a2de72ce650d1743bbd85be5b4df7b6b410667334d6b94266f2ffede199e3feb",
+      "actual_sha256": "a2de72ce650d1743bbd85be5b4df7b6b410667334d6b94266f2ffede199e3feb",
+      "unchanged": true
+    },
+    ".cache/tectonics/design/forward_v2_v2_L7.json": {
+      "expected_sha256": "da25d0b62f5c7c4ed24de45123f005b83f44aed2ff7b27230ffa978e0712622a",
+      "actual_sha256": "da25d0b62f5c7c4ed24de45123f005b83f44aed2ff7b27230ffa978e0712622a",
+      "unchanged": true
+    }
+  },
+  "python": "3.12.15 | packaged by conda-forge | (main, Oct 13 2026, 16:44:09) [MSC v.1944 64 bit (AMD64)]",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "matplotlib": "3.11.2",
+    "pygplates": "1.0.0"
+  },
+  "actual_resource_records": {
+    "c4_strain": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/design_west_arc_diagnostic.py",
+        "--case",
+        "latest",
+        "--output-root",
+        ".cache/u35_c4_strain",
+        "--history-config",
+        "config/design/history_v2_u35_c4_strain.yaml",
+        "--candidate",
+        "u35_c4_strain",
+        "--no-figures"
+      ],
+      "exit_code": 0,
+      "wall_s": 298.76,
+      "peak_rss_GB": 0.9
+    },
+    "c4_isolated_final": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/design_forward.py",
+        "--design",
+        "v2",
+        "--history",
+        "v2",
+        "--history-config",
+        "config/design/history_v2_u35_c4_strain.yaml",
+        "--candidate",
+        "u35_c4_strain",
+        "--no-figures"
+      ],
+      "exit_code": 0,
+      "wall_s": 306.77,
+      "peak_rss_GB": 0.849
+    },
+    "c4_strain_standard": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-u",
+        "scripts/make_figures.py",
+        "--world",
+        ".cache/u35_c4_strain/latest/world.nc",
+        "--stage",
+        "1",
+        "--out",
+        "figures/stage1/design_v2_forward_v2_0Ma_u35_c4_strain"
+      ],
+      "exit_code": 0,
+      "wall_s": 38.49,
+      "peak_rss_GB": 0.656
+    },
+    "c4_tests_61": {
+      "command": [
+        "D:\\mythic-planet-lab\\environment\\env\\python.exe",
+        "-m",
+        "pytest",
+        "tests/tectonics/test_design_forward.py",
+        "tests/tectonics/test_engine.py",
+        "tests/tectonics/test_rifts.py",
+        "tests/tectonics/test_kinematics.py",
+        "tests/tectonics/test_reactivation.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "wall_s": 18.73,
+      "peak_rss_GB": 0.204
+    }
+  },
+  "independent_review": "reviews/stage1_2026-10-26_4.md",
+  "review_scope_limit": "换机交接提前；未逐张复核标准图09-11、13；最后重绘图33未由评审复核。",
+  "shared_promotion_rejected": "自动审批拒绝未认可候选覆盖共用正式输出，已改为候选隔离，不设默认。",
+  "local_only_not_in_git": [
+    ".cache",
+    "environment",
+    "*.nc",
+    "失败的碰撞核试验"
+  ],
+  "known_unresolved": [
+    "山弧沿脊平顶和端部落海",
+    "年轻洋壳敏感性",
+    "R17实体表达",
+    "独立评审其余四项既有严重问题",
+    "远方大陆B1海湾指标"
+  ],
+  "report_script_direct_rerun_exit_code": 0
+}

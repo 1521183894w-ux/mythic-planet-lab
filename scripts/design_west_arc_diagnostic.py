@@ -137,15 +137,21 @@ class Observer:
             json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
 
 
-def archive_run(case):
+def archive_run(case, candidate=None):
     dest = OUT / case
     dest.mkdir(parents=True, exist_ok=True)
     run = ROOT / ".cache/tectonics/design/forward_v2_v2_L7"
+    if candidate:
+        run = ROOT / ".cache/tectonics/design/candidates" / candidate / "forward_v2_v2_L7"
     for suffix in (".npz", ".json"):
         shutil.copy2(run.with_suffix(suffix), dest / ("forward" + suffix))
-    shutil.copy2(ROOT / "data/worlds/design_v2/forward_v2.json", dest / "summary.json")
-    shutil.copy2(ROOT / "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc",
-                 dest / "world.nc")
+    world_dir = ROOT / "data/worlds/design_v2"
+    world_id = "design_v2_forward_v2_0Ma"
+    if candidate:
+        world_dir = world_dir / "candidates" / candidate
+        world_id += "_" + candidate
+    shutil.copy2(world_dir / "forward_v2.json", dest / "summary.json")
+    shutil.copy2(world_dir / (world_id + "_1024x512.nc"), dest / "world.nc")
 
 
 def main():
@@ -155,6 +161,8 @@ def main():
     parser.add_argument("--no-figures", action="store_true")
     parser.add_argument("--no-collision-ledger", action="store_true",
                         help="仅采样逐步状态，不包裹碰撞函数；用于复现额外体积账本的无干扰对照")
+    parser.add_argument("--history-config", type=Path)
+    parser.add_argument("--candidate")
     parser.add_argument("--output-root", type=Path, help="另存观测缓存（相对项目根目录），避免覆盖既有检查点")
     args = parser.parse_args()
     if args.output_root is not None:
@@ -232,11 +240,15 @@ def main():
     sys.argv = ["design_forward.py", "--design", "v2", "--history", "v2"]
     if args.no_figures:
         sys.argv.append("--no-figures")
+    if args.history_config:
+        sys.argv.extend(["--history-config",str(args.history_config)])
+    if args.candidate:
+        sys.argv.extend(["--candidate",args.candidate])
     try:
         rc = fwd.main()
         if len(observers) != 1:
             raise RuntimeError("必须恰好完成一次完整演化")
-        archive_run(args.case)
+        archive_run(args.case, args.candidate)
         return rc
     finally:
         fwd.yaml = original_yaml

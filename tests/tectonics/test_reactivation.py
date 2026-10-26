@@ -69,3 +69,18 @@ def test_build_reactivations_from_line_and_plateau_features():
     assert r1["W"][np.argmin(np.abs(g.lat - 5.0)), np.argmin(np.abs(g.lon))] == 0.0  # 离线约 550 km
     assert r2["t_end"] == 10.0 and r2["rate"] == pytest.approx(np.log(1.25) / 20.0)
     assert r2["W"].max() > 0.9 and r2["W"][np.argmin(np.abs(g.lat)), np.argmin(np.abs(g.lon))] == 0.0
+
+
+def test_shortening_selects_material_origin():
+    """C4：只让原ALB基底缩短，新生裂谷陆壳与同板块其他来源不被冒充为原地体。"""
+    from mythic.tectonics.crust import Crust,Params,CONT
+    from mythic.tectonics.engine import Engine
+    from mythic.tectonics.mesh import load_mesh
+    mesh=load_mesh(3);c=Crust(mesh.n);c.plate[:]=1;c.ctype[:]=CONT;c.T[:]=35.
+    c.origin[:mesh.n//2]=304;c.origin[mesh.n//2:]=91
+    e=Engine(mesh,c,Params(),10.,{1:np.zeros(3)})
+    original=e.cont_volume()
+    out=apply_shortening(e,np.ones(len(c)),np.log1p(.25),1.,plate=1,origin=304)
+    np.testing.assert_allclose(e.c.T[c.origin==304],43.75)
+    np.testing.assert_array_equal(e.c.T[c.origin==91],np.full((c.origin==91).sum(),35.))
+    assert e.cont_volume()-original==pytest.approx(out["volume_km3"],rel=1e-12)

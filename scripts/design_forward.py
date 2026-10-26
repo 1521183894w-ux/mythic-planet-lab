@@ -363,7 +363,8 @@ def build_reactivations(hcfg: dict, design: dict, grid, land: np.ndarray) -> lis
         t0, t1 = float(r["t_start"]), float(r.get("t_end", 0.0))
         out.append({"id": r["id"], "name": r.get("name", fid), "what": r.get("what", ""), "anchor": code_id[r["anchor"]],
                     "t_start": t0, "t_end": t1, "strain": float(r["strain"]),
-                    "rate": float(np.log1p(float(r["strain"])) / max(t0 - t1, 1e-9)), "W": W, "grid": grid})
+                    "rate": float(np.log1p(float(r["strain"])) / max(t0 - t1, 1e-9)), "W": W, "grid": grid,
+                    "origin": code_id[r["source_origin"]] if r.get("source_origin") else None})
     return out
 
 
@@ -635,7 +636,7 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
                 g = ra["grid"]
                 i = np.clip(((90.0 - la) / 180.0 * g.ny).astype(int), 0, g.ny - 1)
                 j = np.clip(((lo + 180.0) / 360.0 * g.nx).astype(int), 0, g.nx - 1)
-                r = apply_shortening(eng, np.where(eng.alive, ra["W"][i, j], 0.0), ra["rate"], 1.0, plate=ra["anchor"])
+                r = apply_shortening(eng, np.where(eng.alive, ra["W"][i, j], 0.0), ra["rate"], 1.0, plate=ra["anchor"], origin=ra.get("origin"))
                 ra["vol"] = ra.get("vol", 0.0) + r["volume_km3"]
                 if t == ra["t_end"]:
                     log(f"  {t:3d} Ma 板内挤压复活 {ra['id']}（{ra['name']}）：{ra['t_start']:g}–{ra['t_end']:g} Ma 共加厚 "
@@ -1133,6 +1134,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--design", default="v2")
     ap.add_argument("--history", default="v2")
+    ap.add_argument("--history-config", type=Path, help="另读候选历史配置，仍复用 --history 对应的运动和初始世界")
+    ap.add_argument("--candidate", help="候选名称；缓存、世界与图件全部另存，不覆盖默认结果")
     ap.add_argument("--level", type=int, default=7)
     ap.add_argument("--snap-every", type=int, default=10)
     ap.add_argument("--figures-only", action="store_true")
@@ -1140,12 +1143,21 @@ def main() -> int:
     ap.add_argument("--write-shelf-active", action="store_true",
                     help="U32：把 0 Ma 露出海面的自动陆架写进 config/design/shelf_active_<history>.yaml（实测活动陆缘）")
     args = ap.parse_args()
+    if args.candidate is not None and (not args.candidate or not args.candidate.isascii() or not all(c.isalnum() or c in "_-" for c in args.candidate)):
+        ap.error("候选名只能包含英文字母、数字、下划线和短横线")
+    if args.candidate and args.write_shelf_active:
+        ap.error("候选模式不允许写共用 shelf_active 配置")
     t_start = time.perf_counter()
     tag = f"{args.design}_{args.history}_L{args.level}"
-    run_path = CACHE / "design" / f"forward_{tag}"
+    run_dir = CACHE / "design"
+    if args.candidate:
+        run_dir = run_dir / "candidates" / args.candidate
+    run_dir.mkdir(parents=True, exist_ok=True)
+    run_path = run_dir / f"forward_{tag}"
     rot = ROOT / "data" / "worlds" / f"design_{args.design}" / f"history_{args.history}.rot"
     mesh = load_mesh(args.level)
-    hcfg = yaml.safe_load((ROOT / "config" / "design" / f"history_{args.history}.yaml").read_text(encoding="utf-8"))
+    history_config = args.history_config or ROOT / "config" / "design" / f"history_{args.history}.yaml"
+    hcfg = yaml.safe_load(history_config.read_text(encoding="utf-8"))
     fcfg = hcfg.get("forward") or {}
     params = Params(**fcfg.get("engine_params", {}))
     polarity = preset_polarity(hcfg)
@@ -1324,12 +1336,17 @@ def main() -> int:
         "generated": time.strftime("%Y-%m-%d %H:%M:%S"),
     }
     out_w = ROOT / "data" / "worlds" / f"design_{args.design}"
+    if args.candidate:
+        out_w = out_w / "candidates" / args.candidate
     from mythic.figures.world import to_jsonable
+    out_w.mkdir(parents=True, exist_ok=True)
     (out_w / f"forward_{args.history}.json").write_text(json.dumps(to_jsonable(summary), ensure_ascii=False, indent=1),
                                                        encoding="utf-8", newline="\n")
     # U31：0 Ma 世界导出为标准世界文件（packages/figures/world.py），供标准图组（scripts/make_figures.py --stage 1）与评审用
     import xarray as xr
     world_id = f"design_{args.design}_forward_{args.history}_0Ma"
+    if args.candidate:
+        world_id += "_" + args.candidate
     tect = tectonic_layers(frames[-1], raster, grid, rot)       # U34：构造图层（标准图组的区域窗口构造叠合图）
     ds = xr.Dataset({"elevation": (("lat", "lon"), E_eng.astype("float32"), {"units": "m"}),
                      "land": (("lat", "lon"), (E_eng > 0).astype("float32"), {"description": "陆地（高程 > 0）"}),
@@ -1403,6 +1420,8 @@ def figures(args, design, hcfg, grid, b, ids, info, mesh, raster, frames, E_eng,
 
     setup_fonts()
     out = ROOT / "figures" / "design" / args.design / "forward"
+    if args.candidate:
+        out = out / args.candidate
     out.mkdir(parents=True, exist_ok=True)
     PC = ccrs.PlateCarree()
     proj = ccrs.EqualEarth(central_longitude=float(design.get("map_central_longitude", 30)))

@@ -1,0 +1,393 @@
+{
+  "checkpoint": "U35-C4",
+  "status": "candidate_pending_user_review",
+  "baseline_commit": "209c5ff",
+  "method_class": "procedural_constrained",
+  "units": {
+    "height": "m",
+    "volume": "km3",
+    "area": "km2",
+    "time": "Ma"
+  },
+  "M31": {
+    "C2": {
+      "id": "M31",
+      "name": "西口弧形山系",
+      "design_height_m": 2800,
+      "final_p90_m": 2073,
+      "engine_p90_m": 982,
+      "engine_land_fraction": 0.78,
+      "cause": "西口弧形地体（阿尔沃兰—贝蒂克式）随俯冲后撤西移、楔进洲 A 南缘时挤起的弧形山系（约 25 Ma–今），弧顶在西海峡北岸（U35）"
+    },
+    "C4": {
+      "id": "M31",
+      "name": "西口弧形山系",
+      "design_height_m": 2800,
+      "final_p90_m": 2073,
+      "engine_p90_m": 2092,
+      "engine_land_fraction": 0.78,
+      "cause": "西口弧形地体（阿尔沃兰—贝蒂克式）随俯冲后撤西移、楔进洲 A 南缘时挤起的弧形山系（约 25 Ma–今），弧顶在西海峡北岸（U35）"
+    }
+  },
+  "internal_shortening_source_km3": 478091.9978239909,
+  "budget_km3": {
+    "C2": {
+      "arc_added": 495667622.2274679,
+      "eroded": 381257193.261335,
+      "rift_thinning": 1338436.9119499724,
+      "arc_converted": 5040090.385872091,
+      "arc_suppressed": 116876805.7299401,
+      "opening_overlap_skipped": 17092882.794448376,
+      "rift_fill": 102024121.65510125,
+      "arc_accreted": 2128626.5940816156,
+      "lip_added": 17225262.35804001,
+      "reactivation_added": 48467961.92156293,
+      "hole_created": 259284.50616833597,
+      "hole_fill": 7599422.54807211
+    },
+    "C4": {
+      "arc_added": 495667622.2274679,
+      "eroded": 381272899.1581865,
+      "rift_thinning": 1338436.9119499724,
+      "arc_converted": 5040090.385872091,
+      "arc_suppressed": 116876805.7299401,
+      "opening_overlap_skipped": 17092882.794448376,
+      "rift_fill": 102024121.65510125,
+      "arc_accreted": 2128626.5940816156,
+      "lip_added": 17225262.35804001,
+      "reactivation_added": 48946053.91938692,
+      "hole_created": 259284.50616833597,
+      "hole_fill": 7599422.54807211
+    }
+  },
+  "pre_event": {
+    "arrays_checked": 330,
+    "identical": true
+  },
+  "source_geometry_identical": {
+    "uid": true,
+    "node": true,
+    "plate": true,
+    "lon": true,
+    "lat": true,
+    "area": true
+  },
+  "connectivity": {
+    "C2": {
+      "4_connected": true,
+      "8_connected": true,
+      "4_connected_remove_young_ocean": false,
+      "8_connected_block_west": false
+    },
+    "C4": {
+      "4_connected": true,
+      "8_connected": true,
+      "4_connected_remove_young_ocean": false,
+      "8_connected_block_west": false
+    }
+  },
+  "global_change": {
+    "max_abs_m": 1371.79248046875,
+    "area_over_150m_km2": 66581.04033750537,
+    "land_change_km2": 0.0,
+    "outside_west_max_abs_m": 0.0,
+    "outside_west_land_change_km2": 0.0
+  },
+  "ridge_profile": {
+    "distance_km": [
+      0.0,
+      10.033680369793984,
+      20.067360739587556,
+      30.101041109381534,
+      40.13472147917519,
+      50.168401848969104,
+      60.20208221876289,
+      70.23576258855658,
+      80.2694429583506,
+      90.30312332814431,
+      100.33680369793798,
+      110.37048406773175,
+      120.40416443752581,
+      130.43784480731964,
+      140.47152517711334,
+      150.5052055469072,
+      161.06462565107327,
+      171.62404575523954,
+      182.18346585940589,
+      192.74288596357206,
+      203.30230606773833,
+      213.86172617190448,
+      224.42114627607052,
+      234.9805663802369,
+      245.539986484403,
+      256.0994065885692,
+      266.6588266927355,
+      277.21824679690167
+    ],
+    "design": [
+      1289.3573731017607,
+      1289.3573731017607,
+      1528.5662258060518,
+      2200.3220862004514,
+      2200.3220862004514,
+      2448.08829677204,
+      2448.08829677204,
+      2448.08829677204,
+      2208.0309109477557,
+      2208.0309109477557,
+      2208.0309109477557,
+      2208.0309109477557,
+      1992.5080335612695,
+      1992.5080335612695,
+      1345.8960636615193,
+      1289.2122031053234,
+      1289.2122031053234,
+      1289.2122031053234,
+      1654.2078776744286,
+      1654.2078776744286,
+      1654.2078776744286,
+      1664.158723495369,
+      1664.158723495369,
+      1664.158723495369,
+      1512.0932576945845,
+      1512.0932576945845,
+      1512.0932576945845,
+      960.9727306299837
+    ],
+    "C2": [
+      786.1298217773438,
+      786.1298217773438,
+      786.1298217773438,
+      1004.3764038085938,
+      1004.3764038085938,
+      1004.3764038085938,
+      1004.3764038085938,
+      1004.3764038085938,
+      899.9594116210938,
+      899.9594116210938,
+      899.9594116210938,
+      899.9594116210938,
+      899.9594116210938,
+      899.9594116210938,
+      899.9594116210938,
+      774.7978515625,
+      774.7978515625,
+      774.7978515625,
+      675.3497314453125,
+      675.3497314453125,
+      675.3497314453125,
+      675.3497314453125,
+      675.3497314453125,
+      675.3497314453125,
+      -4653.26171875,
+      -4653.26171875,
+      -4653.26171875,
+      -4653.26171875
+    ],
+    "C4": [
+      2091.89111328125,
+      2091.89111328125,
+      2091.89111328125,
+      2074.884765625,
+      2074.884765625,
+      2074.884765625,
+      2074.884765625,
+      2074.884765625,
+      2108.05419921875,
+      2108.05419921875,
+      2108.05419921875,
+      2108.05419921875,
+      2108.05419921875,
+      2108.05419921875,
+      2108.05419921875,
+      2049.246337890625,
+      2049.246337890625,
+      2049.246337890625,
+      1951.653076171875,
+      1951.653076171875,
+      1951.653076171875,
+      1951.653076171875,
+      1951.653076171875,
+      1951.653076171875,
+      -4653.26171875,
+      -4653.26171875,
+      -4653.26171875,
+      -4653.26171875
+    ]
+  },
+  "observations_last": {
+    "C2": {
+      "t_Ma": 0,
+      "committed": true,
+      "collision_deposited_cumulative_km3": 223039.65760263786,
+      "source_n": 29,
+      "source_area_km2": 84044.3056238809,
+      "source_volume_km3": 3204702.138563383,
+      "source_T_p90_km": 39.55900479782833,
+      "alb_cont_n": 31,
+      "alb_cont_volume_km3": 3389871.9076015553,
+      "alb_original_volume_km3": 3204702.138563383,
+      "alb_other_volume_km3": 185169.76903817232,
+      "alb_T_p90_km": 39.55628705208301,
+      "alb_at_cap_area_km2": 0.0,
+      "source_by_plate_km2": {
+        "304": 84044.3056238809
+      }
+    },
+    "C4": {
+      "t_Ma": 0,
+      "committed": true,
+      "collision_deposited_cumulative_km3": 223039.65760263786,
+      "source_n": 29,
+      "source_area_km2": 84044.3056238809,
+      "source_volume_km3": 3665928.028209936,
+      "source_T_p90_km": 46.077795853430516,
+      "alb_cont_n": 31,
+      "alb_cont_volume_km3": 3851097.797248108,
+      "alb_original_volume_km3": 3665928.028209936,
+      "alb_other_volume_km3": 185169.76903817232,
+      "alb_T_p90_km": 46.05534546148833,
+      "alb_at_cap_area_km2": 0.0,
+      "source_by_plate_km2": {
+        "304": 84044.3056238809
+      }
+    }
+  },
+  "collision_transfers": {
+    "C2": [
+      {
+        "t_Ma": 1.0,
+        "donor_n": 1,
+        "donor_volume_km3": 111603.64457863846,
+        "deposited_on_ALB_km3": 111603.64457863844,
+        "donor_volume_by_plate_km3": {
+          "103": 111603.64457863846
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 111603.64457863846
+        }
+      },
+      {
+        "t_Ma": 0.0,
+        "donor_n": 1,
+        "donor_volume_km3": 111436.01302399942,
+        "deposited_on_ALB_km3": 111436.01302399942,
+        "donor_volume_by_plate_km3": {
+          "103": 111436.01302399942
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 111436.01302399942
+        }
+      }
+    ],
+    "C4": [
+      {
+        "t_Ma": 1.0,
+        "donor_n": 1,
+        "donor_volume_km3": 111603.64457863846,
+        "deposited_on_ALB_km3": 111603.64457863844,
+        "donor_volume_by_plate_km3": {
+          "103": 111603.64457863846
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 111603.64457863846
+        }
+      },
+      {
+        "t_Ma": 0.0,
+        "donor_n": 1,
+        "donor_volume_km3": 111436.01302399942,
+        "deposited_on_ALB_km3": 111436.01302399942,
+        "donor_volume_by_plate_km3": {
+          "103": 111436.01302399942
+        },
+        "donor_volume_by_origin_km3": {
+          "103": 111436.01302399942
+        }
+      }
+    ]
+  },
+  "A": {
+    "C2": {
+      "all_pass": true,
+      "pass": {
+        "ocean_fraction": true,
+        "main_continent": true,
+        "subcontinents": true,
+        "main_inland_sea": true,
+        "main_continent_latitude": true,
+        "polar_continent": true,
+        "open_ocean": true
+      },
+      "ocean_fraction": 0.715,
+      "main_continent_share": 0.735,
+      "subcontinents": 3,
+      "subcontinent_areas_Mkm2": [
+        59.2,
+        38.8,
+        6.0
+      ],
+      "main_inland_sea": {
+        "area_Mkm2": 4.46,
+        "straits": 1,
+        "aspect": 3.2552886144676694,
+        "checks": {
+          "area_in_range": true,
+          "ratio_to_second_ok": true,
+          "straits_ok": true,
+          "bordering_subcontinents_ok": true,
+          "elongation_ok": true
+        }
+      },
+      "latitude": [
+        79.27734375,
+        -43.76953125
+      ],
+      "polar_Mkm2": [
+        13.2
+      ]
+    },
+    "C4": {
+      "all_pass": true,
+      "pass": {
+        "ocean_fraction": true,
+        "main_continent": true,
+        "subcontinents": true,
+        "main_inland_sea": true,
+        "main_continent_latitude": true,
+        "polar_continent": true,
+        "open_ocean": true
+      },
+      "ocean_fraction": 0.715,
+      "main_continent_share": 0.735,
+      "subcontinents": 3,
+      "subcontinent_areas_Mkm2": [
+        59.2,
+        38.8,
+        6.0
+      ],
+      "main_inland_sea": {
+        "area_Mkm2": 4.46,
+        "straits": 1,
+        "aspect": 3.2552886144676694,
+        "checks": {
+          "area_in_range": true,
+          "ratio_to_second_ok": true,
+          "straits_ok": true,
+          "bordering_subcontinents_ok": true,
+          "elongation_ok": true
+        }
+      },
+      "latitude": [
+        79.27734375,
+        -43.76953125
+      ],
+      "polar_Mkm2": [
+        13.2
+      ]
+    }
+  },
+  "limitations": "内部缩短是规定的历史参数，固定面积模型以体积来源项近似，不是连续应变求解；年轻洋壳敏感性与R17实体表达未解决。",
+  "candidate_config": "config/design/history_v2_u35_c4_strain.yaml",
+  "default_config_unchanged": true
+}

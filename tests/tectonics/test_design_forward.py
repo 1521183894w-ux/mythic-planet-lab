@@ -466,3 +466,14 @@ def test_terrane_rift_timing_and_nested_family_without_extra_commits(monkeypatch
     if preserve:
         np.testing.assert_array_equal(np.sort(eng.c.uid[eng.alive & np.isin(eng.c.origin, [2, 3])]),
                                       np.sort(original_ids))
+
+
+
+
+@pytest.mark.parametrize("extra",[["--candidate","../escape"],["--candidate","safe","--write-shelf-active"],["--candidate",""]])
+def test_candidate_output_guards(monkeypatch,extra):
+    """候选名字不能逃逸目录，也不能借候选运行写共用的陆架配置。"""
+    import sys
+    monkeypatch.setattr(sys,"argv",["design_forward.py",*extra])
+    with pytest.raises(SystemExit) as err:fwd.main()
+    assert err.value.code==2

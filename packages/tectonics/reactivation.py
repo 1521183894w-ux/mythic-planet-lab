@@ -15,11 +15,13 @@ import numpy as np
 from .crust import CONT, ORO_REACT
 
 
-def apply_shortening(eng, w: np.ndarray, rate_per_myr: float, dt: float, plate: int | None = None) -> dict:
-    """存活陆壳单元按权重 w（0–1，长度 = 单元数）纯剪切增厚 exp(rate·w·dt) 倍；plate 不为 None 时只增厚这块板块。"""
+def apply_shortening(eng, w: np.ndarray, rate_per_myr: float, dt: float, plate: int | None = None, origin: int | None = None) -> dict:
+    """存活陆壳单元按权重 w（0–1，长度 = 单元数）纯剪切增厚 exp(rate·w·dt) 倍；plate 不为 None 时只增厚这块板块；origin 可进一步选择宿主的来源域（不是混合岩石成分）。"""
     sel = eng.alive & (eng.c.ctype == CONT)
     if plate is not None:
         sel &= eng.c.plate == plate
+    if origin is not None:
+        sel &= eng.c.origin == origin
     idx = np.flatnonzero(sel)
     wa = np.asarray(w, float)[idx]
     hit = idx[wa > 1e-3]
