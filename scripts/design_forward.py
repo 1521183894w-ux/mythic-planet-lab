@@ -375,9 +375,14 @@ def build_rifts(hcfg: dict) -> list:
     code_id = plate_codes(hcfg)
     out = []
     for r in hcfg.get("rifts", []):
+        duration = float(r.get("duration_myr", 0.))
+        if duration < 0 or duration > float(r["t_start"]) or not np.isfinite(duration):
+            raise ValueError("裂谷duration_myr须在0至t_start之间")
         q = np.asarray(r["line"], float)
         out.append({"id": r["id"], "name": r["name"], "what": r.get("what", ""), "t_start": float(r["t_start"]),
                     "anchor": code_id[r["anchor"]], "pts0": lonlat_to_xyz(q[:, 0], q[:, 1]),
+                    "duration_myr": duration,
+                    "logarithmic_weights": bool(r.get("logarithmic_weights", False)),
                     "half_km": float(r["graben_half_km"]), "beta": float(r["beta"]),
                     "flank_amp_m": float(r["flank_amp_m"]), "flank_decay_km": float(r["flank_decay_km"]),
                     "swell_amp_m": float(r.get("swell_amp_m", 0.0)), "swell_radius_km": float(r.get("swell_radius_km", 1.0))})
@@ -525,7 +530,7 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
     from mythic.tectonics.plumes import apply_lip, apply_lip_weights, swell_m
 
     from mythic.tectonics.reactivation import apply_shortening
-    from mythic.tectonics.rifts import apply_graben, rift_relief_m
+    from mythic.tectonics.rifts import apply_graben, rift_relief_m, progressive_beta
 
     plumes = plumes or {"swells": [], "lips": []}
     rifts = rifts or []
@@ -612,9 +617,17 @@ def simulate(world, mesh, rot: Path, snap_every: int, params: Params, polarity: 
             log(f"  {t:3d} Ma 大火成岩省 {e['id']}（{e['what']}）：{r['n']} 个单元加厚至多 {e['add_km']} km，"
                 f"{r['volume_km3'] / 1e6:.2f}×10⁶ km³")
         for rf in rifts:                           # U30 陆内裂谷：开始时地堑减薄（两肩与轴部隆起在快照里叠加）
-            if committed and rf["id"] not in rift_done and rf["t_start"] >= t - 1e-9:
+            if rf.get("duration_myr", 0.) > 0:
+                beta_step = progressive_beta(rf["beta"], rf["duration_myr"], rf["t_start"], float(t), params.dt)
+                if beta_step > 1.:
+                    r = apply_graben(eng, rift_line(rf, t), rf["half_km"], beta_step, logarithmic=True)
+                    rf["thinned_volume_km3"] = rf.get("thinned_volume_km3", 0.) + r["volume_km3"]
+                    if t == rf["t_start"] - rf["duration_myr"]:
+                        log(f"  {t:3d} Ma 持续地堑 {rf['id']}：规定总β={rf['beta']}，"
+                            f"共减薄{rf['thinned_volume_km3'] / 1e6:.3f}×10⁶ km³（固定面积柱体积扣减）")
+            elif committed and rf["id"] not in rift_done and rf["t_start"] >= t - 1e-9:
                 rift_done.add(rf["id"])
-                r = apply_graben(eng, rift_line(rf, t), rf["half_km"], rf["beta"])
+                r = apply_graben(eng, rift_line(rf, t), rf["half_km"], rf["beta"], logarithmic=rf.get("logarithmic_weights", False))
                 log(f"  {t:3d} Ma 陆内裂谷 {rf['id']}（{rf['name']}）：{r['n']} 个陆壳单元减薄（β ≤ {rf['beta']}），"
                     f"{r['volume_km3'] / 1e6:.2f}×10⁶ km³")
         while (arcs_hcfg is not None and rifts_from and rifts_from[0]["t"] >= t - 1e-9
@@ -1370,6 +1383,13 @@ def main() -> int:
                                      "按网格对不齐处理、不当碰撞增厚（之前会把张开的陆缘一点点泵厚），300 Myr 里因此没被当成碰撞的陆壳单元共 "
                                      f"约 {run_js['budget'].get('opening_overlap_skipped', 0.0) / 1e4:.0f} 万 km³（评审 stage1_2026-10-25_4 第 13 条）",
                            "grid": grid.name})
+    prescribed_rifts = [r for r in hcfg.get("rifts", []) if r.get("prescribed_local_extension")]
+    if prescribed_rifts:
+        ds.attrs["method_class_prescribed_local_extension"] = "user_override"
+        ds.attrs["prescribed_local_extension"] = json.dumps(prescribed_rifts, ensure_ascii=False)
+        ds.attrs["source"] += ("；局部伸展试验的位置、时期和总β由设计规定（user_override），"
+            "不是从盆底目标高程或板块速度求解；固定单元面积仅扣减等效地壳柱体积，另计rift_thinning，"
+            "未求解实际面积伸展、热沉降、沉积、水位或封闭排水；高程符号海陆掩膜沿用旧定义。")
     nc_path = out_w / f"{world_id}_{grid.name}.nc"
     from mythic.figures.netcdf import write_netcdf
     write_netcdf(ds, nc_path)

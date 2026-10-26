@@ -7,7 +7,7 @@ from mythic.tectonics.crust import CONT, ORO_RIFT, Crust, Params
 from mythic.tectonics.engine import Engine
 from mythic.tectonics.geometry import R_KM, lonlat_to_xyz
 from mythic.tectonics.mesh import load_mesh
-from mythic.tectonics.rifts import apply_graben, rift_relief_m
+from mythic.tectonics.rifts import apply_graben, rift_relief_m, progressive_beta
 
 DEG_KM = np.pi / 180 * R_KM
 
@@ -40,3 +40,32 @@ def test_graben_thins_only_continental_crust_near_axis():
     assert (eng.c.oro[near] == ORO_RIFT).all()
     assert (eng.c.T[lon > 25] == T0[lon > 25]).all() and (eng.c.T[np.abs(lon - 10) > 8] == T0[np.abs(lon - 10) > 8]).all()
     assert r["volume_km3"] == pytest.approx(float(((T0 - eng.c.T) * eng.area).sum()))
+
+
+def test_progressive_interval_integrates_only_active_time_and_is_partition_invariant():
+    # 起点/终点跨在半步内，也必须积分满5Myr且只积分一次。
+    for dt in (1., .5, .25):
+        factors = [progressive_beta(1.5, 5., 8.25, t, dt) for t in np.arange(0., 11., dt)]
+        assert np.prod(factors) == pytest.approx(1.5, rel=1e-12)
+    assert progressive_beta(1.5, 5., 8.25, 9.) == 1.
+    with pytest.raises(ValueError):
+        progressive_beta(1.5, 0., 8., 7.)
+
+
+def test_repeated_log_thinning_matches_single_total_beta_in_core_and_taper():
+    import copy
+    mesh = load_mesh(4)
+    c = Crust(mesh.n)
+    c.plate[:] = 1
+    c.ctype[:] = CONT
+    c.T[:] = 45.
+    eng = Engine(mesh, c, Params(), 35., {1: np.zeros(3)})
+    control = copy.deepcopy(eng)
+    line = lonlat_to_xyz(np.array([10., 10.]), np.array([-30., 30.]))
+    apply_graben(control, line, 500., 1.5, logarithmic=True)
+    for t in range(34, -1, -1):
+        apply_graben(eng, line, 500., progressive_beta(1.5, 35., 35., t), logarithmic=True)
+    np.testing.assert_allclose(eng.c.T, control.c.T, rtol=1e-12, atol=1e-12)
+    assert eng.budget["rift_thinning"] == pytest.approx(control.budget["rift_thinning"], rel=1e-12)
+    changed = eng.c.T < 45. - 1e-8
+    assert changed.any() and (~changed).any()

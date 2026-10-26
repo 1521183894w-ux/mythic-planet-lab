@@ -77,7 +77,30 @@ def stamp(fig, world, method_note: str, extra: list[str] | None = None, fontsize
     import textwrap
     width = max(40, int(fig.get_figwidth() * 72.0 / fontsize) - 6)
     wrapped = [w for ln in lines for w in (textwrap.wrap(ln, width=width) or [""])]
-    fig.text(0.01, 0.005, "\n".join(wrapped), fontsize=fontsize, va="bottom", ha="left", color="0.2")
+    content_texts = list(fig.texts)
+    # 来源说明随方法增加时，扩展底部画布，保留图和坐标的物理大小。
+    # 不能只折行后继续占用既有下边距，否则长说明会盖住坐标/图例。
+    footer = fig.text(0.01, 0.005, "\n".join(wrapped), fontsize=fontsize, va="bottom", ha="left", color="0.2")
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    boxes = [ax.get_tightbbox(renderer) for ax in fig.axes if ax.get_visible()]
+    boxes += [text.get_window_extent(renderer) for text in content_texts if text.get_visible()]
+    boxes = [box for box in boxes if box is not None and np.isfinite(box.y0)]
+    if boxes:
+        old_height = fig.bbox.height
+        needed = footer.get_window_extent(renderer).y1 + fontsize * fig.dpi / 72.0 - min(box.y0 for box in boxes)
+        extra_px = max(0., float(np.ceil(needed)))
+        if extra_px:
+            positions = [(ax, ax.get_position(original=True).frozen()) for ax in fig.axes]
+            fig.set_size_inches(fig.get_figwidth(), fig.get_figheight() + extra_px / fig.dpi, forward=True)
+            new_height = fig.bbox.height
+            for ax, pos in positions:
+                ax.set_position([pos.x0, (pos.y0 * old_height + extra_px) / new_height,
+                                 pos.width, pos.height * old_height / new_height])
+            for text in content_texts:
+                x, y = text.get_position()
+                text.set_position((x, (y * old_height + extra_px) / new_height))
+            footer.set_y(0.005 * old_height / new_height)
 
 
 def add_scalebar(ax, extent_km, length_km: float = 500.0, color: str = "k") -> None:

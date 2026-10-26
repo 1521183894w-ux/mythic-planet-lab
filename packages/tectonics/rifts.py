@@ -24,12 +24,26 @@ def rift_relief_m(x: np.ndarray, line_now: np.ndarray, half_km: float, flank_amp
     return flank + swell_amp_m * taper(d, swell_radius_km)
 
 
-def apply_graben(eng, line_now: np.ndarray, half_km: float, beta: float) -> dict:
+def progressive_beta(beta: float, duration_myr: float, t_start: float, t_now: float, dt: float = 1.) -> float:
+    """持续伸展在当前时间步内的倍率；只积分与活动区间相交的时间。
+
+    beta是规定的总伸展倍率，不由目标高程反算。需与apply_graben的对数权重
+    配合，才能在固定宿主/权重下保持时间步细分不改变总减薄。
+    """
+    if not np.isfinite([beta, duration_myr, t_start, t_now, dt]).all() or beta < 1 or duration_myr <= 0 or dt <= 0:
+        raise ValueError("持续伸展要求beta>=1，正持续时间和正时间步")
+    active = max(0., min(t_now + dt, t_start) - max(t_now, t_start - duration_myr))
+    return float(np.exp(np.log(beta) * active / duration_myr))
+
+
+def apply_graben(eng, line_now: np.ndarray, half_km: float, beta: float, *, logarithmic: bool = False) -> dict:
     """地堑：存活陆壳单元按离轴距离减薄（轴线 half_km 内 T / β，到 2 × half_km 渐变到不减薄）。返回减掉的体积与单元数。"""
+    if not np.isfinite(beta) or beta < 1:
+        raise ValueError("地堑伸展倍率beta须为有限数且>=1")
     alive = np.flatnonzero(eng.alive & (eng.c.ctype == CONT))
     w = taper(distance_km(eng.positions()[alive], line_now), 2.0 * half_km, half_km)
     hit = alive[w > 1e-3]
-    f = 1.0 + (beta - 1.0) * w[w > 1e-3]
+    f = np.exp(np.log(beta) * w[w > 1e-3]) if logarithmic else 1.0 + (beta - 1.0) * w[w > 1e-3]
     before = eng.c.T[hit].copy()
     eng.c.T[hit] = before / f
     eng.c.oro[hit] = ORO_RIFT
