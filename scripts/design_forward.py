@@ -1384,6 +1384,11 @@ def main() -> int:
                                      f"约 {run_js['budget'].get('opening_overlap_skipped', 0.0) / 1e4:.0f} 万 km³（评审 stage1_2026-10-25_4 第 13 条）",
                            "grid": grid.name})
     prescribed_rifts = [r for r in hcfg.get("rifts", []) if r.get("prescribed_local_extension")]
+    if params.hole_borrow_shared_budget:
+        ds.attrs["hole_borrow_shared_budget"] = "simultaneous_donor_capacity_v1"
+        ds.attrs["source"] += ("；补洞借料按同一次提交的供体总余额限额（procedural_constrained），"
+            "余额仅为34km以上柱体积；短缺仍按旧规则显式记hole_created，不是求解的沉积或岩浆来源，"
+            "该限额不保证目标谷地形成或完整三维伸展质量守恒。")
     if prescribed_rifts:
         ds.attrs["method_class_prescribed_local_extension"] = "user_override"
         ds.attrs["prescribed_local_extension"] = json.dumps(prescribed_rifts, ensure_ascii=False)

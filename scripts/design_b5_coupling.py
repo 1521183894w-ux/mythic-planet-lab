@@ -22,6 +22,7 @@ class CouplingObserver(evolution.Observer):
 
     def __init__(self, case, checkpoint="u35_c9"):
         super().__init__(case, checkpoint)
+        self.checkpoint = checkpoint
         CouplingObserver.current = self
         self.flow_rows, self.borrow_rows, self.borrow_checks = [], [], []
         self.flow_error = 0.
@@ -82,6 +83,10 @@ class CouplingObserver(evolution.Observer):
             "max_overdraft_equivalent_km": float((overdraft / area).max()),
             "minimum_post_donor_T_km": float(post[involved].min()) if involved.any() else None}
         self.borrow_checks.append(check)
+        if overdraft.max() > 1e-6:
+            worst = int(overdraft.argmax())
+            check["worst_donor"] = {"uid": int(new.uid[worst]), "origin": int(new.origin[worst]),
+                "plate": int(new.plate[worst]), "C_frame_lon_lat": self.coordinates(eng, new.node[[worst]], new.plate[[worst]])[0]}
         if eng.t > 36:
             return
         hg = loc["hg"]
@@ -108,7 +113,7 @@ class CouplingObserver(evolution.Observer):
 
     def finish(self):
         super().finish()
-        data = {"checkpoint": "U35-C9", "method_class": "procedural_constrained", "reference_frame": "洲C现今参照系",
+        data = {"checkpoint": self.checkpoint.upper().replace("_", "-"), "method_class": "procedural_constrained", "reference_frame": "洲C现今参照系",
             "method": "Python行事件只读提取实际求解函数局部变量；观测不修改数组或分配",
             "flow_reconstruction_max_error_km3": self.flow_error,
             "flow_global_balance_max_km3": self.flow_global_balance,
@@ -159,11 +164,11 @@ def traced(original, mode):
     return call
 
 
-def main():
+def main(checkpoint="u35_c9"):
     surface, commit = Engine._surface, Engine.commit
     Engine._surface, Engine.commit = traced(surface, "surface"), traced(commit, "commit")
     try:
-        return evolution.main(CouplingObserver, "u35_c9")
+        return evolution.main(CouplingObserver, checkpoint)
     finally:
         Engine._surface, Engine.commit = surface, commit
         CouplingObserver.current = None

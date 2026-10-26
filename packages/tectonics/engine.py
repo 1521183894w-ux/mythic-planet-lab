@@ -29,6 +29,7 @@ from .crust import (CONT, OCEAN, ORIGIN_ARC, ORIGIN_OCEAN, ORIGIN_RIFT, ORO_ARC,
                     Params, elevation)
 from .geometry import R_KM, chord_from_km, km_from_chord, orthonormalize, smoothstep, unit, wrap
 from .mesh import KD_WORKERS, Mesh
+from .borrowing import cap_shared_borrow
 
 
 def arc_profile(d_km, peak_km, max_km):
@@ -785,6 +786,11 @@ class Engine:
                 tot = avail.sum(1)
                 take = np.minimum(V, tot)
                 share = np.where(tot[:, None] > 0, avail * (take / np.maximum(tot, 1e-12))[:, None], 0.0)
+                if p.hole_borrow_shared_budget:
+                    # 多个洞共用同一份前态余额；超额请求按供体同比缩减，不按洞顺序争抢。
+                    capacity = np.where(new.ctype == CONT, np.maximum(new.T - HOLE_BORROW_T_KM, 0.0), 0.0) * m.area_km2[new.node]
+                    share = cap_shared_borrow(nb, share, capacity)
+                    take = share.sum(axis=1)
                 np.subtract.at(new.T, nb.ravel(), (share / a_nb).ravel())
                 self.budget["hole_created"] = self.budget.get("hole_created", 0.0) + float((V - take).sum())
                 self.budget["hole_fill"] = self.budget.get("hole_fill", 0.0) + float(V.sum())
