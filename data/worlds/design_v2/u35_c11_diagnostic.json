@@ -1,0 +1,4677 @@
+{
+  "checkpoint": "U35-C11",
+  "base_commit": "3037b3f",
+  "physics_changed": false,
+  "method_class": {
+    "history": "user_override",
+    "audit": "procedural_constrained",
+    "height": "parameterized_physics",
+    "query": "interpolated"
+  },
+  "neutrality": {
+    "identical": true,
+    "arrays_checked": 352,
+    "different_arrays": [],
+    "budget_identical": true,
+    "events_identical": true,
+    "physical_state_hash_identical": true,
+    "world_arrays_identical": true
+  },
+  "protected_sha256": {
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/history_v2_u35_c4_strain.yaml": "760862cef2bba754dbdc800f7787c7829b5edd41283142b3af5d82c537789252",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    "data/worlds/design_v2/forward_v2.json": "d58f0447abc80820c88cbc1bee5053314d9a2512c9e21568706f12261a88588b"
+  },
+  "cases": {
+    "baseline": {
+      "birth_count": 1218,
+      "created_km3": 102485323.1088164,
+      "created_by_kind_km3": {
+        "hole_fill": 461201.45371514093,
+        "rift_fill": 102024121.65510125
+      },
+      "birth_budget_residuals_km3": {
+        "hole_fill": 0.0,
+        "rift_fill": 0.0
+      },
+      "zones": {
+        "design_polygon": {
+          "birth_count": 6,
+          "created_km3": 577472.1052956723,
+          "borrowed_km3": 122165.6574587927,
+          "created_by_kind_km3": {
+            "hole_fill": 2.9103830456733704e-11,
+            "rift_fill": 577472.1052956723
+          },
+          "surviving_host_count": 4,
+          "removed_host_count": 2,
+          "whole_host_collision_km3": 221555.68560857282,
+          "whole_host_collision_into_polygon_km3": 50174.76112791219
+        },
+        "B5_window": {
+          "birth_count": 42,
+          "created_km3": 3688909.845687459,
+          "borrowed_km3": 830437.5214765702,
+          "created_by_kind_km3": {
+            "hole_fill": 107869.77794784027,
+            "rift_fill": 3581040.067739619
+          },
+          "surviving_host_count": 32,
+          "removed_host_count": 10,
+          "whole_host_collision_km3": 1060990.4913378097,
+          "whole_host_collision_into_polygon_km3": 206428.55291036848
+        },
+        "outside_window": {
+          "birth_count": 1176,
+          "created_km3": 98796413.26312894,
+          "borrowed_km3": 6307783.690565538,
+          "created_by_kind_km3": {
+            "hole_fill": 353331.67576730065,
+            "rift_fill": 98443081.58736163
+          },
+          "surviving_host_count": 1036,
+          "removed_host_count": 140,
+          "whole_host_collision_km3": 13479181.248848258,
+          "whole_host_collision_into_polygon_km3": 18159.80923071814
+        }
+      },
+      "created_budget_residual_km3": 0.0,
+      "collision_distribution_max_residual_km3": 2.9103830456733704e-11,
+      "C_frame_final_matrix_max_error": 0.0,
+      "center_flow_whole_host_since36Ma": {
+        "created_birth_host": {
+          "incoming_km3": 0.0,
+          "outgoing_km3": 6892.606033543811,
+          "net_km3": -6892.606033543811
+        },
+        "other": {
+          "incoming_km3": 47103.81448281158,
+          "outgoing_km3": 34374.41963289579,
+          "net_km3": 12729.394849915785
+        }
+      },
+      "design_polygon": {
+        "area_km2": 30080.925751470946,
+        "coverage": 1.0,
+        "height_m": {
+          "n": 3895,
+          "min": -211.42897772934148,
+          "p50": 1594.096812785214,
+          "max": 2156.467379869911
+        },
+        "below_sea_fraction": 0.005650955787443111,
+        "current_positive_birth_host_area_fraction": 0.3809481692279092
+      },
+      "center_height_m": 1594.096812784393,
+      "global_budget_km3": {
+        "arc_added": 495670207.7417145,
+        "eroded": 381204392.681471,
+        "rift_thinning": 1338436.9119499724,
+        "arc_converted": 5040090.385872091,
+        "arc_suppressed": 116874220.21569355,
+        "opening_overlap_skipped": 17093358.971972782,
+        "rift_fill": 102024121.65510125,
+        "arc_accreted": 2128626.5940816156,
+        "lip_added": 17225262.35804001,
+        "reactivation_added": 48946053.91938692,
+        "hole_created": 461201.45371514093,
+        "hole_fill": 7599422.665757249
+      },
+      "A": {
+        "all_pass": true,
+        "pass": {
+          "ocean_fraction": true,
+          "main_continent": true,
+          "subcontinents": true,
+          "main_inland_sea": true,
+          "main_continent_latitude": true,
+          "polar_continent": true,
+          "open_ocean": true
+        },
+        "ocean_fraction": 0.715,
+        "main_continent_share": 0.735,
+        "subcontinents": 3,
+        "subcontinent_areas_Mkm2": [
+          59.2,
+          38.8,
+          6.0
+        ],
+        "main_inland_sea": {
+          "area_Mkm2": 4.46,
+          "straits": 1,
+          "aspect": 3.2552886144676694,
+          "checks": {
+            "area_in_range": true,
+            "ratio_to_second_ok": true,
+            "straits_ok": true,
+            "bordering_subcontinents_ok": true,
+            "elongation_ok": true
+          }
+        },
+        "latitude": [
+          79.27734375,
+          -43.76953125
+        ],
+        "polar_Mkm2": [
+          13.2
+        ]
+      },
+      "C10_budget_max_difference_km3": 2.205371856689453e-06,
+      "C10_center_difference_m": 0.0,
+      "birth_time_groups": [
+        {
+          "t_Ma": 300,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 295,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 290,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 285,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 280,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 275.0,
+          "created_km3": 1528338.8774478985,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 270.0,
+          "created_km3": 719395.5276412767,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 265.0,
+          "created_km3": 575493.7072729523,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 260,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 255,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 250,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 245,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 240,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 235,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 230,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 225,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 220,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 215,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 210,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 205,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 200,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 195,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 190,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 185,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 180,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 175,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 170,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 165,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 160,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 155,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 150,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 145.0,
+          "created_km3": 12168979.053181093,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 140.0,
+          "created_km3": 9617311.960208025,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 135.0,
+          "created_km3": 14339216.949987896,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 130.0,
+          "created_km3": 7860417.201789459,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 125.0,
+          "created_km3": 3705068.5295986105,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 120.0,
+          "created_km3": 1371497.7491197642,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 115.0,
+          "created_km3": 4663566.794361894,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 110.0,
+          "created_km3": 3313435.257396108,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 105.0,
+          "created_km3": 3691006.3668063474,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 100.0,
+          "created_km3": 1663743.016615037,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 95.0,
+          "created_km3": 828189.0771540421,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 90.0,
+          "created_km3": 722120.9387618718,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 85.0,
+          "created_km3": 832771.6926748524,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 80.0,
+          "created_km3": 2572887.349468802,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 75.0,
+          "created_km3": 1878926.5585974222,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 70.0,
+          "created_km3": 4792435.051005295,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 65.0,
+          "created_km3": 2893644.8335738564,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 60.0,
+          "created_km3": 1352855.3326237,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 55.0,
+          "created_km3": 1229723.350981823,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 50.0,
+          "created_km3": 916821.2371820457,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 45.0,
+          "created_km3": 317598.0724634018,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 40.0,
+          "created_km3": 193261.474519394,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 35.0,
+          "created_km3": 585547.8556703789,
+          "B5_window_created_km3": 1.4551915228366852e-11
+        },
+        {
+          "t_Ma": 30.0,
+          "created_km3": 2677616.715711027,
+          "B5_window_created_km3": 462059.83833703614
+        },
+        {
+          "t_Ma": 25.0,
+          "created_km3": 3416553.3991833753,
+          "B5_window_created_km3": 790965.3839007736
+        },
+        {
+          "t_Ma": 20.0,
+          "created_km3": 3203984.5057023796,
+          "B5_window_created_km3": 231844.59983744143
+        },
+        {
+          "t_Ma": 15.0,
+          "created_km3": 2368982.219089283,
+          "B5_window_created_km3": 612190.5479995591
+        },
+        {
+          "t_Ma": 10.0,
+          "created_km3": 2039099.8816214716,
+          "B5_window_created_km3": 661390.1408794114
+        },
+        {
+          "t_Ma": 5.0,
+          "created_km3": 1796644.7825788208,
+          "B5_window_created_km3": 353991.84776616225
+        },
+        {
+          "t_Ma": 0.0,
+          "created_km3": 2648187.7888267906,
+          "B5_window_created_km3": 576467.4869670752
+        }
+      ],
+      "near_B5_births": [
+        {
+          "uid": 448283,
+          "t_Ma": 35.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            18.844000427098223,
+            -1.966619440904883
+          ],
+          "T_km": 33.0,
+          "area_km2": 3701.9896199634163,
+          "kind": "hole_fill",
+          "total_km3": 122165.65745879273,
+          "borrowed_km3": 122165.6574587927,
+          "created_km3": 2.9103830456733704e-11,
+          "donors": [
+            {
+              "uid": 21226,
+              "volume_km3": 17097.938428789337,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 52985,
+              "volume_km3": 17549.097052838184,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 114191,
+              "volume_km3": 466.1672268882816,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 157065,
+              "volume_km3": 16461.65594520411,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108753,
+              "volume_km3": 17675.856962479156,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 2617,
+              "volume_km3": 777.0946388489381,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 50568,
+              "volume_km3": 16850.04808074376,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108764,
+              "volume_km3": 17526.566087099236,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108766,
+              "volume_km3": 17761.23303590171,
+              "plate": 301,
+              "origin": 301
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 40.469394459745416,
+            "volume_km3": 149817.27821618252,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.84400042709821,
+              -1.966619440904881
+            ]
+          }
+        },
+        {
+          "uid": 448468,
+          "t_Ma": 35.0,
+          "plate": 401,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            18.926598688666584,
+            -4.85863932169042
+          ],
+          "T_km": 33.0,
+          "area_km2": 3501.9171858842915,
+          "kind": "hole_fill",
+          "total_km3": 115563.26713418162,
+          "borrowed_km3": 115563.26713418163,
+          "created_km3": -1.4551915228366852e-11,
+          "donors": [
+            {
+              "uid": 6163,
+              "volume_km3": 28602.517603885506,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 114207,
+              "volume_km3": 1228.1421678913628,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 76277,
+              "volume_km3": 28550.3515375966,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 124380,
+              "volume_km3": 28817.388037996032,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 64251,
+              "volume_km3": 93.32074996577154,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 55458,
+              "volume_km3": 28271.547036846354,
+              "plate": 301,
+              "origin": 301
+            }
+          ],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 6.0,
+              "uid": 448468,
+              "whole_host_volume_km3": 115563.26713418162
+            }
+          }
+        },
+        {
+          "uid": 453505,
+          "t_Ma": 30.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.74060357349323,
+            -3.9843160835130558
+          ],
+          "T_km": 33.0,
+          "area_km2": 3689.3991106452577,
+          "kind": "rift_fill",
+          "total_km3": 121750.1706512935,
+          "borrowed_km3": 0.0,
+          "created_km3": 121750.1706512935,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 43.32987219092016,
+            "volume_km3": 159861.19192555355,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.74060357349324,
+              -3.984316083513091
+            ]
+          }
+        },
+        {
+          "uid": 453506,
+          "t_Ma": 30.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.28167326388584,
+            -5.021687534931089
+          ],
+          "T_km": 30.78463336926998,
+          "area_km2": 3690.522799853824,
+          "kind": "rift_fill",
+          "total_km3": 113611.3913344317,
+          "borrowed_km3": 0.0,
+          "created_km3": 113611.3913344317,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 43.952064500521914,
+            "volume_km3": 162206.09613982198,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.281673263885846,
+              -5.021687534931117
+            ]
+          }
+        },
+        {
+          "uid": 453569,
+          "t_Ma": 30.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.6785789794466,
+            0.5727071372896122
+          ],
+          "T_km": 32.811818133056,
+          "area_km2": 3689.65327572317,
+          "kind": "rift_fill",
+          "total_km3": 121064.23225706298,
+          "borrowed_km3": 0.0,
+          "created_km3": 121064.23225706298,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 45.65423508126552,
+            "volume_km3": 168448.29801822698,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.678578979446606,
+              0.572707137289589
+            ]
+          }
+        },
+        {
+          "uid": 453832,
+          "t_Ma": 30.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.88258810716058,
+            -0.9304149724666256
+          ],
+          "T_km": 30.05666428802102,
+          "area_km2": 3514.496588244093,
+          "kind": "rift_fill",
+          "total_km3": 105634.04409424795,
+          "borrowed_km3": 0.0,
+          "created_km3": 105634.04409424795,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 19.0,
+              "uid": 453832,
+              "whole_host_volume_km3": 105634.04409424795
+            }
+          }
+        },
+        {
+          "uid": 458639,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.894930995872343,
+            -0.9562283988775242
+          ],
+          "T_km": 31.404108890951136,
+          "area_km2": 3696.3665743241845,
+          "kind": "rift_fill",
+          "total_km3": 116081.09840094871,
+          "borrowed_km3": 0.0,
+          "created_km3": 116081.09840094871,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 42.23661078725652,
+            "volume_km3": 156121.99632675527,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.894930995872354,
+              -0.956228398877525
+            ]
+          }
+        },
+        {
+          "uid": 458680,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.792997087373298,
+            -2.977224521258217
+          ],
+          "T_km": 31.95364465407918,
+          "area_km2": 3695.514296200406,
+          "kind": "rift_fill",
+          "total_km3": 118085.15063485729,
+          "borrowed_km3": 0.0,
+          "created_km3": 118085.15063485729,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 42.31941503038687,
+            "volume_km3": 156392.00325163302,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.792997087373305,
+              -2.9772245212582167
+            ]
+          }
+        },
+        {
+          "uid": 458782,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.010817534366,
+            -4.502856651580183
+          ],
+          "T_km": 30.720406441965597,
+          "area_km2": 3690.5471991005525,
+          "kind": "rift_fill",
+          "total_km3": 113375.1099496267,
+          "borrowed_km3": 0.0,
+          "created_km3": 113375.1099496267,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 43.35440303824502,
+            "volume_km3": 160001.47070147164,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.010817534366005,
+              -4.502856651580181
+            ]
+          }
+        },
+        {
+          "uid": 458852,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.94725503304735,
+            0.05322871487293208
+          ],
+          "T_km": 31.04480579685114,
+          "area_km2": 3689.6503491157187,
+          "kind": "rift_fill",
+          "total_km3": 114544.4785465815,
+          "borrowed_km3": 0.0,
+          "created_km3": 114544.4785465815,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 43.9096522057582,
+            "volume_km3": 162011.26359052552,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.947255033047355,
+              0.05322871487292708
+            ]
+          }
+        },
+        {
+          "uid": 459034,
+          "t_Ma": 25.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.806130373629323,
+            -3.0908300272147393
+          ],
+          "T_km": 30.854007133126533,
+          "area_km2": 3503.6448423495303,
+          "kind": "rift_fill",
+          "total_km3": 108101.48295779439,
+          "borrowed_km3": 0.0,
+          "created_km3": 108101.48295779439,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 24.0,
+              "uid": 459034,
+              "whole_host_volume_km3": 108101.48295779439
+            }
+          }
+        },
+        {
+          "uid": 459096,
+          "t_Ma": 25.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.374070138368875,
+            -4.681349797769309
+          ],
+          "T_km": 29.752252925352103,
+          "area_km2": 3524.3187183075875,
+          "kind": "rift_fill",
+          "total_km3": 104856.4218966401,
+          "borrowed_km3": 0.0,
+          "created_km3": 104856.4218966401,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 29.752252925352103,
+            "volume_km3": 104856.4218966401,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.989662116038875,
+              -2.8893842734206148
+            ]
+          }
+        },
+        {
+          "uid": 459136,
+          "t_Ma": 25.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.79998875089563,
+            -1.5700091000542495
+          ],
+          "T_km": 33.0,
+          "area_km2": 3512.7770155856024,
+          "kind": "rift_fill",
+          "total_km3": 115921.64151432487,
+          "borrowed_km3": 0.0,
+          "created_km3": 115921.64151432487,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 21.0,
+              "uid": 459136,
+              "whole_host_volume_km3": 115921.64151432487
+            }
+          }
+        },
+        {
+          "uid": 458851,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.114325456440547,
+            -2.4870198808875523
+          ],
+          "T_km": 33.0,
+          "area_km2": 3701.9935350128862,
+          "kind": "hole_fill",
+          "total_km3": 122165.78665542524,
+          "borrowed_km3": 122165.78665542523,
+          "created_km3": 1.4551915228366852e-11,
+          "donors": [
+            {
+              "uid": 448283,
+              "volume_km3": 16320.556352084788,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 64242,
+              "volume_km3": 797.0708320488857,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 52985,
+              "volume_km3": 19587.01529021371,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 21226,
+              "volume_km3": 19807.500503237134,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 157065,
+              "volume_km3": 19410.437322946553,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108766,
+              "volume_km3": 23624.668994306136,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108753,
+              "volume_km3": 22618.53736058803,
+              "plate": 301,
+              "origin": 301
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 38.98778544934079,
+            "volume_km3": 144332.5296779291,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.114325456440554,
+              -2.487019880887542
+            ]
+          }
+        },
+        {
+          "uid": 464359,
+          "t_Ma": 20.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.43541507468148,
+            -1.9967371744049913
+          ],
+          "T_km": 31.453504998022776,
+          "area_km2": 3703.342394237069,
+          "kind": "rift_fill",
+          "total_km3": 116483.09850652529,
+          "borrowed_km3": 0.0,
+          "created_km3": 116483.09850652529,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 36.79438956157352,
+            "volume_km3": 136262.2227334491,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.435415074681497,
+              -1.9967371744050215
+            ]
+          }
+        },
+        {
+          "uid": 464517,
+          "t_Ma": 20.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.165109784904114,
+            -1.4764992027666768
+          ],
+          "T_km": 31.1522753195274,
+          "area_km2": 3703.1484906851497,
+          "kind": "rift_fill",
+          "total_km3": 115361.50133091613,
+          "borrowed_km3": 0.0,
+          "created_km3": 115361.50133091613,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 39.676704484783585,
+            "volume_km3": 146928.72832818705,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.165109784904136,
+              -1.4764992027666983
+            ]
+          }
+        },
+        {
+          "uid": 464730,
+          "t_Ma": 20.0,
+          "plate": 401,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.331265110819224,
+            -5.321387650501123
+          ],
+          "T_km": 33.0,
+          "area_km2": 3548.36309264853,
+          "kind": "hole_fill",
+          "total_km3": 117095.98205740149,
+          "borrowed_km3": 117095.98205740147,
+          "created_km3": 1.4551915228366852e-11,
+          "donors": [
+            {
+              "uid": 100051,
+              "volume_km3": 607.110737615075,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 453506,
+              "volume_km3": 17248.579808266983,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 51342,
+              "volume_km3": 549.3118411697415,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 76277,
+              "volume_km3": 29725.459387362087,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 16740,
+              "volume_km3": 482.2751901363341,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 458668,
+              "volume_km3": 19284.869539711817,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 43204,
+              "volume_km3": 757.9016550848269,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 75992,
+              "volume_km3": 771.1774284825777,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 6163,
+              "volume_km3": 29289.122888719343,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 458782,
+              "volume_km3": 18341.404292009283,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 64251,
+              "volume_km3": 38.76928884341212,
+              "plate": 401,
+              "origin": 401
+            }
+          ],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 19.0,
+              "uid": 464730,
+              "whole_host_volume_km3": 117095.98205740149
+            }
+          }
+        },
+        {
+          "uid": 469933,
+          "t_Ma": 15.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.3331093945045,
+            -4.0143817645606905
+          ],
+          "T_km": 28.218893585929546,
+          "area_km2": 3690.739464285852,
+          "kind": "rift_fill",
+          "total_km3": 104148.58419607308,
+          "borrowed_km3": 0.0,
+          "created_km3": 104148.58419607308,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 40.47685362733222,
+            "volume_km3": 149389.52107251697,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.333109394504522,
+              -4.014381764560688
+            ]
+          }
+        },
+        {
+          "uid": 470036,
+          "t_Ma": 15.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.06290391858115,
+            -3.4958418780725085
+          ],
+          "T_km": 30.95959544821469,
+          "area_km2": 3689.40398778358,
+          "kind": "rift_fill",
+          "total_km3": 114222.45490680964,
+          "borrowed_km3": 0.0,
+          "created_km3": 114222.45490680964,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 41.96967596106327,
+            "volume_km3": 154843.08985673147,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.062903918581156,
+              -3.4958418780725062
+            ]
+          }
+        },
+        {
+          "uid": 470250,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.666043869855514,
+            -5.498717096166043
+          ],
+          "T_km": 29.36678027738782,
+          "area_km2": 3525.639931437951,
+          "kind": "rift_fill",
+          "total_km3": 103536.69320372297,
+          "borrowed_km3": 0.0,
+          "created_km3": 103536.69320372297,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 29.36678027738782,
+            "volume_km3": 103536.69320372297,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              20.061946780227203,
+              -4.419476077932474
+            ]
+          }
+        },
+        {
+          "uid": 470265,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.264065209775346,
+            -4.431610258628348
+          ],
+          "T_km": 26.571291681202574,
+          "area_km2": 3524.50331468542,
+          "kind": "rift_fill",
+          "total_km3": 93650.60560587159,
+          "borrowed_km3": 0.0,
+          "created_km3": 93650.60560587159,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 13.0,
+              "uid": 470265,
+              "whole_host_volume_km3": 93650.60560587159
+            }
+          }
+        },
+        {
+          "uid": 470358,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.174751480562264,
+            0.1297361222910094
+          ],
+          "T_km": 27.693286449092103,
+          "area_km2": 3514.496588244093,
+          "kind": "rift_fill",
+          "total_km3": 97327.96074260057,
+          "borrowed_km3": 0.0,
+          "created_km3": 97327.96074260057,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 27.693286449092103,
+            "volume_km3": 97327.96074260057,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.442527086184537,
+              1.196310580812491
+            ]
+          }
+        },
+        {
+          "uid": 470432,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.9781099017696,
+            0.6586222205735581
+          ],
+          "T_km": 28.269443131637864,
+          "area_km2": 3512.7769897010967,
+          "kind": "rift_fill",
+          "total_km3": 99304.2493444812,
+          "borrowed_km3": 0.0,
+          "created_km3": 99304.2493444812,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 28.269443131637864,
+            "volume_km3": 99304.2493444812,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.23374599689047,
+              1.7205484168309164
+            ]
+          }
+        },
+        {
+          "uid": 475660,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.604014587908377,
+            -4.533066090169991
+          ],
+          "T_km": 26.002114322830074,
+          "area_km2": 3692.4782673834015,
+          "kind": "rift_fill",
+          "total_km3": 96012.24204306872,
+          "borrowed_km3": 0.0,
+          "created_km3": 96012.24204306872,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 28.359853825565757,
+            "volume_km3": 104718.14391707157,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.60401458790838,
+              -4.5330660901699895
+            ]
+          }
+        },
+        {
+          "uid": 475727,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.552798242182465,
+            -5.5399674221439055
+          ],
+          "T_km": 30.16071710879281,
+          "area_km2": 3689.325917699835,
+          "kind": "rift_fill",
+          "total_km3": 111272.71532588215,
+          "borrowed_km3": 0.0,
+          "created_km3": 111272.71532588215,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 32.062682627494276,
+            "volume_km3": 118289.68600859887,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.552798242182476,
+              -5.539967422143892
+            ]
+          }
+        },
+        {
+          "uid": 475748,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.21593187213366,
+            -0.4661436972909927
+          ],
+          "T_km": 30.10093262077582,
+          "area_km2": 3695.3997054318347,
+          "kind": "rift_fill",
+          "total_km3": 111234.97754003847,
+          "borrowed_km3": 0.0,
+          "created_km3": 111234.97754003847,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 40.53564397479218,
+            "volume_km3": 149795.40680393676,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.215931872133662,
+              -0.4661436972909921
+            ]
+          }
+        },
+        {
+          "uid": 475871,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.307649762471698,
+            -1.0389121638624461
+          ],
+          "T_km": 27.122650337656246,
+          "area_km2": 3506.709707777489,
+          "kind": "rift_fill",
+          "total_km3": 95111.26123971354,
+          "borrowed_km3": 0.0,
+          "created_km3": 95111.26123971354,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 5.0,
+              "uid": 475871,
+              "whole_host_volume_km3": 95111.26123971354
+            }
+          }
+        },
+        {
+          "uid": 475963,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.508621969698105,
+            -1.5646765643213683
+          ],
+          "T_km": 27.334951362955305,
+          "area_km2": 3501.921378435127,
+          "kind": "rift_fill",
+          "total_km3": 95724.85055641759,
+          "borrowed_km3": 0.0,
+          "created_km3": 95724.85055641759,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 4.0,
+              "uid": 475963,
+              "whole_host_volume_km3": 95724.85055641759
+            }
+          }
+        },
+        {
+          "uid": 475978,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.18945901596487,
+            -3.550497197350603
+          ],
+          "T_km": 25.372313885271076,
+          "area_km2": 3500.9294319138135,
+          "kind": "rift_fill",
+          "total_km3": 88826.68043670103,
+          "borrowed_km3": 0.0,
+          "created_km3": 88826.68043670103,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 25.372313885271076,
+            "volume_km3": 88826.68043670103,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.42691593645785,
+              -2.8394712557336366
+            ]
+          }
+        },
+        {
+          "uid": 475634,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.705891550113193,
+            -2.5169307128842244
+          ],
+          "T_km": 33.0,
+          "area_km2": 3703.1484842140235,
+          "kind": "hole_fill",
+          "total_km3": 122203.89997906277,
+          "borrowed_km3": 85752.44730318624,
+          "created_km3": 36451.45267587653,
+          "donors": [
+            {
+              "uid": 464359,
+              "volume_km3": 9834.736673580906,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 458851,
+              "volume_km3": 19367.61390943587,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 448283,
+              "volume_km3": 18952.450826422573,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 464517,
+              "volume_km3": 16288.033122960056,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 458680,
+              "volume_km3": 21309.612770786836,
+              "plate": 301,
+              "origin": 91
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 35.91538212459521,
+            "volume_km3": 132999.9928746622,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.7058915501132,
+              -2.5169307128842164
+            ]
+          }
+        },
+        {
+          "uid": 476042,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.34910350586965,
+            -2.557759257123113
+          ],
+          "T_km": 33.0,
+          "area_km2": 3503.628960402915,
+          "kind": "hole_fill",
+          "total_km3": 115619.75569329619,
+          "borrowed_km3": 88863.79463158282,
+          "created_km3": 26755.961061713373,
+          "donors": [
+            {
+              "uid": 458851,
+              "volume_km3": 14216.144641118999,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 458680,
+              "volume_km3": 15641.60349397249,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464359,
+              "volume_km3": 7218.857197004919,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 470036,
+              "volume_km3": 11584.14977424681,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 52985,
+              "volume_km3": 26291.631361487816,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 448283,
+              "volume_km3": 13911.408163751777,
+              "plate": 301,
+              "origin": 401
+            }
+          ],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 6.0,
+              "uid": 476042,
+              "whole_host_volume_km3": 115619.75569329619
+            }
+          }
+        },
+        {
+          "uid": 481158,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.536888072210818,
+            0.023955633012618754
+          ],
+          "T_km": 28.594903367558263,
+          "area_km2": 3695.5924570872126,
+          "kind": "rift_fill",
+          "total_km3": 105675.10919628605,
+          "borrowed_km3": 0.0,
+          "created_km3": 105675.10919628605,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 32.13749768346994,
+            "volume_km3": 118767.09402868927,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.53688807221083,
+              0.02395563301258405
+            ]
+          }
+        },
+        {
+          "uid": 481301,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.26826285334079,
+            0.5434338606635842
+          ],
+          "T_km": 28.48147107182422,
+          "area_km2": 3689.6540073389815,
+          "kind": "rift_fill",
+          "total_km3": 105086.77387506551,
+          "borrowed_km3": 0.0,
+          "created_km3": 105086.77387506551,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 31.508308744058304,
+            "volume_km3": 116254.7576219886,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.268262853340804,
+              0.5434338606635645
+            ]
+          }
+        },
+        {
+          "uid": 481439,
+          "t_Ma": 5.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.408530856566216,
+            -0.6830235234241836
+          ],
+          "T_km": 28.108286313505932,
+          "area_km2": 3506.709707777489,
+          "kind": "rift_fill",
+          "total_km3": 98567.60048456037,
+          "borrowed_km3": 0.0,
+          "created_km3": 98567.60048456037,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 4.0,
+              "uid": 481439,
+              "whole_host_volume_km3": 98567.60048456037
+            }
+          }
+        },
+        {
+          "uid": 481365,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.756692667954358,
+            -1.5061945737918017
+          ],
+          "T_km": 33.0,
+          "area_km2": 3705.0939985924797,
+          "kind": "hole_fill",
+          "total_km3": 122268.10195355183,
+          "borrowed_km3": 82179.24601121084,
+          "created_km3": 40088.85594234099,
+          "donors": [
+            {
+              "uid": 464359,
+              "volume_km3": 10353.380123438312,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464517,
+              "volume_km3": 19324.525145021344,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 475634,
+              "volume_km3": 8803.98997153854,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 448283,
+              "volume_km3": 26889.361181807046,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 458851,
+              "volume_km3": 16807.98958940559,
+              "plate": 301,
+              "origin": 401
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 36.19859141189324,
+            "volume_km3": 134119.1837977069,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.756692667954372,
+              -1.5061945737918228
+            ]
+          }
+        },
+        {
+          "uid": 481366,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.486373040042483,
+            -0.985969049177289
+          ],
+          "T_km": 27.334951362955305,
+          "area_km2": 3703.128904406243,
+          "kind": "hole_fill",
+          "total_km3": 101224.84849269861,
+          "borrowed_km3": 96651.34022478928,
+          "created_km3": 4573.508267909332,
+          "donors": [
+            {
+              "uid": 458639,
+              "volume_km3": 16364.454919287597,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464517,
+              "volume_km3": 7586.07169940469,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 51424,
+              "volume_km3": 17846.739123427207,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 157065,
+              "volume_km3": 15639.777540794916,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108765,
+              "volume_km3": 18367.352414553327,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 458852,
+              "volume_km3": 16782.602280452436,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464359,
+              "volume_km3": 4064.3422468690965,
+              "plate": 301,
+              "origin": 91
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 30.964165163498475,
+            "volume_km3": 114664.29501776006,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.486373040042498,
+              -0.9859690491773139
+            ]
+          }
+        },
+        {
+          "uid": 486483,
+          "t_Ma": 0.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.87530890210484,
+            -5.051649353239885
+          ],
+          "T_km": 25.7023549870567,
+          "area_km2": 3690.7199439619626,
+          "kind": "rift_fill",
+          "total_km3": 94860.19415752038,
+          "borrowed_km3": 0.0,
+          "created_km3": 94860.19415752038,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 25.7023549870567,
+            "volume_km3": 94860.19415752038,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.87530890210485,
+              -5.051649353239916
+            ]
+          }
+        },
+        {
+          "uid": 486548,
+          "t_Ma": 0.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.655015766443924,
+            -3.525780424587728
+          ],
+          "T_km": 25.727033957054644,
+          "area_km2": 3690.5471909891126,
+          "kind": "rift_fill",
+          "total_km3": 94946.83290268952,
+          "borrowed_km3": 0.0,
+          "created_km3": 94946.83290268952,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 25.727033957054644,
+            "volume_km3": 94946.83290268952,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.655015766443928,
+              -3.5257804245877606
+            ]
+          }
+        },
+        {
+          "uid": 486572,
+          "t_Ma": 0.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.926014806644282,
+            -4.044252753741627
+          ],
+          "T_km": 22.551816119383957,
+          "area_km2": 3692.4733862434355,
+          "kind": "rift_fill",
+          "total_km3": 83271.98083228097,
+          "borrowed_km3": 0.0,
+          "created_km3": 83271.98083228097,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 22.551816119383957,
+            "volume_km3": 83271.98083228097,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.926014806644282,
+              -4.044252753741652
+            ]
+          }
+        },
+        {
+          "uid": 486775,
+          "t_Ma": 0.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.089167547545195,
+            0.7220175755053753
+          ],
+          "T_km": 27.761651501690388,
+          "area_km2": 3512.9474078230614,
+          "kind": "rift_fill",
+          "total_km3": 97525.22167975045,
+          "borrowed_km3": 0.0,
+          "created_km3": 97525.22167975045,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 27.761651501690388,
+            "volume_km3": 97525.22167975045,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.08916754754519,
+              0.7220175755053652
+            ]
+          }
+        },
+        {
+          "uid": 486807,
+          "t_Ma": 0.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.78028956429848,
+            -2.367097044970951
+          ],
+          "T_km": 32.47384561400914,
+          "area_km2": 3501.9171858842915,
+          "kind": "rift_fill",
+          "total_km3": 113720.71804745184,
+          "borrowed_km3": 0.0,
+          "created_km3": 113720.71804745184,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 32.47384561400914,
+            "volume_km3": 113720.71804745184,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.780289564298478,
+              -2.367097044970952
+            ]
+          }
+        },
+        {
+          "uid": 486875,
+          "t_Ma": 0.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.91527362987038,
+            -5.407391156222899
+          ],
+          "T_km": 26.30158792214773,
+          "area_km2": 3503.307086253593,
+          "kind": "rift_fill",
+          "total_km3": 92142.53934738204,
+          "borrowed_km3": 0.0,
+          "created_km3": 92142.53934738204,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 26.30158792214773,
+            "volume_km3": 92142.53934738204,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.915273629870377,
+              -5.4073911562229044
+            ]
+          }
+        }
+      ],
+      "long_axis_height_m": [
+        2064.7955949781494,
+        2064.7955949781744,
+        2064.7955949782004,
+        2064.7955949782267,
+        2064.7955949782536,
+        1749.8123091735836,
+        1767.2296638988214,
+        1767.2296638988503,
+        1767.22966389888,
+        1767.2296638989108,
+        1767.2296638989417,
+        1767.2296638989737,
+        1767.2296638990065,
+        1767.2296638990397,
+        1767.2296638990742,
+        1767.2296638991093,
+        1767.229663899145,
+        1767.229663899182,
+        1767.22966389922,
+        1767.2296638992582,
+        1496.3465342710838,
+        1496.3465342711245,
+        1496.3465342711656,
+        1496.3465342712084,
+        1496.346534271252,
+        1496.3465342712964,
+        1496.3465342713423,
+        1496.3465342713891,
+        1496.3465342714367,
+        1605.9967929317463,
+        1605.9967929317968,
+        1605.9967929318477,
+        1605.9967929319012,
+        1605.9967929319553,
+        1605.99679293201,
+        1605.9967929320674,
+        1605.9967929321256,
+        1605.9967929321847,
+        1605.9967929322463,
+        1605.9967929323088,
+        1605.9967929323723,
+        1605.9967929324387,
+        1228.6132606543142,
+        1228.6132606543824,
+        1228.6132606544536,
+        1228.6132606545261,
+        1228.6132606545996,
+        1228.6132606546762,
+        1228.613260654754,
+        1228.613260654833,
+        1228.6132606549156,
+        1228.6132606549993,
+        1228.6132606550843,
+        1594.0968127835426,
+        1594.096812783679,
+        1594.0968127838214,
+        1594.096812783968,
+        1594.0968127841197,
+        1594.0968127842784,
+        1594.096812784442,
+        1594.0968127846106,
+        1594.0968127847877,
+        1594.0968127849703,
+        1594.0968127851584,
+        1508.8913771091834,
+        1508.8913771093871,
+        1508.8913771095972,
+        1508.891377109816,
+        1508.8913771100435,
+        1508.891377110278,
+        1508.8913771105213,
+        1508.8913771107752,
+        1508.8913771110372,
+        1508.8913771113075,
+        1508.891377111591,
+        1508.8913771118835,
+        1785.5459949195997,
+        1785.5459949199158,
+        1785.5459949202423,
+        1785.5459949205788,
+        1785.5459949209303,
+        1785.545994921295,
+        1785.5459949216709,
+        1785.5459949220617,
+        1785.5459949224692,
+        1661.9756369362678,
+        1661.9756369367026,
+        1661.9756369371578,
+        1661.9756369376269,
+        1661.9756369381105,
+        1661.975636938619,
+        1661.9756369391432,
+        1661.9756369396837,
+        1661.9756369402494,
+        1661.9756369408353,
+        1661.9756369414392,
+        1661.9756369420684,
+        1661.9756369427234,
+        1661.9756369433985,
+        1923.8256784812697,
+        1923.8256784820019,
+        1923.8256784827568,
+        1923.8256784835353,
+        1923.8256784843538,
+        1923.8256784851978,
+        1923.8256784860675,
+        1923.825678486979,
+        1875.7017809018419,
+        1875.7017809028146,
+        1875.701780903829,
+        1875.7017809048843,
+        1875.701780905972,
+        1875.701780907101,
+        1875.7017809082813,
+        1875.701780909498,
+        1875.7017809107545,
+        1875.7017809120746,
+        1875.7017809134356,
+        1875.7017809148388
+      ],
+      "long_axis_inside_height_m": {
+        "n": 94,
+        "min": 1228.6132606543142,
+        "p50": 1605.9967929319282,
+        "max": 1923.8256784860675
+      },
+      "b_verdict": {
+        "method": "landmass_unit_floor",
+        "units": {
+          "main_continent": {
+            "area_km2": 106798512.16553116,
+            "name": "main_continent",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.1609204331956158,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 5.7138795962359135,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.00866544865792857,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.022272124942165815,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.0589078629572838,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.009298092897530657,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.023115517271896372,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@200": {
+                "value": 0.055356143208247555,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.24408429029134912,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 539.3830348559148,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 9,
+            "all_pass": true
+          },
+          "unit_29": {
+            "area_km2": 21619648.682741776,
+            "name": "unit_29",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.076412529401808,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 2.3608893940902833,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.005972735408203457,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.014929903716409685,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.06896867218711406,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.005315081953359128,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.012851250400141024,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": false
+              },
+              "bay_index@200": {
+                "value": 0.03828795384500619,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.1887147627296773,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 469.93429624663855,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 8,
+            "all_pass": false
+          },
+          "unit_152": {
+            "area_km2": 13154264.51653495,
+            "name": "unit_152",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.1435743938897611,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 2.796424914125573,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.01581756651903957,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.03149457926939755,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.0647677284287691,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.016466435299516927,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.02588440434362136,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@200": {
+                "value": 0.056757146948594524,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.01858479530124279,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 352.83746022521586,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 9,
+            "all_pass": true
+          }
+        },
+        "main_continent_all_pass": true,
+        "all_units_pass": false
+      }
+    },
+    "progressive": {
+      "birth_count": 1218,
+      "created_km3": 102648852.79019848,
+      "created_by_kind_km3": {
+        "hole_fill": 624731.1350972274,
+        "rift_fill": 102024121.65510125
+      },
+      "birth_budget_residuals_km3": {
+        "hole_fill": 0.0,
+        "rift_fill": 0.0
+      },
+      "zones": {
+        "design_polygon": {
+          "birth_count": 6,
+          "created_km3": 577472.1052956723,
+          "borrowed_km3": 122165.6574587927,
+          "created_by_kind_km3": {
+            "hole_fill": 2.9103830456733704e-11,
+            "rift_fill": 577472.1052956723
+          },
+          "surviving_host_count": 4,
+          "removed_host_count": 2,
+          "whole_host_collision_km3": 203987.8147880307,
+          "whole_host_collision_into_polygon_km3": 46416.536109475426
+        },
+        "B5_window": {
+          "birth_count": 42,
+          "created_km3": 3852437.505671488,
+          "borrowed_km3": 645882.8788754542,
+          "created_by_kind_km3": {
+            "hole_fill": 271397.4379318691,
+            "rift_fill": 3581040.067739619
+          },
+          "surviving_host_count": 32,
+          "removed_host_count": 10,
+          "whole_host_collision_km3": 1012553.0241717485,
+          "whole_host_collision_into_polygon_km3": 195525.93086025957
+        },
+        "outside_window": {
+          "birth_count": 1176,
+          "created_km3": 98796415.28452699,
+          "borrowed_km3": 6307781.668881545,
+          "created_by_kind_km3": {
+            "hole_fill": 353333.69716535823,
+            "rift_fill": 98443081.58736163
+          },
+          "surviving_host_count": 1036,
+          "removed_host_count": 140,
+          "whole_host_collision_km3": 13479181.248848258,
+          "whole_host_collision_into_polygon_km3": 18159.80923071814
+        }
+      },
+      "created_budget_residual_km3": 0.0,
+      "collision_distribution_max_residual_km3": 2.9103830456733704e-11,
+      "C_frame_final_matrix_max_error": 0.0,
+      "center_flow_whole_host_since36Ma": {
+        "created_birth_host": {
+          "incoming_km3": 0.0,
+          "outgoing_km3": 405.104726707459,
+          "net_km3": -405.104726707459
+        },
+        "other": {
+          "incoming_km3": 51744.14611677015,
+          "outgoing_km3": 9471.86046468911,
+          "net_km3": 42272.28565208104
+        }
+      },
+      "design_polygon": {
+        "area_km2": 30080.925751470946,
+        "coverage": 1.0,
+        "height_m": {
+          "n": 3895,
+          "min": -219.0197335755585,
+          "p50": 857.3527761416115,
+          "max": 1610.5715234590975
+        },
+        "below_sea_fraction": 0.005650955787443111,
+        "current_positive_birth_host_area_fraction": 0.3809481692279092
+      },
+      "center_height_m": 1024.114733066412,
+      "global_budget_km3": {
+        "arc_added": 495670207.7417145,
+        "eroded": 381135727.34331524,
+        "rift_thinning": 2370179.065031372,
+        "arc_converted": 5040090.385872091,
+        "arc_suppressed": 116874220.21569355,
+        "opening_overlap_skipped": 17069483.89754124,
+        "rift_fill": 102024121.65510125,
+        "arc_accreted": 2128626.5940816156,
+        "lip_added": 17225262.35804001,
+        "reactivation_added": 48946053.91938692,
+        "hole_created": 624731.1350972274,
+        "hole_fill": 7578395.682854227
+      },
+      "A": {
+        "all_pass": true,
+        "pass": {
+          "ocean_fraction": true,
+          "main_continent": true,
+          "subcontinents": true,
+          "main_inland_sea": true,
+          "main_continent_latitude": true,
+          "polar_continent": true,
+          "open_ocean": true
+        },
+        "ocean_fraction": 0.715,
+        "main_continent_share": 0.735,
+        "subcontinents": 3,
+        "subcontinent_areas_Mkm2": [
+          59.2,
+          38.8,
+          6.0
+        ],
+        "main_inland_sea": {
+          "area_Mkm2": 4.46,
+          "straits": 1,
+          "aspect": 3.2552886144676694,
+          "checks": {
+            "area_in_range": true,
+            "ratio_to_second_ok": true,
+            "straits_ok": true,
+            "bordering_subcontinents_ok": true,
+            "elongation_ok": true
+          }
+        },
+        "latitude": [
+          79.27734375,
+          -43.76953125
+        ],
+        "polar_Mkm2": [
+          13.2
+        ]
+      },
+      "C10_budget_max_difference_km3": 2.205371856689453e-06,
+      "C10_center_difference_m": 0.0,
+      "birth_time_groups": [
+        {
+          "t_Ma": 300,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 295,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 290,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 285,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 280,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 275.0,
+          "created_km3": 1528338.8774478985,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 270.0,
+          "created_km3": 719395.5276412767,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 265.0,
+          "created_km3": 575493.7072729523,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 260,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 255,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 250,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 245,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 240,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 235,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 230,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 225,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 220,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 215,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 210,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 205,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 200,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 195,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 190,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 185,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 180,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 175,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 170,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 165,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 160,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 155,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 150,
+          "created_km3": 0,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 145.0,
+          "created_km3": 12168979.053181093,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 140.0,
+          "created_km3": 9617311.960208025,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 135.0,
+          "created_km3": 14339216.949987896,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 130.0,
+          "created_km3": 7860417.201789459,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 125.0,
+          "created_km3": 3705068.5295986105,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 120.0,
+          "created_km3": 1371497.7491197642,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 115.0,
+          "created_km3": 4663566.794361894,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 110.0,
+          "created_km3": 3313435.257396108,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 105.0,
+          "created_km3": 3691006.3668063474,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 100.0,
+          "created_km3": 1663743.016615037,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 95.0,
+          "created_km3": 828189.0771540421,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 90.0,
+          "created_km3": 722120.9387618718,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 85.0,
+          "created_km3": 832771.6926748524,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 80.0,
+          "created_km3": 2572887.349468802,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 75.0,
+          "created_km3": 1878926.5585974222,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 70.0,
+          "created_km3": 4792435.051005295,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 65.0,
+          "created_km3": 2893644.8335738564,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 60.0,
+          "created_km3": 1352855.3326237,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 55.0,
+          "created_km3": 1229723.350981823,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 50.0,
+          "created_km3": 916821.2371820457,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 45.0,
+          "created_km3": 317598.0724634018,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 40.0,
+          "created_km3": 193261.474519394,
+          "B5_window_created_km3": 0
+        },
+        {
+          "t_Ma": 35.0,
+          "created_km3": 585547.8556703789,
+          "B5_window_created_km3": 1.4551915228366852e-11
+        },
+        {
+          "t_Ma": 30.0,
+          "created_km3": 2677616.715711027,
+          "B5_window_created_km3": 462059.83833703614
+        },
+        {
+          "t_Ma": 25.0,
+          "created_km3": 3416553.3991833758,
+          "B5_window_created_km3": 790965.3839007735
+        },
+        {
+          "t_Ma": 20.0,
+          "created_km3": 3208745.152906834,
+          "B5_window_created_km3": 236605.24704189558
+        },
+        {
+          "t_Ma": 15.0,
+          "created_km3": 2368982.219089283,
+          "B5_window_created_km3": 612190.5479995591
+        },
+        {
+          "t_Ma": 10.0,
+          "created_km3": 2145390.665933427,
+          "B5_window_created_km3": 767680.9251913668
+        },
+        {
+          "t_Ma": 5.0,
+          "created_km3": 1849121.0110467162,
+          "B5_window_created_km3": 406468.0762337816
+        },
+        {
+          "t_Ma": 0.0,
+          "created_km3": 2648189.810224572,
+          "B5_window_created_km3": 576467.4869670752
+        }
+      ],
+      "near_B5_births": [
+        {
+          "uid": 448283,
+          "t_Ma": 35.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            18.844000427098223,
+            -1.966619440904883
+          ],
+          "T_km": 33.0,
+          "area_km2": 3701.9896199634163,
+          "kind": "hole_fill",
+          "total_km3": 122165.65745879273,
+          "borrowed_km3": 122165.6574587927,
+          "created_km3": 2.9103830456733704e-11,
+          "donors": [
+            {
+              "uid": 21226,
+              "volume_km3": 17097.938428789337,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 52985,
+              "volume_km3": 17549.097052838184,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 114191,
+              "volume_km3": 466.1672268882816,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 157065,
+              "volume_km3": 16461.65594520411,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108753,
+              "volume_km3": 17675.856962479156,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 2617,
+              "volume_km3": 777.0946388489381,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 50568,
+              "volume_km3": 16850.04808074376,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108764,
+              "volume_km3": 17526.566087099236,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108766,
+              "volume_km3": 17761.23303590171,
+              "plate": 301,
+              "origin": 301
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 35.375216780998464,
+            "volume_km3": 130958.68532721198,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.84400042709821,
+              -1.966619440904881
+            ]
+          }
+        },
+        {
+          "uid": 448468,
+          "t_Ma": 35.0,
+          "plate": 401,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            18.926598688666584,
+            -4.85863932169042
+          ],
+          "T_km": 33.0,
+          "area_km2": 3501.9171858842915,
+          "kind": "hole_fill",
+          "total_km3": 115563.26713418162,
+          "borrowed_km3": 115563.26713418163,
+          "created_km3": -1.4551915228366852e-11,
+          "donors": [
+            {
+              "uid": 6163,
+              "volume_km3": 28602.517603885506,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 114207,
+              "volume_km3": 1228.1421678913628,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 76277,
+              "volume_km3": 28550.3515375966,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 124380,
+              "volume_km3": 28817.388037996032,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 64251,
+              "volume_km3": 93.32074996577154,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 55458,
+              "volume_km3": 28271.547036846354,
+              "plate": 301,
+              "origin": 301
+            }
+          ],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 6.0,
+              "uid": 448468,
+              "whole_host_volume_km3": 101222.55104386431
+            }
+          }
+        },
+        {
+          "uid": 453505,
+          "t_Ma": 30.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.74060357349323,
+            -3.9843160835130558
+          ],
+          "T_km": 33.0,
+          "area_km2": 3689.3991106452577,
+          "kind": "rift_fill",
+          "total_km3": 121750.1706512935,
+          "borrowed_km3": 0.0,
+          "created_km3": 121750.1706512935,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 38.05836398617251,
+            "volume_km3": 140412.49424319837,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.74060357349324,
+              -3.984316083513091
+            ]
+          }
+        },
+        {
+          "uid": 453506,
+          "t_Ma": 30.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.28167326388584,
+            -5.021687534931089
+          ],
+          "T_km": 30.78463336926998,
+          "area_km2": 3690.522799853824,
+          "kind": "rift_fill",
+          "total_km3": 113611.3913344317,
+          "borrowed_km3": 0.0,
+          "created_km3": 113611.3913344317,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 40.399036892685686,
+            "volume_km3": 149093.5667445923,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.281673263885846,
+              -5.021687534931117
+            ]
+          }
+        },
+        {
+          "uid": 453569,
+          "t_Ma": 30.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.6785789794466,
+            0.5727071372896122
+          ],
+          "T_km": 32.811818133056,
+          "area_km2": 3689.65327572317,
+          "kind": "rift_fill",
+          "total_km3": 121064.23225706298,
+          "borrowed_km3": 0.0,
+          "created_km3": 121064.23225706298,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 43.39245018654149,
+            "volume_km3": 160103.09597242728,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.678578979446606,
+              0.572707137289589
+            ]
+          }
+        },
+        {
+          "uid": 453832,
+          "t_Ma": 30.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.88258810716058,
+            -0.9304149724666256
+          ],
+          "T_km": 30.05666428802102,
+          "area_km2": 3514.496588244093,
+          "kind": "rift_fill",
+          "total_km3": 105634.04409424795,
+          "borrowed_km3": 0.0,
+          "created_km3": 105634.04409424795,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 19.0,
+              "uid": 453832,
+              "whole_host_volume_km3": 93315.2927129487
+            }
+          }
+        },
+        {
+          "uid": 458639,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.894930995872343,
+            -0.9562283988775242
+          ],
+          "T_km": 31.404108890951136,
+          "area_km2": 3696.3665743241845,
+          "kind": "rift_fill",
+          "total_km3": 116081.09840094871,
+          "borrowed_km3": 0.0,
+          "created_km3": 116081.09840094871,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 35.90522950022347,
+            "volume_km3": 132718.89016806468,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.894930995872354,
+              -0.956228398877525
+            ]
+          }
+        },
+        {
+          "uid": 458680,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.792997087373298,
+            -2.977224521258217
+          ],
+          "T_km": 31.95364465407918,
+          "area_km2": 3695.514296200406,
+          "kind": "rift_fill",
+          "total_km3": 118085.15063485729,
+          "borrowed_km3": 0.0,
+          "created_km3": 118085.15063485729,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 36.27077564709977,
+            "volume_km3": 134039.16993813473,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.792997087373305,
+              -2.9772245212582167
+            ]
+          }
+        },
+        {
+          "uid": 458782,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.010817534366,
+            -4.502856651580183
+          ],
+          "T_km": 30.720406441965597,
+          "area_km2": 3690.5471991005525,
+          "kind": "rift_fill",
+          "total_km3": 113375.1099496267,
+          "borrowed_km3": 0.0,
+          "created_km3": 113375.1099496267,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 37.616236697522154,
+            "volume_km3": 138824.4969847438,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.010817534366005,
+              -4.502856651580181
+            ]
+          }
+        },
+        {
+          "uid": 458852,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.94725503304735,
+            0.05322871487293208
+          ],
+          "T_km": 31.04480579685114,
+          "area_km2": 3689.6503491157187,
+          "kind": "rift_fill",
+          "total_km3": 114544.4785465815,
+          "borrowed_km3": 0.0,
+          "created_km3": 114544.4785465815,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 39.7716620663365,
+            "volume_km3": 146743.52682797087,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              18.947255033047355,
+              0.05322871487292708
+            ]
+          }
+        },
+        {
+          "uid": 459034,
+          "t_Ma": 25.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.806130373629323,
+            -3.0908300272147393
+          ],
+          "T_km": 30.854007133126533,
+          "area_km2": 3503.6448423495303,
+          "kind": "rift_fill",
+          "total_km3": 108101.48295779439,
+          "borrowed_km3": 0.0,
+          "created_km3": 108101.48295779439,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 24.0,
+              "uid": 459034,
+              "whole_host_volume_km3": 106856.38381571071
+            }
+          }
+        },
+        {
+          "uid": 459096,
+          "t_Ma": 25.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.374070138368875,
+            -4.681349797769309
+          ],
+          "T_km": 29.752252925352103,
+          "area_km2": 3524.3187183075875,
+          "kind": "rift_fill",
+          "total_km3": 104856.4218966401,
+          "borrowed_km3": 0.0,
+          "created_km3": 104856.4218966401,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 29.737357421557917,
+            "volume_km3": 104803.92539379963,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.989662116038875,
+              -2.8893842734206148
+            ]
+          }
+        },
+        {
+          "uid": 459136,
+          "t_Ma": 25.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.79998875089563,
+            -1.5700091000542495
+          ],
+          "T_km": 33.0,
+          "area_km2": 3512.7770155856024,
+          "kind": "rift_fill",
+          "total_km3": 115921.64151432487,
+          "borrowed_km3": 0.0,
+          "created_km3": 115921.64151432487,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 21.0,
+              "uid": 459136,
+              "whole_host_volume_km3": 110672.52207508197
+            }
+          }
+        },
+        {
+          "uid": 458851,
+          "t_Ma": 25.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.114325456440547,
+            -2.4870198808875523
+          ],
+          "T_km": 31.195767613199717,
+          "area_km2": 3701.9935350128862,
+          "kind": "hole_fill",
+          "total_km3": 115486.53002382974,
+          "borrowed_km3": 115486.53002382975,
+          "created_km3": -1.4551915228366852e-11,
+          "donors": [
+            {
+              "uid": 448283,
+              "volume_km3": 10303.209792686885,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 52985,
+              "volume_km3": 17602.795638216812,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 21226,
+              "volume_km3": 19069.896095781438,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 157065,
+              "volume_km3": 17173.565314087668,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108766,
+              "volume_km3": 25089.62084842428,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108753,
+              "volume_km3": 26247.442334632662,
+              "plate": 301,
+              "origin": 301
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 33.725821234392576,
+            "volume_km3": 124852.77217272164,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.114325456440554,
+              -2.487019880887542
+            ]
+          }
+        },
+        {
+          "uid": 464359,
+          "t_Ma": 20.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.43541507468148,
+            -1.9967371744049913
+          ],
+          "T_km": 31.453504998022776,
+          "area_km2": 3703.342394237069,
+          "kind": "rift_fill",
+          "total_km3": 116483.09850652529,
+          "borrowed_km3": 0.0,
+          "created_km3": 116483.09850652529,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 36.56082386065075,
+            "volume_km3": 135397.24897138213,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.435415074681497,
+              -1.9967371744050215
+            ]
+          }
+        },
+        {
+          "uid": 464517,
+          "t_Ma": 20.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.165109784904114,
+            -1.4764992027666768
+          ],
+          "T_km": 31.1522753195274,
+          "area_km2": 3703.1484906851497,
+          "kind": "rift_fill",
+          "total_km3": 115361.50133091613,
+          "borrowed_km3": 0.0,
+          "created_km3": 115361.50133091613,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 35.442910530525864,
+            "volume_km3": 131250.36063660565,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.165109784904136,
+              -1.4764992027666983
+            ]
+          }
+        },
+        {
+          "uid": 464730,
+          "t_Ma": 20.0,
+          "plate": 401,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.331265110819224,
+            -5.321387650501123
+          ],
+          "T_km": 33.0,
+          "area_km2": 3548.36309264853,
+          "kind": "hole_fill",
+          "total_km3": 117095.98205740149,
+          "borrowed_km3": 112335.33485294733,
+          "created_km3": 4760.647204454159,
+          "donors": [
+            {
+              "uid": 100051,
+              "volume_km3": 725.6093928930821,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 453506,
+              "volume_km3": 17933.40938135435,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 51342,
+              "volume_km3": 656.5290430308148,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 76277,
+              "volume_km3": 32878.34139888399,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 16740,
+              "volume_km3": 576.407871316707,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 458668,
+              "volume_km3": 22434.979191496113,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 43204,
+              "volume_km3": 905.832372491229,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 75992,
+              "volume_km3": 921.6993721644184,
+              "plate": 401,
+              "origin": 401
+            },
+            {
+              "uid": 6163,
+              "volume_km3": 26682.08738700993,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 458782,
+              "volume_km3": 8574.102986043257,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 64251,
+              "volume_km3": 46.33645626343851,
+              "plate": 401,
+              "origin": 401
+            }
+          ],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 19.0,
+              "uid": 464730,
+              "whole_host_volume_km3": 117095.98205740149
+            }
+          }
+        },
+        {
+          "uid": 469933,
+          "t_Ma": 15.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.3331093945045,
+            -4.0143817645606905
+          ],
+          "T_km": 28.218893585929546,
+          "area_km2": 3690.739464285852,
+          "kind": "rift_fill",
+          "total_km3": 104148.58419607308,
+          "borrowed_km3": 0.0,
+          "created_km3": 104148.58419607308,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 33.32698097343426,
+            "volume_km3": 123001.20390415755,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.333109394504522,
+              -4.014381764560688
+            ]
+          }
+        },
+        {
+          "uid": 470036,
+          "t_Ma": 15.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.06290391858115,
+            -3.4958418780725085
+          ],
+          "T_km": 30.95959544821469,
+          "area_km2": 3689.40398778358,
+          "kind": "rift_fill",
+          "total_km3": 114222.45490680964,
+          "borrowed_km3": 0.0,
+          "created_km3": 114222.45490680964,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 33.61126737253752,
+            "volume_km3": 124005.54387870005,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.062903918581156,
+              -3.4958418780725062
+            ]
+          }
+        },
+        {
+          "uid": 470250,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.666043869855514,
+            -5.498717096166043
+          ],
+          "T_km": 29.36678027738782,
+          "area_km2": 3525.639931437951,
+          "kind": "rift_fill",
+          "total_km3": 103536.69320372297,
+          "borrowed_km3": 0.0,
+          "created_km3": 103536.69320372297,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 29.36678027738782,
+            "volume_km3": 103536.69320372297,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              20.061946780227203,
+              -4.419476077932474
+            ]
+          }
+        },
+        {
+          "uid": 470265,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.264065209775346,
+            -4.431610258628348
+          ],
+          "T_km": 26.571291681202574,
+          "area_km2": 3524.50331468542,
+          "kind": "rift_fill",
+          "total_km3": 93650.60560587159,
+          "borrowed_km3": 0.0,
+          "created_km3": 93650.60560587159,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 13.0,
+              "uid": 470265,
+              "whole_host_volume_km3": 92926.29189739756
+            }
+          }
+        },
+        {
+          "uid": 470358,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.174751480562264,
+            0.1297361222910094
+          ],
+          "T_km": 27.693286449092103,
+          "area_km2": 3514.496588244093,
+          "kind": "rift_fill",
+          "total_km3": 97327.96074260057,
+          "borrowed_km3": 0.0,
+          "created_km3": 97327.96074260057,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 27.693286449092103,
+            "volume_km3": 97327.96074260057,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.442527086184537,
+              1.196310580812491
+            ]
+          }
+        },
+        {
+          "uid": 470432,
+          "t_Ma": 15.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            18.9781099017696,
+            0.6586222205735581
+          ],
+          "T_km": 28.269443131637864,
+          "area_km2": 3512.7769897010967,
+          "kind": "rift_fill",
+          "total_km3": 99304.2493444812,
+          "borrowed_km3": 0.0,
+          "created_km3": 99304.2493444812,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 28.269443131637864,
+            "volume_km3": 99304.2493444812,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.23374599689047,
+              1.7205484168309164
+            ]
+          }
+        },
+        {
+          "uid": 475660,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.604014587908377,
+            -4.533066090169991
+          ],
+          "T_km": 26.002114322830074,
+          "area_km2": 3692.4782673834015,
+          "kind": "rift_fill",
+          "total_km3": 96012.24204306872,
+          "borrowed_km3": 0.0,
+          "created_km3": 96012.24204306872,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 28.19289352210709,
+            "volume_km3": 104101.64662503471,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.60401458790838,
+              -4.5330660901699895
+            ]
+          }
+        },
+        {
+          "uid": 475727,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.552798242182465,
+            -5.5399674221439055
+          ],
+          "T_km": 30.16071710879281,
+          "area_km2": 3689.325917699835,
+          "kind": "rift_fill",
+          "total_km3": 111272.71532588215,
+          "borrowed_km3": 0.0,
+          "created_km3": 111272.71532588215,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 32.025980749993764,
+            "volume_km3": 118154.280820708,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.552798242182476,
+              -5.539967422143892
+            ]
+          }
+        },
+        {
+          "uid": 475748,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.21593187213366,
+            -0.4661436972909927
+          ],
+          "T_km": 30.10093262077582,
+          "area_km2": 3695.3997054318347,
+          "kind": "rift_fill",
+          "total_km3": 111234.97754003847,
+          "borrowed_km3": 0.0,
+          "created_km3": 111234.97754003847,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 34.670332909514855,
+            "volume_km3": 128120.73802104485,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.215931872133662,
+              -0.4661436972909921
+            ]
+          }
+        },
+        {
+          "uid": 475871,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.307649762471698,
+            -1.0389121638624461
+          ],
+          "T_km": 27.122650337656246,
+          "area_km2": 3506.709707777489,
+          "kind": "rift_fill",
+          "total_km3": 95111.26123971354,
+          "borrowed_km3": 0.0,
+          "created_km3": 95111.26123971354,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 5.0,
+              "uid": 475871,
+              "whole_host_volume_km3": 94953.36749344354
+            }
+          }
+        },
+        {
+          "uid": 475963,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.508621969698105,
+            -1.5646765643213683
+          ],
+          "T_km": 27.334951362955305,
+          "area_km2": 3501.921378435127,
+          "kind": "rift_fill",
+          "total_km3": 95724.85055641759,
+          "borrowed_km3": 0.0,
+          "created_km3": 95724.85055641759,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 4.0,
+              "uid": 475963,
+              "whole_host_volume_km3": 95724.85055641759
+            }
+          }
+        },
+        {
+          "uid": 475978,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.18945901596487,
+            -3.550497197350603
+          ],
+          "T_km": 25.372313885271076,
+          "area_km2": 3500.9294319138135,
+          "kind": "rift_fill",
+          "total_km3": 88826.68043670103,
+          "borrowed_km3": 0.0,
+          "created_km3": 88826.68043670103,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 24.641744661808648,
+            "volume_km3": 86269.00914023099,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.42691593645785,
+              -2.8394712557336366
+            ]
+          }
+        },
+        {
+          "uid": 475634,
+          "t_Ma": 10.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.705891550113193,
+            -2.5169307128842244
+          ],
+          "T_km": 33.0,
+          "area_km2": 3703.1484842140235,
+          "kind": "hole_fill",
+          "total_km3": 122203.89997906277,
+          "borrowed_km3": 16368.513872568832,
+          "created_km3": 105835.38610649394,
+          "donors": [
+            {
+              "uid": 464359,
+              "volume_km3": 2126.308176529297,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 448283,
+              "volume_km3": 6033.2970822653015,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 458680,
+              "volume_km3": 8208.908613774234,
+              "plate": 301,
+              "origin": 91
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 35.897768293695925,
+            "volume_km3": 132934.7662434663,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.7058915501132,
+              -2.5169307128842164
+            ]
+          }
+        },
+        {
+          "uid": 476042,
+          "t_Ma": 10.0,
+          "plate": 401,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.34910350586965,
+            -2.557759257123113
+          ],
+          "T_km": 28.90489571023478,
+          "area_km2": 3503.628960402915,
+          "kind": "hole_fill",
+          "total_km3": 101272.02970780456,
+          "borrowed_km3": 37609.21776475315,
+          "created_km3": 63662.811943051405,
+          "donors": [
+            {
+              "uid": 458680,
+              "volume_km3": 8208.908613774234,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464359,
+              "volume_km3": 2126.308176529297,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 52985,
+              "volume_km3": 21240.703892184316,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 448283,
+              "volume_km3": 6033.2970822653015,
+              "plate": 301,
+              "origin": 401
+            }
+          ],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 6.0,
+              "uid": 476042,
+              "whole_host_volume_km3": 101218.18203492227
+            }
+          }
+        },
+        {
+          "uid": 481158,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.536888072210818,
+            0.023955633012618754
+          ],
+          "T_km": 28.594903367558263,
+          "area_km2": 3695.5924570872126,
+          "kind": "rift_fill",
+          "total_km3": 105675.10919628605,
+          "borrowed_km3": 0.0,
+          "created_km3": 105675.10919628605,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 32.08129968486588,
+            "volume_km3": 118559.40912894472,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.53688807221083,
+              0.02395563301258405
+            ]
+          }
+        },
+        {
+          "uid": 481301,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.26826285334079,
+            0.5434338606635842
+          ],
+          "T_km": 28.48147107182422,
+          "area_km2": 3689.6540073389815,
+          "kind": "rift_fill",
+          "total_km3": 105086.77387506551,
+          "borrowed_km3": 0.0,
+          "created_km3": 105086.77387506551,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 31.457611541292025,
+            "volume_km3": 116067.70248464111,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.268262853340804,
+              0.5434338606635645
+            ]
+          }
+        },
+        {
+          "uid": 481439,
+          "t_Ma": 5.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.408530856566216,
+            -0.6830235234241836
+          ],
+          "T_km": 28.108286313505932,
+          "area_km2": 3506.709707777489,
+          "kind": "rift_fill",
+          "total_km3": 98567.60048456037,
+          "borrowed_km3": 0.0,
+          "created_km3": 98567.60048456037,
+          "donors": [],
+          "final_host": {
+            "alive": false,
+            "removal": {
+              "t_Ma": 4.0,
+              "uid": 481439,
+              "whole_host_volume_km3": 98567.60048456037
+            }
+          }
+        },
+        {
+          "uid": 481365,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 401,
+          "C_frame_lon_lat": [
+            19.756692667954358,
+            -1.5061945737918017
+          ],
+          "T_km": 33.0,
+          "area_km2": 3705.0939985924797,
+          "kind": "hole_fill",
+          "total_km3": 122268.10195355183,
+          "borrowed_km3": 30237.331391870488,
+          "created_km3": 92030.77056168133,
+          "donors": [
+            {
+              "uid": 464359,
+              "volume_km3": 6763.944423623077,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464517,
+              "volume_km3": 2558.495293508972,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 475634,
+              "volume_km3": 7547.663590191408,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 448283,
+              "volume_km3": 9484.56566050798,
+              "plate": 301,
+              "origin": 401
+            },
+            {
+              "uid": 458851,
+              "volume_km3": 3882.662424039051,
+              "plate": 301,
+              "origin": 401
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 36.15794745709894,
+            "volume_km3": 133968.5941247195,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.756692667954372,
+              -1.5061945737918228
+            ]
+          }
+        },
+        {
+          "uid": 481366,
+          "t_Ma": 5.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.486373040042483,
+            -0.985969049177289
+          ],
+          "T_km": 27.334951362955305,
+          "area_km2": 3703.128904406243,
+          "kind": "hole_fill",
+          "total_km3": 101224.84849269861,
+          "borrowed_km3": 96117.02637651032,
+          "created_km3": 5107.8221161882975,
+          "donors": [
+            {
+              "uid": 458639,
+              "volume_km3": 12975.748957841526,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464517,
+              "volume_km3": 1893.815700266047,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 51424,
+              "volume_km3": 19024.077874335882,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 157065,
+              "volume_km3": 16113.728679785241,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 108765,
+              "volume_km3": 20785.564379401803,
+              "plate": 301,
+              "origin": 301
+            },
+            {
+              "uid": 458852,
+              "volume_km3": 20317.3728996904,
+              "plate": 301,
+              "origin": 91
+            },
+            {
+              "uid": 464359,
+              "volume_km3": 5006.717885189434,
+              "plate": 301,
+              "origin": 91
+            }
+          ],
+          "final_host": {
+            "alive": true,
+            "T_km": 30.914061164513544,
+            "volume_km3": 114478.75345089262,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.486373040042498,
+              -0.9859690491773139
+            ]
+          }
+        },
+        {
+          "uid": 486483,
+          "t_Ma": 0.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.87530890210484,
+            -5.051649353239885
+          ],
+          "T_km": 25.7023549870567,
+          "area_km2": 3690.7199439619626,
+          "kind": "rift_fill",
+          "total_km3": 94860.19415752038,
+          "borrowed_km3": 0.0,
+          "created_km3": 94860.19415752038,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 25.7023549870567,
+            "volume_km3": 94860.19415752038,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.87530890210485,
+              -5.051649353239916
+            ]
+          }
+        },
+        {
+          "uid": 486548,
+          "t_Ma": 0.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.655015766443924,
+            -3.525780424587728
+          ],
+          "T_km": 25.727033957054644,
+          "area_km2": 3690.5471909891126,
+          "kind": "rift_fill",
+          "total_km3": 94946.83290268952,
+          "borrowed_km3": 0.0,
+          "created_km3": 94946.83290268952,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 25.727033957054644,
+            "volume_km3": 94946.83290268952,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.655015766443928,
+              -3.5257804245877606
+            ]
+          }
+        },
+        {
+          "uid": 486572,
+          "t_Ma": 0.0,
+          "plate": 301,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.926014806644282,
+            -4.044252753741627
+          ],
+          "T_km": 22.551816119383957,
+          "area_km2": 3692.4733862434355,
+          "kind": "rift_fill",
+          "total_km3": 83271.98083228097,
+          "borrowed_km3": 0.0,
+          "created_km3": 83271.98083228097,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 22.551816119383957,
+            "volume_km3": 83271.98083228097,
+            "plate": 301,
+            "C_frame_lon_lat": [
+              19.926014806644282,
+              -4.044252753741652
+            ]
+          }
+        },
+        {
+          "uid": 486775,
+          "t_Ma": 0.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.089167547545195,
+            0.7220175755053753
+          ],
+          "T_km": 27.761651501690388,
+          "area_km2": 3512.9474078230614,
+          "kind": "rift_fill",
+          "total_km3": 97525.22167975045,
+          "borrowed_km3": 0.0,
+          "created_km3": 97525.22167975045,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 27.761651501690388,
+            "volume_km3": 97525.22167975045,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.08916754754519,
+              0.7220175755053652
+            ]
+          }
+        },
+        {
+          "uid": 486807,
+          "t_Ma": 0.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.78028956429848,
+            -2.367097044970951
+          ],
+          "T_km": 32.47384561400914,
+          "area_km2": 3501.9171858842915,
+          "kind": "rift_fill",
+          "total_km3": 113720.71804745184,
+          "borrowed_km3": 0.0,
+          "created_km3": 113720.71804745184,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 32.47384561400914,
+            "volume_km3": 113720.71804745184,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.780289564298478,
+              -2.367097044970952
+            ]
+          }
+        },
+        {
+          "uid": 486875,
+          "t_Ma": 0.0,
+          "plate": 401,
+          "origin": 91,
+          "C_frame_lon_lat": [
+            19.91527362987038,
+            -5.407391156222899
+          ],
+          "T_km": 26.30158792214773,
+          "area_km2": 3503.307086253593,
+          "kind": "rift_fill",
+          "total_km3": 92142.53934738204,
+          "borrowed_km3": 0.0,
+          "created_km3": 92142.53934738204,
+          "donors": [],
+          "final_host": {
+            "alive": true,
+            "T_km": 26.30158792214773,
+            "volume_km3": 92142.53934738204,
+            "plate": 401,
+            "C_frame_lon_lat": [
+              19.915273629870377,
+              -5.4073911562229044
+            ]
+          }
+        }
+      ],
+      "long_axis_height_m": [
+        1532.5312612800774,
+        1532.5312612801024,
+        1532.5312612801283,
+        1532.5312612801547,
+        1532.5312612801815,
+        1122.9068030511967,
+        1006.8619993354172,
+        1006.861999335446,
+        1006.8619993354758,
+        1006.8619993355063,
+        1006.8619993355372,
+        1006.8619993355693,
+        1006.8619993356021,
+        1006.8619993356353,
+        1006.8619993356698,
+        1006.861999335705,
+        1006.8619993357406,
+        1006.8619993357778,
+        1006.8619993358155,
+        1006.8619993358539,
+        537.1422692855773,
+        537.1422692856179,
+        537.142269285659,
+        537.1422692857019,
+        537.1422692857454,
+        537.1422692857897,
+        537.1422692858357,
+        537.1422692858827,
+        537.1422692859302,
+        857.3527761411183,
+        857.3527761411686,
+        857.3527761412198,
+        857.352776141273,
+        857.3527761413272,
+        857.352776141382,
+        857.3527761414393,
+        857.3527761414975,
+        857.3527761415565,
+        857.3527761416182,
+        857.3527761416808,
+        857.3527761417442,
+        857.3527761418105,
+        456.8453423241508,
+        456.845342324219,
+        456.84534232429036,
+        456.8453423243627,
+        456.8453423244361,
+        456.84534232451284,
+        456.8453423245907,
+        456.8453423246697,
+        456.8453423247522,
+        456.845342324836,
+        456.845342324921,
+        1024.1147330655617,
+        1024.1147330656981,
+        1024.1147330658405,
+        1024.1147330659871,
+        1024.1147330661388,
+        1024.1147330662975,
+        1024.114733066461,
+        1024.1147330666297,
+        1024.1147330668068,
+        1024.1147330669894,
+        1024.1147330671774,
+        592.5225105411873,
+        592.5225105413911,
+        592.5225105416012,
+        592.52251054182,
+        592.5225105420475,
+        592.5225105422819,
+        592.5225105425252,
+        592.5225105427792,
+        592.522510543041,
+        592.5225105433113,
+        592.5225105435951,
+        592.5225105438874,
+        1041.1320131489044,
+        1041.1320131492205,
+        1041.132013149547,
+        1041.1320131498835,
+        1041.132013150235,
+        1041.1320131505997,
+        1041.1320131509756,
+        1041.1320131513664,
+        1041.132013151774,
+        863.3421439169983,
+        863.3421439174331,
+        863.3421439178883,
+        863.3421439183575,
+        863.342143918841,
+        863.3421439193495,
+        863.3421439198738,
+        863.3421439204142,
+        863.3421439209798,
+        863.3421439215658,
+        863.3421439221697,
+        863.3421439227989,
+        863.3421439234539,
+        863.342143924129,
+        1139.5067861313762,
+        1139.5067861321083,
+        1139.5067861328632,
+        1139.5067861336418,
+        1139.5067861344603,
+        1139.5067861353043,
+        1139.506786136174,
+        1139.5067861370856,
+        1170.5174560154715,
+        1170.5174560164442,
+        1170.5174560174587,
+        1170.517456018514,
+        1170.5174560196017,
+        1170.5174560207306,
+        1170.517456021911,
+        1170.5174560231276,
+        1170.517456024384,
+        1170.5174560257042,
+        1170.5174560270652,
+        1170.5174560284684
+      ],
+      "long_axis_inside_height_m": {
+        "n": 94,
+        "min": 456.8453423241508,
+        "p50": 863.3421439176607,
+        "max": 1139.506786136174
+      },
+      "b_verdict": {
+        "method": "landmass_unit_floor",
+        "units": {
+          "main_continent": {
+            "area_km2": 106798512.16553116,
+            "name": "main_continent",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.1609204331956158,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 5.7138795962359135,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.00866544865792857,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.022272124942165815,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.0589078629572838,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.009298092897530657,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.023115517271896372,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@200": {
+                "value": 0.055356143208247555,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.24408429029134912,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 539.3830348559148,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 9,
+            "all_pass": true
+          },
+          "unit_29": {
+            "area_km2": 21619648.682741776,
+            "name": "unit_29",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.076412529401808,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 2.3608893940902833,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.005972735408203457,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.014929903716409685,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.06896867218711406,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.005315081953359128,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.012851250400141024,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": false
+              },
+              "bay_index@200": {
+                "value": 0.03828795384500619,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.1887147627296773,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 469.93429624663855,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 8,
+            "all_pass": false
+          },
+          "unit_152": {
+            "area_km2": 13154264.51653495,
+            "name": "unit_152",
+            "metrics": {
+              "fractal_dimension": {
+                "value": 1.1435743938897611,
+                "line": 1.0242489122247758,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "coastline_development": {
+                "value": 2.796424914125573,
+                "line": 1.5994347529558954,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": null
+              },
+              "peninsula_index@50": {
+                "value": 0.01581756651903957,
+                "line": 0.004345193198417012,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@100": {
+                "value": 0.03149457926939755,
+                "line": 0.011118544781998767,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "peninsula_index@200": {
+                "value": 0.0647677284287691,
+                "line": 0.02963906198122597,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@50": {
+                "value": 0.016466435299516927,
+                "line": 0.003963963953479565,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@100": {
+                "value": 0.02588440434362136,
+                "line": 0.013452134066602704,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "bay_index@200": {
+                "value": 0.056757146948594524,
+                "line": 0.028290655627188344,
+                "line_unit": "unit_127",
+                "direction": "min",
+                "pass": true
+              },
+              "land_fraction_beyond_1000km": {
+                "value": 0.01858479530124279,
+                "line": 0.2613154070512948,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              },
+              "distance_to_sea_median_km": {
+                "value": 352.83746022521586,
+                "line": 541.0616565522338,
+                "line_unit": "main_continent",
+                "direction": "max",
+                "pass": true
+              }
+            },
+            "n_judged": 9,
+            "n_pass": 9,
+            "all_pass": true
+          }
+        },
+        "main_continent_all_pass": true,
+        "all_units_pass": false
+      }
+    }
+  },
+  "limitations": [
+    "出生新增量不等于现存宿主库存",
+    "后续通量为整根混合宿主体积，不是新增成分守恒示踪",
+    "位置使用洲C现今参照系，非古绝对位置",
+    "仅审计rift_fill与hole_created两类出生，未追踪弧岩浆、LIP等其他增厚源；没有修复谷地"
+  ],
+  "long_axis_along_km": [
+    -60,
+    -55,
+    -50,
+    -45,
+    -40,
+    -35,
+    -30,
+    -25,
+    -20,
+    -15,
+    -10,
+    -5,
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    95,
+    100,
+    105,
+    110,
+    115,
+    120,
+    125,
+    130,
+    135,
+    140,
+    145,
+    150,
+    155,
+    160,
+    165,
+    170,
+    175,
+    180,
+    185,
+    190,
+    195,
+    200,
+    205,
+    210,
+    215,
+    220,
+    225,
+    230,
+    235,
+    240,
+    245,
+    250,
+    255,
+    260,
+    265,
+    270,
+    275,
+    280,
+    285,
+    290,
+    295,
+    300,
+    305,
+    310,
+    315,
+    320,
+    325,
+    330,
+    335,
+    340,
+    345,
+    350,
+    355,
+    360,
+    365,
+    370,
+    375,
+    380,
+    385,
+    390,
+    395,
+    400,
+    405,
+    410,
+    415,
+    420,
+    425,
+    430,
+    435,
+    440,
+    445,
+    450,
+    455,
+    460,
+    465,
+    470,
+    475,
+    480,
+    485,
+    490,
+    495,
+    500,
+    505,
+    510,
+    515,
+    520,
+    525,
+    530
+  ],
+  "long_axis_length_km": 467.0517066258359,
+  "protected_unchanged": true
+}

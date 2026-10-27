@@ -1,0 +1,100 @@
+{
+  "checkpoint": "U35-C11",
+  "base_commit": "3037b3f",
+  "date": "2026-10-27",
+  "method_class": "procedural_constrained",
+  "candidate_status": "read_only_audit_not_adopted",
+  "default_world": "C2",
+  "physics_changed": false,
+  "script_sha256": {
+    "scripts/design_b5_sources.py": "a64a8b5c179d34ec83413555fe6964095e86895bf200eaf50798f68780c88b94",
+    "scripts/design_b5_sources_report.py": "2755d47c3c35c4f570cb7db4a0c0a35f906332d4a6b962263154ea8d397ab388",
+    "tests/tectonics/test_b5_sources.py": "7aac60a4dce3bed47e4437292e71b858e356224d588842063645d757b51d6355"
+  },
+  "protected_sha256": {
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/history_v2_u35_c4_strain.yaml": "760862cef2bba754dbdc800f7787c7829b5edd41283142b3af5d82c537789252",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    "data/worlds/design_v2/forward_v2.json": "d58f0447abc80820c88cbc1bee5053314d9a2512c9e21568706f12261a88588b"
+  },
+  "protected_unchanged": true,
+  "neutrality": {
+    "identical": true,
+    "arrays_checked": 352,
+    "different_arrays": [],
+    "budget_identical": true,
+    "events_identical": true,
+    "physical_state_hash_identical": true,
+    "world_arrays_identical": true
+  },
+  "source_scope": [
+    "hole_created explicit deficit",
+    "rift_fill full newborn continental column"
+  ],
+  "final_observer_wall_s": {
+    "baseline": 291.96,
+    "progressive": 294.83
+  },
+  "control_without_C11_source_observer_wall_s": 426.65,
+  "preliminary_holes_only_wall_s": {
+    "baseline": 430.79,
+    "progressive": 372.81
+  },
+  "tests": {
+    "passed": 72,
+    "wall_s": 10.7,
+    "log": ".cache/u35_c11_tests_final.log",
+    "scope": "与C10相同64项相关测试，加8项出生/宿主通量口径检查；未跑全套"
+  },
+  "figures": [
+    {
+      "path": "figures/design/v2/forward/u35_c11",
+      "png_count": 5
+    },
+    {
+      "path": "figures/stage1/design_v2_forward_v2_0Ma_u35_c11_baseline",
+      "png_count": 29
+    },
+    {
+      "path": "figures/stage1/design_v2_forward_v2_0Ma_u35_c11_progressive",
+      "png_count": 29
+    }
+  ],
+  "resources": {
+    "full_peak_memory_measured": false,
+    "in_run_sample_rss_gb_per_process": [
+      0.587,
+      0.579
+    ],
+    "new_dependencies": false,
+    "downloaded_data": false
+  },
+  "failures_resolved": [
+    "观测器零裂谷出生时调用空坐标栈；修正并完整重跑",
+    "本机默认沙箱启动失败，PowerShell CET错误；使用cmd与D盘临时运行入口，不改系统设置",
+    "图66色条遮数据、图67跨无出生年代连线；已重绘修正"
+  ],
+  "commands": [
+    "scripts/run.ps1 python -u scripts/design_b5_sources.py --case baseline --history-config config/design/history_v2_u35_c10_baseline.yaml",
+    "scripts/run.ps1 python -u scripts/design_b5_sources.py --case progressive --history-config config/design/history_v2_u35_c10_progressive.yaml",
+    "scripts/run.ps1 python -u scripts/design_b5_sources.py --control --case progressive --history-config config/design/history_v2_u35_c10_progressive.yaml",
+    "scripts/run.ps1 python -u scripts/design_b5_sources_report.py"
+  ],
+  "limitations": [
+    "出生新增量不等于现存宿主库存",
+    "后续通量为整根混合宿主体积，不是新增成分守恒示踪",
+    "位置使用洲C现今参照系，非古绝对位置",
+    "仅审计rift_fill与hole_created两类出生，未追踪弧岩浆、LIP等其他增厚源；没有修复谷地"
+  ],
+  "independent_review": {
+    "path": "reviews/stage1_2026-10-27_3.md",
+    "sha256": "3b8200fe09a605a478c44cedad6c5a88e01f0546f1c6fe8951aac066771662aa",
+    "images_viewed": 63,
+    "severe_in_this_report": 3,
+    "prior_severe_not_automatically_closed": 5,
+    "open_tracking_with_material_source": 6,
+    "stage_acceptance_recommended": false
+  }
+}
