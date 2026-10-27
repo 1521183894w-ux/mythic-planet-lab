@@ -73,6 +73,7 @@ class Params:
     ero_bg_per_myr: float = 0.005      # 背景剥蚀：高原内部起伏小，但仍以每 km 超高 5 m/Myr 剥蚀（青藏高原内部 10–20 m/Myr 量级）
     kappa_km2_myr: float = 300.0       # 增厚地壳的侧向流动（厚度扩散系数）
     hole_borrow_shared_budget: bool = False  # U35-C10候选：同次提交按供体合计限额；缺额仍显式记hole_created，默认不启用。
+    rift_area_conservative: bool = False  # U36-S2候选：真实张开处从邻柱展开面积并减薄；不新增陆壳体积。
     flow_T_km: float = 40.0            # 只在相邻单元中至少一个厚于 40 km 时流动
     flow_min_T_km: float | None = None  # U33：比这薄的陆壳（海平面以下的陆架、陆表海、前陆海）不参与侧向流动（不被旁边的厚地壳垫高）。
                                        # 地球上前陆盆地、陆表海靠挠曲沉降保持低位，下面是冷而硬的减薄岩石圈；引擎没有挠曲。

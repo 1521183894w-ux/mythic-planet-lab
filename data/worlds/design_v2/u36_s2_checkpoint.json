@@ -1,0 +1,37 @@
+{
+  "checkpoint": "U36-S2",
+  "baseline_commit": "3a2b371",
+  "run_version": "3a2b371-dirty",
+  "candidate_adopted": false,
+  "default_world": "C2",
+  "stage_complete": false,
+  "files_at_checkpoint_sha256": {
+    "packages/tectonics/crust.py": "0f21c57fac7c1241e0d66d56ae935f0c5ff47b943cd6596f872ffbb48b39badc",
+    "packages/tectonics/engine.py": "6897f5be972494fde5f8da55bc0d24aa4dce542ff706a12401de82a754ee242e",
+    "packages/tectonics/stretching.py": "51a7d6e10a27de690e1a02c338e2a390e642028045ded8be88e84b6760742aac",
+    "scripts/design_rift_area_trial.py": "0c9cbff38927a8351e62e897cb8c4ae3a9688bc730acf8db8f5250eee4d11b8d",
+    "scripts/design_rift_area_report.py": "f8d1faf48e6291fb45c9c2fb938d83d984e84676109e275f061d0862eefcac19",
+    "tests/tectonics/test_stretching.py": "0fb7bdadcd8c22d0ac66a7e3837499f251b3d378a7c2293aff4c76234b87d837",
+    "config/design/history_v2_u36_s2_conservative.yaml": "c6dd494867156e74db943008e403959766f89209f753ff49cc85d175654b425e",
+    "config/design/history_v2_u35_c10_progressive.yaml": "dca66288fed473d85d967fa4062e9c4893faccebbe438fb74ae6d27e8c2b616d",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73"
+  },
+  "recompute": "docs/u36_s2_conservative_rift.md",
+  "data": "data/worlds/design_v2/u36_s2_diagnostic.json",
+  "figures": "figures/design/v2/forward/u36_s2/index.html",
+  "review": "reviews/stage1_2026-10-27_5.md",
+  "normalized_lf_text_sha256": {
+    "packages/tectonics/crust.py": "c02e35c125d92381ffe17b47351e110f55b18d15482c7ed8c1f635064e7a80a4",
+    "packages/tectonics/engine.py": "d0e124ddf6d3142694f66174008d58680eff607126da6e4554f5c8b05e47b298",
+    "packages/tectonics/stretching.py": "51a7d6e10a27de690e1a02c338e2a390e642028045ded8be88e84b6760742aac",
+    "scripts/design_rift_area_trial.py": "5f57b10961ea2c6817bbbecfbe6641358324238ef0d4a8ca7029e9cf22f4625c",
+    "scripts/design_rift_area_report.py": "540d2e39a4199941795c4fedc608dded9fd5cd9688edc3a7ade0f705aaed7e86",
+    "tests/tectonics/test_stretching.py": "0fb7bdadcd8c22d0ac66a7e3837499f251b3d378a7c2293aff4c76234b87d837",
+    "config/design/history_v2_u36_s2_conservative.yaml": "eaf9b70f1305fdd8dcd58c21f95b02bf308b0bca0d6860d53e1932abb5883097",
+    "config/design/history_v2_u35_c10_progressive.yaml": "dca66288fed473d85d967fa4062e9c4893faccebbe438fb74ae6d27e8c2b616d",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73"
+  },
+  "hash_note": "原始文件指纹记录本机检查点字节；LF归一化指纹用于跨机Git换行转换后核对。"
+}

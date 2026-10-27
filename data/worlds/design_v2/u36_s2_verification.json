@@ -1,0 +1,60 @@
+{
+  "checkpoint": "U36-S2",
+  "full_suite": {
+    "command": "python -m pytest tests/tectonics -rA",
+    "passed": 167,
+    "failed": 1,
+    "skipped": 1,
+    "warnings": 8,
+    "wall_s": 438.08,
+    "failed_test": "tests/tectonics/test_prehistory.py::test_microcontinents_ridge_jump",
+    "failure": "前史seed3/L5微大陆在300Ma仍与相邻大陆网格相接；禁止删除断言或调宽判据"
+  },
+  "baseline_reproduction": {
+    "commit": "3a2b371",
+    "method": "进程内以git show重新加载试验前crust与engine两个模块；其他项目模块未改",
+    "same_failure": true,
+    "wall_s": 108.47,
+    "modules": {
+      "packages/tectonics/crust.py": "a0c90a56ac12cf91575b4fb98ba66c91d9c4ac42bdd0da57168744a3e0fa93c1",
+      "packages/tectonics/engine.py": "5ebe44b9c31f13b01465f5db8077b9d7ef5d49eff125304e0e706f3f56174191"
+    }
+  },
+  "targeted_suite": {
+    "command": "python -m pytest tests/tectonics/test_stretching.py tests/tectonics/test_borrowing.py tests/tectonics/test_engine.py -q",
+    "passed": 31,
+    "failed": 0
+  },
+  "standard_figures": {
+    "count": 29,
+    "wall_s": 46,
+    "A_all_pass": true,
+    "B": {
+      "main_continent": {
+        "n_pass": 9,
+        "n_judged": 9,
+        "all_pass": true
+      },
+      "unit_29": {
+        "n_pass": 8,
+        "n_judged": 9,
+        "all_pass": false
+      },
+      "unit_159": {
+        "n_pass": 9,
+        "n_judged": 9,
+        "all_pass": true
+      }
+    },
+    "failed_B": "远方大陆(unit_29) bay_index@100 = 0.01184355664941408 < 0.013452134066602704"
+  },
+  "protected_note": "六个默认保护文件与试验前HEAD的git blob哈希相同，见diagnostic",
+  "logs": {
+    "u36_s2_tests.txt": "e3a58e6c630cdc7e57cdc4a41ea527d34f014cdf82fe3348251099bd8dfd1d2e",
+    "u36_s2_baseline_failure.txt": "d5cdaedf79c8f47c9bfe158c6e6e6621e2a3d46d325e84a4475016141934415e"
+  },
+  "logs_normalized_lf_sha256": {
+    "u36_s2_tests.txt": "e3f85f7912571d695a5c1f45cfa69ffaf10520308cec6aa547b04ff871b7b7b4",
+    "u36_s2_baseline_failure.txt": "9e896f9b56db24079f8eb18f0f7f4af43ab13bd4f82b21a882e18651fb3b43fa"
+  }
+}

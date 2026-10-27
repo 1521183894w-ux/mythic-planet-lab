@@ -1,0 +1,2242 @@
+version: 1
+design: v2
+t0: 300
+blocks:
+- code: MD
+  id: 701
+  name: 裂离微大陆
+  parent: D
+  color: '#8e44ad'
+  islands:
+  - I2
+- code: ZL
+  id: 801
+  name: 南洋陆块
+  parent: POL
+  color: '#16a085'
+  islands:
+  - I6
+  - I7
+  - I24
+- code: IN
+  id: 702
+  name: 南方地盾陆块（印度式）
+  parent: 0
+  color: '#e67e22'
+  labels:
+  - B
+  islands:
+  - I21
+  follow:
+    frame: D
+    from: 120
+  poly:
+  - - 60
+    - 2
+  - - 62.5
+    - 24
+  - - 63.2
+    - 30.4
+  - - 66
+    - 29.6
+  - - 74
+    - 28.8
+  - - 82
+    - 28.6
+  - - 90
+    - 29.2
+  - - 97
+    - 30.2
+  - - 99.2
+    - 29.2
+  - - 99.6
+    - 22
+  - - 96
+    - 10
+  - - 86
+    - 0
+- code: BSE
+  id: 102
+  name: 东南增生地块
+  parent: B
+  color: '#27ae60'
+  labels:
+  - B
+  islands:
+  - I8
+  - I16
+  - I17
+  follow:
+    frame: POL
+    from: 280
+  poly:
+  - - 99.4
+    - 21.6
+  - - 106
+    - 21.6
+  - - 111
+    - 21.4
+  - - 113.5
+    - 23.2
+  - - 116.5
+    - 25.6
+  - - 118.6
+    - 26.6
+  - - 121
+    - 26.6
+  - - 121
+    - 21
+  - - 122
+    - 10
+  - - 122
+    - -12
+  - - 92
+    - -12
+  - - 92
+    - 8
+- code: NG
+  id: 803
+  name: 东南群岛东大岛微陆块
+  parent: 0
+  color: '#1abc9c'
+  islands:
+  - I19
+  follow:
+    frame: POL
+    from: 110
+- code: ALB
+  id: 304
+  name: 西口弧形地体（阿尔沃兰式）
+  parent: WT
+  color: '#c39bd3'
+  labels:
+  - A
+  rift_from:
+    plate: WT
+    t: 38
+    preserve_frame: true
+  poly:
+  - - -17.6
+    - 35.9
+  - - -17.6
+    - 38.4
+  - - -12.2
+    - 38.4
+  - - -12.2
+    - 35.9
+- code: WT
+  id: 302
+  name: 内海北岸西段地体
+  parent: C
+  color: '#f1948a'
+  labels:
+  - A
+  rift_from:
+    plate: C
+    t: 100
+  islands:
+  - I4
+  poly:
+  - - -13
+    - 38.9
+  - - -10
+    - 39.5
+  - - -5
+    - 41.1
+  - - 0
+    - 42.7
+  - - 5
+    - 44.1
+  - - 9
+    - 45.0
+  - - 9
+    - 33
+  - - -13
+    - 33
+- code: ADR
+  id: 303
+  name: 亚得里亚式地体（长半岛与神怒湾）
+  parent: C
+  color: '#e59866'
+  labels:
+  - A
+  rift_from:
+    plate: C
+    t: 100
+  poly:
+  - - 9
+    - 45.0
+  - - 13.5
+    - 44.9
+  - - 15.5
+    - 44.6
+  - - 17.6
+    - 44.0
+  - - 17.6
+    - 33
+  - - 9
+    - 33
+- code: ET
+  id: 402
+  name: 内海北岸东段地体
+  parent: D
+  color: '#85c1e9'
+  labels:
+  - B
+  rift_from:
+    plate: D
+    t: 100
+  poly:
+  - - 18.4
+    - 43.9
+  - - 23
+    - 42.5
+  - - 27.5
+    - 41.9
+  - - 31
+    - 41.3
+  - - 36
+    - 41.2
+  - - 41
+    - 41.1
+  - - 46
+    - 39.9
+  - - 50
+    - 37.9
+  - - 50
+    - 33
+  - - 18.4
+    - 33
+- code: A
+  id: 103
+  name: 洲 A
+  parent: B
+  color: '#c0392b'
+  labels:
+  - A
+  - B
+  islands:
+  - I1
+  - I1b
+  poly:
+  - - -50
+    - 34
+  - - -50
+    - 82
+  - - 6
+    - 82
+  - - 4.5
+    - 64
+  - - 6
+    - 59.5
+  - - 10
+    - 55.5
+  - - 14
+    - 51.6
+  - - 15.6
+    - 49.2
+  - - 16.2
+    - 44.6
+  - - 18.8
+    - 41.4
+  - - 17.4
+    - 38.0
+  - - 17.4
+    - 34
+- code: B
+  id: 101
+  name: 洲 B（北方地台与东方地块）
+  parent: 0
+  color: '#2e86c1'
+  labels:
+  - A
+  - B
+  islands:
+  - I10
+  - I11
+  - I12
+  - I13
+  - I14
+  - I15
+- code: C
+  id: 301
+  name: 洲 C
+  parent: B
+  color: '#d4ac0d'
+  labels:
+  - C
+  - D
+  poly:
+  - - -50
+    - -50
+  - - -50
+    - 40
+  - - 18.4
+    - 36
+  - - 18.4
+    - 30
+  - - 20.8
+    - 23
+  - - 21
+    - 15.5
+  - - 19.2
+    - 8
+  - - 18.6
+    - 3
+  - - 18.6
+    - 0.5
+  - - 18.7
+    - -3
+  - - 18.9
+    - -6.5
+  - - 18.8
+    - -9.5
+  - - 19.2
+    - -14
+  - - 20.6
+    - -21
+  - - 22.4
+    - -28
+  - - 23
+    - -35
+  - - 23
+    - -50
+- code: D
+  id: 401
+  name: 洲 D
+  parent: C
+  color: '#7f8c8d'
+  labels:
+  - C
+  - D
+- code: FAR
+  id: 501
+  name: 远方大陆
+  parent: C
+  color: '#a04000'
+  labels:
+  - far
+  islands:
+  - I20
+- code: POL
+  id: 601
+  name: 极地大陆
+  parent: D
+  color: '#5d6d7e'
+  labels:
+  - polar
+  islands:
+  - I22
+keys:
+  ALB:
+    5:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 6.0869
+    - move:
+      - 50
+      - 180
+    10:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 12.1739
+    - move:
+      - 100
+      - 180
+    16:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 19.4782
+    - move:
+      - 100
+      - 180
+    22:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 26.7826
+    - move:
+      - 100
+      - 180
+    28:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 34.0869
+    - move:
+      - 100
+      - 180
+    34:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 41.3912
+    - move:
+      - 100
+      - 180
+    38:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 46.2608
+    300:
+    - pole:
+      - -10.0555
+      - 51.2593
+      - 46.2608
+  WT:
+    45: []
+    100:
+    - pole:
+      - 148.3534
+      - -33.8691
+      - 4.5883
+    300:
+    - pole:
+      - 148.3534
+      - -33.8691
+      - 4.5883
+  ADR:
+    45: []
+    100:
+    - pole:
+      - 148.3534
+      - -33.8691
+      - 4.5883
+    300:
+    - pole:
+      - 148.3534
+      - -33.8691
+      - 4.5883
+  ET:
+    25: []
+    100:
+    - move:
+      - 320
+      - 180
+    300:
+    - move:
+      - 320
+      - 180
+  B:
+    150:
+    - move:
+      - 600
+      - 180
+    - spin: 5
+    300:
+    - move:
+      - 1800
+      - 190
+    - spin: 15
+  A:
+    220: []
+    250:
+    - move:
+      - 400
+      - 245
+    300:
+    - move:
+      - 2600
+      - 240
+    - spin: -20
+  BSE:
+    120: []
+    200:
+    - move:
+      - 700
+      - 190
+    265:
+    - pole:
+      - 134.6525
+      - -13.8026
+      - 39.6496
+    - move:
+      - 400
+      - 90
+    280:
+      frame: POL
+      ops:
+      - to:
+        - 139.5
+        - -62.75
+      - move:
+        - 731
+        - -10.8
+      - spin: 7.8
+  C:
+    35:
+    - move:
+      - 150
+      - 195
+    60:
+    - move:
+      - 500
+      - 190
+    100:
+    - move:
+      - 1500
+      - 185
+    - spin: 5
+    150:
+    - move:
+      - 3000
+      - 185
+    - spin: 8
+    200:
+    - move:
+      - 4200
+      - 190
+    - spin: 10
+    250:
+    - move:
+      - 5000
+      - 195
+    - spin: 10
+    300:
+    - move:
+      - 5600
+      - 200
+    - spin: 10
+  D:
+    35:
+    - pole:
+      - -19.8
+      - 9.5
+      - -4.0
+    150:
+    - pole:
+      - -19.8
+      - 9.5
+      - -4.0
+    180:
+    - pole:
+      - -19.8
+      - 9.5
+      - -4.0
+    - move:
+      - 350
+      - 95
+    300:
+    - pole:
+      - -19.8
+      - 9.5
+      - -4.0
+    - move:
+      - 2600
+      - 105
+    - spin: 10
+  MD:
+    90: []
+    120:
+    - move:
+      - 733
+      - 235.6
+    - spin: 31.1
+  IN:
+    48:
+      frame: B
+      ops:
+      - move:
+        - 2000
+        - 180
+    75:
+    - point_to:
+      - - 76.0
+        - 18.0
+      - - 63.0
+        - -21.0
+    - pole:
+      - 63.0
+      - -21.0
+      - -12
+    120:
+      frame: D
+      ops:
+      - pole:
+        - -127.007
+        - -14.443
+        - 70.157
+  FAR:
+    150:
+    - move:
+      - 4758
+      - 82.1
+    - spin: -14.1
+  POL:
+    140:
+    - to:
+      - 32
+      - -58
+    - spin: 30
+    - move:
+      - 889
+      - -3.9
+    - spin: 3.9
+  ZL:
+    85:
+    - move:
+      - 2971
+      - 174.0
+    - spin: 2.8
+  NG:
+    8:
+    - move:
+      - 150
+      - 185
+    25:
+    - move:
+      - 1300
+      - 182
+    110:
+      frame: POL
+      ops:
+      - to:
+        - 100.0
+        - -55.5
+hotspot_checks:
+- plate: IN
+  point:
+  - 76.0
+  - 18.0
+  t: 75
+  hotspot:
+  - 63.0
+  - -21.0
+  note: 南方地盾半岛西北部的溢流玄武岩应在东洋热点上方（德干—留尼汪式）。终图写的是约 66 Ma，倒推时为把速度控制在 10 cm/yr 左右改为约 75
+    Ma
+events:
+- t:
+  - 300
+  - 250
+  kind: drift
+  what: 洲 A 从西南方大洋对岸向洲 B 漂来
+- t:
+  - 250
+  - 220
+  kind: collision
+  what: 洲 A、B 碰撞焊合，北方缝合老山（M4）
+- t:
+  - 280
+  - 200
+  kind: drift
+  what: 东南增生地块从南方陆块群东北缘（极地大陆一侧）裂离、横越古洋北上（基梅里式）
+- t:
+  - 200
+  - 120
+  kind: collision
+  what: 东南增生地块陆续拼到洲 B 南缘（东南增生半岛）
+- t:
+  - 180
+  - 150
+  kind: collision
+  what: 洲 C、D 碰撞焊合，南方缝合带山系（M5）
+- t:
+  - 150
+  - 0
+  kind: rift
+  what: 远方大陆与洲 C 裂开，西大洋张开
+- t:
+  - 140
+  - 100
+  kind: rift
+  what: 极地大陆从洲 D 南缘裂开，漂到极地
+- t:
+  - 120
+  - 90
+  kind: rift
+  what: 裂离微大陆与南方地盾陆块一起从洲 D 东缘裂开
+- t:
+  - 100
+  - 0
+  kind: subduction
+  what: 残留洋盆（主内海）北缘俯冲转碰撞，内海北岸山系（M1）
+- t:
+  - 90
+  - 48
+  kind: drift
+  what: 南方地盾陆块快速北移，约 75 Ma 经过东洋热点（溢流玄武岩）
+- t:
+  - 85
+  - 0
+  kind: rift
+  what: 南洋陆块从极地大陆裂离
+- t:
+  - 60
+  - 0
+  kind: collision
+  what: 洲 D 东北角撞上洲 B（东方地峡）；内海南岸开始受挤压
+- t:
+  - 48
+  - 0
+  kind: collision
+  what: 南方地盾陆块撞上洲 B，东方大高原隆起（仍在汇聚）
+- t:
+  - 35
+  - 0
+  kind: rift
+  what: 洲 D 相对洲 C 斜向北移：南裂谷海张开，缝合带复活为走滑断层
+- t:
+  - 25
+  - 0
+  kind: rift
+  what: 南方地盾裂谷（地幔柱）
+- t:
+  - 100
+  - 45
+  kind: rift
+  what: 主内海北岸三块亚得里亚式地体从洲 C、D 北缘裂开、北漂 250–320 km，身后张开一条窄的年轻洋盆
+- t:
+  - 45
+  - 0
+  kind: collision
+  what: 西段与亚得里亚式地体撞上洲 A（内海北岸山系 M1 西段与阿尔卑斯式段）
+- t:
+  - 25
+  - 0
+  kind: collision
+  what: 东段地体撞上洲 B（内海北岸山系 M1 东段）
+- t:
+  - 40
+  - 0
+  kind: reactivation
+  what: 内海南岸陆缘挤压反转（M2，阿特拉斯式；引擎按设计 40 Ma 起增厚）
+- t:
+  - 30
+  - 0
+  kind: reactivation
+  what: 板内挤压复活：北方高原（30 Ma 起）、中央山系（25 Ma）、北部断块山（20 Ma）
+- t:
+  - 38
+  - 0
+  kind: rift
+  what: 主内海西部的俯冲板片向西后撤：西口弧形地体从西段地体南缘（西北湾 G28 一带）被拖出、沿走廊西移约 1250 km，身后张开年轻的弧后地壳
+- t:
+  - 10
+  - 0
+  kind: collision
+  what: 西口弧形地体楔进洲 A 南缘与洲 C 之间，弧形山系（M31）隆起，弧顶与洲 C 之间留下西海峡
+collisions:
+- down: IN
+  up: B
+  t: 48
+  max_km: 2600
+  continental_km: 2200
+  what: 南方地盾陆块撞上洲 B（大印度式陆缘）
+  volume_balance:
+    builds:
+    - PL1
+    - PL8
+    - M3
+    - M3b
+    - M3c
+    - M3d
+    - M3e
+    - M3f
+    efficiency: 0.573
+- down: A
+  up: B
+  t: 250
+  max_km: 900
+  what: 洲 A、B 碰撞
+- down: D
+  up: C
+  t: 180
+  max_km: 900
+  what: 洲 C、D 碰撞
+- down: D
+  up: B
+  t: 60
+  max_km: 1600
+  what: 洲 D 东北角撞上洲 B（东方地峡）
+- down: WT
+  up: A
+  t: 45
+  max_km: 800
+  continental_km: 600
+  what: 西段地体撞上洲 A（内海北岸山系 M1 西段）
+- down: ADR
+  up: A
+  t: 45
+  max_km: 800
+  continental_km: 600
+  what: 亚得里亚式地体撞上洲 A（阿尔卑斯式，神怒湾湾顶以北）
+- down: ADR
+  up: B
+  t: 45
+  max_km: 800
+  continental_km: 600
+  what: 亚得里亚式地体东北角撞上洲 B
+- down: ET
+  up: B
+  t: 25
+  max_km: 800
+  continental_km: 600
+  what: 东段地体撞上洲 B（M1 东段）
+ocean:
+  background:
+    id: 900
+    name: 外大洋板块
+  forearc_km: 120
+  corridor_km: 6500
+  between_cos: -0.5
+  plates:
+  - id: 910
+    code: EO
+    name: 东大洋东侧板块
+    near: FAR
+    lat:
+    - -60
+    - 30
+    lon:
+    - -128
+    - -30
+    pole:
+    - -46.99
+    - 52.8
+    speed_cm_yr: 5.8
+    what: 向东俯冲到远方大陆西岸之下（安第斯型，M8、M8c）；西缘是与西侧板块之间的扩张脊
+  - id: 920
+    code: PA
+    name: 东大洋西侧板块
+    lat:
+    - -50
+    - 62
+    lon:
+    - 125
+    - -128
+    motion:
+    - from: 0
+      to: 30
+      pole:
+      - 120.0
+      - -66.0
+      rate_deg_myr: 0.558
+    - from: 30
+      to: 60
+      pole:
+      - 115.37
+      - -9.42
+      rate_deg_myr: 0.54
+    - from: 60
+      to: 300
+      pole:
+      - 120.0
+      - -66.0
+      rate_deg_myr: 0.558
+    what: 向西北运动，载着大洋长链等热点链；向西俯冲到洲 B 东岸之下（M7 东岸山系；东岸岛弧属 U28）
+  subduction:
+  - down:
+    - BSE
+    over:
+    - B
+    what: 东南增生地块北上拼到洲 B 南缘（280–120 Ma）
+  - down:
+    - IN
+    over:
+    - B
+    what: 南方地盾陆块撞洲 B（约 48 Ma，东方大高原）
+  - down:
+    - D
+    over:
+    - C
+    what: 洲 C、D 碰撞（180–150 Ma）
+  - down:
+    - IN
+    over:
+    - D
+    what: 南方地盾陆块北上时擦过洲 D 东北角（约 51 Ma，刚体残差 0.18 百万 km²）：擦过的是南方地盾陆块一侧， 洲 D 东北角的裂谷肩山地保留（U26：按首次接触决定时洲
+      D 被定为下行，东北角被一路刮掉 0.86 百万 km²）。 南方地盾陆块北上要穿过洲 D 东北角与东南增生地块之间的走廊，走廊比它窄，刚体平移必然擦边（地球上印支半岛向东"逃逸"，
+      刚体块做不到）；改来向（南偏东 10°）只把擦洲 D 换成擦东南增生地块，总量少约三成，没有采用。代价：西北角约 0.33 百万 km²
+  - down:
+    - IN
+    over:
+    - BSE
+    what: 同上，与东南增生地块之间也让南方地盾陆块一侧被刮（结果可预期，不按首次接触决定）
+  - down:
+    - C
+    - D
+    - IN
+    - MD
+    - POL
+    - ZL
+    over:
+    - A
+    - B
+    what: 古洋向北俯冲到洲 A、B 南缘之下，残留洋盆成为主内海（内海北岸山系 M1 的成因）；洲 D 东北角撞洲 B（东方地峡）
+  - down:
+    - A
+    over:
+    - B
+    what: 洲 A 撞洲 B（250–220 Ma）
+arcs:
+  plates:
+  - id: 930
+    code: PS
+    name: 菲律宾海式板块
+    t_init: 50
+    motion:
+    - from: 0
+      to: 30
+      velocity:
+        at:
+        - 133
+        - 18
+        az: 300
+        cm_yr: 4.0
+    - from: 30
+      to: 50
+      velocity:
+        at:
+        - 140
+        - 10
+        az: 0
+        cm_yr: 2.0
+  - id: 940
+    code: CA
+    name: 加勒比式板块
+    t_init: 50
+  regions:
+  - t: 50
+    plate: PA
+    what: 南向长岛弧以东的洋壳都归西侧大洋板块（第一轮里是东南增生地块的围裙，西侧大洋板块在 150–165°E 俯冲到它之下， 长出一条终图没有的长弧）
+    poly:
+    - - 132
+      - -2
+      - 0
+    - - 180
+      - -2
+      - 0
+    - - 180
+      - 33
+      - 0
+    - - 150
+      - 33.5
+      - 0
+    - - 141
+      - 33
+      - 0
+    - - 132
+      - 25
+      - 0
+  - t: 50
+    plate: B
+    what: 洲 B 拥有海岸到琉球式、南海海槽式海沟之间的洋壳（东方岛弧南链 R11 长在这里）
+    poly:
+    - - 119.0
+      - 26.4
+    - - 120.7
+      - 24.6
+    - - 122.8
+      - 24.7
+    - - 125.6
+      - 25.5
+    - - 128.1
+      - 27.4
+    - - 129.2
+      - 29.8
+    - - 131.2
+      - 31.2
+    - - 134.0
+      - 32.6
+    - - 137.0
+      - 33.4
+    - - 139.6
+      - 33.8
+    - - 139.0
+      - 36.0
+    - - 134.5
+      - 34.6
+    - - 130.5
+      - 33.0
+    - - 127.0
+      - 31.0
+    - - 123.0
+      - 30.0
+    - - 121.0
+      - 28.0
+  - t: 50
+    plate: PS
+    what: 菲律宾海式板块。西北边（琉球、南海海槽海沟）锚在洲 B 上：那里菲律宾海式板块是下行板块，海沟不动， 它的前缘一路被消耗；其余边跟着它自己走。西北角（116.6–117.2°E）画在现今华夏式陆缘以内约
+      1.5°： 约 5 Ma 起它西缘的弧撞上陆缘、拼贴抬升成东岸大岛（台湾式；第四次运行画在海岸上，到 0 Ma 还没碰上）
+    poly:
+    - - 117.2
+      - 25.8
+    - - 120.7
+      - 24.6
+      - B
+    - - 122.8
+      - 24.7
+      - B
+    - - 125.6
+      - 25.5
+      - B
+    - - 128.1
+      - 27.4
+      - B
+    - - 129.2
+      - 29.8
+      - B
+    - - 131.2
+      - 31.2
+      - B
+    - - 134.0
+      - 32.6
+      - B
+    - - 137.0
+      - 33.4
+      - B
+    - - 139.6
+      - 33.8
+      - B
+    - - 140.6
+      - 33.9
+    - - 141.5
+      - 30.4
+    - - 142.9
+      - 26.6
+    - - 145.0
+      - 22.2
+    - - 147.0
+      - 17.9
+    - - 147.2
+      - 13.4
+    - - 145.8
+      - 10.2
+    - - 143.5
+      - 9.0
+    - - 136.0
+      - 7.0
+    - - 128.0
+      - 5.0
+    - - 122.0
+      - 4.2
+    - - 117.6
+      - 4.8
+    - - 117.6
+      - 6.6
+    - - 119.6
+      - 9.5
+    - - 120.2
+      - 11.5
+    - - 119.4
+      - 13.4
+    - - 119.9
+      - 17.0
+    - - 119.4
+      - 18.7
+    - - 118.6
+      - 20.0
+    - - 117.7
+      - 21.2
+    - - 116.6
+      - 23.0
+  - t: 50
+    plate: BSE
+    what: 南海式：华夏式陆缘外、菲律宾海式板块西缘以西的洋壳归东南增生地块（马尼拉式海沟的下行板块）
+    poly:
+    - - 118.6
+      - 26.6
+    - - 119.0
+      - 26.4
+      - B
+    - - 120.7
+      - 24.6
+      - B
+    - - 117.2
+      - 25.8
+      - PS
+    - - 116.6
+      - 23.0
+      - PS
+    - - 117.7
+      - 21.2
+      - PS
+    - - 118.6
+      - 20.0
+      - PS
+    - - 119.4
+      - 18.7
+      - PS
+    - - 119.9
+      - 17.0
+      - PS
+    - - 116.0
+      - 12.0
+    - - 110.0
+      - 17.0
+    - - 110.0
+      - 20.0
+    - - 113.5
+      - 23.2
+    - - 116.5
+      - 25.6
+  - t: 60
+    plate: PA
+    what: 东南群岛东大岛、所罗门式、瓦努阿图式海沟以北到约 10°N 都归西侧大洋板块（第二轮第四次运行：海沟边与西侧大洋板块 实际的南缘之间夹着南洋陆块板块早年的洋壳围裙，东段隔了约
+      7°，微陆块板块北缘一路推进吃掉它才碰到西侧大洋板块， 海沟比设计偏北 8–12°）
+    poly:
+    - - 130.6
+      - -1.6
+    - - 136.0
+      - -3.4
+    - - 141.0
+      - -5.6
+    - - 145.6
+      - -7.2
+    - - 148.9
+      - -6.2
+    - - 152.9
+      - -7.6
+    - - 156.6
+      - -9.6
+    - - 160.0
+      - -11.6
+    - - 163.1
+      - -12.6
+    - - 164.9
+      - -15.6
+    - - 165.7
+      - -19.0
+    - - 176.7
+      - -17.2
+    - - 180.0
+      - -10.0
+    - - 180.0
+      - 8.0
+    - - 150.0
+      - 10.0
+    - - 135.0
+      - 8.0
+    - - 130.0
+      - 4.0
+  - t: 60
+    plate: NG
+    what: 微陆块所在板块（澳洲式）的洋壳：北缘俯冲到东南增生地块（巽他—班达式海沟，R3）与西侧大洋板块 （东南群岛东大岛的洋内弧、所罗门式 R12a、瓦努阿图式
+      R12b）之下，海沟边锚在上盘上
+    poly:
+    - - 98.0
+      - -3.0
+      - BSE
+    - - 102.0
+      - -7.5
+      - BSE
+    - - 106.0
+      - -9.0
+      - BSE
+    - - 110.0
+      - -9.6
+      - BSE
+    - - 114.5
+      - -10.0
+      - BSE
+    - - 121.0
+      - -10.2
+      - BSE
+    - - 126.0
+      - -9.9
+      - BSE
+    - - 130.0
+      - -9.0
+      - BSE
+    - - 131.8
+      - -6.6
+      - BSE
+    - - 130.9
+      - -4.3
+      - BSE
+    - - 129.3
+      - -3.4
+      - BSE
+    - - 130.6
+      - -1.6
+      - PA
+    - - 136.0
+      - -3.4
+      - PA
+    - - 141.0
+      - -5.6
+      - PA
+    - - 145.6
+      - -7.2
+      - PA
+    - - 148.9
+      - -6.2
+      - PA
+    - - 152.9
+      - -7.6
+      - PA
+    - - 156.6
+      - -9.6
+      - PA
+    - - 160.0
+      - -11.6
+      - PA
+    - - 163.1
+      - -12.6
+      - PA
+    - - 164.9
+      - -15.6
+      - PA
+    - - 165.7
+      - -19.0
+      - PA
+    - - 158.0
+      - -18.6
+    - - 150.0
+      - -17.5
+    - - 140.0
+      - -16.5
+    - - 125.0
+      - -15.0
+    - - 110.0
+      - -14.0
+    - - 98.0
+      - -10.0
+  - t: 60
+    plate: ZL
+    what: 南洋陆块所在板块的洋壳到汤加—克马德克式海沟为止（西侧大洋板块向西俯冲到它之下，南洋岛弧 R7）； 北端以斐济式转换断层接瓦努阿图式海沟
+    poly:
+    - - 154.4
+      - -36.2
+    - - 159.6
+      - -32.6
+    - - 165.0
+      - -29.2
+    - - 170.4
+      - -25.4
+    - - 174.7
+      - -21.1
+    - - 176.7
+      - -17.2
+    - - 166.0
+      - -19.4
+    - - 158.0
+      - -18.6
+    - - 150.0
+      - -17.5
+    - - 142.0
+      - -17.0
+    - - 142.0
+      - -38.0
+    - - 150.0
+      - -40.0
+  - t: 60
+    plate: BSE
+    what: 东南增生地块拥有班达式海沟以内的洋壳（东南弧东段 R3 长在这里，回旋处以内是深海盆）
+    poly:
+    - - 114.5
+      - -10.0
+    - - 121.0
+      - -10.2
+    - - 126.0
+      - -9.9
+    - - 130.0
+      - -9.0
+    - - 131.8
+      - -6.6
+    - - 130.9
+      - -4.3
+    - - 129.3
+      - -3.4
+    - - 126.0
+      - -2.5
+    - - 122.0
+      - -3.0
+    - - 118.0
+      - -6.0
+    - - 114.5
+      - -7.5
+  - t: 60
+    plate: B
+    what: 千岛式海沟以内
+    poly:
+    - - 146.2
+      - 44.85
+    - - 149.8
+      - 46.45
+    - - 153.6
+      - 48.05
+    - - 157.0
+      - 49.25
+    - - 158.3
+      - 50.3
+    - - 156.0
+      - 52.5
+    - - 150.0
+      - 54.5
+    - - 143.0
+      - 53.5
+    - - 141.0
+      - 49.0
+    - - 143.0
+      - 45.8
+    - - 145.0
+      - 45.3
+  - t: 50
+    plate: FAR
+    what: 远方大陆北岛弧以东的洋壳归远方大陆（随它西移、俯冲到加勒比式板块之下）
+    poly:
+    - - -72.6
+      - 19.2
+      - CA
+    - - -68.3
+      - 18.7
+      - CA
+    - - -63.9
+      - 15.6
+      - CA
+    - - -61.6
+      - 11.9
+      - CA
+    - - -61.5
+      - 10.4
+      - CA
+    - - -50.0
+      - 10.0
+    - - -48.0
+      - 22.0
+    - - -65.0
+      - 23.0
+  - t: 50
+    plate: CA
+    what: 加勒比式板块：远方大陆北岸、东北岛与北岛弧之间
+    poly:
+    - - -88.0
+      - 15.5
+    - - -85.0
+      - 17.8
+    - - -75.0
+      - 19.0
+    - - -72.6
+      - 19.2
+    - - -68.3
+      - 18.7
+    - - -63.9
+      - 15.6
+    - - -61.6
+      - 11.9
+    - - -61.5
+      - 10.4
+    - - -66.0
+      - 9.6
+    - - -73.0
+      - 9.3
+    - - -78.0
+      - 8.2
+    - - -84.0
+      - 11.2
+    - - -87.5
+      - 12.5
+  - t: 30
+    plate: ALB
+    what: 西口弧形地体内侧的洋壳（阿尔沃兰式弧后海的海底）
+    poly:
+    - - -14.8
+      - 36.3
+    - - -13.5
+      - 36.8
+    - - -12.2
+      - 37.0
+    - - -10.0
+      - 37.2
+    - - -8.5
+      - 37.3
+    - - -8.5
+      - 35.0
+    - - -10.5
+      - 35.15
+    - - -12.5
+      - 35.4
+    - - -14.2
+      - 35.65
+  basement:
+  - t: 50
+    plate: PS
+    T_km: 20.0
+    what: 东岸大岛一端（西北角）的老岛弧基底
+    poly:
+    - - 116.6
+      - 26.0
+    - - 116.0
+      - 23.0
+    - - 116.8
+      - 21.8
+    - - 119.2
+      - 21.8
+    - - 121.0
+      - 23.2
+    - - 120.6
+      - 24.8
+  - t: 50
+    plate: PS
+    T_km: 20.0
+    what: 吕宋式东南弧北岛一段的老岛弧与蛇绿岩基底
+    poly:
+    - - 119.0
+      - 19.2
+    - - 119.4
+      - 17.0
+    - - 118.9
+      - 13.4
+    - - 119.3
+      - 12.6
+    - - 122.4
+      - 12.6
+    - - 122.8
+      - 17.0
+    - - 122.2
+      - 19.2
+  subduction:
+  - down:
+    - BSE
+    over:
+    - PS
+    compress: true
+    what: 马尼拉式：东南增生地块的洋壳俯冲到菲律宾海式板块西缘之下；台湾式：它的华夏式陆缘撞上岛弧
+  - down:
+    - PS
+    over:
+    - B
+    what: 琉球式、南海海槽式
+  - down:
+    - PA
+    over:
+    - PS
+    what: 伊豆—马里亚纳式（南向长岛弧 R6）
+  - down:
+    - NG
+    over:
+    - PA
+    - PS
+    what: 新几内亚式洋内弧、所罗门式、瓦努阿图式（菲律宾海式板块南缘向南伸到微陆块北边，也是它在上）
+  - down:
+    - NG
+    over:
+    - BSE
+    what: 巽他—班达式（东南弧东段 R3）
+  - down:
+    - PA
+    over:
+    - ZL
+    what: 汤加—克马德克式（南洋岛弧 R7）
+  - down:
+    - PA
+    over:
+    - B
+    what: 千岛式（东北岛链 R1）、日本海沟式（东方岛弧，东岸山系 M7）
+  - down:
+    - FAR
+    over:
+    - CA
+    what: 小安的列斯式（远方大陆北岛弧 R8）
+  - down:
+    - A
+    - C
+    - WT
+    over:
+    - ALB
+    volcano_min_cont_km: 40
+    rollback: true
+    what: 直布罗陀—阿尔沃兰式后撤弧（西口弧形地体）
+  gaps:
+  - pair:
+    - NG
+    - ZL
+    to: NG
+  - pair:
+    - CA
+    - FAR
+    to: CA
+hotspots:
+- id: H1
+  name: 大洋长链
+  at:
+  - -158.0
+  - 19.5
+  active:
+  - 100
+  - 0
+  flux: strong
+- id: H2
+  name: 南方珊瑚岛群
+  at:
+  - -140.0
+  - -17.0
+  active:
+  - 70
+  - 0
+  flux: medium
+- id: H7
+  name: 南方孤岛链
+  at:
+  - -128.0
+  - -25.0
+  active:
+  - 15
+  - 0
+  flux: weak
+- id: H3
+  name: 西大洋火山群
+  at:
+  - -40.0
+  - 21.0
+  active:
+  - 40
+  - 0
+  flux: medium
+- id: H5
+  name: 东洋火山岛
+  at:
+  - 63.0
+  - -21.0
+  active:
+  - 80
+  - 0
+  flux: strong
+- id: H6
+  name: 洋中脊群岛
+  at:
+  - -42.0
+  - 38.5
+  active:
+  - 30
+  - 0
+  flux: weak
+- id: I9
+  name: 北方火山岛
+  at:
+  - -48.0
+  - 63.5
+  active:
+  - 60
+  - 0
+  flux: strong
+- id: K1
+  name: 中脊孤岛
+  at:
+  - -55.5
+  - -7.5
+  active:
+  - 10
+  - 0
+  flux: weak
+- id: K2
+  name: 信风孤岛
+  at:
+  - -44.0
+  - -17.0
+  active:
+  - 20
+  - 0
+  flux: weak
+- id: K3
+  name: 西风双岛
+  at:
+  - -60.5
+  - -37.4
+  active:
+  - 30
+  - 0
+  flux: medium
+- id: K4
+  name: 冰海孤岛
+  at:
+  - -47.5
+  - -54.6
+  active:
+  - 10
+  - 0
+  flux: weak
+- id: K5
+  name: 北洋冰火岛
+  at:
+  - -41.6
+  - 70.6
+  active:
+  - 15
+  - 0
+  flux: weak
+- id: K6
+  name: 赤道群岛
+  at:
+  - -131.6
+  - -0.4
+  active:
+  - 15
+  - 0
+  flux: medium
+- id: K7
+  name: 极远孤岛
+  at:
+  - -124.0
+  - -36.0
+  active:
+  - 10
+  - 0
+  flux: weak
+- id: K8
+  name: 东洋孤礁
+  old:
+    at:
+    - -127.0
+    - 10.4
+    plate: EO
+    age: 12
+  active_myr: 6
+  flux: medium
+- id: K9a
+  name: 北洋环礁
+  old:
+    at:
+    - 156.4
+    - 22.6
+    plate: PA
+    age: 100
+  active_myr: 8
+  flux: medium
+- id: K9b
+  name: 北洋环礁
+  old:
+    at:
+    - 164.0
+    - 18.8
+    plate: PA
+    age: 95
+  active_myr: 8
+  flux: medium
+- id: K11
+  name: 南大洋孤岛群
+  at:
+  - 51.0
+  - -46.2
+  active:
+  - 20
+  - 0
+  flux: medium
+- id: K12
+  name: 西风小岛
+  at:
+  - 37.6
+  - -46.8
+  active:
+  - 10
+  - 0
+  flux: weak
+- id: K13
+  name: 中脊双岛
+  at:
+  - 78.0
+  - -37.8
+  active:
+  - 10
+  - 0
+  flux: weak
+- id: K14
+  name: 冰火孤岛
+  at:
+  - 74.6
+  - -53.4
+  active:
+  - 20
+  - 0
+  flux: medium
+- id: H4
+  name: 南大洋高原岛
+  at:
+  - 76.0
+  - -49.0
+  active:
+  - 35
+  - 0
+  flux: medium
+rifts:
+- id: M10
+  name: 南方地盾裂谷
+  anchor: C
+  t_start: 25
+  line:
+  - - 8.6
+    - -25.0
+  - - 9.4
+    - -19.0
+  - - 7.6
+    - -13.0
+  - - 5.0
+    - -7.5
+  - - 3.4
+    - -2.0
+  - - 1.4
+    - 4.0
+  - - -1.6
+    - 10.6
+  graben_half_km: 40
+  beta: 1.08
+  flank_amp_m: 1000
+  flank_decay_km: 60
+  swell_amp_m: 600
+  swell_radius_km: 400
+  what: 南方地幔柱上方的年轻裂谷（约 25 Ma–今），两肩隆起、谷底下陷，谷中有裂谷深湖
+- id: B5_release
+  name: B5局部释放阶区
+  anchor: C
+  t_start: 35
+  duration_myr: 35
+  line:
+  - - 18.65
+    - -0.4
+  - - 18.7
+    - -4.6
+  graben_half_km: 40
+  beta: 1.5
+  logarithmic_weights: true
+  flank_amp_m: 0
+  flank_decay_km: 60
+  swell_amp_m: 0
+  swell_radius_km: 1
+  prescribed_local_extension: true
+  what: B5位置的局部伸展处方试验，固定面积柱体减薄另记账，不是速度反演或盆底手绘
+reactivations:
+- id: M31_internal
+  feature: M31
+  anchor: ALB
+  source_origin: ALB
+  t_start: 10
+  strain: 0.25
+  what: 西口弧形地体原有陆壳内部的晚期挤压反转（规定的应变，不是刚体接触消耗）
+- id: M15
+  feature: M15
+  anchor: B
+  t_start: 25
+  strain: 0.9
+  what: 中央山系（天山式：老缝合带复活）
+- id: M15b
+  feature: M15b
+  anchor: B
+  t_start: 20
+  strain: 0.6
+  what: 北部断块山（阿尔泰式）
+- id: PL3
+  feature: PL3
+  anchor: B
+  t_start: 30
+  strain: 0.45
+  what: 北方高原（蒙古高原式的板内隆升）
+- id: M2
+  feature: M2
+  anchor: C
+  t_start: 40
+  strain: 0.6
+  what: 内海南岸山系（阿特拉斯式陆缘反转）
+plumes:
+- id: PS
+  name: 南方地幔柱
+  at:
+  - 1.5
+  - -22.0
+  active:
+  - 30
+  - 0
+  swell:
+    amp_m: 900
+    radius_km: 1000
+  what: 南方高原 PL2（地盾整体抬升的宽缓穹隆，终图 1300 m）；同源的南方地盾裂谷 M10（裂谷肩与谷底）是拉张，属 U30
+- id: PV
+  name: 火山隆起地幔柱
+  at:
+  - -5.0
+  - 23.0
+  active:
+  - 40
+  - 0
+  swell:
+    amp_m: 700
+    radius_km: 1000
+  what: 火山隆起 PL6（终图 1100 m）与顶上的南方火山高地 M22（终图 2000 m，提贝斯提、霍加尔式火山群）
+  lips:
+  - t: 20
+    anchor: C
+    line:
+    - - -6.0
+      - 22.0
+    - - -2.0
+      - 24.4
+    radius_km: 220
+    flat_km: 60
+    add_km: 6.0
+    what: 南方火山高地的火山群与底侵
+- id: PE
+  name: 东南火山高原地幔柱（阿法尔式）
+  at:
+  - 26.5
+  - 9.8
+  active:
+  - 32
+  - 0
+  swell:
+    amp_m: 800
+    radius_km: 1000
+  what: 东南火山高原 PL4（终图 2400 m，埃塞俄比亚式），与南裂谷海同源
+  lips:
+  - t: 30
+    anchor: D
+    feature: PL4
+    add_km: 10.0
+    what: 东南火山高原的溢流玄武岩（约 2 km）与下地壳底侵（约 8 km）
+- id: DE
+  name: 东洋热点的溢流玄武岩（德干式）
+  what: 约 75 Ma 南方地盾陆块西北部经过东洋热点（hotspot_checks）时的大喷发，之后热点留下向南的火山岛与环礁链
+  lips:
+  - t: 75
+    anchor: IN
+    at:
+    - 76.0
+    - 18.0
+    radius_km: 500
+    flat_km: 200
+    add_km: 6.0
+    what: 南方地盾半岛西北部的溢流玄武岩台地
+- id: KG
+  name: 南大洋高原地幔柱（凯尔盖朗式）
+  what: 约 35 Ma 地幔柱在洋中脊附近的年轻洋壳上堆出洋底高原（引擎 0 Ma 那里的洋壳 40–56 Myr），之后被板块带走、热点留在活动端（H4）
+  lips:
+  - t: 35
+    anchor: PA
+    line:
+    - - 74.5
+      - -47.6
+    - - 72.0
+      - -46.0
+    - - 68.0
+      - -44.0
+    radius_km: 320
+    flat_km: 120
+    add_km: 15.0
+    what: 洋底高原（洋壳加厚到约 22 km）
+- id: IC
+  name: 北方火山岛地幔柱
+  at:
+  - -48.0
+  - 63.5
+  active:
+  - 60
+  - 0
+  swell:
+    amp_m: 900
+    radius_km: 900
+  what: 北方火山岛 I9。终图写的成因是洋中脊上的热点（冰岛式），但倒推的历史里这里不是洋中脊（引擎 0 Ma 是洲 A 名下约 380 Myr 的老洋壳、
+    水深约 5.5 km），洋中脊上的厚洋壳出不来；按强地幔柱在几乎不动的板块下长期堆出的火山台地处理（强热点 60 Myr 的岩浆量约 7×10⁶ km³，
+    足够在半径 200 km 内加厚 20 km 以上；冰岛地壳平均约 29 km）
+  lips:
+  - t: 10
+    anchor: A
+    line:
+    - - -50.6
+      - 63.2
+    - - -45.2
+      - 63.8
+    radius_km: 220
+    flat_km: 70
+    add_km: 24.0
+    what: 北方火山岛的火山台地与底侵
+forward:
+  aprons:
+    strip: true
+    approach_km: 1500
+    min_conv_cm_yr: 0.5
+    ocean_plates: false
+  ocean_plates_take_continent_gaps: true
+  polarity:
+  - down:
+    - BSE
+    over:
+    - POL
+    what: 东南增生地块裂离时的擦碰（按 U32 的结果固定）
+  - down:
+    - C
+    over:
+    - A
+    hole_down: true
+    what: 洲 C 名下挡在西段地体前方的古洋（方向同 ocean.subduction；hole_down：汇聚边界上的小洞归下行一方）
+  - down:
+    - WT
+    - ADR
+    - ET
+    over:
+    - A
+    - B
+    aprons: true
+    hole_down: true
+    what: 主内海北岸微陆块前方的古洋向北俯冲到洲 A、B 之下，微陆块随后撞上来（aprons：洲 A、B 挡在前面的洋壳围裙转给微陆块， 见 forward.aprons；hole_down：汇聚边界上的小洞归微陆块。两项是第九、十次运行为
+      6–9°E 的深水窄湾加的，窄湾没变， 真正的原因是 I4 记在洲 A 名下，见 blocks 的 WT；两项与其他俯冲带的做法一致，保留）
+  - down:
+    - WT
+    - ADR
+    over:
+    - C
+    - ET
+    - D
+    what: 西段、亚得里亚式地体对洲 C、D 是下行一方：洲 C、D 的洋壳碰上它们只删除、不长弧 （否则神怒湾上长弧、湾面抬到 +1 km）
+  - down:
+    - D
+    over:
+    - ET
+    what: 主内海东部的洋壳向北俯冲到东段地体之下（希腊—爱琴式），多湾半岛在上盘
+  no_collision:
+  - pair:
+    - WT
+    - ALB
+    from: 38
+    to: 0
+    what: 西口弧形地体北侧的撕裂—转换断层
+  - pair:
+    - C
+    - ALB
+    from: 38
+    to: 6
+    what: 西口弧形地体南侧擦过洲 C 北岸
+  pull_apart:
+  - pair:
+    - C
+    - D
+    since: 36
+    T_narrow_km: 33.0
+    w1_km: 80
+    T_wide_km: 20.0
+    w_max_km: 250
+    holes: true
+    what: 洲 C、D 之间的左旋走滑断层（释放段拉分盆地）与南裂谷海两侧的拉伸陆缘
+  - pair:
+    - C
+    - FAR
+    since: 155
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 西大洋两岸（约 150 Ma 裂开）
+  - pair:
+    - D
+    - POL
+    since: 145
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 洲 D 南缘与极地大陆北缘（约 140 Ma）
+  - pair:
+    - D
+    - IN
+    since: 125
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 洲 D 东缘与南方地盾陆块（约 120 Ma）
+  - pair:
+    - D
+    - MD
+    since: 125
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 洲 D 东缘与裂离微大陆（约 120 Ma）
+  - pair:
+    - IN
+    - MD
+    since: 125
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 南方地盾陆块与裂离微大陆（约 120 Ma）
+  - pair:
+    - POL
+    - ZL
+    since: 90
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 极地大陆与南洋陆块（约 85 Ma）
+  - pair:
+    - POL
+    - NG
+    since: 115
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 极地大陆北缘与东大岛微陆块（约 110 Ma）
+  - pair:
+    - POL
+    - BSE
+    since: 285
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: 东南增生地块裂离（约 280 Ma，基梅里式）
+  - pair:
+    - C
+    - WT
+    since: 105
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: U33：西段地体从洲 C 北缘裂开（约 100 Ma）
+  - pair:
+    - C
+    - ADR
+    since: 105
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: U33：亚得里亚式地体从洲 C 北缘裂开
+  - pair:
+    - D
+    - ET
+    since: 105
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: U33：东段地体从洲 D 北缘裂开
+  - pair:
+    - WT
+    - ALB
+    since: 39
+    knots:
+    - - 0
+      - 32.0
+    - - 300
+      - 31.4
+    - - 460
+      - 18.0
+    what: U35：西口弧形地体从西段地体南缘裂开（弧后，宽过 460 km 长洋壳）
+  volcano_params:
+    arcs: true
+    arc_min_T_km: 10.0
+    arc_min_cont_km: 150.0
+  arc_continental_designed_only: false
+  arc_continental_extra_pairs:
+  - - EO
+    - FAR
+  engine_params:
+    erosion_law: relief
+    arc_rate_km_myr: 0.2
+    arc_shortening_km_myr: 0.8
+    arc_accrete_T_km: 17.0
+    arc_ocean_flux_factor: 3.0
+    gap_prefer_opening_only: true
+    arc_ocean_T_max_km: 30.0
+    arc_to_cont_T_km: 31.0
+    flow_min_T_km: 32.5
+    no_collision_when_opening: true
+    view_hole_max_cells: 4
+    arc_cont_min_T_km: 32.5
+    arc_compress_T_max_km: 38.0
+    hole_borrow_shared_budget: true
+    rift_area_conservative: true
+initial:
+  t0: 300
+  mesh_level: 7
+  block_order:
+  - B
+  - A
+  - BSE
+  - C
+  - D
+  - FAR
+  - POL
+  - IN
+  - MD
+  - ZL
+  - NG
+  - ALB
+  - WT
+  - ADR
+  - ET
+  T_cont_km: 35.0
+  craton_T_km: 36.0
+  craton_lithology:
+  - LT7
+  - LT8
+  - LT9
+  craton_min_block_Mkm2: 3.0
+  old_orogens:
+    ids:
+    - M6
+    - M13b
+    - M16
+    - M8b
+    formed_ma: 400
+    h0_m: 4500
+    half_width_km: 150
+  tablelands:
+    ids:
+    - PL7
+    add_km: 7.0
+    ramp_km: 70
+  basins:
+    ids:
+    - B1
+    - B2
+    - B3
+    - B4
+    from_design: true
+    sub_km: 0.8
+    ramp_km: 300
+  province_relief:
+    mean_m: -40
+    sd_m: 380
+    min_m: -350
+    max_m: 1000
+    smooth_iter: 12
+    ramp_km: 150
+    T_floor_km: 32.8
+    min_base_T_km: 34.9
+  margin_km: 250
+  margin_min: 0.72
+  coast_T_km: 33.0
+  ext_continental_km: 1000
+  ext_T_near_km: 30.0
+  ext_T_far_km: 16.0
+  ext_taper_km: 500
+  province_sep_km: 700
+  half_spreading_km_myr: 25
+  seed: 1
+  margins:
+  - block: BSE
+    what: 台湾海峡式陆架与远端陆缘（东岸大岛的成因）
+    T_near_km: 18.0
+    T_far_km: 14.0
+    taper_km: 300
+    poly:
+    - - 114.6
+      - 22.2
+    - - 116.0
+      - 21.4
+    - - 118.0
+      - 21.0
+    - - 120.4
+      - 22.2
+    - - 120.7
+      - 24.2
+    - - 119.8
+      - 25.4
+    - - 118.8
+      - 26.4
+    - - 117.4
+      - 26.4
+    - - 116.0
+      - 25.2
+    - - 115.0
+      - 23.6
+  - gulfs:
+    - G5
+    - G17
+    - G23
+    depth_m: -80
+    edge_thinning: false
+    what: 浅的陆表海与陆架海（几十到一百多米；涌潮湾设计约 70 m）
+  - gulfs:
+    - G4
+    - G10
+    - G19
+    depth_m: -150
+    edge_thinning: false
+    what: 较深的陆架海、冰盖压沉的克拉通盆地与被淹的夭折裂谷
+  - gulfs:
+    - G7
+    depth_m: -90
+    edge_thinning: false
+    block: ADR
+    what: 神怒湾（两侧山系之间被淹没的前陆盆地）
+  - gulfs:
+    - G6
+    depth_m: -80
+    edge_thinning: false
+    what: 东湾（碰撞前陆盆地被海水淹没，波斯湾式）
+  - auto: true
+    shelf_km: 160
+    slope_km: 80
+    T_coast_km: 32.0
+    T_break_km: 31.4
+    T_foot_km: 18.0
+    gap_frac: 0.4
+    active_km: 300
+    active_arcs: true
+    active_points_file: config/design/shelf_active_v2.yaml
+    active:
+    - M1
+    - M1b
+    - M1d
+    - M2
+    - M13
+    - M7
+    - M7b
+    - M8
+    - M8c
+    - M23
+    - M25
+    - M27
+    - M24
+    - M28
+    - M29
+    exclude_gulfs:
+    - G1
+    - G2
+    - G3
+    - G6
+    - G7
+    - G8
+    - G9
+    - G12
+    - G15
+    - G20
+    - G22
+    - G25
+    - G26
+    - G27
+    - G28
+    what: 老被动陆缘的陆架与陆坡

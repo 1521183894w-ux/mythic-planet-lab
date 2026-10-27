@@ -30,6 +30,7 @@ from .crust import (CONT, OCEAN, ORIGIN_ARC, ORIGIN_OCEAN, ORIGIN_RIFT, ORO_ARC,
 from .geometry import R_KM, chord_from_km, km_from_chord, orthonormalize, smoothstep, unit, wrap
 from .mesh import KD_WORKERS, Mesh
 from .borrowing import cap_shared_borrow
+from .stretching import conservative_area_expand
 
 
 def arc_profile(d_km, peak_km, max_km):
@@ -659,6 +660,60 @@ class Engine:
         return best
 
     # ---- 提交：删除消耗单元，空隙生成新洋壳 ------------------------------------------------
+    def _expand_rift_area(self, new, g, cg, neighbors, distances, pair_keys):
+        """U36-S2：固定单元面积展开代理；现有张开/最大宽度判据不变。
+
+        仅向两侧陆壳分配新增面积，权重按源面积/距离²。源柱同时变薄，
+        目标从相应体积取得厚度；不使用旧经验剖面指定目标厚度。
+        完整记录本次运输边；省份/年龄只保留体积最大供体的代表值，不是成分追踪。
+        """
+        area = self.m.area_km2[new.node]
+        target_area = self.m.area_km2[g.node[cg]]
+        pa, pb = pair_keys // 1000, pair_keys % 1000
+        eligible = ((new.ctype[neighbors] == CONT)
+                    & ((new.plate[neighbors] == pa[:, None])
+                       | (new.plate[neighbors] == pb[:, None])))
+        # 球面弦长只用于近邻权重；半格软化防止一个几乎重合的点垄断。
+        floor = 0.5 * np.sqrt(np.median(self.m.area_km2)) / R_KM
+        weights = np.where(eligible, area[neighbors] / np.maximum(distances, floor)**2, 0.0)
+        before = new.T.copy()
+        result = conservative_area_expand(before, area, target_area, neighbors, weights)
+        new.T[:] = result["source_thickness"]
+        g.ctype[cg] = CONT
+        g.T[cg] = result["target_thickness"]
+        g.origin[cg] = ORIGIN_RIFT
+        g.oro[cg] = ORO_RIFT
+        g.oro_t[cg] = self.t
+        # 一个目标可能混合多个源。代表值不可解释为混合后的成分比例。
+        representative = np.array([
+            result["col"][a + np.argmax(result["edge_volume"][a:b])]
+            for a, b in zip(result["row_ptr"][:-1], result["row_ptr"][1:])
+        ])
+        for field in ("age", "prov", "t_form"):
+            getattr(g, field)[cg] = getattr(new, field)[representative]
+        active = np.flatnonzero(result["source_extra_area"] > 0)
+        loss = (before[active] - new.T[active]) * area[active]
+        gain = g.T[cg] * target_area
+        record = dict(
+            t_ma=float(self.t), source_uid=new.uid[active].copy(),
+            source_plate=new.plate[active].copy(), source_area_km2=area[active].copy(),
+            source_before_km=before[active].copy(), source_after_km=new.T[active].copy(),
+            source_beta=result["source_beta"][active].copy(),
+            target_uid=g.uid[cg].copy(), target_plate=g.plate[cg].copy(),
+            target_area_km2=target_area.copy(), target_thickness_km=g.T[cg].copy(),
+            target_pair=pair_keys.copy(), row=result["row"].copy(),
+            edge_source_uid=new.uid[result["col"]].copy(),
+            edge_area_km2=result["edge_area"].copy(),
+            edge_volume_km3=result["edge_volume"].copy(),
+            source_loss_km3=float(loss.sum()), target_gain_km3=float(gain.sum()),
+            closure_km3=float(gain.sum() - loss.sum()),
+            representative_source_uid=new.uid[representative].copy())
+        if not hasattr(self, "rift_area_audit"):
+            self.rift_area_audit = []
+        self.rift_area_audit.append(record)
+        # 内部运输量不是物质源，不能加进净新增预算。
+        self.budget["rift_transferred"] = self.budget.get("rift_transferred", 0.0) + float(gain.sum())
+
     def commit(self):
         t0 = time.perf_counter()
         m, c, p = self.m, self.c, self.p
@@ -758,13 +813,16 @@ class Engine:
             g.t_form = self.t + g.age
             cg = np.isfinite(cont_T[uniq])
             if cg.any():
-                g.ctype[cg] = CONT
-                g.T[cg] = cont_T[uniq][cg]
-                g.origin[cg] = ORIGIN_RIFT
-                g.oro[cg] = ORO_RIFT
-                g.oro_t[cg] = self.t
-                g.t_form[cg] = self.t
-                self.budget["rift_fill"] = self.budget.get("rift_fill", 0.0) + float((g.T[cg] * m.area_km2[g.node[cg]]).sum())
+                if p.rift_area_conservative:
+                    self._expand_rift_area(new, g, cg, k[uniq][cg], d[uniq][cg], key2[uniq][cg])
+                else:
+                    g.ctype[cg] = CONT
+                    g.T[cg] = cont_T[uniq][cg]
+                    g.origin[cg] = ORIGIN_RIFT
+                    g.oro[cg] = ORO_RIFT
+                    g.oro_t[cg] = self.t
+                    g.t_form[cg] = self.t
+                    self.budget["rift_fill"] = self.budget.get("rift_fill", 0.0) + float((g.T[cg] * m.area_km2[g.node[cg]]).sum())
             hg = hole_src[uniq] >= 0
             if hg.any():                          # U32：走滑带上的小洞补成相邻陆壳（见 cont_gap_pairs 的 holes）
                 src = hole_src[uniq][hg]

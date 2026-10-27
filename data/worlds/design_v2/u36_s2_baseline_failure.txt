@@ -1,0 +1,34 @@
+BASELINE packages/tectonics/crust.py a0c90a56ac12cf91575b4fb98ba66c91d9c4ac42bdd0da57168744a3e0fa93c1
+BASELINE packages/tectonics/engine.py 5ebe44b9c31f13b01465f5db8077b9d7ef5d49eff125304e0e706f3f56174191
+F                                                                        [100%]
+================================== FAILURES ===================================
+_______________________ test_microcontinents_ridge_jump _______________________
+
+mesh = Mesh(level=5, xyz=array([[ 6.12323400e-17,  0.00000000e+00,  1.00000000e+00],
+       [ 8.94427191e-01,  0.00000000e+00...0533561 ], shape=(10242,)), h_km=240.6240289941943, tree=<scipy.spatial._ckdtree.cKDTree object at 0x00000218FF8B1700>)
+world = InitialWorld(level=5, seed=3, t=300.0, crust=<mythic.tectonics.crust.Crust object at 0x00000218E05D1FA0>, omega={1: ar...n_disp_km': 1200.0, 'micro_jump_frac': [0.4, 0.65], 'micro_gap_km': 200.0, 'micro_third_km': 500.0, 'design_level': 6})
+
+    def test_microcontinents_ridge_jump(mesh, world):
+        """U20 修订二：洋脊跃迁分出的微大陆先随一侧陆块、跃迁后随另一侧运动，到 300 Ma 与两侧陆块都已隔开（不相贴）。"""
+        p = PrehistoryParams()
+        micro = [e for e in world.events if e["kind"] == "ridge_jump_microcontinent"]
+        assert micro                                               # 种子 3 在设计网格上分出了微大陆
+        fin = world.snapshots[-1]
+        e = mesh.edges
+        for m in micro:
+            q = m["block"]
+            assert p.micro_area_km2[0] <= m["area_km2"] <= 1.5 * p.micro_area_km2[1]
+            assert p.t_end < m["t_jump"] < p.t_start
+            cq = (fin["origin"] == q) & (fin["ctype"] == CONT)
+            assert cq.any()
+            for nb_ in (m["from_block"], m["toward_block"]):
+                cn = (fin["origin"] == nb_) & (fin["ctype"] == CONT)
+>               assert not ((cq[e[:, 0]] & cn[e[:, 1]]) | (cn[e[:, 0]] & cq[e[:, 1]])).any()
+E               assert not np.True_
+E                +  where np.True_ = <built-in method any of numpy.ndarray object at 0x00000218E09566D0>()
+E                +    where <built-in method any of numpy.ndarray object at 0x00000218E09566D0> = ((array([False, False, False, ..., False, False, False], shape=(30720,)) & array([False, False, False, ..., False, False, False], shape=(30720,))) | (array([False, False, False, ..., False, False, False], shape=(30720,)) & array([False, False, False, ..., False, False, False], shape=(30720,)))).any
+
+tests\tectonics\test_prehistory.py:124: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/tectonics/test_prehistory.py::test_microcontinents_ridge_jump - ...
+1 failed in 108.47s (0:01:48)
