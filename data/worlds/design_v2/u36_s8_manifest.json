@@ -1,0 +1,22 @@
+{
+  "checkpoint": "U36-S8",
+  "version": "45e7729+U36-S8",
+  "figures": [
+    {
+      "file": "99_fixed_source_domain.png",
+      "title": "固定源域与保留外圈",
+      "note": "2km是审计保护余量，不是物理变形带宽、断层宽度或新地壳；所有面积/体积回球面计算，不以投影面积冒充km²。"
+    },
+    {
+      "file": "100_fixed_domain_continuity.png",
+      "title": "固定域柱连续性与空间细分",
+      "note": "H=H0/Jac_center，体积使用独立有限三角形面积；仍是给定运动下的柱连续性假设。不是流变、真实侧向流动或完整三维物质解。"
+    },
+    {
+      "file": "101_fixed_material_thickness.png",
+      "title": "固定域材料厚度",
+      "note": "灰色为原非陆壳/无覆盖，不补陆壳。域外原材料保留库存；图为条件性整柱厚度，不是地表高程、水深、B5或新海岸。"
+    }
+  ],
+  "physical_engine_changed": false
+}

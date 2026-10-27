@@ -1,0 +1,116 @@
+{
+  "checkpoint": "U36-S8",
+  "fixed_domain_hash": "7097ffed29b8ae655a2a694ac71b9feb2e8af539f7f82549d284b313043a833a",
+  "outer_stock_partition_closed": true,
+  "outer_stock_partition_note": "初始内外分账的代数恒等核对，非动态物理守恒证明",
+  "outer_uid_stock_all_nonnegative": false,
+  "negative_outer_signed_differences": [
+    {
+      "uid": 95088,
+      "signed_difference_km3": -7.642083801329136e-07
+    },
+    {
+      "uid": 30093,
+      "signed_difference_km3": -2.7704372769221663e-06
+    },
+    {
+      "uid": 51405,
+      "signed_difference_km3": -6.924819899722934e-07
+    },
+    {
+      "uid": 94307,
+      "signed_difference_km3": -2.451459295116365e-06
+    },
+    {
+      "uid": 24452,
+      "signed_difference_km3": -6.094342097640038e-07
+    },
+    {
+      "uid": 48346,
+      "signed_difference_km3": -6.045156624168158e-07
+    },
+    {
+      "uid": 120002,
+      "signed_difference_km3": -1.2056698324158788e-06
+    },
+    {
+      "uid": 79875,
+      "signed_difference_km3": -3.582012141123414e-06
+    }
+  ],
+  "checks": [
+    {
+      "initial_source_query_count": 8341,
+      "initial_source_query_seed": 3608,
+      "initial_source_uid_mismatch_count": 0,
+      "maximum_source_error_uid": 43200,
+      "maximum_source_error_t_ma": 0.0,
+      "maximum_source_error_initial_volume_km3": 12830.87853551959,
+      "tag": "edge30_patch1",
+      "all_141_sampled_times_inside": true,
+      "no_sampled_inversions": true,
+      "initial_volume_difference_from_fixed_polygons_km3": -8.445139974355698e-05,
+      "maximum_source_initial_volume_difference_km3": 3.5666016628965735e-06,
+      "source_volume_sum_max_error_km3": 4.6566128730773926e-09,
+      "maximum_source_absolute_relative_error": 0.0010448436663963445,
+      "final_weighted_source_absolute_error": 0.00014576379202702855,
+      "final_net_volume_relative_error": -9.40155401796261e-06,
+      "process_peak_working_set_mib": 429.99609375
+    },
+    {
+      "initial_source_query_count": 8341,
+      "initial_source_query_seed": 3608,
+      "initial_source_uid_mismatch_count": 0,
+      "maximum_source_error_uid": 448261,
+      "maximum_source_error_t_ma": 0.0,
+      "maximum_source_error_initial_volume_km3": 60.06943910924989,
+      "tag": "edge15_patch1",
+      "all_141_sampled_times_inside": true,
+      "no_sampled_inversions": true,
+      "initial_volume_difference_from_fixed_polygons_km3": -8.525419980287552e-05,
+      "maximum_source_initial_volume_difference_km3": 3.3221731428056955e-06,
+      "source_volume_sum_max_error_km3": 4.6566128730773926e-09,
+      "maximum_source_absolute_relative_error": 0.00028722422791305213,
+      "final_weighted_source_absolute_error": 3.6645075611688506e-05,
+      "final_net_volume_relative_error": -2.390656301698435e-06,
+      "process_peak_working_set_mib": 1111.015625
+    },
+    {
+      "initial_source_query_count": 8341,
+      "initial_source_query_seed": 3608,
+      "initial_source_uid_mismatch_count": 0,
+      "maximum_source_error_uid": 448261,
+      "maximum_source_error_t_ma": 0.0,
+      "maximum_source_error_initial_volume_km3": 60.06943910924989,
+      "tag": "edge7.5_patch1",
+      "all_141_sampled_times_inside": true,
+      "no_sampled_inversions": true,
+      "initial_volume_difference_from_fixed_polygons_km3": -8.526630699634552e-05,
+      "maximum_source_initial_volume_difference_km3": 3.7338468246161938e-06,
+      "source_volume_sum_max_error_km3": 3.725290298461914e-09,
+      "maximum_source_absolute_relative_error": 0.00028722422791305213,
+      "final_weighted_source_absolute_error": 9.170614383022906e-06,
+      "final_net_volume_relative_error": -6.151441256374568e-07,
+      "process_peak_working_set_mib": 3806.21875
+    },
+    {
+      "initial_source_query_count": 8341,
+      "initial_source_query_seed": 3608,
+      "initial_source_uid_mismatch_count": 0,
+      "maximum_source_error_uid": 448261,
+      "maximum_source_error_t_ma": 0.0,
+      "maximum_source_error_initial_volume_km3": 60.06943910924989,
+      "tag": "edge7.5_patch0.25",
+      "all_141_sampled_times_inside": true,
+      "no_sampled_inversions": true,
+      "initial_volume_difference_from_fixed_polygons_km3": -8.526630699634552e-05,
+      "maximum_source_initial_volume_difference_km3": 3.7338468246161938e-06,
+      "source_volume_sum_max_error_km3": 5.587935447692871e-09,
+      "maximum_source_absolute_relative_error": 0.0002871981907639487,
+      "final_weighted_source_absolute_error": 9.172543975582459e-06,
+      "final_net_volume_relative_error": -6.087260325804422e-07,
+      "process_peak_working_set_mib": 3811.08984375
+    }
+  ],
+  "limits": "只核对固定数值内域；141采样时点不代表时点之间已逐点检查，不是物理成因验证"
+}

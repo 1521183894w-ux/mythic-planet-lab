@@ -2,5 +2,10 @@
   "original_byte_count": 24530,
   "original_sha256": "f302c353979a72f9be84866424c45476598f87cee756ecc4f87ff20503aef302",
   "original_prefix_preserved": true,
-  "final_sha256": "47ff5d3da0037583b5cbabf4c130c8aee8ab1cfa24f38f1877b6263d150abccb"
+  "final_sha256": "47ff5d3da0037583b5cbabf4c130c8aee8ab1cfa24f38f1877b6263d150abccb",
+  "lf_original_byte_count": 24529,
+  "lf_original_sha256": "63e0a1f26904d14257bc5d446f84f4e2da25bd9b55cf9e010a859037132fe89b",
+  "lf_original_prefix_preserved": true,
+  "lf_final_sha256": "fd371372b0006e5a11a800a7188ef321e98d07aa899397a2b89db779009c5965",
+  "newline_note": "原始字节证明保留评审工作区原稿；lf字段对应.gitattributes规定的Git文本换行，仅规范CRLF为LF，不改正文。"
 }
