@@ -1,0 +1,39 @@
+{
+  "checkpoint": "U36-S6",
+  "version": "2e64d67+U36-S6",
+  "figures": [
+    {
+      "file": "91_small_rotation_velocity_floor.png",
+      "title": "短窗口小角度截断",
+      "note": "1e−6rad旋转仍移动6.371m，represents_identity_rotation为True、速度为零。扫描只给出本机1.0.0实测范围，不声称通用硬阈值。"
+    },
+    {
+      "file": "92_event_aligned_map_consistency.png",
+      "title": "时变运动、步长与刚体反例",
+      "note": "所有速度/映射积分共享材料中点。map微分随dt细化接近同映射面积，但共同刚体的面积仍非严格常量；这不是独立物理正确性证明。"
+    },
+    {
+      "file": "93_real_segment_map_rates.png",
+      "title": "真实参考段的同点映射微分",
+      "note": "不直接把S5端点梯形求积与本轮中点结果相减归因。新结果采用事件对齐中点；误差是同一给定点映射内部的一致性。"
+    },
+    {
+      "file": "94_source_continuity_convergence.png",
+      "title": "裁切材料的独立柱连续性",
+      "note": "H=H0/Jac_center；141时点任一中心/环点越出网络的材料均不求厚度。两档有效子集略异，不能单凭两点下降宣称固定域收敛。"
+    },
+    {
+      "file": "95_local_material_thickness.png",
+      "title": "局部材料连续性示意",
+      "note": "灰色：非陆壳/无覆盖，以及审计斑块越界的已知边缘材料（另留初始库存）。不是高程/B5；7.5km为审计细分，物理输入L7、给定W0=200km。"
+    }
+  ],
+  "standard_figures": "figures/stage1/u36_s6_reference/index.html",
+  "physical_engine_changed": false,
+  "default_world_adopted": false,
+  "limitations": [
+    "小角度接口截断与时序求积分别核查",
+    "共同刚体严格测试失败仍保留",
+    "物理宽度/古接触及B5尚未求解"
+  ]
+}
