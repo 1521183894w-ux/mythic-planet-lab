@@ -1,0 +1,1429 @@
+{
+  "unit": "km, km2, km3, Myr",
+  "method_class": "procedural_constrained",
+  "normal_method_class": "interpolated",
+  "version": "170c6da+U36-S3",
+  "continuous_truth": "旋转半球；opening缺口面积=2R²α，α=相对旋转角；slip/rigid=0",
+  "endpoint": [
+    {
+      "case": "opening",
+      "level": 5,
+      "phase": 0,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2355004.6622457714,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 2355004.6622457714,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2522268.813593903,
+          "outside_true_gap_km2": 933417.9835949125,
+          "true_gap_missed_km2": 966572.1742690487
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 2554147.8430882646,
+          "outside_true_gap_km2": 953182.9818814168,
+          "true_gap_missed_km2": 934055.5641847997
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 5,
+      "phase": 0,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 1164222.1571340917,
+          "outside_true_gap_km2": 1164222.1571340917,
+          "true_gap_missed_km2": 0.0
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 1145094.7394374746,
+          "outside_true_gap_km2": 1145094.7394374746,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 5,
+      "phase": 0,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 5,
+      "phase": 1,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2460263.175207075,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 2460263.175207075,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2551597.5207287157,
+          "outside_true_gap_km2": 967847.3354488232,
+          "true_gap_missed_km2": 964021.8519094997
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 5,
+      "phase": 1,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 1139994.0947183766,
+          "outside_true_gap_km2": 1139994.0947183766,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 5,
+      "phase": 1,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 5,
+      "phase": 2,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2433685.849226107,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 2433685.849226107,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2543946.553650069,
+          "outside_true_gap_km2": 946169.5953926572,
+          "true_gap_missed_km2": 962746.6907297253
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 5,
+      "phase": 2,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 1322342.143426126,
+          "outside_true_gap_km2": 1322342.143426126,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 5,
+      "phase": 2,
+      "h_km": 240.6240289941943,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 6,
+      "phase": 0,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2447515.214414134,
+      "discrete_gap_area_km2": 2665004.812595241,
+      "outside_true_gap_km2": 690332.261471242,
+      "true_gap_missed_km2": 472842.6632901346,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 2665004.8125952412,
+      "normal_support_area_km2": {
+        "unresolved": 2665004.8125952412
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2569449.7772455583,
+          "outside_true_gap_km2": 503688.6660109159,
+          "true_gap_missed_km2": 489661.8930333967
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 2554785.423678152,
+          "outside_true_gap_km2": 489661.8930333967,
+          "true_gap_missed_km2": 469896.89474689245
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 6,
+      "phase": 0,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 855681.6380980038,
+      "outside_true_gap_km2": 855681.6380980038,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 855978.6884690109,
+      "normal_support_area_km2": {
+        "unresolved": 855978.6884690109
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 827579.6056736314,
+          "outside_true_gap_km2": 827579.6056736314,
+          "true_gap_missed_km2": 0.0
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 818653.4774152101,
+          "outside_true_gap_km2": 818653.4774152101,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 6,
+      "phase": 0,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 6,
+      "phase": 1,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2471869.232652708,
+      "discrete_gap_area_km2": 2303603.458318334,
+      "outside_true_gap_km2": 447576.9353962493,
+      "true_gap_missed_km2": 615842.7097306235,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 2290714.910577244,
+      "normal_support_area_km2": {
+        "unresolved": 2290714.910577244
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2561798.8101669117,
+          "outside_true_gap_km2": 525366.4060670818,
+          "true_gap_missed_km2": 511339.6330895627
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 6,
+      "phase": 1,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 738230.8066610772,
+      "outside_true_gap_km2": 738230.8066610772,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 739251.1515564552,
+      "normal_support_area_km2": {
+        "unresolved": 739251.1515564552
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 831405.0892129549,
+          "outside_true_gap_km2": 831405.0892129549,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 6,
+      "phase": 1,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 6,
+      "phase": 2,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2485320.773525992,
+      "discrete_gap_area_km2": 2553279.3901879266,
+      "outside_true_gap_km2": 668328.8221591653,
+      "true_gap_missed_km2": 600370.2054972308,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 2541670.7609147024,
+      "normal_support_area_km2": {
+        "unresolved": 2541670.7609147024
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2559248.4878073623,
+          "outside_true_gap_km2": 520265.761347984,
+          "true_gap_missed_km2": 521540.92252775846
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 6,
+      "phase": 2,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 977118.4443130754,
+      "outside_true_gap_km2": 977118.4443130754,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 906678.8782577248,
+      "normal_support_area_km2": {
+        "unresolved": 906678.8782577248
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 882411.5364039337,
+          "outside_true_gap_km2": 882411.5364039337,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 6,
+      "phase": 2,
+      "h_km": 120.31998786005632,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 7,
+      "phase": 0,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2535727.827812105,
+      "discrete_gap_area_km2": 2541315.4127817857,
+      "outside_true_gap_km2": 248555.749246591,
+      "true_gap_missed_km2": 242968.1642769099,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 1801797.0672254064,
+      "normal_support_area_km2": {
+        "opening_supported": 1758151.9728598003,
+        "unresolved": 43645.094365605924
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2563073.971346686,
+          "outside_true_gap_km2": 258857.71949421754,
+          "true_gap_missed_km2": 251206.75241557072
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 2544584.1342399563,
+          "outside_true_gap_km2": 252481.9135953452,
+          "true_gap_missed_km2": 242918.20474703665
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 7,
+      "phase": 0,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 870917.3187238385,
+      "outside_true_gap_km2": 870917.3187238385,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 155139.94706613175,
+      "normal_support_area_km2": {
+        "shear_unresolved": 155139.94706613175
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 358320.29151662625,
+          "outside_true_gap_km2": 358320.29151662625,
+          "true_gap_missed_km2": 0.0
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 339192.8738200092,
+          "outside_true_gap_km2": 339192.8738200092,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 7,
+      "phase": 0,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        },
+        {
+          "count": 800000,
+          "weight_km2": 637.5805898872353,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 7,
+      "phase": 1,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2532730.678732427,
+      "discrete_gap_area_km2": 2654997.5398206804,
+      "outside_true_gap_km2": 323841.1993844833,
+      "true_gap_missed_km2": 201574.33829622943,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 1771929.7485554526,
+      "normal_support_area_km2": {
+        "opening_supported": 1441143.438348698,
+        "unresolved": 330786.3102067548
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2535020.4253916475,
+          "outside_true_gap_km2": 248656.43005602178,
+          "true_gap_missed_km2": 261408.04185376648
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 7,
+      "phase": 1,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 687112.3884218457,
+      "outside_true_gap_km2": 687112.3884218457,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 179807.34770415226,
+      "normal_support_area_km2": {
+        "shear_unresolved": 126462.67219777458,
+        "unresolved": 53344.67550637768
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 373622.2256739199,
+          "outside_true_gap_km2": 373622.2256739199,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 7,
+      "phase": 1,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "opening",
+      "level": 7,
+      "phase": 2,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 2548400.0,
+      "sampled_true_gap_area_km2": 2542360.950151259,
+      "discrete_gap_area_km2": 2510074.7608895,
+      "outside_true_gap_km2": 237550.50943483727,
+      "true_gap_missed_km2": 269836.69869659626,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 1834156.0873040913,
+      "normal_support_area_km2": {
+        "opening_supported": 1699831.1486396869,
+        "unresolved": 134324.93866440427
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 2551597.5207287157,
+          "outside_true_gap_km2": 242280.6241571494,
+          "true_gap_missed_km2": 251206.75241557072
+        }
+      ]
+    },
+    {
+      "case": "slip",
+      "level": 7,
+      "phase": 2,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 744051.6067198812,
+      "outside_true_gap_km2": 744051.6067198812,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 284233.9330629513,
+      "normal_support_area_km2": {
+        "shear_unresolved": 263580.33392608527,
+        "unresolved": 20653.599136866083
+      },
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 371071.90331437095,
+          "outside_true_gap_km2": 371071.90331437095,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    },
+    {
+      "case": "rigid",
+      "level": 7,
+      "phase": 2,
+      "h_km": 60.160990673363024,
+      "exact_gap_area_km2": 0.0,
+      "sampled_true_gap_area_km2": 0.0,
+      "discrete_gap_area_km2": 0.0,
+      "outside_true_gap_km2": 0.0,
+      "true_gap_missed_km2": 0.0,
+      "accelerated_query_mismatches": 0,
+      "old_opening_candidate_area_km2": 0.0,
+      "normal_support_area_km2": {},
+      "independent_quadrature": [
+        {
+          "count": 400000,
+          "weight_km2": 1275.1611797744706,
+          "gap_area_km2": 0.0,
+          "outside_true_gap_km2": 0.0,
+          "true_gap_missed_km2": 0.0
+        }
+      ]
+    }
+  ],
+  "cadence": [
+    {
+      "case": "opening",
+      "level": 5,
+      "interval_myr": 1,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 5,
+      "interval_myr": 5,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 5,
+      "interval_myr": 10,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 5,
+      "interval_myr": 1,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 5,
+      "interval_myr": 5,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 5,
+      "interval_myr": 10,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 5,
+      "interval_myr": 1,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 5,
+      "interval_myr": 5,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 5,
+      "interval_myr": 10,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 6,
+      "interval_myr": 1,
+      "total_birth_area_km2": 2665004.8125952426,
+      "transfer_count": 8,
+      "source_equivalent_width_median_km": 50.25453183151927,
+      "source_equivalent_width_max_km": 107.37409978046013,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.7922562621948517,
+      "final_min_thickness_km": 14.908418864028308,
+      "final_min_cont_thickness_km": 14.908418864028308,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 6,
+      "interval_myr": 5,
+      "total_birth_area_km2": 2665002.8453333545,
+      "transfer_count": 2,
+      "source_equivalent_width_median_km": 164.06254713758153,
+      "source_equivalent_width_max_km": 177.3938492558846,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.8869900953878167,
+      "final_min_thickness_km": 14.199841291450111,
+      "final_min_cont_thickness_km": 14.199841291450111,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 6,
+      "interval_myr": 10,
+      "total_birth_area_km2": 2665004.8125952417,
+      "transfer_count": 1,
+      "source_equivalent_width_median_km": 307.958743745254,
+      "source_equivalent_width_max_km": 307.958743745254,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.8927413395372616,
+      "final_min_thickness_km": 15.74236338252786,
+      "final_min_cont_thickness_km": 15.74236338252786,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 6,
+      "interval_myr": 1,
+      "total_birth_area_km2": 855681.6380980038,
+      "transfer_count": 3,
+      "source_equivalent_width_median_km": 92.11688895063179,
+      "source_equivalent_width_max_km": 211.73086845888662,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.3250716216219238,
+      "final_min_thickness_km": 25.111805752197107,
+      "final_min_cont_thickness_km": 25.111805752197107,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 6,
+      "interval_myr": 5,
+      "total_birth_area_km2": 855681.638098004,
+      "transfer_count": 1,
+      "source_equivalent_width_median_km": 314.11640666251503,
+      "source_equivalent_width_max_km": 314.11640666251503,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.297922349241342,
+      "final_min_thickness_km": 25.64243324144034,
+      "final_min_cont_thickness_km": 25.64243324144034,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 6,
+      "interval_myr": 10,
+      "total_birth_area_km2": 855978.688469011,
+      "transfer_count": 1,
+      "source_equivalent_width_median_km": 318.25053981857917,
+      "source_equivalent_width_max_km": 318.25053981857917,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.2865559601770467,
+      "final_min_thickness_km": 26.14819418498217,
+      "final_min_cont_thickness_km": 26.14819418498217,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 6,
+      "interval_myr": 1,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 6,
+      "interval_myr": 5,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 6,
+      "interval_myr": 10,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 7,
+      "interval_myr": 1,
+      "total_birth_area_km2": 2537516.7352984794,
+      "transfer_count": 14,
+      "source_equivalent_width_median_km": 21.4482397019056,
+      "source_equivalent_width_max_km": 62.155038773825446,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.7920460727709484,
+      "final_min_thickness_km": 9.08968910740927,
+      "final_min_cont_thickness_km": 9.08968910740927,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 7,
+      "interval_myr": 5,
+      "total_birth_area_km2": 2537459.6484064963,
+      "transfer_count": 3,
+      "source_equivalent_width_median_km": 125.01670124296822,
+      "source_equivalent_width_max_km": 152.59578658203088,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.8314108552409665,
+      "final_min_thickness_km": 10.678660427826246,
+      "final_min_cont_thickness_km": 10.678660427826246,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "opening",
+      "level": 7,
+      "interval_myr": 10,
+      "total_birth_area_km2": 2537459.648406494,
+      "transfer_count": 2,
+      "source_equivalent_width_median_km": 156.47735968079564,
+      "source_equivalent_width_max_km": 160.35893277956043,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.8313674025830795,
+      "final_min_thickness_km": 10.597165839771256,
+      "final_min_cont_thickness_km": 10.597165839771256,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 7,
+      "interval_myr": 1,
+      "total_birth_area_km2": 1045509.6188269067,
+      "transfer_count": 6,
+      "source_equivalent_width_median_km": 18.520794967129845,
+      "source_equivalent_width_max_km": 149.91269757678916,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.3965146100659782,
+      "final_min_thickness_km": 7.0,
+      "final_min_cont_thickness_km": 21.573804424164432,
+      "volume_residual_km3": -3.814697265625e-06,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 7,
+      "interval_myr": 5,
+      "total_birth_area_km2": 643291.2984736963,
+      "transfer_count": 3,
+      "source_equivalent_width_median_km": 36.56867276345395,
+      "source_equivalent_width_max_km": 165.00221799809657,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.298066941456027,
+      "final_min_thickness_km": 7.0,
+      "final_min_cont_thickness_km": 22.9646299484992,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "slip",
+      "level": 7,
+      "interval_myr": 10,
+      "total_birth_area_km2": 560589.6630251099,
+      "transfer_count": 2,
+      "source_equivalent_width_median_km": 100.78544538077526,
+      "source_equivalent_width_max_km": 165.00221799809657,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.2869385779541853,
+      "final_min_thickness_km": 7.0,
+      "final_min_cont_thickness_km": 22.9646299484992,
+      "volume_residual_km3": 3.814697265625e-06,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 7,
+      "interval_myr": 1,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 7,
+      "interval_myr": 5,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    },
+    {
+      "case": "rigid",
+      "level": 7,
+      "interval_myr": 10,
+      "total_birth_area_km2": 0.0,
+      "transfer_count": 0,
+      "source_equivalent_width_median_km": 0.0,
+      "source_equivalent_width_max_km": 0.0,
+      "source_width_definition": "每次实际供体面积/连续半球张开半环长πR；slip是比较分母，不是物理变形带",
+      "beta_p90": 1.0,
+      "final_min_thickness_km": 35.0,
+      "final_min_cont_thickness_km": 35.0,
+      "volume_residual_km3": 0.0,
+      "note": "仅旋转与commit；不包含相互作用、侵蚀、流动；出生面积不是净伸展"
+    }
+  ],
+  "band": [
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 33.333333333333336,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 300000.0000000001,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.66666666666667,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.000000000001
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 33.333333333333336,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 300000.0000000001,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.66666666666667,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.000000000001
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 33.333333333333336,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 300000.0000000001,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.666666666666668,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.0000000000005
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 300000.0,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.66666666666667,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.000000000001
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 300000.0,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.66666666666667,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.000000000001
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 300000.0,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.666666666666668,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.0000000000005
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 299999.99999999994,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.66666666666667,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.000000000001
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 299999.99999999994,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.66666666666667,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.000000000001
+    },
+    {
+      "width0_km": 100.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 299999.99999999994,
+      "width_final_km": 300.0,
+      "thickness_final_km": 11.666666666666668,
+      "area_stretch": 3.0,
+      "volume_per_length_km2": 3500.0000000000005
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 40.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.500000000000007,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.000000000003
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 40.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.5,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.0
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 40.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.5,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.0
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.500000000000007,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.000000000003
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.5,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.0
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.5,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.0
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.500000000000007,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.000000000003
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.5,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.0
+    },
+    {
+      "width0_km": 200.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 400000.0000000001,
+      "width_final_km": 400.0,
+      "thickness_final_km": 17.5,
+      "area_stretch": 2.0,
+      "volume_per_length_km2": 7000.0
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 40.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.333333333333343,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.000000000005
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 40.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.33333333333334,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.000000000004
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 40.0,
+      "dx_actual_km": 40.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.333333333333332,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.0
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.333333333333343,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.000000000005
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.33333333333334,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.000000000004
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 20.0,
+      "dx_actual_km": 20.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.333333333333332,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.0
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 0.5,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.333333333333343,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.000000000005
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 1.0,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.33333333333334,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.000000000004
+    },
+    {
+      "width0_km": 400.0,
+      "dx_requested_km": 10.0,
+      "dx_actual_km": 10.0,
+      "dt_myr": 5.0,
+      "polygon_area_km2": 600000.0,
+      "width_final_km": 600.0,
+      "thickness_final_km": 23.333333333333332,
+      "area_stretch": 1.5,
+      "volume_per_length_km2": 14000.0
+    }
+  ],
+  "elapsed_s": 99.95622290000028
+}

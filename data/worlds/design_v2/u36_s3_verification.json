@@ -1,0 +1,32 @@
+{
+  "identical": true,
+  "arrays_checked": 352,
+  "different_arrays": [],
+  "budget_identical": true,
+  "events_identical": true,
+  "native_state_identical": true,
+  "world_elevation_identical": true,
+  "protected_worktree_sha256": {
+    "config/design/history_v2.yaml": "afcf42c6224013dc8b6ff769555dbfa4439ea4c5a9945c0c988f4ad68ba90fe4",
+    "config/design/history_v2_u35_c4_strain.yaml": "760862cef2bba754dbdc800f7787c7829b5edd41283142b3af5d82c537789252",
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config/metrics.yaml": "e8a7ef4be12a65e214b226f52adec778372816fd954e310a6945f9968c1db603",
+    "data/worlds/design_v2/history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73",
+    "data/worlds/design_v2/forward_v2.json": "d58f0447abc80820c88cbc1bee5053314d9a2512c9e21568706f12261a88588b",
+    "packages/tectonics/engine.py": "6897f5be972494fde5f8da55bc0d24aa4dce542ff706a12401de82a754ee242e",
+    "packages/tectonics/crust.py": "0f21c57fac7c1241e0d66d56ae935f0c5ff47b943cd6596f872ffbb48b39badc",
+    "packages/tectonics/kinematics.py": "c8edb3e7911b47c8f0201e15d43c95d9f60ab0cf4dace281b492ec1fdab122fa"
+  },
+  "protected_identical_to_head": {
+    "config/design/history_v2.yaml": true,
+    "config/design/history_v2_u35_c4_strain.yaml": true,
+    "config/design/final_map_v2.yaml": true,
+    "config/metrics.yaml": true,
+    "data/worlds/design_v2/history_v2.rot": true,
+    "data/worlds/design_v2/forward_v2.json": true,
+    "packages/tectonics/engine.py": true,
+    "packages/tectonics/crust.py": true,
+    "packages/tectonics/kinematics.py": true
+  },
+  "protected_comparison": "Git clean过滤后的对象哈希；工作区CRLF与仓库LF分开记录，不比较不同换行的原始字节"
+}
