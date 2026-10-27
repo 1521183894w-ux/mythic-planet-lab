@@ -1,0 +1,41 @@
+{
+  "checkpoint": "U36-S4",
+  "version": "faaa277+U36-S4",
+  "figures": [
+    {
+      "file": "81_reference_contact_and_sources.png",
+      "title": "参考接触与原生来源",
+      "note": "12/28条横切有直接唯一C→D转换；其余保持未定。拟合偏移不等于断层恢复；5km查询间距，原生仍L7约60km。"
+    },
+    {
+      "file": "82_material_geometry_and_columns.png",
+      "title": "连续材料拓扑和整柱厚度",
+      "note": "同一批固定三角形，未补新柱；灰色为初始厚度缺值。H0/J闭合是定义性材料账，不是物理求解验证；不是高程或B5盆底。"
+    },
+    {
+      "file": "83_width_and_material_history.png",
+      "title": "带宽敏感性与材料历史",
+      "note": "三种W0都为试验假设，未按目标深度选优；H0来自各自实际覆盖。误差条描述厚度分布，不是置信区间。"
+    },
+    {
+      "file": "84_framework_convergence_and_limits.png",
+      "title": "几何与框架标量残差",
+      "note": "H0/J的体积闭合不画成成功证据；直接显示框架beta与独立几何不一致。不同插值/时间步未消除此残差，根因尚未定位。"
+    },
+    {
+      "file": "85_network_negative_controls.png",
+      "title": "框架负对照的实际数值误差",
+      "note": "同一200km参考带，半球光滑边界；纯走滑不应真实扩张。ppm级偏差仍公开，不把数值近似写成严格零应变；不是释放阶区试验。"
+    }
+  ],
+  "scientific_limitations": [
+    "参考线与W0为显式假设，原生覆盖匹配只是核对，未证明共同古断层与物理流变宽度",
+    "网格只是网络材料审计采样；初始厚度仍为L7约60km，密集采样不增加物理分辨率",
+    "H0/J的闭合是定义性材料账；框架beta与独立几何残差才用于评估时间积分和插值",
+    "无断层基底位移、岩石圈热演化、沉积、侵蚀和水位，不输出B5地貌或海陆新结果",
+    "网络端部可发生交换；用缓冲长度对照，不把瞬时网络外边界当材料边界"
+  ],
+  "standard_figures": "figures/stage1/u36_s4_reference/index.html",
+  "framework_version": "1.0.0",
+  "metrics_source": "figures/stage1/u36_s4_reference/metrics.json"
+}

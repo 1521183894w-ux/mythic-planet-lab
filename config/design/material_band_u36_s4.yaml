@@ -1,0 +1,23 @@
+# 独立的运动学试验输入，不由B5目标高程或固定节点缝隙反演。
+version: 1
+id: CD_G8_middle_35Ma
+name: 南裂谷海中段的参考材料带
+initial_time_ma: 35
+final_time_ma: 0
+plate_left: 301
+plate_right: 401
+reference_anchor: 301
+reference_line_present_lon_lat: [[20.6, -21.0], [19.2, -14.0]]
+reference_line_source: history_v2.yaml 中 C 的分区边界，亦是终图 G8 的中段
+width0_km: 200
+width_sensitivity_km: [100, 200, 400]
+width_method_class: user_override
+width_reason: 以区域窄裂谷的百公里量级作显式试验假设，尚无流变约束；非由速度唯一确定，非验收取值。
+geometry_method_class: user_override
+geometry_note: 将认可的C侧分界重建到35Ma，在附近按实际C/D直接类别转换及宿主UID一次匹配局部参考线，再在其两侧各取W0/2。匹配为interpolated；这是待核对的参考条带，不声称恢复了唯一古断层或共轭陆缘。
+network_method_class: interpolated
+method: pyGPlates 1.0.0 TopologicalModel，边界分别锚定C/D，带内自然邻域速度插值，不截断应变率
+initial_thickness_method_class: interpolated
+initial_thickness_source: 控制历史35Ma原生覆盖；无覆盖和非陆壳均保留缺值，不补35km
+cell_audit_method_class: procedural_constrained
+units: {length: km, area: km2, volume: km3, time: Myr}

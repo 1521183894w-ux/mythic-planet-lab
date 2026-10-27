@@ -1,0 +1,11 @@
+{
+  "identical": true,
+  "arrays_checked": 352,
+  "different_arrays": [],
+  "budget_identical": true,
+  "events_identical": true,
+  "native_state_identical": true,
+  "world_arrays_identical": true,
+  "elapsed_s": 339.6921921999892,
+  "reference": "U35-C10 progressive（共享供体限额、原经验裂谷厚度、持续局部减薄）"
+}
