@@ -1,0 +1,198 @@
+{
+ "world_id": "design_v2_forward_v2_0Ma_u36_s4_control",
+ "display_name": "终图 v2 正向演化 0 Ma",
+ "resolution": "1024x512",
+ "seed": "design_v2_history_v2",
+ "code_version": "faaa277-dirty",
+ "method_class_elevation": "procedural_constrained",
+ "source": "scripts/design_forward.py：300 Ma 初始世界 + 倒推的板块运动正向演化到 0 Ma（L7 地壳引擎，构造尺度高程：Airy + GDH1 + 按起伏的剥蚀，无河流侵蚀）；火山岛按半径进海陆掩膜。注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）。浅海湾（陆表海、陆架海、神怒湾、东湾）的陆壳厚度按终图水深设定（user_override），0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）；老被动陆缘的陆架陆壳由初始条件设定（initial.margins）；主内海北岸三块微陆块的位置、裂开与碰撞时刻由设计给出；板内挤压复活（中央山系、北部断块山、北方高原、内海南岸山系）的范围、时间与增厚比由设计给出、增厚比按终图高度估定（性质同 user_override），所以这几条山的高度接近终图不算过程的验证（评审 stage1_2026-10-25_3 第 2、10 条）；U34 起，设计的裂开陆缘与走滑拉分板块对（history yaml forward.pull_apart）上，两侧正在分开处的陆—陆重叠按网格对不齐处理、不当碰撞增厚（之前会把张开的陆缘一点点泵厚），300 Myr 里因此没被当成碰撞的陆壳单元共 约 1707 万 km³（评审 stage1_2026-10-25_4 第 13 条）；补洞借料按同一次提交的供体总余额限额（procedural_constrained），余额仅为34km以上柱体积；短缺仍按旧规则显式记hole_created，不是求解的沉积或岩浆来源，该限额不保证目标谷地形成或完整三维伸展质量守恒。；局部伸展试验的位置、时期和总β由设计规定（user_override），不是从盆底目标高程或板块速度求解；固定单元面积仅扣减等效地壳柱体积，另计rift_thinning，未求解实际面积伸展、热沉降、沉积、水位或封闭排水；高程符号海陆掩膜沿用旧定义。",
+ "stage": 1,
+ "generated": "2026-10-28 00:23:50",
+ "config_version": 4,
+ "regions": [
+  {
+   "key": "r1_main_inland_sea",
+   "title": "主内海全貌",
+   "rule": "A 层识别出的主内海；窗口边长按内海范围放大",
+   "earth_ref": "mediterranean",
+   "center_lat_lon": [
+    37.102,
+    18.422
+   ],
+   "size_km": 6500.0,
+   "reason": "海域面积 4.46 百万 km²，从中心到最远海域格点 2944 km；窗口边长取 max(内海所需 6500 km, 地中海对照 4000 km)，两边同比例尺",
+   "score": 4458924.77841694,
+   "missing": null,
+   "earth_comparison": {
+    "id": "mediterranean",
+    "name": "地中海全貌",
+    "center": [
+     38.0,
+     17.0
+    ],
+    "note": "config/earth_regions.yaml：mediterranean（评审对照：主内海全貌）"
+   }
+  },
+  {
+   "key": "r2_inland_sea_complex_coast",
+   "title": "主内海中海岸最复杂的一段",
+   "rule": "主内海沿岸的候选窗口中，海岸复杂度最高者",
+   "earth_ref": "aegean",
+   "center_lat_lon": [
+    42.069,
+    1.055
+   ],
+   "size_km": 2000.0,
+   "reason": "窗口内海岸线 6081 km，平滑后 2496 km，海岸复杂度 2.44",
+   "score": 2.4363440669380148,
+   "missing": null,
+   "earth_comparison": {
+    "id": "aegean",
+    "name": "爱琴海与希腊",
+    "center": [
+     38.5,
+     24.5
+    ],
+    "note": "config/earth_regions.yaml：aegean（评审对照：主内海中海岸最复杂的一段；最大的群岛区）"
+   }
+  },
+  {
+   "key": "r3_north_coast",
+   "title": "主大陆北端高纬海岸",
+   "rule": "主大陆最北的海岸点",
+   "earth_ref": "norway",
+   "center_lat_lon": [
+    79.418,
+    65.179
+   ],
+   "size_km": 2000.0,
+   "reason": "主大陆最北的海岸点 79.4°；窗口内海岸线 6880 km，平滑后 4457 km，海岸复杂度 1.54",
+   "score": 79.4175117443344,
+   "missing": null,
+   "earth_comparison": {
+    "id": "norway",
+    "name": "挪威海岸",
+    "center": [
+     65.0,
+     13.0
+    ],
+    "note": "config/earth_regions.yaml：norway（评审对照：主大陆北端高纬海岸）"
+   }
+  },
+  {
+   "key": "r4_polar_coast",
+   "title": "极地大陆的一段海岸",
+   "rule": "极地大陆（A 层判据）伸向低纬最远的海岸点",
+   "earth_ref": "antarctic_peninsula",
+   "center_lat_lon": [
+    -56.62,
+    103.905
+   ],
+   "size_km": 2000.0,
+   "reason": "极地大陆伸向低纬最远的海岸点 -56.6°；窗口内海岸线 3757 km，平滑后 2338 km，海岸复杂度 1.61",
+   "score": -56.6196788982722,
+   "missing": null,
+   "earth_comparison": {
+    "id": "antarctic_peninsula",
+    "name": "南极半岛",
+    "center": [
+     -68.0,
+     -63.0
+    ],
+    "note": "config/earth_regions.yaml：antarctic_peninsula（评审对照：极地大陆的一段海岸）"
+   }
+  },
+  {
+   "key": "r5_isthmus",
+   "title": "亚大陆之间的陆桥或地峡",
+   "rule": "主大陆各亚大陆（面积 ≥ 下限）之间最窄的分界处",
+   "earth_ref": "panama_isthmus",
+   "center_lat_lon": [
+    46.582,
+    15.293
+   ],
+   "size_km": 2000.0,
+   "reason": "亚大陆 2 与 3 的分界线，是所有亚大陆分界中最窄的；分界线上离海最远 159 km，颈部宽度约 317 km",
+   "score": 317.19996811915274,
+   "missing": null,
+   "earth_comparison": {
+    "id": "panama_isthmus",
+    "name": "中美地峡",
+    "center": [
+     10.0,
+     -80.0
+    ],
+    "note": "config/earth_regions.yaml：panama_isthmus（评审对照：一处亚大陆之间的陆桥或地峡）"
+   }
+  },
+  {
+   "key": "r6_smoothest_coast",
+   "title": "海岸复杂度最低的一段",
+   "rule": "平滑后窗口内仍有 ≥ 1000 km 海岸的候选窗口中，海岸复杂度最低者（专门暴露问题）",
+   "earth_ref": "west_africa_coast",
+   "center_lat_lon": [
+    -36.914,
+    -93.74
+   ],
+   "size_km": 2000.0,
+   "reason": "窗口内海岸线 3017 km，平滑后 2898 km，海岸复杂度 1.04",
+   "score": 1.0411364468039388,
+   "missing": null,
+   "earth_comparison": {
+    "id": "earth_rule_r6_smoothest_coast",
+    "name": "地球上按同一规则选出的窗口",
+    "center": [
+     1.3623800105134678,
+     44.42878273559011
+    ],
+    "note": "地球上按同一规则选出：窗口内海岸线 2119 km，平滑后 2139 km，海岸复杂度 0.99"
+   }
+  },
+  {
+   "key": "r7_archipelago",
+   "title": "最大的群岛区",
+   "rule": "窗口内岛屿个数最多者（只数达到岛屿统计面积下限的岛）",
+   "earth_ref": "se_asia",
+   "center_lat_lon": [
+    -2.943,
+    128.978
+   ],
+   "size_km": 2000.0,
+   "reason": "窗口内岛屿 6 个（面积 6113 km² 至 5 百万 km² 的陆块，按质心计）；窗口内海岸线 7477 km，平滑后 2813 km，海岸复杂度 2.66",
+   "score": 6.0,
+   "missing": null,
+   "earth_comparison": {
+    "id": "se_asia",
+    "name": "东南亚群岛",
+    "center": [
+     2.0,
+     118.0
+    ],
+    "note": "config/earth_regions.yaml：se_asia（评审对照：最大的群岛区）"
+   }
+  },
+  {
+   "key": "r8_random_coast",
+   "title": "随机抽取的一段海岸",
+   "rule": "按海岸线长度加权随机抽取（种子由世界编号确定，可复现），防止只挑好看的",
+   "earth_ref": null,
+   "center_lat_lon": [
+    5.026,
+    -90.072
+   ],
+   "size_km": 2000.0,
+   "reason": "随机种子 crc32('design_v2_forward_v2_0Ma_u36_s4_control|r8')，按海岸线长度加权抽取",
+   "score": null,
+   "missing": null,
+   "earth_comparison": {
+    "id": "random",
+    "name": "地球上随机抽取的一段海岸",
+    "center": [
+     41.484492478915236,
+     140.21202983218458
+    ],
+    "note": "随机种子 crc32('design_v2_forward_v2_0Ma_u36_s4_control|r8-earth')，按海岸线长度加权抽取"
+   }
+  }
+ ]
+}

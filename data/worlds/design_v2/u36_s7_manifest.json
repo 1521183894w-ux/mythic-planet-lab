@@ -1,0 +1,22 @@
+{
+  "checkpoint": "U36-S7",
+  "version": "2390e92+U36-S7",
+  "figures": [
+    {
+      "file": "96_rigid_frame_objectivity.png",
+      "title": "共同刚体与精确参照",
+      "note": "NN=自然邻域；BC=重心。锚定板块改变仅改变坐标，不能改变还原后的真实材料运动；零误差刚体特例不证明一般变形正确。"
+    },
+    {
+      "file": "97_deforming_frame_differences.png",
+      "title": "相同物理运动的参照系差",
+      "note": "每组对照共享旋转文件、原始材料点和网络；不同输入史不能相互排名。数值差异不当作物理剪切/真实减薄。"
+    },
+    {
+      "file": "98_frame_step_and_scalar.png",
+      "title": "步长与标量审计",
+      "note": "只记录框架数值客观性；真实物理带宽/古接触仍待独立约束。未采用任何参照系或插值方案为全球替换。"
+    }
+  ],
+  "physical_engine_changed": false
+}
