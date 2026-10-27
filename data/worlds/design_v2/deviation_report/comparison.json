@@ -1,0 +1,862 @@
+{
+  "scope": "已有世界的解释性对照；无新演化、无验收阈值变更",
+  "grid": "1024x512；L7物理网格约60km；赤道输出像元约39km",
+  "references": {
+    "current_design": "final_map_v2，含U35用户要求的西口修订（5d7a5a0）",
+    "approved_configuration": "baf014e，2026-10-24；以当前渲染器重新栅格化，并非当时PNG",
+    "official": "C2，默认世界",
+    "candidate": "C11 progressive，未采用"
+  },
+  "current_design": {
+    "C2": {
+      "target_land_km2": 145592778.0864558,
+      "engine_land_km2": 145312292.64552927,
+      "missing_land_km2": 3717175.180627078,
+      "extra_land_km2": 3436689.7397005763,
+      "land_iou": 0.9519969773449591
+    },
+    "C11": {
+      "target_land_km2": 145592778.0864558,
+      "engine_land_km2": 145328310.971321,
+      "missing_land_km2": 3701156.854835393,
+      "extra_land_km2": 3436689.7397005763,
+      "land_iou": 0.9521044616299489
+    }
+  },
+  "approved_configuration": {
+    "C2": {
+      "target_land_km2": 145586847.00185642,
+      "engine_land_km2": 145312292.64552927,
+      "missing_land_km2": 4094988.7303774445,
+      "extra_land_km2": 3820434.3740503155,
+      "land_iou": 0.9470211690385246
+    },
+    "C11": {
+      "target_land_km2": 145586847.00185642,
+      "engine_land_km2": 145328310.971321,
+      "missing_land_km2": 4078970.4045857596,
+      "extra_land_km2": 3820434.3740503155,
+      "land_iou": 0.9471283815227101
+    }
+  },
+  "design_mask_change_km2": 1317558.1610460158,
+  "candidate_large_deviation_regions": [
+    {
+      "kind": "missing",
+      "area_Mkm2": 0.38,
+      "lon": 66.5,
+      "lat": 27.2,
+      "near_features": [
+        "东湾北岸褶皱山",
+        "裂谷肩山地"
+      ],
+      "final_block_cells": {
+        "101": 8,
+        "702": 268
+      },
+      "engine_elev_m_median": -4832,
+      "no": 1
+    },
+    {
+      "kind": "missing",
+      "area_Mkm2": 0.13,
+      "lon": 124.7,
+      "lat": 7.8,
+      "near_features": [
+        "东南弧南岛",
+        "东南弧中部群岛"
+      ],
+      "final_block_cells": {
+        "-1": 85
+      },
+      "engine_elev_m_median": -5648,
+      "no": 2
+    },
+    {
+      "kind": "missing",
+      "area_Mkm2": 0.13,
+      "lon": 96.3,
+      "lat": -65.8,
+      "near_features": [
+        "极地半岛山脊",
+        "极地半岛"
+      ],
+      "final_block_cells": {
+        "601": 205
+      },
+      "engine_elev_m_median": -5563,
+      "no": 3
+    },
+    {
+      "kind": "extra",
+      "area_Mkm2": 0.13,
+      "lon": -33.2,
+      "lat": 20.0,
+      "near_features": [
+        "西北海岬",
+        "西大洋火山群"
+      ],
+      "final_block_cells": {
+        "0": 89
+      },
+      "engine_elev_m_median": 331,
+      "no": 4
+    },
+    {
+      "kind": "missing",
+      "area_Mkm2": 0.1,
+      "lon": 98.1,
+      "lat": 24.6,
+      "near_features": [
+        "构造结南向山系",
+        "南方喀斯特高原"
+      ],
+      "final_block_cells": {
+        "101": 4,
+        "702": 67
+      },
+      "engine_elev_m_median": -4347,
+      "no": 5
+    },
+    {
+      "kind": "extra",
+      "area_Mkm2": 0.09,
+      "lon": 81.0,
+      "lat": 4.0,
+      "near_features": [
+        "地盾半岛南岛",
+        "南方地盾半岛"
+      ],
+      "final_block_cells": {
+        "0": 59
+      },
+      "engine_elev_m_median": 1090,
+      "no": 6
+    },
+    {
+      "kind": "missing",
+      "area_Mkm2": 0.08,
+      "lon": 152.3,
+      "lat": -39.4,
+      "near_features": [
+        "南洋陆块北岛",
+        "南洋陆块南岛"
+      ],
+      "final_block_cells": {
+        "801": 65
+      },
+      "engine_elev_m_median": -1892,
+      "no": 7
+    },
+    {
+      "kind": "extra",
+      "area_Mkm2": 0.08,
+      "lon": 60.1,
+      "lat": 26.9,
+      "near_features": [
+        "东湾北岸褶皱山",
+        "东湾"
+      ],
+      "final_block_cells": {
+        "0": 57
+      },
+      "engine_elev_m_median": 65,
+      "no": 8
+    },
+    {
+      "kind": "extra",
+      "area_Mkm2": 0.08,
+      "lon": 70.1,
+      "lat": 13.7,
+      "near_features": [
+        "裂谷肩半岛",
+        "南方地盾半岛西缘山"
+      ],
+      "final_block_cells": {
+        "0": 56
+      },
+      "engine_elev_m_median": 3038,
+      "no": 9
+    },
+    {
+      "kind": "extra",
+      "area_Mkm2": 0.07,
+      "lon": 119.2,
+      "lat": 20.2,
+      "near_features": [
+        "东岸大岛南岛链",
+        "东岸大岛"
+      ],
+      "final_block_cells": {
+        "0": 48
+      },
+      "engine_elev_m_median": 431,
+      "no": 10
+    },
+    {
+      "kind": "extra",
+      "area_Mkm2": 0.06,
+      "lon": -26.4,
+      "lat": 9.9,
+      "near_features": [
+        "西方大湾",
+        "砂岩台地群"
+      ],
+      "final_block_cells": {
+        "0": 43
+      },
+      "engine_elev_m_median": 137,
+      "no": 11
+    }
+  ],
+  "method_class": {
+    "target_geometry": "user_override",
+    "target_elevation": "visual_only",
+    "crust": "procedural_constrained",
+    "engine_elevation": "parameterized_physics",
+    "output_sampling": "interpolated"
+  },
+  "assumptions": [
+    "正高程作为引擎陆地，沿用既有comparison口径；干洼地须另查原生宿主。",
+    "山系取设计走廊内目标陆地像元高程P90；高原盆地取原设计多边形内目标陆地像元中位数，沿用既有摘要。",
+    "示意DEM不等于名义峰高或谷底；岛区有覆盖顺序问题，极区含示意冰面；二者不作裸岩高程误差结论。",
+    "海陆重合度不能衡量山地、谷地连续性或海湾成因；没有计算气候、水文影响。"
+  ],
+  "features": [
+    {
+      "id": "M1",
+      "name": "内海北岸山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 4200,
+      "target_schematic_m": 3419,
+      "official_C2_m": 4003,
+      "candidate_C11_m": 4003,
+      "C11_minus_schematic_m": 584,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M1b",
+      "name": "长半岛山脊",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2200,
+      "target_schematic_m": 1840,
+      "official_C2_m": 961,
+      "candidate_C11_m": 961,
+      "C11_minus_schematic_m": -879,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M1c",
+      "name": "多湾半岛山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2400,
+      "target_schematic_m": 2455,
+      "official_C2_m": 1466,
+      "candidate_C11_m": 1466,
+      "C11_minus_schematic_m": -989,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M1d",
+      "name": "北岸外弧山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2200,
+      "target_schematic_m": 2006,
+      "official_C2_m": 1358,
+      "candidate_C11_m": 1358,
+      "C11_minus_schematic_m": -648,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M2",
+      "name": "内海南岸山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 3400,
+      "target_schematic_m": 2895,
+      "official_C2_m": 3246,
+      "candidate_C11_m": 3246,
+      "C11_minus_schematic_m": 351,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M3",
+      "name": "东方大高原南缘山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 6600,
+      "target_schematic_m": 5483,
+      "official_C2_m": 4945,
+      "candidate_C11_m": 4945,
+      "C11_minus_schematic_m": -538,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M3b",
+      "name": "构造结南向山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 3600,
+      "target_schematic_m": 3754,
+      "official_C2_m": 4945,
+      "candidate_C11_m": 4945,
+      "C11_minus_schematic_m": 1191,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M3c",
+      "name": "高原北缘山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 5200,
+      "target_schematic_m": 4641,
+      "official_C2_m": 4945,
+      "candidate_C11_m": 4945,
+      "C11_minus_schematic_m": 304,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M3e",
+      "name": "高原内部山脉",
+      "statistic": "走廊P90",
+      "design_nominal_m": 6000,
+      "target_schematic_m": 5061,
+      "official_C2_m": 4945,
+      "candidate_C11_m": 4945,
+      "C11_minus_schematic_m": -116,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M3f",
+      "name": "高原中北部山脉",
+      "statistic": "走廊P90",
+      "design_nominal_m": 5600,
+      "target_schematic_m": 4700,
+      "official_C2_m": 509,
+      "candidate_C11_m": 509,
+      "C11_minus_schematic_m": -4191,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M3d",
+      "name": "东湾北岸褶皱山",
+      "statistic": "走廊P90",
+      "design_nominal_m": 3200,
+      "target_schematic_m": 2611,
+      "official_C2_m": 4894,
+      "candidate_C11_m": 4894,
+      "C11_minus_schematic_m": 2283,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M4",
+      "name": "北方缝合老山",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1500,
+      "target_schematic_m": 1462,
+      "official_C2_m": 869,
+      "candidate_C11_m": 869,
+      "C11_minus_schematic_m": -593,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M5",
+      "name": "南方缝合带山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2600,
+      "target_schematic_m": 2468,
+      "official_C2_m": 2753,
+      "candidate_C11_m": 2753,
+      "C11_minus_schematic_m": 285,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M30",
+      "name": "南方走滑断层谷",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1500,
+      "target_schematic_m": 1543,
+      "official_C2_m": 2114,
+      "candidate_C11_m": 1902,
+      "C11_minus_schematic_m": 359,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M6",
+      "name": "冰川半岛山脉",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2100,
+      "target_schematic_m": 1884,
+      "official_C2_m": 1078,
+      "candidate_C11_m": 1078,
+      "C11_minus_schematic_m": -806,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M7a",
+      "name": "东南沿海山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1800,
+      "target_schematic_m": 1332,
+      "official_C2_m": 578,
+      "candidate_C11_m": 578,
+      "C11_minus_schematic_m": -754,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M7",
+      "name": "东岸山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2300,
+      "target_schematic_m": 1979,
+      "official_C2_m": 1917,
+      "candidate_C11_m": 1917,
+      "C11_minus_schematic_m": -62,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M7b",
+      "name": "东北半岛火山脊",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2800,
+      "target_schematic_m": 2378,
+      "official_C2_m": 1959,
+      "candidate_C11_m": 1959,
+      "C11_minus_schematic_m": -419,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M7c",
+      "name": "东岸半岛山脊",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1500,
+      "target_schematic_m": 1328,
+      "official_C2_m": 1268,
+      "candidate_C11_m": 1268,
+      "C11_minus_schematic_m": -60,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M8",
+      "name": "远方大陆西岸山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 5600,
+      "target_schematic_m": 4540,
+      "official_C2_m": 4094,
+      "candidate_C11_m": 4094,
+      "C11_minus_schematic_m": -446,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M8c",
+      "name": "远方大陆南段冰原山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 3000,
+      "target_schematic_m": 2807,
+      "official_C2_m": 2886,
+      "candidate_C11_m": 2886,
+      "C11_minus_schematic_m": 79,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M8b",
+      "name": "远方大陆东部古老高地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1300,
+      "target_schematic_m": 1244,
+      "official_C2_m": 883,
+      "candidate_C11_m": 883,
+      "C11_minus_schematic_m": -361,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M23",
+      "name": "远方大陆北缘山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2500,
+      "target_schematic_m": 2158,
+      "official_C2_m": 422,
+      "candidate_C11_m": 422,
+      "C11_minus_schematic_m": -1736,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M9",
+      "name": "极地横贯山脉",
+      "statistic": "走廊P90",
+      "design_nominal_m": 3400,
+      "target_schematic_m": 3237,
+      "official_C2_m": 979,
+      "candidate_C11_m": 979,
+      "C11_minus_schematic_m": -2258,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M29",
+      "name": "冰原长半岛山脊",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2600,
+      "target_schematic_m": 2123,
+      "official_C2_m": 1723,
+      "candidate_C11_m": 1723,
+      "C11_minus_schematic_m": -400,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M28",
+      "name": "极地半岛山脊",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2400,
+      "target_schematic_m": 2176,
+      "official_C2_m": 2062,
+      "candidate_C11_m": 2062,
+      "C11_minus_schematic_m": -114,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M10",
+      "name": "南方地盾裂谷",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2400,
+      "target_schematic_m": 2190,
+      "official_C2_m": 1580,
+      "candidate_C11_m": 1580,
+      "C11_minus_schematic_m": -610,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M22",
+      "name": "南方火山高地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2000,
+      "target_schematic_m": 1987,
+      "official_C2_m": 1842,
+      "candidate_C11_m": 1842,
+      "C11_minus_schematic_m": -145,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M11",
+      "name": "东北山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2000,
+      "target_schematic_m": 1894,
+      "official_C2_m": 1338,
+      "candidate_C11_m": 1338,
+      "C11_minus_schematic_m": -556,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M12",
+      "name": "东南半岛山脊",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2400,
+      "target_schematic_m": 2088,
+      "official_C2_m": 1599,
+      "candidate_C11_m": 1599,
+      "C11_minus_schematic_m": -489,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M13",
+      "name": "海峡北岸山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2600,
+      "target_schematic_m": 2269,
+      "official_C2_m": 1056,
+      "candidate_C11_m": 1964,
+      "C11_minus_schematic_m": -305,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M31",
+      "name": "西口弧形山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2800,
+      "target_schematic_m": 2073,
+      "official_C2_m": 982,
+      "candidate_C11_m": 2092,
+      "C11_minus_schematic_m": 19,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M13b",
+      "name": "西北地盾古山",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1000,
+      "target_schematic_m": 961,
+      "official_C2_m": 927,
+      "candidate_C11_m": 927,
+      "C11_minus_schematic_m": -34,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M14",
+      "name": "南端褶皱山",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1800,
+      "target_schematic_m": 1598,
+      "official_C2_m": 560,
+      "candidate_C11_m": 560,
+      "C11_minus_schematic_m": -1038,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M15",
+      "name": "中央山系",
+      "statistic": "走廊P90",
+      "design_nominal_m": 4200,
+      "target_schematic_m": 3686,
+      "official_C2_m": 4401,
+      "candidate_C11_m": 4401,
+      "C11_minus_schematic_m": 715,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M15b",
+      "name": "北部断块山",
+      "statistic": "走廊P90",
+      "design_nominal_m": 3000,
+      "target_schematic_m": 2797,
+      "official_C2_m": 3237,
+      "candidate_C11_m": 3237,
+      "C11_minus_schematic_m": 440,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M16",
+      "name": "北方长角古山",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1000,
+      "target_schematic_m": 988,
+      "official_C2_m": 800,
+      "candidate_C11_m": 800,
+      "C11_minus_schematic_m": -188,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M17",
+      "name": "裂谷肩山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2200,
+      "target_schematic_m": 1826,
+      "official_C2_m": 3262,
+      "candidate_C11_m": 3262,
+      "C11_minus_schematic_m": 1436,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M19",
+      "name": "南方地盾半岛西缘山",
+      "statistic": "走廊P90",
+      "design_nominal_m": 1500,
+      "target_schematic_m": 1324,
+      "official_C2_m": 893,
+      "candidate_C11_m": 893,
+      "C11_minus_schematic_m": -431,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M24",
+      "name": "南洋陆块山脉",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2800,
+      "target_schematic_m": 880,
+      "official_C2_m": 2116,
+      "candidate_C11_m": 2116,
+      "C11_minus_schematic_m": 1236,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M25",
+      "name": "东方岛弧山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2400,
+      "target_schematic_m": 884,
+      "official_C2_m": 1934,
+      "candidate_C11_m": 1934,
+      "C11_minus_schematic_m": 1050,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M26",
+      "name": "东南大岛山地",
+      "statistic": "走廊P90",
+      "design_nominal_m": 2400,
+      "target_schematic_m": 900,
+      "official_C2_m": 1155,
+      "candidate_C11_m": 1155,
+      "C11_minus_schematic_m": 255,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "M27",
+      "name": "东南群岛东大岛山脊",
+      "statistic": "走廊P90",
+      "design_nominal_m": 4200,
+      "target_schematic_m": 899,
+      "official_C2_m": 4549,
+      "candidate_C11_m": 4549,
+      "C11_minus_schematic_m": 3650,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL1",
+      "name": "东方大高原",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 4700,
+      "target_schematic_m": 4623,
+      "official_C2_m": 4945,
+      "candidate_C11_m": 4945,
+      "C11_minus_schematic_m": 322,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL2",
+      "name": "南方高原",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 1300,
+      "target_schematic_m": 708,
+      "official_C2_m": 941,
+      "candidate_C11_m": 941,
+      "C11_minus_schematic_m": 233,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL3",
+      "name": "北方高原",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 1500,
+      "target_schematic_m": 736,
+      "official_C2_m": 1156,
+      "candidate_C11_m": 1156,
+      "C11_minus_schematic_m": 420,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL4",
+      "name": "东南火山高原",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 2400,
+      "target_schematic_m": 1123,
+      "official_C2_m": 1674,
+      "candidate_C11_m": 1674,
+      "C11_minus_schematic_m": 551,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL5",
+      "name": "远方大陆高原",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 3900,
+      "target_schematic_m": 3894,
+      "official_C2_m": 3445,
+      "candidate_C11_m": 3445,
+      "C11_minus_schematic_m": -449,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL6",
+      "name": "火山隆起",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 1100,
+      "target_schematic_m": 789,
+      "official_C2_m": 762,
+      "candidate_C11_m": 762,
+      "C11_minus_schematic_m": -27,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL7",
+      "name": "砂岩台地群",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 1500,
+      "target_schematic_m": 1500,
+      "official_C2_m": 823,
+      "candidate_C11_m": 823,
+      "C11_minus_schematic_m": -677,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "PL8",
+      "name": "南方喀斯特高原",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 1400,
+      "target_schematic_m": 795,
+      "official_C2_m": 4945,
+      "candidate_C11_m": 4945,
+      "C11_minus_schematic_m": 4150,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "B1",
+      "name": "中央盆地",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 300,
+      "target_schematic_m": 407,
+      "official_C2_m": 346,
+      "candidate_C11_m": 346,
+      "C11_minus_schematic_m": -61,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "B2",
+      "name": "洲 D 内陆盆地",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 300,
+      "target_schematic_m": 324,
+      "official_C2_m": 350,
+      "candidate_C11_m": 350,
+      "C11_minus_schematic_m": 26,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "B3",
+      "name": "北方大低地",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 120,
+      "target_schematic_m": 306,
+      "official_C2_m": 255,
+      "candidate_C11_m": 255,
+      "C11_minus_schematic_m": -51,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "B4",
+      "name": "远方大陆东部大盆地",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 150,
+      "target_schematic_m": 351,
+      "official_C2_m": 234,
+      "candidate_C11_m": 234,
+      "C11_minus_schematic_m": -117,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "B5",
+      "name": "死海式洼地",
+      "statistic": "多边形中位数",
+      "design_nominal_m": -400,
+      "target_schematic_m": -2,
+      "official_C2_m": 1688,
+      "candidate_C11_m": 1024,
+      "C11_minus_schematic_m": 1026,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    },
+    {
+      "id": "B6",
+      "name": "红层盆地",
+      "statistic": "多边形中位数",
+      "design_nominal_m": 450,
+      "target_schematic_m": 438,
+      "official_C2_m": 4945,
+      "candidate_C11_m": 4945,
+      "C11_minus_schematic_m": 4507,
+      "caveat": "示意高度非名义峰顶/谷底；岛区覆盖与极地冰面须单独解释"
+    }
+  ],
+  "source_sha256": {
+    "config/design/final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "data/worlds/design_v2/design_v2_forward_v2_0Ma_1024x512.nc": "41fe0a46e8c2fdc46849f1faba6858303225422310970d9b908fd34d7b8f2b4e",
+    ".cache/u35_c11/progressive/world.nc": "831ef8da47dda973898d5c4acc2daf9417e33a5fcb06ff4fc1f98040e983708f",
+    "data/worlds/design_v2/forward_v2.json": "d58f0447abc80820c88cbc1bee5053314d9a2512c9e21568706f12261a88588b",
+    "data/worlds/design_v2/candidates/u35_c11_progressive/forward_v2.json": "d952be7cc14e70d033ecdbea113d7abc88969a6738fb026b6e2e955b904a5fc7"
+  },
+  "report_code_base": "46f8e6a27d9147a2f27bf379fe2248bc66d12868"
+}
