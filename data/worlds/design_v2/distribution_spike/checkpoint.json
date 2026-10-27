@@ -1,0 +1,43 @@
+{
+  "scope": "U36-S1合成分配方法小试；参照世界为未修改的C11持续候选",
+  "tests": {
+    "command": "python -m pytest tests/tectonics/test_distribution_spike.py tests/tectonics/test_engine.py",
+    "passed": 47,
+    "warnings": 8,
+    "elapsed_s": 23.74
+  },
+  "reference_figures": {
+    "path": "figures/stage1/u36_s1_reference_c11",
+    "count": 29,
+    "elapsed_s_rounded": 59,
+    "metrics_equal_to_existing_C11_excluding_timings": true,
+    "b_verdict_equal": true
+  },
+  "reference_world_nc": {
+    "path": "data/worlds/design_v2/candidates/u35_c11_progressive/design_v2_forward_v2_0Ma_u35_c11_progressive_1024x512.nc",
+    "sha256": "831ef8da47dda973898d5c4acc2daf9417e33a5fcb06ff4fc1f98040e983708f",
+    "size_bytes": 16282483
+  },
+  "dependency_check": {
+    "checked_date": "2026-10-27",
+    "installed_landlab": "2.10.1",
+    "latest_release": "v2.11.0",
+    "release_date": "2026-08-31",
+    "license": "MIT",
+    "upstream_latest_commit_date": "2026-10-26",
+    "windows_execution_verified": true,
+    "dependency_upgraded": false
+  },
+  "review_path": "reviews/stage1_2026-10-27_4.md",
+  "stage1_status": "未通过；小试不关闭真实世界问题",
+  "review": {
+    "actual_images_viewed": 34,
+    "serious": 1,
+    "general": 6,
+    "recommended_as_method_checkpoint": true,
+    "recommended_as_improved_world_or_stage_acceptance": false,
+    "independent_report_characters": 7486,
+    "independent_report_sha256": "18489ec5284a2012c102e39aa7695426bd088aad70c9f2bd3ce7306869a152b7",
+    "restored_verbatim_after_usage_interruption": true
+  }
+}
