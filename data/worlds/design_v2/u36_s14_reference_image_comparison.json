@@ -1,0 +1,530 @@
+{
+  "checkpoint": "U36-S14",
+  "method_class": "visual_only",
+  "comparison": "S13 and S14 frozen standard PNG bytes",
+  "figures": [
+    {
+      "path": "01_elevation_global.png",
+      "S13_sha256": "9c7614de8c193b88cebe21dac415a7ae266ecdcd066f03f12348c90464a45c6a",
+      "S14_sha256": "4763d8bcfec238e4e62c42678bffdfe1c68590689408207d0630f00a53722aff",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2400,
+        1357
+      ],
+      "different_pixel_bbox": [
+        1229,
+        1189,
+        1259,
+        1201
+      ],
+      "different_pixel_count": 245
+    },
+    {
+      "path": "02_elevation_north_polar.png",
+      "S13_sha256": "8decabca6e50831493e43c3dccf1005a162a7fc09d15f1a5e662e709fd10e30f",
+      "S14_sha256": "8a14f57be3c30b57e6f89847ef644fc389f709fb4502989bad5a825c4dad9fb3",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1500,
+        1729
+      ],
+      "different_pixel_bbox": [
+        475,
+        1472,
+        505,
+        1484
+      ],
+      "different_pixel_count": 251
+    },
+    {
+      "path": "03_elevation_south_polar.png",
+      "S13_sha256": "137bd1b12c9d32fa9751a5b3221bda0030f7022c0595ed03a56144bf1fc7baef",
+      "S14_sha256": "38dbd725debe40e925b7f2d60c2d167564103a11d0e73f9f2d0a5cae31e114fd",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1500,
+        1729
+      ],
+      "different_pixel_bbox": [
+        475,
+        1472,
+        505,
+        1484
+      ],
+      "different_pixel_count": 251
+    },
+    {
+      "path": "04_landmass_units.png",
+      "S13_sha256": "f89ec63f03eb3290682a6de11c8e4dc20d11a4013a415bdd12614931d5e58f96",
+      "S14_sha256": "05c551f348e55f334f5d155fe0a98160a4842c10eb6be282d9ffcd6c8725e395",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2400,
+        1338
+      ],
+      "different_pixel_bbox": [
+        1229,
+        1170,
+        1259,
+        1182
+      ],
+      "different_pixel_count": 245
+    },
+    {
+      "path": "05_coast_morphology.png",
+      "S13_sha256": "9d5dd2cac0670274ba0d395074551de0efe14c8e66463864509511d1eac14cd6",
+      "S14_sha256": "cbc3528b6faabf176c754778f4e80f3c25f11773b86dce37d49ced673fb366f3",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2400,
+        1338
+      ],
+      "different_pixel_bbox": [
+        1229,
+        1170,
+        1259,
+        1182
+      ],
+      "different_pixel_count": 245
+    },
+    {
+      "path": "06_distance_to_sea.png",
+      "S13_sha256": "e1fd56c4a133c8b12add641e7c404ef441b7771501d8a749c3023f2fd5a75336",
+      "S14_sha256": "8133fea31a6d189f2e700bfeda8b261c422590433d7d5844173259b3f899d4f9",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2400,
+        1357
+      ],
+      "different_pixel_bbox": [
+        1229,
+        1189,
+        1259,
+        1201
+      ],
+      "different_pixel_count": 245
+    },
+    {
+      "path": "07_slope.png",
+      "S13_sha256": "6d38ac175342f57a616ef277291b108a6b32e3384f999f7d778b8642abd897a8",
+      "S14_sha256": "d485ea9ab7884f7f6bd3f47a305d79768ad6dfb666eb9634abaa539de20d8f80",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2400,
+        1357
+      ],
+      "different_pixel_bbox": [
+        1229,
+        1189,
+        1259,
+        1201
+      ],
+      "different_pixel_count": 245
+    },
+    {
+      "path": "08_mountain_systems.png",
+      "S13_sha256": "eb37c69a3fdd4dcef8eb94537b3270c9dd943d5a7467a5e6e933a4b882de9136",
+      "S14_sha256": "418906de676ee5b41bd16757f1df2115710e6238b9c7663f23251ae01bb2ed36",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2400,
+        1338
+      ],
+      "different_pixel_bbox": [
+        1229,
+        1170,
+        1259,
+        1182
+      ],
+      "different_pixel_count": 245
+    },
+    {
+      "path": "09_hypsometry.png",
+      "S13_sha256": "d69115bf05b6963143e13fe8532f0ea534b071bf9e0019a4b33e06afab45c1aa",
+      "S14_sha256": "40dc6d899c93b5c9bfc7636a789f4ca83f2e3c7182b72938068223a770b308fd",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1820,
+        871
+      ],
+      "different_pixel_bbox": [
+        106,
+        726,
+        132,
+        737
+      ],
+      "different_pixel_count": 206
+    },
+    {
+      "path": "10_slope_distance_mountains.png",
+      "S13_sha256": "29f59df867c4b034b98f5db5805cd18ac392ef03b4e3714a45d770c08d43cbcc",
+      "S14_sha256": "b422fc52129f78379d36d176e0f17e318f33ae795aa71e6d4fa886169f929de2",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2340,
+        845
+      ],
+      "different_pixel_bbox": [
+        1076,
+        715,
+        1101,
+        726
+      ],
+      "different_pixel_count": 209
+    },
+    {
+      "path": "11_coast_vs_earth.png",
+      "S13_sha256": "2ad69de0ec487380267ae0ce3fe51b87640eeee1bafb7398a95b671828a4c6e6",
+      "S14_sha256": "23cc6359d1bdb260aadcfd989366a19ff13cd66aa67ff8a415f73e80876423c7",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2340,
+        1495
+      ],
+      "different_pixel_bbox": [
+        1076,
+        1362,
+        1102,
+        1373
+      ],
+      "different_pixel_count": 216
+    },
+    {
+      "path": "12_coast_complexity_spread.png",
+      "S13_sha256": "14de71db3e03286596925770e05bed9186f4d8ac973d749ca42d7a0b63346dbb",
+      "S14_sha256": "db227c7b36f474ad83b514708884c9c82bc54064a7dfb51b0f15e7fbf1510268",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        2340,
+        1536
+      ],
+      "different_pixel_bbox": [
+        1076,
+        1402,
+        1102,
+        1413
+      ],
+      "different_pixel_count": 207
+    },
+    {
+      "path": "13_plates_boundaries.png",
+      "S13_sha256": "5f6027569dc73c0e981695c2809cf6368550294a4305b8016345831848a026f4",
+      "S14_sha256": "fec091ab325a61b8a981f91bdffe31a14d9b34fd7443a5846ff6d836cd463b8a",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1760,
+        1067
+      ],
+      "different_pixel_bbox": [
+        843,
+        946,
+        863,
+        954
+      ],
+      "different_pixel_count": 138
+    },
+    {
+      "path": "regions/r1_main_inland_sea.png",
+      "S13_sha256": "18700db00b9e4dac464e85836e7ee38ac3848382ed1bf01751d05e8fad7cb8d7",
+      "S14_sha256": "3cbfe950ceba49f1d427946ddffff0444222fdf6856966568655e7882c7e8a28",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        893
+      ],
+      "different_pixel_bbox": [
+        82,
+        760,
+        103,
+        768
+      ],
+      "different_pixel_count": 140
+    },
+    {
+      "path": "regions/r1_main_inland_sea_tectonics.png",
+      "S13_sha256": "2d192bc86c5a3f95942873d64f1104691492483fbd1bd9d6e5fc85a8656d914c",
+      "S14_sha256": "a05a3dbc6cad73eaca8562afd233b866191f51d5e143fcaf1af697e85ae2576a",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 129
+    },
+    {
+      "path": "regions/r2_inland_sea_complex_coast.png",
+      "S13_sha256": "5a1533e001a4347df32316555378b93577e333f049b163059f7164acb06be7aa",
+      "S14_sha256": "f489f38d9af66c2d83fda77821d0d2a6f14d367f913e0086fa09b81f4ab93a54",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        893
+      ],
+      "different_pixel_bbox": [
+        82,
+        760,
+        103,
+        768
+      ],
+      "different_pixel_count": 140
+    },
+    {
+      "path": "regions/r2_inland_sea_complex_coast_tectonics.png",
+      "S13_sha256": "c44a5def11c3dd95ed0684f5b8ce57ee00675f34db085ad629cafa394ab5d453",
+      "S14_sha256": "07f1ff30f708b16d29f9b1887aa43525b5d4d1a179327038a1dec97a62caa665",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 129
+    },
+    {
+      "path": "regions/r3_north_coast.png",
+      "S13_sha256": "d87e67fa762f603dd580d8b30933cdb5442d6f7946cd7e84ba323b568f3575f7",
+      "S14_sha256": "79d36d0ea9d628fa1a4a8a03edb5b036a80d4d966889aa3821983df62e9e34a2",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        893
+      ],
+      "different_pixel_bbox": [
+        82,
+        760,
+        103,
+        768
+      ],
+      "different_pixel_count": 140
+    },
+    {
+      "path": "regions/r3_north_coast_tectonics.png",
+      "S13_sha256": "2c770ecf138d810f67b170665950ffe4f13bb09258d56a6602a5de8f76b3a59b",
+      "S14_sha256": "5cd7cba6b8fe5d498db27ad75e1a3acf891ce1bb7293cc00832067f7858484a8",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 129
+    },
+    {
+      "path": "regions/r4_polar_coast.png",
+      "S13_sha256": "39b035368fd1130bcca5e6d290d30dbe48509e6f7e649d1d5c862bfc9944971e",
+      "S14_sha256": "6676a9e2f3f4b1cab83e4450c0e93a09551c91bc9c4b9409848bd29bf7425d29",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        893
+      ],
+      "different_pixel_bbox": [
+        82,
+        760,
+        103,
+        768
+      ],
+      "different_pixel_count": 140
+    },
+    {
+      "path": "regions/r4_polar_coast_tectonics.png",
+      "S13_sha256": "cf78c906727c7f015c9db87d914de9084402d4146ead1d9c635d30144d17be59",
+      "S14_sha256": "42a2b0dbc280c193e76dfb4665246083e268c918510da82912be1588f2efa01c",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 130
+    },
+    {
+      "path": "regions/r5_isthmus.png",
+      "S13_sha256": "b02d0f954c2aad2db61ee22b33d42b1fb546b3a83235f99136d2dfb6bdbc529e",
+      "S14_sha256": "39054691c87ae274d2310193f8e8694fb95fbbcdea3090db08a8e03eaf67ad2d",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        893
+      ],
+      "different_pixel_bbox": [
+        83,
+        760,
+        103,
+        768
+      ],
+      "different_pixel_count": 133
+    },
+    {
+      "path": "regions/r5_isthmus_tectonics.png",
+      "S13_sha256": "caa66fad628802dc81cc1193ad7e6ba12b75064e8873f78d1100801bc97b9fa1",
+      "S14_sha256": "58bb77ce52c4a2fb72300d5cb82bb840fed9187dbf543ae9ebc01fc02eefefef",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 130
+    },
+    {
+      "path": "regions/r6_smoothest_coast.png",
+      "S13_sha256": "3f66a5c2f653b556b290f9005a12225e70a6114fbc8bf1745d8a576d0e089111",
+      "S14_sha256": "e215ef1a88bb10e223620f2c4b672cba463d0cf91cae8b536468aa16497e0fb7",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        892
+      ],
+      "different_pixel_bbox": [
+        83,
+        759,
+        103,
+        767
+      ],
+      "different_pixel_count": 133
+    },
+    {
+      "path": "regions/r6_smoothest_coast_tectonics.png",
+      "S13_sha256": "34eca3b15daf60a77fa7b86416eb9ccfe2f9d2d1676454fcee84c9bee4c05c49",
+      "S14_sha256": "db11d275daa4a2a193c2b7596f9f4674cf4c768cd0fdfdd895fb63cc4c863ed4",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 130
+    },
+    {
+      "path": "regions/r7_archipelago.png",
+      "S13_sha256": "13eb01c61a871bf308613c77e85e5fbb3ac5ccd923381469b9bfd417d3d3789d",
+      "S14_sha256": "5e2a368a3c96dc83862873793e573c6d26ddcb3d103ca5a13d4288a55ec43fe0",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        893
+      ],
+      "different_pixel_bbox": [
+        83,
+        760,
+        103,
+        768
+      ],
+      "different_pixel_count": 133
+    },
+    {
+      "path": "regions/r7_archipelago_tectonics.png",
+      "S13_sha256": "c082c3c771b80aa7c17bbcdd2235833efc29637e076dce02a8539587a2d3b028",
+      "S14_sha256": "eac31d1be1418e4040c6c8914f9027bd20bb33a05c2d30b2126a3d7c9ec27b94",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 130
+    },
+    {
+      "path": "regions/r8_random_coast.png",
+      "S13_sha256": "110b28340689769d3553d07e0a3e4470180448201be40dac9221571e5ea9e48a",
+      "S14_sha256": "d5cebb112c46908879ba3ed1a51f5d077b8f36131dc59a01404f2cc098692caa",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1540,
+        893
+      ],
+      "different_pixel_bbox": [
+        83,
+        760,
+        103,
+        768
+      ],
+      "different_pixel_count": 133
+    },
+    {
+      "path": "regions/r8_random_coast_tectonics.png",
+      "S13_sha256": "d71cd6f3492814dc971897fe2646a398836c80024b2279f3b369bcb0e6e4967c",
+      "S14_sha256": "33af726ede4c4e6c8a40d78b5e8ca2384a48c13058d628fe2ae5dd5129922c31",
+      "bytes_identical": false,
+      "same_shape": true,
+      "pixel_size": [
+        1300,
+        1369
+      ],
+      "different_pixel_bbox": [
+        106,
+        1232,
+        125,
+        1240
+      ],
+      "different_pixel_count": 130
+    }
+  ],
+  "timestamp_note": "标准图页脚包含实际生成年月日时分；S13与S14时间不同，不能宣称PNG逐字相同。差异位置以全像素比较的bbox记录，不修改图像或指标。"
+}

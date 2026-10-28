@@ -1,0 +1,871 @@
+{
+  "checkpoint": "U36-S14",
+  "method_class": "procedural_constrained",
+  "recalculations": [
+    {
+      "tag": "selected_l0_b512_q32",
+      "times_checked": 141,
+      "maximum_saved_area_difference_km2": 3.1528202271147165e-10,
+      "maximum_source_scheme_volume_drift_km3": 2.7284841053187847e-12,
+      "maximum_saved_L1_difference": 0.0,
+      "minimum_fan_area_km2": 0.008211920917572273,
+      "maximum_all_times_L1_order_sensitivity": 4.670372681996613e-06,
+      "maximum_all_times_boundary_choice_H_sensitivity": 1.200751106772493e-07
+    },
+    {
+      "tag": "selected_l1_b256_q32",
+      "times_checked": 141,
+      "maximum_saved_area_difference_km2": 4.5074699528413475e-10,
+      "maximum_source_scheme_volume_drift_km3": 9.094947017729282e-13,
+      "maximum_saved_L1_difference": 0.0,
+      "minimum_fan_area_km2": 0.004105961053771936,
+      "maximum_all_times_L1_order_sensitivity": 1.3021188842184507e-06,
+      "maximum_all_times_boundary_choice_H_sensitivity": 2.5494156944255296e-07
+    },
+    {
+      "tag": "selected_l2_b128_q32",
+      "times_checked": 141,
+      "maximum_saved_area_difference_km2": 5.959226445639842e-10,
+      "maximum_source_scheme_volume_drift_km3": 1.8189894035458565e-12,
+      "maximum_saved_L1_difference": 0.0,
+      "minimum_fan_area_km2": 0.002052980601126619,
+      "maximum_all_times_L1_order_sensitivity": 4.204428442818606e-07,
+      "maximum_all_times_boundary_choice_H_sensitivity": 5.082623823497313e-07
+    },
+    {
+      "tag": "full_l0_b64_q8",
+      "times_checked": 141,
+      "maximum_saved_area_difference_km2": 7.563016879430506e-10,
+      "maximum_source_scheme_volume_drift_km3": 5.820766091346741e-11,
+      "maximum_saved_L1_difference": 0.0,
+      "minimum_fan_area_km2": 0.0019133626863977622,
+      "maximum_all_times_L1_order_sensitivity": 5.910974786179106e-06,
+      "maximum_all_times_boundary_choice_H_sensitivity": 2.2345495969297214e-06
+    }
+  ],
+  "full_source_summary": {
+    "sources": [
+      {
+        "uid": 566,
+        "initial_volume_km3": 112714.91155757465,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -4.839821708557679e-05,
+        "reference_volume_relative_difference": -3.862125107167991e-06,
+        "L1_thickness_error": 0.002366013256676237,
+        "old_center_L1_thickness_error": 0.0022216540175549115
+      },
+      {
+        "uid": 2732,
+        "initial_volume_km3": 90511.74921349892,
+        "source_known_cells": 20,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": -0.0003917365512535742,
+        "reference_volume_relative_difference": -1.219004602137641e-05,
+        "L1_thickness_error": 0.0014878564995057938,
+        "old_center_L1_thickness_error": 0.001354235508389424
+      },
+      {
+        "uid": 4161,
+        "initial_volume_km3": 109656.06448976634,
+        "source_known_cells": 20,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.00032607817471652645,
+        "reference_volume_relative_difference": 6.7974761468470035e-06,
+        "L1_thickness_error": 0.002317464852601484,
+        "old_center_L1_thickness_error": 0.0022458110097112655
+      },
+      {
+        "uid": 4569,
+        "initial_volume_km3": 100270.91742632279,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -0.0008271864598906609,
+        "reference_volume_relative_difference": -5.834534614113096e-06,
+        "L1_thickness_error": 0.002259326334724148,
+        "old_center_L1_thickness_error": 0.002085967945035167
+      },
+      {
+        "uid": 6160,
+        "initial_volume_km3": 24132.197506187316,
+        "source_known_cells": 3,
+        "scheme_relative_drift": -3.3306690738754696e-16,
+        "old_endpoint_center_relative_difference": -3.487929979306692e-05,
+        "reference_volume_relative_difference": 9.29171793062622e-07,
+        "L1_thickness_error": 0.0007699674685382379,
+        "old_center_L1_thickness_error": 0.0007708550381875616
+      },
+      {
+        "uid": 12132,
+        "initial_volume_km3": 1323.7491839024929,
+        "source_known_cells": 2,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -0.0014463560629958128,
+        "reference_volume_relative_difference": 1.5942764528986686e-05,
+        "L1_thickness_error": 0.0007254281561892649,
+        "old_center_L1_thickness_error": 0.0007327062972358489
+      },
+      {
+        "uid": 13176,
+        "initial_volume_km3": 133363.146579859,
+        "source_known_cells": 52,
+        "scheme_relative_drift": -4.440892098500626e-16,
+        "old_endpoint_center_relative_difference": 0.00019067581337339767,
+        "reference_volume_relative_difference": -9.492680371758766e-07,
+        "L1_thickness_error": 0.0014165143301497175,
+        "old_center_L1_thickness_error": 0.00137522150362676
+      },
+      {
+        "uid": 14011,
+        "initial_volume_km3": 95204.37487322034,
+        "source_known_cells": 24,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -0.000577685853481058,
+        "reference_volume_relative_difference": 1.0906770030016943e-05,
+        "L1_thickness_error": 0.0017826008247663957,
+        "old_center_L1_thickness_error": 0.001668124440191164
+      },
+      {
+        "uid": 16733,
+        "initial_volume_km3": 98224.6939978053,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 0.0001731472132815437,
+        "reference_volume_relative_difference": 4.848360037223998e-06,
+        "L1_thickness_error": 0.0015784253651746378,
+        "old_center_L1_thickness_error": 0.0014597192071400561
+      },
+      {
+        "uid": 16734,
+        "initial_volume_km3": 14211.975642055553,
+        "source_known_cells": 10,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 0.0009509927857878075,
+        "reference_volume_relative_difference": 3.292523330489239e-05,
+        "L1_thickness_error": 0.0016513877053954459,
+        "old_center_L1_thickness_error": 0.001982275900772692
+      },
+      {
+        "uid": 17521,
+        "initial_volume_km3": 20723.78675690814,
+        "source_known_cells": 6,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0004461059062892403,
+        "reference_volume_relative_difference": -3.634078474901159e-05,
+        "L1_thickness_error": 0.0022102043189180165,
+        "old_center_L1_thickness_error": 0.001919868189159021
+      },
+      {
+        "uid": 17718,
+        "initial_volume_km3": 129360.39193962545,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0004885889822616729,
+        "reference_volume_relative_difference": -1.2881688526200641e-05,
+        "L1_thickness_error": 0.0014074251167026206,
+        "old_center_L1_thickness_error": 0.0013243989409277303
+      },
+      {
+        "uid": 21809,
+        "initial_volume_km3": 14521.84533969604,
+        "source_known_cells": 3,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.0011673538616430168,
+        "reference_volume_relative_difference": -3.276168712340599e-05,
+        "L1_thickness_error": 0.0038761274508113904,
+        "old_center_L1_thickness_error": 0.003727277650485688
+      },
+      {
+        "uid": 22840,
+        "initial_volume_km3": 75758.45956017279,
+        "source_known_cells": 17,
+        "scheme_relative_drift": -2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 0.0002415008892582282,
+        "reference_volume_relative_difference": -2.8301361292282223e-06,
+        "L1_thickness_error": 0.0018815525598795454,
+        "old_center_L1_thickness_error": 0.0017124324038764523
+      },
+      {
+        "uid": 24420,
+        "initial_volume_km3": 19679.216830108016,
+        "source_known_cells": 10,
+        "scheme_relative_drift": -3.3306690738754696e-16,
+        "old_endpoint_center_relative_difference": 0.0010108970117561622,
+        "reference_volume_relative_difference": -3.172977881238381e-05,
+        "L1_thickness_error": 0.0015373042019541751,
+        "old_center_L1_thickness_error": 0.0020147444207105993
+      },
+      {
+        "uid": 24452,
+        "initial_volume_km3": 102913.96164317556,
+        "source_known_cells": 40,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": 4.847767973426009e-05,
+        "reference_volume_relative_difference": 2.896117214934435e-07,
+        "L1_thickness_error": 0.001060187429984544,
+        "old_center_L1_thickness_error": 0.0009774226192980579
+      },
+      {
+        "uid": 25431,
+        "initial_volume_km3": 29897.692857340375,
+        "source_known_cells": 7,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.0005843973405361691,
+        "reference_volume_relative_difference": 2.6823343091120222e-05,
+        "L1_thickness_error": 0.001840838288408233,
+        "old_center_L1_thickness_error": 0.0015696644669455622
+      },
+      {
+        "uid": 30093,
+        "initial_volume_km3": 118518.35782277431,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -0.0005741898524628253,
+        "reference_volume_relative_difference": -1.5951285463611242e-06,
+        "L1_thickness_error": 0.0012007901658921012,
+        "old_center_L1_thickness_error": 0.0011664012347334131
+      },
+      {
+        "uid": 43200,
+        "initial_volume_km3": 16329.012496155448,
+        "source_known_cells": 7,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 0.0008704199613300823,
+        "reference_volume_relative_difference": -8.099532739502813e-06,
+        "L1_thickness_error": 0.000886819472737554,
+        "old_center_L1_thickness_error": 0.0008584595461074155
+      },
+      {
+        "uid": 43378,
+        "initial_volume_km3": 20164.331837830156,
+        "source_known_cells": 4,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.0001141498085507342,
+        "reference_volume_relative_difference": -9.706716097568346e-09,
+        "L1_thickness_error": 0.0005713511102158747,
+        "old_center_L1_thickness_error": 0.0005711775206028975
+      },
+      {
+        "uid": 48346,
+        "initial_volume_km3": 100225.35726435782,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 0.0009549771131882601,
+        "reference_volume_relative_difference": 9.478101867799182e-06,
+        "L1_thickness_error": 0.0029818769495218262,
+        "old_center_L1_thickness_error": 0.002824273575733399
+      },
+      {
+        "uid": 51397,
+        "initial_volume_km3": 79925.05031859955,
+        "source_known_cells": 19,
+        "scheme_relative_drift": 4.440892098500626e-16,
+        "old_endpoint_center_relative_difference": -0.0011333791991223752,
+        "reference_volume_relative_difference": 2.2492541069674132e-06,
+        "L1_thickness_error": 0.0027028500594730945,
+        "old_center_L1_thickness_error": 0.0027041168395298743
+      },
+      {
+        "uid": 51403,
+        "initial_volume_km3": 92915.48251940456,
+        "source_known_cells": 18,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": -0.0008035937955342964,
+        "reference_volume_relative_difference": 3.2721230482923858e-06,
+        "L1_thickness_error": 0.0018813885037967275,
+        "old_center_L1_thickness_error": 0.0019126417610042207
+      },
+      {
+        "uid": 51405,
+        "initial_volume_km3": 118539.04362148582,
+        "source_known_cells": 64,
+        "scheme_relative_drift": 4.440892098500626e-16,
+        "old_endpoint_center_relative_difference": -2.1017618891505663e-05,
+        "reference_volume_relative_difference": -7.247122140174866e-07,
+        "L1_thickness_error": 0.0010691160796962144,
+        "old_center_L1_thickness_error": 0.001024223284724479
+      },
+      {
+        "uid": 52268,
+        "initial_volume_km3": 91533.04429546626,
+        "source_known_cells": 19,
+        "scheme_relative_drift": -3.3306690738754696e-16,
+        "old_endpoint_center_relative_difference": 0.0012914867103341887,
+        "reference_volume_relative_difference": -1.6262400006850086e-05,
+        "L1_thickness_error": 0.001290351399006759,
+        "old_center_L1_thickness_error": 0.0019933417712777748
+      },
+      {
+        "uid": 55442,
+        "initial_volume_km3": 101553.68102906975,
+        "source_known_cells": 21,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.00017000015204171604,
+        "reference_volume_relative_difference": 8.149118334355165e-06,
+        "L1_thickness_error": 0.0019109596149950692,
+        "old_center_L1_thickness_error": 0.001768131763236604
+      },
+      {
+        "uid": 55449,
+        "initial_volume_km3": 132796.23497121912,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.00035810666968760785,
+        "reference_volume_relative_difference": -8.938261236712819e-07,
+        "L1_thickness_error": 0.002589846123800222,
+        "old_center_L1_thickness_error": 0.002452365200922025
+      },
+      {
+        "uid": 55450,
+        "initial_volume_km3": 103025.57775891271,
+        "source_known_cells": 21,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.00040710820073841525,
+        "reference_volume_relative_difference": -8.399750480725388e-06,
+        "L1_thickness_error": 0.002399310164780555,
+        "old_center_L1_thickness_error": 0.002150914453863977
+      },
+      {
+        "uid": 60859,
+        "initial_volume_km3": 104912.23434873413,
+        "source_known_cells": 56,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -6.373305902040993e-05,
+        "reference_volume_relative_difference": -1.61812316834542e-06,
+        "L1_thickness_error": 0.0012989509141521814,
+        "old_center_L1_thickness_error": 0.0012887283464643744
+      },
+      {
+        "uid": 64244,
+        "initial_volume_km3": 53051.007789821095,
+        "source_known_cells": 14,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0018384057009797061,
+        "reference_volume_relative_difference": -3.4614949120270744e-05,
+        "L1_thickness_error": 0.0017530291952768404,
+        "old_center_L1_thickness_error": 0.0024819101613937694
+      },
+      {
+        "uid": 65973,
+        "initial_volume_km3": 134015.7890922489,
+        "source_known_cells": 52,
+        "scheme_relative_drift": -2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 0.00017673864574296871,
+        "reference_volume_relative_difference": -9.515429124640207e-07,
+        "L1_thickness_error": 0.0008946653125382225,
+        "old_center_L1_thickness_error": 0.0008776498967433241
+      },
+      {
+        "uid": 67113,
+        "initial_volume_km3": 97811.78504408682,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 6.9704848615348425e-06,
+        "reference_volume_relative_difference": -7.705363147536559e-08,
+        "L1_thickness_error": 0.0011069112919375964,
+        "old_center_L1_thickness_error": 0.001043316057860632
+      },
+      {
+        "uid": 71061,
+        "initial_volume_km3": 104693.55849552323,
+        "source_known_cells": 24,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.00114227492137986,
+        "reference_volume_relative_difference": -2.4444452004779293e-06,
+        "L1_thickness_error": 0.0019871138143302473,
+        "old_center_L1_thickness_error": 0.001782171302099634
+      },
+      {
+        "uid": 71686,
+        "initial_volume_km3": 99353.53201766848,
+        "source_known_cells": 40,
+        "scheme_relative_drift": -4.440892098500626e-16,
+        "old_endpoint_center_relative_difference": 0.00018157951191910549,
+        "reference_volume_relative_difference": -1.4426001178402537e-05,
+        "L1_thickness_error": 0.0018585630832807791,
+        "old_center_L1_thickness_error": 0.0018634762333893259
+      },
+      {
+        "uid": 71754,
+        "initial_volume_km3": 40860.08269623749,
+        "source_known_cells": 14,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.0005170475939563213,
+        "reference_volume_relative_difference": -1.9371238588083983e-05,
+        "L1_thickness_error": 0.0010251994461812298,
+        "old_center_L1_thickness_error": 0.0009875476505684995
+      },
+      {
+        "uid": 71757,
+        "initial_volume_km3": 105034.5087387126,
+        "source_known_cells": 52,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.00031745194920118625,
+        "reference_volume_relative_difference": -2.4756184459073793e-06,
+        "L1_thickness_error": 0.001538868792601951,
+        "old_center_L1_thickness_error": 0.0014841961249736628
+      },
+      {
+        "uid": 76269,
+        "initial_volume_km3": 133238.3488979604,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0002851070563893998,
+        "reference_volume_relative_difference": 1.5839224425384657e-06,
+        "L1_thickness_error": 0.0014651426951404365,
+        "old_center_L1_thickness_error": 0.0013513600716405397
+      },
+      {
+        "uid": 76270,
+        "initial_volume_km3": 30661.8983589177,
+        "source_known_cells": 4,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.0015331389366027848,
+        "reference_volume_relative_difference": 2.9984837340846227e-05,
+        "L1_thickness_error": 0.0012191095806203523,
+        "old_center_L1_thickness_error": 0.0019320005910152679
+      },
+      {
+        "uid": 76272,
+        "initial_volume_km3": 7329.469343028056,
+        "source_known_cells": 3,
+        "scheme_relative_drift": -3.3306690738754696e-16,
+        "old_endpoint_center_relative_difference": -0.00023407583516532604,
+        "reference_volume_relative_difference": -1.2907313117205277e-06,
+        "L1_thickness_error": 0.0006534738109814356,
+        "old_center_L1_thickness_error": 0.0006532178914260268
+      },
+      {
+        "uid": 79872,
+        "initial_volume_km3": 865.4261264994417,
+        "source_known_cells": 1,
+        "scheme_relative_drift": 6.661338147750939e-16,
+        "old_endpoint_center_relative_difference": 0.0006721753052685298,
+        "reference_volume_relative_difference": -1.6405260983010095e-07,
+        "L1_thickness_error": 0.00044318066619895553,
+        "old_center_L1_thickness_error": 0.0004432142730040543
+      },
+      {
+        "uid": 79873,
+        "initial_volume_km3": 97439.1781995978,
+        "source_known_cells": 56,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": -6.0291164721726354e-05,
+        "reference_volume_relative_difference": -1.173505001283992e-06,
+        "L1_thickness_error": 0.0013508215609434407,
+        "old_center_L1_thickness_error": 0.0012728570992571189
+      },
+      {
+        "uid": 79874,
+        "initial_volume_km3": 60810.44129159161,
+        "source_known_cells": 15,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": -0.0004593570148530013,
+        "reference_volume_relative_difference": 6.295286460789029e-06,
+        "L1_thickness_error": 0.0016343158324792926,
+        "old_center_L1_thickness_error": 0.0015613383080669712
+      },
+      {
+        "uid": 79875,
+        "initial_volume_km3": 97461.75044865042,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -4.211066139614417e-05,
+        "reference_volume_relative_difference": 1.6808898641862413e-06,
+        "L1_thickness_error": 0.0018883461755553185,
+        "old_center_L1_thickness_error": 0.001714957594672199
+      },
+      {
+        "uid": 83886,
+        "initial_volume_km3": 118429.92028445468,
+        "source_known_cells": 40,
+        "scheme_relative_drift": -3.3306690738754696e-16,
+        "old_endpoint_center_relative_difference": 7.928618110919494e-05,
+        "reference_volume_relative_difference": -9.685225338396108e-07,
+        "L1_thickness_error": 0.0014879618849176816,
+        "old_center_L1_thickness_error": 0.0013162581629306085
+      },
+      {
+        "uid": 91198,
+        "initial_volume_km3": 103082.02738244018,
+        "source_known_cells": 52,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.00031294772835188667,
+        "reference_volume_relative_difference": -1.4999695698847404e-06,
+        "L1_thickness_error": 0.0012623113852874622,
+        "old_center_L1_thickness_error": 0.0012715519688280157
+      },
+      {
+        "uid": 91202,
+        "initial_volume_km3": 54615.502219234215,
+        "source_known_cells": 17,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.00011841639985521457,
+        "reference_volume_relative_difference": -8.077701505460055e-07,
+        "L1_thickness_error": 0.0018529675820091254,
+        "old_center_L1_thickness_error": 0.0016488359115432753
+      },
+      {
+        "uid": 91203,
+        "initial_volume_km3": 64641.4131233809,
+        "source_known_cells": 18,
+        "scheme_relative_drift": -4.440892098500626e-16,
+        "old_endpoint_center_relative_difference": -0.0011559292942896482,
+        "reference_volume_relative_difference": 6.368055903260839e-06,
+        "L1_thickness_error": 0.0024230448527463237,
+        "old_center_L1_thickness_error": 0.0021997723494060857
+      },
+      {
+        "uid": 91204,
+        "initial_volume_km3": 33.97767470375004,
+        "source_known_cells": 1,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 0.0001348177127939998,
+        "reference_volume_relative_difference": -3.29006832888723e-08,
+        "L1_thickness_error": 8.763977440194049e-05,
+        "old_center_L1_thickness_error": 8.764348593722831e-05
+      },
+      {
+        "uid": 91206,
+        "initial_volume_km3": 47338.73209374506,
+        "source_known_cells": 14,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -0.00026210564923101476,
+        "reference_volume_relative_difference": -1.9672416599614273e-05,
+        "L1_thickness_error": 0.0009496925902981506,
+        "old_center_L1_thickness_error": 0.000860786175571483
+      },
+      {
+        "uid": 91207,
+        "initial_volume_km3": 89444.80811061237,
+        "source_known_cells": 21,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": -0.0005575712376278963,
+        "reference_volume_relative_difference": 7.227458812764098e-06,
+        "L1_thickness_error": 0.0015873638460164679,
+        "old_center_L1_thickness_error": 0.0014776992783304826
+      },
+      {
+        "uid": 91208,
+        "initial_volume_km3": 103100.10797784048,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 9.086314745343493e-05,
+        "reference_volume_relative_difference": -5.531760003396613e-07,
+        "L1_thickness_error": 0.001629752150775467,
+        "old_center_L1_thickness_error": 0.001481912302341917
+      },
+      {
+        "uid": 94306,
+        "initial_volume_km3": 483.1786476888715,
+        "source_known_cells": 2,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0012038490568817561,
+        "reference_volume_relative_difference": -2.9386544075915566e-07,
+        "L1_thickness_error": 0.00019376601315121682,
+        "old_center_L1_thickness_error": 0.00019381415612266484
+      },
+      {
+        "uid": 94307,
+        "initial_volume_km3": 101609.58765698805,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.00035479650589698153,
+        "reference_volume_relative_difference": 4.322810047918679e-06,
+        "L1_thickness_error": 0.0021112561006332215,
+        "old_center_L1_thickness_error": 0.0019162436400505974
+      },
+      {
+        "uid": 95080,
+        "initial_volume_km3": 128640.82826915184,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 4.440892098500626e-16,
+        "old_endpoint_center_relative_difference": -0.0002831283950441854,
+        "reference_volume_relative_difference": 1.5952687129061616e-06,
+        "L1_thickness_error": 0.0013460725972320549,
+        "old_center_L1_thickness_error": 0.0012460670226750645
+      },
+      {
+        "uid": 95088,
+        "initial_volume_km3": 130712.84056739962,
+        "source_known_cells": 64,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": 0.00010231829204565557,
+        "reference_volume_relative_difference": -5.456269909220879e-07,
+        "L1_thickness_error": 0.0011334162448027566,
+        "old_center_L1_thickness_error": 0.0011090584056623407
+      },
+      {
+        "uid": 95089,
+        "initial_volume_km3": 67061.52950975255,
+        "source_known_cells": 17,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.00025140281697255684,
+        "reference_volume_relative_difference": 1.6951517882723977e-06,
+        "L1_thickness_error": 0.0008857843503371495,
+        "old_center_L1_thickness_error": 0.0008309521582066622
+      },
+      {
+        "uid": 111035,
+        "initial_volume_km3": 38470.21408675207,
+        "source_known_cells": 10,
+        "scheme_relative_drift": -5.551115123125783e-16,
+        "old_endpoint_center_relative_difference": 0.0001176607826700593,
+        "reference_volume_relative_difference": 7.624179956255972e-07,
+        "L1_thickness_error": 0.0006911340123624534,
+        "old_center_L1_thickness_error": 0.0006896526441819247
+      },
+      {
+        "uid": 111036,
+        "initial_volume_km3": 120667.65546436608,
+        "source_known_cells": 44,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0009120255340440142,
+        "reference_volume_relative_difference": 2.4558862696810735e-05,
+        "L1_thickness_error": 0.0022908321303580256,
+        "old_center_L1_thickness_error": 0.0021145772034397645
+      },
+      {
+        "uid": 114585,
+        "initial_volume_km3": 50707.902494753966,
+        "source_known_cells": 16,
+        "scheme_relative_drift": -3.3306690738754696e-16,
+        "old_endpoint_center_relative_difference": 0.0002241576072323781,
+        "reference_volume_relative_difference": 8.217893772144436e-07,
+        "L1_thickness_error": 0.0010307478649431404,
+        "old_center_L1_thickness_error": 0.0009189980074982122
+      },
+      {
+        "uid": 114590,
+        "initial_volume_km3": 11366.772120815298,
+        "source_known_cells": 3,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.00013085710940563544,
+        "reference_volume_relative_difference": -1.4328708984878702e-06,
+        "L1_thickness_error": 0.0007118330798593558,
+        "old_center_L1_thickness_error": 0.000710873005909568
+      },
+      {
+        "uid": 114591,
+        "initial_volume_km3": 116639.40397694818,
+        "source_known_cells": 56,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -0.00015711343186719517,
+        "reference_volume_relative_difference": -3.151551939306607e-06,
+        "L1_thickness_error": 0.001008102974080078,
+        "old_center_L1_thickness_error": 0.0009780438855963847
+      },
+      {
+        "uid": 114593,
+        "initial_volume_km3": 133067.67342097306,
+        "source_known_cells": 40,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -0.00023351915674729717,
+        "reference_volume_relative_difference": -1.9484345790132807e-06,
+        "L1_thickness_error": 0.001456724622970975,
+        "old_center_L1_thickness_error": 0.0013707822283755206
+      },
+      {
+        "uid": 119908,
+        "initial_volume_km3": 85730.833897162,
+        "source_known_cells": 18,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 8.331080618173559e-05,
+        "reference_volume_relative_difference": 3.852049756059017e-06,
+        "L1_thickness_error": 0.003111231128307842,
+        "old_center_L1_thickness_error": 0.002871720032247371
+      },
+      {
+        "uid": 120002,
+        "initial_volume_km3": 90197.12620973415,
+        "source_known_cells": 21,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0004154131351439272,
+        "reference_volume_relative_difference": 3.107362613885556e-06,
+        "L1_thickness_error": 0.0022867946906342898,
+        "old_center_L1_thickness_error": 0.002087882064071243
+      },
+      {
+        "uid": 120004,
+        "initial_volume_km3": 67907.16010595934,
+        "source_known_cells": 21,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": -1.7002284527944944e-05,
+        "reference_volume_relative_difference": 1.9539186897343797e-06,
+        "L1_thickness_error": 0.0028356496230508652,
+        "old_center_L1_thickness_error": 0.0026387453877852697
+      },
+      {
+        "uid": 120015,
+        "initial_volume_km3": 24520.10973145726,
+        "source_known_cells": 10,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0002640025361579923,
+        "reference_volume_relative_difference": 0.00011793073685129052,
+        "L1_thickness_error": 0.001316210349180764,
+        "old_center_L1_thickness_error": 0.00108580487870258
+      },
+      {
+        "uid": 120016,
+        "initial_volume_km3": 65876.01677779327,
+        "source_known_cells": 19,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": 1.065673259281752e-05,
+        "reference_volume_relative_difference": 4.854034273638064e-06,
+        "L1_thickness_error": 0.0010714769940008933,
+        "old_center_L1_thickness_error": 0.0009578901308175165
+      },
+      {
+        "uid": 120021,
+        "initial_volume_km3": 98644.07408476176,
+        "source_known_cells": 40,
+        "scheme_relative_drift": -1.1102230246251565e-16,
+        "old_endpoint_center_relative_difference": 0.00024189914826155956,
+        "reference_volume_relative_difference": -2.2331073292747305e-06,
+        "L1_thickness_error": 0.0017962293225623834,
+        "old_center_L1_thickness_error": 0.0017251489095396354
+      },
+      {
+        "uid": 120042,
+        "initial_volume_km3": 98099.81694610874,
+        "source_known_cells": 48,
+        "scheme_relative_drift": 2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.0009648506596664497,
+        "reference_volume_relative_difference": 1.7443192286803466e-05,
+        "L1_thickness_error": 0.0026190062817532888,
+        "old_center_L1_thickness_error": 0.0022831788199964413
+      },
+      {
+        "uid": 137194,
+        "initial_volume_km3": 42529.52672881644,
+        "source_known_cells": 13,
+        "scheme_relative_drift": -2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.0011588978895200608,
+        "reference_volume_relative_difference": -5.8467697255926154e-06,
+        "L1_thickness_error": 0.0008568114643004061,
+        "old_center_L1_thickness_error": 0.0011662214924850654
+      },
+      {
+        "uid": 137195,
+        "initial_volume_km3": 118081.01880921007,
+        "source_known_cells": 52,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0002021897184203425,
+        "reference_volume_relative_difference": 1.9202156686937144e-07,
+        "L1_thickness_error": 0.0008998003855812522,
+        "old_center_L1_thickness_error": 0.0008376408050334862
+      },
+      {
+        "uid": 163770,
+        "initial_volume_km3": 4917.5618571501145,
+        "source_known_cells": 2,
+        "scheme_relative_drift": 1.1102230246251565e-15,
+        "old_endpoint_center_relative_difference": -0.0013224179522094426,
+        "reference_volume_relative_difference": 3.2231469160315385e-07,
+        "L1_thickness_error": 0.0005458353747898018,
+        "old_center_L1_thickness_error": 0.0005454006964472276
+      },
+      {
+        "uid": 448135,
+        "initial_volume_km3": 105.3250641261892,
+        "source_known_cells": 1,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.0008436889995908636,
+        "reference_volume_relative_difference": -2.1154822549274144e-07,
+        "L1_thickness_error": 0.00012736525138140088,
+        "old_center_L1_thickness_error": 0.00012749608884951322
+      },
+      {
+        "uid": 448142,
+        "initial_volume_km3": 31263.890560475105,
+        "source_known_cells": 18,
+        "scheme_relative_drift": 0.0,
+        "old_endpoint_center_relative_difference": 0.00027439201748080677,
+        "reference_volume_relative_difference": -1.5672392849053196e-06,
+        "L1_thickness_error": 0.0019546240181463575,
+        "old_center_L1_thickness_error": 0.001826031371713475
+      },
+      {
+        "uid": 448239,
+        "initial_volume_km3": 20566.10244451053,
+        "source_known_cells": 11,
+        "scheme_relative_drift": -2.220446049250313e-16,
+        "old_endpoint_center_relative_difference": -0.00041540264198558496,
+        "reference_volume_relative_difference": -3.857826737285741e-06,
+        "L1_thickness_error": 0.0031654144090342146,
+        "old_center_L1_thickness_error": 0.002908135802882792
+      },
+      {
+        "uid": 448261,
+        "initial_volume_km3": 479.6364128756891,
+        "source_known_cells": 1,
+        "scheme_relative_drift": 6.661338147750939e-16,
+        "old_endpoint_center_relative_difference": 0.0027381778622306285,
+        "reference_volume_relative_difference": -6.684642817056385e-07,
+        "L1_thickness_error": 0.00019230016343250826,
+        "old_center_L1_thickness_error": 0.00019235528296336824
+      },
+      {
+        "uid": 448479,
+        "initial_volume_km3": 10191.962447347465,
+        "source_known_cells": 3,
+        "scheme_relative_drift": -3.3306690738754696e-16,
+        "old_endpoint_center_relative_difference": 0.00018907236730103527,
+        "reference_volume_relative_difference": 9.390574375212069e-06,
+        "L1_thickness_error": 0.0025874882118007534,
+        "old_center_L1_thickness_error": 0.002641436087238057
+      }
+    ],
+    "FV_L1_worse_source_count": 59,
+    "old_center_L1_worse_source_count": 18
+  },
+  "related_tests_failed": 2,
+  "related_tests_passed": 47,
+  "tests_elapsed_s": 1.2,
+  "reference_metrics_identical_except_timings": true,
+  "region_windows_identical": true,
+  "protected": {
+    "config/design/final_map_v2.yaml": true,
+    "config/design/history_v2.yaml": true,
+    "config/design/history_v2_u35_c10_progressive.yaml": true,
+    "config/design/history_v2_u35_c4_strain.yaml": true,
+    "config/metrics.yaml": true,
+    "data/worlds/design_v2/forward_v2.json": true,
+    "data/worlds/design_v2/history_v2.rot": true,
+    "packages/tectonics/crust.py": true,
+    "packages/tectonics/engine.py": true,
+    "packages/tectonics/kinematics.py": true,
+    "packages/tectonics/material_audit.py": true,
+    "packages/tectonics/material_band.py": true,
+    "packages/tectonics/rotation_interpolation.py": true,
+    "packages/tectonics/source_clipping.py": true,
+    "packages/tectonics/step_audit.py": true,
+    "scripts/design_fixed_domain.py": true,
+    "scripts/design_fixed_domain_verify.py": true,
+    "scripts/design_frame_audit.py": true,
+    "scripts/design_frame_inputs.py": true,
+    "scripts/design_rotation_interpolation.py": true,
+    "scripts/design_rotation_mesh_audit.py": true,
+    "scripts/design_step_audit.py": true,
+    "scripts/design_step_audit_report.py": true,
+    "scripts/design_step_audit_verify.py": true,
+    "scripts/verify_local_checkpoint.py": true,
+    "tests/tectonics/test_material_audit.py": true,
+    "tests/tectonics/test_material_band.py": true,
+    "tests/tectonics/test_rotation_interpolation.py": true,
+    "tests/tectonics/test_source_clipping.py": true,
+    "tests/tectonics/test_step_audit.py": true,
+    "packages/tectonics/boundary_transport.py": true,
+    "scripts/design_boundary_transport.py": true,
+    "tests/tectonics/test_boundary_transport.py": true,
+    "data/worlds/design_v2/u36_s11_reference.json": true,
+    "packages/tectonics/curved_quadrature.py": true,
+    "scripts/design_curved_quadrature.py": true,
+    "tests/tectonics/test_curved_quadrature.py": true
+  },
+  "global_or_B5_coupled": false,
+  "physical_width_identified": false,
+  "default_C2_unchanged": true,
+  "scheme_conservation_is_not_independent_accuracy_test": true,
+  "report_elapsed_s": 20.38594429998193
+}

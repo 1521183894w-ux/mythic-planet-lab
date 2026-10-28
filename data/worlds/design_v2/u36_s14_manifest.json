@@ -1,0 +1,31 @@
+{
+  "checkpoint": "U36-S14",
+  "method_class": "visual_only",
+  "selected_only": false,
+  "figures": [
+    {
+      "file": "125_mean_thickness_refinement.png",
+      "title": "守恒平均厚度与场误差的细分对照",
+      "note": "四例按旧误差挑选；各档内部参照为32×32节点H0/J；均值守恒并不保证L1场误差优于中心取样。",
+      "sha256": "fd88420fc7807a3fb1fda7300b8b5694ad3c17775d0d1a87c3d66b5599ae22b5"
+    },
+    {
+      "file": "126_thickness_field.png",
+      "title": "两个跨片反例的厚度场对照",
+      "note": "均为16子单元；位置采用初始材料坐标便于对照，纵横显示比例可不同，非0Ma地形或新世界；每行同色标。",
+      "sha256": "47cc8d3bf790565d33c8b0a07a49fc8ec33c8ab3ce6752ddd5da997822b1df39"
+    },
+    {
+      "file": "127_all_source_conservation.png",
+      "title": "完整来源的守恒与场误差分开",
+      "note": "2071材料单元（1931已知厚度/140缺值）；守恒账闭合是方案性质；内部参照仅4/8阶；对数图的0仅绘至1e−12%。",
+      "sha256": "2aa1e7447e1f28cae5c3eb5b50d5bccd86733cc875c4439ab187ee9e8c033742"
+    },
+    {
+      "file": "128_full_time_reference.png",
+      "title": "全时序独立参照与场误差",
+      "note": "有限采样/同一指定运动映射；不证明连续时间、真实流变或完整物理带宽；未知厚度不填零。",
+      "sha256": "06dd5426803db231ffedcf74ceb014d1fe384c010a8644f263f06414245995b9"
+    }
+  ]
+}

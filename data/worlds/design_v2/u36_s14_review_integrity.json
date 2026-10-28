@@ -1,0 +1,24 @@
+{
+  "checkpoint": "U36-S14",
+  "method_class": "procedural_constrained",
+  "reviews": [
+    {
+      "review": "reviews/stage1_2026-10-28_9.md",
+      "original_bytes": 19734,
+      "original_sha256": "15868de812eb1a0c80aba0127cbee11067c06452be6319225ad6c708da5e9d40",
+      "original_LF_bytes": 19733,
+      "original_LF_sha256": "8726d32c94fb132ac8eac4bc01691d85383c1d19425c6aefe1cdf6cc17daf495",
+      "raw_prefix_preserved": true,
+      "LF_prefix_preserved": true
+    },
+    {
+      "review": "reviews/stage1_2026-10-28_10.md",
+      "original_bytes": 15122,
+      "original_sha256": "6be75f849ac38de5fc6c232e5276cc0b8db8a1c39a7312c0e7f52efc6a0a5488",
+      "original_LF_bytes": 15035,
+      "original_LF_sha256": "94329a9e560db6cc0b1eb3c65444d8c5196e8bce8a5c12c4d2bcfd438b01fe5f",
+      "raw_prefix_preserved": true,
+      "LF_prefix_preserved": true
+    }
+  ]
+}
