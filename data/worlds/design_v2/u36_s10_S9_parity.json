@@ -1,0 +1,12 @@
+{
+  "checkpoint": "U36-S10",
+  "method_class": "procedural_constrained",
+  "source": ".cache/u36_s9/real_0_0.25.npz",
+  "times_checked": 141,
+  "material_centers": 432,
+  "initial_coordinate_component_difference": 0.0,
+  "maximum_center_position_difference_km": 7.626307556423876e-12,
+  "maximum_J_relative_difference": 1.06855435610953e-09,
+  "reference_connectivity_from_archived_S9": true,
+  "note": "同一432中心及微斑块、同一步长、所有141时点核对；不是物理真值"
+}

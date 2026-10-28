@@ -1,0 +1,31 @@
+{
+  "identical": true,
+  "arrays_checked": 352,
+  "different_arrays": [],
+  "budget_identical": true,
+  "events_identical": true,
+  "native_state_identical": true,
+  "world_arrays_identical": true,
+  "checkpoint": "U36-S10",
+  "method_class": "procedural_constrained",
+  "fixed_domain_wkb_sha256": "7097ffed29b8ae655a2a694ac71b9feb2e8af539f7f82549d284b313043a833a",
+  "maximum_UID_initial_volume_difference_km3": 0.0,
+  "original_clip_summary": {
+    "target_area_km2": 159832.4670126031,
+    "source_area_sum_km2": 159832.46701862357,
+    "uncovered_area_km2": 7193.900383260912,
+    "noncont_area_km2": 2112.861340985718,
+    "known_cont_area_km2": 150525.70529437694,
+    "known_cont_volume_km3": 5554757.557465209,
+    "native_host_count": 78,
+    "candidate_count": 356,
+    "max_full_host_area_error_km2": 1.261782927031163e-07,
+    "method_class": "procedural_constrained",
+    "geometry_backend": "Shapely 2.2.0/GEOS 3.14.1",
+    "boundary_note": "参考带本身仍是假设；精确为指定离散大圆多边形的浮点布尔裁切，非真实断层恢复",
+    "area_partition_residual_km2": 6.020476575940847e-06
+  },
+  "elapsed_s": 284.6589735999996,
+  "base_commit": "1336b4a1a22a23b5589ad8691b68b7503ff1d725",
+  "note": "完整旁观控制重跑对照S3；原网络特征ID重新建立，不冒称S4 GPML字节相同"
+}

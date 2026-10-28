@@ -1,0 +1,25 @@
+{
+  "checkpoint": "U36-S10",
+  "schema_version": 1,
+  "method_class": "procedural_constrained",
+  "notation": {
+    "N": "有限材料三角形数，即len(triangles)",
+    "nv": "原有限单元顶点数，即len(vertices)"
+  },
+  "arrays": {
+    "vertices": "(nv,3) 35Ma原始0框架单位球坐标",
+    "triangles": "(N,3) 索引vertices或points_TMa[:nv]",
+    "points_TMa": "前nv项有限顶点；后5N项微斑块点。微斑块先N个中心，再每中心连续4个环点；均已还原0框架",
+    "patch_triangles": "(4N,3) 局部索引points_TMa[nv:]；每单元连续4行，面积reshape(N,4).sum(axis=1)",
+    "H0_km": "(N,) 每有限单元初始厚度；未知/非陆壳为NaN",
+    "H_TMa": "(N,) H0/微斑块面积比J，非地表高程",
+    "source_uid": "(N,) 每有限三角形的原宿主UID，用此逐源归组",
+    "source_index": "(N,) sources.pkl内pieces列表索引，包含未知/非陆壳；不是uids索引",
+    "known": "(N,) 有已知陆壳厚度的掩膜",
+    "uids": "已知来源UID排序唯一值，source_volumes_km3的列顺序",
+    "source_volumes_km3": "(time,len(uids)) 全部时点各UID体积",
+    "V0_km3": "(len(uids),) 初始体积，与uids同序",
+    "times_ma": "source_volumes_km3的行时间坐标"
+  },
+  "note": "anchor301还原存在极小浮点往返差；独立用保存35Ma点作微斑块基准可能与未旋转pp0的基准有极小J差，请量化而不隐去。原始大数组仅在D盘忽略缓存。"
+}

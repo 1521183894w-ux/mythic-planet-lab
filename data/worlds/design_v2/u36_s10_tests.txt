@@ -1,0 +1,171 @@
+...................F..................F................................. [ 74%]
+.........................                                                [100%]
+================================== FAILURES ===================================
+________ test_common_rotation_network_matches_its_input_rigid_rotation ________
+
+rigid_network = <pygplates.pygplates.TopologicalModel object at 0x000001CC864F1530>
+
+    def test_common_rotation_network_matches_its_input_rigid_rotation(rigid_network):
+        snap=rigid_network.topological_snapshot(1.)
+        x=lonlat_to_xyz(np.array([-.2,.2]),np.array([-1.,1.]))
+        v=map_velocity(snap,x,.001)
+        rotation=rigid_network.get_rotation_model().get_rotation(.999,1,1.)
+        exact=np.array([(rotation*pg.PointOnSphere(tuple(q))).to_xyz() for q in x])
+        expected=sphere_log_velocity(x,exact,.001)
+>       np.testing.assert_allclose(v,expected,rtol=2e-7,atol=1e-7)
+E       AssertionError:
+E       Not equal to tolerance rtol=2e-07, atol=1e-07
+E
+E       Mismatched elements: 4 / 6 (66.7%)
+E       Mismatch at indices:
+E        [0, 0]: 0.01744970565742333 (ACTUAL), 0.017450567101067918 (DESIRED)
+E        [0, 1]: 4.998952254892637 (ACTUAL), 4.9991990916234625 (DESIRED)
+E        [1, 0]: -0.01744966879161653 (ACTUAL), -0.01745056829656427 (DESIRED)
+E        [1, 1]: 4.998941368967876 (ACTUAL), 4.999199091622054 (DESIRED)
+E       Max absolute difference among violations: 0.00025772
+E       Max relative difference among violations: 5.15527886e-05
+E        ACTUAL: array([[ 1.744971e-02,  4.998952e+00, -2.379435e-08],
+E              [-1.744967e-02,  4.998941e+00,  4.113732e-08]])
+E        DESIRED: array([[ 1.745057e-02,  4.999199e+00, -3.425477e-08],
+E              [-1.745057e-02,  4.999199e+00,  3.423503e-08]])
+
+tests\tectonics\test_step_audit.py:50: AssertionError
+_______ test_common_rotation_stays_within_spherical_sampling_tolerance ________
+
+tmp_path = WindowsPath('<workspace>/.cache/tmp/pytest-of-<local-user>/pytest-51/test_common_rotation_stays_wit0')
+
+    def test_common_rotation_stays_within_spherical_sampling_tolerance(tmp_path):
+        strip=reference_strip(lonlat_to_xyz(0,-3),lonlat_to_xyz(0,3),200,60)
+        w=np.array([.4,-.2,.7])/R_KM
+        history=PlateHistory()
+        for plate in (1,2):
+            history.add(plate,0,str(plate),[(0,np.eye(3)),(10,omega_rotmat(w,-10))])
+        model,_=build_network(strip,pg.RotationModel(str(history.write_rot(tmp_path/"rigid.rot"))),10,plates=(1,2))
+        rows,snapshots=reconstruct_band(strip,model,10,.5,[10,5,0])
+        for r in rows:
+            # 网络是离散球面速度插值/积分，并非直接对全部内点施加解析刚体矩阵。
+            # 单独把解析位置和框架标量与真值核对，面积容差为0.1 ppm；
+            # 不是质量指标或物理上的允许应变，长时/高速偏差另在负对照报表公开。
+            assert r["area_ratio"]==pytest.approx(1.,abs=1e-7)
+            assert r["inverted_cells"]==0
+            assert r["outside_center_count"]==0
+        np.testing.assert_allclose(snapshots[0.]["xyz"],strip["xyz"]@omega_rotmat(w,10).T,atol=2e-7)
+>       np.testing.assert_allclose(snapshots[0.]["framework_beta"],1.,atol=1e-9)
+E       AssertionError:
+E       Not equal to tolerance rtol=1e-07, atol=1e-09
+E
+E       Mismatched elements: 7 / 96 (7.29%)
+E       First 5 mismatches are at indices:
+E        [19]: 1.0000001029742276 (ACTUAL), 1.0 (DESIRED)
+E        [39]: 0.9999998772634757 (ACTUAL), 1.0 (DESIRED)
+E        [40]: 1.0000001115007353 (ACTUAL), 1.0 (DESIRED)
+E        [43]: 0.999999853306486 (ACTUAL), 1.0 (DESIRED)
+E        [84]: 1.0000001225508943 (ACTUAL), 1.0 (DESIRED)
+E       Max absolute difference among violations: 1.46693514e-07
+E       Max relative difference among violations: 1.46693514e-07
+E        ACTUAL: array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+E              1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+E              1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,...
+E        DESIRED: array(1.)
+
+tests\tectonics\test_material_band.py:39: AssertionError
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED tests/tectonics/test_rotation_transport.py::test_index_retains_same_faces_weights_and_finite_map
+PASSED tests/tectonics/test_rotation_transport.py::test_index_reports_outside_and_refuses_mapping
+PASSED tests/tectonics/test_rotation_transport.py::test_index_rejects_multiple_strict_interior_faces
+PASSED tests/tectonics/test_rotation_transport.py::test_index_and_original_agree_on_all_mesh_centroid_support
+PASSED tests/tectonics/test_rotation_interpolation.py::test_direct_matrix_keeps_small_rotation[1e-09]
+PASSED tests/tectonics/test_rotation_interpolation.py::test_direct_matrix_keeps_small_rotation[1e-07]
+PASSED tests/tectonics/test_rotation_interpolation.py::test_direct_matrix_keeps_small_rotation[1e-06]
+PASSED tests/tectonics/test_rotation_interpolation.py::test_direct_matrix_keeps_small_rotation[0.0001]
+PASSED tests/tectonics/test_rotation_interpolation.py::test_projected_replica_matches_framework_barycentric_branch
+PASSED tests/tectonics/test_rotation_interpolation.py::test_same_physical_mapping_after_time_dependent_frame_change[1]
+PASSED tests/tectonics/test_rotation_interpolation.py::test_same_physical_mapping_after_time_dependent_frame_change[2]
+PASSED tests/tectonics/test_rotation_interpolation.py::test_common_stage_rotation_preserves_exact_position_and_patch_area
+PASSED tests/tectonics/test_rotation_interpolation.py::test_outside_points_are_rejected_instead_of_extrapolated
+PASSED tests/tectonics/test_step_audit.py::test_log_map_retains_known_small_rotation[1e-09]
+PASSED tests/tectonics/test_step_audit.py::test_log_map_retains_known_small_rotation[1e-07]
+PASSED tests/tectonics/test_step_audit.py::test_log_map_retains_known_small_rotation[1e-06]
+PASSED tests/tectonics/test_step_audit.py::test_log_map_retains_known_small_rotation[0.0001]
+PASSED tests/tectonics/test_step_audit.py::test_zero_map_and_invalid_time_or_antipode_are_explicit
+PASSED tests/tectonics/test_step_audit.py::test_past_mapping_has_correct_forward_sign
+PASSED tests/tectonics/test_step_audit.py::test_network_outside_is_rejected_without_fill
+PASSED tests/tectonics/test_material_audit.py::test_spherical_divergence_of_rigid_rotation_is_zero[1.0]
+PASSED tests/tectonics/test_material_audit.py::test_spherical_divergence_of_rigid_rotation_is_zero[0.1]
+PASSED tests/tectonics/test_material_audit.py::test_spherical_divergence_of_rigid_rotation_is_zero[0.01]
+PASSED tests/tectonics/test_material_audit.py::test_curved_surface_gradient_has_known_nonzero_divergence[1.0]
+PASSED tests/tectonics/test_material_audit.py::test_curved_surface_gradient_has_known_nonzero_divergence[0.1]
+PASSED tests/tectonics/test_material_audit.py::test_curved_surface_gradient_has_known_nonzero_divergence[0.01]
+PASSED tests/tectonics/test_material_audit.py::test_elapsed_time_integration_is_signed_and_matches_affine_rate
+PASSED tests/tectonics/test_source_clipping.py::test_priority_partition_and_exact_cell_areas_match_native_cover
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[60.0-100.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[60.0-200.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[60.0-400.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[30.0-100.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[30.0-200.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[30.0-400.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[15.0-100.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[15.0-200.0]
+PASSED tests/tectonics/test_material_band.py::test_spherical_strip_area_matches_independent_small_circle_integral[15.0-400.0]
+PASSED tests/tectonics/test_material_band.py::test_orientation_reversal_is_visible_and_not_hidden_by_absolute_area
+PASSED tests/tectonics/test_material_band.py::test_nonphysical_reference_inputs_rejected[0-30]
+PASSED tests/tectonics/test_material_band.py::test_nonphysical_reference_inputs_rejected[-1-30]
+PASSED tests/tectonics/test_material_band.py::test_nonphysical_reference_inputs_rejected[200-0]
+PASSED tests/tectonics/test_material_band.py::test_nonphysical_reference_inputs_rejected[nan-30]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[0.0-0.0-100.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[0.0-0.0-200.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[0.0-0.0-400.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[200.0-0.0-100.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[200.0-0.0-200.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[200.0-0.0-400.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[200.0-1.3-100.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[200.0-1.3-200.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_deformed_polygon_area_and_column_volume[200.0-1.3-400.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_incremental_stretch_uses_current_width[0.5]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_incremental_stretch_uses_current_width[1.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_incremental_stretch_uses_current_width[3.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_incremental_stretch_uses_current_width[5.0]
+PASSED tests/tectonics/test_deformation_kinematics.py::test_pure_slip_has_shear_but_no_area_dilation
+PASSED tests/tectonics/test_deformation_kinematics.py::test_rigid_rotation_has_neither_area_nor_material_strain
+PASSED tests/tectonics/test_deformation_kinematics.py::test_boundary_normal_rejects_slip_and_is_frame_invariant
+PASSED tests/tectonics/test_deformation_kinematics.py::test_compression_is_signed_and_invalid_width_is_rejected
+PASSED tests/tectonics/test_gap_diagnostics.py::test_readonly_candidates_match_real_commit[False]
+PASSED tests/tectonics/test_gap_diagnostics.py::test_readonly_candidates_match_real_commit[True]
+PASSED tests/tectonics/test_gap_diagnostics.py::test_normal_flux_integral_agrees_with_spherical_lune_area
+PASSED tests/tectonics/test_kinematics.py::test_rotation_roundtrip
+PASSED tests/tectonics/test_kinematics.py::test_positive_rotation_about_south_pole_moves_west
+PASSED tests/tectonics/test_kinematics.py::test_rotation_file_reproduces_script
+PASSED tests/tectonics/test_kinematics.py::test_relative_motion_fixed_in_parent_frame
+PASSED tests/tectonics/test_kinematics.py::test_follow_then_birth
+PASSED tests/tectonics/test_stretching.py::test_uniform_area_doubling_halves_both_columns
+PASSED tests/tectonics/test_stretching.py::test_unequal_areas_shared_sources_conserve_volume_and_ignore_target_order
+PASSED tests/tectonics/test_stretching.py::test_duplicate_stencil_entries_are_aggregated_and_unsupported_target_fails
+PASSED tests/tectonics/test_stretching.py::test_engine_transfers_old_material_and_does_not_label_it_new_crust
+PASSED tests/tectonics/test_engine.py::test_rigid_rotation_exact_across_seam_and_pole[0.6]
+PASSED tests/tectonics/test_engine.py::test_rigid_rotation_exact_across_seam_and_pole[0.05]
+PASSED tests/tectonics/test_engine.py::test_plate_ids_stable_and_no_teleport
+PASSED tests/tectonics/test_engine.py::test_gdh1_and_isostasy
+PASSED tests/tectonics/test_engine.py::test_transfer_units_keeps_positions_and_attributes
+PASSED tests/tectonics/test_engine.py::test_gap_prefer_gives_new_ocean_to_one_plate
+PASSED tests/tectonics/test_engine.py::test_thick_intraoceanic_arc_is_accreted_not_subducted
+PASSED tests/tectonics/test_engine.py::test_new_plate_takes_ocean_units_and_moves_on_its_own
+PASSED tests/tectonics/test_engine.py::test_ocean_arc_flux_factor_thickens_intraoceanic_arc_faster
+PASSED tests/tectonics/test_engine.py::test_compressional_arc_thickens_past_magmatic_cap_only_where_allowed
+PASSED tests/tectonics/test_engine.py::test_gap_prefer_does_not_grow_the_over_plate_at_a_convergent_boundary
+PASSED tests/tectonics/test_engine.py::test_continental_gap_fills_stretched_crust_then_ocean
+PASSED tests/tectonics/test_engine.py::test_relief_erosion_keeps_old_low_mountains_and_erodes_high_ones_fast
+PASSED tests/tectonics/test_engine.py::test_relief_sees_across_plate_boundaries
+PASSED tests/tectonics/test_engine.py::test_strike_slip_holes_filled_with_continental_crust_only_when_asked
+PASSED tests/tectonics/test_engine.py::test_arc_thickening_of_continents_only_on_designed_pairs
+PASSED tests/tectonics/test_engine.py::test_submerged_thinned_margin_not_thickened_by_arc
+PASSED tests/tectonics/test_engine.py::test_snapshot_shows_transient_holes_as_neighbouring_crust
+PASSED tests/tectonics/test_engine.py::test_hole_fill_borrows_only_from_thickened_crust
+PASSED tests/tectonics/test_engine.py::test_thin_submerged_crust_does_not_take_lateral_flow
+PASSED tests/tectonics/test_engine.py::test_opening_overlap_on_designed_rift_pair_is_not_a_collision
+PASSED tests/tectonics/test_engine.py::test_tear_boundary_pairs_do_not_collide_inside_their_time_window
+PASSED tests/tectonics/test_engine.py::test_rollback_arcs_get_no_upper_plate_shortening
+PASSED tests/tectonics/test_engine.py::test_rift_units_preserves_geometry_and_volume_between_commits
+FAILED tests/tectonics/test_step_audit.py::test_common_rotation_network_matches_its_input_rigid_rotation
+FAILED tests/tectonics/test_material_band.py::test_common_rotation_stays_within_spherical_sampling_tolerance
+2 failed, 95 passed in 15.92s

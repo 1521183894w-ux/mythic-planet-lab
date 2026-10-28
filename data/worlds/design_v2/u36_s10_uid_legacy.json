@@ -1,0 +1,75 @@
+{
+  "checkpoint": "U36-S10",
+  "scope": "single_source_diagnostic",
+  "method_class": "procedural_constrained",
+  "mapping_class": "interpolated",
+  "rows": [
+    {
+      "edge_km": 7.5,
+      "patch_km": 1.0,
+      "triangle_count": 1,
+      "initial_volume_km3": 60.06943910924989,
+      "final_residual": 0.0002872241936611175
+    },
+    {
+      "edge_km": 7.5,
+      "patch_km": 0.25,
+      "triangle_count": 1,
+      "initial_volume_km3": 60.06943910924989,
+      "final_residual": 0.00028719959839684783
+    },
+    {
+      "edge_km": 1.875,
+      "patch_km": 0.25,
+      "triangle_count": 4,
+      "initial_volume_km3": 60.06943912569393,
+      "final_residual": 7.180636259929152e-05
+    },
+    {
+      "edge_km": 0.9375,
+      "patch_km": 0.25,
+      "triangle_count": 16,
+      "initial_volume_km3": 60.0694391408909,
+      "final_residual": 1.7949209202505756e-05
+    },
+    {
+      "edge_km": 0.46875,
+      "patch_km": 0.25,
+      "triangle_count": 64,
+      "initial_volume_km3": 60.06943909236875,
+      "final_residual": 4.488576902605956e-06
+    },
+    {
+      "edge_km": 7.5,
+      "patch_km": 0.0625,
+      "triangle_count": 1,
+      "initial_volume_km3": 60.06943910924989,
+      "final_residual": 0.00028727351201984774
+    },
+    {
+      "edge_km": 1.875,
+      "patch_km": 0.0625,
+      "triangle_count": 4,
+      "initial_volume_km3": 60.06943912569393,
+      "final_residual": 7.173667859716737e-05
+    },
+    {
+      "edge_km": 0.9375,
+      "patch_km": 0.0625,
+      "triangle_count": 16,
+      "initial_volume_km3": 60.0694391408909,
+      "final_residual": 1.7944849079576386e-05
+    },
+    {
+      "edge_km": 0.46875,
+      "patch_km": 0.0625,
+      "triangle_count": 64,
+      "initial_volume_km3": 60.06943909236875,
+      "final_residual": 4.496144766941157e-06
+    }
+  ],
+  "archived_S8_final_residual": 0.00028722422791305213,
+  "reconstructed_minus_archived_residual": -3.4251934621920554e-11,
+  "elapsed_s": 4.73209979999956,
+  "note": "复用S8同一API与同一来源多边形；网络由同一端点重建、非S4 GPML字节相同；此组只独立核对末态几何，不能代替全域支撑"
+}

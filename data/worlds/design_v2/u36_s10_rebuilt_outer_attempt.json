@@ -1,0 +1,426 @@
+{
+  "checkpoint": "U36-S10",
+  "tag": "outer_attempt",
+  "method_class": "procedural_constrained",
+  "mapping_class": "interpolated",
+  "mapping": "S9固定35Ma来源连接+LAEA重心权重+两侧有限旋转SLERP",
+  "framework_version": "1.0.0",
+  "maximum_edge_km": 30.0,
+  "patch_radius_km": 1.0,
+  "dt_myr": 0.25,
+  "anchor": 0,
+  "triangle_count": 233,
+  "point_count": 1398,
+  "initial_known_volume_km3": 143259.78152808815,
+  "numerical_fragments": {
+    "raw_triangle_count": 254,
+    "numerically_degenerate_count": 21,
+    "degenerate_area_km2": 3.343386503267378e-09,
+    "area_precision_floor_km2": 1e-09,
+    "note": "浮点碎片只从J比值审计中排除，原裁切面积/体积账保持；非质量指标阈值"
+  },
+  "complete_35_to_0Ma": false,
+  "all_points_preserved": true,
+  "failure": {
+    "t_ma": 35.0,
+    "reason": "查询位于网络之外，不补值",
+    "query_counts": {
+      "outside": 91,
+      "unsupported": 125,
+      "inverted": 0,
+      "overlapping": 0
+    },
+    "affected_known_source_uids": [
+      2732,
+      4161,
+      6160,
+      12132,
+      14011,
+      16734,
+      17521,
+      21809,
+      22840,
+      24420,
+      25431,
+      43200,
+      51403,
+      52268,
+      55442,
+      55450,
+      60859,
+      64244,
+      71754,
+      76270,
+      76272,
+      79872,
+      79874,
+      91202,
+      91204,
+      91206,
+      91207,
+      95089,
+      111035,
+      111036,
+      114585,
+      114590,
+      114591,
+      120015,
+      120016,
+      137194
+    ],
+    "affected_known_initial_volume_km3": 78148.60915813847
+  },
+  "minimum_selected_projected_det": null,
+  "elapsed_s": 0.09024530000078812,
+  "process_peak_working_set_mib": 507.8515625,
+  "timeline": [
+    {
+      "t_ma": 35.0,
+      "volume_km3": 143259.78152808815,
+      "volume_relative_residual": 0.0,
+      "weighted_source_absolute_relative_error": 0.0,
+      "maximum_source_absolute_relative_error": 0.0,
+      "worst_source_uid": 2732,
+      "known_thickness_quantiles_km": [
+        33.0,
+        33.5259986707063,
+        34.374049040019166,
+        42.77060734810152,
+        43.45935856467164
+      ],
+      "inverted_cells": 0,
+      "inverted_patches": 0
+    }
+  ],
+  "source_trajectories": [
+    {
+      "uid": 2732,
+      "initial_volume_km3": 3392.9000256896584,
+      "volume_km3": [
+        3392.9000256896584
+      ]
+    },
+    {
+      "uid": 4161,
+      "initial_volume_km3": 3105.223448564487,
+      "volume_km3": [
+        3105.223448564487
+      ]
+    },
+    {
+      "uid": 6160,
+      "initial_volume_km3": 3912.568573867976,
+      "volume_km3": [
+        3912.568573867976
+      ]
+    },
+    {
+      "uid": 12132,
+      "initial_volume_km3": 1261.8957647045963,
+      "volume_km3": [
+        1261.8957647045963
+      ]
+    },
+    {
+      "uid": 14011,
+      "initial_volume_km3": 2440.7934640050166,
+      "volume_km3": [
+        2440.7934640050166
+      ]
+    },
+    {
+      "uid": 16734,
+      "initial_volume_km3": 3325.851021293329,
+      "volume_km3": [
+        3325.851021293329
+      ]
+    },
+    {
+      "uid": 17521,
+      "initial_volume_km3": 3818.8732843238904,
+      "volume_km3": [
+        3818.8732843238904
+      ]
+    },
+    {
+      "uid": 21809,
+      "initial_volume_km3": 3187.0175023703855,
+      "volume_km3": [
+        3187.0175023703855
+      ]
+    },
+    {
+      "uid": 22840,
+      "initial_volume_km3": 5634.946909715125,
+      "volume_km3": [
+        5634.946909715125
+      ]
+    },
+    {
+      "uid": 24420,
+      "initial_volume_km3": 3574.1955499277083,
+      "volume_km3": [
+        3574.1955499277083
+      ]
+    },
+    {
+      "uid": 25431,
+      "initial_volume_km3": 3924.1971195713595,
+      "volume_km3": [
+        3924.1971195713595
+      ]
+    },
+    {
+      "uid": 43200,
+      "initial_volume_km3": 3498.1339606580736,
+      "volume_km3": [
+        3498.1339606580736
+      ]
+    },
+    {
+      "uid": 43378,
+      "initial_volume_km3": 3273.3030185531256,
+      "volume_km3": [
+        3273.3030185531256
+      ]
+    },
+    {
+      "uid": 51397,
+      "initial_volume_km3": 4224.149684415876,
+      "volume_km3": [
+        4224.149684415876
+      ]
+    },
+    {
+      "uid": 51403,
+      "initial_volume_km3": 4832.84361358885,
+      "volume_km3": [
+        4832.84361358885
+      ]
+    },
+    {
+      "uid": 52268,
+      "initial_volume_km3": 3130.3478902572465,
+      "volume_km3": [
+        3130.3478902572465
+      ]
+    },
+    {
+      "uid": 55442,
+      "initial_volume_km3": 4626.874118177297,
+      "volume_km3": [
+        4626.874118177297
+      ]
+    },
+    {
+      "uid": 55450,
+      "initial_volume_km3": 3337.5615839456423,
+      "volume_km3": [
+        3337.5615839456423
+      ]
+    },
+    {
+      "uid": 60859,
+      "initial_volume_km3": 803.0553767053665,
+      "volume_km3": [
+        803.0553767053665
+      ]
+    },
+    {
+      "uid": 64244,
+      "initial_volume_km3": 4628.332753061115,
+      "volume_km3": [
+        4628.332753061115
+      ]
+    },
+    {
+      "uid": 71061,
+      "initial_volume_km3": 2308.992455018143,
+      "volume_km3": [
+        2308.992455018143
+      ]
+    },
+    {
+      "uid": 71754,
+      "initial_volume_km3": 5177.095839636997,
+      "volume_km3": [
+        5177.095839636997
+      ]
+    },
+    {
+      "uid": 76270,
+      "initial_volume_km3": 4325.99625295825,
+      "volume_km3": [
+        4325.99625295825
+      ]
+    },
+    {
+      "uid": 76272,
+      "initial_volume_km3": 2752.6028193996544,
+      "volume_km3": [
+        2752.6028193996544
+      ]
+    },
+    {
+      "uid": 79872,
+      "initial_volume_km3": 703.2216256754447,
+      "volume_km3": [
+        703.2216256754447
+      ]
+    },
+    {
+      "uid": 79874,
+      "initial_volume_km3": 4428.578558460029,
+      "volume_km3": [
+        4428.578558460029
+      ]
+    },
+    {
+      "uid": 91202,
+      "initial_volume_km3": 4410.105803715385,
+      "volume_km3": [
+        4410.105803715385
+      ]
+    },
+    {
+      "uid": 91204,
+      "initial_volume_km3": 33.97767471041248,
+      "volume_km3": [
+        33.97767471041248
+      ]
+    },
+    {
+      "uid": 91206,
+      "initial_volume_km3": 4463.057570845915,
+      "volume_km3": [
+        4463.057570845915
+      ]
+    },
+    {
+      "uid": 91207,
+      "initial_volume_km3": 3559.8400716796073,
+      "volume_km3": [
+        3559.8400716796073
+      ]
+    },
+    {
+      "uid": 94306,
+      "initial_volume_km3": 464.80966754991454,
+      "volume_km3": [
+        464.80966754991454
+      ]
+    },
+    {
+      "uid": 95089,
+      "initial_volume_km3": 5489.05101520453,
+      "volume_km3": [
+        5489.05101520453
+      ]
+    },
+    {
+      "uid": 111035,
+      "initial_volume_km3": 4585.989248701337,
+      "volume_km3": [
+        4585.989248701337
+      ]
+    },
+    {
+      "uid": 111036,
+      "initial_volume_km3": 2586.9876094161964,
+      "volume_km3": [
+        2586.9876094161964
+      ]
+    },
+    {
+      "uid": 114585,
+      "initial_volume_km3": 4997.917912293989,
+      "volume_km3": [
+        4997.917912293989
+      ]
+    },
+    {
+      "uid": 114590,
+      "initial_volume_km3": 3112.00616277575,
+      "volume_km3": [
+        3112.00616277575
+      ]
+    },
+    {
+      "uid": 114591,
+      "initial_volume_km3": 2274.5781740999764,
+      "volume_km3": [
+        2274.5781740999764
+      ]
+    },
+    {
+      "uid": 120015,
+      "initial_volume_km3": 3738.357351934561,
+      "volume_km3": [
+        3738.357351934561
+      ]
+    },
+    {
+      "uid": 120016,
+      "initial_volume_km3": 4169.704163597331,
+      "volume_km3": [
+        4169.704163597331
+      ]
+    },
+    {
+      "uid": 120042,
+      "initial_volume_km3": 1779.0779736978564,
+      "volume_km3": [
+        1779.0779736978564
+      ]
+    },
+    {
+      "uid": 137194,
+      "initial_volume_km3": 4585.867448613747,
+      "volume_km3": [
+        4585.867448613747
+      ]
+    },
+    {
+      "uid": 163770,
+      "initial_volume_km3": 1761.5322857142573,
+      "volume_km3": [
+        1761.5322857142573
+      ]
+    },
+    {
+      "uid": 448135,
+      "initial_volume_km3": 105.0642016302701,
+      "volume_km3": [
+        105.0642016302701
+      ]
+    },
+    {
+      "uid": 448239,
+      "initial_volume_km3": 1092.738003585595,
+      "volume_km3": [
+        1092.738003585595
+      ]
+    },
+    {
+      "uid": 448261,
+      "initial_volume_km3": 419.56697377683855,
+      "volume_km3": [
+        419.56697377683855
+      ]
+    }
+  ],
+  "units": {
+    "length": "km",
+    "area": "km2",
+    "volume": "km3",
+    "thickness": "km",
+    "time": "Ma/Myr"
+  },
+  "assumptions": [
+    "H=H0/微斑块J，有限来源三角形面积独立验算，不用H0/有限单元J自证闭合",
+    "2km固定内域为S8相同审计保护余量；200km物理带宽仍为user_override",
+    "原始非陆壳和无覆盖保留缺值；不把来源UID当成分混合比",
+    "141/281离散时点检查，不声称连续时间完全支持；不关闭S9整网边界阻断"
+  ],
+  "connectivity_provenance": "首轮从本机重建网络重新选35Ma连接；与S9归档有48三角形对称差，非同一归档插值场"
+}

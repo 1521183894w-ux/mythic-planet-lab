@@ -1,0 +1,8 @@
+{
+  "source": "data/worlds/design_v2/candidates/u36_s10_source_control/design_v2_forward_v2_0Ma_u36_s10_source_control_1024x512.nc",
+  "source_sha256": "3ba3d42729c61cbf258688fe3e3cd6ee377f4df397baab587021bb299cdfbd07",
+  "reference_sha256": "784e201be783f8a7cb38188d4459b80b31d80ade4167d2d9ee81c558dda4ccb3",
+  "original_world_id": "design_v2_forward_v2_0Ma_u36_s10_source_control",
+  "audit_alias": "design_v2_forward_v2_0Ma_u36_s4_control",
+  "note": "S10完整旁观控制重跑；用S4审计ID固定r8窗口，物理数组未变，非新地貌"
+}

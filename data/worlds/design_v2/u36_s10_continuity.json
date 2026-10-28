@@ -1,0 +1,272 @@
+{
+  "checkpoint": "U36-S10",
+  "method_class": "procedural_constrained",
+  "trials": [
+    {
+      "tag": "edge30_patch1_dt0.25_a0",
+      "complete": true,
+      "final_net": -6.798587737211204e-05,
+      "final_source_weighted_absolute": 0.00033455172788187146,
+      "worst_source_uid": 71754,
+      "worst_source_error": -0.0025505737725617372,
+      "worst_t_ma": 0.0,
+      "uid448261_final": 0.0009445016257796368,
+      "elapsed_s": 10.782723899999837,
+      "peak_mib": 121.953125
+    },
+    {
+      "tag": "edge15_patch1_dt0.25_a0",
+      "complete": true,
+      "final_net": -2.028051563429667e-05,
+      "final_source_weighted_absolute": 7.182595194785467e-05,
+      "worst_source_uid": 448261,
+      "worst_source_error": 0.0009445016257796368,
+      "worst_t_ma": 0.0,
+      "uid448261_final": 0.0009445016257796368,
+      "elapsed_s": 74.70895629999995,
+      "peak_mib": 196.87890625
+    },
+    {
+      "tag": "edge7.5_patch1_dt0.25_a0",
+      "complete": true,
+      "final_net": -4.3713231491215865e-06,
+      "final_source_weighted_absolute": 1.6735911598568843e-05,
+      "worst_source_uid": 448261,
+      "worst_source_error": 0.0009445016257796368,
+      "worst_t_ma": 0.0,
+      "uid448261_final": 0.0009445016257796368,
+      "elapsed_s": 174.8275020000001,
+      "peak_mib": 515.078125
+    },
+    {
+      "tag": "edge7.5_patch0.25_dt0.25_a0",
+      "complete": true,
+      "final_net": -6.005501496431087e-06,
+      "final_source_weighted_absolute": 2.012968420961272e-05,
+      "worst_source_uid": 79872,
+      "worst_source_error": -0.0019330152297198921,
+      "worst_t_ma": 0.0,
+      "uid448261_final": 0.0009443810473765968,
+      "elapsed_s": 142.43887799999993,
+      "peak_mib": 515.078125
+    },
+    {
+      "tag": "edge15_patch1_dt0.125_a0",
+      "complete": true,
+      "final_net": -2.0279264501099625e-05,
+      "final_source_weighted_absolute": 7.200193252857037e-05,
+      "worst_source_uid": 448261,
+      "worst_source_error": 0.0009440715849406978,
+      "worst_t_ma": 0.0,
+      "uid448261_final": 0.0009440715849406978,
+      "elapsed_s": 68.51238860000012,
+      "peak_mib": 515.078125
+    },
+    {
+      "tag": "edge15_patch1_dt0.25_a301",
+      "complete": true,
+      "final_net": -2.028051842084544e-05,
+      "final_source_weighted_absolute": 7.182595151179481e-05,
+      "worst_source_uid": 448261,
+      "worst_source_error": 0.0009445018883547096,
+      "worst_t_ma": 0.0,
+      "uid448261_final": 0.0009445018883547096,
+      "elapsed_s": 36.550001800000246,
+      "peak_mib": 515.078125
+    }
+  ],
+  "comparisons_to_edge15_dt025_anchor0": [
+    {
+      "tag": "edge15_patch1_dt0.125_a0",
+      "maximum_final_position_difference_m": 4.539873233204308,
+      "maximum_final_H_relative_difference": 7.681128137593252e-05,
+      "final_net_residual_difference": 1.2511331970443962e-09
+    },
+    {
+      "tag": "edge15_patch1_dt0.25_a301",
+      "maximum_final_position_difference_m": 4.524795059400995e-08,
+      "maximum_final_H_relative_difference": 6.363574112100423e-10,
+      "final_net_residual_difference": -2.7865487695066804e-12
+    }
+  ],
+  "outer_attempt": {
+    "complete": false,
+    "failure": {
+      "t_ma": 35.0,
+      "reason": "查询位于网络之外，不补值",
+      "query_counts": {
+        "outside": 91,
+        "unsupported": 125,
+        "inverted": 0,
+        "overlapping": 0
+      },
+      "affected_known_source_uids": [
+        2732,
+        4161,
+        6160,
+        12132,
+        14011,
+        16734,
+        17521,
+        21809,
+        22840,
+        24420,
+        25431,
+        43200,
+        51403,
+        52268,
+        55442,
+        55450,
+        60859,
+        64244,
+        71754,
+        76270,
+        76272,
+        79872,
+        79874,
+        91202,
+        91204,
+        91206,
+        91207,
+        95089,
+        111035,
+        111036,
+        114585,
+        114590,
+        114591,
+        120015,
+        120016,
+        137194
+      ],
+      "affected_known_initial_volume_km3": 78148.60915813847
+    },
+    "initial_known_volume_km3": 143259.78152808815
+  },
+  "physical_engine_changed": false,
+  "global_or_B5_coupling_performed": false,
+  "full_network_boundary_resolved": false,
+  "time_convergence_order_proven": false,
+  "physical_width_km": 200,
+  "physical_width_class": "user_override",
+  "single_source_diagnostic": {
+    "uid": 448261,
+    "scope": "single_source_only",
+    "candidate": [
+      {
+        "tag": "uid448261_edge7.5_patch0.25",
+        "triangle_count": 1,
+        "final_residual": 0.0009443810473765968
+      },
+      {
+        "tag": "uid448261_edge1.875_patch0.25",
+        "triangle_count": 4,
+        "final_residual": 0.0002360917324271128
+      },
+      {
+        "tag": "uid448261_edge0.9375_patch0.25",
+        "triangle_count": 16,
+        "final_residual": 5.9027573723113846e-05
+      },
+      {
+        "tag": "uid448261_edge0.46875_patch0.25",
+        "triangle_count": 64,
+        "final_residual": 1.4764073536399636e-05
+      },
+      {
+        "tag": "uid448261_edge7.5_patch0.0625",
+        "triangle_count": 1,
+        "final_residual": 0.0009444323440743752
+      },
+      {
+        "tag": "uid448261_edge1.875_patch0.0625",
+        "triangle_count": 4,
+        "final_residual": 0.0002360391048681354
+      },
+      {
+        "tag": "uid448261_edge0.9375_patch0.0625",
+        "triangle_count": 16,
+        "final_residual": 5.901962296528396e-05
+      },
+      {
+        "tag": "uid448261_edge0.46875_patch0.0625",
+        "triangle_count": 64,
+        "final_residual": 1.4768251886065897e-05
+      }
+    ],
+    "legacy": {
+      "checkpoint": "U36-S10",
+      "scope": "single_source_diagnostic",
+      "method_class": "procedural_constrained",
+      "mapping_class": "interpolated",
+      "rows": [
+        {
+          "edge_km": 7.5,
+          "patch_km": 1.0,
+          "triangle_count": 1,
+          "initial_volume_km3": 60.06943910924989,
+          "final_residual": 0.0002872241936611175
+        },
+        {
+          "edge_km": 7.5,
+          "patch_km": 0.25,
+          "triangle_count": 1,
+          "initial_volume_km3": 60.06943910924989,
+          "final_residual": 0.00028719959839684783
+        },
+        {
+          "edge_km": 1.875,
+          "patch_km": 0.25,
+          "triangle_count": 4,
+          "initial_volume_km3": 60.06943912569393,
+          "final_residual": 7.180636259929152e-05
+        },
+        {
+          "edge_km": 0.9375,
+          "patch_km": 0.25,
+          "triangle_count": 16,
+          "initial_volume_km3": 60.0694391408909,
+          "final_residual": 1.7949209202505756e-05
+        },
+        {
+          "edge_km": 0.46875,
+          "patch_km": 0.25,
+          "triangle_count": 64,
+          "initial_volume_km3": 60.06943909236875,
+          "final_residual": 4.488576902605956e-06
+        },
+        {
+          "edge_km": 7.5,
+          "patch_km": 0.0625,
+          "triangle_count": 1,
+          "initial_volume_km3": 60.06943910924989,
+          "final_residual": 0.00028727351201984774
+        },
+        {
+          "edge_km": 1.875,
+          "patch_km": 0.0625,
+          "triangle_count": 4,
+          "initial_volume_km3": 60.06943912569393,
+          "final_residual": 7.173667859716737e-05
+        },
+        {
+          "edge_km": 0.9375,
+          "patch_km": 0.0625,
+          "triangle_count": 16,
+          "initial_volume_km3": 60.0694391408909,
+          "final_residual": 1.7944849079576386e-05
+        },
+        {
+          "edge_km": 0.46875,
+          "patch_km": 0.0625,
+          "triangle_count": 64,
+          "initial_volume_km3": 60.06943909236875,
+          "final_residual": 4.496144766941157e-06
+        }
+      ],
+      "archived_S8_final_residual": 0.00028722422791305213,
+      "reconstructed_minus_archived_residual": -3.4251934621920554e-11,
+      "elapsed_s": 4.73209979999956,
+      "note": "复用S8同一API与同一来源多边形；网络由同一端点重建、非S4 GPML字节相同；此组只独立核对末态几何，不能代替全域支撑"
+    }
+  }
+}

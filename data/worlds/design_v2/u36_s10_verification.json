@@ -1,0 +1,375 @@
+{
+  "checkpoint": "U36-S10",
+  "base_commit": "1336b4a",
+  "method_class": "procedural_constrained",
+  "protected": {
+    "config/design/final_map_v2.yaml": {
+      "identical_to_base": true,
+      "git_object": "665db34bc82932a637564123464e48383a41ad7e"
+    },
+    "config/design/history_v2.yaml": {
+      "identical_to_base": true,
+      "git_object": "ffa7742d24913228e8000fd7dc5466a24ae1f294"
+    },
+    "config/design/history_v2_u35_c10_progressive.yaml": {
+      "identical_to_base": true,
+      "git_object": "7c0567a5614485d07b0953dbf4d8fb718c5faf4a"
+    },
+    "config/design/history_v2_u35_c4_strain.yaml": {
+      "identical_to_base": true,
+      "git_object": "f924620e4731a08cedb59391b62828bdd39f7718"
+    },
+    "config/metrics.yaml": {
+      "identical_to_base": true,
+      "git_object": "1def85b1b19cae2b1ad69886e12adedd0f959910"
+    },
+    "data/worlds/design_v2/forward_v2.json": {
+      "identical_to_base": true,
+      "git_object": "460284582ca8f6dde37e4dfdc226322e8956a0c1"
+    },
+    "data/worlds/design_v2/history_v2.rot": {
+      "identical_to_base": true,
+      "git_object": "b42b69b30b358906f4b79c91977b5cc0a2e7284b"
+    },
+    "packages/tectonics/crust.py": {
+      "identical_to_base": true,
+      "git_object": "cfd5008cd13c5cf66da127569c0d665cf401b608"
+    },
+    "packages/tectonics/engine.py": {
+      "identical_to_base": true,
+      "git_object": "bf2cde268d48c357c995469eaf4abbdc6a2bfff9"
+    },
+    "packages/tectonics/kinematics.py": {
+      "identical_to_base": true,
+      "git_object": "b4a5453dcb6b3560e60f860a5aba0cf5dadb00ed"
+    },
+    "packages/tectonics/material_audit.py": {
+      "identical_to_base": true,
+      "git_object": "1e820c495fa01ffe8dbab7597be2906a17d5c0d5"
+    },
+    "packages/tectonics/material_band.py": {
+      "identical_to_base": true,
+      "git_object": "de727f529a9753a1476156492bf3529655bfe2d3"
+    },
+    "packages/tectonics/rotation_interpolation.py": {
+      "identical_to_base": true,
+      "git_object": "8b47c6ba0305a5806f2f5a755c6ed4a581e2f297"
+    },
+    "packages/tectonics/source_clipping.py": {
+      "identical_to_base": true,
+      "git_object": "8fae1d01a3445d71839c73149ce84643e392e897"
+    },
+    "packages/tectonics/step_audit.py": {
+      "identical_to_base": true,
+      "git_object": "cc3554095b5a6fafb80e6db535d2fc21cd58d2e8"
+    },
+    "scripts/design_fixed_domain.py": {
+      "identical_to_base": true,
+      "git_object": "0fe7e9e2fb7b8e8e9187d6732ed97c7df8ec7551"
+    },
+    "scripts/design_fixed_domain_verify.py": {
+      "identical_to_base": true,
+      "git_object": "699abbacefadbdc65891589fbc522d03111b9118"
+    },
+    "scripts/design_frame_audit.py": {
+      "identical_to_base": true,
+      "git_object": "3c71953887142fd6cbd4e609d6e5107f58944486"
+    },
+    "scripts/design_frame_inputs.py": {
+      "identical_to_base": true,
+      "git_object": "793262079078d8130ad271fc9c72743298da049f"
+    },
+    "scripts/design_rotation_interpolation.py": {
+      "identical_to_base": true,
+      "git_object": "eb229868574e667b6af983a7242012fa37813cf0"
+    },
+    "scripts/design_rotation_mesh_audit.py": {
+      "identical_to_base": true,
+      "git_object": "cf177786ad7309901a83a9452afc325143078b96"
+    },
+    "scripts/design_step_audit.py": {
+      "identical_to_base": true,
+      "git_object": "b832ab0d41de739fd0d2ec4218282ad717d6b75f"
+    },
+    "scripts/design_step_audit_report.py": {
+      "identical_to_base": true,
+      "git_object": "11f0534fbf57b290b672f9bf4493eb65608ebcfd"
+    },
+    "scripts/design_step_audit_verify.py": {
+      "identical_to_base": true,
+      "git_object": "d2ca2bbee4507d61d326df66d8be2c7adf50e5fb"
+    },
+    "scripts/verify_local_checkpoint.py": {
+      "identical_to_base": true,
+      "git_object": "e95af57c3d4d06b21792cae2d0d7c91183f58799"
+    },
+    "tests/tectonics/test_material_audit.py": {
+      "identical_to_base": true,
+      "git_object": "d15ebc7621d74408881b4019b664059559b94e2f"
+    },
+    "tests/tectonics/test_material_band.py": {
+      "identical_to_base": true,
+      "git_object": "4cdd9880a8ef17d1da82121fb409719edea699c9"
+    },
+    "tests/tectonics/test_rotation_interpolation.py": {
+      "identical_to_base": true,
+      "git_object": "5399826c16a6de508284e225c089faa815a5d1e0"
+    },
+    "tests/tectonics/test_source_clipping.py": {
+      "identical_to_base": true,
+      "git_object": "dc79a591dc41ab9d97fb52f196fba2340cfead68"
+    },
+    "tests/tectonics/test_step_audit.py": {
+      "identical_to_base": true,
+      "git_object": "f46971092e8a314062c72050819b97f665db195b"
+    }
+  },
+  "protected_identical": true,
+  "metrics_identical_except_timings": true,
+  "b_verdict_identical": true,
+  "region_windows_identical": true,
+  "tests_summary": "2 failed, 95 passed in 15.92s",
+  "test_all_passed": false,
+  "old_strict_failures_retained": true,
+  "checks": [
+    {
+      "tag": "edge15_patch1_dt0.125_a0",
+      "time_count": 281,
+      "initial_source_volume_difference_from_S8_km3": 1.1641532182693481e-10,
+      "independent_saved_state_recalculation": [
+        {
+          "t_ma": 35,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        },
+        {
+          "t_ma": 20,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": -2.220446049250313e-16
+        },
+        {
+          "t_ma": 0,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        }
+      ]
+    },
+    {
+      "tag": "edge15_patch1_dt0.25_a0",
+      "time_count": 141,
+      "initial_source_volume_difference_from_S8_km3": 1.1641532182693481e-10,
+      "independent_saved_state_recalculation": [
+        {
+          "t_ma": 35,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        },
+        {
+          "t_ma": 20,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 2.220446049250313e-16
+        },
+        {
+          "t_ma": 0,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        }
+      ]
+    },
+    {
+      "tag": "edge15_patch1_dt0.25_a301",
+      "time_count": 141,
+      "initial_source_volume_difference_from_S8_km3": 1.1641532182693481e-10,
+      "independent_saved_state_recalculation": [
+        {
+          "t_ma": 35,
+          "H_relative_recalculation_difference": 1.3207523963387757e-09,
+          "volume_relative_recalculation_difference": 2.6685320619890263e-12
+        },
+        {
+          "t_ma": 20,
+          "H_relative_recalculation_difference": 1.3207523963387757e-09,
+          "volume_relative_recalculation_difference": 2.6625368576560504e-12
+        },
+        {
+          "t_ma": 0,
+          "H_relative_recalculation_difference": 1.3207523963387757e-09,
+          "volume_relative_recalculation_difference": 2.653655073459049e-12
+        }
+      ]
+    },
+    {
+      "tag": "edge30_patch1_dt0.25_a0",
+      "time_count": 141,
+      "initial_source_volume_difference_from_S8_km3": 4.3655745685100555e-11,
+      "independent_saved_state_recalculation": [
+        {
+          "t_ma": 35,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": -2.220446049250313e-16
+        },
+        {
+          "t_ma": 20,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        },
+        {
+          "t_ma": 0,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 2.220446049250313e-16
+        }
+      ]
+    },
+    {
+      "tag": "edge7.5_patch0.25_dt0.25_a0",
+      "time_count": 141,
+      "initial_source_volume_difference_from_S8_km3": 1.7462298274040222e-10,
+      "independent_saved_state_recalculation": [
+        {
+          "t_ma": 35,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        },
+        {
+          "t_ma": 20,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        },
+        {
+          "t_ma": 0,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        }
+      ]
+    },
+    {
+      "tag": "edge7.5_patch1_dt0.25_a0",
+      "time_count": 141,
+      "initial_source_volume_difference_from_S8_km3": 1.7462298274040222e-10,
+      "independent_saved_state_recalculation": [
+        {
+          "t_ma": 35,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        },
+        {
+          "t_ma": 20,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": 0.0
+        },
+        {
+          "t_ma": 0,
+          "H_relative_recalculation_difference": 0.0,
+          "volume_relative_recalculation_difference": -2.220446049250313e-16
+        }
+      ]
+    }
+  ],
+  "all_full_inner_trials_preserve_all_material": true,
+  "full_network_boundary_resolved": false,
+  "outer_attempt_completed": false,
+  "outer_failure": {
+    "t_ma": 35.0,
+    "reason": "查询位于网络之外，不补值",
+    "query_counts": {
+      "outside": 91,
+      "unsupported": 125,
+      "inverted": 0,
+      "overlapping": 0
+    },
+    "affected_known_source_uids": [
+      2732,
+      4161,
+      6160,
+      12132,
+      14011,
+      16734,
+      17521,
+      21809,
+      22840,
+      24420,
+      25431,
+      43200,
+      51403,
+      52268,
+      55442,
+      55450,
+      60859,
+      64244,
+      71754,
+      76270,
+      76272,
+      79872,
+      79874,
+      91202,
+      91204,
+      91206,
+      91207,
+      95089,
+      111035,
+      111036,
+      114585,
+      114590,
+      114591,
+      120015,
+      120016,
+      137194
+    ],
+    "affected_known_initial_volume_km3": 78148.60915813847
+  },
+  "first_rebuilt_connectivity_outputs_retained": true,
+  "reference_connectivity_explicitly_uses_archived_S9": true,
+  "source_and_input_parity": {
+    "checkpoint": "U36-S10",
+    "method_class": "procedural_constrained",
+    "source": ".cache/u36_s9/real_0_0.25.npz",
+    "times_checked": 141,
+    "material_centers": 432,
+    "initial_coordinate_component_difference": 0.0,
+    "maximum_center_position_difference_km": 7.626307556423876e-12,
+    "maximum_J_relative_difference": 1.06855435610953e-09,
+    "reference_connectivity_from_archived_S9": true,
+    "note": "同一432中心及微斑块、同一步长、所有141时点核对；不是物理真值"
+  },
+  "global_or_B5_coupling_performed": false,
+  "quality_thresholds_changed": false,
+  "default_world_adopted": false,
+  "png_sha256": {
+    "figures/design/v2/forward/u36_s10/106_same_source_continuity.png": "d265cf188ecfe2c8f133161415f01263521851f7aebc3b4391521c6ca13d7dfd",
+    "figures/design/v2/forward/u36_s10/107_conditional_thickness.png": "988ced48890fc056f8c39e4052f04a151d5f8bd71c059f1a33604097f8dd502f",
+    "figures/design/v2/forward/u36_s10/108_source_residuals.png": "f0f08e55490b58b015710712a5c1fd7819cfbca428b2265c72fffc40d638e107",
+    "figures/design/v2/forward/u36_s10/109_outer_boundary_attempt.png": "6616c28aa119e37ad42498666845fc542052c02d88828ac3c5f4bb768e606c7a",
+    "figures/design/v2/forward/u36_s10/110_time_and_frame.png": "343352d160e9261c8226014f0f610fb4b0fa50ed05b02355bd52258980d2dc9d",
+    "figures/design/v2/forward/u36_s10/111_UID448261_refinement.png": "af4b9698dd20f9499ae31a206d1009431ce25b71abffd9daaa580a9d566b2a7a",
+    "figures/stage1/u36_s10_reference/01_elevation_global.png": "719fed78793bd84a093c79715c90ae066083cd90c66f769f59018502ad4dcb59",
+    "figures/stage1/u36_s10_reference/02_elevation_north_polar.png": "c556f98992f6f0f6c90fe00b962e31435ccd553c51c7f844f738281bf54f16b6",
+    "figures/stage1/u36_s10_reference/03_elevation_south_polar.png": "065e18897d59599919517d2e9538926d8771c2b3e6c4f637b56e3a68e985b4bf",
+    "figures/stage1/u36_s10_reference/04_landmass_units.png": "3e7d247d78ff2fd7be3683171c20db7a1070656ad69025575e62a865914df2a0",
+    "figures/stage1/u36_s10_reference/05_coast_morphology.png": "40942dda2c55a2a75eb81e08c637affd8682e02e2cd34ec3dd1bacacce24f511",
+    "figures/stage1/u36_s10_reference/06_distance_to_sea.png": "bc800de2edb0aeb82a0ba4b3c6b748b26f45ef6635d460eed06f313ad4fb06b5",
+    "figures/stage1/u36_s10_reference/07_slope.png": "4ad5e5f5d68ca224026db4e7d6d2b262bb9d0ebc8d0808df38244d1254d0293e",
+    "figures/stage1/u36_s10_reference/08_mountain_systems.png": "a873d57c49666dc1f17e78639509ec9dc56359da8f55d3b2e7fecd35074310c8",
+    "figures/stage1/u36_s10_reference/09_hypsometry.png": "ec01f18fd05b57f76ff032588c2a5f1e573ae32411360c01e9d302a872278eb0",
+    "figures/stage1/u36_s10_reference/10_slope_distance_mountains.png": "b6fa8db0290b44044c3b756465755e663034f54ec8ba4b768a47a6bff29646c8",
+    "figures/stage1/u36_s10_reference/11_coast_vs_earth.png": "224614c09d29afd70c2e72ee96808e9b0746ad57df6750318498999d042a5421",
+    "figures/stage1/u36_s10_reference/12_coast_complexity_spread.png": "98a71e664fd6b583621e7a92f9ea19ef4fbbf5839a6433d1ba7cb5fb5b956a1f",
+    "figures/stage1/u36_s10_reference/13_plates_boundaries.png": "98f6f1ea9894f19e38207d0af7d777ab6c2276aabde08e46c22aa92c77343285",
+    "figures/stage1/u36_s10_reference/regions/r1_main_inland_sea.png": "616923b2e63ab4ecca0ff190ecb307e9f8cff1258ac0c6b1d3d6736f019afc82",
+    "figures/stage1/u36_s10_reference/regions/r1_main_inland_sea_tectonics.png": "4dbab47a6e7b31b2a6b140ed98fb24e648295218833cdfc8046102997f233f58",
+    "figures/stage1/u36_s10_reference/regions/r2_inland_sea_complex_coast.png": "87307cfa35e5b45f89e9f0b9fc26b291159fba9ab3c2f4c6a387b675d3b023d2",
+    "figures/stage1/u36_s10_reference/regions/r2_inland_sea_complex_coast_tectonics.png": "a089fc16611ef0e19a2160dbb838bbee4d1ff48c27056c71f23ebd7d18f03493",
+    "figures/stage1/u36_s10_reference/regions/r3_north_coast.png": "5bd9fe176e703be49bfef45669629fdc313e297ceb993b964b43fa042da6f12f",
+    "figures/stage1/u36_s10_reference/regions/r3_north_coast_tectonics.png": "bfb4c7ad88a8e686afe85c0ba1ea5cea8d1b43a58d879297b3873221bcfa08b6",
+    "figures/stage1/u36_s10_reference/regions/r4_polar_coast.png": "870c0cb9044851938cb43c7ede8349ce094af5f8bb6377df3ba811d57f3841e0",
+    "figures/stage1/u36_s10_reference/regions/r4_polar_coast_tectonics.png": "0066e947b48d4fdc77c23cdb1095bbe9b605b496e61f8c86b94533bfd76b8de8",
+    "figures/stage1/u36_s10_reference/regions/r5_isthmus.png": "2e1c54e98d2d5011262e7238c35e78f45ec594da81e945788cbf88c15f813159",
+    "figures/stage1/u36_s10_reference/regions/r5_isthmus_tectonics.png": "b617101f47be8d7eaadf4eaf927ab66bc6ceb51238ae68eab8b3430b3eb2c7f2",
+    "figures/stage1/u36_s10_reference/regions/r6_smoothest_coast.png": "34cb0b3b30e4777357cb1f94f49e29c21be393aa95e48358082b71842c4eea70",
+    "figures/stage1/u36_s10_reference/regions/r6_smoothest_coast_tectonics.png": "9345a172d23f1594d7235edc01f1ff3f048815f35c3450c6eade7d92f5f33f07",
+    "figures/stage1/u36_s10_reference/regions/r7_archipelago.png": "0b25582771013a8d8e8738f9cfc2dec1d8ce8bd746ed1df3eb4b35478941574f",
+    "figures/stage1/u36_s10_reference/regions/r7_archipelago_tectonics.png": "baec224134502e850262c3d9f44f54831fb134722b6e79e5480b929a25686f6a",
+    "figures/stage1/u36_s10_reference/regions/r8_random_coast.png": "0f98b4d13398c1f3bb212c928632054a8e949e9971071bfc0eb8e6f5868257e5",
+    "figures/stage1/u36_s10_reference/regions/r8_random_coast_tectonics.png": "5f50de9dd4c1cc72a0bf5242111f6f78157500bab3de29179fbc2f6b94bb8495"
+  },
+  "limits": "柱连续性是给定运动下的条件性模型；体积误差不等于独立物理验证，单源细化不证明全域逐源收敛"
+}
