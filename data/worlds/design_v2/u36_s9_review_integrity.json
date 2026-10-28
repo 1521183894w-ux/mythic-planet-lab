@@ -1,0 +1,12 @@
+{
+  "review": "reviews/stage1_2026-10-28_4.md",
+  "original_sha256": "a70e7093dd6c8d1eb93762245e1fc956071190e1ed4fc9922f8254e22f3ff3a4",
+  "original_byte_count": 21434,
+  "original_char_count": 9773,
+  "raw_original_prefix_preserved": true,
+  "normalized_lf_original_sha256": "a70e7093dd6c8d1eb93762245e1fc956071190e1ed4fc9922f8254e22f3ff3a4",
+  "normalized_lf_original_byte_count": 21434,
+  "developer_response_append_only": true,
+  "git_index_normalized_original_prefix_sha256": "a70e7093dd6c8d1eb93762245e1fc956071190e1ed4fc9922f8254e22f3ff3a4",
+  "git_index_original_prefix_preserved": true
+}

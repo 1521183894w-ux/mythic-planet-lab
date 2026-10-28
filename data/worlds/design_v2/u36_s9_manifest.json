@@ -1,0 +1,40 @@
+{
+  "checkpoint": "U36-S9",
+  "version": "77a58ca+U36-S9",
+  "method_classes": {
+    "geometry_width": "user_override",
+    "legacy_and_candidate_point_maps": "interpolated",
+    "comparison": "procedural_constrained"
+  },
+  "figures": [
+    {
+      "file": "102_projection_and_rigid_truth.png",
+      "title": "官方投影插值的刚体误差与旋转候选",
+      "note": "左图绘图下限1e−12%，只用于显示；非误差容差。官方重心分支独立复现误差逐案保存。候选没有替换原框架beta/速度。"
+    },
+    {
+      "file": "103_rotation_and_connectivity.png",
+      "title": "旋转插值与来源连接分别检验",
+      "note": "五种输入分别比较，未挑最优框架。两档dt=0.25/0.125Myr。首轮动态连接反例完整保留；小面积差只验证这些内部点的运动学客观性。"
+    },
+    {
+      "file": "104_real_material_J.png",
+      "title": "真实C/D段的条件性面积比",
+      "note": "432个材料中心、35→0Ma、1km环形面积探针，结果画在同一35Ma初始位置便于比较；不是现今地貌、盆底、水深或材料来源重算。"
+    },
+    {
+      "file": "105_network_boundary_failures.png",
+      "title": "候选整网支持范围与边缘失败",
+      "note": "统计完整缓冲网络的投影方向，球面有符号面积另记（本轮无负值）；含未被内部材料点采用的边缘细长三角形。逐查询另外拒绝网外、负向及多重内部覆盖；内部采样成功不代表完整域输运成立。"
+    }
+  ],
+  "whole_network_geometry_test_passed": false,
+  "raw_inputs": [
+    "u36_s9_rotation_maps.json",
+    "u36_s9_dynamic_rotation_maps.json",
+    "u36_s9_mesh_audit.json"
+  ],
+  "source_reference_world": "S3冻结旁观控制数组；S4审计ID固定r8窗口。完整来源与哈希另表",
+  "physical_engine_changed": false,
+  "default_adopted": false
+}

@@ -1,0 +1,23 @@
+{
+  "framework": "pyGPlates1.0.0 (existing Windows environment)",
+  "scipy_version": "1.18.1",
+  "upstream_tag": "PyGPlates-1.0.0",
+  "upstream_commit": "27d48c91f24d7db9f6a212e7957d8c08064e5d9b",
+  "source_file": "src/app-logic/ResolvedTriangulationNetwork.cc",
+  "point_map_lines": [
+    625,
+    769
+  ],
+  "velocity_lines": [
+    934,
+    986
+  ],
+  "references": [
+    "https://github.com/GPlates/GPlates/blob/27d48c91f24d7db9f6a212e7957d8c08064e5d9b/src/app-logic/ResolvedTriangulationNetwork.cc#L625",
+    "https://www.gplates.org/docs/pygplates/generated/pygplates.ResolvedTopologicalNetwork.html",
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.Slerp.html"
+  ],
+  "copied_upstream_code_into_project": false,
+  "new_solver_installed": false,
+  "conclusion": "局部内部点客观性改善；不是唯一物理插值、完整网络/框架修复或全球输运"
+}

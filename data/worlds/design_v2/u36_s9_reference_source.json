@@ -1,0 +1,9 @@
+{
+  "source": ".cache/u36_s3/world.nc",
+  "source_sha256": "c805c1d0472f0ecdb98d5e0324a64fab2ede82ecf11fa031617ca45cfd6fa5ec",
+  "reference_sha256": "62376c326b4ec7506b11d137ee978a22d8d18a492e0c09c4baad45b467d73ca3",
+  "physical_arrays_identical": true,
+  "original_world_id": "design_v2_forward_v2_0Ma_u36_s3_observed",
+  "audit_alias": "design_v2_forward_v2_0Ma_u36_s4_control",
+  "note": "仅改变用于随机区域抽查的标识并加来源说明，所有物理数组完全相同；未冒称S4的NC字节哈希"
+}
