@@ -1,0 +1,12 @@
+{
+  "checkpoint": "U36-S11",
+  "method_class": "procedural_constrained",
+  "review": "reviews/stage1_2026-10-28_6.md",
+  "original_bytes": 10861,
+  "original_sha256": "6bb6eb56f73b984a9b49d87ba7c3251c4532ee2631e6b7af1bdcfb201875c372",
+  "original_LF_bytes": 10861,
+  "original_LF_sha256": "6bb6eb56f73b984a9b49d87ba7c3251c4532ee2631e6b7af1bdcfb201875c372",
+  "raw_prefix_preserved": true,
+  "LF_prefix_preserved": true,
+  "note": "评审原稿逐字节保持，仅追加开发者回应；Git可规范化LF"
+}

@@ -1,0 +1,217 @@
+{
+ "world_id": "design_v2_forward_v2_0Ma_u36_s4_control",
+ "display_name": "终图 v2 正向演化 0 Ma",
+ "resolution": "1024x512",
+ "seed": "design_v2_history_v2",
+ "code_version": "faaa277-dirty",
+ "method_class_elevation": "procedural_constrained",
+ "source": "scripts/design_forward.py：300 Ma 初始世界 + 倒推的板块运动正向演化到 0 Ma（L7 地壳引擎，构造尺度高程：Airy + GDH1 + 按起伏的剥蚀，无河流侵蚀）；火山岛按半径进海陆掩膜。注意：几百公里以上的海陆轮廓主要来自终图（user_override）切出的刚体块随板块搬运，不是过程产生的；过程产生的是岛弧、热点岛、碰撞与裂谷带来的变化（评审 stage1_2026-10-25_1 第 17 条）。浅海湾（陆表海、陆架海、神怒湾、东湾）的陆壳厚度按终图水深设定（user_override），0 Ma 水深等于设计值不算过程的验证（评审 stage1_2026-10-25_2 第 9 条）；老被动陆缘的陆架陆壳由初始条件设定（initial.margins）；主内海北岸三块微陆块的位置、裂开与碰撞时刻由设计给出；板内挤压复活（中央山系、北部断块山、北方高原、内海南岸山系）的范围、时间与增厚比由设计给出、增厚比按终图高度估定（性质同 user_override），所以这几条山的高度接近终图不算过程的验证（评审 stage1_2026-10-25_3 第 2、10 条）；U34 起，设计的裂开陆缘与走滑拉分板块对（history yaml forward.pull_apart）上，两侧正在分开处的陆—陆重叠按网格对不齐处理、不当碰撞增厚（之前会把张开的陆缘一点点泵厚），300 Myr 里因此没被当成碰撞的陆壳单元共 约 1707 万 km³（评审 stage1_2026-10-25_4 第 13 条）；补洞借料按同一次提交的供体总余额限额（procedural_constrained），余额仅为34km以上柱体积；短缺仍按旧规则显式记hole_created，不是求解的沉积或岩浆来源，该限额不保证目标谷地形成或完整三维伸展质量守恒。；局部伸展试验的位置、时期和总β由设计规定（user_override），不是从盆底目标高程或板块速度求解；固定单元面积仅扣减等效地壳柱体积，另计rift_thinning，未求解实际面积伸展、热沉降、沉积、水位或封闭排水；高程符号海陆掩膜沿用旧定义。",
+ "stage": 1,
+ "generated": "2026-10-28 18:46:38",
+ "config_version": 4,
+ "figures": [
+  {
+   "group": "global",
+   "file": "01_elevation_global.png",
+   "title": "高程（等距圆柱投影）",
+   "why": "分层设色 + 山体阴影；海平面处色带断开。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "global",
+   "file": "02_elevation_north_polar.png",
+   "title": "北极区高程（等面积方位投影）",
+   "why": "避免等距圆柱投影的高纬拉伸掩盖问题。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "global",
+   "file": "03_elevation_south_polar.png",
+   "title": "南极区高程（等面积方位投影）",
+   "why": "",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "maps",
+   "file": "04_landmass_units.png",
+   "title": "陆块单元、亚大陆与主内海（A 层）",
+   "why": "A 层硬约束的空间结构与达标情况。",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "maps",
+   "file": "05_coast_morphology.png",
+   "title": "半岛与海湾（B1）",
+   "why": "半径 100 km 开运算削掉的陆地与闭运算填充的海。",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "maps",
+   "file": "06_distance_to_sea.png",
+   "title": "距海距离（B2）",
+   "why": "",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "maps",
+   "file": "07_slope.png",
+   "title": "坡度",
+   "why": "",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "maps",
+   "file": "08_mountain_systems.png",
+   "title": "山系（C 层，v1 定义）",
+   "why": "",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "global",
+   "file": "13_plates_boundaries.png",
+   "title": "0 Ma 板块与边界类型",
+   "why": "构造图层：板块归属，边界按相对运动分汇聚、离散、走滑。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "charts",
+   "file": "09_hypsometry.png",
+   "title": "高程曲线与高程分布（与地球对比）",
+   "why": "",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "charts",
+   "file": "10_slope_distance_mountains.png",
+   "title": "坡度、距海距离、山系长度（与地球对比）",
+   "why": "",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "charts",
+   "file": "11_coast_vs_earth.png",
+   "title": "海岸盒计数、岛屿面积分布、各大陆级陆块的 B1/B2 判定（与地球陆块本体同类比较）",
+   "why": "",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "charts",
+   "file": "12_coast_complexity_spread.png",
+   "title": "海岸复杂度的空间分布（与地球对比，只作统计）",
+   "why": "B1 只量海岸复杂度的多少；这张图看它在空间上怎么分布：哪里碎、哪里直（U18(a)）。",
+   "method_class": "由高程/海陆掩膜派生（输入 procedural_constrained）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r1_main_inland_sea.png",
+   "title": "区域 1 · 主内海全貌",
+   "why": "海域面积 4.46 百万 km²，从中心到最远海域格点 2944 km；窗口边长取 max(内海所需 6500 km, 地中海对照 4000 km)，两边同比例尺",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r1_main_inland_sea_tectonics.png",
+   "title": "区域 1 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r2_inland_sea_complex_coast.png",
+   "title": "区域 2 · 主内海中海岸最复杂的一段",
+   "why": "窗口内海岸线 6081 km，平滑后 2496 km，海岸复杂度 2.44",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r2_inland_sea_complex_coast_tectonics.png",
+   "title": "区域 2 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r3_north_coast.png",
+   "title": "区域 3 · 主大陆北端高纬海岸",
+   "why": "主大陆最北的海岸点 79.4°；窗口内海岸线 6880 km，平滑后 4457 km，海岸复杂度 1.54",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r3_north_coast_tectonics.png",
+   "title": "区域 3 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r4_polar_coast.png",
+   "title": "区域 4 · 极地大陆的一段海岸",
+   "why": "极地大陆伸向低纬最远的海岸点 -56.6°；窗口内海岸线 3757 km，平滑后 2338 km，海岸复杂度 1.61",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r4_polar_coast_tectonics.png",
+   "title": "区域 4 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r5_isthmus.png",
+   "title": "区域 5 · 亚大陆之间的陆桥或地峡",
+   "why": "亚大陆 2 与 3 的分界线，是所有亚大陆分界中最窄的；分界线上离海最远 159 km，颈部宽度约 317 km",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r5_isthmus_tectonics.png",
+   "title": "区域 5 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r6_smoothest_coast.png",
+   "title": "区域 6 · 海岸复杂度最低的一段",
+   "why": "窗口内海岸线 3017 km，平滑后 2898 km，海岸复杂度 1.04",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r6_smoothest_coast_tectonics.png",
+   "title": "区域 6 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r7_archipelago.png",
+   "title": "区域 7 · 最大的群岛区",
+   "why": "窗口内岛屿 6 个（面积 6113 km² 至 5 百万 km² 的陆块，按质心计）；窗口内海岸线 7477 km，平滑后 2813 km，海岸复杂度 2.66",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r7_archipelago_tectonics.png",
+   "title": "区域 7 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r8_random_coast.png",
+   "title": "区域 8 · 随机抽取的一段海岸",
+   "why": "随机种子 crc32('design_v2_forward_v2_0Ma_u36_s4_control|r8')，按海岸线长度加权抽取",
+   "method_class": "procedural_constrained（世界高程）"
+  },
+  {
+   "group": "regions",
+   "file": "regions/r8_random_coast_tectonics.png",
+   "title": "区域 8 · 同窗口构造图层",
+   "why": "地壳厚度、洋底年龄、板块与边界类型、最近一次构造改造，与左边的高程图同一窗口，供海岸成因抽查。",
+   "method_class": "procedural_constrained"
+  }
+ ]
+}

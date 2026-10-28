@@ -1,0 +1,36 @@
+{
+  "checkpoint": "U36-S11",
+  "method_class": "visual_only",
+  "version": "c192b52+U36-S11",
+  "figures": [
+    {
+      "file": "112_initial_boundary_support.png",
+      "title": "起点诊断：换投影不能单独修复外圈",
+      "sha256": "d70e67bd48e606197cff48b715f6371e2f079c336bf7c63680a937064f1c499d"
+    },
+    {
+      "file": "113_full_domain_thickness.png",
+      "title": "完整来源域与条件性柱厚",
+      "note": "包含原外圈；灰色为原非陆壳/无覆盖。没有补值；此图不是盆底、地表、水深或新海岸。",
+      "sha256": "693fb0b9cc20089ca6bbce3fedbff48e1b407318feb542dbd9296eb237b0a13d"
+    },
+    {
+      "file": "114_boundary_refinement.png",
+      "title": "完整域和外圈的实际细分结果",
+      "note": "有限球面三角形面积乘H0/解析累计J独立求积；不逐UID归一化。15个来源末态误差不单调，不能声称逐源收敛。",
+      "sha256": "70d0f8ee034142515efc8b016b0646428bb4eb7079a19fc36a28fe2301349d55"
+    },
+    {
+      "file": "115_source_errors.png",
+      "title": "旧问题来源与全来源误差",
+      "note": "输入插值场已改变，不能与S10同档误差冒称同一物理问题的精度排名；微斑块不再参与正式柱厚计算。",
+      "sha256": "6f7bc4c183d13eb8e1cc0b1565ce90fa3d72d5599bf5d4de73cbbe4690d7c815"
+    },
+    {
+      "file": "116_frame_and_derivative.png",
+      "title": "参照系、步长和解析导数独立核对",
+      "note": "35/20/5Ma各16个混合面内部点；100m与10m斑块结果全部保留。解析导数验证的是指定插值场，不是物理真值。",
+      "sha256": "79d661e6f0597cb7aa1c1a58b97f3c3c246f41537af9cab7dc47f8170fda46c9"
+    }
+  ]
+}

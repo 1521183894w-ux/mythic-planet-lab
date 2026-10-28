@@ -1,0 +1,113 @@
+{
+  "checkpoint": "U36-S11-rebuild",
+  "method_class": "procedural_constrained",
+  "source": "S5/S8 local caches; archived S11 connectivity",
+  "new_global_evolution": false,
+  "rows": [
+    {
+      "tag": "full_e30_l0_dt0.25_a0",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 15.412465600064024,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    },
+    {
+      "tag": "full_e30_l1_dt0.25_a0",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 60.42439409997314,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    },
+    {
+      "tag": "full_e30_l2_dt0.25_a0",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 223.99494420003612,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    },
+    {
+      "tag": "outer_e30_l0_dt0.25_a0",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 4.651155500090681,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    },
+    {
+      "tag": "outer_e30_l1_dt0.25_a0",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 9.026934799971059,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    },
+    {
+      "tag": "outer_e30_l2_dt0.25_a0",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 27.337602699990384,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    },
+    {
+      "tag": "full_e30_l0_dt0.125_a0",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 33.899096000008285,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    },
+    {
+      "tag": "full_e30_l0_dt0.25_a301",
+      "maximum_source_initial_final_difference_km3": 0.0,
+      "elapsed_s": 17.081255899975076,
+      "complete": true,
+      "all_timeline_rows_equal": true,
+      "all_source_summary_rows_equal": true
+    }
+  ],
+  "scope": "eight trials initial/final per-source values; full timelines compared separately",
+  "figure_png_count": 34,
+  "rebuilt_figure_hashes": {
+    "figures/design/v2/forward/u36_s11/112_initial_boundary_support.png": "d70e67bd48e606197cff48b715f6371e2f079c336bf7c63680a937064f1c499d",
+    "figures/design/v2/forward/u36_s11/113_full_domain_thickness.png": "693fb0b9cc20089ca6bbce3fedbff48e1b407318feb542dbd9296eb237b0a13d",
+    "figures/design/v2/forward/u36_s11/114_boundary_refinement.png": "70d0f8ee034142515efc8b016b0646428bb4eb7079a19fc36a28fe2301349d55",
+    "figures/design/v2/forward/u36_s11/115_source_errors.png": "6f7bc4c183d13eb8e1cc0b1565ce90fa3d72d5599bf5d4de73cbbe4690d7c815",
+    "figures/design/v2/forward/u36_s11/116_frame_and_derivative.png": "79d661e6f0597cb7aa1c1a58b97f3c3c246f41537af9cab7dc47f8170fda46c9",
+    "figures/stage1/u36_s11_reference/01_elevation_global.png": "98f3d5826e8d91c458c574e0095059e326a9056c3de3c3e090cdd48df6e4e60d",
+    "figures/stage1/u36_s11_reference/02_elevation_north_polar.png": "dbdf2292f5ec5a5a3e361227f0e1cc17633fdf7fe98955e55f84e3e1cf5e4189",
+    "figures/stage1/u36_s11_reference/03_elevation_south_polar.png": "d09b80fb7e3381fc1851a371267a6b69bc2cfc2aca6c5b4905f6d186d430fd69",
+    "figures/stage1/u36_s11_reference/04_landmass_units.png": "8e93c8a0235875c846e77ebc252023429f2dac5711d88662ea362d3fa2dbcd93",
+    "figures/stage1/u36_s11_reference/05_coast_morphology.png": "006a2f5d3fad0e9096da17313fff0724fb0918e48109b1de550802ed169c71dd",
+    "figures/stage1/u36_s11_reference/06_distance_to_sea.png": "49d37e46ac2ab2d8d51421b6879c1e49555008fa7a125d3587f1bd113a6e4996",
+    "figures/stage1/u36_s11_reference/07_slope.png": "4dd3dc94b56eb1fca411469ca31438f7f12c8931a355a65707dcdb393b37cb7c",
+    "figures/stage1/u36_s11_reference/08_mountain_systems.png": "bfe43a061d4a0b9d8cd57415ecfa6f3b58b6cdd97e419a0ca3f53cb33081c116",
+    "figures/stage1/u36_s11_reference/09_hypsometry.png": "25e93223090e1de448be1dc519fe1c82f54fbb2febc969d77f36f95c5a1064e4",
+    "figures/stage1/u36_s11_reference/10_slope_distance_mountains.png": "814b4285d5430169912ae25fd8e541bb3fe07afc02bbfc295c912fff6d0fff0f",
+    "figures/stage1/u36_s11_reference/11_coast_vs_earth.png": "57e352512dca0688cb92665dd6975b9d8f6a7ed798bd086148fb65fcddb71bf7",
+    "figures/stage1/u36_s11_reference/12_coast_complexity_spread.png": "6badebb2926d03f4b7ad78112759663584cfa6bd1743f182b20307d84bae6fc7",
+    "figures/stage1/u36_s11_reference/13_plates_boundaries.png": "92420b29feba14deb130e9dc42d06727fce74c7181b1d62f9b3f6ad40b84efb4",
+    "figures/stage1/u36_s11_reference/regions/r1_main_inland_sea.png": "ff81a986be0a7b3f88817f8833a37681d13a1b862467fe829dddbf3bfeb66234",
+    "figures/stage1/u36_s11_reference/regions/r1_main_inland_sea_tectonics.png": "59d6468d6c6c14d57d2d987b1b831d10ff3e872c4c98eb837b2540c4b47adf10",
+    "figures/stage1/u36_s11_reference/regions/r2_inland_sea_complex_coast.png": "ee4a7da577d05b4278fc2ebcbf6ae66dee920194ca4eea6cbb7cb695a05b9f66",
+    "figures/stage1/u36_s11_reference/regions/r2_inland_sea_complex_coast_tectonics.png": "9f562a345b221f16bb046f247e9293d660ec66d60708296d033d312b1d412c08",
+    "figures/stage1/u36_s11_reference/regions/r3_north_coast.png": "cf22b65645158ca38495de98d3ba1eeac5a6f4f72bca9307ab102e85d1fbf979",
+    "figures/stage1/u36_s11_reference/regions/r3_north_coast_tectonics.png": "a53de4646fb1823d467b47a6928ed29486250e068fd6685e23924347c527aefb",
+    "figures/stage1/u36_s11_reference/regions/r4_polar_coast.png": "74239ecfc6c04c952da7cb20649b57e5a68f5dd97a0ceec7a2fec6079d5e3966",
+    "figures/stage1/u36_s11_reference/regions/r4_polar_coast_tectonics.png": "7be14abbefdaafe858ff734c3751feb629f4259328edde204300a21bb1e9a39e",
+    "figures/stage1/u36_s11_reference/regions/r5_isthmus.png": "fbe0453da42a61894527c892530b149bb280bbe622236372c80997e4904c1cd3",
+    "figures/stage1/u36_s11_reference/regions/r5_isthmus_tectonics.png": "59cc1582ed0abae041b48895335bbdbbcb195beb37eae79ca695a552495429b6",
+    "figures/stage1/u36_s11_reference/regions/r6_smoothest_coast.png": "290ff71ffa0e34edf6eb149c5b6dfd4c61e038b16e5e5425c2c39a94dd706cf9",
+    "figures/stage1/u36_s11_reference/regions/r6_smoothest_coast_tectonics.png": "7c23c4fa450ee81579d8a56f2caaeb971ee1eddff2a675581f0f247d77619d8d",
+    "figures/stage1/u36_s11_reference/regions/r7_archipelago.png": "dc6aa061f56f212b838e8a406b4010768a5020a944e27506b6c643ec5dd75848",
+    "figures/stage1/u36_s11_reference/regions/r7_archipelago_tectonics.png": "284f551f4e83b038781adfebb75d77fcb2ad4fac980cde5afe512f907a0a696d",
+    "figures/stage1/u36_s11_reference/regions/r8_random_coast.png": "c36ce3e9f337d439885e0776c17a1fca3391d8e149288c5c6ecc14dfb0486df2",
+    "figures/stage1/u36_s11_reference/regions/r8_random_coast_tectonics.png": "5558e4a12729301bada553b48c7e7be87ce399d4a7af11f41658ff40928191ed"
+  },
+  "standard_metrics_identical_except_timings": true,
+  "region_windows_identical": true,
+  "note": "归档八案timeline/source_summary与本机重建完全相等；不混同来源V0与anchor旋转后有限面积在首时点的浮点微差。图是本机重建，原manifest哈希另保留。"
+}
