@@ -1,0 +1,7 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "procedural_constrained",
+  "raw_log_sha256": "590541ca17c7d8b61a11b8cf1a9b082f6d42138df35fb1ef634b0fd6cfb8f347",
+  "raw_log_bytes": 2656,
+  "archive_note": "仅去行尾空白；Git暂存规范LF，工作区可为CRLF；原命令输出字节留.cache/u36_s15/tests.log，断言/结果未改"
+}

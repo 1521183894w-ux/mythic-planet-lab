@@ -1,0 +1,14 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "procedural_constrained",
+  "review": "reviews/stage1_2026-10-29_1.md",
+  "original_bytes": 13580,
+  "original_sha256": "add1fbc4490ff99c82a0e07bd840a755e935c4e8924918eedded299465f80710",
+  "original_LF_bytes": 13579,
+  "original_LF_sha256": "d7880557b61c0ff9dce730a50f93c16a9ae2704670be1bb48b3777eea9772872",
+  "raw_prefix_preserved": true,
+  "LF_prefix_preserved": true,
+  "audit_original_bytes": 187313,
+  "audit_original_sha256": "9e573f50ceecb013416a8dfc3f3b41106639845f48dbf807066be459f7a73ec1",
+  "audit_LF_sha256": "b2a3d8478b19dc908fdd542ac061ae281ee601d97030b52ba7d47d877b84160b"
+}

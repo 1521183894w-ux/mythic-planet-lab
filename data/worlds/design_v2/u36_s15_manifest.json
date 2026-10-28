@@ -1,0 +1,31 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "visual_only",
+  "figures": [
+    {
+      "file": "129_native_coverage.png",
+      "title": "真实宿主覆盖、未知与多来源",
+      "note": "原生宿主只显示材料带内裁片；孔洞/细碎片另据WKB与面积账审计，色块不代表完整宿主厚度。",
+      "sha256": "bc1fbe6a8c3ea43a1d9c6466e5edb8fa0077d28b8970025f97425f5d9735ab85"
+    },
+    {
+      "file": "130_native_thickness.png",
+      "title": "同一覆盖范围的厚度信息损失",
+      "note": "仅画有真实宿主且H0已知的相同内部8×8节点；未知/无宿主留空；分量均值需要来源标签，当前引擎并未采用。",
+      "sha256": "031df4f39901b8311c8beef6928ab7dae10b050a8b5bdfb7ae4097a37d424e78"
+    },
+    {
+      "file": "131_native_inventory.png",
+      "title": "逐来源交叠转移、未覆盖与边界重叠",
+      "note": "曲边/宿主分片残差保留；对数图中零差仅显示为1e−14km³。重叠面积不是物理碰撞或通量，不据此修正库存。",
+      "sha256": "7c6eea723c9ff7601a6383f6e1d787516814c3f8aa98c9e13439a094b493d7e9"
+    },
+    {
+      "file": "132_native_field_loss.png",
+      "title": "来源混合与宿主内平均的误差对照",
+      "note": "所有柱共用同一有宿主参照库存作分母；未覆盖库存另外列账。首轮将未覆盖区并成伪宿主的图口径已弃用，原始试算留缓存。",
+      "sha256": "f5d54ce68ab0548f0fc3bae842d82322742aac16199706789ff2b3c5d96ff6e4"
+    }
+  ],
+  "elapsed_s": 25.753124100039713
+}

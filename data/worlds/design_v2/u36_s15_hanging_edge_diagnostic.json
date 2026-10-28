@@ -1,0 +1,29 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "procedural_constrained",
+  "scope": "只检查最大两个重叠对的初始拓扑，不证明全部重叠原因",
+  "examples": [
+    {
+      "cell_i": 341,
+      "cell_j": 1659,
+      "initial_shared_vertex_count": 1,
+      "hanging_midpoint_vertex": 164,
+      "long_edge_vertex_ids": [
+        182,
+        146
+      ],
+      "midpoint_difference_m": 0.0
+    },
+    {
+      "cell_i": 341,
+      "cell_j": 1083,
+      "initial_shared_vertex_count": 1,
+      "hanging_midpoint_vertex": 164,
+      "long_edge_vertex_ids": [
+        182,
+        146
+      ],
+      "midpoint_difference_m": 0.0
+    }
+  ]
+}

@@ -1,0 +1,5240 @@
+{
+  "pre_fix_direct_observation": {
+    "tag": "0Ma_b64",
+    "sha256": "d0fd98dee2a41811064e037843e309c92cd4d08ad28149205c7622e60bb21aa8",
+    "negative_linear_pieces": 4,
+    "minimum_linear_piece_volume_km3": -4.537996390870094e-08,
+    "minimum_negative_piece_area_km2": 6.129048054288093e-19
+  },
+  "audit_name": "U36-S15独立结果审计",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "shapely": "2.2.0"
+  },
+  "scope": "三案完整2071材料单元/全部77已知来源；WKB球面面积/一阶矩、交叠积分、未知与无宿主库存、原生Voronoi/优先级几何重建、q4/q8共同覆盖L1",
+  "not_validated": [
+    "未独立验证归档J、指定映射的真实物理或300Ma全球求解",
+    "未独立重建梯度拟合/限幅器",
+    "未读取求解器源码；控制世界不变仅为归档声明，未独立对原始世界逐数组核准",
+    "未复跑项目测试，只读取指定测试日志"
+  ],
+  "cases": [
+    {
+      "tag": "35Ma_b64",
+      "npz_sha256": "c592c0025ccc62815c9c96f2b6e3cd22e7b248fa15f65a6f6032565581da7c54",
+      "input_unchanged_during_audit": true,
+      "json_input_trace_sha256": "d436543d0bf061da190691a81469226f592d919bf9e0f0de1e3f26429ae5145c",
+      "json_input_hash_note": "此字段指S14源输入，本案输出身份由raw_manifest与本审计实际SHA核准",
+      "geometry": {
+        "source_count": 2071,
+        "known_count": 1931,
+        "known_source_count": 77,
+        "target_count": 79,
+        "source_area_error": {
+          "maximum_abs": 3.410605131648481e-12,
+          "finite_mask_disagreement": 0
+        },
+        "source_moment_error": {
+          "maximum_abs": 6.671996288787341e-12,
+          "finite_mask_disagreement": 0
+        },
+        "source_centroid_error": {
+          "maximum_abs": 9.317546734166626e-13,
+          "finite_mask_disagreement": 0
+        },
+        "target_area_error": {
+          "maximum_abs": 6.548361852765083e-11,
+          "finite_mask_disagreement": 0
+        },
+        "domain_area": 159832.46701220312,
+        "source_area_sum_minus_union": -1.1641532182693481e-10,
+        "source_overlap_max_abs_row_residual": 5.7411853049416095e-12,
+        "target_area_partition_max_abs": 2.2737367544323206e-11,
+        "overlap_count": 3263,
+        "archived_overlap_count": 3263,
+        "unlisted_overlap_area": 0.0,
+        "overlap_area_error": {
+          "maximum_abs": 5.087485988042317e-12,
+          "finite_mask_disagreement": 0
+        },
+        "overlap_moment_error": {
+          "maximum_abs": 7.0539130092583946e-12,
+          "finite_mask_disagreement": 0
+        },
+        "constant_volume_error": {
+          "maximum_abs": 1.5006662579253316e-10,
+          "finite_mask_disagreement": 0
+        },
+        "linear_volume_error": {
+          "maximum_abs": 1.5006662579253316e-10,
+          "finite_mask_disagreement": 0
+        },
+        "known_area": 150525.70529209657,
+        "unknown_area": 9306.761720106424,
+        "nohost_area": 7193.900379198516,
+        "constant_known_nohost_volume": 5.0629051798244014e-09,
+        "linear_known_nohost_volume": 5.0629051798244014e-09,
+        "recomputed_source_component_mean_range_km": [
+          32.99999999999999,
+          43.45935856467164
+        ],
+        "archived_source_component_mean_range_km": [
+          32.99999999999999,
+          43.45935856467164
+        ],
+        "negative_constant_piece_count": 0,
+        "negative_linear_piece_count": 0,
+        "archived_negative_linear_piece_count": 0,
+        "unknown_target_area_error": {
+          "maximum_abs": 8.185452315956354e-12,
+          "finite_mask_disagreement": 0
+        },
+        "known_target_area_error": {
+          "maximum_abs": 7.275957614183426e-12,
+          "finite_mask_disagreement": 0
+        },
+        "constant_mean_error": {
+          "maximum_abs": 1.4940799410112504e-05,
+          "finite_mask_disagreement": 0
+        },
+        "linear_mean_error": {
+          "maximum_abs": 1.4940799410112504e-05,
+          "finite_mask_disagreement": 0
+        },
+        "source_constant_mean_error": {
+          "maximum_abs": 3.552713678800501e-14,
+          "finite_mask_disagreement": 0
+        },
+        "source_linear_mean_error": {
+          "maximum_abs": 3.552713678800501e-14,
+          "finite_mask_disagreement": 0
+        },
+        "source_area_component_error": {
+          "maximum_abs": 6.821210263296962e-12,
+          "finite_mask_disagreement": 0
+        }
+      },
+      "source_results_all_77": [
+        {
+          "uid": 566,
+          "material_volume": 112714.91155751118,
+          "initial_volume": 112714.91155757467,
+          "archived_initial_volume": 112714.91155757465,
+          "constant_transfer": 112714.91155751073,
+          "constant_uncovered": 4.163490451379397e-10,
+          "constant_closure": -2.9103830456733704e-11,
+          "linear_transfer": 112714.91155751073,
+          "linear_uncovered": 4.163490451379397e-10,
+          "linear_closure": -2.9103830456733704e-11
+        },
+        {
+          "uid": 2732,
+          "material_volume": 90511.7492135418,
+          "initial_volume": 90511.7492134989,
+          "archived_initial_volume": 90511.74921349892,
+          "constant_transfer": 90511.74921354174,
+          "constant_uncovered": 4.159235732943484e-11,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 90511.74921354174,
+          "linear_uncovered": 4.159235732943484e-11,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 4161,
+          "material_volume": 109656.06448982285,
+          "initial_volume": 109656.06448976636,
+          "archived_initial_volume": 109656.06448976634,
+          "constant_transfer": 109656.0644898228,
+          "constant_uncovered": 7.149325468610495e-11,
+          "constant_closure": 2.9103830456733704e-11,
+          "linear_transfer": 109656.0644898228,
+          "linear_uncovered": 7.149325468610495e-11,
+          "linear_closure": 2.9103830456733704e-11
+        },
+        {
+          "uid": 4569,
+          "material_volume": 100270.91742624532,
+          "initial_volume": 100270.91742632279,
+          "archived_initial_volume": 100270.91742632279,
+          "constant_transfer": 100270.91742624537,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.820766091346741e-11,
+          "linear_transfer": 100270.91742624537,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.820766091346741e-11
+        },
+        {
+          "uid": 6160,
+          "material_volume": 24132.197506213488,
+          "initial_volume": 24132.197506187313,
+          "archived_initial_volume": 24132.197506187316,
+          "constant_transfer": 24132.197506213484,
+          "constant_uncovered": 0.0,
+          "constant_closure": -3.637978807091713e-12,
+          "linear_transfer": 24132.197506213484,
+          "linear_uncovered": 0.0,
+          "linear_closure": -3.637978807091713e-12
+        },
+        {
+          "uid": 12132,
+          "material_volume": 1323.749183904742,
+          "initial_volume": 1323.7491839024926,
+          "archived_initial_volume": 1323.7491839024929,
+          "constant_transfer": 1323.749183904743,
+          "constant_uncovered": 0.0,
+          "constant_closure": 9.094947017729282e-13,
+          "linear_transfer": 1323.749183904743,
+          "linear_uncovered": 0.0,
+          "linear_closure": 9.094947017729282e-13
+        },
+        {
+          "uid": 13176,
+          "material_volume": 133363.14657984293,
+          "initial_volume": 133363.146579859,
+          "archived_initial_volume": 133363.146579859,
+          "constant_transfer": 133363.1465798429,
+          "constant_uncovered": 1.2467046252669838e-11,
+          "constant_closure": -2.9103830456733704e-11,
+          "linear_transfer": 133363.1465798429,
+          "linear_uncovered": 1.2467046252669838e-11,
+          "linear_closure": -2.9103830456733704e-11
+        },
+        {
+          "uid": 14011,
+          "material_volume": 95204.37487327709,
+          "initial_volume": 95204.37487322034,
+          "archived_initial_volume": 95204.37487322034,
+          "constant_transfer": 95204.3748732771,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 95204.3748732771,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 16733,
+          "material_volume": 98224.69399781665,
+          "initial_volume": 98224.6939978053,
+          "archived_initial_volume": 98224.6939978053,
+          "constant_transfer": 98224.6939978166,
+          "constant_uncovered": 5.872693604064057e-11,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 98224.6939978166,
+          "linear_uncovered": 5.872693604064057e-11,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 16734,
+          "material_volume": 14211.975642001762,
+          "initial_volume": 14211.975642055553,
+          "archived_initial_volume": 14211.975642055553,
+          "constant_transfer": 14211.975642001758,
+          "constant_uncovered": 0.0,
+          "constant_closure": -3.637978807091713e-12,
+          "linear_transfer": 14211.975642001758,
+          "linear_uncovered": 0.0,
+          "linear_closure": -3.637978807091713e-12
+        },
+        {
+          "uid": 17521,
+          "material_volume": 20723.786756889192,
+          "initial_volume": 20723.78675690814,
+          "archived_initial_volume": 20723.78675690814,
+          "constant_transfer": 20723.78675688918,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.0913936421275139e-11,
+          "linear_transfer": 20723.78675688918,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.0913936421275139e-11
+        },
+        {
+          "uid": 17718,
+          "material_volume": 129360.39193954339,
+          "initial_volume": 129360.39193962545,
+          "archived_initial_volume": 129360.39193962545,
+          "constant_transfer": 129360.39193954332,
+          "constant_uncovered": 1.2611229102539964e-10,
+          "constant_closure": 5.820766091346741e-11,
+          "linear_transfer": 129360.39193954332,
+          "linear_uncovered": 1.2611229102539964e-10,
+          "linear_closure": 5.820766091346741e-11
+        },
+        {
+          "uid": 21809,
+          "material_volume": 14521.845339680189,
+          "initial_volume": 14521.84533969604,
+          "archived_initial_volume": 14521.84533969604,
+          "constant_transfer": 14521.845339680189,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 14521.845339680189,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 22840,
+          "material_volume": 75758.45956014394,
+          "initial_volume": 75758.4595601728,
+          "archived_initial_volume": 75758.45956017279,
+          "constant_transfer": 75758.45956014394,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 75758.45956014394,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 24420,
+          "material_volume": 19679.216830098943,
+          "initial_volume": 19679.216830108016,
+          "archived_initial_volume": 19679.216830108016,
+          "constant_transfer": 19679.216830098943,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 19679.216830098943,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 24452,
+          "material_volume": 102913.96164315689,
+          "initial_volume": 102913.96164317554,
+          "archived_initial_volume": 102913.96164317556,
+          "constant_transfer": 102913.96164315689,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 102913.96164315689,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 25431,
+          "material_volume": 29897.692857314603,
+          "initial_volume": 29897.692857340375,
+          "archived_initial_volume": 29897.692857340375,
+          "constant_transfer": 29897.692857314607,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.637978807091713e-12,
+          "linear_transfer": 29897.692857314607,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.637978807091713e-12
+        },
+        {
+          "uid": 30093,
+          "material_volume": 118518.35782273834,
+          "initial_volume": 118518.3578227743,
+          "archived_initial_volume": 118518.35782277431,
+          "constant_transfer": 118518.35782273838,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 118518.35782273838,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 43200,
+          "material_volume": 16329.012496163723,
+          "initial_volume": 16329.012496155448,
+          "archived_initial_volume": 16329.012496155448,
+          "constant_transfer": 16329.012496163718,
+          "constant_uncovered": 0.0,
+          "constant_closure": -5.4569682106375694e-12,
+          "linear_transfer": 16329.012496163718,
+          "linear_uncovered": 0.0,
+          "linear_closure": -5.4569682106375694e-12
+        },
+        {
+          "uid": 43378,
+          "material_volume": 20164.331837857357,
+          "initial_volume": 20164.331837830156,
+          "archived_initial_volume": 20164.331837830156,
+          "constant_transfer": 20164.33183785733,
+          "constant_uncovered": 6.9597555175395155e-12,
+          "constant_closure": -1.8189894035458565e-11,
+          "linear_transfer": 20164.33183785733,
+          "linear_uncovered": 6.9597555175395155e-12,
+          "linear_closure": -1.8189894035458565e-11
+        },
+        {
+          "uid": 48346,
+          "material_volume": 100225.35726431789,
+          "initial_volume": 100225.3572643578,
+          "archived_initial_volume": 100225.35726435782,
+          "constant_transfer": 100225.35726431757,
+          "constant_uncovered": 3.6336926811512154e-10,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 100225.35726431757,
+          "linear_uncovered": 3.6336926811512154e-10,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 51397,
+          "material_volume": 79925.0503185944,
+          "initial_volume": 79925.05031859956,
+          "archived_initial_volume": 79925.05031859955,
+          "constant_transfer": 79925.0503185944,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 79925.0503185944,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 51403,
+          "material_volume": 92915.48251944382,
+          "initial_volume": 92915.48251940456,
+          "archived_initial_volume": 92915.48251940456,
+          "constant_transfer": 92915.48251944382,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 92915.48251944382,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 51405,
+          "material_volume": 118539.04362157782,
+          "initial_volume": 118539.04362148582,
+          "archived_initial_volume": 118539.04362148582,
+          "constant_transfer": 118539.04362157718,
+          "constant_uncovered": 7.751163741900737e-10,
+          "constant_closure": 1.3096723705530167e-10,
+          "linear_transfer": 118539.04362157718,
+          "linear_uncovered": 7.751163741900737e-10,
+          "linear_closure": 1.3096723705530167e-10
+        },
+        {
+          "uid": 52268,
+          "material_volume": 91533.04429550373,
+          "initial_volume": 91533.04429546624,
+          "archived_initial_volume": 91533.04429546626,
+          "constant_transfer": 91533.04429550371,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 91533.04429550371,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 55442,
+          "material_volume": 101553.68102906774,
+          "initial_volume": 101553.68102906975,
+          "archived_initial_volume": 101553.68102906975,
+          "constant_transfer": 101553.68102906774,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 101553.68102906774,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 55449,
+          "material_volume": 132796.234971286,
+          "initial_volume": 132796.23497121912,
+          "archived_initial_volume": 132796.23497121912,
+          "constant_transfer": 132796.2349712859,
+          "constant_uncovered": 2.471868946352251e-10,
+          "constant_closure": 1.4551915228366852e-10,
+          "linear_transfer": 132796.2349712859,
+          "linear_uncovered": 2.471868946352251e-10,
+          "linear_closure": 1.4551915228366852e-10
+        },
+        {
+          "uid": 55450,
+          "material_volume": 103025.57775892862,
+          "initial_volume": 103025.57775891271,
+          "archived_initial_volume": 103025.57775891271,
+          "constant_transfer": 103025.57775892863,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 103025.57775892863,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 60859,
+          "material_volume": 104912.23434883569,
+          "initial_volume": 104912.23434873414,
+          "archived_initial_volume": 104912.23434873413,
+          "constant_transfer": 104912.2343488357,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 104912.2343488357,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 64244,
+          "material_volume": 53051.00778982682,
+          "initial_volume": 53051.007789821095,
+          "archived_initial_volume": 53051.007789821095,
+          "constant_transfer": 53051.00778982681,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 53051.00778982681,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 65973,
+          "material_volume": 134015.78909220512,
+          "initial_volume": 134015.78909224892,
+          "archived_initial_volume": 134015.7890922489,
+          "constant_transfer": 134015.78909220497,
+          "constant_uncovered": 2.0145073621196754e-10,
+          "constant_closure": 5.820766091346741e-11,
+          "linear_transfer": 134015.78909220497,
+          "linear_uncovered": 2.0145073621196754e-10,
+          "linear_closure": 5.820766091346741e-11
+        },
+        {
+          "uid": 67113,
+          "material_volume": 97811.78504404287,
+          "initial_volume": 97811.78504408684,
+          "archived_initial_volume": 97811.78504408682,
+          "constant_transfer": 97811.78504404277,
+          "constant_uncovered": 1.5388829816984896e-10,
+          "constant_closure": 5.820766091346741e-11,
+          "linear_transfer": 97811.78504404277,
+          "linear_uncovered": 1.5388829816984896e-10,
+          "linear_closure": 5.820766091346741e-11
+        },
+        {
+          "uid": 71061,
+          "material_volume": 104693.55849548453,
+          "initial_volume": 104693.55849552323,
+          "archived_initial_volume": 104693.55849552323,
+          "constant_transfer": 104693.55849548454,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 104693.55849548454,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 71686,
+          "material_volume": 99353.53201766149,
+          "initial_volume": 99353.53201766848,
+          "archived_initial_volume": 99353.53201766848,
+          "constant_transfer": 99353.53201766154,
+          "constant_uncovered": 1.7812675700766912e-12,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 99353.53201766154,
+          "linear_uncovered": 1.7812675700766912e-12,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 71754,
+          "material_volume": 40860.08269627085,
+          "initial_volume": 40860.08269623749,
+          "archived_initial_volume": 40860.08269623749,
+          "constant_transfer": 40860.08269627086,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.275957614183426e-12,
+          "linear_transfer": 40860.08269627086,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.275957614183426e-12
+        },
+        {
+          "uid": 71757,
+          "material_volume": 105034.50873879006,
+          "initial_volume": 105034.50873871258,
+          "archived_initial_volume": 105034.5087387126,
+          "constant_transfer": 105034.50873878998,
+          "constant_uncovered": 8.625342976587682e-11,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 105034.50873878998,
+          "linear_uncovered": 8.625342976587682e-11,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 76269,
+          "material_volume": 133238.34889791516,
+          "initial_volume": 133238.34889796044,
+          "archived_initial_volume": 133238.3488979604,
+          "constant_transfer": 133238.3488979152,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.9103830456733704e-11,
+          "linear_transfer": 133238.3488979152,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.9103830456733704e-11
+        },
+        {
+          "uid": 76270,
+          "material_volume": 30661.89835893845,
+          "initial_volume": 30661.8983589177,
+          "archived_initial_volume": 30661.8983589177,
+          "constant_transfer": 30661.898358938448,
+          "constant_uncovered": 0.0,
+          "constant_closure": -3.637978807091713e-12,
+          "linear_transfer": 30661.898358938448,
+          "linear_uncovered": 0.0,
+          "linear_closure": -3.637978807091713e-12
+        },
+        {
+          "uid": 76272,
+          "material_volume": 7329.469343021403,
+          "initial_volume": 7329.469343028057,
+          "archived_initial_volume": 7329.469343028056,
+          "constant_transfer": 7329.469343021405,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.8189894035458565e-12,
+          "linear_transfer": 7329.469343021405,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.8189894035458565e-12
+        },
+        {
+          "uid": 79872,
+          "material_volume": 865.4261264950788,
+          "initial_volume": 865.4261264994417,
+          "archived_initial_volume": 865.4261264994417,
+          "constant_transfer": 865.4261264950784,
+          "constant_uncovered": 0.0,
+          "constant_closure": -4.547473508864641e-13,
+          "linear_transfer": 865.4261264950784,
+          "linear_uncovered": 0.0,
+          "linear_closure": -4.547473508864641e-13
+        },
+        {
+          "uid": 79873,
+          "material_volume": 97439.17819965197,
+          "initial_volume": 97439.17819959778,
+          "archived_initial_volume": 97439.1781995978,
+          "constant_transfer": 97439.17819965191,
+          "constant_uncovered": 9.592406999614543e-11,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 97439.17819965191,
+          "linear_uncovered": 9.592406999614543e-11,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 79874,
+          "material_volume": 60810.441291598276,
+          "initial_volume": 60810.44129159161,
+          "archived_initial_volume": 60810.44129159161,
+          "constant_transfer": 60810.44129159828,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.275957614183426e-12,
+          "linear_transfer": 60810.44129159828,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.275957614183426e-12
+        },
+        {
+          "uid": 79875,
+          "material_volume": 97461.75044871823,
+          "initial_volume": 97461.75044865042,
+          "archived_initial_volume": 97461.75044865042,
+          "constant_transfer": 97461.75044871801,
+          "constant_uncovered": 7.097767392564661e-11,
+          "constant_closure": -1.4551915228366852e-10,
+          "linear_transfer": 97461.75044871801,
+          "linear_uncovered": 7.097767392564661e-11,
+          "linear_closure": -1.4551915228366852e-10
+        },
+        {
+          "uid": 83886,
+          "material_volume": 118429.92028448732,
+          "initial_volume": 118429.92028445467,
+          "archived_initial_volume": 118429.92028445468,
+          "constant_transfer": 118429.92028448699,
+          "constant_uncovered": 3.3171947819483447e-10,
+          "constant_closure": 0.0,
+          "linear_transfer": 118429.92028448699,
+          "linear_uncovered": 3.3171947819483447e-10,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 91198,
+          "material_volume": 103082.02738238209,
+          "initial_volume": 103082.0273824402,
+          "archived_initial_volume": 103082.02738244018,
+          "constant_transfer": 103082.02738238205,
+          "constant_uncovered": 5.433632328429532e-12,
+          "constant_closure": -4.3655745685100555e-11,
+          "linear_transfer": 103082.02738238205,
+          "linear_uncovered": 5.433632328429532e-12,
+          "linear_closure": -4.3655745685100555e-11
+        },
+        {
+          "uid": 91202,
+          "material_volume": 54615.50221923777,
+          "initial_volume": 54615.50221923423,
+          "archived_initial_volume": 54615.502219234215,
+          "constant_transfer": 54615.502219237766,
+          "constant_uncovered": 0.0,
+          "constant_closure": -7.275957614183426e-12,
+          "linear_transfer": 54615.502219237766,
+          "linear_uncovered": 0.0,
+          "linear_closure": -7.275957614183426e-12
+        },
+        {
+          "uid": 91203,
+          "material_volume": 64641.41312330521,
+          "initial_volume": 64641.41312338088,
+          "archived_initial_volume": 64641.4131233809,
+          "constant_transfer": 64641.41312330532,
+          "constant_uncovered": 3.4161940917682725e-11,
+          "constant_closure": 1.4551915228366852e-10,
+          "linear_transfer": 64641.41312330532,
+          "linear_uncovered": 3.4161940917682725e-11,
+          "linear_closure": 1.4551915228366852e-10
+        },
+        {
+          "uid": 91204,
+          "material_volume": 33.97767471432458,
+          "initial_volume": 33.97767470375004,
+          "archived_initial_volume": 33.97767470375004,
+          "constant_transfer": 33.977674714324586,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.105427357601002e-15,
+          "linear_transfer": 33.977674714324586,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.105427357601002e-15
+        },
+        {
+          "uid": 91206,
+          "material_volume": 47338.73209375008,
+          "initial_volume": 47338.73209374506,
+          "archived_initial_volume": 47338.73209374506,
+          "constant_transfer": 47338.732093750084,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.275957614183426e-12,
+          "linear_transfer": 47338.732093750084,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.275957614183426e-12
+        },
+        {
+          "uid": 91207,
+          "material_volume": 89444.80811055141,
+          "initial_volume": 89444.80811061237,
+          "archived_initial_volume": 89444.80811061237,
+          "constant_transfer": 89444.8081105514,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 89444.8081105514,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 91208,
+          "material_volume": 103100.10797782715,
+          "initial_volume": 103100.10797784051,
+          "archived_initial_volume": 103100.10797784048,
+          "constant_transfer": 103100.10797782708,
+          "constant_uncovered": 5.319454569881974e-11,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 103100.10797782708,
+          "linear_uncovered": 5.319454569881974e-11,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 94306,
+          "material_volume": 483.1786476788566,
+          "initial_volume": 483.1786476888714,
+          "archived_initial_volume": 483.1786476888715,
+          "constant_transfer": 483.1786476788635,
+          "constant_uncovered": 0.0,
+          "constant_closure": 6.934897101018578e-12,
+          "linear_transfer": 483.1786476788635,
+          "linear_uncovered": 0.0,
+          "linear_closure": 6.934897101018578e-12
+        },
+        {
+          "uid": 94307,
+          "material_volume": 101609.58765695298,
+          "initial_volume": 101609.58765698808,
+          "archived_initial_volume": 101609.58765698805,
+          "constant_transfer": 101609.58765695308,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.0186340659856796e-10,
+          "linear_transfer": 101609.58765695308,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.0186340659856796e-10
+        },
+        {
+          "uid": 95080,
+          "material_volume": 128640.82826903486,
+          "initial_volume": 128640.82826915185,
+          "archived_initial_volume": 128640.82826915184,
+          "constant_transfer": 128640.82826903458,
+          "constant_uncovered": 3.1594421281599876e-10,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 128640.82826903458,
+          "linear_uncovered": 3.1594421281599876e-10,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 95088,
+          "material_volume": 130712.84056732681,
+          "initial_volume": 130712.8405673996,
+          "archived_initial_volume": 130712.84056739962,
+          "constant_transfer": 130712.8405673266,
+          "constant_uncovered": 1.4823234208602677e-10,
+          "constant_closure": -7.275957614183426e-11,
+          "linear_transfer": 130712.8405673266,
+          "linear_uncovered": 1.4823234208602677e-10,
+          "linear_closure": -7.275957614183426e-11
+        },
+        {
+          "uid": 95089,
+          "material_volume": 67061.5295097477,
+          "initial_volume": 67061.52950975255,
+          "archived_initial_volume": 67061.52950975255,
+          "constant_transfer": 67061.5295097477,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 67061.5295097477,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 111035,
+          "material_volume": 38470.2140867575,
+          "initial_volume": 38470.214086752065,
+          "archived_initial_volume": 38470.21408675207,
+          "constant_transfer": 38470.21408675751,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.275957614183426e-12,
+          "linear_transfer": 38470.21408675751,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.275957614183426e-12
+        },
+        {
+          "uid": 111036,
+          "material_volume": 120667.6554643677,
+          "initial_volume": 120667.65546436611,
+          "archived_initial_volume": 120667.65546436608,
+          "constant_transfer": 120667.65546436765,
+          "constant_uncovered": 0.0,
+          "constant_closure": -4.3655745685100555e-11,
+          "linear_transfer": 120667.65546436765,
+          "linear_uncovered": 0.0,
+          "linear_closure": -4.3655745685100555e-11
+        },
+        {
+          "uid": 114585,
+          "material_volume": 50707.902494742135,
+          "initial_volume": 50707.90249475396,
+          "archived_initial_volume": 50707.902494753966,
+          "constant_transfer": 50707.90249474213,
+          "constant_uncovered": 0.0,
+          "constant_closure": -7.275957614183426e-12,
+          "linear_transfer": 50707.90249474213,
+          "linear_uncovered": 0.0,
+          "linear_closure": -7.275957614183426e-12
+        },
+        {
+          "uid": 114590,
+          "material_volume": 11366.772120812693,
+          "initial_volume": 11366.772120815298,
+          "archived_initial_volume": 11366.772120815298,
+          "constant_transfer": 11366.772120812693,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 11366.772120812693,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 114591,
+          "material_volume": 116639.40397691423,
+          "initial_volume": 116639.4039769482,
+          "archived_initial_volume": 116639.40397694818,
+          "constant_transfer": 116639.40397691423,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 116639.40397691423,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 114593,
+          "material_volume": 133067.6734209517,
+          "initial_volume": 133067.67342097306,
+          "archived_initial_volume": 133067.67342097306,
+          "constant_transfer": 133067.6734209508,
+          "constant_uncovered": 9.156457729129403e-10,
+          "constant_closure": 0.0,
+          "linear_transfer": 133067.6734209508,
+          "linear_uncovered": 9.156457729129403e-10,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 119908,
+          "material_volume": 85730.83389715127,
+          "initial_volume": 85730.833897162,
+          "archived_initial_volume": 85730.833897162,
+          "constant_transfer": 85730.83389715118,
+          "constant_uncovered": 9.95500999509269e-11,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 85730.83389715118,
+          "linear_uncovered": 9.95500999509269e-11,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 120002,
+          "material_volume": 90197.12620974371,
+          "initial_volume": 90197.12620973415,
+          "archived_initial_volume": 90197.12620973415,
+          "constant_transfer": 90197.12620974351,
+          "constant_uncovered": 3.1114193787241286e-10,
+          "constant_closure": 1.0186340659856796e-10,
+          "linear_transfer": 90197.12620974351,
+          "linear_uncovered": 3.1114193787241286e-10,
+          "linear_closure": 1.0186340659856796e-10
+        },
+        {
+          "uid": 120004,
+          "material_volume": 67907.16010596236,
+          "initial_volume": 67907.16010595932,
+          "archived_initial_volume": 67907.16010595934,
+          "constant_transfer": 67907.16010596219,
+          "constant_uncovered": 2.5781655247856592e-11,
+          "constant_closure": -1.4551915228366852e-10,
+          "linear_transfer": 67907.16010596219,
+          "linear_uncovered": 2.5781655247856592e-11,
+          "linear_closure": -1.4551915228366852e-10
+        },
+        {
+          "uid": 120015,
+          "material_volume": 24520.109731429704,
+          "initial_volume": 24520.109731457258,
+          "archived_initial_volume": 24520.10973145726,
+          "constant_transfer": 24520.109731429708,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.637978807091713e-12,
+          "linear_transfer": 24520.109731429708,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.637978807091713e-12
+        },
+        {
+          "uid": 120016,
+          "material_volume": 65876.0167777833,
+          "initial_volume": 65876.01677779327,
+          "archived_initial_volume": 65876.01677779327,
+          "constant_transfer": 65876.01677778328,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 65876.01677778328,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 120021,
+          "material_volume": 98644.0740848785,
+          "initial_volume": 98644.07408476176,
+          "archived_initial_volume": 98644.07408476176,
+          "constant_transfer": 98644.07408487868,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.7462298274040222e-10,
+          "linear_transfer": 98644.07408487868,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.7462298274040222e-10
+        },
+        {
+          "uid": 120042,
+          "material_volume": 98099.81694616239,
+          "initial_volume": 98099.81694610877,
+          "archived_initial_volume": 98099.81694610874,
+          "constant_transfer": 98099.81694616239,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 98099.81694616239,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 137194,
+          "material_volume": 42529.52672885709,
+          "initial_volume": 42529.52672881643,
+          "archived_initial_volume": 42529.52672881644,
+          "constant_transfer": 42529.52672885708,
+          "constant_uncovered": 0.0,
+          "constant_closure": -7.275957614183426e-12,
+          "linear_transfer": 42529.52672885708,
+          "linear_uncovered": 0.0,
+          "linear_closure": -7.275957614183426e-12
+        },
+        {
+          "uid": 137195,
+          "material_volume": 118081.0188092395,
+          "initial_volume": 118081.0188092101,
+          "archived_initial_volume": 118081.01880921007,
+          "constant_transfer": 118081.01880923945,
+          "constant_uncovered": 2.8529408841087097e-11,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 118081.01880923945,
+          "linear_uncovered": 2.8529408841087097e-11,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 163770,
+          "material_volume": 4917.561857153551,
+          "initial_volume": 4917.5618571501145,
+          "archived_initial_volume": 4917.5618571501145,
+          "constant_transfer": 4917.56185715355,
+          "constant_uncovered": 0.0,
+          "constant_closure": -9.094947017729282e-13,
+          "linear_transfer": 4917.56185715355,
+          "linear_uncovered": 0.0,
+          "linear_closure": -9.094947017729282e-13
+        },
+        {
+          "uid": 448135,
+          "material_volume": 105.32506412670364,
+          "initial_volume": 105.32506412618922,
+          "archived_initial_volume": 105.3250641261892,
+          "constant_transfer": 105.32506412673114,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.7498003873915877e-11,
+          "linear_transfer": 105.32506412673114,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.7498003873915877e-11
+        },
+        {
+          "uid": 448142,
+          "material_volume": 31263.890560527845,
+          "initial_volume": 31263.890560475105,
+          "archived_initial_volume": 31263.890560475105,
+          "constant_transfer": 31263.890560527816,
+          "constant_uncovered": 3.577213072144906e-11,
+          "constant_closure": 7.275957614183426e-12,
+          "linear_transfer": 31263.890560527816,
+          "linear_uncovered": 3.577213072144906e-11,
+          "linear_closure": 7.275957614183426e-12
+        },
+        {
+          "uid": 448239,
+          "material_volume": 20566.102444533066,
+          "initial_volume": 20566.10244451053,
+          "archived_initial_volume": 20566.10244451053,
+          "constant_transfer": 20566.10244453313,
+          "constant_uncovered": 0.0,
+          "constant_closure": 6.548361852765083e-11,
+          "linear_transfer": 20566.10244453313,
+          "linear_uncovered": 0.0,
+          "linear_closure": 6.548361852765083e-11
+        },
+        {
+          "uid": 448261,
+          "material_volume": 479.63641287594606,
+          "initial_volume": 479.6364128756892,
+          "archived_initial_volume": 479.6364128756891,
+          "constant_transfer": 479.6364128759458,
+          "constant_uncovered": 0.0,
+          "constant_closure": -2.8421709430404007e-13,
+          "linear_transfer": 479.6364128759458,
+          "linear_uncovered": 0.0,
+          "linear_closure": -2.8421709430404007e-13
+        },
+        {
+          "uid": 448479,
+          "material_volume": 10191.962447341895,
+          "initial_volume": 10191.962447347465,
+          "archived_initial_volume": 10191.962447347465,
+          "constant_transfer": 10191.96244734187,
+          "constant_uncovered": 2.814932366622472e-11,
+          "constant_closure": 1.8189894035458565e-12,
+          "linear_transfer": 10191.96244734187,
+          "linear_uncovered": 2.814932366622472e-11,
+          "linear_closure": 1.8189894035458565e-12
+        }
+      ],
+      "native_reconstruction": {
+        "candidate_count": 374,
+        "face_count": 869,
+        "candidate_nodes_missing_neighbors": 0,
+        "reconstructed_nonempty_host_count": 78,
+        "archive_nonempty_host_count": 78,
+        "maximum_uid_geometry_symmetric_difference_km2": 7.896260624923528e-10,
+        "sum_uid_geometry_symmetric_difference_km2": 6.858994309650951e-09,
+        "per_uid_geometry_difference": [
+          [
+            -1,
+            7.896260624923528e-10
+          ],
+          [
+            566,
+            6.802565188320474e-11
+          ],
+          [
+            2732,
+            1.1993400414782403e-10
+          ],
+          [
+            4161,
+            3.71994138012932e-11
+          ],
+          [
+            4569,
+            2.1405252513708154e-10
+          ],
+          [
+            6160,
+            3.407343744790436e-11
+          ],
+          [
+            12132,
+            4.651579660332756e-12
+          ],
+          [
+            13176,
+            5.7829620388278556e-11
+          ],
+          [
+            14011,
+            1.6255374238333302e-10
+          ],
+          [
+            16733,
+            2.1564700240429371e-10
+          ],
+          [
+            16734,
+            6.278265942421679e-11
+          ],
+          [
+            17521,
+            2.8339522752074737e-11
+          ],
+          [
+            17718,
+            4.074966302918352e-11
+          ],
+          [
+            21809,
+            5.0258273190903635e-12
+          ],
+          [
+            22840,
+            3.3418978017891966e-11
+          ],
+          [
+            24420,
+            4.6698898142577944e-11
+          ],
+          [
+            24452,
+            1.8400128312215191e-10
+          ],
+          [
+            25431,
+            3.53611853137595e-11
+          ],
+          [
+            30093,
+            4.690360654456179e-11
+          ],
+          [
+            42724,
+            6.842017439241128e-11
+          ],
+          [
+            43200,
+            6.23653384575765e-11
+          ],
+          [
+            43378,
+            4.8577135698630124e-11
+          ],
+          [
+            48346,
+            1.6576388929156632e-10
+          ],
+          [
+            51397,
+            2.6541660559665722e-11
+          ],
+          [
+            51403,
+            4.752518676591443e-11
+          ],
+          [
+            51405,
+            4.4565240386873484e-11
+          ],
+          [
+            52268,
+            1.0752983343312201e-10
+          ],
+          [
+            55442,
+            3.3821339745211134e-11
+          ],
+          [
+            55449,
+            4.94882087579214e-11
+          ],
+          [
+            55450,
+            5.5111284598689664e-11
+          ],
+          [
+            60859,
+            5.413533900602874e-11
+          ],
+          [
+            64244,
+            1.1859769826111596e-10
+          ],
+          [
+            65973,
+            3.923436508184287e-11
+          ],
+          [
+            67113,
+            1.6401092434197402e-10
+          ],
+          [
+            71061,
+            6.924373041731734e-11
+          ],
+          [
+            71686,
+            1.7523110924044503e-10
+          ],
+          [
+            71754,
+            2.389336186532015e-11
+          ],
+          [
+            71757,
+            3.659013166194754e-11
+          ],
+          [
+            76269,
+            5.990544079230132e-11
+          ],
+          [
+            76270,
+            2.097241618674541e-11
+          ],
+          [
+            76272,
+            1.1570970576998097e-11
+          ],
+          [
+            79872,
+            1.628091705366232e-11
+          ],
+          [
+            79873,
+            1.3598129920966936e-10
+          ],
+          [
+            79874,
+            7.43000140695256e-11
+          ],
+          [
+            79875,
+            1.2005586544128887e-10
+          ],
+          [
+            83886,
+            7.386346086632639e-11
+          ],
+          [
+            91198,
+            1.7650856466276745e-10
+          ],
+          [
+            91202,
+            8.460551768953448e-11
+          ],
+          [
+            91203,
+            1.7595636261127338e-10
+          ],
+          [
+            91204,
+            5.4769049619853675e-12
+          ],
+          [
+            91206,
+            6.51118108344335e-11
+          ],
+          [
+            91207,
+            1.4176748910717188e-10
+          ],
+          [
+            91208,
+            1.4986495262399096e-10
+          ],
+          [
+            94306,
+            0.0
+          ],
+          [
+            94307,
+            1.860204886529242e-10
+          ],
+          [
+            95080,
+            5.118420971483529e-11
+          ],
+          [
+            95088,
+            8.307659121877728e-11
+          ],
+          [
+            95089,
+            3.020468234017787e-11
+          ],
+          [
+            111035,
+            2.0970407035796327e-11
+          ],
+          [
+            111036,
+            8.881324430898094e-11
+          ],
+          [
+            114585,
+            2.4264650176177355e-11
+          ],
+          [
+            114590,
+            5.589465976340984e-12
+          ],
+          [
+            114591,
+            6.285704924498169e-11
+          ],
+          [
+            114593,
+            3.7466377821744546e-11
+          ],
+          [
+            119908,
+            1.9043807889926796e-10
+          ],
+          [
+            120002,
+            1.5931684094228069e-10
+          ],
+          [
+            120004,
+            1.0137649239144268e-10
+          ],
+          [
+            120015,
+            7.11599255248289e-11
+          ],
+          [
+            120016,
+            1.0238592309194976e-10
+          ],
+          [
+            120021,
+            2.1533878175159343e-10
+          ],
+          [
+            120042,
+            1.6905257837591148e-10
+          ],
+          [
+            137194,
+            2.0358565028989136e-11
+          ],
+          [
+            137195,
+            9.51654487962159e-11
+          ],
+          [
+            163770,
+            0.0
+          ],
+          [
+            448135,
+            0.0
+          ],
+          [
+            448142,
+            1.2127511600909957e-10
+          ],
+          [
+            448239,
+            6.594805840450694e-11
+          ],
+          [
+            448261,
+            4.359950186754172e-12
+          ],
+          [
+            448479,
+            6.262878169471885e-11
+          ]
+        ],
+        "raw_host_clipped_area_comparison_note": "重建raw仅裁到材料带，因此不与归档完整raw宿主面积混作同一面积。",
+        "priority_assumption": "按地壳类型降序、厚度降序、年龄升序、UID升序；直接与归档几何及原生查询比对，未读取引擎实现。"
+      },
+      "quadrature_conditional_on_archived_J": [
+        {
+          "order": 4,
+          "point_count": 33136,
+          "archive_target_index_mismatch": 0,
+          "multiple_archived_host_polygon_hits": 0,
+          "outside_target_count": 0,
+          "own_source_outside_count": 0,
+          "native_reconstructed_query_uid_mismatch": 0,
+          "native_reconstructed_multiple_hits": 0,
+          "native_reconstructed_outside_hits": 0,
+          "common_coverage_denominator_km3": 5554757.557381248,
+          "archive_denominator_difference": 0.0,
+          "known_reference_volume_no_host_km3": 0.0,
+          "methods": {
+            "material_constant": {
+              "L1": 0.0,
+              "archive_L1_difference": 0.0,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "material_linear": {
+              "L1": 0.0,
+              "archive_L1_difference": 0.0,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_constant": {
+              "L1": 3.319747310365915e-16,
+              "archive_L1_difference": -2.0295029379757238e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.5942720606019757e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_linear": {
+              "L1": 3.319747310365915e-16,
+              "archive_L1_difference": -2.0295029379757238e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.5942720606019757e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_constant": {
+              "L1": 1.6283891561983298e-16,
+              "archive_L1_difference": -3.606817187611049e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.703660636401394e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_linear": {
+              "L1": 1.6283891561983298e-16,
+              "archive_L1_difference": -3.606817187611049e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.703660636401394e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            }
+          }
+        },
+        {
+          "order": 8,
+          "point_count": 132544,
+          "archive_target_index_mismatch": 0,
+          "multiple_archived_host_polygon_hits": 0,
+          "outside_target_count": 0,
+          "own_source_outside_count": 0,
+          "native_reconstructed_query_uid_mismatch": 0,
+          "native_reconstructed_multiple_hits": 0,
+          "native_reconstructed_outside_hits": 0,
+          "common_coverage_denominator_km3": 5554757.557381248,
+          "archive_denominator_difference": 0.0,
+          "known_reference_volume_no_host_km3": 0.0,
+          "methods": {
+            "material_constant": {
+              "L1": 0.0,
+              "archive_L1_difference": 0.0,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "material_linear": {
+              "L1": 0.0,
+              "archive_L1_difference": 0.0,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_constant": {
+              "L1": 3.3197473103659156e-16,
+              "archive_L1_difference": -2.0295029379757188e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.5942720606019757e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_linear": {
+              "L1": 3.3197473103659156e-16,
+              "archive_L1_difference": -2.0295029379757188e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.5942720606019757e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_constant": {
+              "L1": 1.6283891561983298e-16,
+              "archive_L1_difference": -3.6068171876110564e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.703660636401394e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_linear": {
+              "L1": 1.6283891561983298e-16,
+              "archive_L1_difference": -3.6068171876110564e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.703660636401394e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            }
+          }
+        }
+      ],
+      "gradient_checks": {
+        "neighbor_indices_wrong_known_source": 0,
+        "sampled_boundary_envelope_violation_count": 0,
+        "minimum_known_boundary_thickness_km": 33.0,
+        "maximum_mean_integral_correction_km3": 0.0,
+        "note": "核对归档梯度的同源邻域、球面积均值与边界包络；未独立重建梯度拟合/限幅器。"
+      },
+      "elapsed_seconds": 70.28801140002906
+    },
+    {
+      "tag": "0Ma_b64",
+      "npz_sha256": "ce87c0c202e6a831ffdb37bf9c016e6e1e7ae7ad741029c85e0a049b23aa131c",
+      "input_unchanged_during_audit": true,
+      "json_input_trace_sha256": "d436543d0bf061da190691a81469226f592d919bf9e0f0de1e3f26429ae5145c",
+      "json_input_hash_note": "此字段指S14源输入，本案输出身份由raw_manifest与本审计实际SHA核准",
+      "geometry": {
+        "source_count": 2071,
+        "known_count": 1931,
+        "known_source_count": 77,
+        "target_count": 135,
+        "source_area_error": {
+          "maximum_abs": 5.286437954055145e-12,
+          "finite_mask_disagreement": 0
+        },
+        "source_moment_error": {
+          "maximum_abs": 1.1830536550405668e-11,
+          "finite_mask_disagreement": 0
+        },
+        "source_centroid_error": {
+          "maximum_abs": 7.462919171530302e-13,
+          "finite_mask_disagreement": 0
+        },
+        "target_area_error": {
+          "maximum_abs": 3.6834535421803594e-11,
+          "finite_mask_disagreement": 0
+        },
+        "domain_area": 309691.6261064291,
+        "source_area_sum_minus_union": 0.034940975543577224,
+        "source_overlap_max_abs_row_residual": 2.2021964696250507e-08,
+        "target_area_partition_max_abs": 0.0009365508390146715,
+        "overlap_count": 4111,
+        "archived_overlap_count": 4111,
+        "unlisted_overlap_area": 0.0,
+        "overlap_area_error": {
+          "maximum_abs": 9.9333874459262e-12,
+          "finite_mask_disagreement": 0
+        },
+        "overlap_moment_error": {
+          "maximum_abs": 2.1799451133119874e-11,
+          "finite_mask_disagreement": 0
+        },
+        "constant_volume_error": {
+          "maximum_abs": 2.0509105524979532e-10,
+          "finite_mask_disagreement": 0
+        },
+        "linear_volume_error": {
+          "maximum_abs": 1.746002453728579e-09,
+          "finite_mask_disagreement": 0
+        },
+        "known_area": 291438.47033863026,
+        "unknown_area": 18253.19070877436,
+        "nohost_area": 3703.280074970625,
+        "constant_known_nohost_volume": 64557.75868973803,
+        "linear_known_nohost_volume": 64559.7220155531,
+        "recomputed_source_component_mean_range_km": [
+          16.221858754935305,
+          22.959354778098888
+        ],
+        "archived_source_component_mean_range_km": [
+          16.221858754935305,
+          22.959354778099016
+        ],
+        "negative_constant_piece_count": 0,
+        "negative_linear_piece_count": 0,
+        "archived_negative_linear_piece_count": 0,
+        "unknown_target_area_error": {
+          "maximum_abs": 1.0913936421275139e-11,
+          "finite_mask_disagreement": 0
+        },
+        "known_target_area_error": {
+          "maximum_abs": 2.1827872842550278e-11,
+          "finite_mask_disagreement": 0
+        },
+        "constant_mean_error": {
+          "maximum_abs": 1.7763568394002505e-14,
+          "finite_mask_disagreement": 0
+        },
+        "linear_mean_error": {
+          "maximum_abs": 1.6981971384666394e-12,
+          "finite_mask_disagreement": 0
+        },
+        "source_constant_mean_error": {
+          "maximum_abs": 4.263256414560601e-14,
+          "finite_mask_disagreement": 0
+        },
+        "source_linear_mean_error": {
+          "maximum_abs": 7.509843058528531e-08,
+          "finite_mask_disagreement": 0
+        },
+        "source_area_component_error": {
+          "maximum_abs": 1.3642420526593924e-11,
+          "finite_mask_disagreement": 0
+        }
+      },
+      "source_results_all_77": [
+        {
+          "uid": 566,
+          "material_volume": 112714.91155757473,
+          "initial_volume": 112714.91155757467,
+          "archived_initial_volume": 112714.91155757465,
+          "constant_transfer": 112714.9115580541,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.793691914528608e-07,
+          "linear_transfer": 112714.9115580541,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.793691914528608e-07
+        },
+        {
+          "uid": 2732,
+          "material_volume": 90511.74921349894,
+          "initial_volume": 90511.7492134989,
+          "archived_initial_volume": 90511.74921349892,
+          "constant_transfer": 90511.74921349893,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 90511.74921349893,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 4161,
+          "material_volume": 109656.06448976633,
+          "initial_volume": 109656.06448976636,
+          "archived_initial_volume": 109656.06448976634,
+          "constant_transfer": 109656.06448995981,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.9348226487636566e-07,
+          "linear_transfer": 109656.06448995965,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.9332219380885363e-07
+        },
+        {
+          "uid": 4569,
+          "material_volume": 100270.91742632265,
+          "initial_volume": 100270.91742632279,
+          "archived_initial_volume": 100270.91742632279,
+          "constant_transfer": 75980.5910335232,
+          "constant_uncovered": 24290.326393183102,
+          "constant_closure": 3.836757969111204e-07,
+          "linear_transfer": 75980.28302700333,
+          "linear_uncovered": 24290.634399703027,
+          "linear_closure": 3.8370490074157715e-07
+        },
+        {
+          "uid": 6160,
+          "material_volume": 24132.19750618732,
+          "initial_volume": 24132.197506187313,
+          "archived_initial_volume": 24132.197506187316,
+          "constant_transfer": 24132.19750620516,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.784064806997776e-08,
+          "linear_transfer": 24132.197506205168,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.7847924027591944e-08
+        },
+        {
+          "uid": 12132,
+          "material_volume": 1323.7491839024767,
+          "initial_volume": 1323.7491839024926,
+          "archived_initial_volume": 1323.7491839024929,
+          "constant_transfer": 1323.7491839167192,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4242459656088613e-08,
+          "linear_transfer": 1323.7491839167192,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4242459656088613e-08
+        },
+        {
+          "uid": 13176,
+          "material_volume": 133363.14657985896,
+          "initial_volume": 133363.146579859,
+          "archived_initial_volume": 133363.146579859,
+          "constant_transfer": 132992.7526781032,
+          "constant_uncovered": 370.3939018567592,
+          "constant_closure": 1.0099029168486595e-07,
+          "linear_transfer": 132992.40406672744,
+          "linear_uncovered": 370.74251323250087,
+          "linear_closure": 1.0099029168486595e-07
+        },
+        {
+          "uid": 14011,
+          "material_volume": 95204.37487322037,
+          "initial_volume": 95204.37487322034,
+          "archived_initial_volume": 95204.37487322034,
+          "constant_transfer": 95204.37487322035,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 95204.37487322035,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 16733,
+          "material_volume": 98224.69399780518,
+          "initial_volume": 98224.6939978053,
+          "archived_initial_volume": 98224.6939978053,
+          "constant_transfer": 98224.6939978106,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.413312464952469e-09,
+          "linear_transfer": 98224.6939978106,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.413312464952469e-09
+        },
+        {
+          "uid": 16734,
+          "material_volume": 14211.975642055582,
+          "initial_volume": 14211.975642055553,
+          "archived_initial_volume": 14211.975642055553,
+          "constant_transfer": 14211.975642084917,
+          "constant_uncovered": 6.561203602157024e-14,
+          "constant_closure": 2.9334842110984027e-08,
+          "linear_transfer": 14211.975642084919,
+          "linear_uncovered": 6.561203602157024e-14,
+          "linear_closure": 2.9336661100387573e-08
+        },
+        {
+          "uid": 17521,
+          "material_volume": 20723.78675690817,
+          "initial_volume": 20723.78675690814,
+          "archived_initial_volume": 20723.78675690814,
+          "constant_transfer": 20723.78675691757,
+          "constant_uncovered": 0.0,
+          "constant_closure": 9.396899258717895e-09,
+          "linear_transfer": 20723.78675691757,
+          "linear_uncovered": 0.0,
+          "linear_closure": 9.396899258717895e-09
+        },
+        {
+          "uid": 17718,
+          "material_volume": 129360.39193962542,
+          "initial_volume": 129360.39193962545,
+          "archived_initial_volume": 129360.39193962545,
+          "constant_transfer": 129360.39193980767,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.8224818632006645e-07,
+          "linear_transfer": 129360.39193980754,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.8211721908301115e-07
+        },
+        {
+          "uid": 21809,
+          "material_volume": 14521.84533969597,
+          "initial_volume": 14521.84533969604,
+          "archived_initial_volume": 14521.84533969604,
+          "constant_transfer": 14521.845339695974,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.637978807091713e-12,
+          "linear_transfer": 14521.845339695974,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.637978807091713e-12
+        },
+        {
+          "uid": 22840,
+          "material_volume": 75758.45956017276,
+          "initial_volume": 75758.4595601728,
+          "archived_initial_volume": 75758.45956017279,
+          "constant_transfer": 75758.45956019954,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.6775524020195007e-08,
+          "linear_transfer": 75758.45956019955,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.6790075935423374e-08
+        },
+        {
+          "uid": 24420,
+          "material_volume": 19679.216830108053,
+          "initial_volume": 19679.216830108016,
+          "archived_initial_volume": 19679.216830108016,
+          "constant_transfer": 19679.216830108504,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.511093720793724e-10,
+          "linear_transfer": 19679.216830108504,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.511093720793724e-10
+        },
+        {
+          "uid": 24452,
+          "material_volume": 102913.9616431755,
+          "initial_volume": 102913.96164317554,
+          "archived_initial_volume": 102913.96164317556,
+          "constant_transfer": 102913.96164372987,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.543697625398636e-07,
+          "linear_transfer": 102913.96164372978,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.542824510484934e-07
+        },
+        {
+          "uid": 25431,
+          "material_volume": 29897.692857340433,
+          "initial_volume": 29897.692857340375,
+          "archived_initial_volume": 29897.692857340375,
+          "constant_transfer": 29897.69285736542,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.4985638447105885e-08,
+          "linear_transfer": 29897.692857365415,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.4982000468298793e-08
+        },
+        {
+          "uid": 30093,
+          "material_volume": 118518.35782277424,
+          "initial_volume": 118518.3578227743,
+          "archived_initial_volume": 118518.35782277431,
+          "constant_transfer": 118501.45570214813,
+          "constant_uncovered": 16.902120924625113,
+          "constant_closure": 2.985179889947176e-07,
+          "linear_transfer": 118501.44859847208,
+          "linear_uncovered": 16.909224600582647,
+          "linear_closure": 2.984306775033474e-07
+        },
+        {
+          "uid": 43200,
+          "material_volume": 16329.012496155512,
+          "initial_volume": 16329.012496155448,
+          "archived_initial_volume": 16329.012496155448,
+          "constant_transfer": 16329.01249620939,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.387846613302827e-08,
+          "linear_transfer": 16329.01249620939,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.387846613302827e-08
+        },
+        {
+          "uid": 43378,
+          "material_volume": 20164.331837830156,
+          "initial_volume": 20164.331837830156,
+          "archived_initial_volume": 20164.331837830156,
+          "constant_transfer": 20164.33183783016,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.637978807091713e-12,
+          "linear_transfer": 20164.33183783016,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.637978807091713e-12
+        },
+        {
+          "uid": 48346,
+          "material_volume": 100225.35726435781,
+          "initial_volume": 100225.3572643578,
+          "archived_initial_volume": 100225.35726435782,
+          "constant_transfer": 100225.35726469319,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.3537799026817083e-07,
+          "linear_transfer": 100225.35726469319,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.3537799026817083e-07
+        },
+        {
+          "uid": 51397,
+          "material_volume": 79925.05031859956,
+          "initial_volume": 79925.05031859956,
+          "archived_initial_volume": 79925.05031859955,
+          "constant_transfer": 79925.05031880326,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.036977093666792e-07,
+          "linear_transfer": 79925.05031880326,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.036977093666792e-07
+        },
+        {
+          "uid": 51403,
+          "material_volume": 92915.48251940463,
+          "initial_volume": 92915.48251940456,
+          "archived_initial_volume": 92915.48251940456,
+          "constant_transfer": 92915.48251968696,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.8233625926077366e-07,
+          "linear_transfer": 92915.48251968698,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.82350811176002e-07
+        },
+        {
+          "uid": 51405,
+          "material_volume": 118539.0436214858,
+          "initial_volume": 118539.04362148582,
+          "archived_initial_volume": 118539.04362148582,
+          "constant_transfer": 117606.6019358713,
+          "constant_uncovered": 932.4416856145463,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 117606.60434178366,
+          "linear_uncovered": 932.439279702196,
+          "linear_closure": 5.820766091346741e-11
+        },
+        {
+          "uid": 52268,
+          "material_volume": 91533.04429546621,
+          "initial_volume": 91533.04429546624,
+          "archived_initial_volume": 91533.04429546626,
+          "constant_transfer": 91533.04429558059,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.1437805369496346e-07,
+          "linear_transfer": 91533.04429558059,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.1437805369496346e-07
+        },
+        {
+          "uid": 55442,
+          "material_volume": 101553.68102906976,
+          "initial_volume": 101553.68102906975,
+          "archived_initial_volume": 101553.68102906975,
+          "constant_transfer": 101553.68102907094,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.178705133497715e-09,
+          "linear_transfer": 101553.68102907094,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.178705133497715e-09
+        },
+        {
+          "uid": 55449,
+          "material_volume": 132796.2349712192,
+          "initial_volume": 132796.23497121912,
+          "archived_initial_volume": 132796.23497121912,
+          "constant_transfer": 132796.23497159316,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.7395511753857136e-07,
+          "linear_transfer": 132796.23497159316,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.7395511753857136e-07
+        },
+        {
+          "uid": 55450,
+          "material_volume": 103025.57775891274,
+          "initial_volume": 103025.57775891271,
+          "archived_initial_volume": 103025.57775891271,
+          "constant_transfer": 103025.57775903046,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.1772499419748783e-07,
+          "linear_transfer": 103025.57775903045,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.1771044228225946e-07
+        },
+        {
+          "uid": 60859,
+          "material_volume": 104912.23434873414,
+          "initial_volume": 104912.23434873414,
+          "archived_initial_volume": 104912.23434873413,
+          "constant_transfer": 104912.23434921955,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.854082362726331e-07,
+          "linear_transfer": 104912.23434921957,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.854227881878614e-07
+        },
+        {
+          "uid": 64244,
+          "material_volume": 53051.00778982113,
+          "initial_volume": 53051.007789821095,
+          "archived_initial_volume": 53051.007789821095,
+          "constant_transfer": 53051.007790040574,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.1944288164377213e-07,
+          "linear_transfer": 53051.007790040574,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.1944288164377213e-07
+        },
+        {
+          "uid": 65973,
+          "material_volume": 134015.78909224898,
+          "initial_volume": 134015.78909224892,
+          "archived_initial_volume": 134015.7890922489,
+          "constant_transfer": 133358.47735696935,
+          "constant_uncovered": 657.3117353610347,
+          "constant_closure": 8.140341378748417e-08,
+          "linear_transfer": 133357.91124069196,
+          "linear_uncovered": 657.8778516382858,
+          "linear_closure": 8.128699846565723e-08
+        },
+        {
+          "uid": 67113,
+          "material_volume": 97811.7850440869,
+          "initial_volume": 97811.78504408684,
+          "archived_initial_volume": 97811.78504408682,
+          "constant_transfer": 97811.78504433458,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.476881491020322e-07,
+          "linear_transfer": 97811.7850443346,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.4770270101726055e-07
+        },
+        {
+          "uid": 71061,
+          "material_volume": 104693.55849552334,
+          "initial_volume": 104693.55849552323,
+          "archived_initial_volume": 104693.55849552323,
+          "constant_transfer": 104693.55849552332,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 104693.55849552332,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 71686,
+          "material_volume": 99353.53201766848,
+          "initial_volume": 99353.53201766848,
+          "archived_initial_volume": 99353.53201766848,
+          "constant_transfer": 99353.53201793804,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.6955967769026756e-07,
+          "linear_transfer": 99353.53201793798,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.695014700293541e-07
+        },
+        {
+          "uid": 71754,
+          "material_volume": 40860.08269623746,
+          "initial_volume": 40860.08269623749,
+          "archived_initial_volume": 40860.08269623749,
+          "constant_transfer": 40860.08269628459,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.712637746706605e-08,
+          "linear_transfer": 40860.08269628459,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.712637746706605e-08
+        },
+        {
+          "uid": 71757,
+          "material_volume": 105034.50873871255,
+          "initial_volume": 105034.50873871258,
+          "archived_initial_volume": 105034.5087387126,
+          "constant_transfer": 105034.50873885879,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.462321961298585e-07,
+          "linear_transfer": 105034.5087388589,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4634861145168543e-07
+        },
+        {
+          "uid": 76269,
+          "material_volume": 133238.34889796044,
+          "initial_volume": 133238.34889796044,
+          "archived_initial_volume": 133238.3488979604,
+          "constant_transfer": 133238.34889836627,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.0582381188869476e-07,
+          "linear_transfer": 133238.34889836615,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.0570739656686783e-07
+        },
+        {
+          "uid": 76270,
+          "material_volume": 30661.898358917715,
+          "initial_volume": 30661.8983589177,
+          "archived_initial_volume": 30661.8983589177,
+          "constant_transfer": 30661.8983589888,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.108610589057207e-08,
+          "linear_transfer": 30661.898358988812,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.109701982699335e-08
+        },
+        {
+          "uid": 76272,
+          "material_volume": 7329.469343028014,
+          "initial_volume": 7329.469343028057,
+          "archived_initial_volume": 7329.469343028056,
+          "constant_transfer": 7329.46934304724,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.922580850077793e-08,
+          "linear_transfer": 7329.469343047238,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.9223989511374384e-08
+        },
+        {
+          "uid": 79872,
+          "material_volume": 865.4261264994633,
+          "initial_volume": 865.4261264994417,
+          "archived_initial_volume": 865.4261264994417,
+          "constant_transfer": 865.4261264994632,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.1368683772161603e-13,
+          "linear_transfer": 865.4261264994632,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.1368683772161603e-13
+        },
+        {
+          "uid": 79873,
+          "material_volume": 97439.17819959775,
+          "initial_volume": 97439.17819959778,
+          "archived_initial_volume": 97439.1781995978,
+          "constant_transfer": 91549.81307901027,
+          "constant_uncovered": 5889.365120900275,
+          "constant_closure": 3.127934178337455e-07,
+          "linear_transfer": 91550.21915877731,
+          "linear_uncovered": 5888.959041133334,
+          "linear_closure": 3.1289528124034405e-07
+        },
+        {
+          "uid": 79874,
+          "material_volume": 60810.44129159169,
+          "initial_volume": 60810.44129159161,
+          "archived_initial_volume": 60810.44129159161,
+          "constant_transfer": 60810.441291644296,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.260517355054617e-08,
+          "linear_transfer": 60810.44129164429,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.2597897592931986e-08
+        },
+        {
+          "uid": 79875,
+          "material_volume": 97461.75044865042,
+          "initial_volume": 97461.75044865042,
+          "archived_initial_volume": 97461.75044865042,
+          "constant_transfer": 97461.75044879444,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4402030501514673e-07,
+          "linear_transfer": 97461.75044879444,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4402030501514673e-07
+        },
+        {
+          "uid": 83886,
+          "material_volume": 118429.92028445477,
+          "initial_volume": 118429.92028445467,
+          "archived_initial_volume": 118429.92028445468,
+          "constant_transfer": 118429.92028445756,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.7939677238464355e-09,
+          "linear_transfer": 118429.92028445756,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.7939677238464355e-09
+        },
+        {
+          "uid": 91198,
+          "material_volume": 103082.02738244006,
+          "initial_volume": 103082.0273824402,
+          "archived_initial_volume": 103082.02738244018,
+          "constant_transfer": 103082.02738244037,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.055902197957039e-10,
+          "linear_transfer": 103082.02738244036,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.9103830456733704e-10
+        },
+        {
+          "uid": 91202,
+          "material_volume": 54615.50221923427,
+          "initial_volume": 54615.50221923423,
+          "archived_initial_volume": 54615.502219234215,
+          "constant_transfer": 54615.50221939074,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.5646946849301457e-07,
+          "linear_transfer": 54615.502219390735,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.564621925354004e-07
+        },
+        {
+          "uid": 91203,
+          "material_volume": 64641.41312338092,
+          "initial_volume": 64641.41312338088,
+          "archived_initial_volume": 64641.4131233809,
+          "constant_transfer": 64570.980099240456,
+          "constant_uncovered": 70.43302440667959,
+          "constant_closure": 2.6622001314535737e-07,
+          "linear_transfer": 64571.00483815675,
+          "linear_uncovered": 70.40828549038493,
+          "linear_closure": 2.662127371877432e-07
+        },
+        {
+          "uid": 91204,
+          "material_volume": 33.97767470375141,
+          "initial_volume": 33.97767470375004,
+          "archived_initial_volume": 33.97767470375004,
+          "constant_transfer": 33.97767470375143,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.1316282072803006e-14,
+          "linear_transfer": 33.97767470375143,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.1316282072803006e-14
+        },
+        {
+          "uid": 91206,
+          "material_volume": 47338.732093745144,
+          "initial_volume": 47338.73209374506,
+          "archived_initial_volume": 47338.73209374506,
+          "constant_transfer": 47338.73209383796,
+          "constant_uncovered": 0.0,
+          "constant_closure": 9.281939128413796e-08,
+          "linear_transfer": 47338.73209383796,
+          "linear_uncovered": 0.0,
+          "linear_closure": 9.281939128413796e-08
+        },
+        {
+          "uid": 91207,
+          "material_volume": 89444.80811061242,
+          "initial_volume": 89444.80811061237,
+          "archived_initial_volume": 89444.80811061237,
+          "constant_transfer": 89444.80811061399,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.57160684466362e-09,
+          "linear_transfer": 89444.80811061397,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.5570549294352531e-09
+        },
+        {
+          "uid": 91208,
+          "material_volume": 103100.10797784044,
+          "initial_volume": 103100.10797784051,
+          "archived_initial_volume": 103100.10797784048,
+          "constant_transfer": 103100.10797843084,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.904003046452999e-07,
+          "linear_transfer": 103100.10797843133,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.908950697630644e-07
+        },
+        {
+          "uid": 94306,
+          "material_volume": 483.1786476888505,
+          "initial_volume": 483.1786476888714,
+          "archived_initial_volume": 483.1786476888715,
+          "constant_transfer": 483.1786476908912,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.0406787371030077e-09,
+          "linear_transfer": 483.1786476908912,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.0406787371030077e-09
+        },
+        {
+          "uid": 94307,
+          "material_volume": 101609.58765698818,
+          "initial_volume": 101609.58765698808,
+          "archived_initial_volume": 101609.58765698805,
+          "constant_transfer": 101609.58765702773,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.95521055907011e-08,
+          "linear_transfer": 101609.5876570277,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.952300176024437e-08
+        },
+        {
+          "uid": 95080,
+          "material_volume": 128640.82826915171,
+          "initial_volume": 128640.82826915185,
+          "archived_initial_volume": 128640.82826915184,
+          "constant_transfer": 128640.82826922252,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.08096195012331e-08,
+          "linear_transfer": 128640.82826922249,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.078051567077637e-08
+        },
+        {
+          "uid": 95088,
+          "material_volume": 130712.84056739969,
+          "initial_volume": 130712.8405673996,
+          "archived_initial_volume": 130712.84056739962,
+          "constant_transfer": 114673.58244169476,
+          "constant_uncovered": 16039.258125704928,
+          "constant_closure": 0.0,
+          "linear_transfer": 114673.11140580919,
+          "linear_uncovered": 16039.729161590516,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 95089,
+          "material_volume": 67061.52950975254,
+          "initial_volume": 67061.52950975255,
+          "archived_initial_volume": 67061.52950975255,
+          "constant_transfer": 67061.52950975401,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.469743438065052e-09,
+          "linear_transfer": 67061.52950975401,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.469743438065052e-09
+        },
+        {
+          "uid": 111035,
+          "material_volume": 38470.21408675202,
+          "initial_volume": 38470.214086752065,
+          "archived_initial_volume": 38470.21408675207,
+          "constant_transfer": 38470.21408675917,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.152266334742308e-09,
+          "linear_transfer": 38470.214086759166,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.144990377128124e-09
+        },
+        {
+          "uid": 111036,
+          "material_volume": 120667.65546436598,
+          "initial_volume": 120667.65546436611,
+          "archived_initial_volume": 120667.65546436608,
+          "constant_transfer": 120667.65546478945,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.2347528506070375e-07,
+          "linear_transfer": 120667.65546478945,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.2347528506070375e-07
+        },
+        {
+          "uid": 114585,
+          "material_volume": 50707.90249475393,
+          "initial_volume": 50707.90249475396,
+          "archived_initial_volume": 50707.902494753966,
+          "constant_transfer": 50707.902494753915,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 50707.90249475393,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 114590,
+          "material_volume": 11366.772120815309,
+          "initial_volume": 11366.772120815298,
+          "archived_initial_volume": 11366.772120815298,
+          "constant_transfer": 11366.772120835116,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.980697561521083e-08,
+          "linear_transfer": 11366.772120835121,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.981243258342147e-08
+        },
+        {
+          "uid": 114591,
+          "material_volume": 116639.40397694815,
+          "initial_volume": 116639.4039769482,
+          "archived_initial_volume": 116639.40397694818,
+          "constant_transfer": 116639.40397718234,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.341985236853361e-07,
+          "linear_transfer": 116639.40397718234,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.341985236853361e-07
+        },
+        {
+          "uid": 114593,
+          "material_volume": 133067.673420973,
+          "initial_volume": 133067.67342097306,
+          "archived_initial_volume": 133067.67342097306,
+          "constant_transfer": 133067.67342097298,
+          "constant_uncovered": 0.0,
+          "constant_closure": -2.9103830456733704e-11,
+          "linear_transfer": 133067.67342097295,
+          "linear_uncovered": 0.0,
+          "linear_closure": -5.820766091346741e-11
+        },
+        {
+          "uid": 119908,
+          "material_volume": 85730.83389716204,
+          "initial_volume": 85730.833897162,
+          "archived_initial_volume": 85730.833897162,
+          "constant_transfer": 85517.18454253548,
+          "constant_uncovered": 213.64935477127275,
+          "constant_closure": 1.4471879694610834e-07,
+          "linear_transfer": 85517.01208056905,
+          "linear_uncovered": 213.8218167376948,
+          "linear_closure": 1.4470424503087997e-07
+        },
+        {
+          "uid": 120002,
+          "material_volume": 90197.12620973405,
+          "initial_volume": 90197.12620973415,
+          "archived_initial_volume": 90197.12620973415,
+          "constant_transfer": 83767.38592545621,
+          "constant_uncovered": 6429.740284307585,
+          "constant_closure": 2.9744114726781845e-08,
+          "linear_transfer": 83767.29711260812,
+          "linear_uncovered": 6429.829097155681,
+          "linear_closure": 2.9758666642010212e-08
+        },
+        {
+          "uid": 120004,
+          "material_volume": 67907.16010595928,
+          "initial_volume": 67907.16010595932,
+          "archived_initial_volume": 67907.16010595934,
+          "constant_transfer": 60788.685045602186,
+          "constant_uncovered": 7118.475060445453,
+          "constant_closure": 8.835922926664352e-08,
+          "linear_transfer": 60787.83145914135,
+          "linear_uncovered": 7119.328646906287,
+          "linear_closure": 8.835922926664352e-08
+        },
+        {
+          "uid": 120015,
+          "material_volume": 24520.109731457287,
+          "initial_volume": 24520.109731457258,
+          "archived_initial_volume": 24520.10973145726,
+          "constant_transfer": 24520.10973158243,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.2514283298514783e-07,
+          "linear_transfer": 24520.10973158243,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.2514283298514783e-07
+        },
+        {
+          "uid": 120016,
+          "material_volume": 65876.01677779345,
+          "initial_volume": 65876.01677779327,
+          "archived_initial_volume": 65876.01677779327,
+          "constant_transfer": 65876.01677816588,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.7242716643959284e-07,
+          "linear_transfer": 65876.01677816588,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.7242716643959284e-07
+        },
+        {
+          "uid": 120021,
+          "material_volume": 98644.07408476177,
+          "initial_volume": 98644.07408476176,
+          "archived_initial_volume": 98644.07408476176,
+          "constant_transfer": 98644.07408498414,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.2236781660467386e-07,
+          "linear_transfer": 98644.07408498437,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.2260064724832773e-07
+        },
+        {
+          "uid": 120042,
+          "material_volume": 98099.81694610872,
+          "initial_volume": 98099.81694610877,
+          "archived_initial_volume": 98099.81694610874,
+          "constant_transfer": 95580.12858275298,
+          "constant_uncovered": 2519.688363746356,
+          "constant_closure": 3.906170604750514e-07,
+          "linear_transfer": 95580.54776735208,
+          "linear_uncovered": 2519.269179147188,
+          "linear_closure": 3.905297489836812e-07
+        },
+        {
+          "uid": 137194,
+          "material_volume": 42529.526728816476,
+          "initial_volume": 42529.52672881643,
+          "archived_initial_volume": 42529.52672881644,
+          "constant_transfer": 42529.52672882291,
+          "constant_uncovered": 0.0,
+          "constant_closure": 6.4319465309381485e-09,
+          "linear_transfer": 42529.52672882291,
+          "linear_uncovered": 0.0,
+          "linear_closure": 6.4319465309381485e-09
+        },
+        {
+          "uid": 137195,
+          "material_volume": 118081.01880921009,
+          "initial_volume": 118081.0188092101,
+          "archived_initial_volume": 118081.01880921007,
+          "constant_transfer": 118071.24529084866,
+          "constant_uncovered": 9.773518515422472,
+          "constant_closure": 1.540029188618064e-07,
+          "linear_transfer": 118071.2452908486,
+          "linear_uncovered": 9.773518515422472,
+          "linear_closure": 1.5394471120089293e-07
+        },
+        {
+          "uid": 163770,
+          "material_volume": 4917.5618571501545,
+          "initial_volume": 4917.5618571501145,
+          "archived_initial_volume": 4917.5618571501145,
+          "constant_transfer": 4917.561857150151,
+          "constant_uncovered": 0.0,
+          "constant_closure": -3.637978807091713e-12,
+          "linear_transfer": 4917.561857150151,
+          "linear_uncovered": 0.0,
+          "linear_closure": -3.637978807091713e-12
+        },
+        {
+          "uid": 448135,
+          "material_volume": 105.32506412618272,
+          "initial_volume": 105.32506412618922,
+          "archived_initial_volume": 105.3250641261892,
+          "constant_transfer": 105.32506412618272,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 105.32506412618272,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 448142,
+          "material_volume": 31263.8905604751,
+          "initial_volume": 31263.890560475105,
+          "archived_initial_volume": 31263.890560475105,
+          "constant_transfer": 31263.89056060976,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.3465978554449975e-07,
+          "linear_transfer": 31263.890560609765,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.3466342352330685e-07
+        },
+        {
+          "uid": 448239,
+          "material_volume": 20566.102444510492,
+          "initial_volume": 20566.10244451053,
+          "archived_initial_volume": 20566.10244451053,
+          "constant_transfer": 20566.10244457904,
+          "constant_uncovered": 0.0,
+          "constant_closure": 6.854679668322206e-08,
+          "linear_transfer": 20566.10244457904,
+          "linear_uncovered": 0.0,
+          "linear_closure": 6.854679668322206e-08
+        },
+        {
+          "uid": 448261,
+          "material_volume": 479.63641287567873,
+          "initial_volume": 479.6364128756892,
+          "archived_initial_volume": 479.6364128756891,
+          "constant_transfer": 479.63641287567856,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.7053025658242404e-13,
+          "linear_transfer": 479.63641287567856,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.7053025658242404e-13
+        },
+        {
+          "uid": 448479,
+          "material_volume": 10191.962447347458,
+          "initial_volume": 10191.962447347465,
+          "archived_initial_volume": 10191.962447347465,
+          "constant_transfer": 10191.96244739726,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.9802110879682004e-08,
+          "linear_transfer": 10191.96244739726,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.9802110879682004e-08
+        }
+      ],
+      "native_reconstruction": {
+        "candidate_count": 613,
+        "face_count": 1385,
+        "candidate_nodes_missing_neighbors": 0,
+        "reconstructed_nonempty_host_count": 134,
+        "archive_nonempty_host_count": 134,
+        "maximum_uid_geometry_symmetric_difference_km2": 3.7635080968721704e-10,
+        "sum_uid_geometry_symmetric_difference_km2": 2.01059134653923e-08,
+        "per_uid_geometry_difference": [
+          [
+            -1,
+            0.0
+          ],
+          [
+            566,
+            1.4994600829663912e-10
+          ],
+          [
+            2732,
+            6.652144593335319e-11
+          ],
+          [
+            4161,
+            2.429134556707178e-10
+          ],
+          [
+            6160,
+            9.894996773620245e-11
+          ],
+          [
+            12132,
+            3.406447524686492e-11
+          ],
+          [
+            13176,
+            2.8315250881260716e-10
+          ],
+          [
+            14011,
+            8.157648421155919e-11
+          ],
+          [
+            16733,
+            9.107824206089676e-11
+          ],
+          [
+            16734,
+            2.2067256724930423e-11
+          ],
+          [
+            17521,
+            8.271616141631711e-12
+          ],
+          [
+            17718,
+            3.6519704261121216e-10
+          ],
+          [
+            21809,
+            7.866018947311204e-11
+          ],
+          [
+            22839,
+            1.604328374894064e-10
+          ],
+          [
+            22840,
+            1.9972764016867668e-10
+          ],
+          [
+            24420,
+            2.5772496209732877e-11
+          ],
+          [
+            24452,
+            6.408474928957816e-11
+          ],
+          [
+            25431,
+            2.9064018686785755e-11
+          ],
+          [
+            30093,
+            3.4327287737290126e-10
+          ],
+          [
+            43200,
+            1.859469050773276e-11
+          ],
+          [
+            43378,
+            5.0249978401702417e-11
+          ],
+          [
+            48346,
+            8.588336163243354e-11
+          ],
+          [
+            51397,
+            2.520516819868168e-10
+          ],
+          [
+            51403,
+            2.348206661915904e-10
+          ],
+          [
+            51405,
+            3.2898224713026714e-10
+          ],
+          [
+            52268,
+            7.706307718119647e-11
+          ],
+          [
+            55442,
+            2.671004025463967e-10
+          ],
+          [
+            55449,
+            3.2988348211153857e-10
+          ],
+          [
+            55450,
+            2.558295138145801e-10
+          ],
+          [
+            60859,
+            3.2363028054396333e-10
+          ],
+          [
+            64244,
+            5.7989612395330314e-11
+          ],
+          [
+            65973,
+            3.277057346259024e-10
+          ],
+          [
+            67113,
+            9.523865749425474e-11
+          ],
+          [
+            71061,
+            1.2692248780462433e-10
+          ],
+          [
+            71686,
+            8.112410634362948e-11
+          ],
+          [
+            71754,
+            1.4418978380606363e-10
+          ],
+          [
+            71757,
+            2.9482721482046035e-10
+          ],
+          [
+            76269,
+            0.0
+          ],
+          [
+            76270,
+            0.0
+          ],
+          [
+            76272,
+            6.382400150321853e-11
+          ],
+          [
+            79872,
+            4.0964945741465304e-12
+          ],
+          [
+            79873,
+            4.187179339970222e-11
+          ],
+          [
+            79874,
+            5.998723907070607e-11
+          ],
+          [
+            79875,
+            6.651980662459709e-11
+          ],
+          [
+            83886,
+            3.2497063037018946e-10
+          ],
+          [
+            91198,
+            1.4046339384711547e-10
+          ],
+          [
+            91202,
+            5.5913687446861934e-11
+          ],
+          [
+            91203,
+            1.1130578493443702e-10
+          ],
+          [
+            91204,
+            1.6507600070967092e-12
+          ],
+          [
+            91206,
+            2.8802944557844576e-11
+          ],
+          [
+            91207,
+            5.806258925868079e-11
+          ],
+          [
+            91208,
+            0.0
+          ],
+          [
+            94307,
+            8.476088017379427e-11
+          ],
+          [
+            95080,
+            3.305836665044189e-10
+          ],
+          [
+            95088,
+            3.1737660042942306e-10
+          ],
+          [
+            95089,
+            1.8188953516105424e-10
+          ],
+          [
+            111035,
+            1.280110796709281e-10
+          ],
+          [
+            111036,
+            3.029529186383538e-10
+          ],
+          [
+            114585,
+            1.574117034513958e-10
+          ],
+          [
+            114590,
+            0.0
+          ],
+          [
+            114591,
+            2.948966755755717e-10
+          ],
+          [
+            114593,
+            2.65333221019023e-10
+          ],
+          [
+            119908,
+            1.15371088393376e-10
+          ],
+          [
+            120002,
+            9.702970417530777e-11
+          ],
+          [
+            120004,
+            1.0340747052069064e-10
+          ],
+          [
+            120015,
+            6.380058983149693e-11
+          ],
+          [
+            120016,
+            2.3502758292811412e-11
+          ],
+          [
+            120021,
+            9.230574507829971e-11
+          ],
+          [
+            120042,
+            4.893400593642641e-11
+          ],
+          [
+            137178,
+            1.2790241868681264e-10
+          ],
+          [
+            137194,
+            1.4365696304435527e-10
+          ],
+          [
+            137195,
+            3.633741244446055e-10
+          ],
+          [
+            448142,
+            3.4151103913895226e-10
+          ],
+          [
+            448239,
+            3.7635080968721704e-10
+          ],
+          [
+            448261,
+            3.2544938251607986e-10
+          ],
+          [
+            453396,
+            2.8903478123654814e-10
+          ],
+          [
+            453711,
+            1.1412600441698581e-10
+          ],
+          [
+            453808,
+            1.146264747048535e-10
+          ],
+          [
+            453834,
+            6.303781713351466e-11
+          ],
+          [
+            453886,
+            1.0616602962517929e-10
+          ],
+          [
+            458676,
+            3.1691223645028163e-10
+          ],
+          [
+            458800,
+            3.212636188041732e-10
+          ],
+          [
+            458847,
+            2.2784938228931812e-10
+          ],
+          [
+            458979,
+            1.2054387463301248e-10
+          ],
+          [
+            459020,
+            1.1206108378323138e-10
+          ],
+          [
+            459067,
+            9.312835715231443e-11
+          ],
+          [
+            459095,
+            1.0999146943092538e-10
+          ],
+          [
+            459147,
+            1.1858035813164438e-10
+          ],
+          [
+            459186,
+            1.3055422772710558e-10
+          ],
+          [
+            464315,
+            3.6301454260115306e-10
+          ],
+          [
+            464402,
+            1.2059173374511505e-10
+          ],
+          [
+            464431,
+            3.168465396927596e-10
+          ],
+          [
+            464446,
+            3.340775508460003e-10
+          ],
+          [
+            464447,
+            0.0
+          ],
+          [
+            464457,
+            0.0
+          ],
+          [
+            464468,
+            3.2963722598550883e-10
+          ],
+          [
+            464476,
+            2.113121588102961e-10
+          ],
+          [
+            464530,
+            0.0
+          ],
+          [
+            464716,
+            0.0
+          ],
+          [
+            464781,
+            0.0
+          ],
+          [
+            469932,
+            3.196764448857403e-10
+          ],
+          [
+            469940,
+            2.4637328330060923e-10
+          ],
+          [
+            469976,
+            3.446379119952456e-10
+          ],
+          [
+            470009,
+            0.0
+          ],
+          [
+            470092,
+            1.6213840299089278e-10
+          ],
+          [
+            470256,
+            1.0381776412189784e-10
+          ],
+          [
+            470275,
+            3.531758931652956e-11
+          ],
+          [
+            470400,
+            8.611550101500833e-11
+          ],
+          [
+            475908,
+            0.0
+          ],
+          [
+            476002,
+            2.0224627266761785e-10
+          ],
+          [
+            476046,
+            1.636047597192843e-10
+          ],
+          [
+            476047,
+            1.4914782872859346e-10
+          ],
+          [
+            476048,
+            4.681504552728889e-12
+          ],
+          [
+            481216,
+            2.862293449159098e-10
+          ],
+          [
+            481248,
+            0.0
+          ],
+          [
+            481295,
+            3.396835479057823e-10
+          ],
+          [
+            481446,
+            5.567838166575028e-11
+          ],
+          [
+            481476,
+            2.2887252552774742e-10
+          ],
+          [
+            481479,
+            2.582213944304343e-10
+          ],
+          [
+            481503,
+            2.066847697343198e-10
+          ],
+          [
+            481521,
+            1.36365057259315e-10
+          ],
+          [
+            481539,
+            1.4145952467966903e-10
+          ],
+          [
+            481564,
+            1.2779527117928145e-10
+          ],
+          [
+            481604,
+            1.1636795796314721e-10
+          ],
+          [
+            486440,
+            1.5196191006514754e-10
+          ],
+          [
+            486526,
+            2.645422697249714e-10
+          ],
+          [
+            486560,
+            0.0
+          ],
+          [
+            486570,
+            1.4703878466009583e-10
+          ],
+          [
+            486590,
+            2.617774436459188e-10
+          ],
+          [
+            486591,
+            1.40337987974999e-10
+          ],
+          [
+            486603,
+            2.7899912559584916e-10
+          ],
+          [
+            486633,
+            0.0
+          ],
+          [
+            486815,
+            1.7288865840028893e-10
+          ],
+          [
+            486816,
+            1.1977498212932308e-10
+          ],
+          [
+            486842,
+            0.0
+          ]
+        ],
+        "raw_host_clipped_area_comparison_note": "重建raw仅裁到材料带，因此不与归档完整raw宿主面积混作同一面积。",
+        "priority_assumption": "按地壳类型降序、厚度降序、年龄升序、UID升序；直接与归档几何及原生查询比对，未读取引擎实现。"
+      },
+      "quadrature_conditional_on_archived_J": [
+        {
+          "order": 4,
+          "point_count": 33136,
+          "archive_target_index_mismatch": 0,
+          "multiple_archived_host_polygon_hits": 0,
+          "outside_target_count": 0,
+          "own_source_outside_count": 0,
+          "native_reconstructed_query_uid_mismatch": 0,
+          "native_reconstructed_multiple_hits": 0,
+          "native_reconstructed_outside_hits": 0,
+          "common_coverage_denominator_km3": 5492169.650283355,
+          "archive_denominator_difference": 0.0,
+          "known_reference_volume_no_host_km3": 62587.90709789266,
+          "methods": {
+            "material_constant": {
+              "L1": 0.0016888363447736844,
+              "archive_L1_difference": 0.0,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "material_linear": {
+              "L1": 0.0014543826542184795,
+              "archive_L1_difference": -2.1011838102769076e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 4.335656278442457e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_constant": {
+              "L1": 0.015127718795381053,
+              "archive_L1_difference": 1.734723475976807e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 7.048583938740194e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_linear": {
+              "L1": 0.01512842891000194,
+              "archive_L1_difference": 5.689893001203927e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.7061909097246826e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_constant": {
+              "L1": 0.003696284548481003,
+              "archive_L1_difference": 2.6020852139652106e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 2.9025670755800093e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_linear": {
+              "L1": 0.0036853869080993103,
+              "archive_L1_difference": -5.41667405373758e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 1.0187815036033498e-09,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            }
+          }
+        },
+        {
+          "order": 8,
+          "point_count": 132544,
+          "archive_target_index_mismatch": 0,
+          "multiple_archived_host_polygon_hits": 0,
+          "outside_target_count": 0,
+          "own_source_outside_count": 0,
+          "native_reconstructed_query_uid_mismatch": 0,
+          "native_reconstructed_multiple_hits": 0,
+          "native_reconstructed_outside_hits": 0,
+          "common_coverage_denominator_km3": 5490317.558220102,
+          "archive_denominator_difference": 0.0,
+          "known_reference_volume_no_host_km3": 64439.99916114571,
+          "methods": {
+            "material_constant": {
+              "L1": 0.0016831356109110053,
+              "archive_L1_difference": -6.505213034913027e-19,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "material_linear": {
+              "L1": 0.0014494587335471879,
+              "archive_L1_difference": -7.090682208055199e-17,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 4.16854106788378e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_constant": {
+              "L1": 0.015078631481283132,
+              "archive_L1_difference": 3.469446951953614e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 6.991740519879386e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_linear": {
+              "L1": 0.015079517977808614,
+              "archive_L1_difference": 5.689893001203927e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.4930280889966525e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_constant": {
+              "L1": 0.003702390556912445,
+              "archive_L1_difference": 2.6020852139652106e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 2.8599345114344032e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_linear": {
+              "L1": 0.0036929726050335984,
+              "archive_L1_difference": -7.450637329320386e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 1.0354668233958364e-09,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            }
+          }
+        }
+      ],
+      "gradient_checks": {
+        "neighbor_indices_wrong_known_source": 0,
+        "sampled_boundary_envelope_violation_count": 0,
+        "minimum_known_boundary_thickness_km": 16.221858754935305,
+        "maximum_mean_integral_correction_km3": 1.1901096962313586e-12,
+        "note": "核对归档梯度的同源邻域、球面积均值与边界包络；未独立重建梯度拟合/限幅器。"
+      },
+      "elapsed_seconds": 87.6298673999263
+    },
+    {
+      "tag": "0Ma_b32",
+      "npz_sha256": "6bca3583bd4979ba6a85af2021692525c3fefa20571860bcbcc4880fe20bf758",
+      "input_unchanged_during_audit": true,
+      "json_input_trace_sha256": "d436543d0bf061da190691a81469226f592d919bf9e0f0de1e3f26429ae5145c",
+      "json_input_hash_note": "此字段指S14源输入，本案输出身份由raw_manifest与本审计实际SHA核准",
+      "geometry": {
+        "source_count": 2071,
+        "known_count": 1931,
+        "known_source_count": 77,
+        "target_count": 135,
+        "source_area_error": {
+          "maximum_abs": 8.185452315956354e-12,
+          "finite_mask_disagreement": 0
+        },
+        "source_moment_error": {
+          "maximum_abs": 1.7003287666739197e-11,
+          "finite_mask_disagreement": 0
+        },
+        "source_centroid_error": {
+          "maximum_abs": 1.080413536413971e-12,
+          "finite_mask_disagreement": 0
+        },
+        "target_area_error": {
+          "maximum_abs": 3.9108272176235914e-11,
+          "finite_mask_disagreement": 0
+        },
+        "domain_area": 309691.514961231,
+        "source_area_sum_minus_union": 0.13975416222820058,
+        "source_overlap_max_abs_row_residual": 1.4811462278885301e-08,
+        "target_area_partition_max_abs": 0.0038793461508248583,
+        "overlap_count": 4113,
+        "archived_overlap_count": 4113,
+        "unlisted_overlap_area": 0.0,
+        "overlap_area_error": {
+          "maximum_abs": 9.102052445086883e-12,
+          "finite_mask_disagreement": 0
+        },
+        "overlap_moment_error": {
+          "maximum_abs": 2.4009239041333785e-11,
+          "finite_mask_disagreement": 0
+        },
+        "constant_volume_error": {
+          "maximum_abs": 1.844000507844612e-10,
+          "finite_mask_disagreement": 0
+        },
+        "linear_volume_error": {
+          "maximum_abs": 1.6898411558941007e-09,
+          "finite_mask_disagreement": 0
+        },
+        "known_area": 291438.46118040173,
+        "unknown_area": 18253.193534991482,
+        "nohost_area": 3703.278332223351,
+        "constant_known_nohost_volume": 64557.73927392695,
+        "linear_known_nohost_volume": 64559.70002372942,
+        "recomputed_source_component_mean_range_km": [
+          16.221848764674665,
+          22.9593708662894
+        ],
+        "archived_source_component_mean_range_km": [
+          16.221848764674665,
+          22.95937086628954
+        ],
+        "negative_constant_piece_count": 0,
+        "negative_linear_piece_count": 0,
+        "archived_negative_linear_piece_count": 0,
+        "unknown_target_area_error": {
+          "maximum_abs": 1.0800249583553523e-11,
+          "finite_mask_disagreement": 0
+        },
+        "known_target_area_error": {
+          "maximum_abs": 2.0463630789890885e-11,
+          "finite_mask_disagreement": 0
+        },
+        "constant_mean_error": {
+          "maximum_abs": 2.842170943040401e-14,
+          "finite_mask_disagreement": 0
+        },
+        "linear_mean_error": {
+          "maximum_abs": 1.0800249583553523e-12,
+          "finite_mask_disagreement": 0
+        },
+        "source_constant_mean_error": {
+          "maximum_abs": 6.750155989720952e-14,
+          "finite_mask_disagreement": 0
+        },
+        "source_linear_mean_error": {
+          "maximum_abs": 1.2800782656086085e-10,
+          "finite_mask_disagreement": 0
+        },
+        "source_area_component_error": {
+          "maximum_abs": 1.5575096767861396e-11,
+          "finite_mask_disagreement": 0
+        }
+      },
+      "source_results_all_77": [
+        {
+          "uid": 566,
+          "material_volume": 112714.91155757467,
+          "initial_volume": 112714.91155757467,
+          "archived_initial_volume": 112714.91155757465,
+          "constant_transfer": 112714.91155760543,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.0762748792767525e-08,
+          "linear_transfer": 112714.91155760546,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.079185262322426e-08
+        },
+        {
+          "uid": 2732,
+          "material_volume": 90511.74921349889,
+          "initial_volume": 90511.7492134989,
+          "archived_initial_volume": 90511.74921349892,
+          "constant_transfer": 90511.74921349893,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 90511.74921349893,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 4161,
+          "material_volume": 109656.0644897663,
+          "initial_volume": 109656.06448976636,
+          "archived_initial_volume": 109656.06448976634,
+          "constant_transfer": 109656.06448984174,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.543712854385376e-08,
+          "linear_transfer": 109656.06448984174,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.543712854385376e-08
+        },
+        {
+          "uid": 4569,
+          "material_volume": 100270.91742632262,
+          "initial_volume": 100270.91742632279,
+          "archived_initial_volume": 100270.91742632279,
+          "constant_transfer": 75980.60357078142,
+          "constant_uncovered": 24290.313855709406,
+          "constant_closure": 1.6820558812469244e-07,
+          "linear_transfer": 75980.2959501882,
+          "linear_uncovered": 24290.62147630266,
+          "linear_closure": 1.6824924387037754e-07
+        },
+        {
+          "uid": 6160,
+          "material_volume": 24132.197506187345,
+          "initial_volume": 24132.197506187313,
+          "archived_initial_volume": 24132.197506187316,
+          "constant_transfer": 24132.197506205568,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.822263584472239e-08,
+          "linear_transfer": 24132.197506205557,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.8211721908301115e-08
+        },
+        {
+          "uid": 12132,
+          "material_volume": 1323.7491839024708,
+          "initial_volume": 1323.7491839024926,
+          "archived_initial_volume": 1323.7491839024929,
+          "constant_transfer": 1323.749183930629,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.81581833405653e-08,
+          "linear_transfer": 1323.749183930629,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.81581833405653e-08
+        },
+        {
+          "uid": 13176,
+          "material_volume": 133363.14657985893,
+          "initial_volume": 133363.146579859,
+          "archived_initial_volume": 133363.146579859,
+          "constant_transfer": 132992.75303037176,
+          "constant_uncovered": 370.3935496266336,
+          "constant_closure": 1.394655555486679e-07,
+          "linear_transfer": 132992.4046663381,
+          "linear_uncovered": 370.7419136603072,
+          "linear_closure": 1.394655555486679e-07
+        },
+        {
+          "uid": 14011,
+          "material_volume": 95204.37487322031,
+          "initial_volume": 95204.37487322034,
+          "archived_initial_volume": 95204.37487322034,
+          "constant_transfer": 95204.3748732203,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 95204.37487322031,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 16733,
+          "material_volume": 98224.69399780515,
+          "initial_volume": 98224.6939978053,
+          "archived_initial_volume": 98224.6939978053,
+          "constant_transfer": 98224.69399780515,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 98224.69399780515,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 16734,
+          "material_volume": 14211.975642055595,
+          "initial_volume": 14211.975642055553,
+          "archived_initial_volume": 14211.975642055553,
+          "constant_transfer": 14211.975642108031,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.2436007536016405e-08,
+          "linear_transfer": 14211.975642108033,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.243782652541995e-08
+        },
+        {
+          "uid": 17521,
+          "material_volume": 20723.78675690814,
+          "initial_volume": 20723.78675690814,
+          "archived_initial_volume": 20723.78675690814,
+          "constant_transfer": 20723.78675692205,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.391163095831871e-08,
+          "linear_transfer": 20723.78675692205,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.391163095831871e-08
+        },
+        {
+          "uid": 17718,
+          "material_volume": 129360.3919396255,
+          "initial_volume": 129360.39193962545,
+          "archived_initial_volume": 129360.39193962545,
+          "constant_transfer": 129360.3919397484,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.2290547601878643e-07,
+          "linear_transfer": 129360.39193974837,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.228763721883297e-07
+        },
+        {
+          "uid": 21809,
+          "material_volume": 14521.845339695989,
+          "initial_volume": 14521.84533969604,
+          "archived_initial_volume": 14521.84533969604,
+          "constant_transfer": 14521.845339695987,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.8189894035458565e-12,
+          "linear_transfer": 14521.845339695985,
+          "linear_uncovered": 0.0,
+          "linear_closure": -3.637978807091713e-12
+        },
+        {
+          "uid": 22840,
+          "material_volume": 75758.45956017275,
+          "initial_volume": 75758.4595601728,
+          "archived_initial_volume": 75758.45956017279,
+          "constant_transfer": 75758.45956020983,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.707828000187874e-08,
+          "linear_transfer": 75758.45956020983,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.707828000187874e-08
+        },
+        {
+          "uid": 24420,
+          "material_volume": 19679.216830108053,
+          "initial_volume": 19679.216830108016,
+          "archived_initial_volume": 19679.216830108016,
+          "constant_transfer": 19679.2168301086,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.456968210637569e-10,
+          "linear_transfer": 19679.2168301086,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.456968210637569e-10
+        },
+        {
+          "uid": 24452,
+          "material_volume": 102913.9616431755,
+          "initial_volume": 102913.96164317554,
+          "archived_initial_volume": 102913.96164317556,
+          "constant_transfer": 102913.96164320494,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.943852450698614e-08,
+          "linear_transfer": 102913.96164320492,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.9423972591757774e-08
+        },
+        {
+          "uid": 25431,
+          "material_volume": 29897.692857340437,
+          "initial_volume": 29897.692857340375,
+          "archived_initial_volume": 29897.692857340375,
+          "constant_transfer": 29897.692857346352,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.915353540331125e-09,
+          "linear_transfer": 29897.69285734635,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.9117155615240335e-09
+        },
+        {
+          "uid": 30093,
+          "material_volume": 118518.35782277414,
+          "initial_volume": 118518.3578227743,
+          "archived_initial_volume": 118518.35782277431,
+          "constant_transfer": 118501.4559364284,
+          "constant_uncovered": 16.90188634574082,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 118501.44884384911,
+          "linear_uncovered": 16.90897892505338,
+          "linear_closure": 2.9103830456733704e-11
+        },
+        {
+          "uid": 43200,
+          "material_volume": 16329.012496155508,
+          "initial_volume": 16329.012496155448,
+          "archived_initial_volume": 16329.012496155448,
+          "constant_transfer": 16329.012496169866,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4357283362187445e-08,
+          "linear_transfer": 16329.012496169866,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4357283362187445e-08
+        },
+        {
+          "uid": 43378,
+          "material_volume": 20164.33183783017,
+          "initial_volume": 20164.331837830156,
+          "archived_initial_volume": 20164.331837830156,
+          "constant_transfer": 20164.33183783018,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.0913936421275139e-11,
+          "linear_transfer": 20164.33183783018,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.0913936421275139e-11
+        },
+        {
+          "uid": 48346,
+          "material_volume": 100225.35726435787,
+          "initial_volume": 100225.3572643578,
+          "archived_initial_volume": 100225.35726435782,
+          "constant_transfer": 100225.35726435801,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4551915228366852e-10,
+          "linear_transfer": 100225.357264358,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.3096723705530167e-10
+        },
+        {
+          "uid": 51397,
+          "material_volume": 79925.05031859953,
+          "initial_volume": 79925.05031859956,
+          "archived_initial_volume": 79925.05031859955,
+          "constant_transfer": 79925.05031879008,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.9054277800023556e-07,
+          "linear_transfer": 79925.05031879006,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.905282260850072e-07
+        },
+        {
+          "uid": 51403,
+          "material_volume": 92915.48251940469,
+          "initial_volume": 92915.48251940456,
+          "archived_initial_volume": 92915.48251940456,
+          "constant_transfer": 92915.48251950892,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.0423536878079176e-07,
+          "linear_transfer": 92915.4825195089,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.0422081686556339e-07
+        },
+        {
+          "uid": 51405,
+          "material_volume": 118539.04362148583,
+          "initial_volume": 118539.04362148582,
+          "archived_initial_volume": 118539.04362148582,
+          "constant_transfer": 117606.59944488447,
+          "constant_uncovered": 932.4441766013762,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 117606.601864024,
+          "linear_uncovered": 932.4417574618119,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 52268,
+          "material_volume": 91533.04429546617,
+          "initial_volume": 91533.04429546624,
+          "archived_initial_volume": 91533.04429546626,
+          "constant_transfer": 91533.04429546618,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 91533.04429546618,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 55442,
+          "material_volume": 101553.68102906972,
+          "initial_volume": 101553.68102906975,
+          "archived_initial_volume": 101553.68102906975,
+          "constant_transfer": 101553.68102907125,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.5279510989785194e-09,
+          "linear_transfer": 101553.68102907125,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.5279510989785194e-09
+        },
+        {
+          "uid": 55449,
+          "material_volume": 132796.2349712191,
+          "initial_volume": 132796.23497121912,
+          "archived_initial_volume": 132796.23497121912,
+          "constant_transfer": 132796.23497121912,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.9103830456733704e-11,
+          "linear_transfer": 132796.23497121912,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.9103830456733704e-11
+        },
+        {
+          "uid": 55450,
+          "material_volume": 103025.5777589127,
+          "initial_volume": 103025.57775891271,
+          "archived_initial_volume": 103025.57775891271,
+          "constant_transfer": 103025.57775895711,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.441244527697563e-08,
+          "linear_transfer": 103025.57775895711,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.441244527697563e-08
+        },
+        {
+          "uid": 60859,
+          "material_volume": 104912.23434873403,
+          "initial_volume": 104912.23434873414,
+          "archived_initial_volume": 104912.23434873413,
+          "constant_transfer": 104912.23434874343,
+          "constant_uncovered": 0.0,
+          "constant_closure": 9.400537237524986e-09,
+          "linear_transfer": 104912.23434874341,
+          "linear_uncovered": 0.0,
+          "linear_closure": 9.38598532229662e-09
+        },
+        {
+          "uid": 64244,
+          "material_volume": 53051.0077898211,
+          "initial_volume": 53051.007789821095,
+          "archived_initial_volume": 53051.007789821095,
+          "constant_transfer": 53051.007789889416,
+          "constant_uncovered": 0.0,
+          "constant_closure": 6.831396603956819e-08,
+          "linear_transfer": 53051.007789889416,
+          "linear_uncovered": 0.0,
+          "linear_closure": 6.831396603956819e-08
+        },
+        {
+          "uid": 65973,
+          "material_volume": 134015.78909224892,
+          "initial_volume": 134015.78909224892,
+          "archived_initial_volume": 134015.7890922489,
+          "constant_transfer": 133358.47957572344,
+          "constant_uncovered": 657.3095166742756,
+          "constant_closure": 1.487787812948227e-07,
+          "linear_transfer": 133357.9137066433,
+          "linear_uncovered": 657.8753857541835,
+          "linear_closure": 1.4857505448162556e-07
+        },
+        {
+          "uid": 67113,
+          "material_volume": 97811.78504408691,
+          "initial_volume": 97811.78504408684,
+          "archived_initial_volume": 97811.78504408682,
+          "constant_transfer": 97811.78504408691,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 97811.7850440869,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 71061,
+          "material_volume": 104693.55849552335,
+          "initial_volume": 104693.55849552323,
+          "archived_initial_volume": 104693.55849552323,
+          "constant_transfer": 104693.5584955235,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.4551915228366852e-10,
+          "linear_transfer": 104693.5584955235,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4551915228366852e-10
+        },
+        {
+          "uid": 71686,
+          "material_volume": 99353.53201766845,
+          "initial_volume": 99353.53201766848,
+          "archived_initial_volume": 99353.53201766848,
+          "constant_transfer": 99353.53201766867,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.1827872842550278e-10,
+          "linear_transfer": 99353.53201766865,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.0372681319713593e-10
+        },
+        {
+          "uid": 71754,
+          "material_volume": 40860.082696237456,
+          "initial_volume": 40860.08269623749,
+          "archived_initial_volume": 40860.08269623749,
+          "constant_transfer": 40860.082696249476,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.201988197863102e-08,
+          "linear_transfer": 40860.082696249476,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.201988197863102e-08
+        },
+        {
+          "uid": 71757,
+          "material_volume": 105034.50873871263,
+          "initial_volume": 105034.50873871258,
+          "archived_initial_volume": 105034.5087387126,
+          "constant_transfer": 105034.5087387128,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.7462298274040222e-10,
+          "linear_transfer": 105034.5087387128,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.7462298274040222e-10
+        },
+        {
+          "uid": 76269,
+          "material_volume": 133238.3488979604,
+          "initial_volume": 133238.34889796044,
+          "archived_initial_volume": 133238.3488979604,
+          "constant_transfer": 133238.34889830393,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.4354161471128464e-07,
+          "linear_transfer": 133238.34889830384,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.4345430321991444e-07
+        },
+        {
+          "uid": 76270,
+          "material_volume": 30661.898358917686,
+          "initial_volume": 30661.8983589177,
+          "archived_initial_volume": 30661.8983589177,
+          "constant_transfer": 30661.898358950923,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.323657438158989e-08,
+          "linear_transfer": 30661.898358950948,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.326204023323953e-08
+        },
+        {
+          "uid": 76272,
+          "material_volume": 7329.469343028031,
+          "initial_volume": 7329.469343028057,
+          "archived_initial_volume": 7329.469343028056,
+          "constant_transfer": 7329.469343065466,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.7434801924973726e-08,
+          "linear_transfer": 7329.469343065459,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.742752596735954e-08
+        },
+        {
+          "uid": 79872,
+          "material_volume": 865.4261264994568,
+          "initial_volume": 865.4261264994417,
+          "archived_initial_volume": 865.4261264994417,
+          "constant_transfer": 865.4261264994568,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 865.4261264994568,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 79873,
+          "material_volume": 97439.17819959784,
+          "initial_volume": 97439.17819959778,
+          "archived_initial_volume": 97439.1781995978,
+          "constant_transfer": 91549.81482672131,
+          "constant_uncovered": 5889.363372916838,
+          "constant_closure": 4.030880518257618e-08,
+          "linear_transfer": 91550.22115095609,
+          "linear_uncovered": 5888.957048682064,
+          "linear_closure": 4.030880518257618e-08
+        },
+        {
+          "uid": 79874,
+          "material_volume": 60810.44129159165,
+          "initial_volume": 60810.44129159161,
+          "archived_initial_volume": 60810.44129159161,
+          "constant_transfer": 60810.44129160716,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.5512341633439064e-08,
+          "linear_transfer": 60810.44129160716,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.5512341633439064e-08
+        },
+        {
+          "uid": 79875,
+          "material_volume": 97461.75044865042,
+          "initial_volume": 97461.75044865042,
+          "archived_initial_volume": 97461.75044865042,
+          "constant_transfer": 97461.75044892498,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.7456553652882576e-07,
+          "linear_transfer": 97461.75044892506,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.746382961049676e-07
+        },
+        {
+          "uid": 83886,
+          "material_volume": 118429.92028445484,
+          "initial_volume": 118429.92028445467,
+          "archived_initial_volume": 118429.92028445468,
+          "constant_transfer": 118429.92028445481,
+          "constant_uncovered": 0.0,
+          "constant_closure": -2.9103830456733704e-11,
+          "linear_transfer": 118429.9202844548,
+          "linear_uncovered": 0.0,
+          "linear_closure": -4.3655745685100555e-11
+        },
+        {
+          "uid": 91198,
+          "material_volume": 103082.02738244004,
+          "initial_volume": 103082.0273824402,
+          "archived_initial_volume": 103082.02738244018,
+          "constant_transfer": 103082.02738244004,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 103082.02738244005,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.4551915228366852e-11
+        },
+        {
+          "uid": 91202,
+          "material_volume": 54615.50221923432,
+          "initial_volume": 54615.50221923423,
+          "archived_initial_volume": 54615.502219234215,
+          "constant_transfer": 54615.502219234324,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.275957614183426e-12,
+          "linear_transfer": 54615.50221923432,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 91203,
+          "material_volume": 64641.413123380946,
+          "initial_volume": 64641.41312338088,
+          "archived_initial_volume": 64641.4131233809,
+          "constant_transfer": 64570.98007042165,
+          "constant_uncovered": 70.43305295927458,
+          "constant_closure": -2.1827872842550278e-11,
+          "linear_transfer": 64571.00494291089,
+          "linear_uncovered": 70.40818047004808,
+          "linear_closure": -7.275957614183426e-12
+        },
+        {
+          "uid": 91204,
+          "material_volume": 33.977674703750836,
+          "initial_volume": 33.97767470375004,
+          "archived_initial_volume": 33.97767470375004,
+          "constant_transfer": 33.97767470375082,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4210854715202004e-14,
+          "linear_transfer": 33.97767470375082,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4210854715202004e-14
+        },
+        {
+          "uid": 91206,
+          "material_volume": 47338.73209374513,
+          "initial_volume": 47338.73209374506,
+          "archived_initial_volume": 47338.73209374506,
+          "constant_transfer": 47338.732093843966,
+          "constant_uncovered": 0.0,
+          "constant_closure": 9.883660823106766e-08,
+          "linear_transfer": 47338.73209384397,
+          "linear_uncovered": 0.0,
+          "linear_closure": 9.884388418868184e-08
+        },
+        {
+          "uid": 91207,
+          "material_volume": 89444.80811061244,
+          "initial_volume": 89444.80811061237,
+          "archived_initial_volume": 89444.80811061237,
+          "constant_transfer": 89444.80811061403,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.5861587598919868e-09,
+          "linear_transfer": 89444.80811061405,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.6007106751203537e-09
+        },
+        {
+          "uid": 91208,
+          "material_volume": 103100.10797784055,
+          "initial_volume": 103100.10797784051,
+          "archived_initial_volume": 103100.10797784048,
+          "constant_transfer": 103100.10797785629,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.5730620361864567e-08,
+          "linear_transfer": 103100.10797785633,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.5774276107549667e-08
+        },
+        {
+          "uid": 94306,
+          "material_volume": 483.1786476888659,
+          "initial_volume": 483.1786476888714,
+          "archived_initial_volume": 483.1786476888715,
+          "constant_transfer": 483.17864769196814,
+          "constant_uncovered": 0.0,
+          "constant_closure": 3.1022295843285974e-09,
+          "linear_transfer": 483.17864769196814,
+          "linear_uncovered": 0.0,
+          "linear_closure": 3.1022295843285974e-09
+        },
+        {
+          "uid": 94307,
+          "material_volume": 101609.58765698806,
+          "initial_volume": 101609.58765698808,
+          "archived_initial_volume": 101609.58765698805,
+          "constant_transfer": 101609.58765698811,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.3655745685100555e-11,
+          "linear_transfer": 101609.58765698811,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 95080,
+          "material_volume": 128640.82826915185,
+          "initial_volume": 128640.82826915185,
+          "archived_initial_volume": 128640.82826915184,
+          "constant_transfer": 128640.82826929109,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.3923272490501404e-07,
+          "linear_transfer": 128640.82826929104,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.3918906915932894e-07
+        },
+        {
+          "uid": 95088,
+          "material_volume": 130712.84056739972,
+          "initial_volume": 130712.8405673996,
+          "archived_initial_volume": 130712.84056739962,
+          "constant_transfer": 114673.58555340851,
+          "constant_uncovered": 16039.25501399122,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 114673.11496947883,
+          "linear_uncovered": 16039.725597920931,
+          "linear_closure": 4.3655745685100555e-11
+        },
+        {
+          "uid": 95089,
+          "material_volume": 67061.52950975248,
+          "initial_volume": 67061.52950975255,
+          "archived_initial_volume": 67061.52950975255,
+          "constant_transfer": 67061.52950975395,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.469743438065052e-09,
+          "linear_transfer": 67061.52950975395,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.469743438065052e-09
+        },
+        {
+          "uid": 111035,
+          "material_volume": 38470.21408675199,
+          "initial_volume": 38470.214086752065,
+          "archived_initial_volume": 38470.21408675207,
+          "constant_transfer": 38470.21408676935,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.7360434867441654e-08,
+          "linear_transfer": 38470.21408676935,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.7360434867441654e-08
+        },
+        {
+          "uid": 111036,
+          "material_volume": 120667.65546436595,
+          "initial_volume": 120667.65546436611,
+          "archived_initial_volume": 120667.65546436608,
+          "constant_transfer": 120667.65546441445,
+          "constant_uncovered": 0.0,
+          "constant_closure": 4.850153345614672e-08,
+          "linear_transfer": 120667.65546441446,
+          "linear_uncovered": 0.0,
+          "linear_closure": 4.8516085371375084e-08
+        },
+        {
+          "uid": 114585,
+          "material_volume": 50707.90249475396,
+          "initial_volume": 50707.90249475396,
+          "archived_initial_volume": 50707.902494753966,
+          "constant_transfer": 50707.902494753944,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 50707.902494753944,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 114590,
+          "material_volume": 11366.772120815287,
+          "initial_volume": 11366.772120815298,
+          "archived_initial_volume": 11366.772120815298,
+          "constant_transfer": 11366.77212084183,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.6542693376541138e-08,
+          "linear_transfer": 11366.77212084183,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.6542693376541138e-08
+        },
+        {
+          "uid": 114591,
+          "material_volume": 116639.40397694818,
+          "initial_volume": 116639.4039769482,
+          "archived_initial_volume": 116639.40397694818,
+          "constant_transfer": 116639.4039770989,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.5072873793542385e-07,
+          "linear_transfer": 116639.40397709889,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.5071418602019548e-07
+        },
+        {
+          "uid": 114593,
+          "material_volume": 133067.6734209729,
+          "initial_volume": 133067.67342097306,
+          "archived_initial_volume": 133067.67342097306,
+          "constant_transfer": 133067.6734209729,
+          "constant_uncovered": 0.0,
+          "constant_closure": 0.0,
+          "linear_transfer": 133067.6734209729,
+          "linear_uncovered": 0.0,
+          "linear_closure": 0.0
+        },
+        {
+          "uid": 119908,
+          "material_volume": 85730.83389716198,
+          "initial_volume": 85730.833897162,
+          "archived_initial_volume": 85730.833897162,
+          "constant_transfer": 85517.1847178964,
+          "constant_uncovered": 213.64917926590297,
+          "constant_closure": 3.2014213502407074e-10,
+          "linear_transfer": 85517.01222751975,
+          "linear_uncovered": 213.82166964255285,
+          "linear_closure": 3.2014213502407074e-10
+        },
+        {
+          "uid": 120002,
+          "material_volume": 90197.12620973402,
+          "initial_volume": 90197.12620973415,
+          "archived_initial_volume": 90197.12620973415,
+          "constant_transfer": 83767.39028854975,
+          "constant_uncovered": 6429.7359212283645,
+          "constant_closure": 4.409230314195156e-08,
+          "linear_transfer": 83767.30120891928,
+          "linear_uncovered": 6429.825000858861,
+          "linear_closure": 4.4121406972408295e-08
+        },
+        {
+          "uid": 120004,
+          "material_volume": 67907.16010595934,
+          "initial_volume": 67907.16010595932,
+          "archived_initial_volume": 67907.16010595934,
+          "constant_transfer": 60788.6776807763,
+          "constant_uncovered": 7118.48242530055,
+          "constant_closure": 1.175212673842907e-07,
+          "linear_transfer": 60787.82493613499,
+          "linear_uncovered": 7119.33516994186,
+          "linear_closure": 1.1750671546906233e-07
+        },
+        {
+          "uid": 120015,
+          "material_volume": 24520.109731457276,
+          "initial_volume": 24520.109731457258,
+          "archived_initial_volume": 24520.10973145726,
+          "constant_transfer": 24520.109731466007,
+          "constant_uncovered": 0.0,
+          "constant_closure": 8.731149137020111e-09,
+          "linear_transfer": 24520.10973146601,
+          "linear_uncovered": 0.0,
+          "linear_closure": 8.734787115827203e-09
+        },
+        {
+          "uid": 120016,
+          "material_volume": 65876.01677779337,
+          "initial_volume": 65876.01677779327,
+          "archived_initial_volume": 65876.01677779327,
+          "constant_transfer": 65876.01677779335,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 65876.01677779335,
+          "linear_uncovered": 0.0,
+          "linear_closure": -1.4551915228366852e-11
+        },
+        {
+          "uid": 120021,
+          "material_volume": 98644.07408476189,
+          "initial_volume": 98644.07408476176,
+          "archived_initial_volume": 98644.07408476176,
+          "constant_transfer": 98644.07408499734,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.3544998839497566e-07,
+          "linear_transfer": 98644.07408499735,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.3546454031020403e-07
+        },
+        {
+          "uid": 120042,
+          "material_volume": 98099.81694610871,
+          "initial_volume": 98099.81694610877,
+          "archived_initial_volume": 98099.81694610874,
+          "constant_transfer": 95580.13055117975,
+          "constant_uncovered": 2519.686394988388,
+          "constant_closure": 5.943002179265022e-08,
+          "linear_transfer": 95580.55003037801,
+          "linear_uncovered": 2519.266915790119,
+          "linear_closure": 5.9415469877421856e-08
+        },
+        {
+          "uid": 137194,
+          "material_volume": 42529.526728816454,
+          "initial_volume": 42529.52672881643,
+          "archived_initial_volume": 42529.52672881644,
+          "constant_transfer": 42529.52672881644,
+          "constant_uncovered": 0.0,
+          "constant_closure": -1.4551915228366852e-11,
+          "linear_transfer": 42529.52672881645,
+          "linear_uncovered": 0.0,
+          "linear_closure": -7.275957614183426e-12
+        },
+        {
+          "uid": 137195,
+          "material_volume": 118081.01880921012,
+          "initial_volume": 118081.0188092101,
+          "archived_initial_volume": 118081.01880921007,
+          "constant_transfer": 118071.24788089115,
+          "constant_uncovered": 9.770928318973258,
+          "constant_closure": 1.4551915228366852e-11,
+          "linear_transfer": 118071.24788089117,
+          "linear_uncovered": 9.770928318973258,
+          "linear_closure": 2.9103830456733704e-11
+        },
+        {
+          "uid": 163770,
+          "material_volume": 4917.561857150144,
+          "initial_volume": 4917.5618571501145,
+          "archived_initial_volume": 4917.5618571501145,
+          "constant_transfer": 4917.561857150151,
+          "constant_uncovered": 0.0,
+          "constant_closure": 7.275957614183426e-12,
+          "linear_transfer": 4917.561857150151,
+          "linear_uncovered": 0.0,
+          "linear_closure": 7.275957614183426e-12
+        },
+        {
+          "uid": 448135,
+          "material_volume": 105.32506412617737,
+          "initial_volume": 105.32506412618922,
+          "archived_initial_volume": 105.3250641261892,
+          "constant_transfer": 105.32506412617742,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.684341886080802e-14,
+          "linear_transfer": 105.32506412617742,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.684341886080802e-14
+        },
+        {
+          "uid": 448142,
+          "material_volume": 31263.8905604751,
+          "initial_volume": 31263.890560475105,
+          "archived_initial_volume": 31263.890560475105,
+          "constant_transfer": 31263.890560663,
+          "constant_uncovered": 0.0,
+          "constant_closure": 1.8789796740747988e-07,
+          "linear_transfer": 31263.890560662992,
+          "linear_uncovered": 0.0,
+          "linear_closure": 1.878906914498657e-07
+        },
+        {
+          "uid": 448239,
+          "material_volume": 20566.102444510492,
+          "initial_volume": 20566.10244451053,
+          "archived_initial_volume": 20566.10244451053,
+          "constant_transfer": 20566.102444577806,
+          "constant_uncovered": 0.0,
+          "constant_closure": 6.731352186761796e-08,
+          "linear_transfer": 20566.102444577802,
+          "linear_uncovered": 0.0,
+          "linear_closure": 6.730988388881087e-08
+        },
+        {
+          "uid": 448261,
+          "material_volume": 479.63641287568356,
+          "initial_volume": 479.6364128756892,
+          "archived_initial_volume": 479.6364128756891,
+          "constant_transfer": 479.63641287568413,
+          "constant_uncovered": 0.0,
+          "constant_closure": 5.684341886080801e-13,
+          "linear_transfer": 479.63641287568413,
+          "linear_uncovered": 0.0,
+          "linear_closure": 5.684341886080801e-13
+        },
+        {
+          "uid": 448479,
+          "material_volume": 10191.962447347418,
+          "initial_volume": 10191.962447347465,
+          "archived_initial_volume": 10191.962447347465,
+          "constant_transfer": 10191.96244734971,
+          "constant_uncovered": 0.0,
+          "constant_closure": 2.291926648467779e-09,
+          "linear_transfer": 10191.96244734971,
+          "linear_uncovered": 0.0,
+          "linear_closure": 2.291926648467779e-09
+        }
+      ],
+      "native_reconstruction": {
+        "candidate_count": 613,
+        "face_count": 1385,
+        "candidate_nodes_missing_neighbors": 0,
+        "reconstructed_nonempty_host_count": 134,
+        "archive_nonempty_host_count": 134,
+        "maximum_uid_geometry_symmetric_difference_km2": 5.169273819006982e-08,
+        "sum_uid_geometry_symmetric_difference_km2": 8.508344155438521e-08,
+        "per_uid_geometry_difference": [
+          [
+            -1,
+            5.169273819006982e-08
+          ],
+          [
+            566,
+            1.4911794519367043e-10
+          ],
+          [
+            2732,
+            6.666494867790723e-11
+          ],
+          [
+            4161,
+            2.427393196375882e-10
+          ],
+          [
+            6160,
+            9.895674348708339e-11
+          ],
+          [
+            12132,
+            3.4064475142938924e-11
+          ],
+          [
+            13176,
+            2.831244398890625e-10
+          ],
+          [
+            14011,
+            8.180090252711139e-11
+          ],
+          [
+            16733,
+            9.189539966253383e-11
+          ],
+          [
+            16734,
+            2.1915075279313642e-11
+          ],
+          [
+            17521,
+            8.268735062932126e-12
+          ],
+          [
+            17718,
+            3.6499507833563525e-10
+          ],
+          [
+            21809,
+            7.862088757804031e-11
+          ],
+          [
+            22839,
+            1.6089350993267853e-10
+          ],
+          [
+            22840,
+            1.9981284837270245e-10
+          ],
+          [
+            24420,
+            2.57885703128674e-11
+          ],
+          [
+            24452,
+            6.411730082815597e-11
+          ],
+          [
+            25431,
+            2.9034172533978583e-11
+          ],
+          [
+            30093,
+            3.427008372409156e-10
+          ],
+          [
+            43200,
+            1.8923609116755044e-11
+          ],
+          [
+            43378,
+            5.0502901829599335e-11
+          ],
+          [
+            48346,
+            8.596879671797785e-11
+          ],
+          [
+            51397,
+            2.52353902923165e-10
+          ],
+          [
+            51403,
+            2.348983097757592e-10
+          ],
+          [
+            51405,
+            3.288312795216187e-10
+          ],
+          [
+            52268,
+            7.706325269943815e-11
+          ],
+          [
+            55442,
+            0.0
+          ],
+          [
+            55449,
+            3.300081361032835e-10
+          ],
+          [
+            55450,
+            2.5631895208819665e-10
+          ],
+          [
+            60859,
+            3.245062886638162e-10
+          ],
+          [
+            64244,
+            5.7586178095605544e-11
+          ],
+          [
+            65973,
+            3.2788543549783433e-10
+          ],
+          [
+            67113,
+            9.596419088552169e-11
+          ],
+          [
+            71061,
+            1.2728778149501526e-10
+          ],
+          [
+            71686,
+            8.10366028195926e-11
+          ],
+          [
+            71754,
+            1.4482149678204636e-10
+          ],
+          [
+            71757,
+            2.9492917104839374e-10
+          ],
+          [
+            76269,
+            2.9606752702419583e-10
+          ],
+          [
+            76270,
+            0.0
+          ],
+          [
+            76272,
+            6.382439368034345e-11
+          ],
+          [
+            79872,
+            4.0964945741465304e-12
+          ],
+          [
+            79873,
+            4.1459598313014836e-11
+          ],
+          [
+            79874,
+            5.979443048672903e-11
+          ],
+          [
+            79875,
+            6.633837066868697e-11
+          ],
+          [
+            83886,
+            3.251750176014211e-10
+          ],
+          [
+            91198,
+            1.4040958579391275e-10
+          ],
+          [
+            91202,
+            5.6023598014729024e-11
+          ],
+          [
+            91203,
+            2.5183196808058094e-09
+          ],
+          [
+            91204,
+            1.6507600070967092e-12
+          ],
+          [
+            91206,
+            2.89615290330062e-11
+          ],
+          [
+            91207,
+            5.8067865902210283e-11
+          ],
+          [
+            91208,
+            0.0
+          ],
+          [
+            94307,
+            8.421014868153759e-11
+          ],
+          [
+            95080,
+            3.317951413476891e-10
+          ],
+          [
+            95088,
+            3.175308590815331e-10
+          ],
+          [
+            95089,
+            1.8189338403989985e-10
+          ],
+          [
+            111035,
+            1.280111734377709e-10
+          ],
+          [
+            111036,
+            3.031182096489313e-10
+          ],
+          [
+            114585,
+            1.5741208773881632e-10
+          ],
+          [
+            114590,
+            0.0
+          ],
+          [
+            114591,
+            2.949328018511532e-10
+          ],
+          [
+            114593,
+            2.661744935600586e-10
+          ],
+          [
+            119908,
+            1.1545956767578459e-10
+          ],
+          [
+            120002,
+            9.812831214071447e-11
+          ],
+          [
+            120004,
+            1.6307130899478854e-10
+          ],
+          [
+            120015,
+            6.386158122380567e-11
+          ],
+          [
+            120016,
+            2.3578778060878034e-11
+          ],
+          [
+            120021,
+            9.225409594392755e-11
+          ],
+          [
+            120042,
+            4.852600742656329e-11
+          ],
+          [
+            137178,
+            1.2789511098922729e-10
+          ],
+          [
+            137194,
+            1.4352299370389048e-10
+          ],
+          [
+            137195,
+            3.6419389137372756e-10
+          ],
+          [
+            448142,
+            3.4131334776869277e-10
+          ],
+          [
+            448239,
+            3.7753809476616076e-10
+          ],
+          [
+            448261,
+            3.2556619876927247e-10
+          ],
+          [
+            453396,
+            2.8894074524391235e-10
+          ],
+          [
+            453711,
+            1.139977569500006e-10
+          ],
+          [
+            453808,
+            1.14534454720964e-10
+          ],
+          [
+            453834,
+            6.195172372529818e-11
+          ],
+          [
+            453886,
+            1.0667632914169119e-10
+          ],
+          [
+            458676,
+            3.1669315490715995e-10
+          ],
+          [
+            458800,
+            3.2138077767363956e-10
+          ],
+          [
+            458847,
+            2.2807996498981084e-10
+          ],
+          [
+            458979,
+            1.20641053742054e-10
+          ],
+          [
+            459020,
+            0.0
+          ],
+          [
+            459067,
+            9.303222222264338e-11
+          ],
+          [
+            459095,
+            1.0991827604590472e-10
+          ],
+          [
+            459147,
+            1.191679545420903e-10
+          ],
+          [
+            459186,
+            2.6227703932045907e-09
+          ],
+          [
+            464315,
+            3.629488220596629e-10
+          ],
+          [
+            464402,
+            1.204450631478864e-10
+          ],
+          [
+            464431,
+            3.1742287491622993e-10
+          ],
+          [
+            464446,
+            3.3394641531685487e-10
+          ],
+          [
+            464447,
+            3.963378497168001e-09
+          ],
+          [
+            464457,
+            3.13187565879344e-10
+          ],
+          [
+            464468,
+            3.2991017607558844e-10
+          ],
+          [
+            464476,
+            2.102953740880011e-10
+          ],
+          [
+            464530,
+            0.0
+          ],
+          [
+            464716,
+            2.059504629778951e-09
+          ],
+          [
+            464781,
+            1.1849124124792995e-10
+          ],
+          [
+            469932,
+            3.20112818722057e-10
+          ],
+          [
+            469940,
+            2.4627031764713396e-10
+          ],
+          [
+            469976,
+            3.445563712470023e-10
+          ],
+          [
+            470009,
+            3.7064158558827426e-10
+          ],
+          [
+            470092,
+            1.6145596319565275e-10
+          ],
+          [
+            470256,
+            1.0364852113234506e-10
+          ],
+          [
+            470275,
+            3.5693952199958e-11
+          ],
+          [
+            470400,
+            9.276451982052527e-11
+          ],
+          [
+            475908,
+            7.642217712979962e-11
+          ],
+          [
+            476002,
+            2.0190670515647298e-10
+          ],
+          [
+            476046,
+            1.636047597192843e-10
+          ],
+          [
+            476047,
+            1.4900207974443786e-10
+          ],
+          [
+            476048,
+            4.926281963947984e-12
+          ],
+          [
+            481216,
+            5.770397957760259e-10
+          ],
+          [
+            481248,
+            0.0
+          ],
+          [
+            481295,
+            3.399886455804757e-10
+          ],
+          [
+            481446,
+            6.319147899240446e-11
+          ],
+          [
+            481476,
+            2.2878386470570944e-10
+          ],
+          [
+            481479,
+            2.596719343157324e-10
+          ],
+          [
+            481503,
+            2.07055992464081e-10
+          ],
+          [
+            481521,
+            0.0
+          ],
+          [
+            481539,
+            1.4182056873888753e-10
+          ],
+          [
+            481564,
+            1.303863772511222e-10
+          ],
+          [
+            481604,
+            1.1648199906299908e-10
+          ],
+          [
+            486440,
+            1.520879063891417e-10
+          ],
+          [
+            486526,
+            2.639724753407409e-10
+          ],
+          [
+            486560,
+            2.9386446754915304e-10
+          ],
+          [
+            486570,
+            1.4688248545262749e-10
+          ],
+          [
+            486590,
+            2.651465799346942e-10
+          ],
+          [
+            486591,
+            0.0
+          ],
+          [
+            486603,
+            2.791961860399708e-10
+          ],
+          [
+            486633,
+            9.496663789734946e-10
+          ],
+          [
+            486815,
+            1.72892376293598e-10
+          ],
+          [
+            486816,
+            1.1977498212932308e-10
+          ],
+          [
+            486842,
+            2.2090343338125454e-10
+          ]
+        ],
+        "raw_host_clipped_area_comparison_note": "重建raw仅裁到材料带，因此不与归档完整raw宿主面积混作同一面积。",
+        "priority_assumption": "按地壳类型降序、厚度降序、年龄升序、UID升序；直接与归档几何及原生查询比对，未读取引擎实现。"
+      },
+      "quadrature_conditional_on_archived_J": [
+        {
+          "order": 4,
+          "point_count": 33136,
+          "archive_target_index_mismatch": 0,
+          "multiple_archived_host_polygon_hits": 0,
+          "outside_target_count": 0,
+          "own_source_outside_count": 0,
+          "native_reconstructed_query_uid_mismatch": 0,
+          "native_reconstructed_multiple_hits": 0,
+          "native_reconstructed_outside_hits": 0,
+          "common_coverage_denominator_km3": 5492169.650283355,
+          "archive_denominator_difference": 0.0,
+          "known_reference_volume_no_host_km3": 62587.90709789266,
+          "methods": {
+            "material_constant": {
+              "L1": 0.0016888276905213445,
+              "archive_L1_difference": 0.0,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "material_linear": {
+              "L1": 0.001454390673238868,
+              "archive_L1_difference": -1.1752751549742868e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 7.767564369487445e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_constant": {
+              "L1": 0.015127726460141487,
+              "archive_L1_difference": 5.204170427930421e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 6.707523425575346e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_linear": {
+              "L1": 0.015128437887637186,
+              "archive_L1_difference": 1.8908485888147197e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 2.893330020015128e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_constant": {
+              "L1": 0.0036962665642570024,
+              "archive_L1_difference": 2.168404344971009e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 2.8563817977556027e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_linear": {
+              "L1": 0.003685371729875469,
+              "archive_L1_difference": -6.357761539454998e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 7.633076393176452e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            }
+          }
+        },
+        {
+          "order": 8,
+          "point_count": 132544,
+          "archive_target_index_mismatch": 0,
+          "multiple_archived_host_polygon_hits": 0,
+          "outside_target_count": 0,
+          "own_source_outside_count": 0,
+          "native_reconstructed_query_uid_mismatch": 0,
+          "native_reconstructed_multiple_hits": 0,
+          "native_reconstructed_outside_hits": 0,
+          "common_coverage_denominator_km3": 5490317.558220102,
+          "archive_denominator_difference": 0.0,
+          "known_reference_volume_no_host_km3": 64439.99916114571,
+          "methods": {
+            "material_constant": {
+              "L1": 0.001683128117945091,
+              "archive_L1_difference": 0.0,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 0.0,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "material_linear": {
+              "L1": 0.0014494607849832764,
+              "archive_L1_difference": -1.0126448291014611e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 7.467360063628803e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_constant": {
+              "L1": 0.015078640292380594,
+              "archive_L1_difference": 5.204170427930421e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 6.650680006714538e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_linear": {
+              "L1": 0.015079527439346948,
+              "archive_L1_difference": 1.7520707107365752e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.0826186048216186e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_constant": {
+              "L1": 0.003702373056851071,
+              "archive_L1_difference": 4.336808689942018e-18,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 3.4017233474514796e-12,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            },
+            "host_source_linear": {
+              "L1": 0.0036929573114277284,
+              "archive_L1_difference": -6.526897078362737e-16,
+              "per_source_cell_integral_error": {
+                "maximum_abs": 7.732143814109804e-10,
+                "finite_mask_disagreement": 0
+              },
+              "missing_common_points": 0
+            }
+          }
+        }
+      ],
+      "gradient_checks": {
+        "neighbor_indices_wrong_known_source": 0,
+        "sampled_boundary_envelope_violation_count": 0,
+        "minimum_known_boundary_thickness_km": 16.221848764674665,
+        "maximum_mean_integral_correction_km3": 1.1772580510331793e-12,
+        "note": "核对归档梯度的同源邻域、球面积均值与边界包络；未独立重建梯度拟合/限幅器。"
+      },
+      "elapsed_seconds": 47.04359520005528
+    }
+  ],
+  "geometry_integrator_analytic_rectangle_check": {
+    "area_abs_error_km2": 1.4551915228366852e-11,
+    "moment_max_abs_error_km2": 5.820766091346741e-11,
+    "quadrature_order": 8,
+    "note": "独立球面面积/矩由投影度量积分；本自检不构成所有退化碎片的严格误差界。"
+  },
+  "figures": [
+    {
+      "path": "figures/design/v2/forward/u36_s15/129_native_coverage.png",
+      "sha256": "bc1fbe6a8c3ea43a1d9c6466e5edb8fa0077d28b8970025f97425f5d9735ab85",
+      "staged_sha256": "bc1fbe6a8c3ea43a1d9c6466e5edb8fa0077d28b8970025f97425f5d9735ab85",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/design/v2/forward/u36_s15/130_native_thickness.png",
+      "sha256": "031df4f39901b8311c8beef6928ab7dae10b050a8b5bdfb7ae4097a37d424e78",
+      "staged_sha256": "031df4f39901b8311c8beef6928ab7dae10b050a8b5bdfb7ae4097a37d424e78",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/design/v2/forward/u36_s15/131_native_inventory.png",
+      "sha256": "7c6eea723c9ff7601a6383f6e1d787516814c3f8aa98c9e13439a094b493d7e9",
+      "staged_sha256": "7c6eea723c9ff7601a6383f6e1d787516814c3f8aa98c9e13439a094b493d7e9",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/design/v2/forward/u36_s15/132_native_field_loss.png",
+      "sha256": "f5d54ce68ab0548f0fc3bae842d82322742aac16199706789ff2b3c5d96ff6e4",
+      "staged_sha256": "f5d54ce68ab0548f0fc3bae842d82322742aac16199706789ff2b3c5d96ff6e4",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/01_elevation_global.png",
+      "sha256": "d3b07b9fab581ee0dbbd3c823082e10660b0959563308e69b810ac37b5c40776",
+      "staged_sha256": "d3b07b9fab581ee0dbbd3c823082e10660b0959563308e69b810ac37b5c40776",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/02_elevation_north_polar.png",
+      "sha256": "1791c70e1cd336e0a3a17968d595d83490178ba5a2e703b283530da9c5452e8d",
+      "staged_sha256": "1791c70e1cd336e0a3a17968d595d83490178ba5a2e703b283530da9c5452e8d",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/03_elevation_south_polar.png",
+      "sha256": "3b791eb463d70c2cbb254bf0b7eecd461a77a57e66cb1d1f389b4695c8af7fea",
+      "staged_sha256": "3b791eb463d70c2cbb254bf0b7eecd461a77a57e66cb1d1f389b4695c8af7fea",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/04_landmass_units.png",
+      "sha256": "1732661657bfb4e388fbb1d55abc653c51d5520504e1c01017f3b9bfa5e677ac",
+      "staged_sha256": "1732661657bfb4e388fbb1d55abc653c51d5520504e1c01017f3b9bfa5e677ac",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/05_coast_morphology.png",
+      "sha256": "2b189c58de3e760dfe051972e9f372911f6ed1b280db8ddfde64ccaf8024ced2",
+      "staged_sha256": "2b189c58de3e760dfe051972e9f372911f6ed1b280db8ddfde64ccaf8024ced2",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/06_distance_to_sea.png",
+      "sha256": "d3be64e1598d9daebb1dc3dbf7145e2d164c1bf5177305ea4ae829c45a745a35",
+      "staged_sha256": "d3be64e1598d9daebb1dc3dbf7145e2d164c1bf5177305ea4ae829c45a745a35",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/07_slope.png",
+      "sha256": "67ff3f1d3380af8ef945fac03f7cd3961a875d58b5048a61ae2bc624e1fbbbc1",
+      "staged_sha256": "67ff3f1d3380af8ef945fac03f7cd3961a875d58b5048a61ae2bc624e1fbbbc1",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/08_mountain_systems.png",
+      "sha256": "ac4106b3ca5b4a0d1b8367e8d35c6626def51728eb9d7b3b85f34ec34a426ff0",
+      "staged_sha256": "ac4106b3ca5b4a0d1b8367e8d35c6626def51728eb9d7b3b85f34ec34a426ff0",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/09_hypsometry.png",
+      "sha256": "e89db0cfae914da6673b97b20eeb85b9f15c4ee8d55d5c02a74f12979b33f7e6",
+      "staged_sha256": "e89db0cfae914da6673b97b20eeb85b9f15c4ee8d55d5c02a74f12979b33f7e6",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/10_slope_distance_mountains.png",
+      "sha256": "6db88045e87ec12ed84daeed3df62b8040385e633de4812d552aa86b6599b0fb",
+      "staged_sha256": "6db88045e87ec12ed84daeed3df62b8040385e633de4812d552aa86b6599b0fb",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/11_coast_vs_earth.png",
+      "sha256": "a776a1aed7951fddcdedfbddd639a53415ae43a458dd156ead326ef73e1b129b",
+      "staged_sha256": "a776a1aed7951fddcdedfbddd639a53415ae43a458dd156ead326ef73e1b129b",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/12_coast_complexity_spread.png",
+      "sha256": "673861f0fb2817ffe0ee460ae9013c35c61a93eb80d805e6a3be550464239fe1",
+      "staged_sha256": "673861f0fb2817ffe0ee460ae9013c35c61a93eb80d805e6a3be550464239fe1",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/13_plates_boundaries.png",
+      "sha256": "868508914cd714ac16ecd7eb956266c4ecb73b6dd117cda91e445574169e82be",
+      "staged_sha256": "868508914cd714ac16ecd7eb956266c4ecb73b6dd117cda91e445574169e82be",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r1_main_inland_sea.png",
+      "sha256": "c33425c2b197274a85e2f6a97bc358aba09385bd99a6c335a3e82892354e3e01",
+      "staged_sha256": "c33425c2b197274a85e2f6a97bc358aba09385bd99a6c335a3e82892354e3e01",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r1_main_inland_sea_tectonics.png",
+      "sha256": "9349c71a90e665d611b7c23418788c98aefb2a74e67e18f74255df124df885d8",
+      "staged_sha256": "9349c71a90e665d611b7c23418788c98aefb2a74e67e18f74255df124df885d8",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r2_inland_sea_complex_coast.png",
+      "sha256": "b20b77eac3e04bc0728210f59d89476b6e10aa78689ed03901df914303f036de",
+      "staged_sha256": "b20b77eac3e04bc0728210f59d89476b6e10aa78689ed03901df914303f036de",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r2_inland_sea_complex_coast_tectonics.png",
+      "sha256": "50a5eec6750850e26a037c0062d23b1280cd76ef5128ca8db8f86771f648297a",
+      "staged_sha256": "50a5eec6750850e26a037c0062d23b1280cd76ef5128ca8db8f86771f648297a",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r3_north_coast.png",
+      "sha256": "17511b644b4e7b423507315d0db74c8306c2930dd722ea862fc2330ffbb10828",
+      "staged_sha256": "17511b644b4e7b423507315d0db74c8306c2930dd722ea862fc2330ffbb10828",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r3_north_coast_tectonics.png",
+      "sha256": "92fb05ed1910999aa722c4b84e22395fcad74c07945ba0115ff22c1a192fd368",
+      "staged_sha256": "92fb05ed1910999aa722c4b84e22395fcad74c07945ba0115ff22c1a192fd368",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r4_polar_coast.png",
+      "sha256": "3bde4fd5fb5e2f7da69d1d5a7007e95fa12beb666e323eb940e075d685bfc42a",
+      "staged_sha256": "3bde4fd5fb5e2f7da69d1d5a7007e95fa12beb666e323eb940e075d685bfc42a",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r4_polar_coast_tectonics.png",
+      "sha256": "a6af451e2a7c43421e6012fdc936f88780e522b4ff70dbaa701a19c326098807",
+      "staged_sha256": "a6af451e2a7c43421e6012fdc936f88780e522b4ff70dbaa701a19c326098807",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r5_isthmus.png",
+      "sha256": "39b0d5c98ac098050a899da502307ce9195ab1002c71cabef154085fa96a3155",
+      "staged_sha256": "39b0d5c98ac098050a899da502307ce9195ab1002c71cabef154085fa96a3155",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r5_isthmus_tectonics.png",
+      "sha256": "7a1befb552e376f6758c1003a940a87337611b14a5236b71421d5e5dd5f91f2a",
+      "staged_sha256": "7a1befb552e376f6758c1003a940a87337611b14a5236b71421d5e5dd5f91f2a",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r6_smoothest_coast.png",
+      "sha256": "392b726ef1c64f3e10a1fa5cdebe277c6725e03426a2bc44b5dc2c1318699fca",
+      "staged_sha256": "392b726ef1c64f3e10a1fa5cdebe277c6725e03426a2bc44b5dc2c1318699fca",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r6_smoothest_coast_tectonics.png",
+      "sha256": "b0fc45164b85d3ad66be25e0d5f88d36408c2c394071ea8ea3218b6a00e97047",
+      "staged_sha256": "b0fc45164b85d3ad66be25e0d5f88d36408c2c394071ea8ea3218b6a00e97047",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r7_archipelago.png",
+      "sha256": "8234c044504f10fa089f3687dc19a153313d72405ffec55a81e4e1a492b6859e",
+      "staged_sha256": "8234c044504f10fa089f3687dc19a153313d72405ffec55a81e4e1a492b6859e",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r7_archipelago_tectonics.png",
+      "sha256": "2dba709a0436761b3a0b146f7e3d1f8e5db073ad624e07803e3a00cb828b2beb",
+      "staged_sha256": "2dba709a0436761b3a0b146f7e3d1f8e5db073ad624e07803e3a00cb828b2beb",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r8_random_coast.png",
+      "sha256": "f4abd0406fab8970f8ac029d36ed7f3d04b78fc1ec996b0e03896a0865c49237",
+      "staged_sha256": "f4abd0406fab8970f8ac029d36ed7f3d04b78fc1ec996b0e03896a0865c49237",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r8_random_coast_tectonics.png",
+      "sha256": "f19d036fd5150863a51736a2736424a5e7126862fcb213997f40024083fcdc90",
+      "staged_sha256": "f19d036fd5150863a51736a2736424a5e7126862fcb213997f40024083fcdc90",
+      "worktree_equals_staged_bytes": true,
+      "delivery_manifest_hash_match": true
+    }
+  ],
+  "figure_count": 33,
+  "raw_manifest": {
+    "checkpoint": "U36-S15",
+    "method_class": "procedural_constrained",
+    "files": [
+      {
+        "tag": "35Ma_b64",
+        "path": ".cache/u36_s15/35Ma_b64.npz",
+        "bytes": 18664159,
+        "sha256": "c592c0025ccc62815c9c96f2b6e3cd22e7b248fa15f65a6f6032565581da7c54"
+      },
+      {
+        "tag": "0Ma_b64",
+        "path": ".cache/u36_s15/0Ma_b64.npz",
+        "bytes": 21077346,
+        "sha256": "ce87c0c202e6a831ffdb37bf9c016e6e1e7ae7ad741029c85e0a049b23aa131c"
+      },
+      {
+        "tag": "0Ma_b32",
+        "path": ".cache/u36_s15/0Ma_b32.npz",
+        "bytes": 14048849,
+        "sha256": "6bca3583bd4979ba6a85af2021692525c3fefa20571860bcbcc4880fe20bf758"
+      }
+    ]
+  },
+  "raw_manifest_contains_all_current_output_hashes": true,
+  "audit_script_sha256": "f5843f87a164d729fce2398058cad00143cc14bbd0f49ca1a5c464f085ed6d58"
+}

@@ -1,0 +1,284 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "procedural_constrained",
+  "overlaps": [
+    {
+      "tag": "35Ma_b64",
+      "positive_pair_count": 732,
+      "pairwise_overlap_area_sum_km2": 8.31794628572813e-10,
+      "largest_pairs": [
+        {
+          "cell_i": 257,
+          "cell_j": 1067,
+          "area_km2": 5.460490896207124e-12,
+          "uid_i": 120004,
+          "uid_j": 13176
+        },
+        {
+          "cell_i": 645,
+          "cell_j": 1051,
+          "area_km2": 4.889858757653387e-12,
+          "uid_i": 48346,
+          "uid_j": 48346
+        },
+        {
+          "cell_i": 645,
+          "cell_j": 1339,
+          "area_km2": 4.778237169375583e-12,
+          "uid_i": 48346,
+          "uid_j": 48346
+        },
+        {
+          "cell_i": 128,
+          "cell_j": 936,
+          "area_km2": 4.306759417900848e-12,
+          "uid_i": 17718,
+          "uid_j": 17718
+        },
+        {
+          "cell_i": 69,
+          "cell_j": 263,
+          "area_km2": 4.152513360570517e-12,
+          "uid_i": 119908,
+          "uid_j": 16733
+        },
+        {
+          "cell_i": 69,
+          "cell_j": 466,
+          "area_km2": 4.088761333676925e-12,
+          "uid_i": 119908,
+          "uid_j": 16733
+        },
+        {
+          "cell_i": 341,
+          "cell_j": 1659,
+          "area_km2": 3.921629307563937e-12,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 31,
+          "cell_j": 175,
+          "area_km2": 3.885280959697468e-12,
+          "uid_i": 43200,
+          "uid_j": 43200
+        },
+        {
+          "cell_i": 12,
+          "cell_j": 124,
+          "area_km2": 3.645802189253826e-12,
+          "uid_i": 51403,
+          "uid_j": 51403
+        },
+        {
+          "cell_i": 94,
+          "cell_j": 285,
+          "area_km2": 3.5761651673865627e-12,
+          "uid_i": -1,
+          "uid_j": -1
+        }
+      ]
+    },
+    {
+      "tag": "0Ma_b64",
+      "positive_pair_count": 769,
+      "pairwise_overlap_area_sum_km2": 0.0349413588343684,
+      "largest_pairs": [
+        {
+          "cell_i": 341,
+          "cell_j": 1659,
+          "area_km2": 0.0003303828082799565,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 341,
+          "cell_j": 1083,
+          "area_km2": 0.00033026906315101394,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 61,
+          "cell_j": 639,
+          "area_km2": 0.0003250412980317566,
+          "uid_i": 120016,
+          "uid_j": 14011
+        },
+        {
+          "cell_i": 570,
+          "cell_j": 953,
+          "area_km2": 0.00032290123293152433,
+          "uid_i": 137195,
+          "uid_j": 137195
+        },
+        {
+          "cell_i": 138,
+          "cell_j": 939,
+          "area_km2": 0.00032040124825982274,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 138,
+          "cell_j": 1515,
+          "area_km2": 0.0003164419661006924,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 218,
+          "cell_j": 968,
+          "area_km2": 0.00031314019518190325,
+          "uid_i": 91208,
+          "uid_j": 91208
+        },
+        {
+          "cell_i": 58,
+          "cell_j": 632,
+          "area_km2": 0.00030712988396115195,
+          "uid_i": 52268,
+          "uid_j": 52268
+        },
+        {
+          "cell_i": 58,
+          "cell_j": 429,
+          "area_km2": 0.0003057677915479309,
+          "uid_i": 52268,
+          "uid_j": 52268
+        },
+        {
+          "cell_i": 332,
+          "cell_j": 936,
+          "area_km2": 0.00030293539902657063,
+          "uid_i": 17718,
+          "uid_j": 17718
+        }
+      ]
+    },
+    {
+      "tag": "0Ma_b32",
+      "positive_pair_count": 770,
+      "pairwise_overlap_area_sum_km2": 0.13975433350983865,
+      "largest_pairs": [
+        {
+          "cell_i": 341,
+          "cell_j": 1659,
+          "area_km2": 0.0013215312714651693,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 341,
+          "cell_j": 1083,
+          "area_km2": 0.0013210537860521647,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 570,
+          "cell_j": 953,
+          "area_km2": 0.0012826902470418507,
+          "uid_i": 137195,
+          "uid_j": 137195
+        },
+        {
+          "cell_i": 138,
+          "cell_j": 939,
+          "area_km2": 0.001281045686652045,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 61,
+          "cell_j": 639,
+          "area_km2": 0.0012766855729990808,
+          "uid_i": 120016,
+          "uid_j": 14011
+        },
+        {
+          "cell_i": 138,
+          "cell_j": 1515,
+          "area_km2": 0.0012652743027008505,
+          "uid_i": 111036,
+          "uid_j": 111036
+        },
+        {
+          "cell_i": 218,
+          "cell_j": 968,
+          "area_km2": 0.0012517198220792197,
+          "uid_i": 91208,
+          "uid_j": 91208
+        },
+        {
+          "cell_i": 563,
+          "cell_j": 1023,
+          "area_km2": 0.0012331292428940882,
+          "uid_i": 83886,
+          "uid_j": 83886
+        },
+        {
+          "cell_i": 58,
+          "cell_j": 632,
+          "area_km2": 0.0012285195148766925,
+          "uid_i": 52268,
+          "uid_j": 52268
+        },
+        {
+          "cell_i": 332,
+          "cell_j": 936,
+          "area_km2": 0.0012276862722203435,
+          "uid_i": 17718,
+          "uid_j": 17718
+        }
+      ]
+    }
+  ],
+  "source_refinement_not_performed": true,
+  "protected": {
+    "config/design/final_map_v2.yaml": true,
+    "config/design/history_v2.yaml": true,
+    "config/design/history_v2_u35_c10_progressive.yaml": true,
+    "config/design/history_v2_u35_c4_strain.yaml": true,
+    "config/metrics.yaml": true,
+    "data/worlds/design_v2/forward_v2.json": true,
+    "data/worlds/design_v2/history_v2.rot": true,
+    "packages/tectonics/crust.py": true,
+    "packages/tectonics/engine.py": true,
+    "packages/tectonics/kinematics.py": true,
+    "packages/tectonics/material_audit.py": true,
+    "packages/tectonics/material_band.py": true,
+    "packages/tectonics/rotation_interpolation.py": true,
+    "packages/tectonics/source_clipping.py": true,
+    "packages/tectonics/step_audit.py": true,
+    "scripts/design_fixed_domain.py": true,
+    "scripts/design_fixed_domain_verify.py": true,
+    "scripts/design_frame_audit.py": true,
+    "scripts/design_frame_inputs.py": true,
+    "scripts/design_rotation_interpolation.py": true,
+    "scripts/design_rotation_mesh_audit.py": true,
+    "scripts/design_step_audit.py": true,
+    "scripts/design_step_audit_report.py": true,
+    "scripts/design_step_audit_verify.py": true,
+    "scripts/verify_local_checkpoint.py": true,
+    "tests/tectonics/test_material_audit.py": true,
+    "tests/tectonics/test_material_band.py": true,
+    "tests/tectonics/test_rotation_interpolation.py": true,
+    "tests/tectonics/test_source_clipping.py": true,
+    "tests/tectonics/test_step_audit.py": true,
+    "packages/tectonics/boundary_transport.py": true,
+    "scripts/design_boundary_transport.py": true,
+    "tests/tectonics/test_boundary_transport.py": true,
+    "data/worlds/design_v2/u36_s11_reference.json": true,
+    "packages/tectonics/curved_quadrature.py": true,
+    "scripts/design_curved_quadrature.py": true,
+    "tests/tectonics/test_curved_quadrature.py": true,
+    "packages/tectonics/material_fv.py": true,
+    "scripts/design_material_fv.py": true,
+    "scripts/design_material_fv_report.py": true,
+    "tests/tectonics/test_material_fv.py": true
+  },
+  "protected_baseline_commit": "b098170",
+  "standard_metrics_equal_excluding_time": true,
+  "all_region_windows_equal": true
+}

@@ -1,0 +1,16 @@
+{
+  "identical": true,
+  "arrays_checked": 352,
+  "different_arrays": [],
+  "budget_identical": true,
+  "events_identical": true,
+  "world_arrays_identical": true,
+  "checkpoint": "U36-S15",
+  "method_class": "procedural_constrained",
+  "elapsed_s": 234.9137840999756,
+  "native_state_sha256": "b46984971c08759ceae2267a8068bdfb95da5c52f260bb765a5bfb115c445198",
+  "note": "原始最终原生状态旧缓存缺失，完整旁观控制复跑，未替换默认世界；旧最终原生状态无可比文件，不宣称逐字核对",
+  "actual_capture_script_sha256": "c9933ed5c491f8a771970f565e8a8c90f9a0063b14712b8dfbe52f8e64b6dd1b",
+  "peak_working_set_mib": null,
+  "peak_scope": "首次控制捕获未测进程或整体峰值，不倒填"
+}

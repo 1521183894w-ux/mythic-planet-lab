@@ -1,0 +1,33 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "procedural_constrained",
+  "type_codes": {
+    "-1": "无原生宿主",
+    "0": "旧控制洋壳宿主",
+    "1": "旧控制陆壳宿主"
+  },
+  "rows": [
+    {
+      "target_crust_type": -1,
+      "target_count": 1,
+      "known_material_area_km2": 3462.7643183756672,
+      "constant_volume_km3": 64557.758689738046,
+      "linear_volume_km3": 64559.722015552084
+    },
+    {
+      "target_crust_type": 0,
+      "target_count": 12,
+      "known_material_area_km2": 17364.493099328647,
+      "constant_volume_km3": 310551.6747966124,
+      "linear_volume_km3": 310555.01845751656
+    },
+    {
+      "target_crust_type": 1,
+      "target_count": 122,
+      "known_material_area_km2": 270611.2129214625,
+      "constant_volume_km3": 5179648.123904914,
+      "linear_volume_km3": 5179642.816918196
+    }
+  ],
+  "note": "只读几何接收者分类；源为已知陆壳材料。没有改变目标壳型或将其当作陆壳转洋壳过程，不能直接写回正式状态"
+}

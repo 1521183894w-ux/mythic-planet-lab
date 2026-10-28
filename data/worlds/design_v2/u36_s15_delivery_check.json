@@ -1,0 +1,205 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "visual_only",
+  "figure_count": 33,
+  "figures": [
+    {
+      "path": "figures/design/v2/forward/u36_s15/129_native_coverage.png",
+      "sha256": "bc1fbe6a8c3ea43a1d9c6466e5edb8fa0077d28b8970025f97425f5d9735ab85",
+      "bytes": 573392,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/design/v2/forward/u36_s15/130_native_thickness.png",
+      "sha256": "031df4f39901b8311c8beef6928ab7dae10b050a8b5bdfb7ae4097a37d424e78",
+      "bytes": 366315,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/design/v2/forward/u36_s15/131_native_inventory.png",
+      "sha256": "7c6eea723c9ff7601a6383f6e1d787516814c3f8aa98c9e13439a094b493d7e9",
+      "bytes": 201880,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/design/v2/forward/u36_s15/132_native_field_loss.png",
+      "sha256": "f5d54ce68ab0548f0fc3bae842d82322742aac16199706789ff2b3c5d96ff6e4",
+      "bytes": 125257,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/01_elevation_global.png",
+      "sha256": "d3b07b9fab581ee0dbbd3c823082e10660b0959563308e69b810ac37b5c40776",
+      "bytes": 1126118,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/02_elevation_north_polar.png",
+      "sha256": "1791c70e1cd336e0a3a17968d595d83490178ba5a2e703b283530da9c5452e8d",
+      "bytes": 626564,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/03_elevation_south_polar.png",
+      "sha256": "3b791eb463d70c2cbb254bf0b7eecd461a77a57e66cb1d1f389b4695c8af7fea",
+      "bytes": 607493,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/04_landmass_units.png",
+      "sha256": "1732661657bfb4e388fbb1d55abc653c51d5520504e1c01017f3b9bfa5e677ac",
+      "bytes": 441696,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/05_coast_morphology.png",
+      "sha256": "2b189c58de3e760dfe051972e9f372911f6ed1b280db8ddfde64ccaf8024ced2",
+      "bytes": 420144,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/06_distance_to_sea.png",
+      "sha256": "d3be64e1598d9daebb1dc3dbf7145e2d164c1bf5177305ea4ae829c45a745a35",
+      "bytes": 573791,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/07_slope.png",
+      "sha256": "67ff3f1d3380af8ef945fac03f7cd3961a875d58b5048a61ae2bc624e1fbbbc1",
+      "bytes": 771268,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/08_mountain_systems.png",
+      "sha256": "ac4106b3ca5b4a0d1b8367e8d35c6626def51728eb9d7b3b85f34ec34a426ff0",
+      "bytes": 511260,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/09_hypsometry.png",
+      "sha256": "e89db0cfae914da6673b97b20eeb85b9f15c4ee8d55d5c02a74f12979b33f7e6",
+      "bytes": 256607,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/10_slope_distance_mountains.png",
+      "sha256": "6db88045e87ec12ed84daeed3df62b8040385e633de4812d552aa86b6599b0fb",
+      "bytes": 309094,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/11_coast_vs_earth.png",
+      "sha256": "a776a1aed7951fddcdedfbddd639a53415ae43a458dd156ead326ef73e1b129b",
+      "bytes": 428888,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/12_coast_complexity_spread.png",
+      "sha256": "673861f0fb2817ffe0ee460ae9013c35c61a93eb80d805e6a3be550464239fe1",
+      "bytes": 623513,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/13_plates_boundaries.png",
+      "sha256": "868508914cd714ac16ecd7eb956266c4ecb73b6dd117cda91e445574169e82be",
+      "bytes": 331103,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r1_main_inland_sea.png",
+      "sha256": "c33425c2b197274a85e2f6a97bc358aba09385bd99a6c335a3e82892354e3e01",
+      "bytes": 590906,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r1_main_inland_sea_tectonics.png",
+      "sha256": "9349c71a90e665d611b7c23418788c98aefb2a74e67e18f74255df124df885d8",
+      "bytes": 665280,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r2_inland_sea_complex_coast.png",
+      "sha256": "b20b77eac3e04bc0728210f59d89476b6e10aa78689ed03901df914303f036de",
+      "bytes": 269109,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r2_inland_sea_complex_coast_tectonics.png",
+      "sha256": "50a5eec6750850e26a037c0062d23b1280cd76ef5128ca8db8f86771f648297a",
+      "bytes": 297377,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r3_north_coast.png",
+      "sha256": "17511b644b4e7b423507315d0db74c8306c2930dd722ea862fc2330ffbb10828",
+      "bytes": 310237,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r3_north_coast_tectonics.png",
+      "sha256": "92fb05ed1910999aa722c4b84e22395fcad74c07945ba0115ff22c1a192fd368",
+      "bytes": 377016,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r4_polar_coast.png",
+      "sha256": "3bde4fd5fb5e2f7da69d1d5a7007e95fa12beb666e323eb940e075d685bfc42a",
+      "bytes": 295613,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r4_polar_coast_tectonics.png",
+      "sha256": "a6af451e2a7c43421e6012fdc936f88780e522b4ff70dbaa701a19c326098807",
+      "bytes": 305344,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r5_isthmus.png",
+      "sha256": "39b0d5c98ac098050a899da502307ce9195ab1002c71cabef154085fa96a3155",
+      "bytes": 250244,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r5_isthmus_tectonics.png",
+      "sha256": "7a1befb552e376f6758c1003a940a87337611b14a5236b71421d5e5dd5f91f2a",
+      "bytes": 306500,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r6_smoothest_coast.png",
+      "sha256": "392b726ef1c64f3e10a1fa5cdebe277c6725e03426a2bc44b5dc2c1318699fca",
+      "bytes": 225600,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r6_smoothest_coast_tectonics.png",
+      "sha256": "b0fc45164b85d3ad66be25e0d5f88d36408c2c394071ea8ea3218b6a00e97047",
+      "bytes": 262585,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r7_archipelago.png",
+      "sha256": "8234c044504f10fa089f3687dc19a153313d72405ffec55a81e4e1a492b6859e",
+      "bytes": 236264,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r7_archipelago_tectonics.png",
+      "sha256": "2dba709a0436761b3a0b146f7e3d1f8e5db073ad624e07803e3a00cb828b2beb",
+      "bytes": 242236,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r8_random_coast.png",
+      "sha256": "f4abd0406fab8970f8ac029d36ed7f3d04b78fc1ec996b0e03896a0865c49237",
+      "bytes": 240528,
+      "staged_blob_equals_working_file": true
+    },
+    {
+      "path": "figures/stage1/u36_s15_reference/regions/r8_random_coast_tectonics.png",
+      "sha256": "f19d036fd5150863a51736a2736424a5e7126862fcb213997f40024083fcdc90",
+      "bytes": 212083,
+      "staged_blob_equals_working_file": true
+    }
+  ]
+}

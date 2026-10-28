@@ -1,0 +1,24 @@
+{
+  "checkpoint": "U36-S15",
+  "method_class": "procedural_constrained",
+  "files": [
+    {
+      "tag": "35Ma_b64",
+      "path": ".cache/u36_s15/35Ma_b64.npz",
+      "bytes": 18664159,
+      "sha256": "c592c0025ccc62815c9c96f2b6e3cd22e7b248fa15f65a6f6032565581da7c54"
+    },
+    {
+      "tag": "0Ma_b64",
+      "path": ".cache/u36_s15/0Ma_b64.npz",
+      "bytes": 21077346,
+      "sha256": "ce87c0c202e6a831ffdb37bf9c016e6e1e7ae7ad741029c85e0a049b23aa131c"
+    },
+    {
+      "tag": "0Ma_b32",
+      "path": ".cache/u36_s15/0Ma_b32.npz",
+      "bytes": 14048849,
+      "sha256": "6bca3583bd4979ba6a85af2021692525c3fefa20571860bcbcc4880fe20bf758"
+    }
+  ]
+}
