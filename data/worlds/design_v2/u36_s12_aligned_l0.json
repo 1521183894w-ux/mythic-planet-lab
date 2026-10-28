@@ -1,0 +1,1675 @@
+{
+  "checkpoint": "U36-S12",
+  "method_class": "procedural_constrained",
+  "mapping_class": "interpolated",
+  "mode": "aligned",
+  "level": 0,
+  "triangle_count": 5344,
+  "vertex_count": 3210,
+  "dt_myr": 0.25,
+  "time_count": 141,
+  "all_points_supported_at_sampled_times": true,
+  "precision_fragment_ledger": [],
+  "precision_area_floor_km2": 1e-09,
+  "precision_fragment_known_volume_km3": 0,
+  "input_width_km": 200.0,
+  "timeline": [
+    {
+      "t_ma": 35.0,
+      "net_relative_residual": 0.0,
+      "weighted_absolute_source_residual": 0.0
+    },
+    {
+      "t_ma": 34.75,
+      "net_relative_residual": -1.712178936408293e-07,
+      "weighted_absolute_source_residual": 8.309751395780787e-07
+    },
+    {
+      "t_ma": 34.5,
+      "net_relative_residual": -3.43434233607276e-07,
+      "weighted_absolute_source_residual": 1.6611482305026098e-06
+    },
+    {
+      "t_ma": 34.25,
+      "net_relative_residual": -5.168535681665531e-07,
+      "weighted_absolute_source_residual": 2.4907622934400915e-06
+    },
+    {
+      "t_ma": 34.0,
+      "net_relative_residual": -6.916627309783152e-07,
+      "weighted_absolute_source_residual": 3.3200503626049763e-06
+    },
+    {
+      "t_ma": 33.75,
+      "net_relative_residual": -8.68017990263148e-07,
+      "weighted_absolute_source_residual": 4.149220455959123e-06
+    },
+    {
+      "t_ma": 33.5,
+      "net_relative_residual": -1.046138923821438e-06,
+      "weighted_absolute_source_residual": 4.978552471479453e-06
+    },
+    {
+      "t_ma": 33.25,
+      "net_relative_residual": -1.2260594940416425e-06,
+      "weighted_absolute_source_residual": 5.808011476700761e-06
+    },
+    {
+      "t_ma": 33.0,
+      "net_relative_residual": -1.4077587889849141e-06,
+      "weighted_absolute_source_residual": 6.6395818933673965e-06
+    },
+    {
+      "t_ma": 32.75,
+      "net_relative_residual": -1.5912230620918066e-06,
+      "weighted_absolute_source_residual": 7.472246161215051e-06
+    },
+    {
+      "t_ma": 32.5,
+      "net_relative_residual": -1.7771001908917228e-06,
+      "weighted_absolute_source_residual": 8.306755843597588e-06
+    },
+    {
+      "t_ma": 32.25,
+      "net_relative_residual": -1.9654076833797163e-06,
+      "weighted_absolute_source_residual": 9.143277784723643e-06
+    },
+    {
+      "t_ma": 32.0,
+      "net_relative_residual": -2.156184247592563e-06,
+      "weighted_absolute_source_residual": 9.982010934199555e-06
+    },
+    {
+      "t_ma": 31.75,
+      "net_relative_residual": -2.3494260746881324e-06,
+      "weighted_absolute_source_residual": 1.0823092363076637e-05
+    },
+    {
+      "t_ma": 31.5,
+      "net_relative_residual": -2.545213493743148e-06,
+      "weighted_absolute_source_residual": 1.1666759247200192e-05
+    },
+    {
+      "t_ma": 31.25,
+      "net_relative_residual": -2.7443641862356927e-06,
+      "weighted_absolute_source_residual": 1.2513760211497077e-05
+    },
+    {
+      "t_ma": 31.0,
+      "net_relative_residual": -2.9449917747781384e-06,
+      "weighted_absolute_source_residual": 1.3368297998040706e-05
+    },
+    {
+      "t_ma": 30.75,
+      "net_relative_residual": -3.1465559007237687e-06,
+      "weighted_absolute_source_residual": 1.4230635155803108e-05
+    },
+    {
+      "t_ma": 30.5,
+      "net_relative_residual": -3.3502422406295196e-06,
+      "weighted_absolute_source_residual": 1.510071440442803e-05
+    },
+    {
+      "t_ma": 30.25,
+      "net_relative_residual": -3.5556655336721477e-06,
+      "weighted_absolute_source_residual": 1.5978021612184954e-05
+    },
+    {
+      "t_ma": 30.0,
+      "net_relative_residual": -3.7615809344027085e-06,
+      "weighted_absolute_source_residual": 1.6859658837534397e-05
+    },
+    {
+      "t_ma": 29.75,
+      "net_relative_residual": -3.968934685016912e-06,
+      "weighted_absolute_source_residual": 1.774591561910678e-05
+    },
+    {
+      "t_ma": 29.5,
+      "net_relative_residual": -4.1786160248635795e-06,
+      "weighted_absolute_source_residual": 1.8637752203769474e-05
+    },
+    {
+      "t_ma": 29.25,
+      "net_relative_residual": -4.388991592607638e-06,
+      "weighted_absolute_source_residual": 1.9537803073874435e-05
+    },
+    {
+      "t_ma": 29.0,
+      "net_relative_residual": -4.602118250374154e-06,
+      "weighted_absolute_source_residual": 2.0444161368370302e-05
+    },
+    {
+      "t_ma": 28.75,
+      "net_relative_residual": -4.81564058407713e-06,
+      "weighted_absolute_source_residual": 2.1354597619872066e-05
+    },
+    {
+      "t_ma": 28.5,
+      "net_relative_residual": -5.0316790514148835e-06,
+      "weighted_absolute_source_residual": 2.2274119446613865e-05
+    },
+    {
+      "t_ma": 28.25,
+      "net_relative_residual": -5.2531367148445085e-06,
+      "weighted_absolute_source_residual": 2.320304809641928e-05
+    },
+    {
+      "t_ma": 28.0,
+      "net_relative_residual": -5.476828080941409e-06,
+      "weighted_absolute_source_residual": 2.4138321485970476e-05
+    },
+    {
+      "t_ma": 27.75,
+      "net_relative_residual": -5.704858610067198e-06,
+      "weighted_absolute_source_residual": 2.5072054250312938e-05
+    },
+    {
+      "t_ma": 27.5,
+      "net_relative_residual": -5.937278837575555e-06,
+      "weighted_absolute_source_residual": 2.601427037974611e-05
+    },
+    {
+      "t_ma": 27.25,
+      "net_relative_residual": -6.17795733581783e-06,
+      "weighted_absolute_source_residual": 2.6968990367453665e-05
+    },
+    {
+      "t_ma": 27.0,
+      "net_relative_residual": -6.425848949498381e-06,
+      "weighted_absolute_source_residual": 2.7935312069439777e-05
+    },
+    {
+      "t_ma": 26.75,
+      "net_relative_residual": -6.671654549927908e-06,
+      "weighted_absolute_source_residual": 2.8904014943491065e-05
+    },
+    {
+      "t_ma": 26.5,
+      "net_relative_residual": -6.918967917601826e-06,
+      "weighted_absolute_source_residual": 2.988028373774813e-05
+    },
+    {
+      "t_ma": 26.25,
+      "net_relative_residual": -7.154756743177337e-06,
+      "weighted_absolute_source_residual": 3.085712957045692e-05
+    },
+    {
+      "t_ma": 26.0,
+      "net_relative_residual": -7.376967821492997e-06,
+      "weighted_absolute_source_residual": 3.1836664304569806e-05
+    },
+    {
+      "t_ma": 25.75,
+      "net_relative_residual": -7.589095166515847e-06,
+      "weighted_absolute_source_residual": 3.28272362224998e-05
+    },
+    {
+      "t_ma": 25.5,
+      "net_relative_residual": -7.785184146791302e-06,
+      "weighted_absolute_source_residual": 3.3823626230302394e-05
+    },
+    {
+      "t_ma": 25.25,
+      "net_relative_residual": -7.997609232979208e-06,
+      "weighted_absolute_source_residual": 3.485105902351723e-05
+    },
+    {
+      "t_ma": 25.0,
+      "net_relative_residual": -8.240924033731112e-06,
+      "weighted_absolute_source_residual": 3.590501556161143e-05
+    },
+    {
+      "t_ma": 24.75,
+      "net_relative_residual": -8.486962053910752e-06,
+      "weighted_absolute_source_residual": 3.6979769062035375e-05
+    },
+    {
+      "t_ma": 24.5,
+      "net_relative_residual": -8.746409154158918e-06,
+      "weighted_absolute_source_residual": 3.806585639070014e-05
+    },
+    {
+      "t_ma": 24.25,
+      "net_relative_residual": -9.00321328245468e-06,
+      "weighted_absolute_source_residual": 3.914975547498903e-05
+    },
+    {
+      "t_ma": 24.0,
+      "net_relative_residual": -9.266738946300812e-06,
+      "weighted_absolute_source_residual": 4.024746915973868e-05
+    },
+    {
+      "t_ma": 23.75,
+      "net_relative_residual": -9.527276080500968e-06,
+      "weighted_absolute_source_residual": 4.1349299427397814e-05
+    },
+    {
+      "t_ma": 23.5,
+      "net_relative_residual": -9.790170225176809e-06,
+      "weighted_absolute_source_residual": 4.245920635761596e-05
+    },
+    {
+      "t_ma": 23.25,
+      "net_relative_residual": -1.0023164915162752e-05,
+      "weighted_absolute_source_residual": 4.358016388451646e-05
+    },
+    {
+      "t_ma": 23.0,
+      "net_relative_residual": -1.0234172431067279e-05,
+      "weighted_absolute_source_residual": 4.468663650291235e-05
+    },
+    {
+      "t_ma": 22.75,
+      "net_relative_residual": -1.0435344522941037e-05,
+      "weighted_absolute_source_residual": 4.5802056274388455e-05
+    },
+    {
+      "t_ma": 22.5,
+      "net_relative_residual": -1.060175489586701e-05,
+      "weighted_absolute_source_residual": 4.689934735873895e-05
+    },
+    {
+      "t_ma": 22.25,
+      "net_relative_residual": -1.0772892480304108e-05,
+      "weighted_absolute_source_residual": 4.8015235314427056e-05
+    },
+    {
+      "t_ma": 22.0,
+      "net_relative_residual": -1.093386067407831e-05,
+      "weighted_absolute_source_residual": 4.916485312852884e-05
+    },
+    {
+      "t_ma": 21.75,
+      "net_relative_residual": -1.1117479564282107e-05,
+      "weighted_absolute_source_residual": 5.0352831915880214e-05
+    },
+    {
+      "t_ma": 21.5,
+      "net_relative_residual": -1.1302440750982079e-05,
+      "weighted_absolute_source_residual": 5.154750660281113e-05
+    },
+    {
+      "t_ma": 21.25,
+      "net_relative_residual": -1.1485470046368462e-05,
+      "weighted_absolute_source_residual": 5.2773408446983414e-05
+    },
+    {
+      "t_ma": 21.0,
+      "net_relative_residual": -1.165849431206123e-05,
+      "weighted_absolute_source_residual": 5.404763367129844e-05
+    },
+    {
+      "t_ma": 20.75,
+      "net_relative_residual": -1.1844691614415481e-05,
+      "weighted_absolute_source_residual": 5.536414686710023e-05
+    },
+    {
+      "t_ma": 20.5,
+      "net_relative_residual": -1.2036703133433413e-05,
+      "weighted_absolute_source_residual": 5.6721362738711994e-05
+    },
+    {
+      "t_ma": 20.25,
+      "net_relative_residual": -1.2251452058076318e-05,
+      "weighted_absolute_source_residual": 5.810645875485931e-05
+    },
+    {
+      "t_ma": 20.0,
+      "net_relative_residual": -1.2427264833969609e-05,
+      "weighted_absolute_source_residual": 5.9498030278070157e-05
+    },
+    {
+      "t_ma": 19.75,
+      "net_relative_residual": -1.2558552493380226e-05,
+      "weighted_absolute_source_residual": 6.0867231494000386e-05
+    },
+    {
+      "t_ma": 19.5,
+      "net_relative_residual": -1.2688667130333897e-05,
+      "weighted_absolute_source_residual": 6.224539486863353e-05
+    },
+    {
+      "t_ma": 19.25,
+      "net_relative_residual": -1.2789277168634428e-05,
+      "weighted_absolute_source_residual": 6.360602746689733e-05
+    },
+    {
+      "t_ma": 19.0,
+      "net_relative_residual": -1.2902583904406129e-05,
+      "weighted_absolute_source_residual": 6.4994735699638e-05
+    },
+    {
+      "t_ma": 18.75,
+      "net_relative_residual": -1.2995591178843746e-05,
+      "weighted_absolute_source_residual": 6.637918472230658e-05
+    },
+    {
+      "t_ma": 18.5,
+      "net_relative_residual": -1.310667477283367e-05,
+      "weighted_absolute_source_residual": 6.776439472094984e-05
+    },
+    {
+      "t_ma": 18.25,
+      "net_relative_residual": -1.3171336573636339e-05,
+      "weighted_absolute_source_residual": 6.909616894649054e-05
+    },
+    {
+      "t_ma": 18.0,
+      "net_relative_residual": -1.3211369724097644e-05,
+      "weighted_absolute_source_residual": 7.040015858616619e-05
+    },
+    {
+      "t_ma": 17.75,
+      "net_relative_residual": -1.3246095510233147e-05,
+      "weighted_absolute_source_residual": 7.172870124193776e-05
+    },
+    {
+      "t_ma": 17.5,
+      "net_relative_residual": -1.3327251248917982e-05,
+      "weighted_absolute_source_residual": 7.310906284864704e-05
+    },
+    {
+      "t_ma": 17.25,
+      "net_relative_residual": -1.3411118635398012e-05,
+      "weighted_absolute_source_residual": 7.452321317866624e-05
+    },
+    {
+      "t_ma": 17.0,
+      "net_relative_residual": -1.3490287897433006e-05,
+      "weighted_absolute_source_residual": 7.596479284170558e-05
+    },
+    {
+      "t_ma": 16.75,
+      "net_relative_residual": -1.3507530551737368e-05,
+      "weighted_absolute_source_residual": 7.738126854266335e-05
+    },
+    {
+      "t_ma": 16.5,
+      "net_relative_residual": -1.3523217347044536e-05,
+      "weighted_absolute_source_residual": 7.881700368716907e-05
+    },
+    {
+      "t_ma": 16.25,
+      "net_relative_residual": -1.349024239094554e-05,
+      "weighted_absolute_source_residual": 8.027305142528468e-05
+    },
+    {
+      "t_ma": 16.0,
+      "net_relative_residual": -1.3446251952764499e-05,
+      "weighted_absolute_source_residual": 8.176758034111846e-05
+    },
+    {
+      "t_ma": 15.75,
+      "net_relative_residual": -1.3345425644684106e-05,
+      "weighted_absolute_source_residual": 8.325962633773248e-05
+    },
+    {
+      "t_ma": 15.5,
+      "net_relative_residual": -1.3219873844061425e-05,
+      "weighted_absolute_source_residual": 8.474267670081399e-05
+    },
+    {
+      "t_ma": 15.25,
+      "net_relative_residual": -1.3050982814788448e-05,
+      "weighted_absolute_source_residual": 8.619286325078122e-05
+    },
+    {
+      "t_ma": 15.0,
+      "net_relative_residual": -1.2868414489108915e-05,
+      "weighted_absolute_source_residual": 8.76415849340371e-05
+    },
+    {
+      "t_ma": 14.75,
+      "net_relative_residual": -1.2763911528379523e-05,
+      "weighted_absolute_source_residual": 8.910061616236237e-05
+    },
+    {
+      "t_ma": 14.5,
+      "net_relative_residual": -1.2699778987990129e-05,
+      "weighted_absolute_source_residual": 9.056370681166628e-05
+    },
+    {
+      "t_ma": 14.25,
+      "net_relative_residual": -1.2561007897815557e-05,
+      "weighted_absolute_source_residual": 9.201288911919865e-05
+    },
+    {
+      "t_ma": 14.0,
+      "net_relative_residual": -1.2439763873772769e-05,
+      "weighted_absolute_source_residual": 9.35441666499138e-05
+    },
+    {
+      "t_ma": 13.75,
+      "net_relative_residual": -1.2356096926402493e-05,
+      "weighted_absolute_source_residual": 9.506704646816374e-05
+    },
+    {
+      "t_ma": 13.5,
+      "net_relative_residual": -1.2319484201328557e-05,
+      "weighted_absolute_source_residual": 9.669244604123795e-05
+    },
+    {
+      "t_ma": 13.25,
+      "net_relative_residual": -1.2322010218501767e-05,
+      "weighted_absolute_source_residual": 9.825158199957412e-05
+    },
+    {
+      "t_ma": 13.0,
+      "net_relative_residual": -1.2333110096185429e-05,
+      "weighted_absolute_source_residual": 9.987112455243249e-05
+    },
+    {
+      "t_ma": 12.75,
+      "net_relative_residual": -1.2347822813674192e-05,
+      "weighted_absolute_source_residual": 0.00010153288683011317
+    },
+    {
+      "t_ma": 12.5,
+      "net_relative_residual": -1.2335957885079019e-05,
+      "weighted_absolute_source_residual": 0.00010336809445438537
+    },
+    {
+      "t_ma": 12.25,
+      "net_relative_residual": -1.2375883369886154e-05,
+      "weighted_absolute_source_residual": 0.00010523289424675211
+    },
+    {
+      "t_ma": 12.0,
+      "net_relative_residual": -1.240039070538046e-05,
+      "weighted_absolute_source_residual": 0.00010713259428617159
+    },
+    {
+      "t_ma": 11.75,
+      "net_relative_residual": -1.2461759562487629e-05,
+      "weighted_absolute_source_residual": 0.00010904104642887697
+    },
+    {
+      "t_ma": 11.5,
+      "net_relative_residual": -1.254328916555636e-05,
+      "weighted_absolute_source_residual": 0.00011093088428392882
+    },
+    {
+      "t_ma": 11.25,
+      "net_relative_residual": -1.2622198375278337e-05,
+      "weighted_absolute_source_residual": 0.0001128062613381397
+    },
+    {
+      "t_ma": 11.0,
+      "net_relative_residual": -1.2726108401639458e-05,
+      "weighted_absolute_source_residual": 0.00011470081353691378
+    },
+    {
+      "t_ma": 10.75,
+      "net_relative_residual": -1.2814079334733108e-05,
+      "weighted_absolute_source_residual": 0.00011652994573650533
+    },
+    {
+      "t_ma": 10.5,
+      "net_relative_residual": -1.2888873554217639e-05,
+      "weighted_absolute_source_residual": 0.00011838492964635043
+    },
+    {
+      "t_ma": 10.25,
+      "net_relative_residual": -1.2918206396927978e-05,
+      "weighted_absolute_source_residual": 0.00012029479931103951
+    },
+    {
+      "t_ma": 10.0,
+      "net_relative_residual": -1.2983596170523803e-05,
+      "weighted_absolute_source_residual": 0.00012224961224687971
+    },
+    {
+      "t_ma": 9.75,
+      "net_relative_residual": -1.3123882293020195e-05,
+      "weighted_absolute_source_residual": 0.00012425114426107054
+    },
+    {
+      "t_ma": 9.5,
+      "net_relative_residual": -1.3364900362744514e-05,
+      "weighted_absolute_source_residual": 0.000126252913741838
+    },
+    {
+      "t_ma": 9.25,
+      "net_relative_residual": -1.367455348066926e-05,
+      "weighted_absolute_source_residual": 0.00012815884903318747
+    },
+    {
+      "t_ma": 9.0,
+      "net_relative_residual": -1.4024466777784461e-05,
+      "weighted_absolute_source_residual": 0.00012998010976768192
+    },
+    {
+      "t_ma": 8.75,
+      "net_relative_residual": -1.4492624114792463e-05,
+      "weighted_absolute_source_residual": 0.00013164627352340425
+    },
+    {
+      "t_ma": 8.5,
+      "net_relative_residual": -1.494986251415753e-05,
+      "weighted_absolute_source_residual": 0.00013334337036572175
+    },
+    {
+      "t_ma": 8.25,
+      "net_relative_residual": -1.531781503938401e-05,
+      "weighted_absolute_source_residual": 0.0001351578714153786
+    },
+    {
+      "t_ma": 8.0,
+      "net_relative_residual": -1.5747633648754977e-05,
+      "weighted_absolute_source_residual": 0.00013702090693873227
+    },
+    {
+      "t_ma": 7.75,
+      "net_relative_residual": -1.6225908070599537e-05,
+      "weighted_absolute_source_residual": 0.0001389615355284462
+    },
+    {
+      "t_ma": 7.5,
+      "net_relative_residual": -1.6725486519098e-05,
+      "weighted_absolute_source_residual": 0.00014083259156711137
+    },
+    {
+      "t_ma": 7.25,
+      "net_relative_residual": -1.7260758892301276e-05,
+      "weighted_absolute_source_residual": 0.0001427072531475555
+    },
+    {
+      "t_ma": 7.0,
+      "net_relative_residual": -1.7843205920020644e-05,
+      "weighted_absolute_source_residual": 0.0001446038980722602
+    },
+    {
+      "t_ma": 6.75,
+      "net_relative_residual": -1.8553175944568956e-05,
+      "weighted_absolute_source_residual": 0.0001465750985564855
+    },
+    {
+      "t_ma": 6.5,
+      "net_relative_residual": -1.92954445078497e-05,
+      "weighted_absolute_source_residual": 0.00014864962788956642
+    },
+    {
+      "t_ma": 6.25,
+      "net_relative_residual": -2.0059788135684542e-05,
+      "weighted_absolute_source_residual": 0.00015077363633620634
+    },
+    {
+      "t_ma": 6.0,
+      "net_relative_residual": -2.082600291342107e-05,
+      "weighted_absolute_source_residual": 0.00015285585432342334
+    },
+    {
+      "t_ma": 5.75,
+      "net_relative_residual": -2.144813840943005e-05,
+      "weighted_absolute_source_residual": 0.00015481788860765007
+    },
+    {
+      "t_ma": 5.5,
+      "net_relative_residual": -2.2128273336696758e-05,
+      "weighted_absolute_source_residual": 0.0001566842967313011
+    },
+    {
+      "t_ma": 5.25,
+      "net_relative_residual": -2.2746041068777423e-05,
+      "weighted_absolute_source_residual": 0.00015844067740211965
+    },
+    {
+      "t_ma": 5.0,
+      "net_relative_residual": -2.3434431268398725e-05,
+      "weighted_absolute_source_residual": 0.000160203493697258
+    },
+    {
+      "t_ma": 4.75,
+      "net_relative_residual": -2.416648929215448e-05,
+      "weighted_absolute_source_residual": 0.00016201519948991455
+    },
+    {
+      "t_ma": 4.5,
+      "net_relative_residual": -2.485184986333877e-05,
+      "weighted_absolute_source_residual": 0.00016372578051441388
+    },
+    {
+      "t_ma": 4.25,
+      "net_relative_residual": -2.549070782231766e-05,
+      "weighted_absolute_source_residual": 0.00016553668913372544
+    },
+    {
+      "t_ma": 4.0,
+      "net_relative_residual": -2.614529152855649e-05,
+      "weighted_absolute_source_residual": 0.00016736593437349223
+    },
+    {
+      "t_ma": 3.75,
+      "net_relative_residual": -2.6816439865795516e-05,
+      "weighted_absolute_source_residual": 0.00016943022641100034
+    },
+    {
+      "t_ma": 3.5,
+      "net_relative_residual": -2.753393054211184e-05,
+      "weighted_absolute_source_residual": 0.0001714713403714434
+    },
+    {
+      "t_ma": 3.25,
+      "net_relative_residual": -2.8240492591424804e-05,
+      "weighted_absolute_source_residual": 0.00017362987575681598
+    },
+    {
+      "t_ma": 3.0,
+      "net_relative_residual": -2.890946751210599e-05,
+      "weighted_absolute_source_residual": 0.00017589563641087617
+    },
+    {
+      "t_ma": 2.75,
+      "net_relative_residual": -2.949192766643627e-05,
+      "weighted_absolute_source_residual": 0.0001782019816509344
+    },
+    {
+      "t_ma": 2.5,
+      "net_relative_residual": -3.0069316346414965e-05,
+      "weighted_absolute_source_residual": 0.0001805426421198256
+    },
+    {
+      "t_ma": 2.25,
+      "net_relative_residual": -3.050413868899149e-05,
+      "weighted_absolute_source_residual": 0.0001829570164751952
+    },
+    {
+      "t_ma": 2.0,
+      "net_relative_residual": -3.0921343925016664e-05,
+      "weighted_absolute_source_residual": 0.00018536542725726068
+    },
+    {
+      "t_ma": 1.75,
+      "net_relative_residual": -3.143365348945437e-05,
+      "weighted_absolute_source_residual": 0.00018773159452670506
+    },
+    {
+      "t_ma": 1.5,
+      "net_relative_residual": -3.192774887628147e-05,
+      "weighted_absolute_source_residual": 0.00019008992490857977
+    },
+    {
+      "t_ma": 1.25,
+      "net_relative_residual": -3.2461349345869195e-05,
+      "weighted_absolute_source_residual": 0.00019236371965901668
+    },
+    {
+      "t_ma": 1.0,
+      "net_relative_residual": -3.315306160345255e-05,
+      "weighted_absolute_source_residual": 0.0001948979032228468
+    },
+    {
+      "t_ma": 0.75,
+      "net_relative_residual": -3.371282201325432e-05,
+      "weighted_absolute_source_residual": 0.00019737250157191656
+    },
+    {
+      "t_ma": 0.5,
+      "net_relative_residual": -3.434996786544353e-05,
+      "weighted_absolute_source_residual": 0.0001998489777176033
+    },
+    {
+      "t_ma": 0.25,
+      "net_relative_residual": -3.493401261811524e-05,
+      "weighted_absolute_source_residual": 0.00020243058615943387
+    },
+    {
+      "t_ma": 0.0,
+      "net_relative_residual": -3.568219411975715e-05,
+      "weighted_absolute_source_residual": 0.00020502572689262306
+    }
+  ],
+  "source_summary": [
+    {
+      "uid": 566,
+      "initial_volume_km3": 112714.91155747243,
+      "final_relative_residual": 0.00012885944455653942,
+      "crossing_volume_time_fraction": 0.45726757439890475,
+      "crossing_step_absolute_volume_change_km3": 202.94413556712297,
+      "single_face_step_absolute_volume_change_km3": 166.5930957433689,
+      "signed_step_change_km3": [
+        -55.308682707108986,
+        69.83306360367015
+      ]
+    },
+    {
+      "uid": 2732,
+      "initial_volume_km3": 90511.74921347707,
+      "final_relative_residual": -0.00011548766221181062,
+      "crossing_volume_time_fraction": 0.425048251264616,
+      "crossing_step_absolute_volume_change_km3": 179.3917179067419,
+      "single_face_step_absolute_volume_change_km3": 204.3671336269741,
+      "signed_step_change_km3": [
+        -55.68095399926162,
+        45.227963679944445
+      ]
+    },
+    {
+      "uid": 4161,
+      "initial_volume_km3": 109656.06448972739,
+      "final_relative_residual": 0.0003583819385257758,
+      "crossing_volume_time_fraction": 0.5295702132935707,
+      "crossing_step_absolute_volume_change_km3": 298.99905002883344,
+      "single_face_step_absolute_volume_change_km3": 215.5759972341528,
+      "signed_step_change_km3": [
+        -89.6833762002784,
+        128.98212916320526
+      ]
+    },
+    {
+      "uid": 4569,
+      "initial_volume_km3": 100270.91742624392,
+      "final_relative_residual": -0.0002552591344934241,
+      "crossing_volume_time_fraction": 0.580735450522064,
+      "crossing_step_absolute_volume_change_km3": 161.91107130683054,
+      "single_face_step_absolute_volume_change_km3": 82.77360726214975,
+      "signed_step_change_km3": [
+        -51.659401040801555,
+        26.064333443651314
+      ]
+    },
+    {
+      "uid": 6160,
+      "initial_volume_km3": 24132.19750618811,
+      "final_relative_residual": 2.611142850428294e-05,
+      "crossing_volume_time_fraction": 0.15741209639500175,
+      "crossing_step_absolute_volume_change_km3": 9.871997076236767,
+      "single_face_step_absolute_volume_change_km3": 17.029889779921177,
+      "signed_step_change_km3": [
+        -9.241870926401134,
+        9.871997076236767
+      ]
+    },
+    {
+      "uid": 12132,
+      "initial_volume_km3": 1323.7491839268816,
+      "final_relative_residual": -0.0007372180089038061,
+      "crossing_volume_time_fraction": 0.15915695533245033,
+      "crossing_step_absolute_volume_change_km3": 0.27602720509328205,
+      "single_face_step_absolute_volume_change_km3": 1.2517274078863325,
+      "signed_step_change_km3": [
+        -1.2466806541246624,
+        0.2707889164621592
+      ]
+    },
+    {
+      "uid": 13176,
+      "initial_volume_km3": 133363.14657963248,
+      "final_relative_residual": -0.00028392868727900034,
+      "crossing_volume_time_fraction": 0.4579496289906002,
+      "crossing_step_absolute_volume_change_km3": 271.0682969114753,
+      "single_face_step_absolute_volume_change_km3": 228.06338762748737,
+      "signed_step_change_km3": [
+        -100.21509436607256,
+        62.349471226420306
+      ]
+    },
+    {
+      "uid": 14011,
+      "initial_volume_km3": 95204.37487323479,
+      "final_relative_residual": -0.00012083901498982641,
+      "crossing_volume_time_fraction": 0.3772360993681138,
+      "crossing_step_absolute_volume_change_km3": 157.12348019170324,
+      "single_face_step_absolute_volume_change_km3": 264.85715877265807,
+      "signed_step_change_km3": [
+        -80.41748372791085,
+        68.9130808454996
+      ]
+    },
+    {
+      "uid": 16733,
+      "initial_volume_km3": 98224.69399794181,
+      "final_relative_residual": -0.00025081758466083404,
+      "crossing_volume_time_fraction": 0.5866149694265664,
+      "crossing_step_absolute_volume_change_km3": 125.0444396073944,
+      "single_face_step_absolute_volume_change_km3": 111.33326650138928,
+      "signed_step_change_km3": [
+        -64.39391572190834,
+        39.75743521935181
+      ]
+    },
+    {
+      "uid": 16734,
+      "initial_volume_km3": 14211.975641977675,
+      "final_relative_residual": 0.0003301306437923923,
+      "crossing_volume_time_fraction": 0.5412591927724213,
+      "crossing_step_absolute_volume_change_km3": 12.156958919448128,
+      "single_face_step_absolute_volume_change_km3": 7.024534347985011,
+      "signed_step_change_km3": [
+        0.09261199111228842,
+        4.599196677134102
+      ]
+    },
+    {
+      "uid": 17521,
+      "initial_volume_km3": 20723.786756874062,
+      "final_relative_residual": 0.001158293977687519,
+      "crossing_volume_time_fraction": 0.19558004649555308,
+      "crossing_step_absolute_volume_change_km3": 34.23339170528382,
+      "single_face_step_absolute_volume_change_km3": 14.958179971365354,
+      "signed_step_change_km3": [
+        -4.071085806566174,
+        28.07532320192999
+      ]
+    },
+    {
+      "uid": 17718,
+      "initial_volume_km3": 129360.39193955093,
+      "final_relative_residual": 0.00019600452508372612,
+      "crossing_volume_time_fraction": 0.42193858006620527,
+      "crossing_step_absolute_volume_change_km3": 159.45893709744612,
+      "single_face_step_absolute_volume_change_km3": 193.00851366236645,
+      "signed_step_change_km3": [
+        -63.16869584671269,
+        88.52391803346767
+      ]
+    },
+    {
+      "uid": 21809,
+      "initial_volume_km3": 14521.845339688089,
+      "final_relative_residual": -0.00022801831404928308,
+      "crossing_volume_time_fraction": 0.9928571428571407,
+      "crossing_step_absolute_volume_change_km3": 72.86799992428462,
+      "single_face_step_absolute_volume_change_km3": 0.28000686226982907,
+      "signed_step_change_km3": [
+        -0.01148633490379325,
+        -3.299760356338652
+      ]
+    },
+    {
+      "uid": 22840,
+      "initial_volume_km3": 75758.45956001969,
+      "final_relative_residual": -0.00021536475613814776,
+      "crossing_volume_time_fraction": 0.33696932156411125,
+      "crossing_step_absolute_volume_change_km3": 96.98933965777417,
+      "single_face_step_absolute_volume_change_km3": 92.66794316578651,
+      "signed_step_change_km3": [
+        -41.96090405318841,
+        25.645201884630367
+      ]
+    },
+    {
+      "uid": 24420,
+      "initial_volume_km3": 19679.216830053407,
+      "final_relative_residual": 0.00012520252925107833,
+      "crossing_volume_time_fraction": 0.31154921676539826,
+      "crossing_step_absolute_volume_change_km3": 5.03968996578922,
+      "single_face_step_absolute_volume_change_km3": 10.480359249856697,
+      "signed_step_change_km3": [
+        3.2253477118949943,
+        -0.7614599910820936
+      ]
+    },
+    {
+      "uid": 24452,
+      "initial_volume_km3": 102913.96164313503,
+      "final_relative_residual": -0.000264826771117721,
+      "crossing_volume_time_fraction": 0.4037961390055564,
+      "crossing_step_absolute_volume_change_km3": 204.5041421299418,
+      "single_face_step_absolute_volume_change_km3": 279.1251816490953,
+      "signed_step_change_km3": [
+        -66.74445433523825,
+        39.490082170412926
+      ]
+    },
+    {
+      "uid": 25431,
+      "initial_volume_km3": 29897.69285731411,
+      "final_relative_residual": 0.0001378991729701351,
+      "crossing_volume_time_fraction": 0.6099776632998766,
+      "crossing_step_absolute_volume_change_km3": 23.895633221499907,
+      "single_face_step_absolute_volume_change_km3": 10.350834344505174,
+      "signed_step_change_km3": [
+        -9.238279783598855,
+        13.361146902336344
+      ]
+    },
+    {
+      "uid": 30093,
+      "initial_volume_km3": 118518.35782279106,
+      "final_relative_residual": -2.4085485788361005e-05,
+      "crossing_volume_time_fraction": 0.43279014647182285,
+      "crossing_step_absolute_volume_change_km3": 146.94512264001017,
+      "single_face_step_absolute_volume_change_km3": 156.61837069911618,
+      "signed_step_change_km3": [
+        -49.292543909293094,
+        46.43797168623386
+      ]
+    },
+    {
+      "uid": 43200,
+      "initial_volume_km3": 16329.012496146419,
+      "final_relative_residual": 0.0011471505506419621,
+      "crossing_volume_time_fraction": 0.22034698447659268,
+      "crossing_step_absolute_volume_change_km3": 7.6926130200121925,
+      "single_face_step_absolute_volume_change_km3": 17.437735043371887,
+      "signed_step_change_km3": [
+        11.061127930888608,
+        7.6707077455071975
+      ]
+    },
+    {
+      "uid": 43378,
+      "initial_volume_km3": 20164.331837887246,
+      "final_relative_residual": -0.0001141498116714601,
+      "crossing_volume_time_fraction": 0.992857142857144,
+      "crossing_step_absolute_volume_change_km3": 35.44462836528555,
+      "single_face_step_absolute_volume_change_km3": 0.06646828783971159,
+      "signed_step_change_km3": [
+        0.06646828783971159,
+        -2.368222969614635
+      ]
+    },
+    {
+      "uid": 48346,
+      "initial_volume_km3": 100225.35726427345,
+      "final_relative_residual": -1.908599600985994e-05,
+      "crossing_volume_time_fraction": 0.5190065475692227,
+      "crossing_step_absolute_volume_change_km3": 154.7283649707127,
+      "single_face_step_absolute_volume_change_km3": 123.31905505543581,
+      "signed_step_change_km3": [
+        -27.70908528370947,
+        25.796184514843002
+      ]
+    },
+    {
+      "uid": 51397,
+      "initial_volume_km3": 79925.05031854573,
+      "final_relative_residual": -0.0002189869702148295,
+      "crossing_volume_time_fraction": 0.6326199422348147,
+      "crossing_step_absolute_volume_change_km3": 149.85801573677173,
+      "single_face_step_absolute_volume_change_km3": 98.37989145613636,
+      "signed_step_change_km3": [
+        -57.84899887697521,
+        40.3464542634594
+      ]
+    },
+    {
+      "uid": 51403,
+      "initial_volume_km3": 92915.48251936474,
+      "final_relative_residual": -0.00025366641900770315,
+      "crossing_volume_time_fraction": 0.32297873678016376,
+      "crossing_step_absolute_volume_change_km3": 122.84935576805628,
+      "single_face_step_absolute_volume_change_km3": 124.92351623725433,
+      "signed_step_change_km3": [
+        -27.516978207232853,
+        3.9474404861805503
+      ]
+    },
+    {
+      "uid": 51405,
+      "initial_volume_km3": 118539.04362147882,
+      "final_relative_residual": 4.505259017384411e-05,
+      "crossing_volume_time_fraction": 0.36312978378481553,
+      "crossing_step_absolute_volume_change_km3": 185.61914198444637,
+      "single_face_step_absolute_volume_change_km3": 264.832171338603,
+      "signed_step_change_km3": [
+        -85.00548965045506,
+        90.3459806022823
+      ]
+    },
+    {
+      "uid": 52268,
+      "initial_volume_km3": 91533.04429549992,
+      "final_relative_residual": -5.448835457633194e-05,
+      "crossing_volume_time_fraction": 0.26000267642726127,
+      "crossing_step_absolute_volume_change_km3": 114.50595703305407,
+      "single_face_step_absolute_volume_change_km3": 290.2648495008434,
+      "signed_step_change_km3": [
+        -40.9191834175717,
+        35.93169844458407
+      ]
+    },
+    {
+      "uid": 55442,
+      "initial_volume_km3": 101553.6810290085,
+      "final_relative_residual": 4.640923968013411e-05,
+      "crossing_volume_time_fraction": 0.49348892960729773,
+      "crossing_step_absolute_volume_change_km3": 230.1534795681231,
+      "single_face_step_absolute_volume_change_km3": 146.6932139204064,
+      "signed_step_change_km3": [
+        -58.032982924848184,
+        62.74601204815666
+      ]
+    },
+    {
+      "uid": 55449,
+      "initial_volume_km3": 132796.234971329,
+      "final_relative_residual": -0.00019288078938084485,
+      "crossing_volume_time_fraction": 0.48968436389083886,
+      "crossing_step_absolute_volume_change_km3": 232.93284440639047,
+      "single_face_step_absolute_volume_change_km3": 196.26890140582384,
+      "signed_step_change_km3": [
+        -68.36556148830502,
+        42.75171886022527
+      ]
+    },
+    {
+      "uid": 55450,
+      "initial_volume_km3": 103025.57775891089,
+      "final_relative_residual": 5.181463190950808e-05,
+      "crossing_volume_time_fraction": 0.45657951357261084,
+      "crossing_step_absolute_volume_change_km3": 303.89362283856485,
+      "single_face_step_absolute_volume_change_km3": 223.25715861829633,
+      "signed_step_change_km3": [
+        -70.2252961874434,
+        75.56352857630009
+      ]
+    },
+    {
+      "uid": 60859,
+      "initial_volume_km3": 104912.23434875347,
+      "final_relative_residual": 0.0001699556941427982,
+      "crossing_volume_time_fraction": 0.30527061983785453,
+      "crossing_step_absolute_volume_change_km3": 144.37895322323584,
+      "single_face_step_absolute_volume_change_km3": 268.6711460865505,
+      "signed_step_change_km3": [
+        -53.02166392221919,
+        70.85209553505351
+      ]
+    },
+    {
+      "uid": 64244,
+      "initial_volume_km3": 53051.0077898376,
+      "final_relative_residual": -5.830907848558553e-05,
+      "crossing_volume_time_fraction": 0.29310358514348517,
+      "crossing_step_absolute_volume_change_km3": 42.760089809385526,
+      "single_face_step_absolute_volume_change_km3": 56.8920583328576,
+      "signed_step_change_km3": [
+        -3.5542388521915793,
+        0.46088347525977547
+      ]
+    },
+    {
+      "uid": 65973,
+      "initial_volume_km3": 134015.78909225957,
+      "final_relative_residual": -0.00013810047412743387,
+      "crossing_volume_time_fraction": 0.3725192996976448,
+      "crossing_step_absolute_volume_change_km3": 213.07804918079646,
+      "single_face_step_absolute_volume_change_km3": 280.3672639769278,
+      "signed_step_change_km3": [
+        -64.14224849017766,
+        45.63460447593601
+      ]
+    },
+    {
+      "uid": 67113,
+      "initial_volume_km3": 97811.78504403263,
+      "final_relative_residual": 0.0003473919631375999,
+      "crossing_volume_time_fraction": 0.3958491843439185,
+      "crossing_step_absolute_volume_change_km3": 158.97329358520724,
+      "single_face_step_absolute_volume_change_km3": 250.00995719585947,
+      "signed_step_change_km3": [
+        -38.262285991520656,
+        72.2413140159832
+      ]
+    },
+    {
+      "uid": 71061,
+      "initial_volume_km3": 104693.55849551075,
+      "final_relative_residual": 0.0003924904925072248,
+      "crossing_volume_time_fraction": 0.7272373203415874,
+      "crossing_step_absolute_volume_change_km3": 169.38771698931424,
+      "single_face_step_absolute_volume_change_km3": 57.861116468505415,
+      "signed_step_change_km3": [
+        -4.111486493008102,
+        45.20271282924442
+      ]
+    },
+    {
+      "uid": 71686,
+      "initial_volume_km3": 99353.53201756778,
+      "final_relative_residual": -0.0004135230919540822,
+      "crossing_volume_time_fraction": 0.4357851027764407,
+      "crossing_step_absolute_volume_change_km3": 100.99153840012268,
+      "single_face_step_absolute_volume_change_km3": 145.9551065305566,
+      "signed_step_change_km3": [
+        -33.72405797963848,
+        -7.360921776872744
+      ]
+    },
+    {
+      "uid": 71754,
+      "initial_volume_km3": 40860.08269622575,
+      "final_relative_residual": -0.0002895734287017282,
+      "crossing_volume_time_fraction": 0.15621324030602224,
+      "crossing_step_absolute_volume_change_km3": 33.04601164022563,
+      "single_face_step_absolute_volume_change_km3": 63.39836807063958,
+      "signed_step_change_km3": [
+        -30.073781249816278,
+        18.24178700643766
+      ]
+    },
+    {
+      "uid": 71757,
+      "initial_volume_km3": 105034.50873873789,
+      "final_relative_residual": -0.00018801461623785265,
+      "crossing_volume_time_fraction": 0.36310886555071237,
+      "crossing_step_absolute_volume_change_km3": 165.24047077987365,
+      "single_face_step_absolute_volume_change_km3": 242.6237449599533,
+      "signed_step_change_km3": [
+        -67.98225874371936,
+        48.23423589145632
+      ]
+    },
+    {
+      "uid": 76269,
+      "initial_volume_km3": 133238.34889792616,
+      "final_relative_residual": 0.00017479849269408376,
+      "crossing_volume_time_fraction": 0.35585275258035093,
+      "crossing_step_absolute_volume_change_km3": 219.97146396070718,
+      "single_face_step_absolute_volume_change_km3": 305.5559304768085,
+      "signed_step_change_km3": [
+        -78.41971586931722,
+        101.70957842581467
+      ]
+    },
+    {
+      "uid": 76270,
+      "initial_volume_km3": 30661.898358881976,
+      "final_relative_residual": -0.0006765326737561139,
+      "crossing_volume_time_fraction": 0.3238788566661015,
+      "crossing_step_absolute_volume_change_km3": 33.590995118293336,
+      "single_face_step_absolute_volume_change_km3": 51.738765679762224,
+      "signed_step_change_km3": [
+        -45.77327262333111,
+        25.02949654415545
+      ]
+    },
+    {
+      "uid": 76272,
+      "initial_volume_km3": 7329.469343006027,
+      "final_relative_residual": -7.28007515649054e-05,
+      "crossing_volume_time_fraction": 0.10853065797270124,
+      "crossing_step_absolute_volume_change_km3": 0.9155772247567029,
+      "single_face_step_absolute_volume_change_km3": 4.458769972744875,
+      "signed_step_change_km3": [
+        -1.4491681014999642,
+        0.9155772247567029
+      ]
+    },
+    {
+      "uid": 79872,
+      "initial_volume_km3": 865.4261264983711,
+      "final_relative_residual": 0.0006721753053113844,
+      "crossing_volume_time_fraction": 0.0,
+      "crossing_step_absolute_volume_change_km3": 0.0,
+      "single_face_step_absolute_volume_change_km3": 0.5817180708035039,
+      "signed_step_change_km3": [
+        0.5817180708035039,
+        0.0
+      ]
+    },
+    {
+      "uid": 79873,
+      "initial_volume_km3": 97439.17819956379,
+      "final_relative_residual": 2.7251480575252174e-05,
+      "crossing_volume_time_fraction": 0.5560204564489557,
+      "crossing_step_absolute_volume_change_km3": 153.34041553997952,
+      "single_face_step_absolute_volume_change_km3": 64.2984822273404,
+      "signed_step_change_km3": [
+        -30.597221381959503,
+        33.25258325396864
+      ]
+    },
+    {
+      "uid": 79874,
+      "initial_volume_km3": 60810.44129155597,
+      "final_relative_residual": 0.00015091207932393935,
+      "crossing_volume_time_fraction": 0.21359363271856144,
+      "crossing_step_absolute_volume_change_km3": 43.84272254419809,
+      "single_face_step_absolute_volume_change_km3": 98.66776875241023,
+      "signed_step_change_km3": [
+        5.154041508403197,
+        4.022988631490948
+      ]
+    },
+    {
+      "uid": 79875,
+      "initial_volume_km3": 97461.75044865349,
+      "final_relative_residual": -0.00018304989116191273,
+      "crossing_volume_time_fraction": 0.44925584572190763,
+      "crossing_step_absolute_volume_change_km3": 178.49248642490298,
+      "single_face_step_absolute_volume_change_km3": 169.61317739619756,
+      "signed_step_change_km3": [
+        -52.41025617579241,
+        34.569893363713646
+      ]
+    },
+    {
+      "uid": 83886,
+      "initial_volume_km3": 118429.92028453689,
+      "final_relative_residual": 5.2988568829626104e-05,
+      "crossing_volume_time_fraction": 0.5838689150221884,
+      "crossing_step_absolute_volume_change_km3": 192.53751152733594,
+      "single_face_step_absolute_volume_change_km3": 144.152005513685,
+      "signed_step_change_km3": [
+        -69.03873426823324,
+        75.31416625073696
+      ]
+    },
+    {
+      "uid": 91198,
+      "initial_volume_km3": 103082.02738236326,
+      "final_relative_residual": 0.00031659624506841233,
+      "crossing_volume_time_fraction": 0.39738670621325034,
+      "crossing_step_absolute_volume_change_km3": 91.71017203196335,
+      "single_face_step_absolute_volume_change_km3": 137.7814206283165,
+      "signed_step_change_km3": [
+        5.752840126246588,
+        26.882542677049308
+      ]
+    },
+    {
+      "uid": 91202,
+      "initial_volume_km3": 54615.50221925089,
+      "final_relative_residual": -0.00039058082115039916,
+      "crossing_volume_time_fraction": 0.3747119151891123,
+      "crossing_step_absolute_volume_change_km3": 47.04430386122603,
+      "single_face_step_absolute_volume_change_km3": 50.58832634062249,
+      "signed_step_change_km3": [
+        -12.984587194838989,
+        -8.347180509498326
+      ]
+    },
+    {
+      "uid": 91203,
+      "initial_volume_km3": 64641.41312326053,
+      "final_relative_residual": -0.0006826398438813941,
+      "crossing_volume_time_fraction": 0.6499499607810045,
+      "crossing_step_absolute_volume_change_km3": 118.54496360717921,
+      "single_face_step_absolute_volume_change_km3": 44.07874728389294,
+      "signed_step_change_km3": [
+        -34.51804998228394,
+        -9.608754180452925
+      ]
+    },
+    {
+      "uid": 91204,
+      "initial_volume_km3": 33.9776747100499,
+      "final_relative_residual": 0.00013481750949839721,
+      "crossing_volume_time_fraction": 0.0,
+      "crossing_step_absolute_volume_change_km3": 0.0,
+      "single_face_step_absolute_volume_change_km3": 0.0045807854829575945,
+      "signed_step_change_km3": [
+        0.0045807854829575945,
+        0.0
+      ]
+    },
+    {
+      "uid": 91206,
+      "initial_volume_km3": 47338.73209369282,
+      "final_relative_residual": 3.901529529781733e-05,
+      "crossing_volume_time_fraction": 0.13568098240754164,
+      "crossing_step_absolute_volume_change_km3": 20.52293704431692,
+      "single_face_step_absolute_volume_change_km3": 71.44659956279254,
+      "signed_step_change_km3": [
+        -1.7205824007026962,
+        3.5675170123575555
+      ]
+    },
+    {
+      "uid": 91207,
+      "initial_volume_km3": 89444.8081105587,
+      "final_relative_residual": -0.00011910424608529979,
+      "crossing_volume_time_fraction": 0.33562132504186887,
+      "crossing_step_absolute_volume_change_km3": 140.81343621760772,
+      "single_face_step_absolute_volume_change_km3": 209.88452522883048,
+      "signed_step_change_km3": [
+        -44.77788892899468,
+        34.12463249275511
+      ]
+    },
+    {
+      "uid": 91208,
+      "initial_volume_km3": 103100.10797779757,
+      "final_relative_residual": -0.00016003109884432654,
+      "crossing_volume_time_fraction": 0.461685985781558,
+      "crossing_step_absolute_volume_change_km3": 228.68269239740835,
+      "single_face_step_absolute_volume_change_km3": 188.91447962248634,
+      "signed_step_change_km3": [
+        -69.85502248994143,
+        53.355798919279124
+      ]
+    },
+    {
+      "uid": 94306,
+      "initial_volume_km3": 483.1786476722645,
+      "final_relative_residual": 0.001203849084274955,
+      "crossing_volume_time_fraction": 0.0,
+      "crossing_step_absolute_volume_change_km3": 0.0,
+      "single_face_step_absolute_volume_change_km3": 0.6459234677289913,
+      "signed_step_change_km3": [
+        0.5816741725414687,
+        0.0
+      ]
+    },
+    {
+      "uid": 94307,
+      "initial_volume_km3": 101609.58765699185,
+      "final_relative_residual": -0.0006506968395018076,
+      "crossing_volume_time_fraction": 0.4802295619860268,
+      "crossing_step_absolute_volume_change_km3": 122.75854252340397,
+      "single_face_step_absolute_volume_change_km3": 144.91495896313066,
+      "signed_step_change_km3": [
+        -68.50031495972901,
+        2.3832774082175945
+      ]
+    },
+    {
+      "uid": 95080,
+      "initial_volume_km3": 128640.82826881247,
+      "final_relative_residual": 6.148071371336883e-05,
+      "crossing_volume_time_fraction": 0.5011894073778485,
+      "crossing_step_absolute_volume_change_km3": 185.1668914629957,
+      "single_face_step_absolute_volume_change_km3": 192.0920140497975,
+      "signed_step_change_km3": [
+        -75.10263810155898,
+        83.01156803624633
+      ]
+    },
+    {
+      "uid": 95088,
+      "initial_volume_km3": 130712.84056722402,
+      "final_relative_residual": -1.5222265534742263e-05,
+      "crossing_volume_time_fraction": 0.28943453694895305,
+      "crossing_step_absolute_volume_change_km3": 192.0550131934118,
+      "single_face_step_absolute_volume_change_km3": 312.2343721335009,
+      "signed_step_change_km3": [
+        -73.81404175778725,
+        71.82429618982854
+      ]
+    },
+    {
+      "uid": 95089,
+      "initial_volume_km3": 67061.52950968416,
+      "final_relative_residual": -0.0003463519894977285,
+      "crossing_volume_time_fraction": 0.16020327145509503,
+      "crossing_step_absolute_volume_change_km3": 25.31772385023761,
+      "single_face_step_absolute_volume_change_km3": 72.31631945374478,
+      "signed_step_change_km3": [
+        -32.03999916467695,
+        8.813105000234646
+      ]
+    },
+    {
+      "uid": 111035,
+      "initial_volume_km3": 38470.21408672526,
+      "final_relative_residual": 8.776585963099492e-05,
+      "crossing_volume_time_fraction": 0.11824916415599775,
+      "crossing_step_absolute_volume_change_km3": 14.319315876678754,
+      "single_face_step_absolute_volume_change_km3": 37.778028284762314,
+      "signed_step_change_km3": [
+        -10.877008279751152,
+        14.25337968925141
+      ]
+    },
+    {
+      "uid": 111036,
+      "initial_volume_km3": 120667.65546445594,
+      "final_relative_residual": 0.00038540757295457695,
+      "crossing_volume_time_fraction": 0.3767958275687434,
+      "crossing_step_absolute_volume_change_km3": 217.7795563944737,
+      "single_face_step_absolute_volume_change_km3": 280.38621192392816,
+      "signed_step_change_km3": [
+        -56.4985423846255,
+        103.00477061135172
+      ]
+    },
+    {
+      "uid": 114585,
+      "initial_volume_km3": 50707.90249467702,
+      "final_relative_residual": -3.8319119932683776e-07,
+      "crossing_volume_time_fraction": 0.26127576554081683,
+      "crossing_step_absolute_volume_change_km3": 21.679982819674315,
+      "single_face_step_absolute_volume_change_km3": 32.26191786060053,
+      "signed_step_change_km3": [
+        -10.62992047223404,
+        10.61048965025973
+      ]
+    },
+    {
+      "uid": 114590,
+      "initial_volume_km3": 11366.772120768783,
+      "final_relative_residual": 3.0540312706550665e-05,
+      "crossing_volume_time_fraction": 0.22669369083846536,
+      "crossing_step_absolute_volume_change_km3": 5.382781088919273,
+      "single_face_step_absolute_volume_change_km3": 6.325419687280828,
+      "signed_step_change_km3": [
+        -5.035636313889427,
+        5.382781088919273
+      ]
+    },
+    {
+      "uid": 114591,
+      "initial_volume_km3": 116639.40397688319,
+      "final_relative_residual": 4.246772031879509e-05,
+      "crossing_volume_time_fraction": 0.30049044517758516,
+      "crossing_step_absolute_volume_change_km3": 116.83983883605057,
+      "single_face_step_absolute_volume_change_km3": 204.45897528860093,
+      "signed_step_change_km3": [
+        -28.35659183102677,
+        33.31000141730135
+      ]
+    },
+    {
+      "uid": 114593,
+      "initial_volume_km3": 133067.67342098002,
+      "final_relative_residual": -2.4664062598600545e-05,
+      "crossing_volume_time_fraction": 0.5783796943522552,
+      "crossing_step_absolute_volume_change_km3": 232.99125181863013,
+      "single_face_step_absolute_volume_change_km3": 192.8283286269813,
+      "signed_step_change_km3": [
+        -89.75972769012704,
+        86.47773826294708
+      ]
+    },
+    {
+      "uid": 119908,
+      "initial_volume_km3": 85730.83389710027,
+      "final_relative_residual": -0.0001334113159640049,
+      "crossing_volume_time_fraction": 0.6846725901483791,
+      "crossing_step_absolute_volume_change_km3": 147.10227873489134,
+      "single_face_step_absolute_volume_change_km3": 39.81937964183118,
+      "signed_step_change_km3": [
+        -31.01556206545634,
+        19.57809869650942
+      ]
+    },
+    {
+      "uid": 120002,
+      "initial_volume_km3": 90197.12620964373,
+      "final_relative_residual": -6.831723273281742e-05,
+      "crossing_volume_time_fraction": 0.8072510875067245,
+      "crossing_step_absolute_volume_change_km3": 140.87822244656329,
+      "single_face_step_absolute_volume_change_km3": 24.292573253809977,
+      "signed_step_change_km3": [
+        -10.567087887528388,
+        4.405069824434555
+      ]
+    },
+    {
+      "uid": 120004,
+      "initial_volume_km3": 67907.16010595518,
+      "final_relative_residual": 0.0001368008525985953,
+      "crossing_volume_time_fraction": 0.7077186638676706,
+      "crossing_step_absolute_volume_change_km3": 119.55944198474083,
+      "single_face_step_absolute_volume_change_km3": 48.31712177430155,
+      "signed_step_change_km3": [
+        -17.79183617396458,
+        27.08159357401361
+      ]
+    },
+    {
+      "uid": 120015,
+      "initial_volume_km3": 24520.109731388173,
+      "final_relative_residual": 0.00045550576336661486,
+      "crossing_volume_time_fraction": 0.18636474676319623,
+      "crossing_step_absolute_volume_change_km3": 17.34369363686283,
+      "single_face_step_absolute_volume_change_km3": 19.938055343427592,
+      "signed_step_change_km3": [
+        -0.21412207095580982,
+        11.383173371981762
+      ]
+    },
+    {
+      "uid": 120016,
+      "initial_volume_km3": 65876.01677781862,
+      "final_relative_residual": -0.0007172304708736865,
+      "crossing_volume_time_fraction": 0.33293406523120395,
+      "crossing_step_absolute_volume_change_km3": 73.59830286019428,
+      "single_face_step_absolute_volume_change_km3": 118.09882752665614,
+      "signed_step_change_km3": [
+        -53.219002651814364,
+        5.970716118965887
+      ]
+    },
+    {
+      "uid": 120021,
+      "initial_volume_km3": 98644.07408485068,
+      "final_relative_residual": 0.0004111696803226206,
+      "crossing_volume_time_fraction": 0.3772613753271519,
+      "crossing_step_absolute_volume_change_km3": 156.78884301629057,
+      "single_face_step_absolute_volume_change_km3": 204.4446916420011,
+      "signed_step_change_km3": [
+        -22.358846375185315,
+        62.91829878248838
+      ]
+    },
+    {
+      "uid": 120042,
+      "initial_volume_km3": 98099.81694610443,
+      "final_relative_residual": -9.281991923693056e-05,
+      "crossing_volume_time_fraction": 0.5936422702603109,
+      "crossing_step_absolute_volume_change_km3": 132.69651265123,
+      "single_face_step_absolute_volume_change_km3": 42.8827145701904,
+      "signed_step_change_km3": [
+        -23.835045860318193,
+        14.72942877424541
+      ]
+    },
+    {
+      "uid": 137194,
+      "initial_volume_km3": 42529.526728852856,
+      "final_relative_residual": -0.0005151889772645468,
+      "crossing_volume_time_fraction": 0.19288125410593163,
+      "crossing_step_absolute_volume_change_km3": 13.213520247743276,
+      "single_face_step_absolute_volume_change_km3": 50.39953462083541,
+      "signed_step_change_km3": [
+        -29.019555999100064,
+        7.108812620129932
+      ]
+    },
+    {
+      "uid": 137195,
+      "initial_volume_km3": 118081.01880918824,
+      "final_relative_residual": 0.0001616866760953961,
+      "crossing_volume_time_fraction": 0.3892938054520508,
+      "crossing_step_absolute_volume_change_km3": 145.4094855345409,
+      "single_face_step_absolute_volume_change_km3": 150.44275440878894,
+      "signed_step_change_km3": [
+        -53.32615259723355,
+        72.4182800384708
+      ]
+    },
+    {
+      "uid": 163770,
+      "initial_volume_km3": 4917.561857161108,
+      "final_relative_residual": -0.0013224179543107617,
+      "crossing_volume_time_fraction": 0.9928571428571435,
+      "crossing_step_absolute_volume_change_km3": 29.511745229726557,
+      "single_face_step_absolute_volume_change_km3": 0.09842596322846475,
+      "signed_step_change_km3": [
+        -0.016907184118508667,
+        -6.486164907225202
+      ]
+    },
+    {
+      "uid": 448135,
+      "initial_volume_km3": 105.32506413436718,
+      "final_relative_residual": 0.0008436888900928974,
+      "crossing_volume_time_fraction": 0.7571428571428584,
+      "crossing_step_absolute_volume_change_km3": 0.059710798139789745,
+      "single_face_step_absolute_volume_change_km3": 0.029150788318702325,
+      "signed_step_change_km3": [
+        0.029150788318702325,
+        0.059710798139789745
+      ]
+    },
+    {
+      "uid": 448142,
+      "initial_volume_km3": 31263.89056052577,
+      "final_relative_residual": -0.0001942430543866447,
+      "crossing_volume_time_fraction": 0.5693934566001667,
+      "crossing_step_absolute_volume_change_km3": 62.06158570388651,
+      "single_face_step_absolute_volume_change_km3": 44.77978115133732,
+      "signed_step_change_km3": [
+        -3.465690147424944,
+        -2.607103447064535
+      ]
+    },
+    {
+      "uid": 448239,
+      "initial_volume_km3": 20566.1024445026,
+      "final_relative_residual": -0.0001367681281313482,
+      "crossing_volume_time_fraction": 0.7188854413679107,
+      "crossing_step_absolute_volume_change_km3": 47.005398271084985,
+      "single_face_step_absolute_volume_change_km3": 10.215427053091457,
+      "signed_step_change_km3": [
+        -3.6751762092871343,
+        0.8623888749958937
+      ]
+    },
+    {
+      "uid": 448261,
+      "initial_volume_km3": 479.6364128744819,
+      "final_relative_residual": 0.002738177865788005,
+      "crossing_volume_time_fraction": 0.0,
+      "crossing_step_absolute_volume_change_km3": 0.0,
+      "single_face_step_absolute_volume_change_km3": 1.3133298093588337,
+      "signed_step_change_km3": [
+        1.3133298093588337,
+        0.0
+      ]
+    },
+    {
+      "uid": 448479,
+      "initial_volume_km3": 10191.96244729935,
+      "final_relative_residual": 0.0006439325283815744,
+      "crossing_volume_time_fraction": 0.7256556112812889,
+      "crossing_step_absolute_volume_change_km3": 16.868389817381406,
+      "single_face_step_absolute_volume_change_km3": 5.10675923593454,
+      "signed_step_change_km3": [
+        -2.0667624440212577,
+        8.629698591881215
+      ]
+    }
+  ],
+  "ever_crossed_cell_count": 3225,
+  "crossing_volume_time_fraction": 0.4392438580564033,
+  "crossing_step_absolute_volume_change_km3": 8434.653284660117,
+  "single_face_step_absolute_volume_change_km3": 8685.76720445954,
+  "signed_increment_telescoping_error_km3": 1.1004175348716672e-10,
+  "elapsed_s": 45.655457100016065,
+  "peak_working_set_mib": 210.6953125,
+  "base_commit": "c192b5208eba7e0b8068e21110c989933378e1ad",
+  "framework_versions": {
+    "pygplates": "1.0.0",
+    "numpy": "2.5.4"
+  },
+  "units": {
+    "length": "km",
+    "area": "km2",
+    "volume": "km3",
+    "thickness": "km",
+    "time": "Ma/Myr"
+  },
+  "limitations": [
+    "保持S11同一分片运动场与原200km假设，不是物理带宽或古接触恢复",
+    "crossing仅指有限直边三角形在当前时点越过中心所选分片，不能等同真实断层",
+    "一步独立有限面积乘中心厚度的体积差按起点跨面状态分组，仅为关联诊断",
+    "初始对齐不保证演化后持续对齐；不每步切分或重映射，不能称完整守恒耦合",
+    "不对逐UID体积归一化，非陆壳/无覆盖保留缺值；未接全球/B5"
+  ]
+}

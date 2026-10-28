@@ -1,0 +1,50 @@
+{
+  "checkpoint": "U36-S12",
+  "method_class": "procedural_constrained",
+  "mapping_class": "interpolated",
+  "reference_geometry_class": "user_override",
+  "method_name": "同一S11心射两板块SLERP场的有限材料求积与跨片关联审计",
+  "method_version": "U36-S12",
+  "model_resolution": "原世界L7约60km；指定200km宽参考带；新增子单元仅为求积采样",
+  "units": {
+    "length": "km",
+    "area": "km2",
+    "volume": "km3",
+    "thickness": "km",
+    "time": "Ma/Myr"
+  },
+  "versions": {
+    "pygplates": "1.0.0",
+    "scipy": "1.18.1",
+    "shapely": "2.2.0",
+    "GEOS": "3.14.1",
+    "numpy": "2.5.4"
+  },
+  "references": [
+    {
+      "url": "https://shapely.readthedocs.io/en/stable/reference/shapely.constrained_delaunay_triangles.html",
+      "verified": "2026-10-28",
+      "scope": "GEOS约束三角剖分保留多边形边界"
+    },
+    {
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.Slerp.html",
+      "verified": "2026-10-28",
+      "scope": "复用既有SLERP有限旋转插值，不新选求解器"
+    }
+  ],
+  "assumptions": [
+    "与S11共用同一history_v2.rot、network.gpml、reference_connectivity、来源初始域",
+    "H0除以解析累计J给中心厚度；体积用独立有限球面面积乘中心厚度",
+    "初始裁切也增加单元数及改变求积点，不是等成本的单因素试验",
+    "裁切及细分后低于既有1e-9km²面积精度底的微片保留逐UID面积/初始库存账；只不求不稳定有限面积比",
+    "不每步裁切，不求真实应力流变、古接触、物理带宽、沉降或海岸"
+  ],
+  "setup_note": "所有新文件/环境/计算/缓存均在D盘既有工作树；没有新依赖、系统设置或全球演化",
+  "failure_history": [
+    {
+      "kind": "dependency_not_ready",
+      "log": ".cache/u36_s12_original_l2_dependency_failure.log",
+      "resolution": "原细档在S11依赖NPZ生成前调用，保留原错误日志；依赖就绪后重跑完成"
+    }
+  ]
+}

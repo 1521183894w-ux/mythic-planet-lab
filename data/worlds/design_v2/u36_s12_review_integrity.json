@@ -1,0 +1,11 @@
+{
+  "checkpoint": "U36-S12",
+  "method_class": "procedural_constrained",
+  "review": "reviews/stage1_2026-10-28_7.md",
+  "original_bytes": 12360,
+  "original_sha256": "dc7c8a8c662d9ffc58a3bb9eadad4ad0fa3e6c10c06e4661a9b1935a4b1399ed",
+  "original_LF_bytes": 12360,
+  "original_LF_sha256": "dc7c8a8c662d9ffc58a3bb9eadad4ad0fa3e6c10c06e4661a9b1935a4b1399ed",
+  "raw_prefix_preserved": true,
+  "LF_prefix_preserved": true
+}

@@ -1,0 +1,31 @@
+{
+  "checkpoint": "U36-S12",
+  "method_class": "visual_only",
+  "version": "c192b52+U36-S12",
+  "figures": [
+    {
+      "file": "117_initial_partition.png",
+      "title": "同一来源域的初始分区对照",
+      "note": "只改求积分区，不改运动场。初始跨片1308→0；有限精度微片及逐UID初始库存差另列。",
+      "sha256": "84ffe8da7028257cde5c2cc1597f7fec416b5dc1260ea087f43b57f6326adabe"
+    },
+    {
+      "file": "118_quadrature_comparison.png",
+      "title": "六案独立有限面积—中心厚度对照",
+      "note": "相同L号的单元数量不同，不能称同样成本的精度排名；三档不证明收敛阶。",
+      "sha256": "e25f858943ec05f919bc99f102c9e566a48f3b95676e18a2c601a04ed4a357c0"
+    },
+    {
+      "file": "119_nonmonotonic_sources.png",
+      "title": "原15个来源逐项核对",
+      "note": "完整77来源和两个分区的非单调清单均在JSON保留；不能仅挑改善来源。",
+      "sha256": "0e3182c2db5711c9cb00b7b886c5810a14cd389efb673d1ffbfe7ccac16e9bd6"
+    },
+    {
+      "file": "120_crossing_association.png",
+      "title": "演化过程中跨片关联",
+      "note": "跨片指运动插值分区，不是地质断层；初始对齐不等于后续持续对齐，未每步重切或强制守恒。",
+      "sha256": "91b0ec4f6989ed3ac17aa21a07d0a1aff476c321fd91e0b423ed12d300476db6"
+    }
+  ]
+}
