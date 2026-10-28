@@ -1,0 +1,80 @@
+{
+  "checkpoint": "U36-S11",
+  "method_class": "procedural_constrained",
+  "mapping_class": "interpolated",
+  "same_S9_connectivity": true,
+  "edge_km": 30,
+  "patch_km": 1,
+  "rows": [
+    {
+      "projection": "S10 LAEA",
+      "point_count": 1398,
+      "query_counts": {
+        "outside": 91,
+        "unsupported": 125,
+        "inverted": 0,
+        "overlapping": 0
+      },
+      "by_role": {
+        "source_vertices": {
+          "outside": 0,
+          "unsupported": 34,
+          "inverted": 0,
+          "overlapping": 0
+        },
+        "source_centers": {
+          "outside": 0,
+          "unsupported": 0,
+          "inverted": 0,
+          "overlapping": 0
+        },
+        "patch_ring": {
+          "outside": 91,
+          "unsupported": 91,
+          "inverted": 0,
+          "overlapping": 0
+        }
+      },
+      "nonpositive_projected_triangles": 0
+    },
+    {
+      "projection": "S11 心射，同一来源连接",
+      "point_count": 1398,
+      "query_counts": {
+        "outside": 91,
+        "unsupported": 114,
+        "inverted": 0,
+        "overlapping": 0
+      },
+      "by_role": {
+        "source_vertices": {
+          "outside": 0,
+          "unsupported": 23,
+          "inverted": 0,
+          "overlapping": 0
+        },
+        "source_centers": {
+          "outside": 0,
+          "unsupported": 0,
+          "inverted": 0,
+          "overlapping": 0
+        },
+        "patch_ring": {
+          "outside": 91,
+          "unsupported": 91,
+          "inverted": 0,
+          "overlapping": 0
+        }
+      },
+      "nonpositive_projected_triangles": 0
+    }
+  ],
+  "fragments": {
+    "raw_triangle_count": 254,
+    "numerically_degenerate_count": 21,
+    "degenerate_area_km2": 3.343386503267378e-09,
+    "area_precision_floor_km2": 1e-09,
+    "note": "浮点碎片只从J比值审计中排除，原裁切面积/体积账保持；非质量指标阈值"
+  },
+  "elapsed_s": 0.3510701999985031
+}

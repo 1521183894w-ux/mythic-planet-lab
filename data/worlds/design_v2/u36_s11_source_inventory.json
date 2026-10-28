@@ -1,0 +1,635 @@
+{
+  "checkpoint": "U36-S11",
+  "method_class": "procedural_constrained",
+  "rows": [
+    {
+      "uid": 76270,
+      "full_geometry_volume_km3": 30661.89835972412,
+      "full_finite_volume_km3": 30661.8983589177,
+      "outer_geometry_volume_km3": 4325.996253122458,
+      "outer_finite_volume_km3": 4325.99625295825,
+      "original_S8_signed_outer_inventory_km3": 4325.996252339079
+    },
+    {
+      "uid": 65973,
+      "full_geometry_volume_km3": 134015.78909249217,
+      "full_finite_volume_km3": 134015.7890922489,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 114590,
+      "full_geometry_volume_km3": 11366.772121460275,
+      "full_finite_volume_km3": 11366.772120815298,
+      "outer_geometry_volume_km3": 3112.0061641347174,
+      "outer_finite_volume_km3": 3112.00616277575,
+      "original_S8_signed_outer_inventory_km3": 3112.006161798301
+    },
+    {
+      "uid": 55442,
+      "full_geometry_volume_km3": 101553.68102900272,
+      "full_finite_volume_km3": 101553.68102906975,
+      "outer_geometry_volume_km3": 4626.874119864405,
+      "outer_finite_volume_km3": 4626.874118177297,
+      "original_S8_signed_outer_inventory_km3": 4626.874118306863
+    },
+    {
+      "uid": 22840,
+      "full_geometry_volume_km3": 75758.45956213845,
+      "full_finite_volume_km3": 75758.45956017279,
+      "outer_geometry_volume_km3": 5634.946912870824,
+      "outer_finite_volume_km3": 5634.946909715125,
+      "original_S8_signed_outer_inventory_km3": 5634.946910540108
+    },
+    {
+      "uid": 13176,
+      "full_geometry_volume_km3": 133363.1465818705,
+      "full_finite_volume_km3": 133363.146579859,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 76269,
+      "full_geometry_volume_km3": 133238.34890075005,
+      "full_finite_volume_km3": 133238.34889796042,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 7.762573659420013e-07
+    },
+    {
+      "uid": 114593,
+      "full_geometry_volume_km3": 133067.67342265206,
+      "full_finite_volume_km3": 133067.67342097306,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 55449,
+      "full_geometry_volume_km3": 132796.23497248135,
+      "full_finite_volume_km3": 132796.23497121912,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 6160,
+      "full_geometry_volume_km3": 24132.197507920602,
+      "full_finite_volume_km3": 24132.197506187316,
+      "outer_geometry_volume_km3": 3912.568574511953,
+      "outer_finite_volume_km3": 3912.568573867976,
+      "original_S8_signed_outer_inventory_km3": 3912.5685752829086
+    },
+    {
+      "uid": 51403,
+      "full_geometry_volume_km3": 92915.48252231341,
+      "full_finite_volume_km3": 92915.48251940454,
+      "outer_geometry_volume_km3": 4832.843616191363,
+      "outer_finite_volume_km3": 4832.84361358885,
+      "original_S8_signed_outer_inventory_km3": 4832.843613895762
+    },
+    {
+      "uid": 95088,
+      "full_geometry_volume_km3": 130712.84056792282,
+      "full_finite_volume_km3": 130712.84056739962,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -7.642083801329136e-07
+    },
+    {
+      "uid": 76272,
+      "full_geometry_volume_km3": 7329.469343845915,
+      "full_finite_volume_km3": 7329.469343028056,
+      "outer_geometry_volume_km3": 2752.6028199290345,
+      "outer_finite_volume_km3": 2752.6028193996544,
+      "original_S8_signed_outer_inventory_km3": 2752.6028184051493
+    },
+    {
+      "uid": 17718,
+      "full_geometry_volume_km3": 129360.39193955476,
+      "full_finite_volume_km3": 129360.39193962545,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 95089,
+      "full_geometry_volume_km3": 67061.52951191386,
+      "full_finite_volume_km3": 67061.52950975257,
+      "outer_geometry_volume_km3": 5489.051017746288,
+      "outer_finite_volume_km3": 5489.05101520453,
+      "original_S8_signed_outer_inventory_km3": 5489.051016230085
+    },
+    {
+      "uid": 95080,
+      "full_geometry_volume_km3": 128640.82827161708,
+      "full_finite_volume_km3": 128640.82826915184,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 7.557391654700041e-07
+    },
+    {
+      "uid": 111035,
+      "full_geometry_volume_km3": 38470.21408817021,
+      "full_finite_volume_km3": 38470.21408675207,
+      "outer_geometry_volume_km3": 4585.989250039782,
+      "outer_finite_volume_km3": 4585.989248701337,
+      "original_S8_signed_outer_inventory_km3": 4585.989248529273
+    },
+    {
+      "uid": 111036,
+      "full_geometry_volume_km3": 120667.65546638863,
+      "full_finite_volume_km3": 120667.65546436608,
+      "outer_geometry_volume_km3": 2586.9876105451417,
+      "outer_finite_volume_km3": 2586.9876094161964,
+      "original_S8_signed_outer_inventory_km3": 2586.987611300283
+    },
+    {
+      "uid": 12132,
+      "full_geometry_volume_km3": 1323.749183273402,
+      "full_finite_volume_km3": 1323.7491839024929,
+      "outer_geometry_volume_km3": 1261.895765553417,
+      "outer_finite_volume_km3": 1261.8957647045963,
+      "original_S8_signed_outer_inventory_km3": 1261.895763424797
+    },
+    {
+      "uid": 114585,
+      "full_geometry_volume_km3": 50707.90249656337,
+      "full_finite_volume_km3": 50707.902494753966,
+      "outer_geometry_volume_km3": 4997.917912217354,
+      "outer_finite_volume_km3": 4997.917912293989,
+      "original_S8_signed_outer_inventory_km3": 4997.917914342004
+    },
+    {
+      "uid": 4161,
+      "full_geometry_volume_km3": 109656.06449118079,
+      "full_finite_volume_km3": 109656.06448976634,
+      "outer_geometry_volume_km3": 3105.2234493255974,
+      "outer_finite_volume_km3": 3105.223448564487,
+      "original_S8_signed_outer_inventory_km3": 3105.2234493255964
+    },
+    {
+      "uid": 137194,
+      "full_geometry_volume_km3": 42529.526729362,
+      "full_finite_volume_km3": 42529.52672881644,
+      "outer_geometry_volume_km3": 4585.867449500189,
+      "outer_finite_volume_km3": 4585.867448613747,
+      "original_S8_signed_outer_inventory_km3": 4585.867446727534
+    },
+    {
+      "uid": 114591,
+      "full_geometry_volume_km3": 116639.40397818376,
+      "full_finite_volume_km3": 116639.40397694816,
+      "outer_geometry_volume_km3": 2274.578175526692,
+      "outer_finite_volume_km3": 2274.5781740999764,
+      "original_S8_signed_outer_inventory_km3": 2274.5781741412065
+    },
+    {
+      "uid": 30093,
+      "full_geometry_volume_km3": 118518.3578234366,
+      "full_finite_volume_km3": 118518.35782277431,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -2.7704372769221663e-06
+    },
+    {
+      "uid": 51405,
+      "full_geometry_volume_km3": 118539.04362165697,
+      "full_finite_volume_km3": 118539.04362148582,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -6.924819899722934e-07
+    },
+    {
+      "uid": 83886,
+      "full_geometry_volume_km3": 118429.92028620136,
+      "full_finite_volume_km3": 118429.92028445468,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 1.3842509360983968e-06
+    },
+    {
+      "uid": 55450,
+      "full_geometry_volume_km3": 103025.57776085791,
+      "full_finite_volume_km3": 103025.57775891271,
+      "outer_geometry_volume_km3": 3337.561585506807,
+      "outer_finite_volume_km3": 3337.5615839456423,
+      "original_S8_signed_outer_inventory_km3": 3337.5615834304626
+    },
+    {
+      "uid": 137195,
+      "full_geometry_volume_km3": 118081.01881057116,
+      "full_finite_volume_km3": 118081.01880921009,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 566,
+      "full_geometry_volume_km3": 112714.91155936514,
+      "full_finite_volume_km3": 112714.91155757465,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 71061,
+      "full_geometry_volume_km3": 104693.55849690754,
+      "full_finite_volume_km3": 104693.55849552325,
+      "outer_geometry_volume_km3": 2308.99245440171,
+      "outer_finite_volume_km3": 2308.992455018143,
+      "original_S8_signed_outer_inventory_km3": 2308.992455080748
+    },
+    {
+      "uid": 21809,
+      "full_geometry_volume_km3": 14521.845340271004,
+      "full_finite_volume_km3": 14521.845339696041,
+      "outer_geometry_volume_km3": 3187.0175041683005,
+      "outer_finite_volume_km3": 3187.0175023703855,
+      "original_S8_signed_outer_inventory_km3": 3187.0175021312025
+    },
+    {
+      "uid": 16734,
+      "full_geometry_volume_km3": 14211.975643176225,
+      "full_finite_volume_km3": 14211.975642055553,
+      "outer_geometry_volume_km3": 3325.851021673052,
+      "outer_finite_volume_km3": 3325.851021293329,
+      "original_S8_signed_outer_inventory_km3": 3325.8510204214726
+    },
+    {
+      "uid": 43200,
+      "full_geometry_volume_km3": 16329.012497106478,
+      "full_finite_volume_km3": 16329.012496155448,
+      "outer_geometry_volume_km3": 3498.133961613758,
+      "outer_finite_volume_km3": 3498.1339606580736,
+      "original_S8_signed_outer_inventory_km3": 3498.1339616137575
+    },
+    {
+      "uid": 91204,
+      "full_geometry_volume_km3": 33.977675103168416,
+      "full_finite_volume_km3": 33.97767470375004,
+      "outer_geometry_volume_km3": 33.97767572848855,
+      "outer_finite_volume_km3": 33.97767471041248,
+      "original_S8_signed_outer_inventory_km3": 33.977675103168416
+    },
+    {
+      "uid": 91206,
+      "full_geometry_volume_km3": 47338.73209402835,
+      "full_finite_volume_km3": 47338.73209374506,
+      "outer_geometry_volume_km3": 4463.057574350197,
+      "outer_finite_volume_km3": 4463.057570845915,
+      "original_S8_signed_outer_inventory_km3": 4463.057568151809
+    },
+    {
+      "uid": 64244,
+      "full_geometry_volume_km3": 53051.007791342214,
+      "full_finite_volume_km3": 53051.007789821095,
+      "outer_geometry_volume_km3": 4628.332752514713,
+      "outer_finite_volume_km3": 4628.332753061115,
+      "original_S8_signed_outer_inventory_km3": 4628.332753134324
+    },
+    {
+      "uid": 17521,
+      "full_geometry_volume_km3": 20723.786757413847,
+      "full_finite_volume_km3": 20723.78675690814,
+      "outer_geometry_volume_km3": 3818.8732841449196,
+      "outer_finite_volume_km3": 3818.8732843238904,
+      "original_S8_signed_outer_inventory_km3": 3818.873284763791
+    },
+    {
+      "uid": 91207,
+      "full_geometry_volume_km3": 89444.80811114928,
+      "full_finite_volume_km3": 89444.80811061237,
+      "outer_geometry_volume_km3": 3559.840073337875,
+      "outer_finite_volume_km3": 3559.8400716796073,
+      "original_S8_signed_outer_inventory_km3": 3559.8400708630506
+    },
+    {
+      "uid": 2732,
+      "full_geometry_volume_km3": 90511.74921471177,
+      "full_finite_volume_km3": 90511.74921349892,
+      "outer_geometry_volume_km3": 3392.900028224773,
+      "outer_finite_volume_km3": 3392.9000256896584,
+      "original_S8_signed_outer_inventory_km3": 3392.9000257506705
+    },
+    {
+      "uid": 24420,
+      "full_geometry_volume_km3": 19679.216829908062,
+      "full_finite_volume_km3": 19679.216830108016,
+      "outer_geometry_volume_km3": 3574.195550015914,
+      "outer_finite_volume_km3": 3574.1955499277083,
+      "original_S8_signed_outer_inventory_km3": 3574.1955487791656
+    },
+    {
+      "uid": 79874,
+      "full_geometry_volume_km3": 60810.44129365042,
+      "full_finite_volume_km3": 60810.44129159161,
+      "outer_geometry_volume_km3": 4428.578559558051,
+      "outer_finite_volume_km3": 4428.578558460029,
+      "original_S8_signed_outer_inventory_km3": 4428.5785589426305
+    },
+    {
+      "uid": 79872,
+      "full_geometry_volume_km3": 865.4261268923682,
+      "full_finite_volume_km3": 865.4261264994417,
+      "outer_geometry_volume_km3": 703.2216264575729,
+      "outer_finite_volume_km3": 703.2216256754447,
+      "original_S8_signed_outer_inventory_km3": 703.221625226954
+    },
+    {
+      "uid": 51397,
+      "full_geometry_volume_km3": 79925.05032149708,
+      "full_finite_volume_km3": 79925.05031859955,
+      "outer_geometry_volume_km3": 4224.149685444091,
+      "outer_finite_volume_km3": 4224.149684415876,
+      "original_S8_signed_outer_inventory_km3": 4224.149686669814
+    },
+    {
+      "uid": 60859,
+      "full_geometry_volume_km3": 104912.23435042913,
+      "full_finite_volume_km3": 104912.23434873413,
+      "outer_geometry_volume_km3": 803.0553763920475,
+      "outer_finite_volume_km3": 803.0553767053665,
+      "original_S8_signed_outer_inventory_km3": 803.055377617784
+    },
+    {
+      "uid": 71754,
+      "full_geometry_volume_km3": 40860.08269698755,
+      "full_finite_volume_km3": 40860.08269623749,
+      "outer_geometry_volume_km3": 5177.095840388483,
+      "outer_finite_volume_km3": 5177.095839636997,
+      "original_S8_signed_outer_inventory_km3": 5177.095840388487
+    },
+    {
+      "uid": 71757,
+      "full_geometry_volume_km3": 105034.50874073242,
+      "full_finite_volume_km3": 105034.5087387126,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 6.1285390984267e-07
+    },
+    {
+      "uid": 163770,
+      "full_geometry_volume_km3": 4917.561858783886,
+      "full_finite_volume_km3": 4917.5618571501145,
+      "outer_geometry_volume_km3": 1761.5322881374434,
+      "outer_finite_volume_km3": 1761.5322857142573,
+      "original_S8_signed_outer_inventory_km3": 1761.5322875245793
+    },
+    {
+      "uid": 94307,
+      "full_geometry_volume_km3": 101609.58765652156,
+      "full_finite_volume_km3": 101609.58765698805,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -2.451459295116365e-06
+    },
+    {
+      "uid": 120042,
+      "full_geometry_volume_km3": 98099.81694728379,
+      "full_finite_volume_km3": 98099.81694610874,
+      "outer_geometry_volume_km3": 1779.0779762638597,
+      "outer_finite_volume_km3": 1779.0779736978564,
+      "original_S8_signed_outer_inventory_km3": 1779.0779744252795
+    },
+    {
+      "uid": 91202,
+      "full_geometry_volume_km3": 54615.50221932808,
+      "full_finite_volume_km3": 54615.502219234215,
+      "outer_geometry_volume_km3": 4410.105805377077,
+      "outer_finite_volume_km3": 4410.105803715385,
+      "original_S8_signed_outer_inventory_km3": 4410.105802318401
+    },
+    {
+      "uid": 94306,
+      "full_geometry_volume_km3": 483.17864843895063,
+      "full_finite_volume_km3": 483.1786476888715,
+      "outer_geometry_volume_km3": 464.8096681765993,
+      "outer_finite_volume_km3": 464.80966754991454,
+      "original_S8_signed_outer_inventory_km3": 464.8096669552083
+    },
+    {
+      "uid": 91208,
+      "full_geometry_volume_km3": 103100.107979263,
+      "full_finite_volume_km3": 103100.10797784048,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 91198,
+      "full_geometry_volume_km3": 103082.02738250076,
+      "full_finite_volume_km3": 103082.02738244018,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 71686,
+      "full_geometry_volume_km3": 99353.5320188101,
+      "full_finite_volume_km3": 99353.53201766848,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 6.103218765929341e-07
+    },
+    {
+      "uid": 52268,
+      "full_geometry_volume_km3": 91533.04429661836,
+      "full_finite_volume_km3": 91533.04429546626,
+      "outer_geometry_volume_km3": 3130.347892336801,
+      "outer_finite_volume_km3": 3130.3478902572465,
+      "original_S8_signed_outer_inventory_km3": 3130.3478892857092
+    },
+    {
+      "uid": 120015,
+      "full_geometry_volume_km3": 24520.109731865938,
+      "full_finite_volume_km3": 24520.10973145726,
+      "outer_geometry_volume_km3": 3738.3573534622697,
+      "outer_finite_volume_km3": 3738.357351934561,
+      "original_S8_signed_outer_inventory_km3": 3738.3573498017395
+    },
+    {
+      "uid": 24452,
+      "full_geometry_volume_km3": 102913.9616453747,
+      "full_finite_volume_km3": 102913.96164317556,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -6.094342097640038e-07
+    },
+    {
+      "uid": 14011,
+      "full_geometry_volume_km3": 95204.37487429939,
+      "full_finite_volume_km3": 95204.37487322034,
+      "outer_geometry_volume_km3": 2440.7934650092748,
+      "outer_finite_volume_km3": 2440.7934640050166,
+      "original_S8_signed_outer_inventory_km3": 2440.7934637908766
+    },
+    {
+      "uid": 4569,
+      "full_geometry_volume_km3": 100270.91742728252,
+      "full_finite_volume_km3": 100270.91742632279,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 48346,
+      "full_geometry_volume_km3": 100225.35726522851,
+      "full_finite_volume_km3": 100225.35726435782,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -6.045156624168158e-07
+    },
+    {
+      "uid": 120021,
+      "full_geometry_volume_km3": 98644.07408677395,
+      "full_finite_volume_km3": 98644.07408476176,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 120016,
+      "full_geometry_volume_km3": 65876.01677944121,
+      "full_finite_volume_km3": 65876.01677779327,
+      "outer_geometry_volume_km3": 4169.704165934532,
+      "outer_finite_volume_km3": 4169.704163597331,
+      "original_S8_signed_outer_inventory_km3": 4169.704164121569
+    },
+    {
+      "uid": 25431,
+      "full_geometry_volume_km3": 29897.692858288356,
+      "full_finite_volume_km3": 29897.692857340375,
+      "outer_geometry_volume_km3": 3924.1971209624235,
+      "outer_finite_volume_km3": 3924.1971195713595,
+      "original_S8_signed_outer_inventory_km3": 3924.197120358138
+    },
+    {
+      "uid": 120002,
+      "full_geometry_volume_km3": 90197.12621041576,
+      "full_finite_volume_km3": 90197.12620973415,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -1.2056698324158788e-06
+    },
+    {
+      "uid": 120004,
+      "full_geometry_volume_km3": 67907.16010786004,
+      "full_finite_volume_km3": 67907.16010595934,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 119908,
+      "full_geometry_volume_km3": 85730.83389739764,
+      "full_finite_volume_km3": 85730.83389716201,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 6.026966730132699e-07
+    },
+    {
+      "uid": 16733,
+      "full_geometry_volume_km3": 98224.69399851437,
+      "full_finite_volume_km3": 98224.6939978053,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 1.8078862922266126e-06
+    },
+    {
+      "uid": 67113,
+      "full_geometry_volume_km3": 97811.78504445247,
+      "full_finite_volume_km3": 97811.78504408682,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 43378,
+      "full_geometry_volume_km3": 20164.331838606337,
+      "full_finite_volume_km3": 20164.331837830156,
+      "outer_geometry_volume_km3": 3273.303019463071,
+      "outer_finite_volume_km3": 3273.3030185531256,
+      "original_S8_signed_outer_inventory_km3": 3273.3030170745733
+    },
+    {
+      "uid": 91203,
+      "full_geometry_volume_km3": 64641.4131249448,
+      "full_finite_volume_km3": 64641.41312338089,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 1.7910642782226205e-06
+    },
+    {
+      "uid": 79873,
+      "full_geometry_volume_km3": 97439.17820059406,
+      "full_finite_volume_km3": 97439.1781995978,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 79875,
+      "full_geometry_volume_km3": 97461.75044748031,
+      "full_finite_volume_km3": 97461.75044865042,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": -3.582012141123414e-06
+    },
+    {
+      "uid": 448135,
+      "full_geometry_volume_km3": 105.32506465237135,
+      "full_finite_volume_km3": 105.3250641261892,
+      "outer_geometry_volume_km3": 105.06420221103838,
+      "outer_finite_volume_km3": 105.0642016302701,
+      "original_S8_signed_outer_inventory_km3": 105.06420280587729
+    },
+    {
+      "uid": 448142,
+      "full_geometry_volume_km3": 31263.890560603642,
+      "full_finite_volume_km3": 31263.89056047511,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    },
+    {
+      "uid": 448239,
+      "full_geometry_volume_km3": 20566.10244831343,
+      "full_finite_volume_km3": 20566.10244451053,
+      "outer_geometry_volume_km3": 1092.7380064110632,
+      "outer_finite_volume_km3": 1092.738003585595,
+      "original_S8_signed_outer_inventory_km3": 1092.7380064110657
+    },
+    {
+      "uid": 448261,
+      "full_geometry_volume_km3": 479.63641356010095,
+      "full_finite_volume_km3": 479.6364128756891,
+      "outer_geometry_volume_km3": 419.56697475182636,
+      "outer_finite_volume_km3": 419.56697377683855,
+      "original_S8_signed_outer_inventory_km3": 419.5669735621485
+    },
+    {
+      "uid": 448479,
+      "full_geometry_volume_km3": 10191.962447531963,
+      "full_finite_volume_km3": 10191.962447347465,
+      "outer_geometry_volume_km3": 0.0,
+      "outer_finite_volume_km3": 0.0,
+      "original_S8_signed_outer_inventory_km3": 0.0
+    }
+  ],
+  "source_uid_count": 77,
+  "original_S8_negative_signed_inventory_count": 8,
+  "original_S8_minimum_signed_inventory_km3": -3.582012141123414e-06,
+  "original_S8_signed_inventory_preserved": true,
+  "gnomonic_planar_target_outside_area_km2": 1.0042759816081018e-09,
+  "maximum_original_vertex_distance_outside_network_m": 2.395983076552466e-09,
+  "full_geometry_minus_finite_initial_km3": 8.394664073563263e-05,
+  "outer_geometry_minus_finite_initial_km3": 5.540913850410334e-05,
+  "notes": [
+    "S8原库存有符号差逐UID原样保留，不归零或当作物理负材料；本轮正几何外圈另列，不冒充相同逐项账值",
+    "有限单元中低于既有面积精度底的碎片继续单列，不改变旧裁切账",
+    "心射平面面积只诊断几何差，不替代球面材料面积；极薄片球面面积可能受浮点误差底影响"
+  ]
+}

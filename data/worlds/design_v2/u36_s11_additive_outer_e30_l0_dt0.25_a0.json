@@ -1,0 +1,54 @@
+{
+  "checkpoint": "U36-S11",
+  "method_class": "procedural_constrained",
+  "mapping_class": "interpolated",
+  "mapping": "显式边界采样+心射约束来源连接+两板块SLERP，逐步解析球面面积导数",
+  "tag": "outer_e30_l0_dt0.25_a0",
+  "scope": "outer",
+  "edge_km": 30.0,
+  "uniform_refinement_levels": 0,
+  "dt_myr": 0.25,
+  "anchor": 0,
+  "triangle_count": 233,
+  "vertex_count": 233,
+  "all_original_domain_preserved": true,
+  "initial_known_volume_km3": 143259.78152808815,
+  "complete_35_to_0Ma": false,
+  "failure": {
+    "t_ma": 35.0,
+    "reason": "查询没有受支持的官方三角形",
+    "query_counts": {
+      "outside": 0,
+      "unsupported": 35,
+      "inverted": 0,
+      "overlapping": 0
+    }
+  },
+  "fragments": {
+    "raw_triangle_count": 254,
+    "numerically_degenerate_count": 21,
+    "degenerate_area_km2": 3.343386503267378e-09,
+    "area_precision_floor_km2": 1e-09,
+    "note": "浮点碎片只从J比值审计中排除，原裁切面积/体积账保持；非质量指标阈值"
+  },
+  "elapsed_s": 0.12404780000360915,
+  "process_peak_working_set_mib": 90.66796875,
+  "timeline": [],
+  "source_summary": [],
+  "framework_version": "1.0.0",
+  "base_commit": "7cb67e93ce7ffb435a0e622d8565d3335824fd4b",
+  "units": {
+    "length": "km",
+    "area": "km2",
+    "volume": "km3",
+    "thickness": "km",
+    "time": "Ma/Myr"
+  },
+  "limitations": [
+    "所有141/281离散时点检查，不证明连续时间始终支持",
+    "J是所选分片插值场的解析导数；片边可有单侧不同导数，不是物理真值",
+    "来源体积仍由有限来源三角形面积乘中心厚度独立求积，不用同一有限面积比归一化",
+    "重采样改变插值场；200km物理带宽和古接触仍未由地学证据确定",
+    "非陆壳/无覆盖保留缺值，未接全球/B5，未改变默认世界"
+  ]
+}

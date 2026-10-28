@@ -1,0 +1,942 @@
+{
+  "checkpoint": "U36-S11",
+  "method_class": "procedural_constrained",
+  "base_commit": "7cb67e9",
+  "result_recalculation": [
+    {
+      "tag": "full_e30_l0_dt0.125_a0",
+      "time_count": 281,
+      "all_source_volume_max_recalculation_difference_km3": 5.820766091346741e-11,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 3.450773533586471e-08
+    },
+    {
+      "tag": "full_e30_l0_dt0.25_a0",
+      "time_count": 141,
+      "all_source_volume_max_recalculation_difference_km3": 5.820766091346741e-11,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 3.806003689987847e-08
+    },
+    {
+      "tag": "full_e30_l0_dt0.25_a301",
+      "time_count": 141,
+      "all_source_volume_max_recalculation_difference_km3": 5.820766091346741e-11,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 4.507981543611095e-08
+    },
+    {
+      "tag": "full_e30_l1_dt0.25_a0",
+      "time_count": 141,
+      "all_source_volume_max_recalculation_difference_km3": 5.820766091346741e-11,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 4.342568615811615e-08
+    },
+    {
+      "tag": "full_e30_l2_dt0.25_a0",
+      "time_count": 141,
+      "all_source_volume_max_recalculation_difference_km3": 5.820766091346741e-11,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 3.941915327487777e-08
+    },
+    {
+      "tag": "outer_e30_l0_dt0.25_a0",
+      "time_count": 141,
+      "all_source_volume_max_recalculation_difference_km3": 1.8189894035458565e-12,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 5.504539402068076e-08
+    },
+    {
+      "tag": "outer_e30_l1_dt0.25_a0",
+      "time_count": 141,
+      "all_source_volume_max_recalculation_difference_km3": 1.8189894035458565e-12,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 4.085515081797553e-08
+    },
+    {
+      "tag": "outer_e30_l2_dt0.25_a0",
+      "time_count": 141,
+      "all_source_volume_max_recalculation_difference_km3": 3.637978807091713e-12,
+      "maximum_sample_triangle_area_difference_from_pygplates_km2": 4.3992481657539884e-08
+    }
+  ],
+  "time_and_frame_comparisons": [
+    {
+      "tag": "full_e30_l0_dt0.125_a0",
+      "maximum_final_position_difference_m": 5.068691983804041,
+      "maximum_final_thickness_relative_difference": 0.00010621777248887021
+    },
+    {
+      "tag": "full_e30_l0_dt0.25_a301",
+      "maximum_final_position_difference_m": 2.743903098455855e-07,
+      "maximum_final_thickness_relative_difference": 1.7861268020169518e-12
+    }
+  ],
+  "analytic_derivative_checks": [
+    {
+      "t_ma": 35.0,
+      "points": 16,
+      "patch_radius_km": 0.1,
+      "maximum_relative_difference": 5.253111567959934e-08
+    },
+    {
+      "t_ma": 35.0,
+      "points": 16,
+      "patch_radius_km": 0.01,
+      "maximum_relative_difference": 1.000395724015668e-05
+    },
+    {
+      "t_ma": 20.0,
+      "points": 16,
+      "patch_radius_km": 0.1,
+      "maximum_relative_difference": 6.668918661745238e-08
+    },
+    {
+      "t_ma": 20.0,
+      "points": 16,
+      "patch_radius_km": 0.01,
+      "maximum_relative_difference": 1.2046897091777531e-05
+    },
+    {
+      "t_ma": 5.0,
+      "points": 16,
+      "patch_radius_km": 0.1,
+      "maximum_relative_difference": 2.6212899850719396e-08
+    },
+    {
+      "t_ma": 5.0,
+      "points": 16,
+      "patch_radius_km": 0.01,
+      "maximum_relative_difference": 8.805069315442893e-06
+    }
+  ],
+  "nonmonotonic_source_final_error": [
+    {
+      "uid": 566,
+      "absolute_final_residual": [
+        4.8398217093570395e-05,
+        5.06999143952136e-05,
+        1.8870453790675867e-05
+      ]
+    },
+    {
+      "uid": 16733,
+      "absolute_final_residual": [
+        0.0001731472137544987,
+        3.2580167075302313e-07,
+        5.49876681588124e-06
+      ]
+    },
+    {
+      "uid": 17718,
+      "absolute_final_residual": [
+        0.0004885889821237832,
+        1.688937930000023e-05,
+        2.8478992950775606e-05
+      ]
+    },
+    {
+      "uid": 60859,
+      "absolute_final_residual": [
+        6.373305862694689e-05,
+        0.00015646912618016984,
+        3.7918756734312e-05
+      ]
+    },
+    {
+      "uid": 67113,
+      "absolute_final_residual": [
+        6.970484885959749e-06,
+        3.792189994977768e-05,
+        4.5944558706434435e-06
+      ]
+    },
+    {
+      "uid": 71686,
+      "absolute_final_residual": [
+        0.00018157951150632456,
+        0.00023967096318888714,
+        5.494601023170453e-06
+      ]
+    },
+    {
+      "uid": 79873,
+      "absolute_final_residual": [
+        6.029116479489005e-05,
+        8.867210267526904e-05,
+        2.09236080591646e-05
+      ]
+    },
+    {
+      "uid": 79875,
+      "absolute_final_residual": [
+        4.211066123194218e-05,
+        7.874426949072699e-05,
+        5.192594479952461e-07
+      ]
+    },
+    {
+      "uid": 83886,
+      "absolute_final_residual": [
+        7.928618095509599e-05,
+        4.9536947408501675e-06,
+        8.073163759725333e-06
+      ]
+    },
+    {
+      "uid": 91202,
+      "absolute_final_residual": [
+        0.00011841639957121952,
+        0.0002480053674731586,
+        7.856926307892032e-05
+      ]
+    },
+    {
+      "uid": 119908,
+      "absolute_final_residual": [
+        8.33108062718857e-05,
+        0.00025039802127369004,
+        2.7705726708404654e-06
+      ]
+    },
+    {
+      "uid": 120004,
+      "absolute_final_residual": [
+        1.7002284583456095e-05,
+        5.289588552892521e-05,
+        5.2059128448078695e-06
+      ]
+    },
+    {
+      "uid": 120016,
+      "absolute_final_residual": [
+        1.0656732530422985e-05,
+        0.00015927679907790093,
+        3.4971791360915994e-05
+      ]
+    },
+    {
+      "uid": 137195,
+      "absolute_final_residual": [
+        0.00020218971890995086,
+        2.1216981030747206e-05,
+        2.1416820330300013e-05
+      ]
+    },
+    {
+      "uid": 448239,
+      "absolute_final_residual": [
+        0.0004154026409484146,
+        1.41097300518922e-05,
+        4.043773457962363e-05
+      ]
+    }
+  ],
+  "all_sources_final_error_monotonic": false,
+  "protected": {
+    "config/design/final_map_v2.yaml": {
+      "identical_to_base": true,
+      "git_object": "665db34bc82932a637564123464e48383a41ad7e"
+    },
+    "config/design/history_v2.yaml": {
+      "identical_to_base": true,
+      "git_object": "ffa7742d24913228e8000fd7dc5466a24ae1f294"
+    },
+    "config/design/history_v2_u35_c10_progressive.yaml": {
+      "identical_to_base": true,
+      "git_object": "7c0567a5614485d07b0953dbf4d8fb718c5faf4a"
+    },
+    "config/design/history_v2_u35_c4_strain.yaml": {
+      "identical_to_base": true,
+      "git_object": "f924620e4731a08cedb59391b62828bdd39f7718"
+    },
+    "config/metrics.yaml": {
+      "identical_to_base": true,
+      "git_object": "1def85b1b19cae2b1ad69886e12adedd0f959910"
+    },
+    "data/worlds/design_v2/forward_v2.json": {
+      "identical_to_base": true,
+      "git_object": "460284582ca8f6dde37e4dfdc226322e8956a0c1"
+    },
+    "data/worlds/design_v2/history_v2.rot": {
+      "identical_to_base": true,
+      "git_object": "b42b69b30b358906f4b79c91977b5cc0a2e7284b"
+    },
+    "packages/tectonics/crust.py": {
+      "identical_to_base": true,
+      "git_object": "cfd5008cd13c5cf66da127569c0d665cf401b608"
+    },
+    "packages/tectonics/engine.py": {
+      "identical_to_base": true,
+      "git_object": "bf2cde268d48c357c995469eaf4abbdc6a2bfff9"
+    },
+    "packages/tectonics/kinematics.py": {
+      "identical_to_base": true,
+      "git_object": "b4a5453dcb6b3560e60f860a5aba0cf5dadb00ed"
+    },
+    "packages/tectonics/material_audit.py": {
+      "identical_to_base": true,
+      "git_object": "1e820c495fa01ffe8dbab7597be2906a17d5c0d5"
+    },
+    "packages/tectonics/material_band.py": {
+      "identical_to_base": true,
+      "git_object": "de727f529a9753a1476156492bf3529655bfe2d3"
+    },
+    "packages/tectonics/rotation_interpolation.py": {
+      "identical_to_base": true,
+      "git_object": "8b47c6ba0305a5806f2f5a755c6ed4a581e2f297"
+    },
+    "packages/tectonics/source_clipping.py": {
+      "identical_to_base": true,
+      "git_object": "8fae1d01a3445d71839c73149ce84643e392e897"
+    },
+    "packages/tectonics/step_audit.py": {
+      "identical_to_base": true,
+      "git_object": "cc3554095b5a6fafb80e6db535d2fc21cd58d2e8"
+    },
+    "scripts/design_fixed_domain.py": {
+      "identical_to_base": true,
+      "git_object": "0fe7e9e2fb7b8e8e9187d6732ed97c7df8ec7551"
+    },
+    "scripts/design_fixed_domain_verify.py": {
+      "identical_to_base": true,
+      "git_object": "699abbacefadbdc65891589fbc522d03111b9118"
+    },
+    "scripts/design_frame_audit.py": {
+      "identical_to_base": true,
+      "git_object": "3c71953887142fd6cbd4e609d6e5107f58944486"
+    },
+    "scripts/design_frame_inputs.py": {
+      "identical_to_base": true,
+      "git_object": "793262079078d8130ad271fc9c72743298da049f"
+    },
+    "scripts/design_rotation_interpolation.py": {
+      "identical_to_base": true,
+      "git_object": "eb229868574e667b6af983a7242012fa37813cf0"
+    },
+    "scripts/design_rotation_mesh_audit.py": {
+      "identical_to_base": true,
+      "git_object": "cf177786ad7309901a83a9452afc325143078b96"
+    },
+    "scripts/design_step_audit.py": {
+      "identical_to_base": true,
+      "git_object": "b832ab0d41de739fd0d2ec4218282ad717d6b75f"
+    },
+    "scripts/design_step_audit_report.py": {
+      "identical_to_base": true,
+      "git_object": "11f0534fbf57b290b672f9bf4493eb65608ebcfd"
+    },
+    "scripts/design_step_audit_verify.py": {
+      "identical_to_base": true,
+      "git_object": "d2ca2bbee4507d61d326df66d8be2c7adf50e5fb"
+    },
+    "scripts/verify_local_checkpoint.py": {
+      "identical_to_base": true,
+      "git_object": "e95af57c3d4d06b21792cae2d0d7c91183f58799"
+    },
+    "tests/tectonics/test_material_audit.py": {
+      "identical_to_base": true,
+      "git_object": "d15ebc7621d74408881b4019b664059559b94e2f"
+    },
+    "tests/tectonics/test_material_band.py": {
+      "identical_to_base": true,
+      "git_object": "4cdd9880a8ef17d1da82121fb409719edea699c9"
+    },
+    "tests/tectonics/test_rotation_interpolation.py": {
+      "identical_to_base": true,
+      "git_object": "5399826c16a6de508284e225c089faa815a5d1e0"
+    },
+    "tests/tectonics/test_source_clipping.py": {
+      "identical_to_base": true,
+      "git_object": "dc79a591dc41ab9d97fb52f196fba2340cfead68"
+    },
+    "tests/tectonics/test_step_audit.py": {
+      "identical_to_base": true,
+      "git_object": "f46971092e8a314062c72050819b97f665db195b"
+    }
+  },
+  "protected_identical": true,
+  "reference_metrics_identical_except_timings": true,
+  "region_windows_identical": true,
+  "test_summary": "2 failed, 46 passed in 1.15s",
+  "all_tests_passed": false,
+  "new_tests_passed": true,
+  "old_strict_failures_retained": true,
+  "all_eight_trials_full_point_support_at_sampled_times": true,
+  "physical_field_validated": false,
+  "physical_width_identified": false,
+  "global_or_B5_coupled": false,
+  "quality_thresholds_changed": false,
+  "default_world_adopted": false,
+  "boundary_representation_difference": {
+    "checkpoint": "U36-S11",
+    "method_class": "procedural_constrained",
+    "mapping_class": "interpolated",
+    "reference_connectivity": [
+      [
+        "S11_aligned_side0_00054",
+        "S11_aligned_side1_00000",
+        "S11_aligned_side0_00055"
+      ],
+      [
+        "S11_aligned_side0_00001",
+        "S11_aligned_side0_00000",
+        "S11_aligned_side1_00055"
+      ],
+      [
+        "S11_aligned_side1_00001",
+        "S11_aligned_side1_00000",
+        "S11_aligned_side0_00054"
+      ],
+      [
+        "S11_aligned_side1_00055",
+        "S11_aligned_side1_00054",
+        "S11_aligned_side0_00001"
+      ],
+      [
+        "S11_aligned_side0_00054",
+        "S11_aligned_side0_00053",
+        "S11_aligned_side1_00001"
+      ],
+      [
+        "S11_aligned_side0_00002",
+        "S11_aligned_side0_00001",
+        "S11_aligned_side1_00054"
+      ],
+      [
+        "S11_aligned_side1_00002",
+        "S11_aligned_side1_00001",
+        "S11_aligned_side0_00053"
+      ],
+      [
+        "S11_aligned_side1_00054",
+        "S11_aligned_side1_00053",
+        "S11_aligned_side0_00002"
+      ],
+      [
+        "S11_aligned_side1_00003",
+        "S11_aligned_side1_00002",
+        "S11_aligned_side0_00053"
+      ],
+      [
+        "S11_aligned_side1_00053",
+        "S11_aligned_side1_00052",
+        "S11_aligned_side0_00002"
+      ],
+      [
+        "S11_aligned_side0_00053",
+        "S11_aligned_side0_00052",
+        "S11_aligned_side1_00003"
+      ],
+      [
+        "S11_aligned_side0_00003",
+        "S11_aligned_side0_00002",
+        "S11_aligned_side1_00052"
+      ],
+      [
+        "S11_aligned_side0_00052",
+        "S11_aligned_side0_00051",
+        "S11_aligned_side1_00003"
+      ],
+      [
+        "S11_aligned_side0_00004",
+        "S11_aligned_side0_00003",
+        "S11_aligned_side1_00052"
+      ],
+      [
+        "S11_aligned_side1_00004",
+        "S11_aligned_side1_00003",
+        "S11_aligned_side0_00051"
+      ],
+      [
+        "S11_aligned_side1_00052",
+        "S11_aligned_side1_00051",
+        "S11_aligned_side0_00004"
+      ],
+      [
+        "S11_aligned_side0_00051",
+        "S11_aligned_side0_00050",
+        "S11_aligned_side1_00004"
+      ],
+      [
+        "S11_aligned_side0_00005",
+        "S11_aligned_side0_00004",
+        "S11_aligned_side1_00051"
+      ],
+      [
+        "S11_aligned_side1_00005",
+        "S11_aligned_side1_00004",
+        "S11_aligned_side0_00050"
+      ],
+      [
+        "S11_aligned_side1_00051",
+        "S11_aligned_side1_00050",
+        "S11_aligned_side0_00005"
+      ],
+      [
+        "S11_aligned_side0_00050",
+        "S11_aligned_side0_00049",
+        "S11_aligned_side1_00005"
+      ],
+      [
+        "S11_aligned_side1_00050",
+        "S11_aligned_side1_00049",
+        "S11_aligned_side0_00005"
+      ],
+      [
+        "S11_aligned_side1_00006",
+        "S11_aligned_side1_00005",
+        "S11_aligned_side0_00049"
+      ],
+      [
+        "S11_aligned_side0_00006",
+        "S11_aligned_side0_00005",
+        "S11_aligned_side1_00049"
+      ],
+      [
+        "S11_aligned_side0_00049",
+        "S11_aligned_side0_00048",
+        "S11_aligned_side1_00006"
+      ],
+      [
+        "S11_aligned_side0_00007",
+        "S11_aligned_side0_00006",
+        "S11_aligned_side1_00049"
+      ],
+      [
+        "S11_aligned_side1_00007",
+        "S11_aligned_side1_00006",
+        "S11_aligned_side0_00048"
+      ],
+      [
+        "S11_aligned_side1_00049",
+        "S11_aligned_side1_00048",
+        "S11_aligned_side0_00007"
+      ],
+      [
+        "S11_aligned_side1_00008",
+        "S11_aligned_side1_00007",
+        "S11_aligned_side0_00048"
+      ],
+      [
+        "S11_aligned_side0_00008",
+        "S11_aligned_side0_00007",
+        "S11_aligned_side1_00048"
+      ],
+      [
+        "S11_aligned_side0_00048",
+        "S11_aligned_side0_00047",
+        "S11_aligned_side1_00008"
+      ],
+      [
+        "S11_aligned_side1_00048",
+        "S11_aligned_side1_00047",
+        "S11_aligned_side0_00008"
+      ],
+      [
+        "S11_aligned_side0_00047",
+        "S11_aligned_side0_00046",
+        "S11_aligned_side1_00008"
+      ],
+      [
+        "S11_aligned_side0_00009",
+        "S11_aligned_side0_00008",
+        "S11_aligned_side1_00047"
+      ],
+      [
+        "S11_aligned_side1_00009",
+        "S11_aligned_side1_00008",
+        "S11_aligned_side0_00046"
+      ],
+      [
+        "S11_aligned_side1_00047",
+        "S11_aligned_side1_00046",
+        "S11_aligned_side0_00009"
+      ],
+      [
+        "S11_aligned_side0_00046",
+        "S11_aligned_side0_00045",
+        "S11_aligned_side1_00009"
+      ],
+      [
+        "S11_aligned_side0_00010",
+        "S11_aligned_side0_00009",
+        "S11_aligned_side1_00046"
+      ],
+      [
+        "S11_aligned_side1_00010",
+        "S11_aligned_side1_00009",
+        "S11_aligned_side0_00045"
+      ],
+      [
+        "S11_aligned_side1_00046",
+        "S11_aligned_side1_00045",
+        "S11_aligned_side0_00010"
+      ],
+      [
+        "S11_aligned_side0_00045",
+        "S11_aligned_side0_00044",
+        "S11_aligned_side1_00010"
+      ],
+      [
+        "S11_aligned_side1_00045",
+        "S11_aligned_side1_00044",
+        "S11_aligned_side0_00010"
+      ],
+      [
+        "S11_aligned_side1_00011",
+        "S11_aligned_side1_00010",
+        "S11_aligned_side0_00044"
+      ],
+      [
+        "S11_aligned_side0_00011",
+        "S11_aligned_side0_00010",
+        "S11_aligned_side1_00044"
+      ],
+      [
+        "S11_aligned_side0_00044",
+        "S11_aligned_side0_00043",
+        "S11_aligned_side1_00011"
+      ],
+      [
+        "S11_aligned_side0_00012",
+        "S11_aligned_side0_00011",
+        "S11_aligned_side1_00044"
+      ],
+      [
+        "S11_aligned_side1_00012",
+        "S11_aligned_side1_00011",
+        "S11_aligned_side0_00043"
+      ],
+      [
+        "S11_aligned_side1_00044",
+        "S11_aligned_side1_00043",
+        "S11_aligned_side0_00012"
+      ],
+      [
+        "S11_aligned_side0_00043",
+        "S11_aligned_side0_00042",
+        "S11_aligned_side1_00012"
+      ],
+      [
+        "S11_aligned_side0_00013",
+        "S11_aligned_side0_00012",
+        "S11_aligned_side1_00043"
+      ],
+      [
+        "S11_aligned_side1_00013",
+        "S11_aligned_side1_00012",
+        "S11_aligned_side0_00042"
+      ],
+      [
+        "S11_aligned_side1_00043",
+        "S11_aligned_side1_00042",
+        "S11_aligned_side0_00013"
+      ],
+      [
+        "S11_aligned_side0_00042",
+        "S11_aligned_side0_00041",
+        "S11_aligned_side1_00013"
+      ],
+      [
+        "S11_aligned_side0_00014",
+        "S11_aligned_side0_00013",
+        "S11_aligned_side1_00042"
+      ],
+      [
+        "S11_aligned_side1_00014",
+        "S11_aligned_side1_00013",
+        "S11_aligned_side0_00041"
+      ],
+      [
+        "S11_aligned_side1_00042",
+        "S11_aligned_side1_00041",
+        "S11_aligned_side0_00014"
+      ],
+      [
+        "S11_aligned_side0_00041",
+        "S11_aligned_side0_00040",
+        "S11_aligned_side1_00014"
+      ],
+      [
+        "S11_aligned_side1_00041",
+        "S11_aligned_side1_00040",
+        "S11_aligned_side0_00014"
+      ],
+      [
+        "S11_aligned_side1_00015",
+        "S11_aligned_side1_00014",
+        "S11_aligned_side0_00040"
+      ],
+      [
+        "S11_aligned_side0_00015",
+        "S11_aligned_side0_00014",
+        "S11_aligned_side1_00040"
+      ],
+      [
+        "S11_aligned_side0_00040",
+        "S11_aligned_side0_00039",
+        "S11_aligned_side1_00015"
+      ],
+      [
+        "S11_aligned_side0_00016",
+        "S11_aligned_side0_00015",
+        "S11_aligned_side1_00040"
+      ],
+      [
+        "S11_aligned_side1_00016",
+        "S11_aligned_side1_00015",
+        "S11_aligned_side0_00039"
+      ],
+      [
+        "S11_aligned_side1_00040",
+        "S11_aligned_side1_00039",
+        "S11_aligned_side0_00016"
+      ],
+      [
+        "S11_aligned_side1_00017",
+        "S11_aligned_side1_00016",
+        "S11_aligned_side0_00039"
+      ],
+      [
+        "S11_aligned_side0_00017",
+        "S11_aligned_side0_00016",
+        "S11_aligned_side1_00039"
+      ],
+      [
+        "S11_aligned_side0_00039",
+        "S11_aligned_side0_00038",
+        "S11_aligned_side1_00017"
+      ],
+      [
+        "S11_aligned_side1_00039",
+        "S11_aligned_side1_00038",
+        "S11_aligned_side0_00017"
+      ],
+      [
+        "S11_aligned_side1_00018",
+        "S11_aligned_side1_00017",
+        "S11_aligned_side0_00038"
+      ],
+      [
+        "S11_aligned_side1_00038",
+        "S11_aligned_side1_00037",
+        "S11_aligned_side0_00017"
+      ],
+      [
+        "S11_aligned_side0_00038",
+        "S11_aligned_side0_00037",
+        "S11_aligned_side1_00018"
+      ],
+      [
+        "S11_aligned_side0_00018",
+        "S11_aligned_side0_00017",
+        "S11_aligned_side1_00037"
+      ],
+      [
+        "S11_aligned_side0_00037",
+        "S11_aligned_side0_00036",
+        "S11_aligned_side1_00018"
+      ],
+      [
+        "S11_aligned_side0_00019",
+        "S11_aligned_side0_00018",
+        "S11_aligned_side1_00037"
+      ],
+      [
+        "S11_aligned_side1_00019",
+        "S11_aligned_side1_00018",
+        "S11_aligned_side0_00036"
+      ],
+      [
+        "S11_aligned_side1_00037",
+        "S11_aligned_side1_00036",
+        "S11_aligned_side0_00019"
+      ],
+      [
+        "S11_aligned_side0_00036",
+        "S11_aligned_side0_00035",
+        "S11_aligned_side1_00019"
+      ],
+      [
+        "S11_aligned_side1_00036",
+        "S11_aligned_side1_00035",
+        "S11_aligned_side0_00019"
+      ],
+      [
+        "S11_aligned_side1_00020",
+        "S11_aligned_side1_00019",
+        "S11_aligned_side0_00035"
+      ],
+      [
+        "S11_aligned_side0_00020",
+        "S11_aligned_side0_00019",
+        "S11_aligned_side1_00035"
+      ],
+      [
+        "S11_aligned_side1_00021",
+        "S11_aligned_side1_00020",
+        "S11_aligned_side0_00035"
+      ],
+      [
+        "S11_aligned_side0_00021",
+        "S11_aligned_side0_00020",
+        "S11_aligned_side1_00035"
+      ],
+      [
+        "S11_aligned_side0_00035",
+        "S11_aligned_side0_00034",
+        "S11_aligned_side1_00021"
+      ],
+      [
+        "S11_aligned_side1_00035",
+        "S11_aligned_side1_00034",
+        "S11_aligned_side0_00021"
+      ],
+      [
+        "S11_aligned_side0_00034",
+        "S11_aligned_side0_00033",
+        "S11_aligned_side1_00021"
+      ],
+      [
+        "S11_aligned_side0_00022",
+        "S11_aligned_side0_00021",
+        "S11_aligned_side1_00034"
+      ],
+      [
+        "S11_aligned_side1_00022",
+        "S11_aligned_side1_00021",
+        "S11_aligned_side0_00033"
+      ],
+      [
+        "S11_aligned_side1_00034",
+        "S11_aligned_side1_00033",
+        "S11_aligned_side0_00022"
+      ],
+      [
+        "S11_aligned_side0_00033",
+        "S11_aligned_side0_00032",
+        "S11_aligned_side1_00022"
+      ],
+      [
+        "S11_aligned_side1_00033",
+        "S11_aligned_side1_00032",
+        "S11_aligned_side0_00022"
+      ],
+      [
+        "S11_aligned_side1_00023",
+        "S11_aligned_side1_00022",
+        "S11_aligned_side0_00032"
+      ],
+      [
+        "S11_aligned_side0_00023",
+        "S11_aligned_side0_00022",
+        "S11_aligned_side1_00032"
+      ],
+      [
+        "S11_aligned_side1_00024",
+        "S11_aligned_side1_00023",
+        "S11_aligned_side0_00032"
+      ],
+      [
+        "S11_aligned_side0_00024",
+        "S11_aligned_side0_00023",
+        "S11_aligned_side1_00032"
+      ],
+      [
+        "S11_aligned_side0_00032",
+        "S11_aligned_side0_00031",
+        "S11_aligned_side1_00024"
+      ],
+      [
+        "S11_aligned_side1_00032",
+        "S11_aligned_side1_00031",
+        "S11_aligned_side0_00024"
+      ],
+      [
+        "S11_aligned_side0_00031",
+        "S11_aligned_side0_00030",
+        "S11_aligned_side1_00024"
+      ],
+      [
+        "S11_aligned_side1_00031",
+        "S11_aligned_side1_00030",
+        "S11_aligned_side0_00024"
+      ],
+      [
+        "S11_aligned_side1_00025",
+        "S11_aligned_side1_00024",
+        "S11_aligned_side0_00030"
+      ],
+      [
+        "S11_aligned_side0_00025",
+        "S11_aligned_side0_00024",
+        "S11_aligned_side1_00030"
+      ],
+      [
+        "S11_aligned_side1_00026",
+        "S11_aligned_side1_00025",
+        "S11_aligned_side0_00030"
+      ],
+      [
+        "S11_aligned_side1_00030",
+        "S11_aligned_side1_00029",
+        "S11_aligned_side0_00025"
+      ],
+      [
+        "S11_aligned_side0_00030",
+        "S11_aligned_side0_00029",
+        "S11_aligned_side1_00026"
+      ],
+      [
+        "S11_aligned_side0_00026",
+        "S11_aligned_side0_00025",
+        "S11_aligned_side1_00029"
+      ],
+      [
+        "S11_aligned_side1_00027",
+        "S11_aligned_side1_00026",
+        "S11_aligned_side0_00029"
+      ],
+      [
+        "S11_aligned_side0_00027",
+        "S11_aligned_side0_00026",
+        "S11_aligned_side1_00029"
+      ],
+      [
+        "S11_aligned_side0_00029",
+        "S11_aligned_side0_00028",
+        "S11_aligned_side1_00027"
+      ],
+      [
+        "S11_aligned_side1_00029",
+        "S11_aligned_side1_00028",
+        "S11_aligned_side0_00027"
+      ],
+      [
+        "S11_aligned_side0_00028",
+        "S11_aligned_side0_00027",
+        "S11_aligned_side1_00027"
+      ],
+      [
+        "S11_aligned_side1_00028",
+        "S11_aligned_side1_00027",
+        "S11_aligned_side0_00027"
+      ]
+    ],
+    "reference_connectivity_reuses_archive": true,
+    "reference_connectivity_sha256": "96408e4940b4ae843fa9c94cfb8b15483794ef54b7adea81c11bef46e8edb093",
+    "network_boundary_nodes": 112,
+    "triangle_count": 110,
+    "physical_input_width_km": 200.0,
+    "end_guard_km": 400.0,
+    "old_new_boundary_hausdorff_m": 0.19655601048362084,
+    "new_network_minus_old_area_km2": 0.0035539641976356506,
+    "original_target_outside_new_network_area_km2": 2.1630505919745247e-07,
+    "source_target_wkb_sha256": "5705b0055fe7d987e466f26bc45f1df1987d166c4fc0a36146902eb821eb7d94",
+    "geometry_backend": "Shapely 2.2.0/GEOS 3.14.1",
+    "assumptions": [
+      "材料范围内采用原材料轨道节点；只在范围外保留400km端部余量采样",
+      "指定边界的折线表示和插值连接确实改变，不宣称同一S9映射",
+      "不移动来源边界，不丢外圈，不增壳，不修改原200km假设宽度"
+    ]
+  },
+  "limits": [
+    "仅验证指定分片插值场；其解析J与微斑块和独立有限面积比较，不是真实岩石圈物理验证",
+    "细分三档不足以证明所有来源收敛或连续时间无折叠",
+    "新网络边界的表示改变小于约0.2m，但新坐标/连接改变内部插值场",
+    "原目标与新网络的极小几何差原样报告，不把有限点支撑当精确连续域等价"
+  ]
+}
