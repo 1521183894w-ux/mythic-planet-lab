@@ -1,0 +1,30 @@
+{
+  "checkpoint": "U36-S13",
+  "method_class": "visual_only",
+  "figures": [
+    {
+      "file": "121_material_curved_edges.png",
+      "title": "同一材料的曲边与三顶点直边",
+      "note": "按旧误差选取四个诊断单元，不代表全部来源；局部心射图保等比例；右列以米显示曲边法向偏离。",
+      "sha256": "83aa6ad7d9163f0dc65f9407e64e4c761ba191b09b4c9d04b5d6d8c337864e04"
+    },
+    {
+      "file": "122_error_decomposition.png",
+      "title": "直边误差与中心取样分开",
+      "note": "总差等于两项之和是算术分解；没有逐来源归一化，不作为质量或物理守恒证明。",
+      "sha256": "d638e7bacb91e31f8229840d7e902b99bb46bf0d8bb426565c47812405e30c8c"
+    },
+    {
+      "file": "123_independent_area_sampling.png",
+      "title": "曲边几何与内部J积分的采样敏感性",
+      "note": "最高两档也只是有限近似；跨片内部积分可不单调，两曲线不是等成本精度排名。",
+      "sha256": "33fcb77a4384172f3216d07ca92b178e4cd51bebc6d94c2d0dc0bc7d2a5d52da"
+    },
+    {
+      "file": "124_material_face_history.png",
+      "title": "直边跨片与实际材料采样点的分片历史",
+      "note": "分片是运动插值分区，不是断层；只检查141个离散时点和有限样本，非连续域证明。",
+      "sha256": "8b30f7fe0252ad15dc2b2d9fd844fc159265cb82cd3265b14ad83ab1c99fad64"
+    }
+  ]
+}

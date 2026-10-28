@@ -1,0 +1,43 @@
+...................F...........F..............                           [100%]
+================================== FAILURES ===================================
+_______ test_common_rotation_stays_within_spherical_sampling_tolerance ________
+tests\tectonics\test_material_band.py:39: in test_common_rotation_stays_within_spherical_sampling_tolerance
+    np.testing.assert_allclose(snapshots[0.]["framework_beta"],1.,atol=1e-9)
+E   AssertionError:
+E   Not equal to tolerance rtol=1e-07, atol=1e-09
+E
+E   Mismatched elements: 7 / 96 (7.29%)
+E   First 5 mismatches are at indices:
+E    [19]: 1.0000001029742276 (ACTUAL), 1.0 (DESIRED)
+E    [39]: 0.9999998772634757 (ACTUAL), 1.0 (DESIRED)
+E    [40]: 1.0000001115007353 (ACTUAL), 1.0 (DESIRED)
+E    [43]: 0.999999853306486 (ACTUAL), 1.0 (DESIRED)
+E    [84]: 1.0000001225508943 (ACTUAL), 1.0 (DESIRED)
+E   Max absolute difference among violations: 1.46693514e-07
+E   Max relative difference among violations: 1.46693514e-07
+E    ACTUAL: array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+E          1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+E          1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,...
+E    DESIRED: array(1.)
+________ test_common_rotation_network_matches_its_input_rigid_rotation ________
+tests\tectonics\test_step_audit.py:50: in test_common_rotation_network_matches_its_input_rigid_rotation
+    np.testing.assert_allclose(v,expected,rtol=2e-7,atol=1e-7)
+E   AssertionError:
+E   Not equal to tolerance rtol=2e-07, atol=1e-07
+E
+E   Mismatched elements: 4 / 6 (66.7%)
+E   Mismatch at indices:
+E    [0, 0]: 0.01744970565742333 (ACTUAL), 0.017450567101067918 (DESIRED)
+E    [0, 1]: 4.998952254892637 (ACTUAL), 4.9991990916234625 (DESIRED)
+E    [1, 0]: -0.01744966879161653 (ACTUAL), -0.01745056829656427 (DESIRED)
+E    [1, 1]: 4.998941368967876 (ACTUAL), 4.999199091622054 (DESIRED)
+E   Max absolute difference among violations: 0.00025772
+E   Max relative difference among violations: 5.15527886e-05
+E    ACTUAL: array([[ 1.744971e-02,  4.998952e+00, -2.379435e-08],
+E          [-1.744967e-02,  4.998941e+00,  4.113732e-08]])
+E    DESIRED: array([[ 1.745057e-02,  4.999199e+00, -3.425477e-08],
+E          [-1.745057e-02,  4.999199e+00,  3.423503e-08]])
+=========================== short test summary info ===========================
+FAILED tests/tectonics/test_material_band.py::test_common_rotation_stays_within_spherical_sampling_tolerance
+FAILED tests/tectonics/test_step_audit.py::test_common_rotation_network_matches_its_input_rigid_rotation
+2 failed, 44 passed in 1.14s
