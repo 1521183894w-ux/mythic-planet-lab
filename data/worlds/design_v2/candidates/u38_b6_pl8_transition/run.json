@@ -1,0 +1,196 @@
+{
+  "method_class": "procedural_constrained",
+  "structural_region_class": "user_override",
+  "method": "u38_transition_sensitivity_v1",
+  "assumptions": [
+    "B6 and PL8 polygons follow plate 101; active since 180 Ma",
+    "resistance increases smoothly inside polygons over 250 km to 0.99, not calibrated viscosity",
+    "temporarily reserved capacity continuously limits overflow reception; direct collision and erosion remain active",
+    "original 65km cap and ring redistribution otherwise retained"
+  ],
+  "limits": [
+    "real physical basin strength and inherited history unknown",
+    "ring redistribution can pass through basin to other cells; no stress or strain solver",
+    "rift material source unresolved; candidate not adopted"
+  ],
+  "units": {
+    "thickness": "km",
+    "volume": "km3",
+    "time": "Ma",
+    "elevation": "m"
+  },
+  "diagnostic_rows": [
+    {
+      "t_ma": 180.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.30450586397545,
+      "basin_max_T_km": 39.697606022831955,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 170.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.294417361150835,
+      "basin_max_T_km": 39.65591469778889,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 160.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.286968519811715,
+      "basin_max_T_km": 39.67375668489541,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 150.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.27602769250433,
+      "basin_max_T_km": 39.68974108412419,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 140.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.26890143608315,
+      "basin_max_T_km": 39.70977736696086,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 130.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.25714029107931,
+      "basin_max_T_km": 39.73216806551356,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 120.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.248442409904726,
+      "basin_max_T_km": 41.33953226226812,
+      "lateral_volume_in_km3": 1107.8492236633897,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 110.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.23581084433722,
+      "basin_max_T_km": 40.63077102704978,
+      "lateral_volume_in_km3": 352.8617897017027,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 100.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.21958986022702,
+      "basin_max_T_km": 40.23195200604211,
+      "lateral_volume_in_km3": -59.34323157356326,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 90.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.20351014781478,
+      "basin_max_T_km": 39.985050650097705,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 80.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.18784495854186,
+      "basin_max_T_km": 39.91082968483661,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 70.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.17246981564911,
+      "basin_max_T_km": 39.83289753716736,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 60.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.157093852757455,
+      "basin_max_T_km": 39.76248218530739,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 50.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.25534383117149,
+      "basin_max_T_km": 40.391827817156766,
+      "lateral_volume_in_km3": -521.8162679688415,
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 40.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.4051083829604,
+      "basin_max_T_km": 41.11200339608679,
+      "lateral_volume_in_km3": -260.59713434145306,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 30.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.427493594794875,
+      "basin_max_T_km": 41.00436588788622,
+      "lateral_volume_in_km3": -46.672967815897664,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 20.0,
+      "basin_cell_count": 284,
+      "reserved_count": 284,
+      "basin_median_T_km": 36.61225903971406,
+      "basin_max_T_km": 58.675263749438834,
+      "lateral_volume_in_km3": 23345.39641049697,
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 10.0,
+      "basin_cell_count": 284,
+      "reserved_count": 281,
+      "basin_median_T_km": 38.8415359816881,
+      "basin_max_T_km": 65.0,
+      "lateral_volume_in_km3": 917.5197244931423,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 0.0,
+      "basin_cell_count": 284,
+      "reserved_count": 281,
+      "basin_median_T_km": 41.51446726367779,
+      "basin_max_T_km": 65.0,
+      "lateral_volume_in_km3": -19486.658849659874,
+      "collapse_balance_km3": 0.0
+    }
+  ],
+  "elapsed_s": 259.3331002999985
+}
