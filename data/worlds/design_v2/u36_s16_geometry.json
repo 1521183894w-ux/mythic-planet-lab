@@ -1,0 +1,128 @@
+{
+  "method_class": "procedural_constrained",
+  "mapping_class": "interpolated",
+  "method_name": "shared_atomic_edge_local_diagnostic_v1",
+  "physical_input_resolution_km": 60,
+  "units": {
+    "distance": "km",
+    "area": "km²",
+    "time": "Ma"
+  },
+  "input_sha256": "d21a8ecddc1d5c6b203abffebaaa73fa5aa5534dc46f1923f664a6b3e0352215",
+  "sampling_segments_per_atomic_edge": 32,
+  "recognition_tolerance_km": 1e-09,
+  "split_count": 378,
+  "maximum_split_departure_km": 1.009870971099637e-12,
+  "incidence_counts": {
+    "2": 3212,
+    "1": 167
+  },
+  "sample_count": 117060,
+  "snapshots": [
+    {
+      "time_ma": 35.0,
+      "method": "independent",
+      "source_area_sum_km2": 159832.467012203,
+      "union_area_km2": 159832.46701220286,
+      "sum_minus_union_km2": 1.4551915228366852e-10,
+      "positive_pair_count": 782,
+      "pair_overlap_km2": 8.668206143005534e-10,
+      "union_symmetric_difference_km2": 6.327214731950748e-11
+    },
+    {
+      "time_ma": 35.0,
+      "method": "shared",
+      "source_area_sum_km2": 159832.467012203,
+      "union_area_km2": 159832.46701220298,
+      "sum_minus_union_km2": 2.9103830456733704e-11,
+      "positive_pair_count": 0,
+      "pair_overlap_km2": 0.0,
+      "union_symmetric_difference_km2": 6.327214731950748e-11
+    },
+    {
+      "time_ma": 20.0,
+      "method": "independent",
+      "source_area_sum_km2": 224059.54246922722,
+      "union_area_km2": 224059.5086627527,
+      "sum_minus_union_km2": 0.033806474530138075,
+      "positive_pair_count": 780,
+      "pair_overlap_km2": 0.03380647488661437,
+      "union_symmetric_difference_km2": 0.03475654595152091
+    },
+    {
+      "time_ma": 20.0,
+      "method": "shared",
+      "source_area_sum_km2": 224059.54341929842,
+      "union_area_km2": 224059.54341929857,
+      "sum_minus_union_km2": -1.4551915228366852e-10,
+      "positive_pair_count": 0,
+      "pair_overlap_km2": 0.0,
+      "union_symmetric_difference_km2": 0.03475654595152091
+    },
+    {
+      "time_ma": 5.0,
+      "method": "independent",
+      "source_area_sum_km2": 288283.33122467855,
+      "union_area_km2": 288283.2254976821,
+      "sum_minus_union_km2": 0.10572699643671513,
+      "positive_pair_count": 767,
+      "pair_overlap_km2": 0.10572753385437893,
+      "union_symmetric_difference_km2": 0.10838902387169733
+    },
+    {
+      "time_ma": 5.0,
+      "method": "shared",
+      "source_area_sum_km2": 288283.33388670837,
+      "union_area_km2": 288283.3338867083,
+      "sum_minus_union_km2": 5.820766091346741e-11,
+      "positive_pair_count": 0,
+      "pair_overlap_km2": 0.0,
+      "union_symmetric_difference_km2": 0.10838902387169733
+    },
+    {
+      "time_ma": 0.0,
+      "method": "independent",
+      "source_area_sum_km2": 309691.65471539326,
+      "union_area_km2": 309691.5149610658,
+      "sum_minus_union_km2": 0.13975432747974992,
+      "positive_pair_count": 769,
+      "pair_overlap_km2": 0.1397543335106023,
+      "union_symmetric_difference_km2": 0.14294471132987746
+    },
+    {
+      "time_ma": 0.0,
+      "method": "shared",
+      "source_area_sum_km2": 309691.6579057763,
+      "union_area_km2": 309691.6579057765,
+      "sum_minus_union_km2": -2.3283064365386963e-10,
+      "positive_pair_count": 0,
+      "pair_overlap_km2": 0.0,
+      "union_symmetric_difference_km2": 0.14294471132987746
+    }
+  ],
+  "elapsed_s": 371.7105446999999,
+  "assumptions": [
+    "reference strip 200 km is user_override",
+    "same archived two-plate interpolated field and 0.25 Myr steps",
+    "existing nodes within tolerance split initial great-circle edges; this changes the edge by the measured departure",
+    "both representations are finite great-circle chord approximations, not physical truth"
+  ],
+  "limitations": [
+    "four sampled times do not prove continuous-time validity",
+    "does not resolve missing native hosts or crust type mismatch",
+    "does not update global engine or B5",
+    "no physical width or ancient contact established"
+  ],
+  "method_version": "1",
+  "base_commit": "2e2b0f3",
+  "versions": {
+    "numpy": "2.5.4",
+    "pygplates": "1.0.0",
+    "shapely": "2.2.0",
+    "geos": "3.14.1"
+  },
+  "references": [
+    "https://proj.org/en/stable/operations/projections/gnom.html",
+    "https://shapely.readthedocs.io/en/2.2.0/reference/shapely.STRtree.html"
+  ]
+}
