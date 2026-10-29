@@ -1,0 +1,123 @@
+{
+  "method_class": "visual_only",
+  "note": "metadata and numerical output audit, not physical validation",
+  "cases": {
+    "u39_b6_halo": {
+      "source_sha_matches": true,
+      "elapsed_s": 223.6991018000008,
+      "peak_MiB": 839.4140625,
+      "budget_delta_vs_u38_km3": {
+        "arc_added": 1820,
+        "eroded": 413190,
+        "rift_thinning": 0,
+        "arc_converted": 0,
+        "arc_suppressed": -1820,
+        "opening_overlap_skipped": 0,
+        "rift_fill": 0,
+        "arc_accreted": 0,
+        "lip_added": 0,
+        "reactivation_added": 0,
+        "hole_created": 0,
+        "hole_fill": 0
+      },
+      "A_all_pass": true
+    },
+    "u39_b6_pl8_halo": {
+      "source_sha_matches": true,
+      "elapsed_s": 233.36425120000058,
+      "peak_MiB": 841.2421875,
+      "budget_delta_vs_u38_km3": {
+        "arc_added": 2456,
+        "eroded": 209567,
+        "rift_thinning": 0,
+        "arc_converted": 0,
+        "arc_suppressed": -2456,
+        "opening_overlap_skipped": 0,
+        "rift_fill": 0,
+        "arc_accreted": 0,
+        "lip_added": 0,
+        "reactivation_added": 0,
+        "hole_created": 0,
+        "hole_fill": 0
+      },
+      "A_all_pass": true
+    }
+  },
+  "figures": {
+    "figures/stage1/u39_b6_pl8_halo/01_elevation_global.png": "7470ed50d5ee14b06e5808ad8ffed98192e1aa2b073cb5921483ccdbbafc02c8",
+    "figures/stage1/u39_b6_pl8_halo/02_elevation_north_polar.png": "caa913e6e1e43add9706d8da7346c5597d27080e87e6daf4c5ceef6afbe52c35",
+    "figures/stage1/u39_b6_pl8_halo/03_elevation_south_polar.png": "c9c68f4dd2734ea4114938c538f89fcba808d7e90cd830da26b2834a5e867ca0",
+    "figures/stage1/u39_b6_pl8_halo/04_landmass_units.png": "d867a9ef24803feb430bf717998e03832d89343a14a06f71a69866a866348a0b",
+    "figures/stage1/u39_b6_pl8_halo/05_coast_morphology.png": "10c90ef3dba90c813270e4c37ed08858c5a62e5cb85ba7d700052903a8c32fad",
+    "figures/stage1/u39_b6_pl8_halo/06_distance_to_sea.png": "f720397843f1883c44c81ec386da964a691f2de17d0916c662841c44d10d73cf",
+    "figures/stage1/u39_b6_pl8_halo/07_slope.png": "3a65edb8234ee5b15cd0d82adca538f1182f9852d69c24ac548c78af386f355e",
+    "figures/stage1/u39_b6_pl8_halo/08_mountain_systems.png": "81de433388205baa3f5054593d8c273a456e92b46e7af86c4fbb3d5ecc3a08ad",
+    "figures/stage1/u39_b6_pl8_halo/09_hypsometry.png": "bdf11a5b5e9c2237e098e42a0070152949b332ae4efb2fca28fbdb4e37170038",
+    "figures/stage1/u39_b6_pl8_halo/10_slope_distance_mountains.png": "0dd041d6d29623a611280b4454b0fe34eb527dfad7806ee33e0b67f15e91ce07",
+    "figures/stage1/u39_b6_pl8_halo/11_coast_vs_earth.png": "6084ab6f7b288fc0a39d3b818f9a019b843867b0d2a4d8977b32b830705c925a",
+    "figures/stage1/u39_b6_pl8_halo/12_coast_complexity_spread.png": "db51afe843e8b19ff07ad066a6a64c0fdedc1f62a507e71763b181890f98b5e4",
+    "figures/stage1/u39_b6_pl8_halo/13_plates_boundaries.png": "7bcab2e8404cee3a69efd1f85e9876891a35bd917d6be9db2be76bfff90a710d",
+    "figures/stage1/u39_b6_pl8_halo/regions/r1_main_inland_sea.png": "8d5cc6c111e7e2d772cc1670c16b71bb9c8bbab2934bacd3949b6b5e08631137",
+    "figures/stage1/u39_b6_pl8_halo/regions/r1_main_inland_sea_tectonics.png": "cd03c4075f9b2d37d097743aea7d15991fabf64f83a99bc232632dd05e76a6cf",
+    "figures/stage1/u39_b6_pl8_halo/regions/r2_inland_sea_complex_coast.png": "3aaa9100e0911fb0b6f3fccec2ec8c3127ca1dae989c5d0ea9eead3645f1122b",
+    "figures/stage1/u39_b6_pl8_halo/regions/r2_inland_sea_complex_coast_tectonics.png": "00c565a52d90d1921c505291d574b42e3e7edc33926185ef1a6e83684a5f0f79",
+    "figures/stage1/u39_b6_pl8_halo/regions/r3_north_coast.png": "f894900efb2b57cca04d1aafec5af16d2f0cd7f8805500024dc033ae244a090f",
+    "figures/stage1/u39_b6_pl8_halo/regions/r3_north_coast_tectonics.png": "06336333444083c6c1d6200466a4b8557c30f1526833b1c614f2fe37ac438ac8",
+    "figures/stage1/u39_b6_pl8_halo/regions/r4_polar_coast.png": "0fcf863336a9381d7f6be7b22ac4ee05a5b5278bda1890ec44fd96548f09d09a",
+    "figures/stage1/u39_b6_pl8_halo/regions/r4_polar_coast_tectonics.png": "cc0e2967e903281bfa293f722ca63f1bbaea0aaaf441677e9b2c4e819fff1ce7",
+    "figures/stage1/u39_b6_pl8_halo/regions/r5_isthmus.png": "d429d2e948ca39817746c1b4acb32be78abb7ef9a13f814ee045f2302e87bccd",
+    "figures/stage1/u39_b6_pl8_halo/regions/r5_isthmus_tectonics.png": "a57bcaa76ded3de9456a4b84a99e12c49de03f6d51a6497be568e8d38825ce35",
+    "figures/stage1/u39_b6_pl8_halo/regions/r6_smoothest_coast.png": "2399a21b4425dd5f32a1371d3ac4ff1e3a65029c9060cef1fc5b6071fdb8c820",
+    "figures/stage1/u39_b6_pl8_halo/regions/r6_smoothest_coast_tectonics.png": "4b6b7dac7a8b9eeb65ec264b9995137fa43e1dfeecc3d08be3024a13b80acfc6",
+    "figures/stage1/u39_b6_pl8_halo/regions/r7_archipelago.png": "967e5ede2f6d0fa7253007c4d57c435a815c3605fc23523fe05e0bbad78e76f6",
+    "figures/stage1/u39_b6_pl8_halo/regions/r7_archipelago_tectonics.png": "8e7365c2680b36575ab1da697e345bcfe6d942f48f508c327d9589c8676109c2",
+    "figures/stage1/u39_b6_pl8_halo/regions/r8_random_coast.png": "2cab75357328a19fdd56ff6f8a67e7e77e895dffcde472484719190541d7a231",
+    "figures/stage1/u39_b6_pl8_halo/regions/r8_random_coast_tectonics.png": "6ea06460ecb54508714e8097ae7b1899785667b746dbc6d85d5262b81f5adb1a",
+    "figures/design/v2/forward/u39_halo/01_cases.png": "f4ad712b059df36f5aadc2e1feabe17ead06edd16d6fedf13f6065149b7f33b2",
+    "figures/design/v2/forward/u39_halo/02_profiles.png": "c812e2e71da3818cfdf06bd223f1aaae5187ebdac11832b6157f5bd60471e968",
+    "figures/design/v2/forward/u39_halo/03_surface_ledger.png": "e281ab567a68012697509b2dbb0f383f31619ad876542863571b57a6b10931c9",
+    "figures/design/v2/forward/u39_halo/04_history.png": "ffa8eee95107e430b85d5a55b6c2f96cdebeaa6ae967e4e32e17acb508dc1a29",
+    "figures/design/v2/forward/u39_halo/05_previous_r8.png": "c1a6d6dcdebb719ae3bc2cf7c72a4b4e16918f01ad3cce783b84a58ae5078a8b",
+    "figures/design/v2/forward/u39_halo/06_previous_r8_tectonics.png": "34fd212bd276a69a2c4435aa849021016083d21ea7d3dabcd1f46eb4628fa098"
+  },
+  "figure_count": 35,
+  "reproducibility_sha256": {
+    ".cache/tectonics/design/initial_v2_v2_L7.pkl": "2826b19b0338d3869027ed9fd325822efa190be3570e33223b2fd0fabd4c2cd7",
+    "packages/tectonics/engine.py": "6897f5be972494fde5f8da55bc0d24aa4dce542ff706a12401de82a754ee242e",
+    "packages/tectonics/crust.py": "0f21c57fac7c1241e0d66d56ae935f0c5ff47b943cd6596f872ffbb48b39badc",
+    "scripts/design_forward.py": "225ffbd25ba8e6dd0a42cb5ba2d469efe8bebbacbef6f0817bcd5a715beb6b45",
+    "scripts/design_b6_transition.py": "e4de00514a0874b0ce6b7acfd1d8aac93617dea11d55e8fced331f63db65dc6d",
+    "scripts/design_b6_halo.py": "27c5b08c077ed0185d9187fa35467ec7030f092b23399914016f662bf8131559",
+    "scripts/design_b6_halo_comparison.py": "dbe1b18be2a3079fcfa3ff9284d44d30a0faf9cbe557353831f4316e3037295b"
+  },
+  "validation": {
+    "selected_tests_passed": 53,
+    "warnings": 8,
+    "pytest_elapsed_s": 17.23,
+    "test_files": [
+      "test_b6_halo.py",
+      "test_b6_transition.py",
+      "test_b6_structured.py",
+      "test_engine.py",
+      "test_distribution_spike.py"
+    ],
+    "scope": "selected tests only; other old strict failures not rerun",
+    "whitespace_check": "passed for all other files; reviewer original preserves two intentional Markdown line breaks with trailing spaces"
+  },
+  "staging_verification": {
+    "png_count": 35,
+    "png_mismatches": [],
+    "runtime_source_git_lf_sha256": "5a94de5eed778f11be17257336148e524f4077f489ad4304d44dc4a7ed5bb1be",
+    "note": "run source SHA records actual Windows file bytes; Git normalizes text to LF"
+  },
+  "review": {
+    "path": "reviews/stage1_2026-10-29_5.md",
+    "original_utf8_sha256": "dbcba022971c7c55fa91120acb0401006e3a41a3384aa49814d8b8f338dbabc9",
+    "original_utf8_byte_count": 6225,
+    "original_prefix_preserved": true,
+    "viewed_png_count": 35,
+    "severe_issue_count": 2,
+    "report_scope": "local experiment; not stage approval",
+    "staged_original_prefix_preserved": true
+  }
+}

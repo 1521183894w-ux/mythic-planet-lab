@@ -1,0 +1,183 @@
+{
+  "method_class": {
+    "regions": "user_override",
+    "crust": "procedural_constrained",
+    "elevation": "parameterized_physics",
+    "sampling": "interpolated",
+    "figures": "visual_only"
+  },
+  "method": "u39_comparison_v1",
+  "resolution": "L7 about 60 km; output 1024x512",
+  "units": {
+    "elevation": "m",
+    "area": "km2",
+    "volume": "km3",
+    "time": "Ma"
+  },
+  "input_sha256": {
+    "control": "c805c1d0472f0ecdb98d5e0324a64fab2ede82ecf11fa031617ca45cfd6fa5ec",
+    "u37": "dae2a5322d1ce1f1c3b0fc8afca07b5d1289d66bbc0fbe360fcc3386d18bd51e",
+    "u38": "9af322554223d9456a2bc059ee6e0844975a51ac24497fe73a4b1c83a54b09f6",
+    "basin_only": "f04c139edb55696e99c64e23f0b9aa0c8bdff6bd3c72bb3143943785f1c62840",
+    "joint": "fc4ce082ffcde3752d5aca81abb2f148395f8d2b375a4da3d78b75f7d356ced8"
+  },
+  "regions": {
+    "B6": {
+      "control": {
+        "median_m": 4945.0,
+        "p10_m": 512.7612915039062,
+        "p90_m": 4945.0,
+        "above4500_fraction": 0.6997788476008983
+      },
+      "u37": {
+        "median_m": 452.2801513671875,
+        "p10_m": 380.99896240234375,
+        "p90_m": 589.0700988769531,
+        "above4500_fraction": 0.0569683360474338
+      },
+      "u38": {
+        "median_m": 4794.207763671875,
+        "p10_m": 1694.0985717773438,
+        "p90_m": 4944.832763671875,
+        "above4500_fraction": 0.6542574500264813
+      },
+      "basin_only": {
+        "median_m": 446.2295379638672,
+        "p10_m": 362.5155944824219,
+        "p90_m": 542.6381225585938,
+        "above4500_fraction": 0.0
+      },
+      "joint": {
+        "median_m": 447.8681945800781,
+        "p10_m": 362.5155944824219,
+        "p90_m": 542.7826843261719,
+        "above4500_fraction": 0.0
+      }
+    },
+    "PL8": {
+      "control": {
+        "median_m": 4945.0,
+        "p10_m": 574.6850708007813,
+        "p90_m": 4945.0,
+        "above4500_fraction": 0.5252533026320366
+      },
+      "u37": {
+        "median_m": 4945.0,
+        "p10_m": 543.85830078125,
+        "p90_m": 4945.0,
+        "above4500_fraction": 0.5547503976068047
+      },
+      "u38": {
+        "median_m": 1011.6922607421875,
+        "p10_m": 528.9311279296876,
+        "p90_m": 4933.1203125,
+        "above4500_fraction": 0.2356747011614527
+      },
+      "basin_only": {
+        "median_m": 3048.4052734375,
+        "p10_m": 506.52581787109375,
+        "p90_m": 4945.0,
+        "above4500_fraction": 0.48251264667427146
+      },
+      "joint": {
+        "median_m": 963.377685546875,
+        "p10_m": 474.97210693359375,
+        "p90_m": 4873.83984375,
+        "above4500_fraction": 0.1818148609261413
+      }
+    }
+  },
+  "candidates": {
+    "basin_only": {
+      "global_changed_area_over100m_km2": 1267196.1974747088,
+      "max_abs_change_m": 4639.1646728515625,
+      "land_to_ocean_km2": 0.0,
+      "ocean_to_land_km2": 0.0,
+      "surface_step_count": 181,
+      "max_abs_collapse_closure_km3": 3.814697265625e-06,
+      "elapsed_s": 223.6991018000008,
+      "process_lifetime_peak_wset_bytes": 880189440,
+      "surface_totals": {
+        "B6": {
+          "erosion_removed_km3": 21250.34782741961,
+          "lateral_net_in_km3": 4360.075764533335,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "erosion_removed_km3": 2670750.1329859574,
+          "lateral_net_in_km3": 10037.190867847625,
+          "collapse_net_in_km3": 12746763.09295324
+        },
+        "other_continent": {
+          "erosion_removed_km3": 305114318.00930655,
+          "lateral_net_in_km3": -14397.266632380777,
+          "collapse_net_in_km3": -13285970.393160617
+        },
+        "other_cells_residual": {
+          "erosion_removed_km3": 0.0,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 539207.3002140521
+        }
+      },
+      "before_activation_unequal_arrays": [],
+      "before_activation_compared_arrays": 132
+    },
+    "joint": {
+      "global_changed_area_over100m_km2": 1687043.0166019655,
+      "max_abs_change_m": 4636.543304443359,
+      "land_to_ocean_km2": 0.0,
+      "ocean_to_land_km2": 0.0,
+      "surface_step_count": 181,
+      "max_abs_collapse_closure_km3": 3.814697265625e-06,
+      "elapsed_s": 233.36425120000058,
+      "process_lifetime_peak_wset_bytes": 882106368,
+      "surface_totals": {
+        "B6": {
+          "erosion_removed_km3": 21249.200396075878,
+          "lateral_net_in_km3": 4555.200527998749,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "erosion_removed_km3": 2235668.5340846702,
+          "lateral_net_in_km3": 57871.23812488723,
+          "collapse_net_in_km3": 6369495.1454856
+        },
+        "other_continent": {
+          "erosion_removed_km3": 305345777.77795035,
+          "lateral_net_in_km3": -62426.43865288594,
+          "collapse_net_in_km3": -6908702.44569298
+        },
+        "other_cells_residual": {
+          "erosion_removed_km3": 0.0,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 539207.3002045174
+        }
+      },
+      "before_activation_unequal_arrays": [],
+      "before_activation_compared_arrays": 132
+    }
+  },
+  "history": {
+    "300.0": {
+      "snapshot_index": 0,
+      "sea_level_m": 254.1
+    },
+    "200.0": {
+      "snapshot_index": 10,
+      "sea_level_m": -61.5
+    },
+    "100.0": {
+      "snapshot_index": 20,
+      "sea_level_m": 20.7
+    },
+    "50.0": {
+      "snapshot_index": 25,
+      "sea_level_m": 68.5
+    },
+    "0.0": {
+      "snapshot_index": 30,
+      "sea_level_m": -0.0
+    }
+  },
+  "residual_note": "other_cells_residual = global collapse volume change minus three continental regions; includes ocean receivers at operator start, inferred algebraically, not independent source tracking"
+}

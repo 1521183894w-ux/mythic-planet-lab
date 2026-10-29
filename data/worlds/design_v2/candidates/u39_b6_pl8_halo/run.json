@@ -1,0 +1,5468 @@
+{
+  "success": true,
+  "candidate": "u39_b6_pl8_halo",
+  "case": "joint",
+  "method_class": {
+    "region": "user_override",
+    "crust": "procedural_constrained",
+    "elevation": "parameterized_physics",
+    "output": "interpolated"
+  },
+  "method": "u39_core_outward_halo_v1",
+  "resolution": "L7 about 60 km; output 1024x512",
+  "units": {
+    "thickness": "km",
+    "volume": "km3",
+    "time": "Ma",
+    "elevation": "m"
+  },
+  "assumptions": [
+    "B6 and PL8 follow plate 101; active since 180 Ma",
+    "B6 weight=1 inside; 250 km outward smoothstep halo",
+    "joint adds identical PL8 inward transition from U38",
+    "maximum lateral flux reduction 99%; core overflow capacity fully reserved",
+    "65 km cap and ring redistribution retained; no stress solver"
+  ],
+  "limits": [
+    "unvalidated inherited structure, strength and activation",
+    "ledger partitions current design windows on plate 101 with B6 priority, not material provenance",
+    "ledger covers surface erosion/flow/collapse only; excludes collisions and other sources",
+    "rift source and all previous world-quality issues unresolved"
+  ],
+  "source_sha256": "27c5b08c077ed0185d9187fa35467ec7030f092b23399914016f662bf8131559",
+  "input_sha256": {
+    "config\\design\\final_map_v2.yaml": "12549846d7734e581ec9340ad96cc55dc03b2425aeb2bddacf215b6576cc77ac",
+    "config\\design\\history_v2_u35_c10_progressive.yaml": "dca66288fed473d85d967fa4062e9c4893faccebbe438fb74ae6d27e8c2b616d",
+    "data\\worlds\\design_v2\\history_v2.rot": "6d8e3d344dd0a8752d01a63d8881bf0183cd86190351297c52fa91431c143a73"
+  },
+  "reference": [
+    "docs/tectonics_method.md",
+    "docs/u37_b6_structured.md",
+    "docs/u38_transition.md"
+  ],
+  "diagnostic_rows": [
+    {
+      "t_ma": 180.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 135.58142886825843,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7904.259249346065,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.226112162146593e-12
+        },
+        "other_continent": {
+          "cells": 54148,
+          "area_km2": 168110437.25726497,
+          "erosion_removed_km3": 976774.6428856866,
+          "lateral_net_in_km3": 9.094947017729282e-13,
+          "collapse_net_in_km3": -8.569729502616248e-13
+        }
+      }
+    },
+    {
+      "t_ma": 170.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 132.72874809151466,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7668.121059992124,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -4.1968902772540445e-11
+        },
+        "other_continent": {
+          "cells": 54018,
+          "area_km2": 167716721.18085372,
+          "erosion_removed_km3": 1102891.56592651,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": 1.5103017757033988e-10
+        }
+      }
+    },
+    {
+      "t_ma": 160.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 126.85346629455677,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7616.464968406961,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.8585014840633108e-11
+        },
+        "other_continent": {
+          "cells": 53874,
+          "area_km2": 167275050.50552288,
+          "erosion_removed_km3": 1305486.195840415,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 8.571987564209849e-11
+        }
+      }
+    },
+    {
+      "t_ma": 150.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": -1.9073486328125e-06,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.72453326830905,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7066.816547855337,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 6.826435700461273e-11
+        },
+        "other_continent": {
+          "cells": 53703,
+          "area_km2": 166747472.6463072,
+          "erosion_removed_km3": 1521026.2440668403,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.4551915228366852e-11
+        }
+      }
+    },
+    {
+      "t_ma": 140.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 127.19738405586253,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7280.494450699093,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.1359158772807946e-10
+        },
+        "other_continent": {
+          "cells": 53823,
+          "area_km2": 167107602.64340955,
+          "erosion_removed_km3": 1398174.351772445,
+          "lateral_net_in_km3": -9.094947017729282e-13,
+          "collapse_net_in_km3": -1.5074575695021122e-10
+        }
+      }
+    },
+    {
+      "t_ma": 130.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 125.34360538075747,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6698.842983488793,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.865895414096699e-12
+        },
+        "other_continent": {
+          "cells": 54084,
+          "area_km2": 167894196.270015,
+          "erosion_removed_km3": 1323944.1698769035,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -1.0012374585148714e-10
+        }
+      }
+    },
+    {
+      "t_ma": 120.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.44191712958016,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8801.9875790182,
+          "lateral_net_in_km3": 1107.84922366339,
+          "collapse_net_in_km3": 1.8953026698123838e-10
+        },
+        "other_continent": {
+          "cells": 54214,
+          "area_km2": 168283941.93418086,
+          "erosion_removed_km3": 1271826.6545097963,
+          "lateral_net_in_km3": -1107.8492236633865,
+          "collapse_net_in_km3": 1.257411493888668e-10
+        }
+      }
+    },
+    {
+      "t_ma": 110.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.30812264900885,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7747.493904581113,
+          "lateral_net_in_km3": 352.8617897017028,
+          "collapse_net_in_km3": 1.0248856200344011e-10
+        },
+        "other_continent": {
+          "cells": 54275,
+          "area_km2": 168459870.36839375,
+          "erosion_removed_km3": 1280290.6529871468,
+          "lateral_net_in_km3": -352.86178970169703,
+          "collapse_net_in_km3": 2.466168854783955e-11
+        }
+      }
+    },
+    {
+      "t_ma": 100.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.61436840364728,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7046.161875657379,
+          "lateral_net_in_km3": -59.34323157356326,
+          "collapse_net_in_km3": 7.650584841034829e-11
+        },
+        "other_continent": {
+          "cells": 54351,
+          "area_km2": 168685921.4082501,
+          "erosion_removed_km3": 1298883.651040224,
+          "lateral_net_in_km3": 59.34323157356266,
+          "collapse_net_in_km3": -6.459143764903372e-14
+        }
+      }
+    },
+    {
+      "t_ma": 90.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 116.2838760860418,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7156.527811298134,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.0768116495026566e-10
+        },
+        "other_continent": {
+          "cells": 54409,
+          "area_km2": 168774077.6255353,
+          "erosion_removed_km3": 1319920.3598310421,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": -7.499575631867269e-11
+        }
+      }
+    },
+    {
+      "t_ma": 80.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.66128617390497,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6336.331186473993,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 6.916945357963789e-11
+        },
+        "other_continent": {
+          "cells": 54422,
+          "area_km2": 168811989.2084107,
+          "erosion_removed_km3": 1344049.9217750935,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 2.5638446214765086e-11
+        }
+      }
+    },
+    {
+      "t_ma": 70.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.00831216162922,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6141.258520270153,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.433092890458921e-12
+        },
+        "other_continent": {
+          "cells": 54415,
+          "area_km2": 168784185.08165073,
+          "erosion_removed_km3": 1450173.347130403,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.1459633242338896e-10
+        }
+      }
+    },
+    {
+      "t_ma": 60.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.26412848176327,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 5987.284090459646,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.1374684256732632e-10
+        },
+        "other_continent": {
+          "cells": 54447,
+          "area_km2": 168875964.9610117,
+          "erosion_removed_km3": 1582263.161908058,
+          "lateral_net_in_km3": -9.094947017729282e-12,
+          "collapse_net_in_km3": 8.731149137020111e-11
+        }
+      }
+    },
+    {
+      "t_ma": 50.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 1.9073486328125e-06,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 113.32516871535708,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7198.658797992871,
+          "lateral_net_in_km3": -521.8162679688414,
+          "collapse_net_in_km3": 1.889506077787981e-10
+        },
+        "other_continent": {
+          "cells": 54380,
+          "area_km2": 168626970.2162848,
+          "erosion_removed_km3": 1824538.2619780414,
+          "lateral_net_in_km3": 521.8162679688394,
+          "collapse_net_in_km3": -2.3283064365386963e-10
+        }
+      }
+    },
+    {
+      "t_ma": 40.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.20307798371712,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8712.219589598817,
+          "lateral_net_in_km3": -259.5130160871607,
+          "collapse_net_in_km3": 5.0669910877575096e-11
+        },
+        "other_continent": {
+          "cells": 54088,
+          "area_km2": 167735787.3344524,
+          "erosion_removed_km3": 2173067.7600781103,
+          "lateral_net_in_km3": 259.5130160871631,
+          "collapse_net_in_km3": -5.529727786779404e-10
+        }
+      }
+    },
+    {
+      "t_ma": 30.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.46144196519131,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8802.291381163093,
+          "lateral_net_in_km3": 168.10003410916673,
+          "collapse_net_in_km3": 8.065511620416104e-11
+        },
+        "other_continent": {
+          "cells": 53740,
+          "area_km2": 166666447.37987626,
+          "erosion_removed_km3": 2403735.607314216,
+          "lateral_net_in_km3": -168.1000341091476,
+          "collapse_net_in_km3": -2.473825588822365e-10
+        }
+      }
+    },
+    {
+      "t_ma": 20.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": -1.9073486328125e-06,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.23088871942429,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 9708.291267711777,
+          "lateral_net_in_km3": 9737.29012357249,
+          "collapse_net_in_km3": 18958.50642339328
+        },
+        "other_continent": {
+          "cells": 53429,
+          "area_km2": 165650174.30932832,
+          "erosion_removed_km3": 2640623.0154635366,
+          "lateral_net_in_km3": -9737.290123572508,
+          "collapse_net_in_km3": -18958.50642339248
+        }
+      }
+    },
+    {
+      "t_ma": 10.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 101.18685921397298,
+          "lateral_net_in_km3": 208.29582943467372,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 51929.53002990647,
+          "lateral_net_in_km3": 5371.003095120337,
+          "collapse_net_in_km3": 555236.9579608036
+        },
+        "other_continent": {
+          "cells": 53058,
+          "area_km2": 164481349.59929377,
+          "erosion_removed_km3": 2911061.1872448134,
+          "lateral_net_in_km3": -5579.298924554994,
+          "collapse_net_in_km3": -555236.9579608039
+        }
+      }
+    },
+    {
+      "t_ma": 0.0,
+      "affected_cells": 422,
+      "collapse_balance_km3": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.17758724020476,
+          "lateral_net_in_km3": 495.3068535266668,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 89408.62766814162,
+          "lateral_net_in_km3": -4986.574371482376,
+          "collapse_net_in_km3": 606555.5425818295
+        },
+        "other_continent": {
+          "cells": 52531,
+          "area_km2": 162867792.7293045,
+          "erosion_removed_km3": 3475286.6146224895,
+          "lateral_net_in_km3": 4491.267517955661,
+          "collapse_net_in_km3": -606555.5425818297
+        }
+      }
+    }
+  ],
+  "step_ledger": [
+    {
+      "t_ma": 180.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 135.58142886825843,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7904.259249346065,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.226112162146593e-12
+        },
+        "other_continent": {
+          "cells": 54148,
+          "area_km2": 168110437.25726497,
+          "erosion_removed_km3": 976774.6428856866,
+          "lateral_net_in_km3": 9.094947017729282e-13,
+          "collapse_net_in_km3": -8.569729502616248e-13
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 179.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 134.76242778540316,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7921.700819304344,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 4.0746496380064084e-10
+        },
+        "other_continent": {
+          "cells": 54141,
+          "area_km2": 168089275.28044915,
+          "erosion_removed_km3": 983503.0403642845,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.3547421063665454e-12
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 178.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 140.30420299980963,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7922.762141858002,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.6681814868184686e-10
+        },
+        "other_continent": {
+          "cells": 54131,
+          "area_km2": 168058761.67322227,
+          "erosion_removed_km3": 991246.900857936,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.5899604263463956e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 177.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 140.95062029951725,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7965.013715408393,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -3.487064110878479e-10
+        },
+        "other_continent": {
+          "cells": 54118,
+          "area_km2": 168019635.19103268,
+          "erosion_removed_km3": 1003104.5727659229,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": -1.0011348243237604e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 176.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 139.3452228326927,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7948.973743486946,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.456024542895163e-10
+        },
+        "other_continent": {
+          "cells": 54104,
+          "area_km2": 167977777.9212969,
+          "erosion_removed_km3": 1012661.465951439,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": 1.7587684375918371e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 175.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 138.40374635416245,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7980.688741037756,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.420334044303159e-10
+        },
+        "other_continent": {
+          "cells": 54088,
+          "area_km2": 167929287.40757293,
+          "erosion_removed_km3": 1031037.7465945564,
+          "lateral_net_in_km3": -2.7284841053187847e-12,
+          "collapse_net_in_km3": -1.510189158006112e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 174.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 136.66513503914922,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7988.136439806313,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.464021701631789e-10
+        },
+        "other_continent": {
+          "cells": 54078,
+          "area_km2": 167898590.38340044,
+          "erosion_removed_km3": 1037526.4329117134,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.4660353338950936e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 173.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 132.34618842137462,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8063.781579090617,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -5.827745178139533e-11
+        },
+        "other_continent": {
+          "cells": 54066,
+          "area_km2": 167862373.20234185,
+          "erosion_removed_km3": 1048458.099409513,
+          "lateral_net_in_km3": 9.094947017729282e-13,
+          "collapse_net_in_km3": 7.545681809745859e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 172.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 132.19662789578013,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7960.067777594886,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.507353731238034e-10
+        },
+        "other_continent": {
+          "cells": 54049,
+          "area_km2": 167810937.02260962,
+          "erosion_removed_km3": 1065366.4848574598,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": 5.07913854113413e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 171.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 129.3879692005321,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7893.612337999861,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.25429720074399e-11
+        },
+        "other_continent": {
+          "cells": 54033,
+          "area_km2": 167762082.7339427,
+          "erosion_removed_km3": 1086045.4539261681,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": 7.39114175600969e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 170.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 132.72874809151466,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7668.121059992124,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -4.1968902772540445e-11
+        },
+        "other_continent": {
+          "cells": 54018,
+          "area_km2": 167716721.18085372,
+          "erosion_removed_km3": 1102891.56592651,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": 1.5103017757033988e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 169.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 131.54640166431292,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7877.545170293239,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.5696319147172488e-10
+        },
+        "other_continent": {
+          "cells": 54004,
+          "area_km2": 167674250.9506805,
+          "erosion_removed_km3": 1119730.3395830665,
+          "lateral_net_in_km3": -2.7284841053187847e-12,
+          "collapse_net_in_km3": 7.601490192832279e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 168.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 130.80850643669208,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7715.384379779852,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.0168264063298711e-10
+        },
+        "other_continent": {
+          "cells": 53992,
+          "area_km2": 167637697.68053573,
+          "erosion_removed_km3": 1135610.6660906083,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.0016884759538319e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 167.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 132.43523955983204,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7583.902754131703,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.9910311861322164e-11
+        },
+        "other_continent": {
+          "cells": 53977,
+          "area_km2": 167592232.77418232,
+          "erosion_removed_km3": 1145269.4654904446,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": 2.4701579070884476e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 166.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 130.9934722811871,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7582.976160085851,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -7.096321128206541e-13
+        },
+        "other_continent": {
+          "cells": 53960,
+          "area_km2": 167540299.15405893,
+          "erosion_removed_km3": 1171207.7909198245,
+          "lateral_net_in_km3": -9.094947017729282e-13,
+          "collapse_net_in_km3": -1.003392578851496e-12
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 165.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 132.2700267993865,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7483.399330944034,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.983969801509761e-11
+        },
+        "other_continent": {
+          "cells": 53948,
+          "area_km2": 167503604.56718946,
+          "erosion_removed_km3": 1187284.7292558416,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": 1.0373071626127225e-13
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 164.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 130.63372226214744,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7470.255074807399,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -3.5325091396192616e-11
+        },
+        "other_continent": {
+          "cells": 53936,
+          "area_km2": 167466052.49591956,
+          "erosion_removed_km3": 1206531.685259633,
+          "lateral_net_in_km3": -5.4569682106375694e-12,
+          "collapse_net_in_km3": -7.516337354746797e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 163.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 129.41636779075077,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7594.275061355123,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.8879641617510644e-10
+        },
+        "other_continent": {
+          "cells": 53919,
+          "area_km2": 167413923.0922526,
+          "erosion_removed_km3": 1230890.3445696924,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -7.526020906139256e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 162.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 131.64268271886942,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7827.969007047047,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.447246604246038e-11
+        },
+        "other_continent": {
+          "cells": 53902,
+          "area_km2": 167361878.88727048,
+          "erosion_removed_km3": 1255455.7868906143,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": -5.076191115865661e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 161.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.34455559674132,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7894.5629764726,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.2272154192581347e-10
+        },
+        "other_continent": {
+          "cells": 53888,
+          "area_km2": 167318171.68228337,
+          "erosion_removed_km3": 1279883.207482221,
+          "lateral_net_in_km3": -1.3642420526593924e-12,
+          "collapse_net_in_km3": 1.7608570196634018e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 160.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 126.85346629455677,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7616.464968406961,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.8585014840633108e-11
+        },
+        "other_continent": {
+          "cells": 53874,
+          "area_km2": 167275050.50552288,
+          "erosion_removed_km3": 1305486.195840415,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 8.571987564209849e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 159.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.8747336589804,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7559.376333384864,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.8452256334792298e-10
+        },
+        "other_continent": {
+          "cells": 53859,
+          "area_km2": 167228842.53556424,
+          "erosion_removed_km3": 1319573.4035229923,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.0370904228731128e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 158.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.8561411181248,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7526.89293392072,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.598571384107844e-10
+        },
+        "other_continent": {
+          "cells": 53842,
+          "area_km2": 167175977.02625507,
+          "erosion_removed_km3": 1339330.5612306956,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -8.913048077374697e-11
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 157.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 127.62023428009374,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7424.190753823576,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -4.509994033789438e-11
+        },
+        "other_continent": {
+          "cells": 53829,
+          "area_km2": 167136255.25288606,
+          "erosion_removed_km3": 1365435.5158178357,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 7.609202157254913e-11
+        }
+      },
+      "collapse_balance_km3": -9.5367431640625e-07
+    },
+    {
+      "t_ma": 156.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 130.42136974237775,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7504.686050322403,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 7.675765749198313e-11
+        },
+        "other_continent": {
+          "cells": 53814,
+          "area_km2": 167089555.76444402,
+          "erosion_removed_km3": 1386958.1258852049,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 2.0736479200422764e-10
+        }
+      },
+      "collapse_balance_km3": -9.5367431640625e-07
+    },
+    {
+      "t_ma": 155.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 133.44973089817253,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7566.949375988271,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.539825010001864e-11
+        },
+        "other_continent": {
+          "cells": 53789,
+          "area_km2": 167013106.74465108,
+          "erosion_removed_km3": 1426192.8993184331,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 1.355147105641663e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 154.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 132.04758830216284,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7637.845022053216,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.0167364616405338e-10
+        },
+        "other_continent": {
+          "cells": 53777,
+          "area_km2": 166975316.02517402,
+          "erosion_removed_km3": 1433556.7490451215,
+          "lateral_net_in_km3": -6.366462912410498e-12,
+          "collapse_net_in_km3": 1.5904788597254083e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 153.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 127.89057965885603,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7353.66291766382,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.913846279126043e-11
+        },
+        "other_continent": {
+          "cells": 53754,
+          "area_km2": 166903955.76903996,
+          "erosion_removed_km3": 1468834.2994149297,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -5.638867150992155e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 152.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 130.35404540337896,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7233.226155198939,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -8.729453735625001e-11
+        },
+        "other_continent": {
+          "cells": 53744,
+          "area_km2": 166872536.11132914,
+          "erosion_removed_km3": 1485942.7405195332,
+          "lateral_net_in_km3": -9.094947017729282e-13,
+          "collapse_net_in_km3": 6.548361852765083e-11
+        }
+      },
+      "collapse_balance_km3": 9.5367431640625e-07
+    },
+    {
+      "t_ma": 151.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 129.98505683619092,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7023.20949783706,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.8146070918506894e-10
+        },
+        "other_continent": {
+          "cells": 53724,
+          "area_km2": 166811738.97125798,
+          "erosion_removed_km3": 1511245.0969311073,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": 4.729372449219227e-11
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 150.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.72453326830905,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7066.816547855337,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 6.826435700461273e-11
+        },
+        "other_continent": {
+          "cells": 53703,
+          "area_km2": 166747472.6463072,
+          "erosion_removed_km3": 1521026.2440668403,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.4551915228366852e-11
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 149.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 127.32010145602626,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7099.88555991182,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.2000504156096067e-10
+        },
+        "other_continent": {
+          "cells": 53701,
+          "area_km2": 166741580.27038312,
+          "erosion_removed_km3": 1510283.1878793347,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.3765818183613457e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 148.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 126.77358919924616,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7108.967283730602,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.7109832396094245e-11
+        },
+        "other_continent": {
+          "cells": 53701,
+          "area_km2": 166741580.27038312,
+          "erosion_removed_km3": 1497990.0245432428,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -8.046625995084768e-14
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 147.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 129.00689291685836,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6979.233771847272,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -6.388902828197907e-11
+        },
+        "other_continent": {
+          "cells": 53699,
+          "area_km2": 166735565.98121083,
+          "erosion_removed_km3": 1473556.824452858,
+          "lateral_net_in_km3": 9.094947017729282e-13,
+          "collapse_net_in_km3": -2.519431376736918e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 146.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.61707518815652,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7198.842818560344,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -7.313273932774252e-11
+        },
+        "other_continent": {
+          "cells": 53699,
+          "area_km2": 166735565.98121083,
+          "erosion_removed_km3": 1451139.8443426029,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": -2.546086353526738e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 145.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 129.08680889070936,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7361.432936894507,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -8.86235477597183e-11
+        },
+        "other_continent": {
+          "cells": 53699,
+          "area_km2": 166735565.98121083,
+          "erosion_removed_km3": 1448346.1771596628,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": -1.2955237373915063e-12
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 144.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.38458138077368,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7245.465691437636,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.3796383899565757e-10
+        },
+        "other_continent": {
+          "cells": 53823,
+          "area_km2": 167107602.64340955,
+          "erosion_removed_km3": 1436430.4437605222,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": -1.0157061674689773e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 143.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 129.09993354395382,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7153.133046341088,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 3.4962474498820174e-11
+        },
+        "other_continent": {
+          "cells": 53823,
+          "area_km2": 167107602.64340955,
+          "erosion_removed_km3": 1430816.4808226484,
+          "lateral_net_in_km3": 5.4569682106375694e-12,
+          "collapse_net_in_km3": -7.626019597580131e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 142.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 129.6611007203753,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7046.011968602257,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.4427817117575496e-11
+        },
+        "other_continent": {
+          "cells": 53823,
+          "area_km2": 167107602.64340955,
+          "erosion_removed_km3": 1413015.2304179126,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -2.448850149046168e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 141.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 130.82880116431974,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7333.331658712901,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.3573299910646402e-10
+        },
+        "other_continent": {
+          "cells": 53823,
+          "area_km2": 167107602.64340955,
+          "erosion_removed_km3": 1396199.6774678696,
+          "lateral_net_in_km3": -9.094947017729282e-12,
+          "collapse_net_in_km3": 7.526642425593195e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 140.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 127.19738405586253,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7280.494450699093,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.1359158772807946e-10
+        },
+        "other_continent": {
+          "cells": 53823,
+          "area_km2": 167107602.64340955,
+          "erosion_removed_km3": 1398174.351772445,
+          "lateral_net_in_km3": -9.094947017729282e-13,
+          "collapse_net_in_km3": -1.5074575695021122e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 139.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 128.27370729481052,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7328.394489641079,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 3.6924500290623984e-10
+        },
+        "other_continent": {
+          "cells": 53925,
+          "area_km2": 167413077.4620109,
+          "erosion_removed_km3": 1397541.3673858845,
+          "lateral_net_in_km3": 2.7284841053187847e-12,
+          "collapse_net_in_km3": -4.999489729037355e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 138.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 125.58683716767425,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7229.937622002032,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.1706824907722151e-11
+        },
+        "other_continent": {
+          "cells": 53924,
+          "area_km2": 167410149.3310162,
+          "erosion_removed_km3": 1372104.8187712028,
+          "lateral_net_in_km3": 7.275957614183426e-12,
+          "collapse_net_in_km3": 5.013277819218582e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 137.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 125.17470256331055,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7186.555700974219,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.6107981106798572e-11
+        },
+        "other_continent": {
+          "cells": 53923,
+          "area_km2": 167407214.9046328,
+          "erosion_removed_km3": 1368304.9274813929,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 1.507453187893186e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 136.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 124.50454181860407,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7128.14020338332,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.800954859083603e-10
+        },
+        "other_continent": {
+          "cells": 53922,
+          "area_km2": 167404289.0634667,
+          "erosion_removed_km3": 1356315.2550502638,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": -5.0645448958532005e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 135.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 123.66442606076302,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7084.64976109704,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.6078969443974936e-11
+        },
+        "other_continent": {
+          "cells": 53922,
+          "area_km2": 167404289.0634667,
+          "erosion_removed_km3": 1358345.9221723774,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.2708982019491918e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 134.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 124.72348048186865,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6976.248231352895,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.0421615950074353e-10
+        },
+        "other_continent": {
+          "cells": 54087,
+          "area_km2": 167902992.9430908,
+          "erosion_removed_km3": 1350480.8109007475,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": -7.573576637405971e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 133.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 124.75876204998336,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6890.120091325575,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.9337483359018946e-11
+        },
+        "other_continent": {
+          "cells": 54086,
+          "area_km2": 167900059.03375912,
+          "erosion_removed_km3": 1340915.6167345338,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -5.327248653140452e-13
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 132.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.18539998009608,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6876.6955887679005,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -9.003759360721961e-11
+        },
+        "other_continent": {
+          "cells": 54085,
+          "area_km2": 167897130.90276444,
+          "erosion_removed_km3": 1343956.589043631,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": -7.53626412483319e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 131.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.89483565054833,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6716.682551564391,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -6.321672032437578e-11
+        },
+        "other_continent": {
+          "cells": 54084,
+          "area_km2": 167894196.270015,
+          "erosion_removed_km3": 1343762.6671927564,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": 1.7604930589111974e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 130.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 125.34360538075747,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6698.842983488793,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.865895414096699e-12
+        },
+        "other_continent": {
+          "cells": 54084,
+          "area_km2": 167894196.270015,
+          "erosion_removed_km3": 1323944.1698769035,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -1.0012374585148714e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 129.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 125.1476157277096,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6888.682417784936,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.2973109074527137e-10
+        },
+        "other_continent": {
+          "cells": 54176,
+          "area_km2": 168170538.6791016,
+          "erosion_removed_km3": 1311079.0510475484,
+          "lateral_net_in_km3": 4.092726157978177e-12,
+          "collapse_net_in_km3": -5.026165553206375e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 128.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.19812256053564,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6811.051202561171,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.3388732687790052e-11
+        },
+        "other_continent": {
+          "cells": 54172,
+          "area_km2": 168158761.20830703,
+          "erosion_removed_km3": 1315210.975138083,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 4.9300830714477314e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 127.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 120.74739581591953,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7065.020745080561,
+          "lateral_net_in_km3": -1229.6759151452065,
+          "collapse_net_in_km3": -7.3348464119287e-11
+        },
+        "other_continent": {
+          "cells": 54171,
+          "area_km2": 168155697.37247574,
+          "erosion_removed_km3": 1320731.6683971279,
+          "lateral_net_in_km3": 1229.6759151452097,
+          "collapse_net_in_km3": -9.6655895978776e-13
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 126.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.1964470171506,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7486.849552676281,
+          "lateral_net_in_km3": 385.9145390312394,
+          "collapse_net_in_km3": -1.7642887383202383e-10
+        },
+        "other_continent": {
+          "cells": 54170,
+          "area_km2": 168152643.55378526,
+          "erosion_removed_km3": 1308354.5581524882,
+          "lateral_net_in_km3": -385.9145390312369,
+          "collapse_net_in_km3": -9.993290529950355e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 125.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.73084558696172,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7469.727551203286,
+          "lateral_net_in_km3": -876.6480314131235,
+          "collapse_net_in_km3": -3.709321767406912e-10
+        },
+        "other_continent": {
+          "cells": 54169,
+          "area_km2": 168149654.71955675,
+          "erosion_removed_km3": 1300387.2498440465,
+          "lateral_net_in_km3": 876.6480314131259,
+          "collapse_net_in_km3": 5.001198520430956e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 124.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.8219412262728,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7553.639527923627,
+          "lateral_net_in_km3": 590.0843471675207,
+          "collapse_net_in_km3": -1.6196346457049966e-10
+        },
+        "other_continent": {
+          "cells": 54219,
+          "area_km2": 168298690.24422038,
+          "erosion_removed_km3": 1299573.065031735,
+          "lateral_net_in_km3": -590.084347167518,
+          "collapse_net_in_km3": -1.2584713988884612e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 123.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.7520133544959,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7789.18445498301,
+          "lateral_net_in_km3": 2070.7508752428826,
+          "collapse_net_in_km3": 1.67213057704158e-10
+        },
+        "other_continent": {
+          "cells": 54218,
+          "area_km2": 168295790.3430617,
+          "erosion_removed_km3": 1297867.575883588,
+          "lateral_net_in_km3": -2070.750875242885,
+          "collapse_net_in_km3": 2.3884086640922728e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 122.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.19291386181771,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7768.529677142667,
+          "lateral_net_in_km3": 414.4167538976978,
+          "collapse_net_in_km3": 3.177342617049874e-11
+        },
+        "other_continent": {
+          "cells": 54217,
+          "area_km2": 168292856.53286985,
+          "erosion_removed_km3": 1288369.616384971,
+          "lateral_net_in_km3": -414.4167538976981,
+          "collapse_net_in_km3": -4.9902052834893864e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 121.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.1135937059317,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8034.7107043361875,
+          "lateral_net_in_km3": 1945.9826840197043,
+          "collapse_net_in_km3": -1.395315156384752e-10
+        },
+        "other_continent": {
+          "cells": 54216,
+          "area_km2": 168289957.41269034,
+          "erosion_removed_km3": 1286454.8980229753,
+          "lateral_net_in_km3": -1945.982684019702,
+          "collapse_net_in_km3": -2.4560760943541973e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 120.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.44191712958016,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8801.9875790182,
+          "lateral_net_in_km3": 1107.84922366339,
+          "collapse_net_in_km3": 1.8953026698123838e-10
+        },
+        "other_continent": {
+          "cells": 54214,
+          "area_km2": 168283941.93418086,
+          "erosion_removed_km3": 1271826.6545097963,
+          "lateral_net_in_km3": -1107.8492236633865,
+          "collapse_net_in_km3": 1.257411493888668e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 119.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 120.24351446855209,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8654.194282709968,
+          "lateral_net_in_km3": 602.9759815917598,
+          "collapse_net_in_km3": -2.1806804863040279e-10
+        },
+        "other_continent": {
+          "cells": 54230,
+          "area_km2": 168329710.2848869,
+          "erosion_removed_km3": 1283357.1141072826,
+          "lateral_net_in_km3": -602.9759815917523,
+          "collapse_net_in_km3": -1.5065956516252703e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 118.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.05499879780692,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8587.076496106203,
+          "lateral_net_in_km3": -225.76180457637616,
+          "collapse_net_in_km3": -1.7170218814575962e-10
+        },
+        "other_continent": {
+          "cells": 54230,
+          "area_km2": 168329710.2848869,
+          "erosion_removed_km3": 1292720.6293469486,
+          "lateral_net_in_km3": 225.76180457637565,
+          "collapse_net_in_km3": -4.9301313047966817e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 117.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 122.06480080768168,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8381.38663784124,
+          "lateral_net_in_km3": 316.74579178162924,
+          "collapse_net_in_km3": 1.172633493569415e-10
+        },
+        "other_continent": {
+          "cells": 54230,
+          "area_km2": 168329710.2848869,
+          "erosion_removed_km3": 1280080.1818841314,
+          "lateral_net_in_km3": -316.74579178163003,
+          "collapse_net_in_km3": -2.5275679849220338e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 116.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.38552552271585,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8198.195244761362,
+          "lateral_net_in_km3": 1648.7410462833907,
+          "collapse_net_in_km3": -1.9302838749646678e-10
+        },
+        "other_continent": {
+          "cells": 54229,
+          "area_km2": 168326777.40937018,
+          "erosion_removed_km3": 1277172.6063517025,
+          "lateral_net_in_km3": -1648.741046283394,
+          "collapse_net_in_km3": 1.745503419088115e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 115.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 120.3053810603538,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8283.231256945603,
+          "lateral_net_in_km3": 247.1383756055039,
+          "collapse_net_in_km3": 2.454591982247894e-10
+        },
+        "other_continent": {
+          "cells": 54228,
+          "area_km2": 168323023.7639725,
+          "erosion_removed_km3": 1291189.4284734887,
+          "lateral_net_in_km3": -247.13837560550292,
+          "collapse_net_in_km3": -2.5085453426187168e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 114.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 120.04687848411761,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8108.645020530942,
+          "lateral_net_in_km3": 399.57076344522454,
+          "collapse_net_in_km3": -1.6894734988128457e-10
+        },
+        "other_continent": {
+          "cells": 54276,
+          "area_km2": 168462209.68957663,
+          "erosion_removed_km3": 1280255.5573750224,
+          "lateral_net_in_km3": -399.57076344522466,
+          "collapse_net_in_km3": -2.335822738271101e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 113.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 119.17722517666074,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7956.864381745499,
+          "lateral_net_in_km3": 179.53592181950708,
+          "collapse_net_in_km3": 5.664980380142759e-12
+        },
+        "other_continent": {
+          "cells": 54275,
+          "area_km2": 168459283.32399866,
+          "erosion_removed_km3": 1287861.3332177347,
+          "lateral_net_in_km3": -179.5359218195058,
+          "collapse_net_in_km3": -1.7639188696857454e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 112.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.4799543123003,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7903.481098453969,
+          "lateral_net_in_km3": 424.94130091483726,
+          "collapse_net_in_km3": -9.20654969102349e-11
+        },
+        "other_continent": {
+          "cells": 54276,
+          "area_km2": 168462807.6554769,
+          "erosion_removed_km3": 1293051.773304172,
+          "lateral_net_in_km3": -424.9413009148393,
+          "collapse_net_in_km3": -5.127337048862082e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 111.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 119.29999325010368,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7727.940158456204,
+          "lateral_net_in_km3": 112.1017030411271,
+          "collapse_net_in_km3": -3.78080313004556e-11
+        },
+        "other_continent": {
+          "cells": 54275,
+          "area_km2": 168459870.36839375,
+          "erosion_removed_km3": 1284899.626058467,
+          "lateral_net_in_km3": -112.10170304113308,
+          "collapse_net_in_km3": 2.5755029225360944e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 110.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 121.30812264900885,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7747.493904581113,
+          "lateral_net_in_km3": 352.8617897017028,
+          "collapse_net_in_km3": 1.0248856200344011e-10
+        },
+        "other_continent": {
+          "cells": 54275,
+          "area_km2": 168459870.36839375,
+          "erosion_removed_km3": 1280290.6529871468,
+          "lateral_net_in_km3": -352.86178970169703,
+          "collapse_net_in_km3": 2.466168854783955e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 109.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 120.23225648516363,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7912.055458986336,
+          "lateral_net_in_km3": 118.20229476160407,
+          "collapse_net_in_km3": -5.349002203803157e-11
+        },
+        "other_continent": {
+          "cells": 54310,
+          "area_km2": 168562852.00006706,
+          "erosion_removed_km3": 1283718.215761778,
+          "lateral_net_in_km3": -118.20229476160057,
+          "collapse_net_in_km3": -3.191742394656531e-13
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 108.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 119.76099700598161,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7993.982438022508,
+          "lateral_net_in_km3": 145.9453615351542,
+          "collapse_net_in_km3": 1.3336293159117558e-10
+        },
+        "other_continent": {
+          "cells": 54309,
+          "area_km2": 168559908.117433,
+          "erosion_removed_km3": 1284996.1207785807,
+          "lateral_net_in_km3": -145.94536153515764,
+          "collapse_net_in_km3": -7.484555817905709e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 107.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 119.87131475825882,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7861.221647924408,
+          "lateral_net_in_km3": 15.161889189445986,
+          "collapse_net_in_km3": -4.3962485621048176e-11
+        },
+        "other_continent": {
+          "cells": 54309,
+          "area_km2": 168561158.18833905,
+          "erosion_removed_km3": 1288510.1519216716,
+          "lateral_net_in_km3": -15.161889189444992,
+          "collapse_net_in_km3": -7.40864568456243e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 106.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 119.85294270442859,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7719.439833887873,
+          "lateral_net_in_km3": 189.64103717231507,
+          "collapse_net_in_km3": 3.5790016036451106e-11
+        },
+        "other_continent": {
+          "cells": 54307,
+          "area_km2": 168555359.6048162,
+          "erosion_removed_km3": 1291191.7290566687,
+          "lateral_net_in_km3": -189.6410371723141,
+          "collapse_net_in_km3": -2.431983192995771e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 105.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 118.44703518984257,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7663.822848381808,
+          "lateral_net_in_km3": 103.39910127379238,
+          "collapse_net_in_km3": 1.7291478046928395e-11
+        },
+        "other_continent": {
+          "cells": 54307,
+          "area_km2": 168555359.6048162,
+          "erosion_removed_km3": 1285179.3503729566,
+          "lateral_net_in_km3": -103.39910127379335,
+          "collapse_net_in_km3": 7.517859555578631e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 104.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 116.64459149450839,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7603.195264600824,
+          "lateral_net_in_km3": -19.954583621615683,
+          "collapse_net_in_km3": 1.1441534038645071e-10
+        },
+        "other_continent": {
+          "cells": 54351,
+          "area_km2": 168685921.4082501,
+          "erosion_removed_km3": 1291644.601951992,
+          "lateral_net_in_km3": 19.95458362161753,
+          "collapse_net_in_km3": -1.0067231310320346e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 103.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 117.45635135374924,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7577.309302390381,
+          "lateral_net_in_km3": -181.0199213983372,
+          "collapse_net_in_km3": 3.7622157796740204e-11
+        },
+        "other_continent": {
+          "cells": 54351,
+          "area_km2": 168685921.4082501,
+          "erosion_removed_km3": 1296918.927950025,
+          "lateral_net_in_km3": 181.0199213983451,
+          "collapse_net_in_km3": 9.951034146548685e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 102.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 117.39476477588816,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7382.627334108009,
+          "lateral_net_in_km3": -5.842252762362087,
+          "collapse_net_in_km3": 1.4338055212914464e-10
+        },
+        "other_continent": {
+          "cells": 54351,
+          "area_km2": 168685921.4082501,
+          "erosion_removed_km3": 1295950.548410644,
+          "lateral_net_in_km3": 5.842252762361568,
+          "collapse_net_in_km3": -7.600199290275134e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 101.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 115.63633379534669,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7334.42545252113,
+          "lateral_net_in_km3": -9.798550838893973,
+          "collapse_net_in_km3": 3.452867260290565e-10
+        },
+        "other_continent": {
+          "cells": 54351,
+          "area_km2": 168685921.4082501,
+          "erosion_removed_km3": 1300047.6546118765,
+          "lateral_net_in_km3": 9.79855083889015,
+          "collapse_net_in_km3": 4.9753329191425244e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 100.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.61436840364728,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7046.161875657379,
+          "lateral_net_in_km3": -59.34323157356326,
+          "collapse_net_in_km3": 7.650584841034829e-11
+        },
+        "other_continent": {
+          "cells": 54351,
+          "area_km2": 168685921.4082501,
+          "erosion_removed_km3": 1298883.651040224,
+          "lateral_net_in_km3": 59.34323157356266,
+          "collapse_net_in_km3": -6.459143764903372e-14
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 99.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 116.22480453376713,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6991.436016827264,
+          "lateral_net_in_km3": -127.47874631643414,
+          "collapse_net_in_km3": 7.62764801314149e-12
+        },
+        "other_continent": {
+          "cells": 54405,
+          "area_km2": 168764594.2207719,
+          "erosion_removed_km3": 1288972.3748876208,
+          "lateral_net_in_km3": 127.47874631642844,
+          "collapse_net_in_km3": 2.5377107045977805e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 98.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.4196710465994,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7217.735727616687,
+          "lateral_net_in_km3": -110.21624070956607,
+          "collapse_net_in_km3": 9.917739672680054e-12
+        },
+        "other_continent": {
+          "cells": 54404,
+          "area_km2": 168761069.88929364,
+          "erosion_removed_km3": 1305448.717869551,
+          "lateral_net_in_km3": 110.21624070956659,
+          "collapse_net_in_km3": 1.3675083395761627e-13
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 97.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.30090478342385,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7105.486491170478,
+          "lateral_net_in_km3": -100.5185852831571,
+          "collapse_net_in_km3": 2.3420849519117605e-10
+        },
+        "other_continent": {
+          "cells": 54404,
+          "area_km2": 168761069.88929364,
+          "erosion_removed_km3": 1304354.9051504894,
+          "lateral_net_in_km3": 100.51858528316188,
+          "collapse_net_in_km3": -2.604528531267821e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 96.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.0460233640776,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7156.854785828412,
+          "lateral_net_in_km3": -83.07392013204534,
+          "collapse_net_in_km3": 1.2401686082787788e-11
+        },
+        "other_continent": {
+          "cells": 54404,
+          "area_km2": 168761069.88929364,
+          "erosion_removed_km3": 1301938.7069258287,
+          "lateral_net_in_km3": 83.07392013204617,
+          "collapse_net_in_km3": -1.0088578487940891e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 95.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 116.93257559003374,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7054.596705963854,
+          "lateral_net_in_km3": -24.775255026218233,
+          "collapse_net_in_km3": -5.0359964690718636e-11
+        },
+        "other_continent": {
+          "cells": 54404,
+          "area_km2": 168761069.88929364,
+          "erosion_removed_km3": 1299651.9997543665,
+          "lateral_net_in_km3": 24.775255026212108,
+          "collapse_net_in_km3": 9.98969481167271e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 94.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 115.81312456293156,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7067.709781331951,
+          "lateral_net_in_km3": -5.329070518200751e-15,
+          "collapse_net_in_km3": 1.2854764489248944e-10
+        },
+        "other_continent": {
+          "cells": 54413,
+          "area_km2": 168788205.59873325,
+          "erosion_removed_km3": 1306475.5542104132,
+          "lateral_net_in_km3": 5.4569682106375694e-12,
+          "collapse_net_in_km3": -1.7481043789285772e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 93.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 115.33059319607509,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7222.628076096477,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.0639652597463754e-10
+        },
+        "other_continent": {
+          "cells": 54413,
+          "area_km2": 168788205.59873325,
+          "erosion_removed_km3": 1316005.7589908217,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -7.564746252326509e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 92.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.79849671041374,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7136.500363911355,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 4.6342198189154015e-11
+        },
+        "other_continent": {
+          "cells": 54412,
+          "area_km2": 168784689.18628126,
+          "erosion_removed_km3": 1313709.1319223668,
+          "lateral_net_in_km3": 2.7284841053187847e-12,
+          "collapse_net_in_km3": -7.566543481200707e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 91.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 116.2431709757373,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7004.752115125244,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 3.4317245817374626e-10
+        },
+        "other_continent": {
+          "cells": 54411,
+          "area_km2": 168781173.9471351,
+          "erosion_removed_km3": 1313196.1994623023,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -9.968302078865792e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 90.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 116.2838760860418,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7156.527811298134,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.0768116495026566e-10
+        },
+        "other_continent": {
+          "cells": 54409,
+          "area_km2": 168774077.6255353,
+          "erosion_removed_km3": 1319920.3598310421,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": -7.499575631867269e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 89.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 119.61705842055864,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7092.223016058849,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -7.429394846114867e-11
+        },
+        "other_continent": {
+          "cells": 54417,
+          "area_km2": 168797735.05578884,
+          "erosion_removed_km3": 1321807.2128551053,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": 7.504975488138643e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 88.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 115.9548563122101,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6838.534684827497,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.6517253279626572e-10
+        },
+        "other_continent": {
+          "cells": 54417,
+          "area_km2": 168797735.05578884,
+          "erosion_removed_km3": 1327105.730994992,
+          "lateral_net_in_km3": -5.4569682106375694e-12,
+          "collapse_net_in_km3": 7.54646324873943e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 87.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 115.80681930563719,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7013.547175296659,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.6327434131409468e-10
+        },
+        "other_continent": {
+          "cells": 54417,
+          "area_km2": 168797735.05578884,
+          "erosion_removed_km3": 1328670.5602537584,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": -1.5006866938368458e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 86.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 113.23109100969126,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6802.999376702495,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.987719803304441e-11
+        },
+        "other_continent": {
+          "cells": 54417,
+          "area_km2": 168797735.05578884,
+          "erosion_removed_km3": 1341053.7847996035,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": 1.7482573477209787e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 85.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.78914543815768,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6757.593746473591,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.528184974016985e-10
+        },
+        "other_continent": {
+          "cells": 54417,
+          "area_km2": 168797735.05578884,
+          "erosion_removed_km3": 1336264.9805358537,
+          "lateral_net_in_km3": -1.8189894035458565e-12,
+          "collapse_net_in_km3": -7.484212010549914e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 84.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.88452552489302,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6616.314221230599,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -9.552970948586114e-11
+        },
+        "other_continent": {
+          "cells": 54424,
+          "area_km2": 168817833.4935252,
+          "erosion_removed_km3": 1340678.7409216298,
+          "lateral_net_in_km3": 5.4569682106375694e-12,
+          "collapse_net_in_km3": -1.249517406752987e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 83.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 115.14415451569508,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6529.510850004761,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -3.164097523142805e-10
+        },
+        "other_continent": {
+          "cells": 54423,
+          "area_km2": 168814898.39837703,
+          "erosion_removed_km3": 1335478.553495432,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.2589655809497084e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 82.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 113.82567558348306,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6568.221963644758,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.1106632496571965e-10
+        },
+        "other_continent": {
+          "cells": 54423,
+          "area_km2": 168814898.39837703,
+          "erosion_removed_km3": 1350624.308540699,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": 5.021775991011574e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 81.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.80139505767792,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6519.897389172994,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.0730697294685636e-11
+        },
+        "other_continent": {
+          "cells": 54423,
+          "area_km2": 168814898.39837703,
+          "erosion_removed_km3": 1342051.8106511165,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 1.2578139243219252e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 80.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.66128617390497,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6336.331186473993,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 6.916945357963789e-11
+        },
+        "other_continent": {
+          "cells": 54422,
+          "area_km2": 168811989.2084107,
+          "erosion_removed_km3": 1344049.9217750935,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 2.5638446214765086e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 79.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.3728998264294,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6317.718354334578,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 3.7002867328955107e-13
+        },
+        "other_continent": {
+          "cells": 54448,
+          "area_km2": 168890186.40094584,
+          "erosion_removed_km3": 1345662.55872948,
+          "lateral_net_in_km3": -7.275957614183426e-12,
+          "collapse_net_in_km3": -2.2454100955233457e-13
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 78.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.6775219847554,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6236.16605391882,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 3.288178174501161e-11
+        },
+        "other_continent": {
+          "cells": 54443,
+          "area_km2": 168874493.5224384,
+          "erosion_removed_km3": 1361355.7516163616,
+          "lateral_net_in_km3": 5.4569682106375694e-12,
+          "collapse_net_in_km3": 5.0494469503230215e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 77.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.39390544547001,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6176.991295087543,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.354730318745296e-10
+        },
+        "other_continent": {
+          "cells": 54436,
+          "area_km2": 168853005.01960364,
+          "erosion_removed_km3": 1360503.5423452316,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -2.569951178260614e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 76.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.85991733896218,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 5959.539674758648,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.417074313676443e-10
+        },
+        "other_continent": {
+          "cells": 54427,
+          "area_km2": 168826209.7725129,
+          "erosion_removed_km3": 1387698.4646907772,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -9.974846808194454e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 75.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.87661472813721,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6095.580832426101,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.0846156753446777e-10
+        },
+        "other_continent": {
+          "cells": 54414,
+          "area_km2": 168786881.17197967,
+          "erosion_removed_km3": 1406377.0023220733,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": 2.5535047867005178e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 74.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.31934021409226,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6183.4650089520555,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -5.19133130198513e-11
+        },
+        "other_continent": {
+          "cells": 54431,
+          "area_km2": 168837529.5858339,
+          "erosion_removed_km3": 1420062.512796392,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": -2.5304557007931986e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 73.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.61116494744553,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6327.942270092841,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.092601730603941e-11
+        },
+        "other_continent": {
+          "cells": 54430,
+          "area_km2": 168834311.02497715,
+          "erosion_removed_km3": 1422803.885268989,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": 2.547554285299397e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 72.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.14932639607066,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6437.982056607251,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.7100910730827227e-10
+        },
+        "other_continent": {
+          "cells": 54426,
+          "area_km2": 168821103.88918364,
+          "erosion_removed_km3": 1427769.0254856595,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.064108801074326e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 71.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.02383751998076,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6269.582746498459,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 5.102561092666971e-11
+        },
+        "other_continent": {
+          "cells": 54420,
+          "area_km2": 168800914.3346539,
+          "erosion_removed_km3": 1437854.783855624,
+          "lateral_net_in_km3": 5.6843418860808015e-12,
+          "collapse_net_in_km3": -1.0913936421275139e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 70.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.00831216162922,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6141.258520270153,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.433092890458921e-12
+        },
+        "other_continent": {
+          "cells": 54415,
+          "area_km2": 168784185.08165073,
+          "erosion_removed_km3": 1450173.347130403,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.1459633242338896e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 69.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.68816933341034,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6101.25473390565,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 6.924705345262644e-11
+        },
+        "other_continent": {
+          "cells": 54464,
+          "area_km2": 168943515.14391682,
+          "erosion_removed_km3": 1473785.4570361706,
+          "lateral_net_in_km3": -7.275957614183426e-12,
+          "collapse_net_in_km3": -7.548732025568258e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 68.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.00607069786902,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6212.220605539747,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -3.780360643389192e-11
+        },
+        "other_continent": {
+          "cells": 54460,
+          "area_km2": 168929375.96212667,
+          "erosion_removed_km3": 1480732.008695547,
+          "lateral_net_in_km3": 1.0913936421275139e-11,
+          "collapse_net_in_km3": -8.731149137020111e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 67.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.7051663329521,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6067.382617685023,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.202847844538882e-10
+        },
+        "other_continent": {
+          "cells": 54456,
+          "area_km2": 168915269.20235124,
+          "erosion_removed_km3": 1485386.2397961966,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 5.820766091346741e-11
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 66.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.0444641181277,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6049.576829626816,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 8.822892407274621e-12
+        },
+        "other_continent": {
+          "cells": 54447,
+          "area_km2": 168883480.96686015,
+          "erosion_removed_km3": 1515778.7727201516,
+          "lateral_net_in_km3": -3.637978807091713e-12,
+          "collapse_net_in_km3": 1.4551915228366852e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 65.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.74932637454782,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 5870.725482060946,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -5.5735220358255826e-11
+        },
+        "other_continent": {
+          "cells": 54443,
+          "area_km2": 168869426.80979836,
+          "erosion_removed_km3": 1521211.361939013,
+          "lateral_net_in_km3": 2.7284841053187847e-12,
+          "collapse_net_in_km3": -1.432454155292362e-10
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 64.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.92717250483236,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 5871.738259763908,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.0823591955608255e-10
+        },
+        "other_continent": {
+          "cells": 54472,
+          "area_km2": 168963403.11823112,
+          "erosion_removed_km3": 1530036.0408490144,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": 8.731149137020111e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 63.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 107.62034413874726,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6061.618265927617,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.5141673822377107e-10
+        },
+        "other_continent": {
+          "cells": 54470,
+          "area_km2": 168956350.46819752,
+          "erosion_removed_km3": 1532847.801596715,
+          "lateral_net_in_km3": 7.275957614183426e-12,
+          "collapse_net_in_km3": -7.275957614183426e-12
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 62.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.29754990189119,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 5941.707220721293,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.0981318269911647e-10
+        },
+        "other_continent": {
+          "cells": 54463,
+          "area_km2": 168931240.5821916,
+          "erosion_removed_km3": 1555033.134829401,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -1.1641532182693481e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 61.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.25747912734649,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6084.26106574886,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.6030334499075105e-10
+        },
+        "other_continent": {
+          "cells": 54451,
+          "area_km2": 168889584.60264888,
+          "erosion_removed_km3": 1598160.9702889663,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.3283064365386963e-10
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 60.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.26412848176327,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 5987.284090459646,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.1374684256732632e-10
+        },
+        "other_continent": {
+          "cells": 54447,
+          "area_km2": 168875964.9610117,
+          "erosion_removed_km3": 1582263.161908058,
+          "lateral_net_in_km3": -9.094947017729282e-12,
+          "collapse_net_in_km3": 8.731149137020111e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 59.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.35186947279655,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6086.26744074881,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 7.952860516759421e-11
+        },
+        "other_continent": {
+          "cells": 54461,
+          "area_km2": 168921549.29998046,
+          "erosion_removed_km3": 1578047.9981896724,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": 1.5916157281026244e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 58.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 107.89144234029234,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6188.509017854321,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.7667040221000956e-10
+        },
+        "other_continent": {
+          "cells": 54456,
+          "area_km2": 168902943.2506085,
+          "erosion_removed_km3": 1624815.6975428835,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -2.9103830456733704e-11
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 57.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.79436445462532,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6168.852145023912,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -1.1748372702943137e-10
+        },
+        "other_continent": {
+          "cells": 54444,
+          "area_km2": 168859785.52393413,
+          "erosion_removed_km3": 1657053.1659505016,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.3283064365386963e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 56.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.03234388105412,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6518.663125619795,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 1.190036384343299e-10
+        },
+        "other_continent": {
+          "cells": 54440,
+          "area_km2": 168846400.52429295,
+          "erosion_removed_km3": 1639215.278752435,
+          "lateral_net_in_km3": 3.637978807091713e-12,
+          "collapse_net_in_km3": -1.5279510989785194e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 55.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.99627859746406,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6532.092638392813,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 2.675642006722575e-11
+        },
+        "other_continent": {
+          "cells": 54436,
+          "area_km2": 168832099.606419,
+          "erosion_removed_km3": 1647704.7157726998,
+          "lateral_net_in_km3": 1.8189894035458565e-12,
+          "collapse_net_in_km3": -2.7921487344428897e-10
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 54.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.8473436468274,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6603.943007987753,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 6.903878562512897e-11
+        },
+        "other_continent": {
+          "cells": 54422,
+          "area_km2": 168775887.1141451,
+          "erosion_removed_km3": 1784325.6695445727,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -9.313225746154785e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 53.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.66899774976986,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6754.248306890432,
+          "lateral_net_in_km3": 1.1368683772161603e-13,
+          "collapse_net_in_km3": -2.988656575697875e-11
+        },
+        "other_continent": {
+          "cells": 54405,
+          "area_km2": 168713372.11974254,
+          "erosion_removed_km3": 1774697.3397541083,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": -3.2014213502407074e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 52.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.14231654617141,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6913.776674909735,
+          "lateral_net_in_km3": -389.18952471299866,
+          "collapse_net_in_km3": 2.0584223795874646e-10
+        },
+        "other_continent": {
+          "cells": 54401,
+          "area_km2": 168699867.36861652,
+          "erosion_removed_km3": 1759957.915641424,
+          "lateral_net_in_km3": 389.1895247129951,
+          "collapse_net_in_km3": 9.231371222995222e-11
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 51.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.19581256594,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 6972.91407160324,
+          "lateral_net_in_km3": -323.19518377305377,
+          "collapse_net_in_km3": 4.7055710713859876e-11
+        },
+        "other_continent": {
+          "cells": 54398,
+          "area_km2": 168690674.7140435,
+          "erosion_removed_km3": 1758236.9117495478,
+          "lateral_net_in_km3": 323.1951837730521,
+          "collapse_net_in_km3": -5.055807126740802e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 50.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 113.32516871535708,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7198.658797992871,
+          "lateral_net_in_km3": -521.8162679688414,
+          "collapse_net_in_km3": 1.889506077787981e-10
+        },
+        "other_continent": {
+          "cells": 54380,
+          "area_km2": 168626970.2162848,
+          "erosion_removed_km3": 1824538.2619780414,
+          "lateral_net_in_km3": 521.8162679688394,
+          "collapse_net_in_km3": -2.3283064365386963e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 49.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 114.18166050109721,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 7675.983195939473,
+          "lateral_net_in_km3": -593.1776466117859,
+          "collapse_net_in_km3": 1.503807105872431e-10
+        },
+        "other_continent": {
+          "cells": 54371,
+          "area_km2": 168590735.47122425,
+          "erosion_removed_km3": 1869134.3832817585,
+          "lateral_net_in_km3": 593.1776466117817,
+          "collapse_net_in_km3": -2.3283064365386963e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 48.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 113.18975102303581,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8113.121646923072,
+          "lateral_net_in_km3": -1212.2438607115414,
+          "collapse_net_in_km3": -8.550774583823723e-11
+        },
+        "other_continent": {
+          "cells": 54358,
+          "area_km2": 168550933.26841545,
+          "erosion_removed_km3": 1827641.261202983,
+          "lateral_net_in_km3": 1212.2438607115382,
+          "collapse_net_in_km3": -1.4551915228366852e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 47.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.95246665456878,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8355.929499351547,
+          "lateral_net_in_km3": -622.9559341677859,
+          "collapse_net_in_km3": 1.0897493421496253e-10
+        },
+        "other_continent": {
+          "cells": 54328,
+          "area_km2": 168458765.22926956,
+          "erosion_removed_km3": 1878086.5974579768,
+          "lateral_net_in_km3": 622.9559341677887,
+          "collapse_net_in_km3": 1.1641532182693481e-10
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 46.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.42976750914829,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8741.734968130795,
+          "lateral_net_in_km3": -896.8302656946071,
+          "collapse_net_in_km3": 8.343221701938703e-11
+        },
+        "other_continent": {
+          "cells": 54301,
+          "area_km2": 168379111.5574503,
+          "erosion_removed_km3": 1875089.1303362427,
+          "lateral_net_in_km3": 896.8302656946098,
+          "collapse_net_in_km3": 1.1677647555019318e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 45.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 106.81716562786826,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8866.61071708491,
+          "lateral_net_in_km3": -729.3981109934168,
+          "collapse_net_in_km3": 2.2023585558485893e-10
+        },
+        "other_continent": {
+          "cells": 54274,
+          "area_km2": 168299311.9669068,
+          "erosion_removed_km3": 1881679.5084630942,
+          "lateral_net_in_km3": 729.398110993418,
+          "collapse_net_in_km3": 5.166490665249729e-14
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 44.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.04024425212103,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8836.14961397665,
+          "lateral_net_in_km3": 43.04804869987527,
+          "collapse_net_in_km3": -9.178632895234807e-11
+        },
+        "other_continent": {
+          "cells": 54234,
+          "area_km2": 168177391.43534303,
+          "erosion_removed_km3": 1955727.3674437788,
+          "lateral_net_in_km3": -43.04804869986947,
+          "collapse_net_in_km3": 0.0
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 43.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.06022361234585,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8736.574659887845,
+          "lateral_net_in_km3": -646.6808704125765,
+          "collapse_net_in_km3": -9.684611350345532e-11
+        },
+        "other_continent": {
+          "cells": 54200,
+          "area_km2": 168075467.98856163,
+          "erosion_removed_km3": 1990611.8902422807,
+          "lateral_net_in_km3": 646.6808704125742,
+          "collapse_net_in_km3": -1.5012775090793503e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 42.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.39847525315867,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8770.95602965163,
+          "lateral_net_in_km3": -257.9923351310391,
+          "collapse_net_in_km3": 1.0157473282696513e-10
+        },
+        "other_continent": {
+          "cells": 54158,
+          "area_km2": 167947988.5357727,
+          "erosion_removed_km3": 2060127.7587883903,
+          "lateral_net_in_km3": 257.992335131039,
+          "collapse_net_in_km3": -2.9103830456733704e-11
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 41.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.63256334807218,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8691.327579762403,
+          "lateral_net_in_km3": -653.2059797975412,
+          "collapse_net_in_km3": -5.487970908836796e-11
+        },
+        "other_continent": {
+          "cells": 54127,
+          "area_km2": 167854191.9545884,
+          "erosion_removed_km3": 2117083.787119693,
+          "lateral_net_in_km3": 653.2059797975453,
+          "collapse_net_in_km3": 4.0745362639427185e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 40.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.20307798371712,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8712.219589598817,
+          "lateral_net_in_km3": -259.5130160871607,
+          "collapse_net_in_km3": 5.0669910877575096e-11
+        },
+        "other_continent": {
+          "cells": 54088,
+          "area_km2": 167735787.3344524,
+          "erosion_removed_km3": 2173067.7600781103,
+          "lateral_net_in_km3": 259.5130160871631,
+          "collapse_net_in_km3": -5.529727786779404e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 39.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.23770490077455,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8614.214331493675,
+          "lateral_net_in_km3": -632.4374217585826,
+          "collapse_net_in_km3": -5.8132882559184854e-11
+        },
+        "other_continent": {
+          "cells": 54048,
+          "area_km2": 167612589.95462,
+          "erosion_removed_km3": 2227154.6023018947,
+          "lateral_net_in_km3": 632.4374217585882,
+          "collapse_net_in_km3": -4.511093720793724e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 38.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.83298262830249,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8626.298510361827,
+          "lateral_net_in_km3": -587.0681732943768,
+          "collapse_net_in_km3": -5.1060174038721746e-11
+        },
+        "other_continent": {
+          "cells": 54007,
+          "area_km2": 167486131.27943504,
+          "erosion_removed_km3": 2264037.8309224034,
+          "lateral_net_in_km3": 587.0681732943794,
+          "collapse_net_in_km3": 1.1641532182693481e-10
+        }
+      },
+      "collapse_balance_km3": -3.814697265625e-06
+    },
+    {
+      "t_ma": 37.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.28549787701192,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8919.096335868779,
+          "lateral_net_in_km3": -556.5086245444801,
+          "collapse_net_in_km3": -1.6003881060575247e-10
+        },
+        "other_continent": {
+          "cells": 53977,
+          "area_km2": 167397358.14725137,
+          "erosion_removed_km3": 2281092.2041328885,
+          "lateral_net_in_km3": 556.5086245444836,
+          "collapse_net_in_km3": 7.09405867382884e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 36.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.09863602787625,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8832.039615180389,
+          "lateral_net_in_km3": -565.5349211592984,
+          "collapse_net_in_km3": 1.2289369935876092e-11
+        },
+        "other_continent": {
+          "cells": 53940,
+          "area_km2": 167282909.12363848,
+          "erosion_removed_km3": 2316628.994330394,
+          "lateral_net_in_km3": 565.5349211593202,
+          "collapse_net_in_km3": 3.2014213502407074e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 35.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 113.5116876191415,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8875.823700921997,
+          "lateral_net_in_km3": -23.221689288919066,
+          "collapse_net_in_km3": 7.412850620393426e-11
+        },
+        "other_continent": {
+          "cells": 53903,
+          "area_km2": 167168231.39571172,
+          "erosion_removed_km3": 2333595.737177902,
+          "lateral_net_in_km3": 23.221689288911875,
+          "collapse_net_in_km3": 1.5279510989785194e-10
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 34.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 111.36328361941489,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8617.173718270922,
+          "lateral_net_in_km3": -457.6909212094386,
+          "collapse_net_in_km3": -2.2977565585978628e-10
+        },
+        "other_continent": {
+          "cells": 53888,
+          "area_km2": 167124342.08787382,
+          "erosion_removed_km3": 2351402.148337407,
+          "lateral_net_in_km3": 457.6909212094324,
+          "collapse_net_in_km3": 1.0186340659856796e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 33.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 107.21477736401809,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8619.631509812947,
+          "lateral_net_in_km3": 231.20668043001365,
+          "collapse_net_in_km3": -6.9236899491172e-11
+        },
+        "other_continent": {
+          "cells": 53853,
+          "area_km2": 167016348.09165266,
+          "erosion_removed_km3": 2368794.447323228,
+          "lateral_net_in_km3": -231.2066804300157,
+          "collapse_net_in_km3": 7.275957614183426e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 32.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 106.49842012509998,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8814.119604243628,
+          "lateral_net_in_km3": -398.6083082538075,
+          "collapse_net_in_km3": -4.062085035400023e-12
+        },
+        "other_continent": {
+          "cells": 53810,
+          "area_km2": 166883037.60427237,
+          "erosion_removed_km3": 2391148.784442093,
+          "lateral_net_in_km3": 398.6083082538098,
+          "collapse_net_in_km3": -8.003553375601768e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 31.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.06736420076072,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8729.396414111647,
+          "lateral_net_in_km3": 212.83220551997636,
+          "collapse_net_in_km3": 1.5763602904313898e-10
+        },
+        "other_continent": {
+          "cells": 53770,
+          "area_km2": 166758953.89632612,
+          "erosion_removed_km3": 2393885.302602355,
+          "lateral_net_in_km3": -212.83220551995873,
+          "collapse_net_in_km3": -5.784386303275824e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 30.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.46144196519131,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8802.291381163093,
+          "lateral_net_in_km3": 168.10003410916673,
+          "collapse_net_in_km3": 8.065511620416104e-11
+        },
+        "other_continent": {
+          "cells": 53740,
+          "area_km2": 166666447.37987626,
+          "erosion_removed_km3": 2403735.607314216,
+          "lateral_net_in_km3": -168.1000341091476,
+          "collapse_net_in_km3": -2.473825588822365e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 29.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.00625921627287,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8656.89268281864,
+          "lateral_net_in_km3": -366.6115685763025,
+          "collapse_net_in_km3": -1.9937595956091067e-10
+        },
+        "other_continent": {
+          "cells": 53734,
+          "area_km2": 166648767.09862947,
+          "erosion_removed_km3": 2464471.1597807026,
+          "lateral_net_in_km3": 366.6115685763143,
+          "collapse_net_in_km3": 2.6193447411060333e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 28.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.20891859312923,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8798.865982758767,
+          "lateral_net_in_km3": -139.9903723046574,
+          "collapse_net_in_km3": -2.7010689419878695e-10
+        },
+        "other_continent": {
+          "cells": 53694,
+          "area_km2": 166520943.56838027,
+          "erosion_removed_km3": 2473269.8558673155,
+          "lateral_net_in_km3": 139.99037230465183,
+          "collapse_net_in_km3": 5.238689482212067e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 27.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 112.17145541757974,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8931.577746817198,
+          "lateral_net_in_km3": -121.25021497598681,
+          "collapse_net_in_km3": 8.935566876993167e-11
+        },
+        "other_continent": {
+          "cells": 53657,
+          "area_km2": 166399320.91699526,
+          "erosion_removed_km3": 2509191.274387365,
+          "lateral_net_in_km3": 121.25021497598937,
+          "collapse_net_in_km3": -1.964508555829525e-10
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 26.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.05133631865648,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8778.176193451594,
+          "lateral_net_in_km3": -107.68697958217354,
+          "collapse_net_in_km3": -2.550891058112221e-10
+        },
+        "other_continent": {
+          "cells": 53619,
+          "area_km2": 166272786.6459115,
+          "erosion_removed_km3": 2546262.674352635,
+          "lateral_net_in_km3": 107.68697958216217,
+          "collapse_net_in_km3": 4.0745362639427185e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 25.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.30944336573397,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 8672.172159764665,
+          "lateral_net_in_km3": -79.26803871422209,
+          "collapse_net_in_km3": 9.058154141202048e-11
+        },
+        "other_continent": {
+          "cells": 53581,
+          "area_km2": 166144458.66825664,
+          "erosion_removed_km3": 2546932.168304735,
+          "lateral_net_in_km3": 79.26803871420998,
+          "collapse_net_in_km3": -1.382431946694851e-10
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 24.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.79813500502345,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 9050.399468500804,
+          "lateral_net_in_km3": -193.39022507934567,
+          "collapse_net_in_km3": 1.1303872486037022e-12
+        },
+        "other_continent": {
+          "cells": 53587,
+          "area_km2": 166159217.4212659,
+          "erosion_removed_km3": 2564385.261653562,
+          "lateral_net_in_km3": 193.39022507934715,
+          "collapse_net_in_km3": -6.548361852765083e-11
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 23.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.29428165443318,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 9042.340120927629,
+          "lateral_net_in_km3": 519.6826315539637,
+          "collapse_net_in_km3": -1.741926293190194e-10
+        },
+        "other_continent": {
+          "cells": 53555,
+          "area_km2": 166055704.36241734,
+          "erosion_removed_km3": 2572113.2949145786,
+          "lateral_net_in_km3": -519.6826315539656,
+          "collapse_net_in_km3": -2.6921043172478676e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 22.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.93406495478405,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 9497.246871002488,
+          "lateral_net_in_km3": 1063.271933540555,
+          "collapse_net_in_km3": 7.778997734510543e-11
+        },
+        "other_continent": {
+          "cells": 53510,
+          "area_km2": 165911035.93451458,
+          "erosion_removed_km3": 2588962.0241542305,
+          "lateral_net_in_km3": -1063.2719335405563,
+          "collapse_net_in_km3": -3.7562131183221936e-10
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 21.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.29970055574572,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 9395.451846927475,
+          "lateral_net_in_km3": 9689.068830312644,
+          "collapse_net_in_km3": 1.1268546071970773e-11
+        },
+        "other_continent": {
+          "cells": 53469,
+          "area_km2": 165778869.00669172,
+          "erosion_removed_km3": 2606602.8114624307,
+          "lateral_net_in_km3": -9689.068830312628,
+          "collapse_net_in_km3": 5.820766091346741e-10
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 20.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 110.23088871942429,
+          "lateral_net_in_km3": 0.0,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 9708.291267711777,
+          "lateral_net_in_km3": 9737.29012357249,
+          "collapse_net_in_km3": 18958.50642339328
+        },
+        "other_continent": {
+          "cells": 53429,
+          "area_km2": 165650174.30932832,
+          "erosion_removed_km3": 2640623.0154635366,
+          "lateral_net_in_km3": -9737.290123572508,
+          "collapse_net_in_km3": -18958.50642339248
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 19.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 105.7134946126433,
+          "lateral_net_in_km3": 12.962634921200788,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 9801.662304861684,
+          "lateral_net_in_km3": 21266.759755080304,
+          "collapse_net_in_km3": 17813.642355785694
+        },
+        "other_continent": {
+          "cells": 53418,
+          "area_km2": 165612959.44430825,
+          "erosion_removed_km3": 2660056.638491362,
+          "lateral_net_in_km3": -21279.722390001494,
+          "collapse_net_in_km3": -19978.57247506543
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 18.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 104.79408662384151,
+          "lateral_net_in_km3": 48.497685483454624,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 10136.418020433452,
+          "lateral_net_in_km3": 21487.88331563834,
+          "collapse_net_in_km3": 303184.15207984566
+        },
+        "other_continent": {
+          "cells": 53373,
+          "area_km2": 165468594.4639968,
+          "erosion_removed_km3": 2726970.8419362097,
+          "lateral_net_in_km3": -21536.381001121797,
+          "collapse_net_in_km3": -303184.1520798453
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 17.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 102.8870811102171,
+          "lateral_net_in_km3": 63.31499147585514,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 15292.437106093506,
+          "lateral_net_in_km3": 6336.753290198003,
+          "collapse_net_in_km3": 609160.9544579299
+        },
+        "other_continent": {
+          "cells": 53335,
+          "area_km2": 165347851.83359593,
+          "erosion_removed_km3": 2717951.9690382173,
+          "lateral_net_in_km3": -6400.068281673877,
+          "collapse_net_in_km3": -634069.1821925248
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 16.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 102.48662661155052,
+          "lateral_net_in_km3": 76.53607723021658,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 25099.385627354302,
+          "lateral_net_in_km3": 4424.897647703537,
+          "collapse_net_in_km3": 256901.71576620408
+        },
+        "other_continent": {
+          "cells": 53292,
+          "area_km2": 165214471.5728687,
+          "erosion_removed_km3": 2751791.0878429036,
+          "lateral_net_in_km3": -4501.433724933762,
+          "collapse_net_in_km3": -345887.56945764035
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 15.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 104.92568572823563,
+          "lateral_net_in_km3": 88.30513939992375,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 28515.855333772317,
+          "lateral_net_in_km3": 4405.663584399908,
+          "collapse_net_in_km3": 123455.45333066196
+        },
+        "other_continent": {
+          "cells": 53247,
+          "area_km2": 165072099.1636065,
+          "erosion_removed_km3": 2770819.1160232103,
+          "lateral_net_in_km3": -4493.968723799837,
+          "collapse_net_in_km3": -209114.0452777627
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 14.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 106.8661480304784,
+          "lateral_net_in_km3": 98.75316012464175,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 29886.585738601858,
+          "lateral_net_in_km3": 5179.334694101506,
+          "collapse_net_in_km3": 14355.928824868732
+        },
+        "other_continent": {
+          "cells": 53243,
+          "area_km2": 165062052.59536034,
+          "erosion_removed_km3": 2764510.067453636,
+          "lateral_net_in_km3": -5278.087854226178,
+          "collapse_net_in_km3": -14355.928824869043
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 13.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 106.55161785129974,
+          "lateral_net_in_km3": 108.0970861738596,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 29017.74902199314,
+          "lateral_net_in_km3": 5712.879285365612,
+          "collapse_net_in_km3": 827548.8152305821
+        },
+        "other_continent": {
+          "cells": 53195,
+          "area_km2": 164911630.56837648,
+          "erosion_removed_km3": 2822508.660322434,
+          "lateral_net_in_km3": -5820.9763715394365,
+          "collapse_net_in_km3": -827548.8152305823
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 12.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 102.9757683575472,
+          "lateral_net_in_km3": 116.38611220706996,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 41603.4149104723,
+          "lateral_net_in_km3": -2600.2087148958444,
+          "collapse_net_in_km3": 241237.0041341555
+        },
+        "other_continent": {
+          "cells": 53145,
+          "area_km2": 164755388.73816234,
+          "erosion_removed_km3": 2864294.801266443,
+          "lateral_net_in_km3": 2483.822602688757,
+          "collapse_net_in_km3": -241237.00413415715
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 11.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 101.31761381038663,
+          "lateral_net_in_km3": 150.09228054362902,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 41771.55960543306,
+          "lateral_net_in_km3": -2214.8204458442888,
+          "collapse_net_in_km3": 755681.2823540748
+        },
+        "other_continent": {
+          "cells": 53110,
+          "area_km2": 164643733.61357024,
+          "erosion_removed_km3": 2931011.3801928395,
+          "lateral_net_in_km3": 2064.728165300652,
+          "collapse_net_in_km3": -755681.2823540737
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 10.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 101.18685921397298,
+          "lateral_net_in_km3": 208.29582943467372,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 51929.53002990647,
+          "lateral_net_in_km3": 5371.003095120337,
+          "collapse_net_in_km3": 555236.9579608036
+        },
+        "other_continent": {
+          "cells": 53058,
+          "area_km2": 164481349.59929377,
+          "erosion_removed_km3": 2911061.1872448134,
+          "lateral_net_in_km3": -5579.298924554994,
+          "collapse_net_in_km3": -555236.9579608039
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 9.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 103.79066162525845,
+          "lateral_net_in_km3": 238.96119895591806,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 60966.83581775527,
+          "lateral_net_in_km3": 1418.9089199744922,
+          "collapse_net_in_km3": 76437.64257286856
+        },
+        "other_continent": {
+          "cells": 53040,
+          "area_km2": 164435137.72205538,
+          "erosion_removed_km3": 2954918.202640125,
+          "lateral_net_in_km3": -1657.870118930383,
+          "collapse_net_in_km3": -76437.64257286859
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 8.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 104.73296352767002,
+          "lateral_net_in_km3": 273.3220241700983,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 61262.86000976654,
+          "lateral_net_in_km3": 779.9960594250488,
+          "collapse_net_in_km3": 152514.26474671278
+        },
+        "other_continent": {
+          "cells": 52982,
+          "area_km2": 164255181.3614157,
+          "erosion_removed_km3": 2984578.485069027,
+          "lateral_net_in_km3": -1053.3180835951207,
+          "collapse_net_in_km3": -152514.26474671302
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 7.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 102.69853262374332,
+          "lateral_net_in_km3": 310.7316666569775,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 63696.220619433014,
+          "lateral_net_in_km3": 307.0235000954708,
+          "collapse_net_in_km3": 510271.15078744205
+        },
+        "other_continent": {
+          "cells": 52927,
+          "area_km2": 164084208.26739362,
+          "erosion_removed_km3": 3040804.963876918,
+          "lateral_net_in_km3": -617.7551667524531,
+          "collapse_net_in_km3": -510271.15078744246
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 6.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 104.0140361966322,
+          "lateral_net_in_km3": 332.3281219858961,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 72875.14497066788,
+          "lateral_net_in_km3": -3285.2578569178686,
+          "collapse_net_in_km3": 178665.91243343297
+        },
+        "other_continent": {
+          "cells": 52877,
+          "area_km2": 163931403.6697782,
+          "erosion_removed_km3": 3080120.379079914,
+          "lateral_net_in_km3": 2952.9297349319895,
+          "collapse_net_in_km3": -210639.46215642535
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 5.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 103.56873723546353,
+          "lateral_net_in_km3": 352.1857896926017,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 74260.8398582055,
+          "lateral_net_in_km3": -3181.6983402562787,
+          "collapse_net_in_km3": 10069.089062365201
+        },
+        "other_continent": {
+          "cells": 52826,
+          "area_km2": 163774154.76548684,
+          "erosion_removed_km3": 3110974.8470746907,
+          "lateral_net_in_km3": 2829.5125505636934,
+          "collapse_net_in_km3": -81119.10078172947
+        }
+      },
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 4.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 103.52660728060864,
+          "lateral_net_in_km3": 360.90365272728684,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 72349.87146944896,
+          "lateral_net_in_km3": -2502.806379013109,
+          "collapse_net_in_km3": 631424.1308176045
+        },
+        "other_continent": {
+          "cells": 52787,
+          "area_km2": 163658613.4898358,
+          "erosion_removed_km3": 3188853.614072572,
+          "lateral_net_in_km3": 2141.902726285807,
+          "collapse_net_in_km3": -772458.4443939539
+        }
+      },
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 3.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 104.95214673465708,
+          "lateral_net_in_km3": 378.6049175994301,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 83270.61656391661,
+          "lateral_net_in_km3": -6805.851896209075,
+          "collapse_net_in_km3": 185121.29043562524
+        },
+        "other_continent": {
+          "cells": 52731,
+          "area_km2": 163485195.7361279,
+          "erosion_removed_km3": 3222876.689688839,
+          "lateral_net_in_km3": 6427.246978609663,
+          "collapse_net_in_km3": -230043.54130863893
+        }
+      },
+      "collapse_balance_km3": 3.814697265625e-06
+    },
+    {
+      "t_ma": 2.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 107.04110792945526,
+          "lateral_net_in_km3": 394.89418216560375,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 84671.15001338742,
+          "lateral_net_in_km3": -6154.783901796516,
+          "collapse_net_in_km3": 171769.8870098253
+        },
+        "other_continent": {
+          "cells": 52663,
+          "area_km2": 163274993.77342108,
+          "erosion_removed_km3": 3299677.6984386495,
+          "lateral_net_in_km3": 5759.889719630886,
+          "collapse_net_in_km3": -220279.45783306926
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 1.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 108.45596429622802,
+          "lateral_net_in_km3": 446.72112352374467,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 86852.43189818802,
+          "lateral_net_in_km3": -5734.750891077245,
+          "collapse_net_in_km3": 123131.82211958953
+        },
+        "other_continent": {
+          "cells": 52590,
+          "area_km2": 163049199.61470073,
+          "erosion_removed_km3": 3399161.989140777,
+          "lateral_net_in_km3": 5288.029767553489,
+          "collapse_net_in_km3": -123131.8221195896
+        }
+      },
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 0.0,
+      "regions": {
+        "B6": {
+          "cells": 65,
+          "area_km2": 230460.91856697816,
+          "erosion_removed_km3": 109.17758724020476,
+          "lateral_net_in_km3": 495.3068535266668,
+          "collapse_net_in_km3": 0.0
+        },
+        "PL8": {
+          "cells": 219,
+          "area_km2": 790933.3188761645,
+          "erosion_removed_km3": 89408.62766814162,
+          "lateral_net_in_km3": -4986.574371482376,
+          "collapse_net_in_km3": 606555.5425818295
+        },
+        "other_continent": {
+          "cells": 52531,
+          "area_km2": 162867792.7293045,
+          "erosion_removed_km3": 3475286.6146224895,
+          "lateral_net_in_km3": 4491.267517955661,
+          "collapse_net_in_km3": -606555.5425818297
+        }
+      },
+      "collapse_balance_km3": 0.0
+    }
+  ],
+  "elapsed_s": 233.36425120000058,
+  "process_lifetime_peak_wset_bytes": 882106368
+}
