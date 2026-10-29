@@ -1,0 +1,217 @@
+{
+  "method_class": "procedural_constrained",
+  "structural_region_class": "user_override",
+  "method": "u37_inherited_basin_resistance_candidate_v1",
+  "assumptions": [
+    "B6 final-design polygon follows plate 101; active since 180 Ma",
+    "flow involving basin multiplied by 0.01, a sensitivity candidate not calibrated viscosity",
+    "basin cells below cap do not receive cap overflow; direct collision and erosion remain active",
+    "original 65km cap and ring redistribution otherwise retained"
+  ],
+  "limits": [
+    "real physical basin strength and inherited history unknown",
+    "ring redistribution can pass through basin to other cells; no stress or strain solver",
+    "rift material source unresolved; candidate not adopted"
+  ],
+  "units": {
+    "thickness": "km",
+    "volume": "km3",
+    "time": "Ma",
+    "elevation": "m"
+  },
+  "diagnostic_rows": [
+    {
+      "t_ma": 180.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.305048966968734,
+      "basin_max_T_km": 36.50744624326114,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 170.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.30262975641535,
+      "basin_max_T_km": 36.48285447850053,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 160.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.300251903315164,
+      "basin_max_T_km": 36.46142313806664,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 150.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.29786550928531,
+      "basin_max_T_km": 36.44080895397118,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": -1.9073486328125e-06
+    },
+    {
+      "t_ma": 140.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.29550988565893,
+      "basin_max_T_km": 36.41934470633573,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 130.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.29318910478323,
+      "basin_max_T_km": 36.39790064137723,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 120.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.29085376693874,
+      "basin_max_T_km": 36.37836836563862,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 110.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.288545373149226,
+      "basin_max_T_km": 36.35807972048199,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 100.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.28626170604088,
+      "basin_max_T_km": 36.33820760577378,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 90.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.28396953048918,
+      "basin_max_T_km": 36.31969072488664,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 80.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.2817410479473,
+      "basin_max_T_km": 36.30008702091084,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 70.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.27952905777826,
+      "basin_max_T_km": 36.281308249159935,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 60.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.277313843010916,
+      "basin_max_T_km": 36.26346194044557,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 50.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.275137566878215,
+      "basin_max_T_km": 36.34469020518975,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 40.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.27293236567739,
+      "basin_max_T_km": 36.419384934678305,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 30.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.2707893346578,
+      "basin_max_T_km": 36.41156259717521,
+      "lateral_volume_in_km3": 0.0,
+      "collapse_balance_km3": 1.9073486328125e-06
+    },
+    {
+      "t_ma": 20.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.268639545108925,
+      "basin_max_T_km": 36.41497555088134,
+      "lateral_volume_in_km3": 221.05723674018654,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 10.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.28303966859191,
+      "basin_max_T_km": 36.90948543974479,
+      "lateral_volume_in_km3": 1288.4994955078487,
+      "collapse_balance_km3": 0.0
+    },
+    {
+      "t_ma": 0.0,
+      "basin_cell_count": 65,
+      "reserved_count": 65,
+      "basin_median_T_km": 35.323749801605246,
+      "basin_max_T_km": 37.38297195418339,
+      "lateral_volume_in_km3": 1955.6351771863535,
+      "collapse_balance_km3": 0.0
+    }
+  ],
+  "elapsed_s": 247.3675357000002,
+  "method_version": "1",
+  "base_commit": "1a24f29",
+  "physical_input_resolution_km": 60,
+  "output_grid": "1024x512",
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "shapely": "2.2.0",
+    "pygplates": "1.0.0"
+  },
+  "references": [
+    "https://doi.org/10.1130/0091-7613(2000)28<703:TOBTEM>2.0.CO;2",
+    "docs/u36_s1_distribution_spike.md"
+  ],
+  "code_sha256": {
+    "scripts/design_b6_structured.py": "71392fb89399e02807ecc3782c1a3dc18cbf83f3623a1a041580f431ad04b234",
+    "scripts/design_b6_comparison.py": "9d9f00bc97489ae301b64ed243e785632e24a74e6f9ed6489edbce9e2c9a7408",
+    "scripts/design_b6_audit.py": "c7d2f686e863175c4a3b9a904d33255ae2637ea3251fef404b70c3c81a7928ef"
+  },
+  "test_scope": "47 existing related tests passed, 8 Landlab warnings; 1 candidate balance test passed",
+  "memory_peak": "not measured"
+}

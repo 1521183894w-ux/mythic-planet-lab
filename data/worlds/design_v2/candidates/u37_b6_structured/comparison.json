@@ -1,0 +1,49 @@
+{
+  "method_class": {
+    "designed_region": "user_override",
+    "crust": "procedural_constrained",
+    "elevation": "parameterized_physics",
+    "output_sampling": "interpolated",
+    "figures": "visual_only"
+  },
+  "input_resolution": "L7 about 60 km; output 1024x512",
+  "units": {
+    "elevation": "m",
+    "area": "km²"
+  },
+  "window": [
+    96,
+    117,
+    20,
+    36
+  ],
+  "regions": {
+    "B6": {
+      "pixel_count": 176,
+      "target_median_m": 437.96768198422876,
+      "control_median_m": 4945.0,
+      "candidate_median_m": 452.2801513671875,
+      "change_median_m": -4466.613876342773,
+      "area_km2": 231346.88047662174,
+      "control_over_4500_fraction": 0.6997788476008983,
+      "candidate_over_4500_fraction": 0.0569683360474338
+    },
+    "PL8": {
+      "pixel_count": 559,
+      "target_median_m": 795.1275092616792,
+      "control_median_m": 4945.0,
+      "candidate_median_m": 4945.0,
+      "change_median_m": 0.0,
+      "area_km2": 771540.470176996,
+      "control_over_4500_fraction": 0.5252533026320366,
+      "candidate_over_4500_fraction": 0.5547503976068047
+    }
+  },
+  "global_changed_area_over_100m_km2": 956806.8515064926,
+  "global_max_abs_change_m": 4628.271911621094,
+  "land_to_ocean_km2": 0.0,
+  "ocean_to_land_km2": 0.0,
+  "before_sha256": "c805c1d0472f0ecdb98d5e0324a64fab2ede82ecf11fa031617ca45cfd6fa5ec",
+  "after_sha256": "dae2a5322d1ce1f1c3b0fc8afca07b5d1289d66bbc0fbe360fcc3386d18bd51e",
+  "note": "target is schematic; candidate is full run, not default; no claim physical calibration"
+}

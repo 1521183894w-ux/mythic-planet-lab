@@ -1,0 +1,61 @@
+{
+  "pre_activation_sampled_times": [
+    300.0,
+    290.0,
+    280.0,
+    270.0,
+    260.0,
+    250.0,
+    240.0,
+    230.0,
+    220.0,
+    210.0,
+    200.0,
+    190.0
+  ],
+  "pre_activation_different_arrays": [],
+  "budget_control": {
+    "arc_added": 495670207.7417145,
+    "eroded": 381135727.34331524,
+    "rift_thinning": 2370179.065031372,
+    "arc_converted": 5040090.385872091,
+    "arc_suppressed": 116874220.21569355,
+    "opening_overlap_skipped": 17069483.89754124,
+    "rift_fill": 102024121.65510125,
+    "arc_accreted": 2128626.5940816156,
+    "lip_added": 17225262.35804001,
+    "reactivation_added": 48946053.91938692,
+    "hole_created": 624731.1350972274,
+    "hole_fill": 7578395.682854227
+  },
+  "budget_candidate": {
+    "arc_added": 495671109.76572496,
+    "eroded": 381745205.4346037,
+    "rift_thinning": 2370179.065031372,
+    "arc_converted": 5040090.385872091,
+    "arc_suppressed": 116873318.19168302,
+    "opening_overlap_skipped": 17069483.89754124,
+    "rift_fill": 102024121.65510125,
+    "arc_accreted": 2128626.5940816156,
+    "lip_added": 17225262.35804001,
+    "reactivation_added": 48946053.91938692,
+    "hole_created": 624731.1350972274,
+    "hole_fill": 7578395.682854227
+  },
+  "budget_differences": {
+    "arc_added": 902.0240104794502,
+    "eroded": 609478.0912884474,
+    "rift_thinning": 0.0,
+    "arc_converted": 0.0,
+    "arc_suppressed": -902.0240105241537,
+    "opening_overlap_skipped": 0.0,
+    "rift_fill": 0.0,
+    "arc_accreted": 0.0,
+    "lip_added": 0.0,
+    "reactivation_added": 0.0,
+    "hole_created": 0.0,
+    "hole_fill": 0.0
+  },
+  "collapse_balance_sampled_max_km3": 1.9073486328125e-06,
+  "note": "前史仅比较每10Ma保存的11个格网字段；体积预算字段中剥蚀等是不同过程，不能直接将差额视为单一物质去向"
+}
