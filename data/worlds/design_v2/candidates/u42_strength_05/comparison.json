@@ -1,0 +1,261 @@
+{
+  "method": "u42_comparison_v1",
+  "review_candidate": "u42_strength_05",
+  "method_class": {
+    "transport": "procedural_constrained",
+    "regions": "user_override",
+    "elevation": "parameterized_physics",
+    "sampling": "interpolated",
+    "figures": "visual_only"
+  },
+  "resolution": "L7 about60km; output1024x512",
+  "units": {
+    "elevation": "m",
+    "volume": "km3",
+    "area": "km2",
+    "time": "Ma"
+  },
+  "regions": {
+    "B6": {
+      "00": {
+        "median_m": 441.1565856933594,
+        "mean_m": 449.11394283926455,
+        "above4500_fraction": 0.0
+      },
+      "01": {
+        "median_m": 441.1565856933594,
+        "mean_m": 451.19845761013056,
+        "above4500_fraction": 0.0
+      },
+      "05": {
+        "median_m": 441.1565856933594,
+        "mean_m": 459.3742967413959,
+        "above4500_fraction": 0.0
+      }
+    },
+    "PL8": {
+      "00": {
+        "median_m": 850.7301635742188,
+        "mean_m": 849.8282666984697,
+        "above4500_fraction": 0.0
+      },
+      "01": {
+        "median_m": 850.7301635742188,
+        "mean_m": 849.7944364079477,
+        "above4500_fraction": 0.0
+      },
+      "05": {
+        "median_m": 850.7301635742188,
+        "mean_m": 849.6925735867245,
+        "above4500_fraction": 0.0
+      }
+    },
+    "PL1": {
+      "00": {
+        "median_m": 4666.6376953125,
+        "mean_m": 3817.4702218855155,
+        "above4500_fraction": 0.5147986660810601
+      },
+      "01": {
+        "median_m": 4666.62939453125,
+        "mean_m": 3817.446186599185,
+        "above4500_fraction": 0.5147986660810601
+      },
+      "05": {
+        "median_m": 4666.595703125,
+        "mean_m": 3817.355249508392,
+        "above4500_fraction": 0.5147986660810601
+      }
+    }
+  },
+  "cases": {
+    "00": {
+      "max_elevation_m": 8074.87353515625,
+      "cells_over10km": 0,
+      "changed_area_over100m_km2": 0.0,
+      "max_abs_change_m": 0.0,
+      "land_to_ocean_km2": 0.0,
+      "ocean_to_land_km2": 0.0,
+      "budget_delta_km3": {
+        "arc_added": 0,
+        "eroded": 0,
+        "rift_thinning": 0,
+        "arc_converted": 0,
+        "arc_suppressed": 0,
+        "opening_overlap_skipped": 0,
+        "rift_fill": 0,
+        "arc_accreted": 0,
+        "lip_added": 0,
+        "reactivation_added": 0,
+        "hole_created": 0,
+        "hole_fill": 0
+      },
+      "step_count": 181,
+      "max_balance_km3": 5.263245839159936e-08,
+      "max_local_residual_km3": 8.974893717095256e-09,
+      "max_outlet_balance_km3": 1.807904936867999e-10,
+      "pre_outlet_max_T_km": 106.59411271860225,
+      "post_outlet_max_T_km": 93.48302919392601,
+      "elapsed_s": 318.8316484999996,
+      "process_lifetime_peak_wset_bytes": 888406016,
+      "surface_totals": {
+        "B6": {
+          "erosion_removed_km3": 21268.095269744845,
+          "lateral_net_in_km3": 251.91717055881978,
+          "relaxation_net_in_km3": 0.0
+        },
+        "PL8": {
+          "erosion_removed_km3": 1400106.672732327,
+          "lateral_net_in_km3": 65480.50008622124,
+          "relaxation_net_in_km3": 183312.725339198
+        },
+        "other_continent": {
+          "erosion_removed_km3": 303690594.86911166,
+          "lateral_net_in_km3": -65732.4172567801,
+          "relaxation_net_in_km3": -183312.72533919776
+        },
+        "other_cells": {
+          "erosion_removed_km3": 0.0,
+          "lateral_net_in_km3": 0.0,
+          "relaxation_net_in_km3": 0.0
+        }
+      },
+      "pre_activation_compared_arrays": 132,
+      "pre_activation_unequal_arrays": [],
+      "profile_31N_max_adjacent_jump_m": 2444.965087890625,
+      "profile_latitude_deg": 31.11328125
+    },
+    "01": {
+      "max_elevation_m": 8074.8447265625,
+      "cells_over10km": 0,
+      "changed_area_over100m_km2": 1327.3318946990794,
+      "max_abs_change_m": 136.73681640625,
+      "land_to_ocean_km2": 0.0,
+      "ocean_to_land_km2": 0.0,
+      "budget_delta_km3": {
+        "arc_added": 0,
+        "eroded": -2006,
+        "rift_thinning": 0,
+        "arc_converted": 0,
+        "arc_suppressed": 0,
+        "opening_overlap_skipped": 0,
+        "rift_fill": 0,
+        "arc_accreted": 0,
+        "lip_added": 0,
+        "reactivation_added": 0,
+        "hole_created": 0,
+        "hole_fill": 0
+      },
+      "step_count": 181,
+      "max_balance_km3": 4.751200322061777e-08,
+      "max_local_residual_km3": 1.0761141311377287e-08,
+      "max_outlet_balance_km3": 1.7462298274040222e-10,
+      "pre_outlet_max_T_km": 106.59411271860225,
+      "post_outlet_max_T_km": 93.48302919392601,
+      "elapsed_s": 318.4606308000002,
+      "process_lifetime_peak_wset_bytes": 888008704,
+      "surface_totals": {
+        "B6": {
+          "erosion_removed_km3": 21269.270765094345,
+          "lateral_net_in_km3": 289.2210240033448,
+          "relaxation_net_in_km3": 651.0215223929441
+        },
+        "PL8": {
+          "erosion_removed_km3": 1400099.8678874879,
+          "lateral_net_in_km3": 65472.46687413061,
+          "relaxation_net_in_km3": 183009.9597970013
+        },
+        "other_continent": {
+          "erosion_removed_km3": 303688593.89269346,
+          "lateral_net_in_km3": -65761.68789813407,
+          "relaxation_net_in_km3": -183660.9813193942
+        },
+        "other_cells": {
+          "erosion_removed_km3": 0.0,
+          "lateral_net_in_km3": 0.0,
+          "relaxation_net_in_km3": 0.0
+        }
+      },
+      "pre_activation_compared_arrays": 132,
+      "pre_activation_unequal_arrays": [],
+      "profile_31N_max_adjacent_jump_m": 2328.4390869140625,
+      "profile_latitude_deg": 31.11328125
+    },
+    "05": {
+      "max_elevation_m": 8074.73486328125,
+      "cells_over10km": 0,
+      "changed_area_over100m_km2": 23812.600066863793,
+      "max_abs_change_m": 555.51953125,
+      "land_to_ocean_km2": 0.0,
+      "ocean_to_land_km2": 0.0,
+      "budget_delta_km3": {
+        "arc_added": 0,
+        "eroded": -9469,
+        "rift_thinning": 0,
+        "arc_converted": 0,
+        "arc_suppressed": 0,
+        "opening_overlap_skipped": 0,
+        "rift_fill": 0,
+        "arc_accreted": 0,
+        "lip_added": 0,
+        "reactivation_added": 0,
+        "hole_created": 0,
+        "hole_fill": 0
+      },
+      "step_count": 181,
+      "max_balance_km3": 4.677167453337461e-08,
+      "max_local_residual_km3": 7.541530067101121e-09,
+      "max_outlet_balance_km3": 1.7462298274040222e-10,
+      "pre_outlet_max_T_km": 106.59411271860225,
+      "post_outlet_max_T_km": 93.48302919392601,
+      "elapsed_s": 317.9672423000011,
+      "process_lifetime_peak_wset_bytes": 889438208,
+      "surface_totals": {
+        "B6": {
+          "erosion_removed_km3": 21276.25510848614,
+          "lateral_net_in_km3": 364.1200101338433,
+          "relaxation_net_in_km3": 4010.29605197286
+        },
+        "PL8": {
+          "erosion_removed_km3": 1400075.6061923776,
+          "lateral_net_in_km3": 65448.609521479964,
+          "relaxation_net_in_km3": 181955.1784833648
+        },
+        "other_continent": {
+          "erosion_removed_km3": 303681148.57550544,
+          "lateral_net_in_km3": -65812.72953161376,
+          "relaxation_net_in_km3": -185965.4745353381
+        },
+        "other_cells": {
+          "erosion_removed_km3": 0.0,
+          "lateral_net_in_km3": 0.0,
+          "relaxation_net_in_km3": 0.0
+        }
+      },
+      "pre_activation_compared_arrays": 132,
+      "pre_activation_unequal_arrays": [],
+      "profile_31N_max_adjacent_jump_m": 1935.152587890625,
+      "profile_latitude_deg": 31.11328125
+    }
+  },
+  "control_reproduction": {
+    "compared_arrays": 352,
+    "unequal_arrays": [],
+    "budget_identical": true,
+    "events_identical": true,
+    "native_compared_arrays": 16,
+    "native_unequal_arrays": []
+  },
+  "input_sha256": {
+    "00": "237ce7d54d1a2fac9c04d601e1009da4d3f275f194690b5eb9156f3bc33fe64f",
+    "01": "d4b721d69575cc7db9ee03838d6f9348114ed4fb2cdc86698741fff35b3caa58",
+    "05": "93a2974a9019a489204a1fb5e3a819f57f076d1828d7902a7f0ffd09267c8026"
+  },
+  "limits": [
+    "finite mobility hypothesis, not a calibrated rheology",
+    "design windows not actual plateau segmentation",
+    "saved10Myrframes and postoutlet181steps do not certify continuous history ceiling",
+    "r2/oldr8 and material provenance remain unresolved",
+    "defaultC2unchanged; stage1notaccepted"
+  ]
+}

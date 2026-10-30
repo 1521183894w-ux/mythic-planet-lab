@@ -1,0 +1,386 @@
+{
+  "world": "u42_strength_05",
+  "purpose": "stage1 local mechanism checkpoint",
+  "figure_sha256": {
+    "figures/design/v2/forward/u42_strength/00_spike.png": "1cea2234f2ec4d7d8621d1c0b618c47ceb308749da3b7592f7c3300cadd72042",
+    "figures/design/v2/forward/u42_strength/01_cases.png": "abde6acc648e6b9509dee5efa35f2731e9b9a7bc20047bb5521943f2e12a14df",
+    "figures/design/v2/forward/u42_strength/02_profiles.png": "27ab7eb6b0a92dcc6032abeeb21d8d0a128693d1efc70923eb5a00c862b5552b",
+    "figures/design/v2/forward/u42_strength/03_surface_ledger.png": "4c80c266daa46e4b6a8f311f4879587f8fe72969905958d19f98702ec1a9deb1",
+    "figures/design/v2/forward/u42_strength/04_history.png": "7551d674d3d4ecf2ef8e24ea47c8e6c9dd8efd8404a07d84e1642f974cba42ef",
+    "figures/design/v2/forward/u42_strength/05_global_cost.png": "467c1c13ae6eb440946de8b057d74d479602f5a69005308200d690f123ad0589",
+    "figures/design/v2/forward/u42_strength/06_previous_r8.png": "2e9431c12cc39c73453fabeadd482f39507e5fe2ddcb2e4b0a040b914a13d440",
+    "figures/design/v2/forward/u42_strength/07_previous_r8_tectonics.png": "466bef80569dc148b67093c4f3ec144550dddf84c979b662c3024f0c71121658",
+    "figures/design/v2/forward/u42_strength/08_step_peaks.png": "f061bf7a32bfc51bca1153f5f20c2d4caf2763a4376dc043bcf4f281e8374b48",
+    "figures/stage1/u42_strength_05/01_elevation_global.png": "64cd1f1a76e0932322710b60b30dc9a2c48458aa89f01cc14afdcf77d1af82bd",
+    "figures/stage1/u42_strength_05/02_elevation_north_polar.png": "13ca8ac9fcb1e11ae9b31a93a9fff3b1f04de56ba37ccb8cabbf7df85f4a7046",
+    "figures/stage1/u42_strength_05/03_elevation_south_polar.png": "eaac14021e96ce2a7f8e9fe007ea9ec40577e72672cd3d3a5770a73e036c5393",
+    "figures/stage1/u42_strength_05/04_landmass_units.png": "6925dfa01b5b235a9f65630d8cb5db2d42f0a0f51acc2cb19ef377f55692ea2e",
+    "figures/stage1/u42_strength_05/05_coast_morphology.png": "d3588fedd8ef2008c4352e4e74e8e8e9011825c46271b88bb5fb208a7e1cb0fa",
+    "figures/stage1/u42_strength_05/06_distance_to_sea.png": "3e9cddab7aad720da5dd20db53aee56f8204c9fa379e7184d21cb4e888d1b463",
+    "figures/stage1/u42_strength_05/07_slope.png": "5f3a40cb69c55ceb540b4574c15872d794a2273a7aa44b7b5f7a9808ba92767b",
+    "figures/stage1/u42_strength_05/08_mountain_systems.png": "61b5804d6c9dcf8f402b6a426c3e57018634ab6933628ffc10f9745ade5dfde3",
+    "figures/stage1/u42_strength_05/09_hypsometry.png": "102ddd1cc357778707179bba3ec266e288bf3c002efd79852e2f5aad2929017d",
+    "figures/stage1/u42_strength_05/10_slope_distance_mountains.png": "66159e86032828f3f5ce7748b64747b9b609cf922b33054144f8cf93de30ad7a",
+    "figures/stage1/u42_strength_05/11_coast_vs_earth.png": "4e05c5c35b7dcf1bb370e816410f6a0a2644961bfa1e221aec7c63bbacc64816",
+    "figures/stage1/u42_strength_05/12_coast_complexity_spread.png": "743cc0485ed02cf4aaa7ca2cbfb40e1f8ad7032e0e39efa278732ecf0d18e4cc",
+    "figures/stage1/u42_strength_05/13_plates_boundaries.png": "76099e8377379f309333df7351db80470e7420689b0af4cd972686f3ac4573c7",
+    "figures/stage1/u42_strength_05/regions/r1_main_inland_sea.png": "7518bd2074a06f43b23929cd861fc2d03ab696c5ee67045bcfe32353ea89bff8",
+    "figures/stage1/u42_strength_05/regions/r1_main_inland_sea_tectonics.png": "4e63cd6babecfc394776f6c037ba3160438c65f22644212eaac28c336712e54a",
+    "figures/stage1/u42_strength_05/regions/r2_inland_sea_complex_coast.png": "1dbfb7fd1fd6ae663edb9dc15f690dbd3fc883a4ea03421a61b5b0ba12df1d4d",
+    "figures/stage1/u42_strength_05/regions/r2_inland_sea_complex_coast_tectonics.png": "746eff3fb89b66cf655a1150f65c86674faf1a2f0359dba0b4fdd11d9f04f659",
+    "figures/stage1/u42_strength_05/regions/r3_north_coast.png": "996848011e1f0ca422534618f83ba992cef68f0cab1e6cfbdc5d39ab1eacbae7",
+    "figures/stage1/u42_strength_05/regions/r3_north_coast_tectonics.png": "7137b7f6f4b2984f20543f2741b6badcb52f0c61e9c71820990073c01f0996ad",
+    "figures/stage1/u42_strength_05/regions/r4_polar_coast.png": "2a45bf824c92c4ff2623f85c1f3f8867d6fed1677adf8cc07a5dd83258162b60",
+    "figures/stage1/u42_strength_05/regions/r4_polar_coast_tectonics.png": "50b93b976a8c811527f85959a6dcfa67dfd1e2713613983f2239bfdf20095123",
+    "figures/stage1/u42_strength_05/regions/r5_isthmus.png": "635016b7d54dce5d95b957451b2c7dd1a1700095152fd55646c9ded782e4c4b5",
+    "figures/stage1/u42_strength_05/regions/r5_isthmus_tectonics.png": "90bff123d7517a3c851152bcdbbd931ddaf5e081d3774e79fe6375fd03f93e6b",
+    "figures/stage1/u42_strength_05/regions/r6_smoothest_coast.png": "42852e0edbcca9a65054e9d78f3b41c819955fdbcad47ea0177c8c8ab4ddae99",
+    "figures/stage1/u42_strength_05/regions/r6_smoothest_coast_tectonics.png": "f60a2231593bd64623fd4708e9ee84d6ad183f1c509c8d2e721f72db1982ce2a",
+    "figures/stage1/u42_strength_05/regions/r7_archipelago.png": "21134d2fd5a371f4f3b780fc869ac6655cda15a7879c76d348ff45b03ac0e4e5",
+    "figures/stage1/u42_strength_05/regions/r7_archipelago_tectonics.png": "0beafa8c0feec69e8d95d12b5d4e2094a596e4819dcd96651762a656b05ddc49",
+    "figures/stage1/u42_strength_05/regions/r8_random_coast.png": "af6c279e3d89f9cb1ca685e50dc3345e4c7d550a64f2640887c12fbe03a7cb20",
+    "figures/stage1/u42_strength_05/regions/r8_random_coast_tectonics.png": "3474efb243d032a80f79b5d3846394696f2ee910d12aece8ef12b09526e3b748"
+  },
+  "figure_count": 38,
+  "comparison": {
+    "method": "u42_comparison_v1",
+    "review_candidate": "u42_strength_05",
+    "method_class": {
+      "transport": "procedural_constrained",
+      "regions": "user_override",
+      "elevation": "parameterized_physics",
+      "sampling": "interpolated",
+      "figures": "visual_only"
+    },
+    "resolution": "L7 about60km; output1024x512",
+    "units": {
+      "elevation": "m",
+      "volume": "km3",
+      "area": "km2",
+      "time": "Ma"
+    },
+    "regions": {
+      "B6": {
+        "00": {
+          "median_m": 441.1565856933594,
+          "mean_m": 449.11394283926455,
+          "above4500_fraction": 0.0
+        },
+        "01": {
+          "median_m": 441.1565856933594,
+          "mean_m": 451.19845761013056,
+          "above4500_fraction": 0.0
+        },
+        "05": {
+          "median_m": 441.1565856933594,
+          "mean_m": 459.3742967413959,
+          "above4500_fraction": 0.0
+        }
+      },
+      "PL8": {
+        "00": {
+          "median_m": 850.7301635742188,
+          "mean_m": 849.8282666984697,
+          "above4500_fraction": 0.0
+        },
+        "01": {
+          "median_m": 850.7301635742188,
+          "mean_m": 849.7944364079477,
+          "above4500_fraction": 0.0
+        },
+        "05": {
+          "median_m": 850.7301635742188,
+          "mean_m": 849.6925735867245,
+          "above4500_fraction": 0.0
+        }
+      },
+      "PL1": {
+        "00": {
+          "median_m": 4666.6376953125,
+          "mean_m": 3817.4702218855155,
+          "above4500_fraction": 0.5147986660810601
+        },
+        "01": {
+          "median_m": 4666.62939453125,
+          "mean_m": 3817.446186599185,
+          "above4500_fraction": 0.5147986660810601
+        },
+        "05": {
+          "median_m": 4666.595703125,
+          "mean_m": 3817.355249508392,
+          "above4500_fraction": 0.5147986660810601
+        }
+      }
+    },
+    "cases": {
+      "00": {
+        "max_elevation_m": 8074.87353515625,
+        "cells_over10km": 0,
+        "changed_area_over100m_km2": 0.0,
+        "max_abs_change_m": 0.0,
+        "land_to_ocean_km2": 0.0,
+        "ocean_to_land_km2": 0.0,
+        "budget_delta_km3": {
+          "arc_added": 0,
+          "eroded": 0,
+          "rift_thinning": 0,
+          "arc_converted": 0,
+          "arc_suppressed": 0,
+          "opening_overlap_skipped": 0,
+          "rift_fill": 0,
+          "arc_accreted": 0,
+          "lip_added": 0,
+          "reactivation_added": 0,
+          "hole_created": 0,
+          "hole_fill": 0
+        },
+        "step_count": 181,
+        "max_balance_km3": 5.263245839159936e-08,
+        "max_local_residual_km3": 8.974893717095256e-09,
+        "max_outlet_balance_km3": 1.807904936867999e-10,
+        "pre_outlet_max_T_km": 106.59411271860225,
+        "post_outlet_max_T_km": 93.48302919392601,
+        "elapsed_s": 318.8316484999996,
+        "process_lifetime_peak_wset_bytes": 888406016,
+        "surface_totals": {
+          "B6": {
+            "erosion_removed_km3": 21268.095269744845,
+            "lateral_net_in_km3": 251.91717055881978,
+            "relaxation_net_in_km3": 0.0
+          },
+          "PL8": {
+            "erosion_removed_km3": 1400106.672732327,
+            "lateral_net_in_km3": 65480.50008622124,
+            "relaxation_net_in_km3": 183312.725339198
+          },
+          "other_continent": {
+            "erosion_removed_km3": 303690594.86911166,
+            "lateral_net_in_km3": -65732.4172567801,
+            "relaxation_net_in_km3": -183312.72533919776
+          },
+          "other_cells": {
+            "erosion_removed_km3": 0.0,
+            "lateral_net_in_km3": 0.0,
+            "relaxation_net_in_km3": 0.0
+          }
+        },
+        "pre_activation_compared_arrays": 132,
+        "pre_activation_unequal_arrays": [],
+        "profile_31N_max_adjacent_jump_m": 2444.965087890625,
+        "profile_latitude_deg": 31.11328125
+      },
+      "01": {
+        "max_elevation_m": 8074.8447265625,
+        "cells_over10km": 0,
+        "changed_area_over100m_km2": 1327.3318946990794,
+        "max_abs_change_m": 136.73681640625,
+        "land_to_ocean_km2": 0.0,
+        "ocean_to_land_km2": 0.0,
+        "budget_delta_km3": {
+          "arc_added": 0,
+          "eroded": -2006,
+          "rift_thinning": 0,
+          "arc_converted": 0,
+          "arc_suppressed": 0,
+          "opening_overlap_skipped": 0,
+          "rift_fill": 0,
+          "arc_accreted": 0,
+          "lip_added": 0,
+          "reactivation_added": 0,
+          "hole_created": 0,
+          "hole_fill": 0
+        },
+        "step_count": 181,
+        "max_balance_km3": 4.751200322061777e-08,
+        "max_local_residual_km3": 1.0761141311377287e-08,
+        "max_outlet_balance_km3": 1.7462298274040222e-10,
+        "pre_outlet_max_T_km": 106.59411271860225,
+        "post_outlet_max_T_km": 93.48302919392601,
+        "elapsed_s": 318.4606308000002,
+        "process_lifetime_peak_wset_bytes": 888008704,
+        "surface_totals": {
+          "B6": {
+            "erosion_removed_km3": 21269.270765094345,
+            "lateral_net_in_km3": 289.2210240033448,
+            "relaxation_net_in_km3": 651.0215223929441
+          },
+          "PL8": {
+            "erosion_removed_km3": 1400099.8678874879,
+            "lateral_net_in_km3": 65472.46687413061,
+            "relaxation_net_in_km3": 183009.9597970013
+          },
+          "other_continent": {
+            "erosion_removed_km3": 303688593.89269346,
+            "lateral_net_in_km3": -65761.68789813407,
+            "relaxation_net_in_km3": -183660.9813193942
+          },
+          "other_cells": {
+            "erosion_removed_km3": 0.0,
+            "lateral_net_in_km3": 0.0,
+            "relaxation_net_in_km3": 0.0
+          }
+        },
+        "pre_activation_compared_arrays": 132,
+        "pre_activation_unequal_arrays": [],
+        "profile_31N_max_adjacent_jump_m": 2328.4390869140625,
+        "profile_latitude_deg": 31.11328125
+      },
+      "05": {
+        "max_elevation_m": 8074.73486328125,
+        "cells_over10km": 0,
+        "changed_area_over100m_km2": 23812.600066863793,
+        "max_abs_change_m": 555.51953125,
+        "land_to_ocean_km2": 0.0,
+        "ocean_to_land_km2": 0.0,
+        "budget_delta_km3": {
+          "arc_added": 0,
+          "eroded": -9469,
+          "rift_thinning": 0,
+          "arc_converted": 0,
+          "arc_suppressed": 0,
+          "opening_overlap_skipped": 0,
+          "rift_fill": 0,
+          "arc_accreted": 0,
+          "lip_added": 0,
+          "reactivation_added": 0,
+          "hole_created": 0,
+          "hole_fill": 0
+        },
+        "step_count": 181,
+        "max_balance_km3": 4.677167453337461e-08,
+        "max_local_residual_km3": 7.541530067101121e-09,
+        "max_outlet_balance_km3": 1.7462298274040222e-10,
+        "pre_outlet_max_T_km": 106.59411271860225,
+        "post_outlet_max_T_km": 93.48302919392601,
+        "elapsed_s": 317.9672423000011,
+        "process_lifetime_peak_wset_bytes": 889438208,
+        "surface_totals": {
+          "B6": {
+            "erosion_removed_km3": 21276.25510848614,
+            "lateral_net_in_km3": 364.1200101338433,
+            "relaxation_net_in_km3": 4010.29605197286
+          },
+          "PL8": {
+            "erosion_removed_km3": 1400075.6061923776,
+            "lateral_net_in_km3": 65448.609521479964,
+            "relaxation_net_in_km3": 181955.1784833648
+          },
+          "other_continent": {
+            "erosion_removed_km3": 303681148.57550544,
+            "lateral_net_in_km3": -65812.72953161376,
+            "relaxation_net_in_km3": -185965.4745353381
+          },
+          "other_cells": {
+            "erosion_removed_km3": 0.0,
+            "lateral_net_in_km3": 0.0,
+            "relaxation_net_in_km3": 0.0
+          }
+        },
+        "pre_activation_compared_arrays": 132,
+        "pre_activation_unequal_arrays": [],
+        "profile_31N_max_adjacent_jump_m": 1935.152587890625,
+        "profile_latitude_deg": 31.11328125
+      }
+    },
+    "control_reproduction": {
+      "compared_arrays": 352,
+      "unequal_arrays": [],
+      "budget_identical": true,
+      "events_identical": true,
+      "native_compared_arrays": 16,
+      "native_unequal_arrays": []
+    },
+    "input_sha256": {
+      "00": "237ce7d54d1a2fac9c04d601e1009da4d3f275f194690b5eb9156f3bc33fe64f",
+      "01": "d4b721d69575cc7db9ee03838d6f9348114ed4fb2cdc86698741fff35b3caa58",
+      "05": "93a2974a9019a489204a1fb5e3a819f57f076d1828d7902a7f0ffd09267c8026"
+    },
+    "limits": [
+      "finite mobility hypothesis, not a calibrated rheology",
+      "design windows not actual plateau segmentation",
+      "saved10Myrframes and postoutlet181steps do not certify continuous history ceiling",
+      "r2/oldr8 and material provenance remain unresolved",
+      "defaultC2unchanged; stage1notaccepted"
+    ]
+  },
+  "spike": {
+    "method": "u42_frozen_native_strength_spike_v1",
+    "method_class": "procedural_constrained",
+    "resolution": "L7 about60km",
+    "units": {
+      "T": "km",
+      "volume": "km3",
+      "time": "Myr"
+    },
+    "source_sha256": "3a6b5c3d2d3df005a240750edf2b95e76c7c793b736694e54397ba1353437bb4",
+    "assumptions": [
+      "same0Ma native domain and edges; source and motion frozen;20oneMyrsteps",
+      "local exterior boundary closed; not a world reconstruction"
+    ],
+    "rows": [
+      {
+        "floor": 0.0,
+        "steps": 20,
+        "domain_cells": 1555,
+        "eligible_edges": 4143,
+        "max_balance_km3": 4.688445187639445e-09,
+        "max_residual_km3": 1.3023964129388332e-09,
+        "basin_core_net_in_km3": 0.0,
+        "basin_core_median_T_km": 35.487867454880025
+      },
+      {
+        "floor": 0.01,
+        "steps": 20,
+        "domain_cells": 1555,
+        "eligible_edges": 4143,
+        "max_balance_km3": 3.819877747446299e-09,
+        "max_residual_km3": 9.222276275977492e-10,
+        "basin_core_net_in_km3": 45273.529533936606,
+        "basin_core_median_T_km": 35.517620943569625
+      },
+      {
+        "floor": 0.05,
+        "steps": 20,
+        "domain_cells": 1555,
+        "eligible_edges": 4143,
+        "max_balance_km3": 2.726665115915239e-09,
+        "max_residual_km3": 9.258656064048409e-10,
+        "basin_core_net_in_km3": 161838.37649010617,
+        "basin_core_median_T_km": 35.53730983740729
+      }
+    ]
+  },
+  "metrics_path": "figures/stage1/u42_strength_05/metrics.json",
+  "regions_path": "figures/stage1/u42_strength_05/regions.json",
+  "data_layers": {
+    "transport": "procedural_constrained",
+    "regions": "user_override",
+    "elevation": "parameterized_physics",
+    "output": "interpolated",
+    "figures": "visual_only"
+  },
+  "metadata": {
+    "transport": "u42_finite_strength_v1",
+    "solver": "SciPy spsolve inherited",
+    "grid": "L7 ~60km; output1024x512",
+    "seed": "designv2/historyv2",
+    "key_assumption": "since180Ma, m_new=floor+(1-floor)*m_old on same eligible edges; old explicit flow and U41contactoutlet unchanged",
+    "limits": [
+      "not calibrated thermal/stress/rheology",
+      "finite coefficient ratio not an actual viscosity measurement",
+      "outlet181steps are thickness, not global sea-level-relative elevation each step",
+      "source/provenance, fixedoldr8 and r2 causal evidence not supplemented here"
+    ],
+    "reference": [
+      "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2007JB005457",
+      "https://academic.oup.com/gji/article/162/2/575/2050588",
+      "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.spsolve.html"
+    ]
+  },
+  "tests": {
+    "related_passed": 77,
+    "warnings": 8,
+    "old_strict_failures": "not rerun"
+  },
+  "run_memory_note": "individual process lifetime peak; concurrent aggregate peak not measured"
+}

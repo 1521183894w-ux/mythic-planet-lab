@@ -1,0 +1,47 @@
+{
+  "method": "u42_frozen_native_strength_spike_v1",
+  "method_class": "procedural_constrained",
+  "resolution": "L7 about60km",
+  "units": {
+    "T": "km",
+    "volume": "km3",
+    "time": "Myr"
+  },
+  "source_sha256": "3a6b5c3d2d3df005a240750edf2b95e76c7c793b736694e54397ba1353437bb4",
+  "assumptions": [
+    "same0Ma native domain and edges; source and motion frozen;20oneMyrsteps",
+    "local exterior boundary closed; not a world reconstruction"
+  ],
+  "rows": [
+    {
+      "floor": 0.0,
+      "steps": 20,
+      "domain_cells": 1555,
+      "eligible_edges": 4143,
+      "max_balance_km3": 4.688445187639445e-09,
+      "max_residual_km3": 1.3023964129388332e-09,
+      "basin_core_net_in_km3": 0.0,
+      "basin_core_median_T_km": 35.487867454880025
+    },
+    {
+      "floor": 0.01,
+      "steps": 20,
+      "domain_cells": 1555,
+      "eligible_edges": 4143,
+      "max_balance_km3": 3.819877747446299e-09,
+      "max_residual_km3": 9.222276275977492e-10,
+      "basin_core_net_in_km3": 45273.529533936606,
+      "basin_core_median_T_km": 35.517620943569625
+    },
+    {
+      "floor": 0.05,
+      "steps": 20,
+      "domain_cells": 1555,
+      "eligible_edges": 4143,
+      "max_balance_km3": 2.726665115915239e-09,
+      "max_residual_km3": 9.258656064048409e-10,
+      "basin_core_net_in_km3": 161838.37649010617,
+      "basin_core_median_T_km": 35.53730983740729
+    }
+  ]
+}
