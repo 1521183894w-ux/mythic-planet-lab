@@ -1,0 +1,942 @@
+{
+  "method_class": "procedural_constrained",
+  "method": "u41_native_one_step_spike_v1",
+  "resolution": "native L7 about60km",
+  "units": {
+    "thickness": "km",
+    "volume": "km3",
+    "time": "Myr"
+  },
+  "assumptions": [
+    "same frozen actual U40B 0Ma engine state; one1Myr outlet step, no plate motion or new sources",
+    "contact approximation excludes center separations below0.5h and above1.5h"
+  ],
+  "limits": [
+    "not a full forward result",
+    "not physical calibration",
+    "volume only, no density/composition transfer"
+  ],
+  "cases": {
+    "control": {
+      "max_T_km": 173.41925160696752,
+      "change_balance_km3": 0.0,
+      "outlet": null
+    },
+    "native": {
+      "max_T_km": 109.88813605233311,
+      "change_balance_km3": 0.0,
+      "outlet": {
+        "t_ma": 0.0,
+        "balance_km3": 0.0,
+        "transported_km3": 2393611.8611408123,
+        "contact_transported_km3": 0.0,
+        "source_cells": 19,
+        "receiver_cells": 33,
+        "converted_cells": 17,
+        "converted_column_km3": 2847401.800539365,
+        "edges": [
+          {
+            "source_uid": 251189,
+            "target_uid": 489545,
+            "kind": 0,
+            "length_km": 65.18383658843231,
+            "volume_km3": 100198.3464144163
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 489545,
+            "kind": 0,
+            "length_km": 65.80824508700879,
+            "volume_km3": 128628.03620286012
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 484340,
+            "kind": 0,
+            "length_km": 63.17234976611421,
+            "volume_km3": 40465.96812696196
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 484509,
+            "kind": 0,
+            "length_km": 63.17234976611156,
+            "volume_km3": 40439.836681383465
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 489756,
+            "kind": 0,
+            "length_km": 62.59547953972012,
+            "volume_km3": 30663.760037716133
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 233210,
+            "kind": 0,
+            "length_km": 62.59547953971994,
+            "volume_km3": 28595.251208065296
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 490228,
+            "kind": 0,
+            "length_km": 65.13782903356298,
+            "volume_km3": 40397.760379527135
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 485023,
+            "kind": 0,
+            "length_km": 65.1285443501135,
+            "volume_km3": 40403.576676145014
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 485049,
+            "kind": 0,
+            "length_km": 62.5882190152497,
+            "volume_km3": 40475.259689022794
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 490430,
+            "kind": 0,
+            "length_km": 62.597880590587735,
+            "volume_km3": 40443.29595682573
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 489979,
+            "kind": 0,
+            "length_km": 63.16523049904668,
+            "volume_km3": 132602.2427809144
+          },
+          {
+            "source_uid": 251189,
+            "target_uid": 490143,
+            "kind": 0,
+            "length_km": 65.85185185416752,
+            "volume_km3": 100176.6878976815
+          },
+          {
+            "source_uid": 251189,
+            "target_uid": 490957,
+            "kind": 0,
+            "length_km": 65.1864301647706,
+            "volume_km3": 100221.90958352944
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 490005,
+            "kind": 0,
+            "length_km": 65.14498574158732,
+            "volume_km3": 128636.18891015925
+          },
+          {
+            "source_uid": 246812,
+            "target_uid": 490144,
+            "kind": 0,
+            "length_km": 65.67812979682743,
+            "volume_km3": 243722.7446015165
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 484878,
+            "kind": 0,
+            "length_km": 63.21303533822836,
+            "volume_km3": 30649.366681126146
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 490144,
+            "kind": 0,
+            "length_km": 65.18642582678963,
+            "volume_km3": 128500.7704842597
+          },
+          {
+            "source_uid": 260778,
+            "target_uid": 490852,
+            "kind": 0,
+            "length_km": 62.5882340497498,
+            "volume_km3": 8797.566312499275
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 485665,
+            "kind": 0,
+            "length_km": 65.17496612304973,
+            "volume_km3": 30580.274526132518
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 229694,
+            "kind": 0,
+            "length_km": 65.16567241431662,
+            "volume_km3": 28519.356729280593
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 229764,
+            "kind": 0,
+            "length_km": 63.20345306007409,
+            "volume_km3": 26712.356605537083
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 491218,
+            "kind": 0,
+            "length_km": 62.55923030416828,
+            "volume_km3": 290961.011508329
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 432690,
+            "kind": 0,
+            "length_km": 63.004928192092954,
+            "volume_km3": 4778.98116245228
+          },
+          {
+            "source_uid": 432721,
+            "target_uid": 491241,
+            "kind": 0,
+            "length_km": 57.55105708286351,
+            "volume_km3": 52927.18165316961
+          },
+          {
+            "source_uid": 432721,
+            "target_uid": 432929,
+            "kind": 0,
+            "length_km": 57.06284532863925,
+            "volume_km3": 35544.122717534956
+          },
+          {
+            "source_uid": 432724,
+            "target_uid": 432926,
+            "kind": 0,
+            "length_km": 57.03067486138694,
+            "volume_km3": 32291.528425169876
+          },
+          {
+            "source_uid": 432887,
+            "target_uid": 432736,
+            "kind": 0,
+            "length_km": 63.01162368225481,
+            "volume_km3": 17976.21951461647
+          },
+          {
+            "source_uid": 432923,
+            "target_uid": 432736,
+            "kind": 0,
+            "length_km": 57.03807182582763,
+            "volume_km3": 22500.664296120874
+          },
+          {
+            "source_uid": 432737,
+            "target_uid": 432790,
+            "kind": 0,
+            "length_km": 57.57496757010618,
+            "volume_km3": 36979.50135951465
+          },
+          {
+            "source_uid": 432742,
+            "target_uid": 491244,
+            "kind": 0,
+            "length_km": 55.26713076407292,
+            "volume_km3": 30016.90485971549
+          },
+          {
+            "source_uid": 432927,
+            "target_uid": 432753,
+            "kind": 0,
+            "length_km": 57.038719742372244,
+            "volume_km3": 25152.149958119106
+          },
+          {
+            "source_uid": 432928,
+            "target_uid": 432753,
+            "kind": 0,
+            "length_km": 57.5829363919703,
+            "volume_km3": 22761.554923595097
+          },
+          {
+            "source_uid": 432874,
+            "target_uid": 491241,
+            "kind": 0,
+            "length_km": 57.072896507489055,
+            "volume_km3": 82935.8980221971
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 491244,
+            "kind": 0,
+            "length_km": 57.06211513204575,
+            "volume_km3": 12397.416280797064
+          },
+          {
+            "source_uid": 432872,
+            "target_uid": 432790,
+            "kind": 0,
+            "length_km": 57.06485801932194,
+            "volume_km3": 36888.61924058605
+          },
+          {
+            "source_uid": 432927,
+            "target_uid": 432790,
+            "kind": 0,
+            "length_km": 64.35196608513637,
+            "volume_km3": 21848.78587782527
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 434241,
+            "kind": 0,
+            "length_km": 55.269042157310146,
+            "volume_km3": 6982.2868767495165
+          },
+          {
+            "source_uid": 432927,
+            "target_uid": 432825,
+            "kind": 0,
+            "length_km": 57.57695992867911,
+            "volume_km3": 25801.118774925384
+          },
+          {
+            "source_uid": 432872,
+            "target_uid": 432929,
+            "kind": 0,
+            "length_km": 57.57696235781561,
+            "volume_km3": 46799.06834271212
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 432886,
+            "kind": 0,
+            "length_km": 57.039920940473884,
+            "volume_km3": 5672.833772532643
+          },
+          {
+            "source_uid": 432923,
+            "target_uid": 432886,
+            "kind": 0,
+            "length_km": 63.00660218213289,
+            "volume_km3": 13984.704201914694
+          },
+          {
+            "source_uid": 432887,
+            "target_uid": 432926,
+            "kind": 0,
+            "length_km": 55.23083977538088,
+            "volume_km3": 15194.708469853334
+          },
+          {
+            "source_uid": 432887,
+            "target_uid": 432956,
+            "kind": 0,
+            "length_km": 57.03252408517112,
+            "volume_km3": 17715.78551671673
+          },
+          {
+            "source_uid": 432928,
+            "target_uid": 432889,
+            "kind": 0,
+            "length_km": 57.03268622274908,
+            "volume_km3": 25184.235379451722
+          },
+          {
+            "source_uid": 432928,
+            "target_uid": 432926,
+            "kind": 0,
+            "length_km": 64.35196607417821,
+            "volume_km3": 20486.02352065248
+          }
+        ]
+      }
+    },
+    "contact": {
+      "max_T_km": 85.65923195101621,
+      "change_balance_km3": -2.3283064365386963e-10,
+      "outlet": {
+        "t_ma": 0.0,
+        "balance_km3": -2.3283064365386963e-10,
+        "transported_km3": 3166094.4821128724,
+        "contact_transported_km3": 1524685.388201492,
+        "source_cells": 21,
+        "receiver_cells": 65,
+        "converted_cells": 13,
+        "converted_column_km3": 1763833.2668854438,
+        "edges": [
+          {
+            "source_uid": 251189,
+            "target_uid": 489545,
+            "kind": 0,
+            "length_km": 65.18383658843231,
+            "volume_km3": 59441.408000876974
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 489545,
+            "kind": 0,
+            "length_km": 65.80824508700879,
+            "volume_km3": 74569.71214182103
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 484340,
+            "kind": 0,
+            "length_km": 63.17234976611421,
+            "volume_km3": 40465.96812696196
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 484509,
+            "kind": 0,
+            "length_km": 63.17234976611156,
+            "volume_km3": 40439.836681383465
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 489756,
+            "kind": 0,
+            "length_km": 62.59547953972012,
+            "volume_km3": 30663.760037716133
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 233210,
+            "kind": 0,
+            "length_km": 62.59547953971994,
+            "volume_km3": 28595.251208065296
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 490228,
+            "kind": 0,
+            "length_km": 65.13782903356298,
+            "volume_km3": 40397.760379527135
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 485023,
+            "kind": 0,
+            "length_km": 65.1285443501135,
+            "volume_km3": 40403.576676145014
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 485049,
+            "kind": 0,
+            "length_km": 62.5882190152497,
+            "volume_km3": 40475.259689022794
+          },
+          {
+            "source_uid": 228860,
+            "target_uid": 490430,
+            "kind": 0,
+            "length_km": 62.597880590587735,
+            "volume_km3": 40443.29595682573
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 489979,
+            "kind": 0,
+            "length_km": 63.16523049904668,
+            "volume_km3": 35296.721409442755
+          },
+          {
+            "source_uid": 251189,
+            "target_uid": 490143,
+            "kind": 0,
+            "length_km": 65.85185185416752,
+            "volume_km3": 59428.55935839936
+          },
+          {
+            "source_uid": 251189,
+            "target_uid": 490957,
+            "kind": 0,
+            "length_km": 65.1864301647706,
+            "volume_km3": 59455.38655440774
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 490005,
+            "kind": 0,
+            "length_km": 65.14498574158732,
+            "volume_km3": 74574.43852227759
+          },
+          {
+            "source_uid": 246812,
+            "target_uid": 490144,
+            "kind": 0,
+            "length_km": 65.67812979682743,
+            "volume_km3": 79877.32169610381
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 484878,
+            "kind": 0,
+            "length_km": 63.21303533822836,
+            "volume_km3": 30649.366681126146
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 490144,
+            "kind": 0,
+            "length_km": 65.18642582678963,
+            "volume_km3": 74495.93220797685
+          },
+          {
+            "source_uid": 260778,
+            "target_uid": 490852,
+            "kind": 0,
+            "length_km": 62.5882340497498,
+            "volume_km3": 8797.566312499275
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 485665,
+            "kind": 0,
+            "length_km": 65.17496612304973,
+            "volume_km3": 30580.274526132518
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 229694,
+            "kind": 0,
+            "length_km": 65.16567241431662,
+            "volume_km3": 28519.356729280593
+          },
+          {
+            "source_uid": 229761,
+            "target_uid": 229764,
+            "kind": 0,
+            "length_km": 63.20345306007409,
+            "volume_km3": 26712.356605537083
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 491218,
+            "kind": 0,
+            "length_km": 62.55923030416828,
+            "volume_km3": 84305.69126292849
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 432690,
+            "kind": 0,
+            "length_km": 63.004928192092954,
+            "volume_km3": 4778.98116245228
+          },
+          {
+            "source_uid": 432721,
+            "target_uid": 491241,
+            "kind": 0,
+            "length_km": 57.55105708286351,
+            "volume_km3": 52927.18165316961
+          },
+          {
+            "source_uid": 432721,
+            "target_uid": 432929,
+            "kind": 0,
+            "length_km": 57.06284532863925,
+            "volume_km3": 35544.122717534956
+          },
+          {
+            "source_uid": 432724,
+            "target_uid": 432926,
+            "kind": 0,
+            "length_km": 57.03067486138694,
+            "volume_km3": 32291.528425169876
+          },
+          {
+            "source_uid": 432887,
+            "target_uid": 432736,
+            "kind": 0,
+            "length_km": 63.01162368225481,
+            "volume_km3": 17976.21951461647
+          },
+          {
+            "source_uid": 432923,
+            "target_uid": 432736,
+            "kind": 0,
+            "length_km": 57.03807182582763,
+            "volume_km3": 22500.664296120874
+          },
+          {
+            "source_uid": 432737,
+            "target_uid": 432790,
+            "kind": 0,
+            "length_km": 57.57496757010618,
+            "volume_km3": 36979.50135951465
+          },
+          {
+            "source_uid": 432742,
+            "target_uid": 491244,
+            "kind": 0,
+            "length_km": 55.26713076407292,
+            "volume_km3": 30016.90485971549
+          },
+          {
+            "source_uid": 432927,
+            "target_uid": 432753,
+            "kind": 0,
+            "length_km": 57.038719742372244,
+            "volume_km3": 25152.149958119106
+          },
+          {
+            "source_uid": 432928,
+            "target_uid": 432753,
+            "kind": 0,
+            "length_km": 57.5829363919703,
+            "volume_km3": 22761.554923595097
+          },
+          {
+            "source_uid": 432874,
+            "target_uid": 491241,
+            "kind": 0,
+            "length_km": 57.072896507489055,
+            "volume_km3": 82935.8980221971
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 491244,
+            "kind": 0,
+            "length_km": 57.06211513204575,
+            "volume_km3": 12397.416280797064
+          },
+          {
+            "source_uid": 432872,
+            "target_uid": 432790,
+            "kind": 0,
+            "length_km": 57.06485801932194,
+            "volume_km3": 36888.61924058605
+          },
+          {
+            "source_uid": 432927,
+            "target_uid": 432790,
+            "kind": 0,
+            "length_km": 64.35196608513637,
+            "volume_km3": 21848.78587782527
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 434241,
+            "kind": 0,
+            "length_km": 55.269042157310146,
+            "volume_km3": 6982.2868767495165
+          },
+          {
+            "source_uid": 432927,
+            "target_uid": 432825,
+            "kind": 0,
+            "length_km": 57.57695992867911,
+            "volume_km3": 25801.118774925384
+          },
+          {
+            "source_uid": 432872,
+            "target_uid": 432929,
+            "kind": 0,
+            "length_km": 57.57696235781561,
+            "volume_km3": 46799.06834271212
+          },
+          {
+            "source_uid": 432884,
+            "target_uid": 432886,
+            "kind": 0,
+            "length_km": 57.039920940473884,
+            "volume_km3": 5672.833772532643
+          },
+          {
+            "source_uid": 432923,
+            "target_uid": 432886,
+            "kind": 0,
+            "length_km": 63.00660218213289,
+            "volume_km3": 13984.704201914694
+          },
+          {
+            "source_uid": 432887,
+            "target_uid": 432926,
+            "kind": 0,
+            "length_km": 55.23083977538088,
+            "volume_km3": 15194.708469853334
+          },
+          {
+            "source_uid": 432887,
+            "target_uid": 432956,
+            "kind": 0,
+            "length_km": 57.03252408517112,
+            "volume_km3": 17715.78551671673
+          },
+          {
+            "source_uid": 432928,
+            "target_uid": 432889,
+            "kind": 0,
+            "length_km": 57.03268622274908,
+            "volume_km3": 25184.235379451722
+          },
+          {
+            "source_uid": 432928,
+            "target_uid": 432926,
+            "kind": 0,
+            "length_km": 64.35196607417821,
+            "volume_km3": 20486.02352065248
+          },
+          {
+            "source_uid": 234190,
+            "target_uid": 12650,
+            "kind": 1,
+            "length_km": 54.25753229313603,
+            "volume_km3": 60172.23879673336
+          },
+          {
+            "source_uid": 234190,
+            "target_uid": 43596,
+            "kind": 1,
+            "length_km": 59.43157374642162,
+            "volume_km3": 60280.26085470045
+          },
+          {
+            "source_uid": 234190,
+            "target_uid": 127408,
+            "kind": 1,
+            "length_km": 59.21692886439398,
+            "volume_km3": 59275.84435049061
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 12650,
+            "kind": 1,
+            "length_km": 58.25506358599024,
+            "volume_km3": 20915.99553685661
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 39337,
+            "kind": 1,
+            "length_km": 56.080214637362154,
+            "volume_km3": 21156.131434672156
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 53454,
+            "kind": 1,
+            "length_km": 65.61776649071982,
+            "volume_km3": 20691.434995166906
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 96979,
+            "kind": 1,
+            "length_km": 56.96790382380144,
+            "volume_km3": 21167.45989962927
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 96981,
+            "kind": 1,
+            "length_km": 63.837950804837796,
+            "volume_km3": 20956.338953194954
+          },
+          {
+            "source_uid": 238608,
+            "target_uid": 160381,
+            "kind": 1,
+            "length_km": 57.12799467899659,
+            "volume_km3": 21158.830773401478
+          },
+          {
+            "source_uid": 246812,
+            "target_uid": 97002,
+            "kind": 1,
+            "length_km": 50.06357819803462,
+            "volume_km3": 57585.330393230455
+          },
+          {
+            "source_uid": 246812,
+            "target_uid": 97003,
+            "kind": 1,
+            "length_km": 77.74104029253687,
+            "volume_km3": 57816.56286891083
+          },
+          {
+            "source_uid": 246812,
+            "target_uid": 97005,
+            "kind": 1,
+            "length_km": 84.3396881047037,
+            "volume_km3": 57282.950153320824
+          },
+          {
+            "source_uid": 246812,
+            "target_uid": 138635,
+            "kind": 1,
+            "length_km": 88.07489748605545,
+            "volume_km3": 57455.9362121932
+          },
+          {
+            "source_uid": 246812,
+            "target_uid": 138637,
+            "kind": 1,
+            "length_km": 38.45993995330789,
+            "volume_km3": 57773.43690245807
+          },
+          {
+            "source_uid": 247564,
+            "target_uid": 55715,
+            "kind": 1,
+            "length_km": 35.005358707579184,
+            "volume_km3": 37171.25003809133
+          },
+          {
+            "source_uid": 247564,
+            "target_uid": 55728,
+            "kind": 1,
+            "length_km": 82.70998782553583,
+            "volume_km3": 36917.51950613681
+          },
+          {
+            "source_uid": 247564,
+            "target_uid": 73990,
+            "kind": 1,
+            "length_km": 81.9197383842988,
+            "volume_km3": 36774.939129890125
+          },
+          {
+            "source_uid": 247564,
+            "target_uid": 73992,
+            "kind": 1,
+            "length_km": 64.26605767459388,
+            "volume_km3": 36896.00796799149
+          },
+          {
+            "source_uid": 247564,
+            "target_uid": 97005,
+            "kind": 1,
+            "length_km": 44.60458091738298,
+            "volume_km3": 37048.52327262133
+          },
+          {
+            "source_uid": 247564,
+            "target_uid": 97014,
+            "kind": 1,
+            "length_km": 88.39429381171406,
+            "volume_km3": 36789.13677328544
+          },
+          {
+            "source_uid": 247564,
+            "target_uid": 127395,
+            "kind": 1,
+            "length_km": 84.28600953992499,
+            "volume_km3": 36344.219636818656
+          },
+          {
+            "source_uid": 251189,
+            "target_uid": 60260,
+            "kind": 1,
+            "length_km": 85.94295464850596,
+            "volume_km3": 40532.30642000803
+          },
+          {
+            "source_uid": 251189,
+            "target_uid": 138647,
+            "kind": 1,
+            "length_km": 47.183585441102714,
+            "volume_km3": 40949.22710911694
+          },
+          {
+            "source_uid": 251189,
+            "target_uid": 138694,
+            "kind": 1,
+            "length_km": 60.808052115409,
+            "volume_km3": 40790.05645281818
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 60260,
+            "kind": 1,
+            "length_km": 55.46005319472308,
+            "volume_km3": 54051.726972248885
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 97002,
+            "kind": 1,
+            "length_km": 84.85380004568317,
+            "volume_km3": 53893.839886074646
+          },
+          {
+            "source_uid": 252084,
+            "target_uid": 138649,
+            "kind": 1,
+            "length_km": 42.542279499079626,
+            "volume_km3": 54179.345866880074
+          },
+          {
+            "source_uid": 260778,
+            "target_uid": 138608,
+            "kind": 1,
+            "length_km": 82.06372916185367,
+            "volume_km3": 1706.1566843422727
+          },
+          {
+            "source_uid": 260778,
+            "target_uid": 138612,
+            "kind": 1,
+            "length_km": 80.98217524843574,
+            "volume_km3": 1709.1288226113268
+          },
+          {
+            "source_uid": 260778,
+            "target_uid": 138672,
+            "kind": 1,
+            "length_km": 70.56271434879702,
+            "volume_km3": 2117.1427827664024
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 38931,
+            "kind": 1,
+            "length_km": 69.2312009255781,
+            "volume_km3": 63938.83254019063
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 46988,
+            "kind": 1,
+            "length_km": 54.14042441352205,
+            "volume_km3": 63864.521872095334
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 46989,
+            "kind": 1,
+            "length_km": 90.22833696021469,
+            "volume_km3": 63748.78269381897
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 61949,
+            "kind": 1,
+            "length_km": 61.57666781758021,
+            "volume_km3": 63702.014277950315
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 138779,
+            "kind": 1,
+            "length_km": 79.43833934498716,
+            "volume_km3": 63990.85684043156
+          },
+          {
+            "source_uid": 408016,
+            "target_uid": 159509,
+            "kind": 1,
+            "length_km": 49.854733174185704,
+            "volume_km3": 63881.10053034404
+          }
+        ]
+      }
+    }
+  },
+  "control_rerun_compared_array_count": 352,
+  "control_rerun_unequal_arrays": []
+}

@@ -1,0 +1,152 @@
+{
+  "method_class": "procedural_constrained",
+  "method": "u41_execution_audit_v1",
+  "base_commit": "d134690",
+  "source_sha256": {
+    "scripts/design_arc_outlet.py": "087aed9da791bc51951b0419c928f0f6864bff915f0d91eee57a5536febd6ac0",
+    "scripts/design_arc_outlet_trial.py": "72daa345b26a66a839817a2c33e6e956266fc955ec162017cb0480c758e163ab",
+    "scripts/design_arc_outlet_spike.py": "a1b317b860f3dbd5c218fa919c309b2cb9ac82c1fa376ca96d1c323f7bb357b5",
+    "scripts/design_arc_outlet_comparison.py": "a97d62aaf42be643645db8ddfc3e284a399574646f97b91e200e8b10d0a4a171",
+    "packages/tectonics/arc_outlet_spike.py": "d684f0512724adcfce99f4c74bc4ce885487f4dd769070462c8b2248e03f6a63",
+    "tests/tectonics/test_arc_outlet_spike.py": "dfaf2bb1f535711978ce64e41aecfc115b98de2724d5adaf062ba77155171878"
+  },
+  "image_sha256": {
+    "figures/design/v2/forward/u41_outlet/00_native_spike.png": "6cf903be92d1b9f0907b41d8d8294a03e7fc72a599be9121c2f6d4466a2de227",
+    "figures/design/v2/forward/u41_outlet/01_cases.png": "018e41b87e622c81fa637d67bbc990e2827cf878c725a9b89ffb3e699fb45c32",
+    "figures/design/v2/forward/u41_outlet/02_profiles.png": "db571de7fa8be3c0d23a5374bbcebd06d8ba9d3fb572b16eeccdd3855c91abd4",
+    "figures/design/v2/forward/u41_outlet/03_outlet_ledger.png": "f220369bbeb6b23c44cba032b23d0b31cfb9d236afa0fdb659b60bd279d7bb16",
+    "figures/design/v2/forward/u41_outlet/04_history.png": "e465e577d18dfbee276362fdd8b5f0e46a07ba6df05e1033c12e14931f742d5d",
+    "figures/design/v2/forward/u41_outlet/05_global_cost.png": "39dcc29baad30f792b1810eb79c9ae3d88094a2912150a5b8832f4882df7cc30",
+    "figures/design/v2/forward/u41_outlet/06_previous_r8.png": "e00a03f9595597c5c60ca8315a766a35363d15cc91b0048e01644cb7c40e0f8b",
+    "figures/design/v2/forward/u41_outlet/07_previous_r8_tectonics.png": "7de381c025454aad92e460230497b3b77b7dd5a6ec37045361a871a49ad3a40b",
+    "figures/design/v2/forward/u41_outlet/08_ceiling_violations.png": "af96ce49f268c536b45ff57bde7a1da687bc9d765ab03eaf52cba25f6bb13492",
+    "figures/stage1/u41_contact/01_elevation_global.png": "b5861da9257000c398a46fde2e83508ccbde7a87236b364dd815aeae2b2d6802",
+    "figures/stage1/u41_contact/02_elevation_north_polar.png": "be027dfc4973ac3e81a3965c9717d449f0f663039a4279d2bdea558bfce7faa9",
+    "figures/stage1/u41_contact/03_elevation_south_polar.png": "e461e459e3f6971dafd396001af467dd9fe7b9d1d2b7a5060116a8f72762988a",
+    "figures/stage1/u41_contact/04_landmass_units.png": "3c6caee825a2fdf2f140d14fd56d68f0046e11e96c3a82352e96fd0dfb4f23ce",
+    "figures/stage1/u41_contact/05_coast_morphology.png": "542c37b95439379754bf9156974bcd7495faf0a178e087c0a1d35bf27c8196a6",
+    "figures/stage1/u41_contact/06_distance_to_sea.png": "65def6f39ddba0c95d4885079bec603f346c0ecf78dc10f18347a14c3168a55d",
+    "figures/stage1/u41_contact/07_slope.png": "081ba1e6025e319aef02e8b580fd017eda3e9be3c32e5420f275b5f7705d6e62",
+    "figures/stage1/u41_contact/08_mountain_systems.png": "de6acc1131d909d4a8b3dda9c85d40a321c7260edab010cb4162720c833f28c0",
+    "figures/stage1/u41_contact/09_hypsometry.png": "9d1609ca4a0680a8649790de85d1075b025d4a7f35e5f94f05aa19684d2ca019",
+    "figures/stage1/u41_contact/10_slope_distance_mountains.png": "66a314bdd4560944a8f969485451a46175f3f901d3777b1b6b9bc5c8d481245d",
+    "figures/stage1/u41_contact/11_coast_vs_earth.png": "c121cde74a851a025c1409dc769842a9969649632697827a6c95ee15ea007a28",
+    "figures/stage1/u41_contact/12_coast_complexity_spread.png": "37999a4250f36abf48321c273ad22c1beca739e0bc164a7c283ed727703069be",
+    "figures/stage1/u41_contact/13_plates_boundaries.png": "a7840ba96bcf80395faaca327c7d0483116548102879f1af5fdba7d5f15b9dad",
+    "figures/stage1/u41_contact/regions/r1_main_inland_sea.png": "50a178aa5b8cac77e4f054faa4f888f307ea467eaf18f72eeb0b258bff39dbb5",
+    "figures/stage1/u41_contact/regions/r1_main_inland_sea_tectonics.png": "71882e6592ee51e4144ba82ea198b59a1f65d881f617c645b3a7284be78653cc",
+    "figures/stage1/u41_contact/regions/r2_inland_sea_complex_coast.png": "4e36a99ec84632e3cfffd0a179f60a209d5ec28fd7a0fe89ffb8a982516bbf0d",
+    "figures/stage1/u41_contact/regions/r2_inland_sea_complex_coast_tectonics.png": "b37bc92ba823013fce3f0dd6dbb179bb93ab163d738e728da54390e6fff04446",
+    "figures/stage1/u41_contact/regions/r3_north_coast.png": "693a24159ef44827b9b8f3336e250900d68699c30416031e629583c3a940ee9a",
+    "figures/stage1/u41_contact/regions/r3_north_coast_tectonics.png": "ea97d68dd5e26914dc6bf486d781e50a8f942865261045ef726de15edc3e3c02",
+    "figures/stage1/u41_contact/regions/r4_polar_coast.png": "a0a32605c99569690c484e74bf7396857e20fd47366422916106dfb5aec21300",
+    "figures/stage1/u41_contact/regions/r4_polar_coast_tectonics.png": "1d86087b38f36b84aad98a1885789c5bf08c077554b2eb16ddf393645cfde33c",
+    "figures/stage1/u41_contact/regions/r5_isthmus.png": "9df696abcb0f9db29a6ed24caaaaddb362e2b05329fd8b92096e6b7926825634",
+    "figures/stage1/u41_contact/regions/r5_isthmus_tectonics.png": "eb9d7b7edfe35c001095477915b3591c5b1dbb6b3503782e06867b5f932f9ef3",
+    "figures/stage1/u41_contact/regions/r6_smoothest_coast.png": "c89c49ac98f7e53b6781c8e2e9fb7fd975f5aed1e001600ea5ac19e27970591f",
+    "figures/stage1/u41_contact/regions/r6_smoothest_coast_tectonics.png": "6ba70703d00b085c3d789f2f395087335656dda7b6e3ec6c08b043e9abe8a259",
+    "figures/stage1/u41_contact/regions/r7_archipelago.png": "76d267ce357d3accd2cfa91bb63578610dbe4bf2b296297e368d1ae327d82797",
+    "figures/stage1/u41_contact/regions/r7_archipelago_tectonics.png": "ab0acf1cf421bb25927a338da0a24b896a9212d4e313bd42fc9175d8b493dc6a",
+    "figures/stage1/u41_contact/regions/r8_random_coast.png": "5e08670911d1cbc2b8f21eabc0cbed389099fcfb6fd0f580bee59c4c3a548faf",
+    "figures/stage1/u41_contact/regions/r8_random_coast_tectonics.png": "98a8b6d6012b96da0f926abbdd2ad96005710d9a8288b69b9e5726bb04a048ec"
+  },
+  "candidates": {
+    "control": {
+      "success": true,
+      "elapsed_s": 223.90590299999985,
+      "process_lifetime_peak_mib": 846.0,
+      "source_sha_matches": true,
+      "raw_report_sha256": {
+        "run.json": "c76384359bbcc4f253a25da43242c3bad20b134cc3f1a3f57022edfc34d5918b",
+        "forward_v2.json": "c44928cadaf1a4ba18f58ca852514a8421cd4a7226bb68739c93028fb4b1a821"
+      },
+      "git_lf_report_sha256": {
+        "run.json": "c76384359bbcc4f253a25da43242c3bad20b134cc3f1a3f57022edfc34d5918b",
+        "forward_v2.json": "c44928cadaf1a4ba18f58ca852514a8421cd4a7226bb68739c93028fb4b1a821"
+      }
+    },
+    "native": {
+      "success": true,
+      "elapsed_s": 261.1846937,
+      "process_lifetime_peak_mib": 848.0703125,
+      "runtime_input_mismatch": [],
+      "max_outlet_balance_km3": 9.00826080396655e-11,
+      "logged_edge_count": 310,
+      "raw_report_sha256": {
+        "run.json": "b6490127bb83622a5a64bb76da2ef72423e2efa4eb589a598fec8509c67c035d",
+        "forward_v2.json": "8f5403cbce455c542383dba707313d3136b2e01388c8dae70cf637b4c2b47e0a"
+      },
+      "git_lf_report_sha256": {
+        "run.json": "b6490127bb83622a5a64bb76da2ef72423e2efa4eb589a598fec8509c67c035d",
+        "forward_v2.json": "8f5403cbce455c542383dba707313d3136b2e01388c8dae70cf637b4c2b47e0a"
+      }
+    },
+    "contact": {
+      "success": true,
+      "elapsed_s": 260.5829826999998,
+      "process_lifetime_peak_mib": 848.48046875,
+      "runtime_input_mismatch": [],
+      "max_outlet_balance_km3": 1.807904936867999e-10,
+      "logged_edge_count": 447,
+      "raw_report_sha256": {
+        "run.json": "198e16edf4697e932bbad1c10059b4615fc5a4498845c4e498ba2e4b4c97e296",
+        "forward_v2.json": "f622ab345b645cc462e9842e4a6edd670cd80208403718bb19f8435a2165b768"
+      },
+      "git_lf_report_sha256": {
+        "run.json": "198e16edf4697e932bbad1c10059b4615fc5a4498845c4e498ba2e4b4c97e296",
+        "forward_v2.json": "f622ab345b645cc462e9842e4a6edd670cd80208403718bb19f8435a2165b768"
+      }
+    }
+  },
+  "tests": {
+    "passed": 68,
+    "warnings": 8,
+    "old_strict_failures_rerun": false,
+    "command": "python -m pytest tests/tectonics/test_arc_outlet_spike.py tests/tectonics/test_relaxation_spike.py tests/tectonics/test_b6_halo.py tests/tectonics/test_b6_transition.py tests/tectonics/test_b6_structured.py tests/tectonics/test_engine.py tests/tectonics/test_distribution_spike.py -q"
+  },
+  "control": {
+    "compared_arrays": 352,
+    "unequal_arrays": [],
+    "budget_equal": true,
+    "event_counts_equal": true
+  },
+  "standard_figures": 29,
+  "topic_figures": 9,
+  "standard_elapsed_s": 34,
+  "limits": [
+    "per-process peak, not total concurrent peak",
+    "no full provenance/density mixture accounting",
+    "metadata enrichment does not change elevation arrays"
+  ],
+  "preserved_regions": {
+    "native": {
+      "B6": 0.0,
+      "PL8": 0.0
+    },
+    "contact": {
+      "B6": 0.0,
+      "PL8": 0.0
+    }
+  },
+  "figure_title_correction": "02 title only; curves/data unchanged",
+  "progress_user_review_suffix_sha256": "114d6d8a949aee7526c5117840717269b7b22a21709f8e06276a64eef4fae720",
+  "method_metadata": "data/worlds/design_v2/candidates/u41_contact/method_metadata.json",
+  "staged_image_count_verified": 38,
+  "staged_image_hash_mismatch": [],
+  "progress_user_review_git_lf_unchanged": true,
+  "method_metadata_sha256": "030b9356dad6976848812070003396cfa26c7d7fcf75337539228c7d336e2e1d",
+  "independent_review": {
+    "path": "reviews/stage1_2026-10-30_2.md",
+    "reviewed_images": 38,
+    "sha_matches": 38,
+    "severe": 2,
+    "general": 6,
+    "recommends_stage_acceptance": false,
+    "original_bytes": 17094,
+    "original_sha256": "0dea201d7fc2c7c0d7980fc10f24ec1573c9feda2f2446e0f00f3db78245dc9a",
+    "original_git_lf_bytes": 17094,
+    "original_git_lf_sha256": "0dea201d7fc2c7c0d7980fc10f24ec1573c9feda2f2446e0f00f3db78245dc9a",
+    "developer_response": "append_only"
+  },
+  "handoff_doc_sha256": "487c148887510ea3ea2df7bb7924454bea7a4bcfa1e3def89ff4127c21800503"
+}

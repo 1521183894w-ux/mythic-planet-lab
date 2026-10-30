@@ -1,0 +1,64 @@
+{
+  "method": "u41_finite_arc_outlet_v1",
+  "method_class": "procedural_constrained",
+  "version": 1,
+  "date": "2026-10-30",
+  "candidates": [
+    "u41_native",
+    "u41_contact"
+  ],
+  "resolution": {
+    "native": "L7，约60 km",
+    "output": "1024×512"
+  },
+  "units": {
+    "thickness": "km",
+    "distance": "km",
+    "time": "Ma",
+    "volume": "km3",
+    "diffusivity": "km2/Myr",
+    "elevation": "m"
+  },
+  "assumptions": [
+    "继承U40B参数和180Ma激活；弧源陆壳超过40km后，向原生相邻同板块薄壳或洋壳有限交换。",
+    "10000km2/Myr系数和立方厚度响应未经真实流变标定。",
+    "40km为不可输出基底假设，不是高程或厚度上限。",
+    "contact案为碰撞记录且无合格原生陆壳边的弧源单元，加入0.5–1.5网格间距的跨板块陆壳近邻。",
+    "中心近邻不证明精确共边或真实应力耦合；排除过近中心也不构成几何验证。",
+    "双单元冻结导度后向欧拉提议、节点凸组合缩放、共享供体库存限额与成对体积更新。",
+    "洋壳达到既有31km阈值后分类为弧源陆壳，整柱分类量不计为新增材料。",
+    "只验证体积闭合，未转移密度、组分或热状态；未求解完整应力、热、流变与挠曲。"
+  ],
+  "associated_layers": {
+    "regions": "user_override",
+    "elevation": "parameterized_physics",
+    "sampling": "interpolated",
+    "figures": "visual_only"
+  },
+  "evidence": "run.json、comparison.json、audit.json；控制重现352数组，68项相关测试。证据只支持本次数值试验行为。",
+  "references": [
+    {
+      "url": "https://www.jstage.jst.go.jp/article/jgeography/128/5/128_128.813/_article/-char/en",
+      "year": 2019,
+      "scope": "岛弧地壳变形和应力建模的概念背景；未验证本项目近邻连边。"
+    },
+    {
+      "url": "https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024JB029013",
+      "year": 2024,
+      "scope": "弧与弧后密度差异的背景；本项目未采用其密度模型。"
+    },
+    {
+      "url": "https://academic.oup.com/gji/article/232/3/1886/6779681",
+      "year": 2023,
+      "scope": "岛弧地壳增长的地球背景；未用于标定新出口系数。"
+    }
+  ],
+  "documentation": "docs/u41_arc_outlet.md",
+  "default_world_changed": false,
+  "stage_approved": false,
+  "comparison_case_key_map": {
+    "ring": "u41_control",
+    "slow": "u41_native / U41A",
+    "fast": "u41_contact / U41B"
+  }
+}

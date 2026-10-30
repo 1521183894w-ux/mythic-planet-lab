@@ -1,0 +1,607 @@
+{
+  "method": "u41_outlet_comparison_v1",
+  "method_class": {
+    "regions": "user_override",
+    "transport": "procedural_constrained",
+    "elevation": "parameterized_physics",
+    "sampling": "interpolated",
+    "figures": "visual_only"
+  },
+  "resolution": "L7 about 60km; output 1024x512",
+  "units": {
+    "elevation": "m",
+    "area": "km2",
+    "volume": "km3",
+    "time": "Ma"
+  },
+  "regions": {
+    "B6": {
+      "ring": {
+        "median_m": 441.1565856933594,
+        "p10_m": 348.2434844970703,
+        "p90_m": 530.43994140625,
+        "above4500_fraction": 0.0
+      },
+      "slow": {
+        "median_m": 441.1565856933594,
+        "p10_m": 348.2434844970703,
+        "p90_m": 530.43994140625,
+        "above4500_fraction": 0.0
+      },
+      "fast": {
+        "median_m": 441.1565856933594,
+        "p10_m": 348.2434844970703,
+        "p90_m": 530.43994140625,
+        "above4500_fraction": 0.0
+      }
+    },
+    "PL8": {
+      "ring": {
+        "median_m": 850.7301635742188,
+        "p10_m": 436.0092468261719,
+        "p90_m": 1239.9119384765625,
+        "above4500_fraction": 0.0
+      },
+      "slow": {
+        "median_m": 850.7301635742188,
+        "p10_m": 436.0092468261719,
+        "p90_m": 1239.9119384765625,
+        "above4500_fraction": 0.0
+      },
+      "fast": {
+        "median_m": 850.7301635742188,
+        "p10_m": 436.0092468261719,
+        "p90_m": 1239.9119384765625,
+        "above4500_fraction": 0.0
+      }
+    }
+  },
+  "candidates": {
+    "slow": {
+      "global_changed_area_over100m_km2": 285840.74667640834,
+      "max_abs_change_m": 16284.890625,
+      "land_to_ocean_km2": 11106.821424152859,
+      "ocean_to_land_km2": 123211.98774926184,
+      "area_over10km_km2": 0.0,
+      "max_elevation_m": 8074.87353515625,
+      "surface_step_count": 181,
+      "max_abs_transport_balance_km3": 3.686727723106742e-08,
+      "max_local_residual_km3": 8.505594450980425e-09,
+      "max_native_T_before_outlet_km": 119.78947320086492,
+      "max_native_T_after_outlet_km": 117.03553258675731,
+      "outlet_step_count": 181,
+      "peak_post_outlet_time_ma": 5.0,
+      "outlet_max_balance_km3": 9.00826080396655e-11,
+      "outlet_gross_km3": 2734291.6631664834,
+      "contact_gross_km3": 0.0,
+      "elapsed_s": 261.1846937,
+      "process_lifetime_peak_wset_bytes": 889266176,
+      "budget_delta_vs_control_km3": {
+        "arc_added": 3687,
+        "eroded": -394286,
+        "rift_thinning": 0,
+        "arc_converted": 5629837,
+        "arc_suppressed": 0,
+        "opening_overlap_skipped": 0,
+        "rift_fill": 0,
+        "arc_accreted": -88032,
+        "lip_added": 0,
+        "reactivation_added": 0,
+        "hole_created": 0,
+        "hole_fill": 0
+      },
+      "surface_totals": {
+        "B6": {
+          "erosion_removed_km3": 21268.095269744845,
+          "lateral_net_in_km3": 251.91717055882026,
+          "relaxation_net_in_km3": 0.0
+        },
+        "PL8": {
+          "erosion_removed_km3": 1400106.672732327,
+          "lateral_net_in_km3": 65480.5000862212,
+          "relaxation_net_in_km3": 183312.7253391982
+        },
+        "other_continent": {
+          "erosion_removed_km3": 303817808.00506955,
+          "lateral_net_in_km3": -65732.41725678011,
+          "relaxation_net_in_km3": -183312.72533919886
+        },
+        "other_cells": {
+          "erosion_removed_km3": 0.0,
+          "lateral_net_in_km3": 0.0,
+          "relaxation_net_in_km3": 0.0
+        }
+      },
+      "before_activation_unequal_arrays": [],
+      "before_activation_compared_arrays": 132,
+      "final_fixed_max_T_km": 85.65923309326172
+    },
+    "fast": {
+      "global_changed_area_over100m_km2": 421236.0467317685,
+      "max_abs_change_m": 20213.017578125,
+      "land_to_ocean_km2": 14162.64811913831,
+      "ocean_to_land_km2": 31633.45579143455,
+      "area_over10km_km2": 0.0,
+      "max_elevation_m": 8074.87353515625,
+      "surface_step_count": 181,
+      "max_abs_transport_balance_km3": 5.263245839159936e-08,
+      "max_local_residual_km3": 8.974893717095256e-09,
+      "max_native_T_before_outlet_km": 106.59411271860225,
+      "max_native_T_after_outlet_km": 93.48302919392601,
+      "outlet_step_count": 181,
+      "peak_post_outlet_time_ma": 5.0,
+      "outlet_max_balance_km3": 1.807904936867999e-10,
+      "outlet_gross_km3": 4129278.421453846,
+      "contact_gross_km3": 3322926.9775568163,
+      "elapsed_s": 260.5829826999998,
+      "process_lifetime_peak_wset_bytes": 889696256,
+      "budget_delta_vs_control_km3": {
+        "arc_added": 3687,
+        "eroded": -521499,
+        "rift_thinning": 0,
+        "arc_converted": 1264080,
+        "arc_suppressed": 0,
+        "opening_overlap_skipped": 0,
+        "rift_fill": 0,
+        "arc_accreted": 0,
+        "lip_added": 0,
+        "reactivation_added": 0,
+        "hole_created": 0,
+        "hole_fill": 0
+      },
+      "surface_totals": {
+        "B6": {
+          "erosion_removed_km3": 21268.095269744845,
+          "lateral_net_in_km3": 251.91717055881978,
+          "relaxation_net_in_km3": 0.0
+        },
+        "PL8": {
+          "erosion_removed_km3": 1400106.672732327,
+          "lateral_net_in_km3": 65480.50008622124,
+          "relaxation_net_in_km3": 183312.725339198
+        },
+        "other_continent": {
+          "erosion_removed_km3": 303690594.86911166,
+          "lateral_net_in_km3": -65732.4172567801,
+          "relaxation_net_in_km3": -183312.72533919776
+        },
+        "other_cells": {
+          "erosion_removed_km3": 0.0,
+          "lateral_net_in_km3": 0.0,
+          "relaxation_net_in_km3": 0.0
+        }
+      },
+      "before_activation_unequal_arrays": [],
+      "before_activation_compared_arrays": 132,
+      "final_fixed_max_T_km": 85.65923309326172
+    }
+  },
+  "input_sha256": {
+    "ring": "b1793118bff299b343d1f2a543253dc86457ad31e21f2f23e76de0d1327b1b88",
+    "slow": "4693d79334db3890d553be51059ac5f756d74ce8f784ba1a340fd09d920ec5a8",
+    "fast": "93133eb834ca44a5dedb521bec3ffbb50c5bf89b3bdf2f68728c0a308316a1d7"
+  },
+  "limits": [
+    "finite paired outlet is procedural_constrained; no calibrated rheology or density/composition transfer",
+    "contact uses finite current center distances, not exact material common faces",
+    "40km donor immobile floor is an uncalibrated hypothesis, not an upper cap",
+    "old r2/r8, plateau, full provenance and stage delivery issues remain"
+  ],
+  "saved_history_elevation": {
+    "ring": {
+      "snapshots": [
+        {
+          "t_ma": 300.0,
+          "max_elevation_m": 1800.27099609375
+        },
+        {
+          "t_ma": 290.0,
+          "max_elevation_m": 1597.009033203125
+        },
+        {
+          "t_ma": 280.0,
+          "max_elevation_m": 1527.4688720703125
+        },
+        {
+          "t_ma": 270.0,
+          "max_elevation_m": 3496.316162109375
+        },
+        {
+          "t_ma": 260.0,
+          "max_elevation_m": 3322.78662109375
+        },
+        {
+          "t_ma": 250.0,
+          "max_elevation_m": 4376.61767578125
+        },
+        {
+          "t_ma": 240.0,
+          "max_elevation_m": 3810.706787109375
+        },
+        {
+          "t_ma": 230.0,
+          "max_elevation_m": 3431.87353515625
+        },
+        {
+          "t_ma": 220.0,
+          "max_elevation_m": 4479.01611328125
+        },
+        {
+          "t_ma": 210.0,
+          "max_elevation_m": 3596.65478515625
+        },
+        {
+          "t_ma": 200.0,
+          "max_elevation_m": 3120.485107421875
+        },
+        {
+          "t_ma": 190.0,
+          "max_elevation_m": 2934.12060546875
+        },
+        {
+          "t_ma": 180.0,
+          "max_elevation_m": 3374.73095703125
+        },
+        {
+          "t_ma": 170.0,
+          "max_elevation_m": 3427.680908203125
+        },
+        {
+          "t_ma": 160.0,
+          "max_elevation_m": 4223.58447265625
+        },
+        {
+          "t_ma": 150.0,
+          "max_elevation_m": 4729.49462890625
+        },
+        {
+          "t_ma": 140.0,
+          "max_elevation_m": 3755.60107421875
+        },
+        {
+          "t_ma": 130.0,
+          "max_elevation_m": 3248.94580078125
+        },
+        {
+          "t_ma": 120.0,
+          "max_elevation_m": 3042.48388671875
+        },
+        {
+          "t_ma": 110.0,
+          "max_elevation_m": 2854.392333984375
+        },
+        {
+          "t_ma": 100.0,
+          "max_elevation_m": 2944.21826171875
+        },
+        {
+          "t_ma": 90.0,
+          "max_elevation_m": 3085.19287109375
+        },
+        {
+          "t_ma": 80.0,
+          "max_elevation_m": 3187.936279296875
+        },
+        {
+          "t_ma": 70.0,
+          "max_elevation_m": 5544.59033203125
+        },
+        {
+          "t_ma": 60.0,
+          "max_elevation_m": 6651.97802734375
+        },
+        {
+          "t_ma": 50.0,
+          "max_elevation_m": 8309.064453125
+        },
+        {
+          "t_ma": 40.0,
+          "max_elevation_m": 6421.7783203125
+        },
+        {
+          "t_ma": 30.0,
+          "max_elevation_m": 6692.40380859375
+        },
+        {
+          "t_ma": 20.0,
+          "max_elevation_m": 7406.41015625
+        },
+        {
+          "t_ma": 10.0,
+          "max_elevation_m": 9746.0693359375
+        },
+        {
+          "t_ma": 0.0,
+          "max_elevation_m": 21370.517578125
+        }
+      ],
+      "note": "fixed saved10Myr snapshots; sea level rounded0.1m; misses between-save pulses, see every-step outlet maxima"
+    },
+    "slow": {
+      "snapshots": [
+        {
+          "t_ma": 300.0,
+          "max_elevation_m": 1800.970947265625
+        },
+        {
+          "t_ma": 290.0,
+          "max_elevation_m": 1597.708984375
+        },
+        {
+          "t_ma": 280.0,
+          "max_elevation_m": 1528.268798828125
+        },
+        {
+          "t_ma": 270.0,
+          "max_elevation_m": 3497.1162109375
+        },
+        {
+          "t_ma": 260.0,
+          "max_elevation_m": 3323.586669921875
+        },
+        {
+          "t_ma": 250.0,
+          "max_elevation_m": 4377.41748046875
+        },
+        {
+          "t_ma": 240.0,
+          "max_elevation_m": 3811.5068359375
+        },
+        {
+          "t_ma": 230.0,
+          "max_elevation_m": 3432.673583984375
+        },
+        {
+          "t_ma": 220.0,
+          "max_elevation_m": 4479.81640625
+        },
+        {
+          "t_ma": 210.0,
+          "max_elevation_m": 3597.45458984375
+        },
+        {
+          "t_ma": 200.0,
+          "max_elevation_m": 3121.28515625
+        },
+        {
+          "t_ma": 190.0,
+          "max_elevation_m": 2934.920654296875
+        },
+        {
+          "t_ma": 180.0,
+          "max_elevation_m": 3375.531005859375
+        },
+        {
+          "t_ma": 170.0,
+          "max_elevation_m": 3428.48095703125
+        },
+        {
+          "t_ma": 160.0,
+          "max_elevation_m": 4224.38427734375
+        },
+        {
+          "t_ma": 150.0,
+          "max_elevation_m": 4730.29443359375
+        },
+        {
+          "t_ma": 140.0,
+          "max_elevation_m": 3756.401123046875
+        },
+        {
+          "t_ma": 130.0,
+          "max_elevation_m": 3249.745849609375
+        },
+        {
+          "t_ma": 120.0,
+          "max_elevation_m": 3043.28369140625
+        },
+        {
+          "t_ma": 110.0,
+          "max_elevation_m": 2855.192138671875
+        },
+        {
+          "t_ma": 100.0,
+          "max_elevation_m": 2945.01806640625
+        },
+        {
+          "t_ma": 90.0,
+          "max_elevation_m": 3085.992919921875
+        },
+        {
+          "t_ma": 80.0,
+          "max_elevation_m": 3188.736083984375
+        },
+        {
+          "t_ma": 70.0,
+          "max_elevation_m": 5545.39013671875
+        },
+        {
+          "t_ma": 60.0,
+          "max_elevation_m": 6652.67822265625
+        },
+        {
+          "t_ma": 50.0,
+          "max_elevation_m": 8309.7646484375
+        },
+        {
+          "t_ma": 40.0,
+          "max_elevation_m": 6422.478515625
+        },
+        {
+          "t_ma": 30.0,
+          "max_elevation_m": 6693.20361328125
+        },
+        {
+          "t_ma": 20.0,
+          "max_elevation_m": 7407.21044921875
+        },
+        {
+          "t_ma": 10.0,
+          "max_elevation_m": 8137.58447265625
+        },
+        {
+          "t_ma": 0.0,
+          "max_elevation_m": 8074.87353515625
+        }
+      ],
+      "note": "fixed saved10Myr snapshots; sea level rounded0.1m; misses between-save pulses, see every-step outlet maxima"
+    },
+    "fast": {
+      "snapshots": [
+        {
+          "t_ma": 300.0,
+          "max_elevation_m": 1800.470947265625
+        },
+        {
+          "t_ma": 290.0,
+          "max_elevation_m": 1597.208984375
+        },
+        {
+          "t_ma": 280.0,
+          "max_elevation_m": 1527.6688232421875
+        },
+        {
+          "t_ma": 270.0,
+          "max_elevation_m": 3496.51611328125
+        },
+        {
+          "t_ma": 260.0,
+          "max_elevation_m": 3323.086669921875
+        },
+        {
+          "t_ma": 250.0,
+          "max_elevation_m": 4376.91748046875
+        },
+        {
+          "t_ma": 240.0,
+          "max_elevation_m": 3810.90673828125
+        },
+        {
+          "t_ma": 230.0,
+          "max_elevation_m": 3432.073486328125
+        },
+        {
+          "t_ma": 220.0,
+          "max_elevation_m": 4479.31640625
+        },
+        {
+          "t_ma": 210.0,
+          "max_elevation_m": 3596.95458984375
+        },
+        {
+          "t_ma": 200.0,
+          "max_elevation_m": 3120.68505859375
+        },
+        {
+          "t_ma": 190.0,
+          "max_elevation_m": 2934.320556640625
+        },
+        {
+          "t_ma": 180.0,
+          "max_elevation_m": 3374.93115234375
+        },
+        {
+          "t_ma": 170.0,
+          "max_elevation_m": 3427.98095703125
+        },
+        {
+          "t_ma": 160.0,
+          "max_elevation_m": 4223.7841796875
+        },
+        {
+          "t_ma": 150.0,
+          "max_elevation_m": 4729.6943359375
+        },
+        {
+          "t_ma": 140.0,
+          "max_elevation_m": 3755.801025390625
+        },
+        {
+          "t_ma": 130.0,
+          "max_elevation_m": 3249.145751953125
+        },
+        {
+          "t_ma": 120.0,
+          "max_elevation_m": 3042.683837890625
+        },
+        {
+          "t_ma": 110.0,
+          "max_elevation_m": 2854.692138671875
+        },
+        {
+          "t_ma": 100.0,
+          "max_elevation_m": 2944.51806640625
+        },
+        {
+          "t_ma": 90.0,
+          "max_elevation_m": 3085.392822265625
+        },
+        {
+          "t_ma": 80.0,
+          "max_elevation_m": 3188.13623046875
+        },
+        {
+          "t_ma": 70.0,
+          "max_elevation_m": 5544.89013671875
+        },
+        {
+          "t_ma": 60.0,
+          "max_elevation_m": 6652.17822265625
+        },
+        {
+          "t_ma": 50.0,
+          "max_elevation_m": 8309.2646484375
+        },
+        {
+          "t_ma": 40.0,
+          "max_elevation_m": 6421.978515625
+        },
+        {
+          "t_ma": 30.0,
+          "max_elevation_m": 6692.60400390625
+        },
+        {
+          "t_ma": 20.0,
+          "max_elevation_m": 7406.6103515625
+        },
+        {
+          "t_ma": 10.0,
+          "max_elevation_m": 7766.447265625
+        },
+        {
+          "t_ma": 0.0,
+          "max_elevation_m": 8074.87353515625
+        }
+      ],
+      "note": "fixed saved10Myr snapshots; sea level rounded0.1m; misses between-save pulses, see every-step outlet maxima"
+    }
+  },
+  "surface_totals_exclude_added_outlet": true,
+  "plateau_design_windows": {
+    "PL1": {
+      "window_class": "user_override",
+      "area_km2": 2647572.8013789835,
+      "note": "fixed design polygon, not an independently segmented physical plateau",
+      "cases": {
+        "ring": {
+          "area_weighted_mean_m": 3817.4702218855155,
+          "median_m": 4666.6376953125
+        },
+        "slow": {
+          "area_weighted_mean_m": 3817.4702218855155,
+          "median_m": 4666.6376953125
+        },
+        "fast": {
+          "area_weighted_mean_m": 3817.4702218855155,
+          "median_m": 4666.6376953125
+        }
+      }
+    }
+  },
+  "physical_ceiling": {
+    "max_peak_soft_limit_m": 10000,
+    "ceiling_violation_method_class": "fantasy_exception",
+    "accepted_as_fantasy": false,
+    "note": "diagnostic model failure, not an adopted world"
+  }
+}
